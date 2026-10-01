@@ -6,6 +6,7 @@ A free, volunteer website for students of the EU-HEM master's program (European 
 
 ## What's on it
 - 1st-year class timetable, loaded live from the official UniBo timetable
+- 1st-year exam dates with countdown and registration status, loaded live from the official UniBo exam dates page
 - Notes, summaries and student resources (coming soon)
 - Useful links, including Virtuale for official course materials
 

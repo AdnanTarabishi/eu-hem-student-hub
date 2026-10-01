@@ -5,6 +5,7 @@
 // "INTRODUCTION TO ECONOMICS" -> "Introduction To Economics"
 function toTitleCase(text) {
   return text
+    .replace(/\s+/g, " ")
     .trim()
     .toLowerCase()
     .replace(/\b\w/g, (letter) => letter.toUpperCase());

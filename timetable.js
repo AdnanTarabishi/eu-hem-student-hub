@@ -105,6 +105,8 @@ async function loadTimetable() {
         start: raw.start,
         time: raw.time,
         course: shortCourseName(raw.title),
+        // Every name this class is known by, e.g. ["Quantitative Methods ... (I.C.)", "Econometrics"]
+        allNames: raw.title.split("/").map(toTitleCase),
         room: roomText(raw),
         teacher: raw.docente,
         online: raw.teledidattica,
@@ -119,10 +121,12 @@ async function loadTimetable() {
     scheduleStatus.textContent =
       "Sorry, the timetable could not be loaded right now. Please use the official timetable link above.";
   }
+  return allSessions;
 }
 
 // Re-draw the list whenever the user changes a filter
 courseFilter.addEventListener("change", renderSchedule);
 showPastCheckbox.addEventListener("change", renderSchedule);
 
-loadTimetable();
+// A "promise" of the sessions: exams.js waits for it to know which courses are 1st year
+const timetableLoaded = loadTimetable();

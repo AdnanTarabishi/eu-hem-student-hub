@@ -11,6 +11,9 @@ const examCourseFilter = document.getElementById("exam-course-filter");
 
 let allExams = [];
 
+// True if we could not load the timetable, so we can't tell which exams are 1st year
+let showingAllYears = false;
+
 const MONTHS = {
   january: "01", february: "02", march: "03", april: "04", may: "05", june: "06",
   july: "07", august: "08", september: "09", october: "10", november: "11", december: "12",
@@ -126,6 +129,18 @@ function mergeDuplicates(exams) {
   return [...byKey.values()];
 }
 
+// The exam page lists all years. A course counts as 1st year if it appears in the
+// 1st-year timetable. We drop other exams, and drop non-1st-year names from merged exams.
+function keepFirstYearExams(exams, timetableSessions) {
+  const firstYearNames = new Set(timetableSessions.flatMap((session) => session.allNames));
+  const result = [];
+  for (const exam of exams) {
+    const names = exam.names.filter((name) => firstYearNames.has(name));
+    if (names.length > 0) result.push({ ...exam, names: names });
+  }
+  return result;
+}
+
 // Main title = the module/course names; integrated course names (I.C.) go in a "Part of" line
 function examTitle(exam) {
   const integrated = exam.names.filter((name) => name.includes("(I.C.)"));
@@ -180,7 +195,9 @@ function renderExams() {
     examStatus.textContent = "No upcoming exams for this selection.";
     return;
   }
-  examStatus.textContent = `Showing ${visibleExams.length} upcoming exams.`;
+  examStatus.textContent = showingAllYears
+    ? `Showing ${visibleExams.length} upcoming exams for all years (the 1st-year course list could not be loaded).`
+    : `Showing ${visibleExams.length} upcoming 1st-year exams.`;
 
   for (const exam of visibleExams) {
     const item = createElement("div", "exam-item");
@@ -215,10 +232,18 @@ async function loadExams() {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const html = await response.text();
 
-    allExams = parseExamsPage(html).sort((a, b) =>
-      (a.dateKey + a.time).localeCompare(b.dateKey + b.time)
-    );
-    if (allExams.length === 0) throw new Error("No exams found on the page");
+    let exams = parseExamsPage(html);
+    if (exams.length === 0) throw new Error("No exams found on the page");
+
+    // Keep only 1st-year exams, using the course names from the timetable
+    const sessions = await timetableLoaded;
+    if (sessions.length > 0) {
+      exams = keepFirstYearExams(exams, sessions);
+    } else {
+      showingAllYears = true;
+    }
+
+    allExams = exams.sort((a, b) => (a.dateKey + a.time).localeCompare(b.dateKey + b.time));
 
     fillExamCourseFilter();
     renderExams();
