@@ -1,0 +1,3 @@
+# Calendar files must keep Windows-style line endings (CRLF), as the iCalendar standard requires.
+# "-text" tells Git never to convert them.
+*.ics -text
