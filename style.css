@@ -211,6 +211,43 @@ main {
   font-weight: 600;
 }
 
+/* ===== Calendar subscription ===== */
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.button {
+  display: inline-block;
+  background: var(--color-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  opacity: 0.9;
+}
+
+.copy-row {
+  display: flex;
+  gap: 8px;
+}
+
+/* The link box takes the remaining space; min-width: 0 lets it shrink on phones */
+.copy-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 6px;
+  font-size: 0.9rem;
+}
+
 /* On narrow phone screens, put the time above the details */
 @media (max-width: 500px) {
   .schedule-item {
