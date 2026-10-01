@@ -42,3 +42,45 @@ function createElement(tag, className, text) {
   if (text) element.textContent = text;
   return element;
 }
+
+// Turns CSV text into rows of fields. Handles the CSV rules Google Sheets uses:
+// fields in "quotes" may contain commas or line breaks, and "" inside quotes means one ".
+function parseCsv(text) {
+  const rows = [];
+  let row = [];
+  let field = "";
+  let insideQuotes = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    if (insideQuotes) {
+      if (char === '"' && text[i + 1] === '"') {
+        field += '"';
+        i++; // skip the second quote
+      } else if (char === '"') {
+        insideQuotes = false;
+      } else {
+        field += char;
+      }
+    } else if (char === '"') {
+      insideQuotes = true;
+    } else if (char === ",") {
+      row.push(field);
+      field = "";
+    } else if (char === "\n" || char === "\r") {
+      if (char === "\r" && text[i + 1] === "\n") i++; // Windows line ending (\r\n)
+      row.push(field);
+      rows.push(row);
+      row = [];
+      field = "";
+    } else {
+      field += char;
+    }
+  }
+  // Last line, if the file doesn't end with a line break
+  if (field !== "" || row.length > 0) {
+    row.push(field);
+    rows.push(row);
+  }
+  return rows;
+}

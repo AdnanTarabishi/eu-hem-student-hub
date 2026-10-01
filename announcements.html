@@ -3,23 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>City Guide – EU-HEM Student Hub</title>
-  <meta name="description" content="Practical city guides for EU-HEM students, written by students.">
+  <title>Announcements – EU-HEM Student Hub</title>
+  <meta name="description" content="News and announcements for EU-HEM students.">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Same header as the home page; menu links point back to the home page sections -->
   <header class="site-header">
     <div class="container">
       <p class="site-title"><a href="index.html">EU-HEM Student Hub</a></p>
       <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
       <nav class="site-nav">
-        <a href="announcements.html">Announcements</a>
+        <a href="announcements.html" aria-current="page">Announcements</a>
         <a href="index.html#schedule">Timetable</a>
         <a href="index.html#exams">Exams</a>
         <a href="index.html#calendar">Calendar</a>
-        <a href="city-guide.html" aria-current="page">City Guide</a>
+        <a href="city-guide.html">City Guide</a>
         <a href="students.html">Students</a>
         <a href="index.html#resources">Resources</a>
         <a href="index.html#links">Useful Links</a>
@@ -29,11 +28,20 @@
   </header>
 
   <main class="container">
-    <!-- guide.js loads the city's Markdown file and puts the guide here.
-         Which city: city-guide.html?city=bologna (Bologna is the default). -->
-    <article id="guide" class="card guide">
-      <p id="guide-status" class="placeholder">Loading guide...</p>
-    </article>
+    <section class="card announcements-page">
+      <h2>Announcements</h2>
+
+      <!-- announcements.js shows this only while the sample (fake) data is used -->
+      <p id="announcement-demo-note" class="demo-note" hidden>
+        <strong>Demo announcements</strong> — these are examples only, not real news.
+      </p>
+
+      <!-- announcements.js adds one button per category -->
+      <div id="announcement-filters" class="track-tabs announcement-filters" role="tablist" aria-label="Filter by category"></div>
+
+      <p id="announcement-status" class="placeholder">Loading announcements...</p>
+      <div id="announcement-list" class="announcement-list"></div>
+    </section>
   </main>
 
   <footer class="site-footer">
@@ -42,14 +50,8 @@
     </div>
   </footer>
 
-  <!-- "marked" converts Markdown to HTML. The integrity hash makes the browser
-       refuse the file if it was changed on the CDN. -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/18.0.14/lib/marked.umd.min.js"
-          integrity="sha512-trN9mtGYvoySPVI909KTnwbJI9AkKPydRCV/qAsUG1+q39hhpKltEag9b5JpdjeIZn5i8IH62hHRFdbKwMFh9w=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="utils.js"></script>
   <script src="announcements.js"></script>
-  <script src="guide.js"></script>
 
 </body>
 </html>

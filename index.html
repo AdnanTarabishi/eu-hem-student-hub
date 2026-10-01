@@ -18,6 +18,7 @@
       <h1 class="site-title">EU-HEM Student Hub</h1>
       <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
       <nav class="site-nav">
+        <a href="announcements.html">Announcements</a>
         <a href="#schedule">Timetable</a>
         <a href="#exams">Exams</a>
         <a href="#calendar">Calendar</a>
@@ -33,6 +34,17 @@
   <main class="container">
 
     <!-- Each <section> is one block of content. The id lets the menu jump to it. -->
+    <section id="announcements" class="card">
+      <h2>Announcements</h2>
+      <p id="home-announcement-demo-note" class="demo-note" hidden>
+        <strong>Demo announcements</strong> — examples only, not real news.
+      </p>
+      <!-- announcements.js fills this with the latest announcements -->
+      <p id="latest-announcements-status" class="placeholder">Loading announcements...</p>
+      <div id="latest-announcements" class="announcement-list"></div>
+      <a class="see-all" href="announcements.html">See all announcements →</a>
+    </section>
+
     <section id="schedule" class="card">
       <h2>Class Timetable</h2>
       <p>
@@ -151,6 +163,7 @@
   <!-- Loaded at the end so the HTML above already exists when the scripts run.
        utils.js comes first because the other two use its helpers. -->
   <script src="utils.js"></script>
+  <script src="announcements.js"></script>
   <script src="timetable.js"></script>
   <script src="exams.js"></script>
   <script src="calendar.js"></script>

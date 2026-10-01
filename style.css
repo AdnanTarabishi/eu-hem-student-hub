@@ -681,6 +681,140 @@ main {
   }
 }
 
+/* ===== Announcements ===== */
+
+/* Red bar at the top of every page when there is an active Urgent announcement */
+.urgent-banner {
+  background: #b71c1c;
+  color: #ffffff;
+  padding: 10px 0;
+  font-size: 0.95rem;
+}
+
+.urgent-banner a {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.demo-note {
+  background: #fff8e1;
+  border-left: 4px solid #f9a825;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.announcement-filters {
+  margin-bottom: 8px;
+}
+
+.announcement-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.announcement {
+  border: 1px solid #dde3ea;
+  border-radius: 8px;
+  padding: 14px 16px;
+  scroll-margin-top: 12px;
+}
+
+.announcement.is-pinned {
+  border-left: 4px solid var(--color-primary);
+}
+
+/* The announcement someone arrived at from a link */
+.announcement.is-highlighted {
+  box-shadow: 0 0 0 3px #f9a825;
+}
+
+.announcement-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  font-size: 0.8rem;
+}
+
+.announcement-date {
+  color: var(--color-muted);
+}
+
+.announcement-title {
+  display: block;
+  margin: 8px 0 4px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.announcement-message {
+  margin: 4px 0 8px;
+  white-space: pre-line; /* keeps the line breaks typed in the sheet */
+}
+
+.announcement-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 16px;
+  font-size: 0.9rem;
+}
+
+.read-more {
+  font-weight: 600;
+}
+
+.posted-by {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+/* Home page: shorter cards */
+.announcement.compact {
+  padding: 10px 14px;
+}
+
+.announcement.compact .announcement-title {
+  margin: 6px 0 0;
+  font-size: 1rem;
+}
+
+.see-all {
+  display: inline-block;
+  margin-top: 12px;
+  font-weight: 600;
+}
+
+/* Category badges, one colour each */
+.category-badge,
+.pinned-badge,
+.new-badge {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.category-university { background: #e3eefb; color: #1f4e79; }
+.category-academic { background: #ede7f6; color: #4a2c8a; }
+.category-student { background: #e3f2e9; color: #1b6b45; }
+.category-social { background: #fff0e0; color: #9a4b00; }
+.category-urgent { background: #b71c1c; color: #ffffff; }
+.category-other { background: #f0f1f3; color: var(--color-muted); }
+
+.pinned-badge {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.new-badge {
+  background: #f9a825;
+  color: #3e2a00;
+}
+
 /* On narrow phone screens, put the time above the details */
 @media (max-width: 500px) {
   .schedule-item {

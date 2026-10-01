@@ -23,6 +23,21 @@ The calendar file in `calendar/` is rebuilt every 6 hours by a GitHub Actions wo
 (`.github/workflows/update-calendar.yml`) running `scripts/build-calendar.js`.
 To rebuild it yourself: `node scripts/build-calendar.js` (needs Node.js 18 or newer).
 
+## Announcements
+Announcements come from a CSV set by `ANNOUNCEMENTS_URL` at the top of `announcements.js`
+(currently fictional demo data in `data/sample-announcements.csv`).
+To use a Google Sheet, publish it as CSV (File → Share → Publish to web → CSV) and paste the link there.
+
+Sheet columns (any order): `Date | Title | Category | Message | Link | Pinned | Expires | Posted by`
+- **Category:** University, Academic, Student, Social or Urgent. An active Urgent announcement shows a red banner on every page.
+- **Dates:** format the Date and Expires columns as `yyyy-mm-dd` (Format → Number → Custom date and time). `dd/mm/yyyy` also works.
+- **Expires:** optional. The announcement is shown through that day and hidden from the next day.
+  A Date in the future hides the announcement until that day (scheduled posts).
+- **Pinned:** `Yes` (or a ticked checkbox) shows it first.
+- **Link:** optional, must start with `https://`.
+- **"New" badge:** posted today or in the previous 2 days.
+- Don't put personal data (phone numbers, private emails) in announcements: the published sheet is public.
+
 ## Students directory and privacy
 The directory page reads a CSV file set by `DATA_SOURCE_URL` at the top of `students.js`.
 It currently uses fictional demo data. Before using real data:
