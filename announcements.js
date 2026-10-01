@@ -6,9 +6,12 @@
 
 // ----- Settings -----
 
-// Where announcements come from. To switch to real data, replace this with your
-// published Google Sheets CSV link (File -> Share -> Publish to web -> CSV).
-const ANNOUNCEMENTS_URL = "data/sample-announcements.csv";
+// Where announcements come from: the class Google Sheet, downloaded as CSV.
+// This is the sheet's "export" address (its sharing link with /edit... replaced by /export?format=csv).
+// The sheet must be shared as "Anyone with the link: Viewer".
+// For demo data instead, use: "data/sample-announcements.csv"
+const ANNOUNCEMENTS_URL =
+  "https://docs.google.com/spreadsheets/d/1yDfWywa8DWZsKgl_UeA0_8kLzSDnW2PmnH91LbUp6Wg/export?format=csv";
 
 // "New" badge for announcements posted in the last 3 days (today + the 2 days before)
 const NEW_FOR_DAYS = 3;
