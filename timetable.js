@@ -15,47 +15,17 @@ const showPastCheckbox = document.getElementById("show-past");
 // All class sessions, after we download them
 let allSessions = [];
 
-// --- Helper functions ---
+// --- Helper functions (shared helpers like createElement are in utils.js) ---
 
 // "QUANTITATIVE METHODS (I.C.) / ECONOMETRICS" -> "Econometrics"
 function shortCourseName(fullTitle) {
-  const lastPart = fullTitle.split("/").pop().trim();
-  return lastPart
-    .toLowerCase()
-    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+  return toTitleCase(fullTitle.split("/").pop());
 }
 
 // Turns the list of rooms into one readable line, e.g. "AULA 1, Via Irnerio 48 - Bologna"
 function roomText(session) {
   const rooms = session.aule.map((room) => `${room.des_edificio}, ${room.des_indirizzo}`);
   return rooms.join(" + ");
-}
-
-// Today's date as "YYYY-MM-DD", the same format as the timetable data
-function todayKey() {
-  const now = new Date();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-  return `${now.getFullYear()}-${month}-${day}`;
-}
-
-// "2026-10-05" -> "Monday 5 October 2026"
-function formatDay(dateKey) {
-  const date = new Date(dateKey + "T12:00:00");
-  return date.toLocaleDateString("en-GB", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-}
-
-// Creates an HTML element with optional CSS class and text
-function createElement(tag, className, text) {
-  const element = document.createElement(tag);
-  if (className) element.className = className;
-  if (text) element.textContent = text;
-  return element;
 }
 
 // --- Building the page ---

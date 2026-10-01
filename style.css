@@ -106,12 +106,18 @@ main {
   margin-bottom: 12px;
 }
 
+/* min-width: 0 lets the label shrink, so long course names can't push the dropdown off-screen */
+.schedule-filters label {
+  min-width: 0;
+  max-width: 100%;
+}
+
 .schedule-filters select {
   display: block;
+  width: 100%;
   margin-top: 4px;
   padding: 6px;
   font-size: 1rem;
-  max-width: 100%;
 }
 
 .checkbox-label {
@@ -166,6 +172,43 @@ main {
   font-size: 0.75rem;
   padding: 1px 8px;
   border-radius: 10px;
+}
+
+/* ===== Exams ===== */
+#exam-list {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.exam-item {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-primary-light);
+}
+
+.exam-when {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.exam-course {
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.exam-registration {
+  font-size: 0.9rem;
+  margin-top: 4px;
+  color: var(--color-muted);
+}
+
+/* Registration currently open: make it stand out */
+.exam-registration.is-open {
+  color: #1b5e20;
+  font-weight: 600;
 }
 
 /* On narrow phone screens, put the time above the details */
