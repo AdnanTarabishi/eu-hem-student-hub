@@ -35,36 +35,51 @@
       The real directory will only show students who give their consent.
     </div>
 
-    <section class="card">
-      <div class="students-heading">
+    <!-- Section header: icon, title, count pill, and track tabs -->
+    <section class="directory-header">
+      <div class="directory-title">
+        <!-- "People" icon, drawn with SVG so we don't need an icon library -->
+        <svg class="directory-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9" r="2.5"/>
+          <path d="M2 20c0-3.9 3.1-7 7-7s7 3.1 7 7z"/><path d="M15.5 20c0-2.4-.8-4.5-2.1-6.1A5.5 5.5 0 0 1 22 18.5V20z"/>
+        </svg>
         <h2>Students</h2>
-        <!-- students.js sets the link (Google Form) from the JOIN_FORM_URL setting -->
-        <a id="join-button" class="button" href="#">Join the directory</a>
+        <span id="student-count" class="count-pill">…</span>
       </div>
-
-      <p id="student-totals" class="student-totals">Loading students...</p>
-
-      <div class="schedule-filters student-filters">
-        <label>
-          Search
-          <input id="student-search" type="search" placeholder="Name, country, background...">
-        </label>
-        <label>
-          Country
-          <select id="country-filter">
-            <option value="">All countries</option>
-          </select>
-        </label>
-        <label>
-          Track
-          <select id="track-filter">
-            <option value="">All tracks</option>
-          </select>
-        </label>
-      </div>
-
-      <div id="student-grid" class="student-grid"></div>
+      <!-- students.js adds one tab per track -->
+      <div id="track-tabs" class="track-tabs" role="tablist" aria-label="Filter by track"></div>
     </section>
+
+    <!-- Toolbar: search, country filter and the Join button -->
+    <div class="directory-toolbar">
+      <label class="search-pill">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+        <input id="student-search" type="search" placeholder="Search by name, country, background..." aria-label="Search students">
+      </label>
+      <select id="country-filter" class="select-pill" aria-label="Filter by country">
+        <option value="">All countries</option>
+      </select>
+      <!-- students.js sets the link (Google Form) from the JOIN_FORM_URL setting -->
+      <a id="join-button" class="button join-button" href="#">Join the directory</a>
+    </div>
+
+    <p id="student-totals" class="student-totals">Loading students...</p>
+
+    <!-- The student list. On phones each row becomes a small stacked card (see style.css). -->
+    <div class="directory-table-wrapper">
+      <table class="directory-table">
+        <thead>
+          <tr>
+            <th class="col-number">#</th>
+            <th>Name</th>
+            <th>Country</th>
+            <th>Background</th>
+            <th>Track</th>
+          </tr>
+        </thead>
+        <tbody id="student-rows"></tbody>
+      </table>
+    </div>
 
   </main>
 

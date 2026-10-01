@@ -29,13 +29,20 @@ const NOT_SPECIFIED = "Not specified";
 
 // ----- Page elements -----
 
-const studentGrid = document.getElementById("student-grid");
+const studentRows = document.getElementById("student-rows");
+const studentCount = document.getElementById("student-count");
 const studentTotals = document.getElementById("student-totals");
 const studentSearch = document.getElementById("student-search");
 const countryFilter = document.getElementById("country-filter");
-const trackFilter = document.getElementById("track-filter");
+const trackTabs = document.getElementById("track-tabs");
 
 let allStudents = [];
+
+// The track tab that is currently selected ("" = All)
+let selectedTrack = "";
+
+// Each track gets its own pill colour: { "Policy": "track-color-2", ... }
+let trackColors = {};
 
 // ----- Reading the CSV -----
 
@@ -129,15 +136,49 @@ function plural(count, singular, pluralWord = singular + "s") {
 
 // ----- Building the page -----
 
-function fillFilter(select, values) {
-  const options = [...new Set(values.map((value) => value || NOT_SPECIFIED))].sort((a, b) => {
-    // Keep "Not specified" at the end of the list
+// Sorted list of values, with "Not specified" (empty fields) at the end
+function uniqueValues(values) {
+  return [...new Set(values.map((value) => value || NOT_SPECIFIED))].sort((a, b) => {
     if (a === NOT_SPECIFIED) return 1;
     if (b === NOT_SPECIFIED) return -1;
     return a.localeCompare(b);
   });
-  for (const value of options) {
-    select.appendChild(new Option(value, value));
+}
+
+function fillCountryFilter() {
+  for (const country of uniqueValues(allStudents.map((s) => s.country))) {
+    countryFilter.appendChild(new Option(country, country));
+  }
+}
+
+// One tab per track, plus "All". Clicking a tab filters the table.
+function buildTrackTabs() {
+  const tracks = uniqueValues(allStudents.map((s) => s.track));
+  tracks.filter((t) => t !== NOT_SPECIFIED).forEach((track, index) => {
+    trackColors[track] = `track-color-${index % 4}`;
+  });
+
+  for (const track of ["", ...tracks]) {
+    const tab = createElement("button", "track-tab", track || "All");
+    tab.type = "button";
+    tab.setAttribute("role", "tab");
+    tab.dataset.track = track;
+    tab.addEventListener("click", () => selectTrack(track));
+    trackTabs.appendChild(tab);
+  }
+  updateTabs();
+}
+
+function selectTrack(track) {
+  selectedTrack = track;
+  updateTabs();
+  renderStudents();
+}
+
+// Highlights the selected tab
+function updateTabs() {
+  for (const tab of trackTabs.children) {
+    tab.setAttribute("aria-selected", String(tab.dataset.track === selectedTrack));
   }
 }
 
@@ -150,29 +191,46 @@ function initials(name) {
   return (first + last).toUpperCase();
 }
 
-function studentCard(student) {
-  const card = createElement("div", "student-card");
-
-  const header = createElement("div", "student-header");
-  header.appendChild(createElement("div", "student-avatar", initials(student.name)));
-  const nameBlock = createElement("div");
-  nameBlock.appendChild(createElement("div", "student-name", student.name || "Name not shared"));
-  if (student.country) nameBlock.appendChild(createElement("div", "schedule-meta", student.country));
-  header.appendChild(nameBlock);
-  card.appendChild(header);
-
-  if (student.background) card.appendChild(createElement("div", "student-background", student.background));
-
-  if (student.track) {
-    card.appendChild(createElement("span", "badge", student.track));
+// One table cell. "label" is shown before the value on phones (via CSS); empty values show a dash.
+function tableCell(label, value, className) {
+  const cell = createElement("td", className);
+  cell.dataset.label = label;
+  if (value) {
+    cell.textContent = value;
   } else {
-    card.appendChild(createElement("span", "student-no-track", "Track not decided yet"));
+    cell.appendChild(createElement("span", "empty-value", "—"));
   }
-  return card;
+  return cell;
+}
+
+function studentRow(student, number) {
+  const row = createElement("tr");
+  row.appendChild(createElement("td", "col-number", String(number)));
+
+  // Avatar + name sit in an inner box, so the cell itself stays a normal table cell
+  const nameCell = createElement("td", "col-name");
+  const nameBox = createElement("div", "name-box");
+  nameBox.appendChild(createElement("span", "student-avatar", initials(student.name)));
+  nameBox.appendChild(createElement("span", "student-name", student.name || "Name not shared"));
+  nameCell.appendChild(nameBox);
+  row.appendChild(nameCell);
+
+  row.appendChild(tableCell("Country", student.country));
+  row.appendChild(tableCell("Background", student.background));
+
+  const trackCell = createElement("td");
+  trackCell.dataset.label = "Track";
+  if (student.track) {
+    trackCell.appendChild(createElement("span", `track-pill ${trackColors[student.track] || ""}`, student.track));
+  } else {
+    trackCell.appendChild(createElement("span", "track-pill track-none", "Not decided yet"));
+  }
+  row.appendChild(trackCell);
+  return row;
 }
 
 function renderStudents() {
-  const visible = filterStudents(allStudents, studentSearch.value, countryFilter.value, trackFilter.value);
+  const visible = filterStudents(allStudents, studentSearch.value, countryFilter.value, selectedTrack);
   const isFiltered = visible.length !== allStudents.length;
 
   const countries = new Set(allStudents.map((s) => s.country).filter(Boolean));
@@ -180,27 +238,27 @@ function renderStudents() {
     ? `Showing ${visible.length} of ${plural(allStudents.length, "student")}`
     : `${plural(allStudents.length, "student")} from ${plural(countries.size, "country", "countries")}`;
 
-  studentGrid.innerHTML = "";
+  studentRows.innerHTML = "";
   if (visible.length === 0) {
-    const empty = createElement("div", "student-empty");
-    empty.appendChild(createElement("p", null, "No students match your search."));
+    const row = createElement("tr", "empty-row");
+    const cell = createElement("td");
+    cell.colSpan = 5;
+    cell.appendChild(createElement("p", null, "No students match your search."));
     const clearButton = createElement("button", "button", "Clear filters");
     clearButton.type = "button";
     clearButton.addEventListener("click", clearFilters);
-    empty.appendChild(clearButton);
-    studentGrid.appendChild(empty);
+    cell.appendChild(clearButton);
+    row.appendChild(cell);
+    studentRows.appendChild(row);
     return;
   }
-  for (const student of visible) {
-    studentGrid.appendChild(studentCard(student));
-  }
+  visible.forEach((student, index) => studentRows.appendChild(studentRow(student, index + 1)));
 }
 
 function clearFilters() {
   studentSearch.value = "";
   countryFilter.value = "";
-  trackFilter.value = "";
-  renderStudents();
+  selectTrack("");
 }
 
 function setUpJoinButton() {
@@ -226,8 +284,9 @@ async function loadStudents() {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     allStudents = rowsToStudents(parseCsv(await response.text()));
 
-    fillFilter(countryFilter, allStudents.map((s) => s.country));
-    fillFilter(trackFilter, allStudents.map((s) => s.track));
+    studentCount.textContent = plural(allStudents.length, "student");
+    fillCountryFilter();
+    buildTrackTabs();
     renderStudents();
   } catch (error) {
     console.error("Could not load students:", error);
@@ -238,6 +297,5 @@ async function loadStudents() {
 // "input" fires on every key press, so results update while typing
 studentSearch.addEventListener("input", renderStudents);
 countryFilter.addEventListener("change", renderStudents);
-trackFilter.addEventListener("change", renderStudents);
 
 loadStudents();

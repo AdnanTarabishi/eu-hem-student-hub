@@ -380,17 +380,138 @@ main {
   border-radius: 4px;
 }
 
-/* Title and "Join" button side by side; they stack on narrow screens */
-.students-heading {
+/* Header card: icon + title + count pill on one side, track tabs on the other */
+.directory-header {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 8px 16px;
+  gap: 12px 20px;
+  background: var(--color-card);
+  border-top: 3px solid var(--color-primary);
+  border-radius: 10px;
+  padding: 14px 18px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
-.students-heading h2 {
+.directory-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.directory-title h2 {
   margin: 0;
+  font-size: 1.4rem;
+}
+
+.directory-icon {
+  width: 30px;
+  height: 30px;
+  fill: var(--color-primary);
+}
+
+.count-pill {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  border: 1px solid #c9d8e8;
+  border-radius: 999px;
+  padding: 2px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Segmented tabs; they wrap onto more lines on narrow screens */
+.track-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  background: var(--color-background);
+  border: 1px solid #dde3ea;
+  border-radius: 10px;
+  max-width: 100%;
+}
+
+.track-tab {
+  border: none;
+  background: transparent;
+  color: var(--color-muted);
+  font: inherit;
+  font-size: 0.9rem;
+  padding: 6px 14px;
+  border-radius: 7px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.track-tab:hover {
+  color: var(--color-primary);
+}
+
+.track-tab[aria-selected="true"] {
+  background: var(--color-primary);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Toolbar: rounded search box, country filter, Join button */
+.directory-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0 8px;
+}
+
+.search-pill {
+  flex: 1 1 280px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-card);
+  border: 1px solid #c9d3de;
+  border-radius: 999px;
+  padding: 8px 16px;
+}
+
+.search-pill:focus-within {
+  border-color: var(--color-primary);
+}
+
+.search-pill svg {
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+
+.search-pill input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font: inherit;
+}
+
+.select-pill {
+  flex: 0 1 220px;
+  min-width: 0;
+  background: var(--color-card);
+  border: 1px solid #c9d3de;
+  border-radius: 999px;
+  padding: 9px 14px;
+  font: inherit;
+}
+
+.join-button {
+  border-radius: 999px;
+  white-space: nowrap;
 }
 
 .button.is-disabled {
@@ -400,47 +521,67 @@ main {
 
 .student-totals {
   font-weight: 600;
+  color: var(--color-muted);
+  margin: 8px 0 12px;
 }
 
-.student-filters input {
-  display: block;
+/* The table */
+.directory-table-wrapper {
+  background: var(--color-card);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  margin-bottom: 24px;
+}
+
+.directory-table {
   width: 100%;
-  margin-top: 4px;
-  padding: 6px;
-  font-size: 1rem;
+  border-collapse: collapse;
 }
 
-/* Cards fill the width: one column on phones, more on wider screens */
-.student-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 12px;
-  margin-top: 16px;
+.directory-table th {
+  background: var(--color-primary);
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: left;
+  padding: 12px 14px;
 }
 
-.student-card {
-  border: 1px solid #dde3ea;
-  border-radius: 8px;
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
+.directory-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #e6ebf0;
+  vertical-align: middle;
 }
 
-.student-header {
+.directory-table tbody tr:nth-child(even) {
+  background: #fafbfd;
+}
+
+.directory-table tbody tr:hover {
+  background: var(--color-primary-light);
+}
+
+.col-number {
+  width: 40px;
+  color: var(--color-muted);
+  font-weight: 600;
+}
+
+.name-box {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
 .student-avatar {
-  flex: 0 0 40px;
-  width: 40px;
-  height: 40px;
+  flex: 0 0 34px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   background: var(--color-primary-light);
   color: var(--color-primary);
+  font-size: 0.8rem;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -449,23 +590,95 @@ main {
 
 .student-name {
   font-weight: 600;
-  line-height: 1.3;
 }
 
-.student-background {
-  font-size: 0.95rem;
+.empty-value {
+  color: #b0b8c1;
 }
 
-.student-no-track {
+/* Track pills: one soft colour per track */
+.track-pill {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 3px 12px;
   font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.track-color-0 { background: #e3f2e9; color: #1b6b45; }
+.track-color-1 { background: #e3eefb; color: #1f4e79; }
+.track-color-2 { background: #fbf0dc; color: #8a5a0b; }
+.track-color-3 { background: #f6e6f0; color: #8a2f63; }
+
+.track-none {
+  background: #f0f1f3;
   color: var(--color-muted);
   font-style: italic;
+  font-weight: 400;
 }
 
-.student-empty {
-  grid-column: 1 / -1;
+.empty-row td {
   text-align: center;
   color: var(--color-muted);
+  padding: 32px 14px;
+}
+
+/* On phones: each row becomes a small stacked card with labels */
+@media (max-width: 640px) {
+  .directory-table thead {
+    display: none;
+  }
+
+  .directory-table,
+  .directory-table tbody,
+  .directory-table tr,
+  .directory-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .directory-table tbody tr {
+    position: relative;
+    padding: 12px 14px;
+    border-bottom: 1px solid #e6ebf0;
+  }
+
+  .directory-table td {
+    border: none;
+    padding: 3px 0;
+  }
+
+  /* The number moves to the top-right corner */
+  .directory-table td.col-number {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    width: auto;
+    padding: 0;
+    font-size: 0.8rem;
+  }
+
+  .directory-table td.col-name {
+    padding: 0 30px 6px 0;
+  }
+
+  .select-pill {
+    flex: 1 1 100%;
+  }
+
+  /* The column name ("Country", ...) appears before each value */
+  .directory-table td[data-label]::before {
+    content: attr(data-label);
+    display: inline-block;
+    width: 92px;
+    color: var(--color-muted);
+    font-size: 0.8rem;
+  }
+
+  .empty-row td {
+    padding: 24px 0;
+  }
 }
 
 /* On narrow phone screens, put the time above the details */
