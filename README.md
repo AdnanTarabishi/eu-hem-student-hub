@@ -9,6 +9,7 @@ A free, volunteer website for students of the EU-HEM master's program (European 
 - 1st-year exam dates with countdown and registration status, loaded live from the official UniBo exam dates page
 - Calendar subscription (Google, Apple, Outlook) with classes, exams and registration deadlines
 - City guide for Bologna (housing, transport, healthcare, documents, study places and more)
+- Students directory, currently a **demo with fictional data** (`data/sample-students.csv`)
 - Notes, summaries and student resources (coming soon)
 - Useful links, including Virtuale for official course materials
 
@@ -21,6 +22,14 @@ Plain HTML, CSS and JavaScript, hosted on GitHub Pages.
 The calendar file in `calendar/` is rebuilt every 6 hours by a GitHub Actions workflow
 (`.github/workflows/update-calendar.yml`) running `scripts/build-calendar.js`.
 To rebuild it yourself: `node scripts/build-calendar.js` (needs Node.js 18 or newer).
+
+## Students directory and privacy
+The directory page reads a CSV file set by `DATA_SOURCE_URL` at the top of `students.js`.
+It currently uses fictional demo data. Before using real data:
+- Only students who **gave consent** may appear.
+- Google Sheets "Publish to web" makes the **whole tab public**. Publish a separate tab with only
+  consenting students and only the 4 directory columns, never the raw form responses (emails, timestamps).
+- Never commit real student data to this repository. `private-data/` and `*.private.csv` are git-ignored.
 
 ## Adding a city guide
 City guides are Markdown files shown by one template page, `city-guide.html`.

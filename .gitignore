@@ -1,0 +1,4 @@
+# Real student data must never be committed. Keep it outside the project,
+# or in one of these, which Git will ignore:
+private-data/
+*.private.csv

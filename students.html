@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Asks search engines not to list this page (it does not block visitors) -->
+  <meta name="robots" content="noindex">
+  <title>Students – EU-HEM Student Hub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <p class="site-title"><a href="index.html">EU-HEM Student Hub</a></p>
+      <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
+      <nav class="site-nav">
+        <a href="index.html#schedule">Timetable</a>
+        <a href="index.html#exams">Exams</a>
+        <a href="index.html#calendar">Calendar</a>
+        <a href="city-guide.html">City Guide</a>
+        <a href="students.html" aria-current="page">Students</a>
+        <a href="index.html#resources">Resources</a>
+        <a href="index.html#links">Useful Links</a>
+        <a href="index.html#about">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- students.js shows this only while the page uses the sample (fake) data -->
+    <div id="demo-banner" class="demo-banner" role="note">
+      <strong>Demo data</strong> — these are fictional students.
+      The real directory will only show students who give their consent.
+    </div>
+
+    <section class="card">
+      <div class="students-heading">
+        <h2>Students</h2>
+        <!-- students.js sets the link (Google Form) from the JOIN_FORM_URL setting -->
+        <a id="join-button" class="button" href="#">Join the directory</a>
+      </div>
+
+      <p id="student-totals" class="student-totals">Loading students...</p>
+
+      <div class="schedule-filters student-filters">
+        <label>
+          Search
+          <input id="student-search" type="search" placeholder="Name, country, background...">
+        </label>
+        <label>
+          Country
+          <select id="country-filter">
+            <option value="">All countries</option>
+          </select>
+        </label>
+        <label>
+          Track
+          <select id="track-filter">
+            <option value="">All tracks</option>
+          </select>
+        </label>
+      </div>
+
+      <div id="student-grid" class="student-grid"></div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>EU-HEM Student Hub &middot; Unofficial student project</p>
+    </div>
+  </footer>
+
+  <script src="utils.js"></script>
+  <script src="students.js"></script>
+
+</body>
+</html>
