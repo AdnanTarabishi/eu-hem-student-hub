@@ -97,6 +97,89 @@ main {
   font-style: italic;
 }
 
+/* ===== Schedule ===== */
+.schedule-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.schedule-filters select {
+  display: block;
+  margin-top: 4px;
+  padding: 6px;
+  font-size: 1rem;
+  max-width: 100%;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Limits the list height so the page doesn't become endless; it scrolls inside */
+#schedule-list {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.schedule-day h3 {
+  margin: 16px 0 8px;
+  font-size: 1rem;
+  color: var(--color-primary);
+  border-bottom: 1px solid var(--color-primary-light);
+  padding-bottom: 4px;
+}
+
+.schedule-day.is-today h3 {
+  background: var(--color-primary-light);
+  padding: 4px 8px;
+}
+
+.schedule-item {
+  display: flex;
+  gap: 16px;
+  padding: 8px 0;
+}
+
+.schedule-time {
+  flex: 0 0 110px;
+  font-weight: 600;
+}
+
+.schedule-course {
+  font-weight: 600;
+}
+
+.schedule-meta {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.badge {
+  display: inline-block;
+  background: var(--color-primary);
+  color: #ffffff;
+  font-size: 0.75rem;
+  padding: 1px 8px;
+  border-radius: 10px;
+}
+
+/* On narrow phone screens, put the time above the details */
+@media (max-width: 500px) {
+  .schedule-item {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .schedule-time {
+    flex-basis: auto;
+  }
+}
+
 /* ===== Footer ===== */
 .site-footer {
   text-align: center;

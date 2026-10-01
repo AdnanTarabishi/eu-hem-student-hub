@@ -31,8 +31,29 @@
     <!-- Each <section> is one block of content. The id lets the menu jump to it. -->
     <section id="schedule" class="card">
       <h2>Schedule &amp; Important Dates</h2>
-      <p>Class schedules, exam dates and deadlines will be listed here.</p>
-      <p class="placeholder">Coming soon.</p>
+      <p>
+        1st-year class timetable, loaded live from the
+        <a href="https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/timetable" target="_blank" rel="noopener">official UniBo timetable</a>.
+        If anything looks different, the official page is always right.
+      </p>
+
+      <!-- Filters: choose a course and whether to include past classes -->
+      <div class="schedule-filters">
+        <label>
+          Course
+          <select id="course-filter">
+            <option value="">All courses</option>
+          </select>
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" id="show-past">
+          Show past classes
+        </label>
+      </div>
+
+      <!-- script.js fills these two elements -->
+      <p id="schedule-status" class="placeholder">Loading timetable...</p>
+      <div id="schedule-list"></div>
     </section>
 
     <section id="resources" class="card">
@@ -69,6 +90,9 @@
       <p>EU-HEM Student Hub &middot; Unofficial student project</p>
     </div>
   </footer>
+
+  <!-- Loaded at the end so the HTML above already exists when the script runs -->
+  <script src="script.js"></script>
 
 </body>
 </html>
