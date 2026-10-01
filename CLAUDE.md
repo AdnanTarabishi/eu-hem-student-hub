@@ -17,6 +17,6 @@ Unofficial, free, volunteer website for students of the EU-HEM master's program 
 
 ## Tech
 - Start simple: HTML, CSS, JavaScript. No frameworks until really needed.
-- Hosted on GitHub Pages (GitHub user: adnan98tara-source).
+- Hosted on GitHub Pages (GitHub user: AdnanTarabishi).
 - Interface in English. Mobile-friendly.
 - This is a learning project: keep code readable and explain choices.
