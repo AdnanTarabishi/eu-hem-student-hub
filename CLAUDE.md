@@ -15,6 +15,9 @@ Unofficial, free, volunteer website for students of the EU-HEM master's program 
 ## Later
 - Student accounts and login, content per track.
 
+## Long-term vision
+See docs/vision.md. We are currently in Phase 1. Build new features so they fit the vision (for example, structure data so it can support multiple cohorts and a future login), but do not build ahead of the current phase. Ask me before any Phase 2 technology decision.
+
 ## Tech
 - Start simple: HTML, CSS, JavaScript. No frameworks until really needed.
 - Hosted on GitHub Pages (GitHub user: AdnanTarabishi).
