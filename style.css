@@ -4269,3 +4269,81 @@ main.container {
     clip: rect(0 0 0 0);
   }
 }
+
+/* ===== Home hero with the cohort photo (index.html, HERO_IMAGE) ===== */
+.dash-hero.has-photo {
+  position: relative;
+  min-height: clamp(220px, 34vw, 340px);
+  padding: 24px 28px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  isolation: isolate;
+}
+
+.dash-hero-photo,
+.dash-hero-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+
+.dash-hero-photo img {
+  object-fit: cover;
+  object-position: center 72%; /* keep the people in view, not the sky */
+}
+
+/* Dark fade at the bottom, so the white text is readable on any part of the photo */
+.dash-hero.has-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to top, rgba(8, 20, 34, 0.85) 0%, rgba(8, 20, 34, 0.45) 45%, rgba(8, 20, 34, 0) 75%);
+}
+
+.dash-hero.has-photo .dash-hero-text {
+  align-self: flex-end;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.dash-hero.has-photo .dash-date {
+  color: #ffd166;
+}
+
+.dash-hero.has-photo .dash-sub {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* Phones: photo on top, text underneath (so the text doesn't cover everyone's faces) */
+@media (max-width: 600px) {
+  .dash-hero.has-photo {
+    display: block;
+    min-height: 0;
+    padding: 0;
+    background: #13263a;
+  }
+
+  .dash-hero-photo {
+    position: relative;
+    display: block;
+    height: auto;
+    aspect-ratio: 16 / 10;
+  }
+
+  .dash-hero-photo img {
+    z-index: 0;
+  }
+
+  .dash-hero.has-photo::after {
+    display: none;
+  }
+
+  .dash-hero.has-photo .dash-hero-text {
+    padding: 14px 18px 18px;
+    text-shadow: none;
+  }
+}

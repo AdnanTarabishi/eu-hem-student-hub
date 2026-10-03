@@ -9,7 +9,7 @@
 
   <!-- Link to our stylesheet (controls colors, fonts, layout) -->
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=31168ab6">
+  <link rel="stylesheet" href="style.css?v=c30555f5">
   <meta name="theme-color" content="#1f4e79">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
@@ -33,8 +33,18 @@
   <main class="container">
 
     <!-- Greeting (dashboard.js fills the date and greeting) -->
-    <section class="dash-hero">
-      <div>
+    <section class="dash-hero has-photo">
+      <!-- HERO_IMAGE: the cohort photo behind the greeting. To change it, replace the 3 files in
+           assets/images/ (a 640 px and a 1280 px WebP, plus a JPG for old browsers) and the alt text.
+           Phones download the small WebP, larger screens the big one. -->
+      <picture class="dash-hero-photo">
+        <source type="image/webp"
+                srcset="assets/images/euhem-cohort-2026-640.webp 640w, assets/images/euhem-cohort-2026-1280.webp 1280w"
+                sizes="(max-width: 1200px) 100vw, 1168px">
+        <img src="assets/images/euhem-cohort-2026.jpg" width="1280" height="960" fetchpriority="high"
+             alt="The EU-HEM 2026 cohort together under the porticoes of a street in Bologna">
+      </picture>
+      <div class="dash-hero-text">
         <p id="dash-date" class="dash-date"></p>
         <h1 id="dash-greeting">Welcome 👋</h1>
         <p class="dash-sub">Your EU-HEM semester at a glance: classes, exams, your plan and the latest news.</p>
