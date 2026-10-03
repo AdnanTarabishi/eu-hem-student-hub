@@ -2,9 +2,13 @@
   "id": "econometrics",
   "code": "32626",
   "title": "Econometrics",
+  "icon": "🧮",
+  "color": "#00838f",
   "academicYear": "2026/27",
   "credits": 5,
   "teachingPeriod": "9 Nov – 14 Dec 2026",
+  "teachingStart": "2026-11-09",
+  "teachingEnd": "2026-12-14",
   "professors": [
     "Elisabetta De Cao"
   ],

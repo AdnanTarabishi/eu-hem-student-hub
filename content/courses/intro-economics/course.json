@@ -2,9 +2,13 @@
   "id": "intro-economics",
   "code": "B1076",
   "title": "Introduction to Economics",
+  "icon": "📈",
+  "color": "#00897b",
   "academicYear": "2026/27",
   "credits": 3,
   "teachingPeriod": "7 Sep – 22 Sep 2026",
+  "teachingStart": "2026-09-07",
+  "teachingEnd": "2026-09-22",
   "professors": [
     "Adelajda Matuka"
   ],

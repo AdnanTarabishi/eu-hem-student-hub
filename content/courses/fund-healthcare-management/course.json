@@ -2,9 +2,13 @@
   "id": "fund-healthcare-management",
   "code": "87428",
   "title": "Fundamentals in Healthcare Management",
+  "icon": "🏥",
+  "color": "#ef6c00",
   "academicYear": "2026/27",
   "credits": 5,
   "teachingPeriod": "10 Nov – 3 Dec 2026",
+  "teachingStart": "2026-11-10",
+  "teachingEnd": "2026-12-03",
   "professors": [
     "Francesco Ciabuschi"
   ],

@@ -2,10 +2,16 @@
   "id": "fund-health-economics",
   "code": "79060",
   "title": "Fundamentals in Health Economics",
+  "icon": "🩺",
+  "color": "#2e7d32",
   "academicYear": "2026/27",
   "credits": 5,
   "teachingPeriod": "16 Sep – 22 Oct 2026",
-  "professors": ["Daniele Fabbri"],
+  "teachingStart": "2026-09-16",
+  "teachingEnd": "2026-10-22",
+  "professors": [
+    "Daniele Fabbri"
+  ],
   "description": "How economists analyse health and health care: why these markets are special, where they fail, how people demand care and insurance, and how governments and health systems respond.",
   "assessment": "Closed-book written exam, 90 minutes. Grades on the 18–30 scale. More details are given in class.",
   "textbooks": [

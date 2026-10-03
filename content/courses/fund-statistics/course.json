@@ -2,9 +2,13 @@
   "id": "fund-statistics",
   "code": "96498",
   "title": "Fundamentals of Statistics for Healthcare",
+  "icon": "📊",
+  "color": "#5e35b1",
   "academicYear": "2026/27",
   "credits": 5,
   "teachingPeriod": "14 Sep – 21 Oct 2026",
+  "teachingStart": "2026-09-14",
+  "teachingEnd": "2026-10-21",
   "professors": [
     "Sara Capacci"
   ],

@@ -130,6 +130,20 @@ async function main() {
       const url = course.course[field];
       if (url && !/^https:\/\//.test(url)) error(`${where}/course.json`, `"${field}" must start with https://`);
     }
+    const { teachingStart, teachingEnd, color, icon } = course.course;
+    checkDate(teachingStart, "teachingStart", `${where}/course.json`);
+    checkDate(teachingEnd, "teachingEnd", `${where}/course.json`);
+    if (Boolean(teachingStart) !== Boolean(teachingEnd)) {
+      error(`${where}/course.json`, `give both "teachingStart" and "teachingEnd", or neither`);
+    } else if (teachingStart && teachingEnd && teachingStart > teachingEnd) {
+      error(`${where}/course.json`, `"teachingStart" (${teachingStart}) is after "teachingEnd" (${teachingEnd})`);
+    }
+    if (color !== undefined && !/^#[0-9a-fA-F]{6}$/.test(color)) {
+      error(`${where}/course.json`, `"color" must look like "#2e7d32" (got "${color}")`);
+    }
+    if (icon !== undefined && (typeof icon !== "string" || [...icon].length > 4)) {
+      warn(`${where}/course.json`, `"icon" should be a single emoji`);
+    }
     courses.push(course);
   }
 

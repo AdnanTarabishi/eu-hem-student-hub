@@ -2,9 +2,13 @@
   "id": "health-systems",
   "code": "C8393",
   "title": "Health Systems",
+  "icon": "🌍",
+  "color": "#ad1457",
   "academicYear": "2026/27",
   "credits": 5,
   "teachingPeriod": "10 Nov – 15 Dec 2026",
+  "teachingStart": "2026-11-10",
+  "teachingEnd": "2026-12-15",
   "professors": [
     "Rossella Verzulli"
   ],
