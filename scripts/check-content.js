@@ -179,7 +179,7 @@ async function checkProgramme() {
           } else if (module.teachingStart < cycle.start || module.teachingEnd > cycle.end) {
             error(mw, `teaching dates ${module.teachingStart} to ${module.teachingEnd} are outside ${cycle.label} (${cycle.start} to ${cycle.end})`);
           }
-          modules.push(await data.loadModuleContent(module, course.id, readFromDisk));
+          modules.push(await data.loadModuleContent(module, course.id, readFromDisk, false)); // real files, not the index
         }
         courseCount++;
       }
@@ -201,6 +201,14 @@ async function checkProgramme() {
         if (programmeRules.allPlanCombinations(term).length === 0) error(tw, `no valid study plan is possible with these rules`);
       }
     }
+  }
+
+  // content/index.json must match the files on disk (pages only load files it lists)
+  const { buildIndex } = require("./build-content-index.js");
+  const indexPath = path.join(ROOT, "content", "index.json");
+  const currentIndex = fs.existsSync(indexPath) ? fs.readFileSync(indexPath, "utf8").replace(/\r\n/g, "\n") : "";
+  if (currentIndex !== buildIndex()) {
+    error("content/index.json", "is out of date (a content file was added or removed). Run: node scripts/build-content-index.js");
   }
 
   // Content folders that no module uses would be invisible on the site

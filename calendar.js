@@ -60,6 +60,7 @@ document.getElementById("calendar-copy").addEventListener("click", async () => {
   try {
     await navigator.clipboard.writeText(url);
     button.textContent = "Copied!";
+    if (typeof toast === "function") toast("Calendar link copied ✓");
   } catch {
     document.getElementById("calendar-url").select();
     button.textContent = "Press Ctrl+C to copy";

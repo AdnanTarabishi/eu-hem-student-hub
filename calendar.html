@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar – EU-HEM Student Hub</title>
+  <meta name="description" content="Subscribe to EU-HEM classes and exams in Google, Apple or Outlook Calendar.">
+  <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <meta name="theme-color" content="#1f4e79">
+  <script src="theme.js"></script>
+</head>
+<body class="wide-page">
+
+  <header class="site-header">
+    <div class="container">
+      <p class="site-title"><a href="index.html">EU-HEM Student Hub</a></p>
+      <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
+      <!-- site-nav.js builds the menu here (defined once for all pages) -->
+      <nav class="site-nav" id="site-nav" data-current="calendar" aria-label="Main menu"></nav>
+      <script src="site-nav.js"></script>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="page-intro">
+      <div>
+        <h1><svg class="icon" aria-hidden="true"><use href="icons.svg#calendar"></use></svg> Add to Your Calendar</h1>
+        <p>Subscribe once and your calendar app keeps itself up to date with classes, exams and
+          "last day to register" reminders. Updated from UniBo every 6 hours.</p>
+      </div>
+    </section>
+
+    <section id="calendar" class="card">
+      <!-- calendar.js fills in the links and shows this block -->
+      <p id="calendar-status" class="schedule-meta">Loading calendar link…</p>
+      <p id="calendar-plan-note" class="schedule-meta"></p>
+      <div id="calendar-links" hidden>
+        <div class="button-row">
+          <a id="calendar-google" class="button" href="#" target="_blank" rel="noopener">Google Calendar</a>
+          <a id="calendar-apple" class="button" href="#">Apple Calendar</a>
+          <a id="calendar-outlook" class="button" href="#" target="_blank" rel="noopener">Outlook</a>
+        </div>
+        <p>Other apps: copy this link and add it as a calendar "from URL" or "subscription".</p>
+        <div class="copy-row">
+          <input id="calendar-url" type="text" readonly aria-label="Calendar link">
+          <button id="calendar-copy" type="button" class="button">Copy link</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>How to subscribe</h2>
+      <details class="help-step">
+        <summary>Google Calendar (Android, computer)</summary>
+        <ol>
+          <li>Tap <strong>Google Calendar</strong> above. On a phone, do this once on a computer: Google only adds subscriptions on the web.</li>
+          <li>Confirm <strong>Add</strong>. The calendar appears under "Other calendars".</li>
+          <li>Google refreshes subscriptions slowly (sometimes once a day).</li>
+        </ol>
+      </details>
+      <details class="help-step">
+        <summary>Apple Calendar (iPhone, Mac)</summary>
+        <ol>
+          <li>Tap <strong>Apple Calendar</strong> above.</li>
+          <li>Confirm <strong>Subscribe</strong>, then <strong>Add</strong>.</li>
+          <li>On iPhone you can choose how often it refreshes in Settings → Calendar → Accounts → Subscribed Calendars.</li>
+        </ol>
+      </details>
+      <details class="help-step">
+        <summary>Outlook (outlook.com, Office 365)</summary>
+        <ol>
+          <li>Tap <strong>Outlook</strong> above and sign in.</li>
+          <li>Check the name and choose <strong>Import</strong>.</li>
+        </ol>
+      </details>
+      <p class="schedule-meta">Exam end times are estimates (2 hours). If you change your study plan, subscribe to the new link and remove the old calendar.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>EU-HEM Student Hub &middot; Unofficial student project</p>
+    </div>
+  </footer>
+
+  <script src="utils.js"></script>
+  <script src="ui.js"></script>
+  <script src="announcements.js"></script>
+  <script src="programme.js"></script>
+  <script src="unibo-data.js"></script>
+  <script src="calendar.js"></script>
+
+</body>
+</html>

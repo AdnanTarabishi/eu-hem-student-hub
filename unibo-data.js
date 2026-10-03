@@ -195,6 +195,7 @@ function examItem(exam, today) {
   item.appendChild(createElement("div", "schedule-meta", details.join(" · ")));
   const registration = registrationText(exam, today);
   if (registration) item.appendChild(createElement("div", registration.open ? "exam-registration is-open" : "exam-registration", registration.text));
+  if (typeof downloadEvent === "function") item.appendChild(examActions(exam));
   return item;
 }
 
@@ -215,6 +216,7 @@ function scheduleDays(sessions, index, today) {
       if (session.room) details.appendChild(createElement("div", "schedule-meta", session.room));
       if (session.teacher) details.appendChild(createElement("div", "schedule-meta", session.teacher));
       if (session.note) details.appendChild(createElement("div", "schedule-meta", session.note));
+      if (typeof downloadEvent === "function") details.appendChild(sessionActions(session, index));
       item.appendChild(details);
       day.appendChild(item);
     }
@@ -222,3 +224,123 @@ function scheduleDays(sessions, index, today) {
   }
   return box;
 }
+
+// ----- Actions: map and "add to my calendar" (need ui.js) -----
+
+function sessionActions(session, index) {
+  const row = createElement("div", "item-actions");
+  if (session.room) row.appendChild(iconButton("Map", "map-pin", { href: mapUrl(session.room), ariaLabel: `Map: ${session.room}` }));
+  row.appendChild(iconButton("Add to calendar", "plus", {
+    ariaLabel: `Add ${sessionLabel(session, index)} on ${session.dateKey} to your calendar`,
+    onClick: () => downloadEvent({
+      uid: `class-${session.moduleCode}-${session.start}`,
+      title: sessionLabel(session, index),
+      start: session.start,
+      end: session.end,
+      location: session.room,
+      description: [session.teacher, session.note].filter(Boolean).join("\n"),
+    }),
+  }));
+  return row;
+}
+
+// "2026-11-05T09:00:00" + 2 hours (exam end times aren't published)
+function plusHours(isoLocal, hours) {
+  const date = new Date(isoLocal + "Z");
+  date.setUTCHours(date.getUTCHours() + hours);
+  return date.toISOString().slice(0, 19);
+}
+
+function examActions(exam) {
+  const row = createElement("div", "item-actions");
+  if (exam.place) row.appendChild(iconButton("Map", "map-pin", { href: mapUrl(`${exam.place}, Bologna`), ariaLabel: `Map: ${exam.place}` }));
+  const start = `${exam.dateKey}T${exam.time || "09:00"}:00`;
+  row.appendChild(iconButton("Add exam", "plus", {
+    ariaLabel: `Add the ${exam.title} exam to your calendar`,
+    onClick: () => downloadEvent({
+      uid: `exam-${exam.dateKey}-${exam.time}-${exam.place}`,
+      title: `Exam: ${exam.title}`,
+      start,
+      end: plusHours(start, 2),
+      location: exam.place,
+      description: [exam.type && `Type: ${exam.type}`, exam.teachers.join(", "), "End time is an estimate. Register on AlmaEsami."].filter(Boolean).join("\n"),
+    }),
+  }));
+  if (exam.registrationCloses && exam.registrationCloses >= todayKey()) {
+    row.appendChild(iconButton("Registration reminder", "bell", {
+      ariaLabel: `Add a reminder for the last day to register for ${exam.title}`,
+      onClick: () => {
+        const next = new Date(exam.registrationCloses + "T12:00:00");
+        next.setDate(next.getDate() + 1);
+        downloadEvent({
+          uid: `registration-${exam.dateKey}-${exam.time}-${exam.place}`,
+          title: `Last day to register: ${exam.title}`,
+          start: exam.registrationCloses,
+          end: dateToKey(next),
+          description: `Exam on ${exam.dateKey}. Register on AlmaEsami.`,
+        });
+      },
+    }));
+  }
+  return row;
+}
+
+// ----- Now / next class, week layout (pure, tested) -----
+
+// Local time as "YYYY-MM-DDTHH:MM:SS", the same format as the timetable feed
+function localIso(date) {
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${dateToKey(date)}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+}
+
+// { now: the class happening now (or null), next: the next class to start (or null) }
+function nowAndNext(sessions, nowIso) {
+  let now = null;
+  let next = null;
+  for (const session of sessions) {
+    if (session.start <= nowIso && nowIso < session.end && !now) now = session;
+    if (session.start > nowIso && (!next || session.start < next.start)) next = session;
+  }
+  return { now, next };
+}
+
+// The Monday of the week containing dateKey
+function weekStartOf(dateKey) {
+  const date = new Date(dateKey + "T12:00:00");
+  const offset = (date.getDay() + 6) % 7; // Monday = 0
+  date.setDate(date.getDate() - offset);
+  return dateToKey(date);
+}
+
+// "11:30" -> 11.5
+function hourOf(isoLocal) {
+  return Number(isoLocal.slice(11, 13)) + Number(isoLocal.slice(14, 16)) / 60;
+}
+
+// Places one day's classes in side-by-side lanes when they overlap.
+// Returns [{ session, lane, lanes }] - lane = column within the overlap group, lanes = columns in that group.
+function layoutDay(sessions) {
+  const sorted = [...sessions].sort((a, b) => a.start.localeCompare(b.start));
+  const placed = [];
+  let group = [];
+  let groupEnd = "";
+  const closeGroup = () => {
+    const lanes = Math.max(1, ...group.map((g) => g.lane + 1));
+    for (const g of group) g.lanes = lanes;
+    group = [];
+  };
+  for (const session of sorted) {
+    if (group.length && session.start >= groupEnd) closeGroup();
+    const busy = group.filter((g) => g.session.end > session.start).map((g) => g.lane);
+    let lane = 0;
+    while (busy.includes(lane)) lane++;
+    const entry = { session, lane, lanes: 1 };
+    group.push(entry);
+    placed.push(entry);
+    if (session.end > groupEnd) groupEnd = session.end;
+  }
+  if (group.length) closeGroup();
+  return placed;
+}
+
+if (typeof module !== "undefined") module.exports = { nowAndNext, weekStartOf, layoutDay, hourOf, plusHours };

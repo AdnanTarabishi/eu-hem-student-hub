@@ -4,3 +4,6 @@
 
 # Written by the announcements robot exactly as Google sends it; don't convert line endings
 data/announcements.csv -text
+
+# Generated: keep exactly as written (the checker compares it byte for byte)
+content/index.json -text

@@ -28,126 +28,85 @@
 
   <main class="container">
 
-    <!-- Each <section> is one block of content. The id lets the menu jump to it. -->
-    <section id="announcements" class="card">
-      <h2>Announcements</h2>
-      <p id="home-announcement-demo-note" class="demo-note" hidden>
-        <strong>Demo announcements</strong> — examples only, not real news.
-      </p>
-      <!-- announcements.js fills this with the latest announcements -->
-      <p id="latest-announcements-status" class="placeholder">Loading announcements...</p>
-      <div id="latest-announcements" class="announcement-list"></div>
-      <a class="see-all" href="announcements.html">See all announcements →</a>
-    </section>
-
-    <section id="schedule" class="card">
-      <h2>Class Timetable</h2>
-      <p>
-        1st-year class timetable, loaded live from the
-        <a href="https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/timetable" target="_blank" rel="noopener">official UniBo timetable</a>.
-        If anything looks different, the official page is always right.
-      </p>
-
-      <!-- Filters: choose a course and whether to include past classes -->
-      <div class="schedule-filters">
-        <label>
-          Course
-          <select id="course-filter">
-            <option value="">All courses</option>
-          </select>
-        </label>
-        <label class="checkbox-label">
-          <input type="checkbox" id="show-past">
-          Show past classes
-        </label>
+    <!-- Greeting (dashboard.js fills the date and greeting) -->
+    <section class="dash-hero">
+      <div>
+        <p id="dash-date" class="dash-date"></p>
+        <h1 id="dash-greeting">Welcome 👋</h1>
+        <p class="dash-sub">Your EU-HEM semester at a glance: classes, exams, your plan and the latest news.</p>
       </div>
-
-      <!-- timetable.js fills these two elements -->
-      <p id="schedule-status" class="placeholder">Loading timetable...</p>
-      <div id="schedule-list"></div>
     </section>
 
-    <section id="exams" class="card">
-      <h2>Exams &amp; Registration</h2>
-      <p>
-        Upcoming 1st-year exam dates, loaded live from the
-        <a href="https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates" target="_blank" rel="noopener">official UniBo exam dates</a>.
-        Only exams of 1st-year courses (from the official course structure) are shown.
-      </p>
-      <p class="note">
-        To register for an exam, use
-        <a href="https://almaesami.unibo.it/almaesami/welcome.htm" target="_blank" rel="noopener">AlmaEsami</a>
-        or the myUniBo app.
-      </p>
+    <!-- First-visit welcome and setup checklist (onboarding.js) -->
+    <div id="welcome-slot"></div>
 
-      <div class="schedule-filters">
-        <label>
-          Course
-          <select id="exam-course-filter">
-            <option value="">All courses</option>
-          </select>
-        </label>
-      </div>
+    <div class="dash-grid">
+      <!-- dashboard.js fills these cards -->
+      <section class="dash-card dash-today" aria-labelledby="dash-today-title">
+        <h2 id="dash-today-title"><svg class="icon" aria-hidden="true"><use href="icons.svg#clock"></use></svg> Today</h2>
+        <div id="dash-today" class="dash-body"></div>
+        <a class="dash-more" href="timetable.html">Open timetable →</a>
+      </section>
 
-      <!-- exams.js fills these two elements -->
-      <p id="exam-status" class="placeholder">Loading exam dates...</p>
-      <div id="exam-list"></div>
-    </section>
+      <section class="dash-card" aria-labelledby="dash-exam-title">
+        <h2 id="dash-exam-title"><svg class="icon" aria-hidden="true"><use href="icons.svg#exams"></use></svg> Next exam</h2>
+        <div id="dash-exam" class="dash-body"></div>
+        <a class="dash-more" href="exams.html">All exams →</a>
+      </section>
 
-    <section id="calendar" class="card">
-      <h2>Add to Your Calendar</h2>
-      <p>
-        Subscribe once and your calendar app keeps itself up to date with 1st-year classes,
-        exams and "last day to register" reminders. Updated from UniBo every 6 hours.
-      </p>
+      <section class="dash-card" aria-labelledby="dash-plan-title">
+        <h2 id="dash-plan-title"><svg class="icon" aria-hidden="true"><use href="icons.svg#study-plan"></use></svg> My plan</h2>
+        <div id="dash-plan" class="dash-body"></div>
+        <a class="dash-more" href="studyplan.html">Open Study Plan →</a>
+      </section>
 
-      <!-- calendar.js fills in the links and shows this block -->
-      <p id="calendar-status" class="placeholder">Loading calendar link...</p>
-      <p id="calendar-plan-note" class="schedule-meta"></p>
-      <div id="calendar-links" hidden>
-        <div class="button-row">
-          <a id="calendar-google" class="button" href="#" target="_blank" rel="noopener">Google Calendar</a>
-          <a id="calendar-apple" class="button" href="#">Apple Calendar</a>
-          <a id="calendar-outlook" class="button" href="#" target="_blank" rel="noopener">Outlook</a>
-        </div>
-        <p>Other apps: copy this link and add it as a calendar "from URL" or "subscription".</p>
-        <div class="copy-row">
-          <input id="calendar-url" type="text" readonly aria-label="Calendar link">
-          <button id="calendar-copy" type="button" class="button">Copy link</button>
-        </div>
-        <p class="schedule-meta">
-          Google Calendar can take up to a day to show changes. Exam end times are estimates.
+      <section id="announcements" class="dash-card dash-wide" aria-labelledby="dash-news-title">
+        <h2 id="dash-news-title"><svg class="icon" aria-hidden="true"><use href="icons.svg#announcements"></use></svg> Announcements</h2>
+        <p id="home-announcement-demo-note" class="demo-note" hidden>
+          <strong>Demo announcements</strong> — examples only, not real news.
         </p>
+        <!-- announcements.js fills this with the latest announcements -->
+        <p id="latest-announcements-status" class="placeholder">Loading announcements...</p>
+        <div id="latest-announcements" class="announcement-list"></div>
+        <a class="dash-more see-all" href="announcements.html">See all announcements →</a>
+      </section>
+    </div>
+
+    <!-- Quick links to every section -->
+    <section aria-labelledby="tiles-title">
+      <h2 id="tiles-title" class="section-title">Explore</h2>
+      <div class="tiles">
+        <a class="tile" href="studyplan.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#study-plan"></use></svg><strong>Study Plan</strong><span>Choose courses, track CFU</span></a>
+        <a class="tile" href="timetable.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#timetable"></use></svg><strong>Timetable</strong><span>Week view, rooms, maps</span></a>
+        <a class="tile" href="exams.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#exams"></use></svg><strong>Exams</strong><span>Dates and registration</span></a>
+        <a class="tile" href="calendar.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#calendar"></use></svg><strong>Calendar</strong><span>Subscribe on your phone</span></a>
+        <a class="tile" href="notes.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#notes"></use></svg><strong>Notes &amp; Resources</strong><span>Notes, flashcards, quizzes</span></a>
+        <a class="tile" href="city-guide.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#guide"></use></svg><strong>City Guide</strong><span>Life in Bologna</span></a>
+        <a class="tile" href="announcements.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#announcements"></use></svg><strong>Announcements</strong><span>News from classmates</span></a>
+        <a class="tile" href="students.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#students"></use></svg><strong>Students</strong><span>Meet your cohort</span></a>
       </div>
     </section>
 
-    <section id="resources" class="card">
-      <h2>Notes &amp; Resources</h2>
-      <p>Student-made notes, flashcards and practice questions for 1st-year courses.</p>
-      <p class="note">
-        Official lecture materials are on Virtuale and are not re-uploaded here.
-      </p>
-      <a class="see-all" href="notes.html">Open Notes &amp; Resources →</a>
-    </section>
+    <div class="dash-footer-grid">
+      <section id="links" class="card">
+        <h2>Useful Links</h2>
+        <ul class="link-list">
+          <li><a href="https://virtuale.unibo.it" target="_blank" rel="noopener">Virtuale (UniBo)</a>: official lectures and course materials</li>
+          <li><a href="https://studenti.unibo.it" target="_blank" rel="noopener">Studenti Online</a>: study plan, certificates, bus pass</li>
+          <li><a href="https://almaesami.unibo.it/almaesami/welcome.htm" target="_blank" rel="noopener">AlmaEsami</a>: exam registration</li>
+          <li><a href="https://corsi.unibo.it/2cycle/euHealthEconomicsManagement" target="_blank" rel="noopener">EU-HEM course website</a>: official information</li>
+        </ul>
+      </section>
 
-    <section id="links" class="card">
-      <h2>Useful Links</h2>
-      <ul>
-        <li>
-          <a href="https://virtuale.unibo.it" target="_blank" rel="noopener">Virtuale (UniBo)</a>
-          : official lectures and course materials
-        </li>
-      </ul>
-    </section>
-
-    <section id="about" class="card">
-      <h2>About</h2>
-      <p>
-        This is a free, volunteer project by EU-HEM students, for EU-HEM students.
-        It is not an official website of the University of Bologna or any partner university.
-      </p>
-    </section>
-
+      <section id="about" class="card">
+        <h2>About</h2>
+        <p>
+          A free, volunteer project by EU-HEM students, for EU-HEM students.
+          It is not an official website of the University of Bologna or any partner university.
+          Your study plan and progress are saved only on your device.
+        </p>
+      </section>
+    </div>
   </main>
 
   <footer class="site-footer">
@@ -159,12 +118,13 @@
   <!-- Loaded at the end so the HTML above already exists when the scripts run.
        utils.js comes first because the other two use its helpers. -->
   <script src="utils.js"></script>
+  <script src="ui.js"></script>
   <script src="announcements.js"></script>
   <script src="programme.js"></script>
   <script src="unibo-data.js"></script>
-  <script src="timetable.js"></script>
-  <script src="exams.js"></script>
-  <script src="calendar.js"></script>
+  <script src="notes-data.js"></script>
+  <script src="notes-progress.js"></script>
+  <script src="dashboard.js"></script>
 
 </body>
 </html>

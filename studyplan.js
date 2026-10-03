@@ -15,11 +15,14 @@ const planSummaryBox = document.getElementById("plan-summary");
 
 // ----- Saving -----
 
-function updatePlan(change) {
+function updatePlan(change, message = "Plan saved on this device ✓") {
+  const y = window.scrollY;
   change(planPage.plan);
   planPage.plan.saved = true;
   savePlan(planPage.plan);
   render();
+  window.scrollTo(0, y); // keep the place on the page
+  if (typeof toast === "function") toast(message);
 }
 
 // ----- Small pieces -----
@@ -56,7 +59,7 @@ function statusSelect(course) {
   select.addEventListener("change", () => updatePlan((plan) => {
     if (select.value) plan.statuses[course.code] = select.value;
     else delete plan.statuses[course.code];
-  }));
+  }, `${course.name}: ${COURSE_STATUS_LABELS[select.value] || "Not started"} ✓`));
   label.appendChild(select);
   return label;
 }
@@ -387,6 +390,7 @@ async function initStudyPlan() {
     document.getElementById("plan-reset").addEventListener("click", () => {
       if (!confirm("Reset your study plan on this device? Your choices and course statuses will be cleared.")) return;
       resetPlan();
+      if (typeof toast === "function") toast("Your plan was reset");
       planPage.plan = loadPlan(planPage.programme);
       planPage.view = "choose";
       render();

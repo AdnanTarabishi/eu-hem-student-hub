@@ -86,14 +86,22 @@ function reviewPoints(review) {
 // Course and module facts come from content/programme.json (the one shared data file).
 // Student content for a module lives in content/modules/<module-id>/ (all files optional).
 
+// content/index.json lists which files each module has (built by scripts/build-content-index.js),
+// so only existing files are requested. Without it, every file is tried.
+let contentIndexPromise = null;
+function loadContentIndex(read) {
+  contentIndexPromise = contentIndexPromise || readJson(read, CONTENT_ROOT + "index.json", null).catch(() => null);
+  return contentIndexPromise;
+}
+
 // Loads the student content of one module. Missing files simply mean "no items of that type".
-async function loadModuleContent(moduleInfo, courseId, read = fetchText) {
+async function loadModuleContent(moduleInfo, courseId, read = fetchText, useIndex = true) {
   const folder = `${CONTENT_ROOT}modules/${moduleInfo.id}/`;
+  const index = useIndex ? await loadContentIndex(read) : null;
+  const has = (file) => !index || (index.modules[moduleInfo.id] || []).includes(file);
+  const load = (file) => (has(file) ? readJson(read, folder + file, []) : Promise.resolve([]));
   const [topics, flashcards, questions, resources] = await Promise.all([
-    readJson(read, folder + "topics.json", []),
-    readJson(read, folder + "flashcards.json", []),
-    readJson(read, folder + "questions.json", []),
-    readJson(read, folder + "resources.json", []),
+    load("topics.json"), load("flashcards.json"), load("questions.json"), load("resources.json"),
   ]);
   return { id: moduleInfo.id, courseId, folder, info: moduleInfo, topics, flashcards, questions, resources };
 }
@@ -268,8 +276,9 @@ function saveButton(itemId) {
     button.title = saved ? "Remove from My Study List" : "Add to My Study List";
   };
   button.addEventListener("click", () => {
-    toggleSaved(itemId);
+    const saved = toggleSaved(itemId);
     update();
+    if (typeof toast === "function") toast(saved ? "Saved to My Study List ✓" : "Removed from My Study List");
   });
   update();
   return button;

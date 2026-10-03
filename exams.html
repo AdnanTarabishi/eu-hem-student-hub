@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exams – EU-HEM Student Hub</title>
+  <meta name="description" content="Upcoming 1st-year EU-HEM exams, live from UniBo, with registration status and countdowns.">
+  <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <meta name="theme-color" content="#1f4e79">
+  <script src="theme.js"></script>
+</head>
+<body class="wide-page">
+
+  <header class="site-header">
+    <div class="container">
+      <p class="site-title"><a href="index.html">EU-HEM Student Hub</a></p>
+      <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
+      <!-- site-nav.js builds the menu here (defined once for all pages) -->
+      <nav class="site-nav" id="site-nav" data-current="exams" aria-label="Main menu"></nav>
+      <script src="site-nav.js"></script>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="page-intro">
+      <div>
+        <h1><svg class="icon" aria-hidden="true"><use href="icons.svg#exams"></use></svg> Exams &amp; Registration</h1>
+        <p>Upcoming 1st-year exams, loaded live from the
+          <a id="exams-source" href="https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates" target="_blank" rel="noopener">official UniBo exam dates</a>.
+          Register on <a href="https://almaesami.unibo.it/almaesami/welcome.htm" target="_blank" rel="noopener">AlmaEsami</a> or the myUniBo app.</p>
+      </div>
+    </section>
+
+    <!-- Registrations open right now (exams.js) -->
+    <div id="open-registrations"></div>
+
+    <section class="card">
+      <div class="toolbar">
+        <div class="toolbar-filters schedule-filters">
+          <label>Course
+            <select id="exam-course-filter"><option value="">All courses</option></select>
+          </label>
+        </div>
+      </div>
+      <p id="exam-status" class="schedule-meta" aria-live="polite"></p>
+      <div id="exam-list"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>EU-HEM Student Hub &middot; Unofficial student project</p>
+    </div>
+  </footer>
+
+  <script src="utils.js"></script>
+  <script src="ui.js"></script>
+  <script src="announcements.js"></script>
+  <script src="programme.js"></script>
+  <script src="unibo-data.js"></script>
+  <script src="exams.js"></script>
+
+</body>
+</html>
