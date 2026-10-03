@@ -62,6 +62,7 @@
     else header.prepend(button);
   }
 
+  window.addThemeToggle = addToggle; // site-nav.js calls this right after building the header
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", addToggle);
   else addToggle();
 })();

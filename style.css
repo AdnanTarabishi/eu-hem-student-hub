@@ -4247,3 +4247,25 @@ details > summary {
 .menu-link {
   white-space: nowrap;
 }
+
+/* Keep the footer below the screen while the page content loads, so nothing jumps */
+main.container {
+  min-height: calc(100vh - 160px);
+}
+
+/* Narrow phones: the Menu button shows only its icon, so the header stays on one row */
+@media (max-width: 400px) {
+  .header-actions .menu-toggle {
+    width: 36px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .menu-toggle-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+}

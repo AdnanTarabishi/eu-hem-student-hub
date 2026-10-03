@@ -187,7 +187,10 @@ function announcementCard(announcement, today, compact) {
 
   const footer = createElement("div", "announcement-footer");
   if (announcement.link) {
-    const readMore = createElement("a", "read-more", "Read more ↗");
+    const readMore = createElement("a", "read-more", "Read more");
+    // Screen readers hear which announcement the link is about, and that it opens a new tab
+    readMore.appendChild(createElement("span", "visually-hidden", ` about “${announcement.title}” (opens in a new tab)`));
+    readMore.appendChild(document.createTextNode(" ↗"));
     readMore.href = announcement.link;
     readMore.target = "_blank";
     readMore.rel = "noopener";
@@ -208,8 +211,8 @@ function showUrgentBanner(active) {
   banner.setAttribute("role", "alert");
   const inner = createElement("div", "container");
   inner.appendChild(createElement("strong", null, IS_DEMO_ANNOUNCEMENTS ? "⚠ Urgent (demo): " : "⚠ Urgent: "));
-  inner.appendChild(document.createTextNode(newest.title + " "));
-  const link = createElement("a", null, "Read more");
+  // The title itself is the link (clearer than "Read more", also for screen readers)
+  const link = createElement("a", null, newest.title + " →");
   link.href = "announcements.html#" + newest.id;
   inner.appendChild(link);
   if (urgent.length > 1) inner.appendChild(document.createTextNode(` (+${urgent.length - 1} more)`));

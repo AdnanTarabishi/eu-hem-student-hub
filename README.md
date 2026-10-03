@@ -5,15 +5,18 @@ A free, volunteer website for students of the EU-HEM master's program (European 
 **Live site:** https://adnantarabishi.github.io/eu-hem-student-hub/
 
 ## What's on it
+- **Home dashboard:** today's classes (now / next), the next exam with a countdown, your plan's progress and the latest announcements, plus a 5-step welcome checklist for new visitors
 - **Study Plan & Progress:** plan your courses with the official rules (CFU, required and optional groups), track each course (Studying → Exam booked → Passed) and see a timeline. A planning tool only: it does not submit anything.
-- 1st-year class timetable, loaded live from the official UniBo timetable, with a "My courses only" switch
-- 1st-year exam dates with countdown and registration status, loaded live from the official UniBo exam dates page
+- **Timetable** (`timetable.html`): 1st-year classes loaded live from the official UniBo timetable, in a Week or List view, with "My courses only", room map links and "add this class to my calendar"
+- **Exams** (`exams.html`): 1st-year exam dates with countdown and registration status (opens / open / closed), loaded live from the official UniBo exam dates page
 - Calendar subscription (Google, Apple, Outlook): one calendar with every course, or one with exactly your study plan
 - One page per course: Overview, Schedule, Exam, Topics, Key Concepts, Practice, Resources
 - Notes & Resources: student-made notes, flashcards, practice questions and a shared glossary (pilot: Fundamentals in Health Economics)
 - City guide for Bologna (housing, transport, healthcare, documents, study places and more)
 - Students directory, currently a **demo with fictional data** (`data/sample-students.csv`)
 - Useful links, including Virtuale for official course materials
+- **Search the whole site** with the 🔍 button, Ctrl+K (⌘K on Mac) or `/`
+- **Installable app that works offline** (on phones: "Install app" / "Add to Home Screen")
 
 ## Disclaimer
 This is an **unofficial student project**. It is not affiliated with or endorsed by the University of Bologna or any partner university. Always check official university sources for authoritative information.
@@ -33,9 +36,25 @@ calendar plus one calendar per possible study plan. To rebuild them yourself:
 `node scripts/build-calendar.js` (needs Node.js 18 or newer).
 
 **Saved in the browser only (localStorage):** study plan choices and statuses, Notes progress,
-My Study List, theme. Nothing is sent anywhere.
+My Study List, theme, timetable view, welcome checklist. Nothing is sent anywhere.
 
-The main menu is defined once in `site-nav.js`.
+The header, main menu and footer are drawn on every page by `site-nav.js`.
+
+**Design system:** colours, sizes, corners and shadows are variables at the top of `style.css`
+(light and dark mode). Font: Inter, stored in `fonts/` (no Google Fonts, so no visitor data goes to Google).
+Icons: `icons.svg` (from Lucide), used as `<svg class="icon"><use href="icons.svg#calendar"></use></svg>`.
+Shared helpers (toasts, skeletons, add-to-calendar files, map links) are in `ui.js`.
+Check colour contrast (WCAG AA, light and dark): `node scripts/check-contrast.js`.
+
+**App and offline:** `manifest.webmanifest` (name, icons in `img/`) makes the site installable;
+`sw.js` (service worker) keeps copies of the site files, and of the data for offline use;
+`pwa.js` handles installing, the "Update available" message and the offline banner.
+When you add a new page or script, add it to `SITE_FILES` in `sw.js`.
+
+**After changing any .html, .css or .js file, run `node scripts/stamp-versions.js`.**
+It adds `?v=…` fingerprints to the links in every page and updates the version in `sw.js`,
+so visitors get the new files at once (and installed apps show "Update available").
+`check-content.js` warns when you forgot.
 
 ## Notes & Resources
 Study content (notes, flashcards, questions, concepts, resources) lives in `content/modules/`

@@ -59,16 +59,6 @@ function siteIcon(name, className = "icon") {
     return element;
   };
 
-  // --- Skip link + a target for it ---
-  const main = document.querySelector("main");
-  if (main) {
-    main.id = main.id || "main";
-    main.tabIndex = -1;
-    const skip = make("a", "skip-link", "Skip to content");
-    skip.href = "#" + main.id;
-    document.body.prepend(skip);
-  }
-
   // --- Header bar: [site name + tagline] [menu] [search · theme · menu button] ---
   const bar = make("div", "header-bar");
   const brand = make("div", "brand");
@@ -89,7 +79,7 @@ function siteIcon(name, className = "icon") {
   toggle.type = "button";
   toggle.setAttribute("aria-expanded", "false");
   toggle.setAttribute("aria-controls", "site-menu");
-  const toggleLabel = make("span", null, "Menu");
+  const toggleLabel = make("span", "menu-toggle-label", "Menu");
   toggle.appendChild(siteIcon("menu"));
   toggle.appendChild(toggleLabel);
 
@@ -187,9 +177,23 @@ function siteIcon(name, className = "icon") {
     onScroll();
   }
 
+  // The light/dark button (theme.js) goes in now, so the header doesn't change size after the first paint
+  if (typeof window.addThemeToggle === "function") window.addThemeToggle();
+
+  // --- Skip link + a target for it ---
+  // This script runs in the header, before <main> and the footer exist, so the skip link
+  // and the footer are added as soon as the whole page has been read (DOMContentLoaded).
+  function addSkipLink() {
+    const main = document.querySelector("main");
+    if (!main) return;
+    main.id = main.id || "main";
+    main.tabIndex = -1;
+    const skip = make("a", "skip-link", "Skip to content");
+    skip.href = "#" + main.id;
+    document.body.prepend(skip);
+  }
+
   // --- Footer ---
-  // This script runs in the header, before the footer exists, so the footer is built
-  // as soon as the whole page has been read (DOMContentLoaded).
   function buildFooter() {
     const footer = document.querySelector(".site-footer .container");
     if (!footer) return;
@@ -235,6 +239,10 @@ function siteIcon(name, className = "icon") {
     footer.appendChild(make("p", "footer-bottom",
       "Made by EU-HEM students, for EU-HEM students. Your study plan and progress are saved only on your device."));
   }
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", buildFooter);
-  else buildFooter();
+  const afterLoad = () => {
+    addSkipLink();
+    buildFooter();
+  };
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", afterLoad);
+  else afterLoad();
 })();

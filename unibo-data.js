@@ -231,7 +231,7 @@ function sessionActions(session, index) {
   const row = createElement("div", "item-actions");
   if (session.room) row.appendChild(iconButton("Map", "map-pin", { href: mapUrl(session.room), ariaLabel: `Map: ${session.room}` }));
   row.appendChild(iconButton("Add to calendar", "plus", {
-    ariaLabel: `Add ${sessionLabel(session, index)} on ${session.dateKey} to your calendar`,
+    ariaLabel: `Add to calendar: ${sessionLabel(session, index)}, ${session.dateKey}`, // starts with the visible words
     onClick: () => downloadEvent({
       uid: `class-${session.moduleCode}-${session.start}`,
       title: sessionLabel(session, index),
@@ -256,7 +256,7 @@ function examActions(exam) {
   if (exam.place) row.appendChild(iconButton("Map", "map-pin", { href: mapUrl(`${exam.place}, Bologna`), ariaLabel: `Map: ${exam.place}` }));
   const start = `${exam.dateKey}T${exam.time || "09:00"}:00`;
   row.appendChild(iconButton("Add exam", "plus", {
-    ariaLabel: `Add the ${exam.title} exam to your calendar`,
+    ariaLabel: `Add exam: ${exam.title}`,
     onClick: () => downloadEvent({
       uid: `exam-${exam.dateKey}-${exam.time}-${exam.place}`,
       title: `Exam: ${exam.title}`,
@@ -268,7 +268,7 @@ function examActions(exam) {
   }));
   if (exam.registrationCloses && exam.registrationCloses >= todayKey()) {
     row.appendChild(iconButton("Registration reminder", "bell", {
-      ariaLabel: `Add a reminder for the last day to register for ${exam.title}`,
+      ariaLabel: `Registration reminder: last day to register for ${exam.title}`,
       onClick: () => {
         const next = new Date(exam.registrationCloses + "T12:00:00");
         next.setDate(next.getDate() + 1);

@@ -211,6 +211,12 @@ async function checkProgramme() {
     error("content/index.json", "is out of date (a content file was added or removed). Run: node scripts/build-content-index.js");
   }
 
+  // ?v= stamps on CSS/JS links and the service worker version (see scripts/stamp-versions.js)
+  // (skipped in a copy of only the content, which has no site files)
+  const hasSite = fs.existsSync(path.join(ROOT, "sw.js")) && fs.existsSync(path.join(__dirname, "stamp-versions.js"));
+  const stale = hasSite ? require("./stamp-versions.js").plannedChanges().map((c) => c.file) : [];
+  if (stale.length) warn(stale.join(", "), "version stamps are out of date, so visitors may get old files. Run: node scripts/stamp-versions.js");
+
   // Content folders that no module uses would be invisible on the site
   const folder = path.join(ROOT, "content", "modules");
   if (fs.existsSync(folder)) {

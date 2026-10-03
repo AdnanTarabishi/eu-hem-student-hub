@@ -150,16 +150,23 @@ function openWelcomeFromLink() {
 }
 
 async function initWelcome() {
-  try {
-    const programme = await getProgramme();
-    welcome.planSaved = loadPlan(programme).saved;
-  } catch (error) {
-    console.error("Welcome:", error);
-  }
+  // Draw at once (a quick guess: is a plan saved in this browser?), so the page doesn't wait
+  welcome.planSaved = !!readStorage(PLAN_KEY, null);
   // Not finished yet at the start of this visit: finishing now shows "You're all set" instead of vanishing
   welcome.celebrate = !setupProgress(loadSetup(), welcome.planSaved, runningAsApp()).complete;
   renderWelcome();
   openWelcomeFromLink();
+  // Then check properly (the saved plan must belong to the current semester)
+  try {
+    const programme = await getProgramme();
+    const saved = loadPlan(programme).saved;
+    if (saved !== welcome.planSaved) {
+      welcome.planSaved = saved;
+      renderWelcome();
+    }
+  } catch (error) {
+    console.error("Welcome:", error);
+  }
   document.addEventListener("setup-change", renderWelcome);
   window.addEventListener("hashchange", openWelcomeFromLink);
   // A plan saved in another tab, or a step ticked there
