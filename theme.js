@@ -52,6 +52,7 @@
         // storage blocked: the choice lasts until the page is closed
       }
       update();
+      if (typeof markSetupDone === "function") markSetupDone("theme"); // setup checklist (ui.js)
     });
     // If the device switches theme and the visitor hasn't chosen, update the icon
     if (window.matchMedia) window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", update);

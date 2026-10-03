@@ -132,6 +132,32 @@ function iconButton(label, icon, options = {}) {
   return element;
 }
 
+// ----- Setup checklist (shown on the home page by onboarding.js) -----
+// Any page can tick a step, e.g. markSetupDone("search") when search is used.
+// Steps: plan, calendar, install, search, theme. Saved in this browser only.
+
+const SETUP_KEY = "euhem-onboarding-v1";
+
+function loadSetup() {
+  const stored = readStorage(SETUP_KEY, null);
+  return {
+    done: stored && typeof stored.done === "object" && stored.done ? stored.done : {},
+    hidden: !!(stored && stored.hidden),
+  };
+}
+
+function saveSetup(state) {
+  writeStorage(SETUP_KEY, state);
+  document.dispatchEvent(new CustomEvent("setup-change"));
+}
+
+function markSetupDone(step, value = true) {
+  const state = loadSetup();
+  if (state.done[step] === value) return;
+  state.done[step] = value;
+  saveSetup(state);
+}
+
 // ----- Back to top -----
 
 (function backToTop() {

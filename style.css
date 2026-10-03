@@ -4091,3 +4091,136 @@ details > summary {
     display: none;
   }
 }
+
+/* Text for screen readers only (not shown on screen) */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ===== Welcome & setup checklist (onboarding.js) ===== */
+.welcome-card {
+  border-top: 4px solid var(--color-accent);
+  animation: fade-in 0.25s var(--ease);
+}
+
+.welcome-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.welcome-head h2 {
+  margin: 0 0 4px;
+}
+
+.welcome-sub {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.welcome-hide {
+  flex: none;
+}
+
+.welcome-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0 8px;
+}
+
+.welcome-progress .progress-bar {
+  flex: 1;
+}
+
+.welcome-count {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.setup-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.setup-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--color-divider);
+}
+
+.setup-check {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--color-input-border);
+  border-radius: 50%;
+  color: var(--color-on-primary);
+  transition: background 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.setup-check .icon {
+  width: 16px;
+  height: 16px;
+}
+
+.setup-step.is-done .setup-check {
+  background: #2e7d32;
+  border-color: #2e7d32;
+  animation: pop 0.3s var(--ease);
+}
+
+.setup-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.setup-text strong {
+  display: block;
+}
+
+.setup-sub {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.setup-step.is-done strong {
+  color: var(--color-muted);
+  text-decoration: line-through;
+  text-decoration-color: var(--color-faint);
+}
+
+.setup-actions {
+  display: flex;
+  flex: none;
+  gap: 6px;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.6); }
+  70% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+@media (max-width: 600px) {
+  .setup-step {
+    flex-wrap: wrap;
+  }
+  .setup-actions {
+    width: 100%;
+    padding-left: 38px;
+  }
+}

@@ -188,8 +188,11 @@ function siteIcon(name, className = "icon") {
   }
 
   // --- Footer ---
-  const footer = document.querySelector(".site-footer .container");
-  if (footer) {
+  // This script runs in the header, before the footer exists, so the footer is built
+  // as soon as the whole page has been read (DOMContentLoaded).
+  function buildFooter() {
+    const footer = document.querySelector(".site-footer .container");
+    if (!footer) return;
     footer.textContent = "";
     const grid = make("div", "footer-grid");
     const brandBox = make("div", "footer-brand");
@@ -232,4 +235,6 @@ function siteIcon(name, className = "icon") {
     footer.appendChild(make("p", "footer-bottom",
       "Made by EU-HEM students, for EU-HEM students. Your study plan and progress are saved only on your device."));
   }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", buildFooter);
+  else buildFooter();
 })();

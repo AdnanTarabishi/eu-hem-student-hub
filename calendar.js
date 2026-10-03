@@ -69,3 +69,10 @@ document.getElementById("calendar-copy").addEventListener("click", async () => {
 });
 
 setUpCalendarLinks();
+
+// Subscribing ticks "Subscribe to your calendar" in the home page setup checklist
+for (const id of ["calendar-google", "calendar-apple", "calendar-outlook", "calendar-copy"]) {
+  document.getElementById(id).addEventListener("click", () => {
+    if (typeof markSetupDone === "function") markSetupDone("calendar");
+  });
+}
