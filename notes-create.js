@@ -6,14 +6,14 @@
 const createApp = document.getElementById("create-app");
 
 const ITEM_KINDS = [
-  { key: "flashcard", label: "Flashcard", file: (c) => `content/courses/${c}/flashcards.json`, marker: "fc", list: "flashcards" },
-  { key: "question", label: "Question", file: (c) => `content/courses/${c}/questions.json`, marker: "q", list: "questions" },
+  { key: "flashcard", label: "Flashcard", file: (m) => `content/modules/${m}/flashcards.json`, marker: "fc", list: "flashcards" },
+  { key: "question", label: "Question", file: (m) => `content/modules/${m}/questions.json`, marker: "q", list: "questions" },
   { key: "concept", label: "Key concept", file: () => "content/concepts.json" },
-  { key: "resource", label: "Resource", file: (c) => `content/courses/${c}/resources.json`, marker: "r", list: "resources" },
+  { key: "resource", label: "Resource", file: (m) => `content/modules/${m}/resources.json`, marker: "r", list: "resources" },
 ];
 
 let createData = null;
-const form = { kind: "flashcard", course: "", values: {} };
+const form = { kind: "flashcard", course: "", module: "", values: {} };
 
 // "Moral hazard" -> "moral-hazard"
 function slugify(text) {
@@ -21,9 +21,9 @@ function slugify(text) {
 }
 
 // Next free number for a course's flashcards/questions/resources: ".fc.007"
-function nextId(course, kind) {
-  const prefix = `${course.id}.${kind.marker}.`;
-  const numbers = course[kind.list]
+function nextId(module, kind) {
+  const prefix = `${module.id}.${kind.marker}.`;
+  const numbers = module[kind.list]
     .map((item) => item.id.startsWith(prefix) ? parseInt(item.id.slice(prefix.length), 10) : NaN)
     .filter((n) => !isNaN(n));
   const next = (numbers.length ? Math.max(...numbers) : 0) + 1;
@@ -34,7 +34,7 @@ function nextId(course, kind) {
 
 function buildItem() {
   const v = form.values;
-  const course = createData.courses.find((c) => c.id === form.course);
+  const course = createData.modules.find((m) => m.id === form.module);
   const kind = ITEM_KINDS.find((k) => k.key === form.kind);
   const clean = (text) => (text || "").trim();
 
@@ -143,7 +143,7 @@ const previewBox = createElement("div", "create-preview");
 const resultBox = createElement("div", "create-result");
 
 function topicOptions(optional) {
-  const course = createData.courses.find((c) => c.id === form.course);
+  const course = createData.modules.find((m) => m.id === form.module);
   const options = course.topics.map((t) => [t.id, t.title]);
   return optional ? [["", "(no specific topic)"], ...options] : options;
 }
@@ -162,13 +162,23 @@ function drawForm() {
   formBox.appendChild(kinds);
 
   formBox.appendChild(createElement("h3", null, "2. Course and topic"));
-  const courses = createData.courses.filter((c) => c.topics.length).map((c) => [c.id, c.course.title]);
+  const courses = createData.courses.filter((c) => c.topics.length).map((c) => [c.id, c.info.name]);
   if (!courses.some(([id]) => id === form.course)) form.course = courses[0][0];
   const courseSelect = createElement("select");
   for (const [id, title] of courses) courseSelect.appendChild(new Option(title, id));
   courseSelect.value = form.course;
-  courseSelect.addEventListener("change", () => { form.course = courseSelect.value; form.values.topic = ""; form.values.topics = []; drawForm(); });
+  courseSelect.addEventListener("change", () => { form.course = courseSelect.value; form.module = ""; form.values.topic = ""; form.values.topics = []; drawForm(); });
   formBox.appendChild(field("Course", courseSelect));
+  // Integrated courses have several modules: items belong to a module
+  const modules = createData.courses.find((c) => c.id === form.course).modules.filter((m) => m.topics.length);
+  if (!modules.some((m) => m.id === form.module)) form.module = modules[0].id;
+  if (modules.length > 1) {
+    const moduleSelect = createElement("select");
+    for (const m of modules) moduleSelect.appendChild(new Option(`${m.info.name} (${m.info.code})`, m.id));
+    moduleSelect.value = form.module;
+    moduleSelect.addEventListener("change", () => { form.module = moduleSelect.value; form.values.topic = ""; form.values.topics = []; drawForm(); });
+    formBox.appendChild(field("Module", moduleSelect));
+  }
 
   if (form.kind === "concept") {
     const box = createElement("fieldset", "create-topics");
@@ -265,7 +275,7 @@ function update() {
   previewBox.innerHTML = "";
   previewBox.appendChild(createElement("h3", null, "Preview"));
   const ctx = {
-    course: createData.courses.find((c) => c.id === form.course),
+    course: createData.modules.find((m) => m.id === form.module),
     topicLink: (id) => createElement("span", null, (topicById(id, createData) || { topic: { title: id || "—" } }).topic.title),
   };
   if (form.kind === "flashcard") {
@@ -309,7 +319,7 @@ function update() {
   const json = JSON.stringify(item, null, 2).split("\n").map((line) => "  " + line).join("\n");
   resultBox.appendChild(createElement("p", "answer-feedback is-right", "✔ Ready! Your item follows the content format."));
   const steps = createElement("ol", "create-steps");
-  steps.appendChild(createElement("li", null, `Open ${kind.file(form.course)}.`));
+  steps.appendChild(createElement("li", null, `Open ${kind.file(form.module)}.`));
   steps.appendChild(createElement("li", null, "Put a comma after the last } in the file (before the final ])."));
   steps.appendChild(createElement("li", null, "Paste the text below before the final ], save, and run: node scripts/check-content.js"));
   resultBox.appendChild(steps);
@@ -339,7 +349,12 @@ async function initCreate() {
     createData = await loadAll();
     const params = new URLSearchParams(window.location.search);
     if (ITEM_KINDS.some((k) => k.key === params.get("type"))) form.kind = params.get("type");
-    if (createData.courses.some((c) => c.id === params.get("course") && c.topics.length)) form.course = params.get("course");
+    // Accepts a course ID, or a module ID from older links
+    const wanted = params.get("course") || "";
+    const fromModule = createData.modules.find((m) => m.id === wanted);
+    const courseId = fromModule ? fromModule.courseId : wanted;
+    if (createData.courses.some((c) => c.id === courseId && c.topics.length)) form.course = courseId;
+    if (fromModule && fromModule.topics.length) form.module = fromModule.id;
     createApp.innerHTML = "";
     const layout = createElement("div", "create-layout");
     layout.appendChild(formBox);

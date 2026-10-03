@@ -1,0 +1,430 @@
+{
+  "schemaVersion": 1,
+  "programme": {
+    "code": "6759",
+    "name": "Health Economics and Management",
+    "university": "University of Bologna",
+    "virtualeUrl": "https://virtuale.unibo.it",
+    "studentsOnlineUrl": "https://studenti.unibo.it"
+  },
+  "cohorts": [
+    {
+      "id": "2026-27",
+      "label": "2026/27",
+      "lastChecked": "2026-10-03",
+      "sources": {
+        "structureDiagram": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/course-structure-diagram/piano/2026/6759/000/000/2026",
+        "timetableFeed": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/timetable/@@orario_reale_json?anno=1",
+        "examDates": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates"
+      },
+      "studyPlanSubmission": {
+        "url": "https://studenti.unibo.it",
+        "deadline": null,
+        "deadlineNote": "PLACEHOLDER: add the official study plan deadline here (from the UniBo course website)."
+      },
+      "terms": [
+        {
+          "id": "y1-s1",
+          "year": 1,
+          "semester": 1,
+          "label": "Semester 1",
+          "university": "University of Bologna",
+          "requiredCfu": 30,
+          "cycles": [
+            {
+              "id": "1",
+              "label": "Cycle 1",
+              "start": "2026-09-07",
+              "end": "2026-10-24"
+            },
+            {
+              "id": "2",
+              "label": "Cycle 2",
+              "start": "2026-11-09",
+              "end": "2026-12-16"
+            }
+          ],
+          "groups": [
+            {
+              "id": "crash",
+              "label": "Crash courses",
+              "badge": "Optional",
+              "kind": "optional",
+              "min": 0,
+              "max": 2,
+              "countsTowardRequired": false,
+              "courses": [
+                "B1076",
+                "97484"
+              ]
+            },
+            {
+              "id": "core",
+              "label": "Core courses",
+              "badge": "Required",
+              "kind": "required",
+              "courses": [
+                "97177",
+                "96500"
+              ]
+            },
+            {
+              "id": "quant",
+              "label": "Quantitative methods",
+              "badge": "Required · choose one",
+              "kind": "choose-one",
+              "courses": [
+                "96496",
+                "96525"
+              ],
+              "advice": null
+            },
+            {
+              "id": "elective",
+              "label": "Elective",
+              "badge": "Elective",
+              "kind": "choose-one",
+              "courses": [
+                "C8393",
+                "70125"
+              ],
+              "advice": null
+            }
+          ],
+          "courses": [
+            {
+              "code": "B1076",
+              "id": "intro-economics",
+              "name": "Introduction to Economics",
+              "integrated": false,
+              "cfu": 3,
+              "type": "D",
+              "icon": "📈",
+              "color": "#00897b",
+              "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518755",
+              "modules": [
+                {
+                  "code": "B1076",
+                  "id": "intro-economics",
+                  "name": "Introduction to Economics",
+                  "cfu": 3,
+                  "cycle": "1",
+                  "ssd": "ECON-01/A",
+                  "professors": [
+                    "Adelajda Matuka"
+                  ],
+                  "teachingStart": "2026-09-07",
+                  "teachingEnd": "2026-09-22",
+                  "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518755",
+                  "virtualeUrl": "https://virtuale.unibo.it",
+                  "description": "A short refresher on the core ideas of economics: how people and firms make choices, how markets reach equilibrium, and when markets fail.",
+                  "assessment": "No final exam. Attendance and active participation are encouraged.",
+                  "textbooks": [
+                    "Mankiw, N. G. Principles of Economics. Cengage Learning (any recent edition)."
+                  ]
+                }
+              ]
+            },
+            {
+              "code": "97484",
+              "id": "intro-management",
+              "name": "Introduction to Management",
+              "integrated": false,
+              "cfu": 3,
+              "type": "D",
+              "icon": "💼",
+              "color": "#7b1fa2",
+              "officialUrl": null,
+              "modules": [
+                {
+                  "code": "97484",
+                  "id": "intro-management",
+                  "name": "Introduction to Management",
+                  "cfu": 3,
+                  "cycle": "1",
+                  "ssd": "ECON-08/A",
+                  "professors": [
+                    "Siegfried Walch"
+                  ],
+                  "teachingStart": "2026-09-07",
+                  "teachingEnd": "2026-09-11",
+                  "officialUrl": null,
+                  "virtualeUrl": "https://virtuale.unibo.it",
+                  "description": "A short introductory (crash) course on management. The official course page hasn't been published yet.",
+                  "assessment": "Not published yet. Check the official course structure.",
+                  "textbooks": []
+                }
+              ]
+            },
+            {
+              "code": "97177",
+              "id": "fund-health-econ-management",
+              "name": "Fundamental in Health Economics and Management",
+              "integrated": true,
+              "cfu": 10,
+              "type": "B",
+              "icon": "🩺",
+              "color": "#2e7d32",
+              "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue?codiceMateria=97177&annoAccademico=2026&codiceCorso=6759&single=True&search=True",
+              "modules": [
+                {
+                  "code": "79060",
+                  "id": "fund-health-economics",
+                  "name": "Fundamentals in Health Economics",
+                  "cfu": 5,
+                  "cycle": "1",
+                  "ssd": "ECON-01/A",
+                  "professors": [
+                    "Daniele Fabbri"
+                  ],
+                  "teachingStart": "2026-09-16",
+                  "teachingEnd": "2026-10-22",
+                  "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518742",
+                  "virtualeUrl": "https://virtuale.unibo.it",
+                  "description": "How economists analyse health and health care: why these markets are special, where they fail, how people demand care and insurance, and how governments and health systems respond.",
+                  "assessment": "Closed-book written exam, 90 minutes. Grades on the 18–30 scale. More details are given in class.",
+                  "textbooks": [
+                    "Bhattacharya, J., Hyde, T. & Tu, P. (2014). Health Economics. Palgrave Macmillan.",
+                    "Sloan, F. A. & Hsieh, C.-R. (2012). Health Economics. MIT Press.",
+                    "Folland, S., Goodman, A. C. & Stano, M. (2007). The Economics of Health and Health Care. Prentice Hall."
+                  ]
+                },
+                {
+                  "code": "87428",
+                  "id": "fund-healthcare-management",
+                  "name": "Fundamentals in Healthcare Management",
+                  "cfu": 5,
+                  "cycle": "2",
+                  "ssd": "ECON-07/A",
+                  "professors": [
+                    "Francesco Ciabuschi"
+                  ],
+                  "teachingStart": "2026-11-10",
+                  "teachingEnd": "2026-12-03",
+                  "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518743",
+                  "virtualeUrl": "https://virtuale.unibo.it",
+                  "description": "Core management ideas and tools applied to health, pharma and biotech organisations, taught through lectures and group case studies.",
+                  "assessment": "50% in-class work (cases and presentations) and 50% final written exam (multiple choice and open questions). For non-attending students the exam counts 100%.",
+                  "textbooks": [
+                    "Gomez-Mejia, L. R., Balkin, D. B. & Cardy, R. L. (2012). Management. McGraw-Hill.",
+                    "Collis, D. J. & Montgomery, C. A. (2005). Corporate Strategy: A Resource-Based Approach (2nd ed.). McGraw-Hill.",
+                    "Hill, C. W. Global Business Today (11th ed.). McGraw-Hill."
+                  ]
+                }
+              ]
+            },
+            {
+              "code": "96500",
+              "id": "right-to-health",
+              "name": "Our Right to Health: Needs, Resources and Society",
+              "integrated": false,
+              "cfu": 5,
+              "type": "B",
+              "icon": "⚖️",
+              "color": "#6d4c41",
+              "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518699",
+              "modules": [
+                {
+                  "code": "96500",
+                  "id": "right-to-health",
+                  "name": "Our Right to Health: Needs, Resources and Society",
+                  "cfu": 5,
+                  "cycle": "1",
+                  "ssd": "GIUR-03/A",
+                  "professors": [
+                    "Markus Frischhut"
+                  ],
+                  "teachingStart": "2026-10-08",
+                  "teachingEnd": "2026-10-23",
+                  "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518699",
+                  "virtualeUrl": "https://virtuale.unibo.it",
+                  "description": "An overview of health law with a focus on EU health law (economic freedoms, non-discrimination, human rights, values and ethics) and a comparison of Beveridge and Bismarck health systems.",
+                  "assessment": "On-site written exam with multiple-choice and essay questions, for attending and non-attending students. No AI during the exam.",
+                  "textbooks": [
+                    "Frischhut, M. (2026). What one should know about the European Union (EU): A quick introduction to EU law (5th ed.). NWV.",
+                    "Greer, S. L. et al. (2024). Everything you always wanted to know about European Union health policy but were afraid to ask (4th ed.)."
+                  ]
+                }
+              ]
+            },
+            {
+              "code": "96496",
+              "id": "fund-quant-methods",
+              "name": "Fundamentals of Quantitative Methods in Health and Healthcare",
+              "integrated": true,
+              "cfu": 10,
+              "type": "B",
+              "icon": "📊",
+              "color": "#5e35b1",
+              "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue?codiceMateria=96496&annoAccademico=2026&codiceCorso=6759&single=True&search=True",
+              "modules": [
+                {
+                  "code": "96498",
+                  "id": "fund-statistics",
+                  "name": "Fundamentals of Statistics for Healthcare",
+                  "cfu": 5,
+                  "cycle": "1",
+                  "ssd": "STAT-02/A",
+                  "professors": [
+                    "Sara Capacci"
+                  ],
+                  "teachingStart": "2026-09-14",
+                  "teachingEnd": "2026-10-21",
+                  "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518697",
+                  "virtualeUrl": "https://virtuale.unibo.it",
+                  "description": "The basics of statistical measurement and probability for health data: describing data, sampling, and a first look at inference. Practical sessions use Excel.",
+                  "assessment": "Computer-based written exam (90 minutes): multiple-choice/short questions, interpreting statistical output, and applied exercises on a dataset. A formula sheet and tables are provided.",
+                  "textbooks": [
+                    "Rosner, B. (2016). Fundamentals of Biostatistics. Cengage.",
+                    "Agresti, A. (2018). Statistical Methods for the Social Sciences (5th ed.). Pearson.",
+                    "Plichta Kellar, S. B. & Kelvin, E. A. (2013). Munro's Statistical Methods for Health Care Research. Wolters Kluwer."
+                  ]
+                },
+                {
+                  "code": "96499",
+                  "id": "fund-econometrics",
+                  "name": "Fundamentals of Econometrics",
+                  "cfu": 5,
+                  "cycle": "2",
+                  "ssd": "ECON-05/A",
+                  "professors": [
+                    "Elisabetta De Cao"
+                  ],
+                  "teachingStart": "2026-11-11",
+                  "teachingEnd": "2026-12-11",
+                  "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518698",
+                  "virtualeUrl": "https://virtuale.unibo.it",
+                  "description": "The main tools economists use for empirical work: regression models and strategies to identify causal effects, so you can read and critically assess applied research.",
+                  "assessment": "In-class quizzes, group problem sets and a final exam. Details on Virtuale. No AI during the final exam.",
+                  "textbooks": [
+                    "Wooldridge, J. M. (2019). Introductory Econometrics: A Modern Approach (7th ed.).",
+                    "Angrist, J. D. & Pischke, J.-S. (2014). Mastering 'Metrics: The Path from Cause to Effect. Princeton University Press."
+                  ]
+                }
+              ]
+            },
+            {
+              "code": "96525",
+              "id": "quant-methods",
+              "name": "Quantitative Methods in Health and Healthcare",
+              "integrated": true,
+              "cfu": 10,
+              "type": "B",
+              "icon": "🧮",
+              "color": "#3949ab",
+              "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue?codiceMateria=96525&annoAccademico=2026&codiceCorso=6759&single=True&search=True",
+              "modules": [
+                {
+                  "code": "74948",
+                  "id": "statistics",
+                  "name": "Statistics for Healthcare",
+                  "cfu": 5,
+                  "cycle": "1",
+                  "ssd": "STAT-02/A",
+                  "professors": [
+                    "Martin Forster"
+                  ],
+                  "teachingStart": "2026-09-14",
+                  "teachingEnd": "2026-10-20",
+                  "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518721",
+                  "virtualeUrl": "https://virtuale.unibo.it",
+                  "description": "Probability and statistics for analysing health data, from describing samples to hypothesis tests, plus a first introduction to regression and causal inference. Workshops use Stata.",
+                  "assessment": "Written exam at the end of the course. AI tools are not allowed.",
+                  "textbooks": [
+                    "Folland, S., Goodman, A. C. & Stano, M. The Economics of Health and Health Care, ch. 3 'Statistical Tools for Health Economics'.",
+                    "Bertsekas, D. & Tsitsiklis, J. (2008). Introduction to Probability, ch. 1. Athena Scientific.",
+                    "Altman, D. (1991). Practical Statistics for Medical Research. Chapman and Hall."
+                  ]
+                },
+                {
+                  "code": "32626",
+                  "id": "econometrics",
+                  "name": "Econometrics",
+                  "cfu": 5,
+                  "cycle": "2",
+                  "ssd": "ECON-05/A",
+                  "professors": [
+                    "Elisabetta De Cao"
+                  ],
+                  "teachingStart": "2026-11-09",
+                  "teachingEnd": "2026-12-14",
+                  "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518722",
+                  "virtualeUrl": "https://virtuale.unibo.it",
+                  "description": "The linear regression model for cross-section and panel data: when estimates can be read as causal, with hands-on practice on real data in Stata.",
+                  "assessment": "Quizzes, problem sets and a final exam. Details on Virtuale. No AI during the final exam.",
+                  "textbooks": [
+                    "Wooldridge, J. M. (2019). Introductory Econometrics: A Modern Approach (7th ed.), chapters 2–8."
+                  ]
+                }
+              ]
+            },
+            {
+              "code": "C8393",
+              "id": "health-systems",
+              "name": "Health Systems",
+              "integrated": false,
+              "cfu": 5,
+              "type": "C",
+              "icon": "🌍",
+              "color": "#ad1457",
+              "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/558081",
+              "modules": [
+                {
+                  "code": "C8393",
+                  "id": "health-systems",
+                  "name": "Health Systems",
+                  "cfu": 5,
+                  "cycle": "2",
+                  "ssd": "ECON-03/A",
+                  "professors": [
+                    "Rossella Verzulli"
+                  ],
+                  "teachingStart": "2026-11-10",
+                  "teachingEnd": "2026-12-15",
+                  "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/558081",
+                  "virtualeUrl": "https://virtuale.unibo.it",
+                  "description": "How health systems in OECD countries are organised, funded and reformed, compared side by side with their strengths and weaknesses.",
+                  "assessment": "Presentation of an assigned reading plus a final written exam with open questions (the exam is two thirds of the grade). Without the presentation, a longer exam counts 100%. No AI during the exam.",
+                  "textbooks": [
+                    "Toth, F. (2021). Comparative Health Systems: A New Framework. Cambridge University Press."
+                  ]
+                }
+              ]
+            },
+            {
+              "code": "70125",
+              "id": "international-law-health",
+              "name": "International Law and Health",
+              "integrated": false,
+              "cfu": 5,
+              "type": "B",
+              "icon": "🌐",
+              "color": "#455a64",
+              "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518666",
+              "modules": [
+                {
+                  "code": "70125",
+                  "id": "international-law-health",
+                  "name": "International Law and Health",
+                  "cfu": 5,
+                  "cycle": "2",
+                  "ssd": "GIUR-03/A",
+                  "professors": [
+                    "André den Exter"
+                  ],
+                  "teachingStart": "2026-11-13",
+                  "teachingEnd": "2026-12-12",
+                  "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518666",
+                  "virtualeUrl": "https://virtuale.unibo.it",
+                  "description": "The links between international law and public health: major health treaties and institutions (WHO, WTO, ILO, World Bank, UNAIDS) and how they shape health regulation and policy.",
+                  "assessment": "Not published yet. Check the official course page.",
+                  "textbooks": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

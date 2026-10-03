@@ -82,6 +82,137 @@ function allJsonFiles(dir) {
   });
 }
 
+const programmeRules = require("../programme.js");
+let courseCount = 0;
+
+function checkUrl(value, field, where) {
+  if (value === null || value === undefined || value === "") return;
+  if (typeof value !== "string" || !/^https:\/\//.test(value)) error(where, `"${field}" must start with https:// (or be null)`);
+}
+
+// Checks content/programme.json - the one shared course data file - and loads the content of
+// every module it lists. Returns the modules' content, for the checks below.
+async function checkProgramme() {
+  const file = "content/programme.json";
+  const programme = await data.readJson(readFromDisk, file, null);
+  if (!programme) {
+    error(file, "file is missing");
+    return [];
+  }
+  if (!Array.isArray(programme.cohorts) || programme.cohorts.length === 0) {
+    error(file, `needs at least one cohort in "cohorts"`);
+    return [];
+  }
+  const modules = [];
+  const codes = new Map();
+  const ids = new Map();
+  const unique = (map, key, where, what) => {
+    if (map.has(key)) error(where, `${what} "${key}" is used twice (also in ${map.get(key)})`);
+    else map.set(key, where);
+  };
+
+  for (const cohort of programme.cohorts) {
+    const cw = `${file} (cohort ${cohort.id})`;
+    requireText(cohort, "id", cw);
+    requireText(cohort, "label", cw);
+    checkDate(cohort.lastChecked, "lastChecked", cw);
+    for (const [name, url] of Object.entries(cohort.sources || {})) checkUrl(url, `sources.${name}`, cw);
+    const submission = cohort.studyPlanSubmission || {};
+    checkUrl(submission.url, "studyPlanSubmission.url", cw);
+    if (submission.deadline) checkDate(submission.deadline, "studyPlanSubmission.deadline", cw);
+    else warn(cw, `the study plan submission deadline is still a placeholder ("deadline": null)`);
+
+    for (const term of cohort.terms || []) {
+      const tw = `${file} (${cohort.id} / ${term.id})`;
+      const cycles = new Map((term.cycles || []).map((c) => [c.id, c]));
+      for (const cycle of term.cycles || []) {
+        checkDate(cycle.start, "start", `${tw} cycle ${cycle.id}`);
+        checkDate(cycle.end, "end", `${tw} cycle ${cycle.id}`);
+        if (cycle.start > cycle.end) error(`${tw} cycle ${cycle.id}`, `starts after it ends`);
+      }
+      const groups = term.groups || [];
+      for (const group of groups) {
+        const gw = `${tw} group "${group.id}"`;
+        if (!["required", "choose-one", "optional"].includes(group.kind)) error(gw, `"kind" must be required, choose-one or optional`);
+        for (const code of group.courses || []) {
+          if (!(term.courses || []).some((c) => c.code === code)) error(gw, `lists course "${code}", which isn't in this term's courses`);
+        }
+        if (group.kind === "optional" && (group.min ?? 0) > (group.max ?? Infinity)) error(gw, `"min" is larger than "max"`);
+      }
+
+      for (const course of term.courses || []) {
+        const where = `${tw} course ${course.code || "?"}`;
+        requireText(course, "code", where);
+        requireText(course, "name", where);
+        if (!ID_PATTERN.test(course.id || "")) error(where, `"id" must use lowercase letters, numbers and dashes`);
+        unique(codes, course.code, where, "Code");
+        unique(ids, course.id, where, "ID");
+        checkUrl(course.officialUrl, "officialUrl", where);
+        if (course.color !== undefined && !/^#[0-9a-fA-F]{6}$/.test(course.color)) error(where, `"color" must look like "#2e7d32"`);
+        const inGroups = groups.filter((g) => (g.courses || []).includes(course.code)).length;
+        if (inGroups === 0) error(where, `isn't in any study plan group`);
+        if (inGroups > 1) error(where, `is in more than one study plan group`);
+        if (!Array.isArray(course.modules) || course.modules.length === 0) {
+          error(where, `needs at least one module (a single-module course lists itself as its module)`);
+          continue;
+        }
+        if (course.integrated && course.modules.length < 2) warn(where, `is marked "integrated" but has only one module`);
+        const sum = course.modules.reduce((total, m) => total + (m.cfu || 0), 0);
+        if (sum !== course.cfu) error(where, `"cfu" is ${course.cfu} but its modules add up to ${sum}`);
+
+        for (const module of course.modules) {
+          const mw = `${where} module ${module.code || "?"}`;
+          requireText(module, "code", mw);
+          requireText(module, "name", mw);
+          if (module.code !== course.code) unique(codes, module.code, mw, "Code");
+          if (!ID_PATTERN.test(module.id || "")) error(mw, `"id" must use lowercase letters, numbers and dashes`);
+          if (module.id !== course.id) unique(ids, module.id, mw, "ID");
+          if (!Array.isArray(module.professors)) error(mw, `"professors" must be a list`);
+          checkUrl(module.officialUrl, "officialUrl", mw);
+          checkUrl(module.virtualeUrl, "virtualeUrl", mw);
+          checkDate(module.teachingStart, "teachingStart", mw);
+          checkDate(module.teachingEnd, "teachingEnd", mw);
+          if (module.teachingStart > module.teachingEnd) error(mw, `teaching starts after it ends`);
+          const cycle = cycles.get(module.cycle);
+          if (!cycle) {
+            error(mw, `"cycle" "${module.cycle}" isn't one of this term's cycles`);
+          } else if (module.teachingStart < cycle.start || module.teachingEnd > cycle.end) {
+            error(mw, `teaching dates ${module.teachingStart} to ${module.teachingEnd} are outside ${cycle.label} (${cycle.start} to ${cycle.end})`);
+          }
+          modules.push(await data.loadModuleContent(module, course.id, readFromDisk));
+        }
+        courseCount++;
+      }
+
+      // Every way of following the rules must add up to the required CFU
+      if (groups.length && term.courses) {
+        let plans = [programmeRules.emptyChoices(term)];
+        for (const group of groups) {
+          if (group.kind === "required") continue;
+          const options = group.kind === "choose-one" ? group.courses : [[]];
+          plans = plans.flatMap((plan) => options.map((option) => ({ ...plan, [group.id]: option })));
+        }
+        for (const plan of plans) {
+          const summary = programmeRules.planSummary(term, plan);
+          if (summary.requiredCfu !== term.requiredCfu) {
+            error(tw, `the plan ${programmeRules.planKey(term, plan)} adds up to ${summary.requiredCfu} CFU, not the required ${term.requiredCfu}`);
+          }
+        }
+        if (programmeRules.allPlanCombinations(term).length === 0) error(tw, `no valid study plan is possible with these rules`);
+      }
+    }
+  }
+
+  // Content folders that no module uses would be invisible on the site
+  const folder = path.join(ROOT, "content", "modules");
+  if (fs.existsSync(folder)) {
+    for (const name of fs.readdirSync(folder)) {
+      if (!modules.some((m) => m.id === name)) warn(`content/modules/${name}`, `no module in programme.json has the ID "${name}", so this content isn't shown`);
+    }
+  }
+  return modules;
+}
+
 async function main() {
   // --- Step 1: is every JSON file valid? (A broken file stops the rest from being checked.) ---
   for (const file of allJsonFiles(path.join(ROOT, "content"))) {
@@ -109,47 +240,12 @@ async function main() {
     }
   }
 
-  // --- courses ---
-  const courseIds = requireList(await data.readJson(readFromDisk, "content/courses.json", null) ?? [], "content/courses.json");
-  const courses = [];
-  for (const courseId of courseIds) {
-    const where = `content/courses/${courseId}`;
-    if (typeof courseId !== "string" || !ID_PATTERN.test(courseId)) {
-      error("content/courses.json", `"${courseId}" is not a valid course ID (lowercase letters, numbers and dashes)`);
-      continue;
-    }
-    registerId(courseId, "content/courses.json");
-    const course = await data.loadCourse(courseId, readFromDisk);
-    if (!course) {
-      error(where, "course.json is missing (every course in courses.json needs a folder with course.json)");
-      continue;
-    }
-    if (course.course.id !== courseId) error(`${where}/course.json`, `"id" is "${course.course.id}" but the folder is "${courseId}"`);
-    for (const field of ["title", "code", "description"]) requireText(course.course, field, `${where}/course.json`);
-    for (const field of ["officialUrl", "virtualeUrl"]) {
-      const url = course.course[field];
-      if (url && !/^https:\/\//.test(url)) error(`${where}/course.json`, `"${field}" must start with https://`);
-    }
-    const { teachingStart, teachingEnd, color, icon } = course.course;
-    checkDate(teachingStart, "teachingStart", `${where}/course.json`);
-    checkDate(teachingEnd, "teachingEnd", `${where}/course.json`);
-    if (Boolean(teachingStart) !== Boolean(teachingEnd)) {
-      error(`${where}/course.json`, `give both "teachingStart" and "teachingEnd", or neither`);
-    } else if (teachingStart && teachingEnd && teachingStart > teachingEnd) {
-      error(`${where}/course.json`, `"teachingStart" (${teachingStart}) is after "teachingEnd" (${teachingEnd})`);
-    }
-    if (color !== undefined && !/^#[0-9a-fA-F]{6}$/.test(color)) {
-      error(`${where}/course.json`, `"color" must look like "#2e7d32" (got "${color}")`);
-    }
-    if (icon !== undefined && (typeof icon !== "string" || [...icon].length > 4)) {
-      warn(`${where}/course.json`, `"icon" should be a single emoji`);
-    }
-    courses.push(course);
-  }
+  // --- programme.json (courses, modules, study plan rules) ---
+  const modules = await checkProgramme();
 
   // --- topics (first, so everything else can link to them) ---
   const topicIds = new Set();
-  for (const course of courses) {
+  for (const course of modules) {
     const file = `${course.folder}topics.json`;
     requireList(course.topics, file).forEach((topic, index) => {
       const where = `${file} (topic ${index + 1})`;
@@ -166,7 +262,7 @@ async function main() {
   }
 
   // --- notes, practice items, resources ---
-  for (const course of courses) {
+  for (const course of modules) {
     for (const topic of course.topics) {
       if (!topic.notes) continue;
       const file = `${course.folder}${topic.notes}`;
@@ -263,7 +359,7 @@ async function main() {
   });
 
   // --- report ---
-  const counts = courses.reduce(
+  const counts = modules.reduce(
     (total, c) => ({
       topics: total.topics + c.topics.length,
       notes: total.notes + c.topics.filter((t) => t.notes).length,
@@ -273,7 +369,7 @@ async function main() {
     }),
     { topics: 0, notes: 0, flashcards: 0, questions: 0, resources: 0 }
   );
-  console.log(`Checked ${courses.length} courses, ${counts.topics} topics, ${counts.notes} notes, ` +
+  console.log(`Checked ${courseCount} courses (${modules.length} modules), ${counts.topics} topics, ${counts.notes} notes, ` +
     `${counts.flashcards} flashcards, ${counts.questions} questions, ${counts.resources} resources, ${concepts.length} concepts.`);
   for (const message of warnings) console.log(`  ⚠ Warning  ${message}`);
   for (const message of errors) console.log(`  ✖ Error    ${message}`);

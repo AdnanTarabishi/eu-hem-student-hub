@@ -86,13 +86,19 @@ function courseCounts(course) {
     notes: course.topics.filter((t) => t.notes).length,
     flashcards: course.flashcards.length,
     questions: course.questions.length,
-    concepts: conceptsForCourse(course.id, landingData.concepts).length,
+    concepts: conceptsForCourse(course, landingData.concepts).length,
     resources: course.resources.length,
   };
 }
 
-function courseCard(course, index, progress, today) {
-  const info = course.course;
+// Teaching status of a course: from its modules' first and last teaching day
+function courseTeachingStatus(course, today) {
+  const dates = courseDates(course.info);
+  return teachingStatus({ teachingStart: dates.start, teachingEnd: dates.end }, today);
+}
+
+function courseCard(course, index, progress, today, myCodes) {
+  const info = course.info;
   const counts = courseCounts(course);
   const total = Object.values(counts).reduce((a, b) => a + b, 0);
 
@@ -103,19 +109,27 @@ function courseCard(course, index, progress, today) {
   const head = createElement("div", "course-card-head");
   head.appendChild(createElement("span", "course-icon", info.icon || "📘"));
   const titleBox = createElement("div", "course-card-titles");
-  titleBox.appendChild(createElement("span", "course-card-title", info.title));
+  titleBox.appendChild(createElement("span", "course-card-title", info.name + (info.integrated ? " (I.C.)" : "")));
+  const professors = [...new Set(info.modules.flatMap((m) => m.professors))];
   titleBox.appendChild(createElement("span", "schedule-meta",
-    [info.code, info.credits ? `${info.credits} CFU` : "", (info.professors || []).join(", ")].filter(Boolean).join(" · ")));
+    [info.code, `${info.cfu} CFU`, `cycle ${courseCycles(info)}`, professors.join(", ")].filter(Boolean).join(" · ")));
   head.appendChild(titleBox);
   card.appendChild(head);
 
+  // Integrated courses: list the modules
+  if (info.integrated) {
+    const list = createElement("ul", "course-card-modules");
+    for (const module of info.modules) list.appendChild(createElement("li", null, `${module.name} · cycle ${module.cycle}`));
+    card.appendChild(list);
+  }
+
   const badges = createElement("div", "course-card-badges");
-  const status = teachingStatus(info, today);
+  if (course.group) badges.appendChild(createElement("span", `plan-badge plan-badge-${course.group.kind}`, course.group.badge || course.group.label));
+  if (myCodes && myCodes.includes(info.code)) badges.appendChild(createElement("span", "plan-badge plan-badge-mine", "✓ In my plan"));
+  const status = courseTeachingStatus(course, today);
   if (status) {
     badges.appendChild(createElement("span", `status-badge status-${status.key}`, status.label));
     if (status.detail) badges.appendChild(createElement("span", "schedule-meta", status.detail));
-  } else if (info.teachingPeriod) {
-    badges.appendChild(createElement("span", "schedule-meta", info.teachingPeriod));
   }
   const samples = [...course.flashcards, ...course.questions, ...course.resources].some((i) => i.sample);
   if (samples) badges.appendChild(sampleTag());
@@ -144,6 +158,8 @@ function courseCard(course, index, progress, today) {
 function renderCourseList() {
   const progress = loadProgress();
   const today = todayKey();
+  const plan = loadPlan(landingData.programme);
+  const myCodes = plan.saved ? selectedCourseCodes(landingData.term, plan.choices) : null;
   const groups = [
     { key: "now", title: "Teaching now" },
     { key: "upcoming", title: "Coming up" },
@@ -153,14 +169,15 @@ function renderCourseList() {
   for (const group of groups) {
     const members = landingData.courses
       .map((course, index) => ({ course, index }))
-      .filter(({ course }) => ((teachingStatus(course.course, today) || {}).key || "other") === group.key);
+      .filter(({ course }) => ((courseTeachingStatus(course, today) || {}).key || "other") === group.key);
     if (members.length === 0) continue;
     landingContent.appendChild(createElement("h3", "course-group-title", `${group.title} (${members.length})`));
     const list = createElement("div", "course-list");
-    for (const { course, index } of members) list.appendChild(courseCard(course, index, progress, today));
+    for (const { course, index } of members) list.appendChild(courseCard(course, index, progress, today, myCodes));
     landingContent.appendChild(list);
   }
 }
+
 
 // ----- Key concepts (the shared glossary) -----
 
@@ -185,7 +202,7 @@ function renderGlossary() {
     (concept.topics || []).forEach((topicId, index) => {
       const found = topicById(topicId, landingData);
       if (index > 0) where.appendChild(document.createTextNode(", "));
-      const link = createElement("a", null, found ? `${found.course.course.title} › ${found.topic.title}` : topicId);
+      const link = createElement("a", null, found ? `${found.course.info.name} › ${found.topic.title}` : topicId);
       link.href = itemUrl(topicId, landingData);
       where.appendChild(link);
     });
@@ -235,8 +252,8 @@ function renderMyProgress() {
     row.href = courseUrl(course.id);
     row.style.setProperty("--course-color", courseColor(course, index));
     const name = createElement("div", "progress-row-name");
-    name.appendChild(createElement("span", "course-icon small", course.course.icon || "📘"));
-    name.appendChild(createElement("span", "course-card-title", course.course.title));
+    name.appendChild(createElement("span", "course-icon small", course.info.icon || "📘"));
+    name.appendChild(createElement("span", "course-card-title", course.info.name));
     row.appendChild(name);
     const topics = createElement("div", "progress-row-cell");
     topics.appendChild(progressBar(mine.percent));
@@ -327,7 +344,7 @@ function renderStudyList() {
       const link = createElement("a", "study-title", found.title);
       link.href = itemUrl(entry.id, landingData);
       main.appendChild(link);
-      if (found.course && found.type !== "course") main.appendChild(createElement("span", "schedule-meta", found.course.course.title));
+      if (found.course && found.type !== "course") main.appendChild(createElement("span", "schedule-meta", found.course.info.name));
     } else {
       main.appendChild(createElement("span", "study-title placeholder", "This item is no longer available."));
     }
@@ -357,14 +374,13 @@ async function ensureSearchIndex() {
   // Load every notes file once, so notes text can be searched too
   const notesByTopic = {};
   const jobs = [];
-  for (const course of landingData.courses) {
-    for (const topic of course.topics.filter((t) => t.notes)) {
-      jobs.push(loadNotes(course, topic).then((notes) => { if (notes) notesByTopic[topic.id] = notes; }));
+  for (const module of landingData.modules) {
+    for (const topic of module.topics.filter((t) => t.notes)) {
+      jobs.push(loadNotes(module, topic).then((notes) => { if (notes) notesByTopic[topic.id] = notes; }));
     }
   }
   await Promise.all(jobs);
   searchEntries = buildSearchIndex(landingData, notesByTopic);
-  for (const entry of searchEntries) entry.courseId = entry.type === "concept" ? "" : courseIdOf(entry.id);
 }
 
 // A row of filter buttons: "All (12)  Notes (3)  Flashcards (5) ..."
@@ -389,7 +405,7 @@ function filterChips(results, query) {
     select.appendChild(new Option("All courses", ""));
     for (const id of courses) {
       const course = landingData.courses.find((c) => c.id === id);
-      select.appendChild(new Option(course ? course.course.title : id, id));
+      select.appendChild(new Option(course ? course.info.name : id, id));
     }
     select.value = searchFilters.course;
     select.addEventListener("change", () => {

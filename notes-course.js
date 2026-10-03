@@ -1,16 +1,21 @@
 // ===== Course page =====
-// One template for every course: course.html?course=<course-id>
-// Tabs: Overview · Topics · Key Concepts · Practice · Resources. A tab with no content is hidden.
-// The open tab and topic are kept in the address (e.g. &tab=topics&topic=...), so links,
-// bookmarks and the browser's Back button all work.
+// One page for every course: course.html?course=<course-id>
+// Tabs: Overview · Schedule · Exam · Topics · Key Concepts · Practice · Resources. A tab with no content is hidden.
+// Course facts come from content/programme.json; Schedule and Exam are loaded live from UniBo;
+// notes and practice come from content/modules/<module-id>/ (Course -> Module -> Topic).
 
 const coursePage = document.getElementById("course-page");
 
-// Everything the page needs, filled in by initCoursePage()
-const page = { data: null, course: null, index: 0, notesByTopic: {}, settings: {} };
+const page = {
+  data: null, course: null, index: 0, notesByTopic: {}, settings: {},
+  unibo: "loading", // "loading" | "ready" | "failed"
+  sessions: [], exams: [],
+};
 
 const TABS = [
   { key: "overview", label: "Overview" },
+  { key: "schedule", label: "Schedule" },
+  { key: "exam", label: "Exam" },
   { key: "topics", label: "Topics" },
   { key: "concepts", label: "Key Concepts" },
   { key: "practice", label: "Practice" },
@@ -26,7 +31,6 @@ function currentParams() {
   return Object.fromEntries(new URLSearchParams(window.location.search));
 }
 
-// Goes to another tab/topic without reloading the page, and adds it to the browser history
 function navigate(params, hash = "") {
   history.pushState(null, "", courseUrl(page.course.id, params) + hash);
   renderPage();
@@ -55,7 +59,7 @@ function topicLink(topicId, className) {
   const found = topicById(topicId, page.data);
   const title = found ? found.topic.title : topicId;
   if (found && found.course.id !== page.course.id) {
-    const link = createElement("a", className, `${found.course.course.title} › ${title}`);
+    const link = createElement("a", className, `${found.course.info.name} › ${title}`);
     link.href = itemUrl(topicId, page.data);
     return link;
   }
@@ -64,39 +68,56 @@ function topicLink(topicId, className) {
 
 function hasSampleContent() {
   const c = page.course;
-  const items = [...c.flashcards, ...c.questions, ...c.resources, ...conceptsForCourse(c.id, page.data.concepts)];
+  const items = [...c.flashcards, ...c.questions, ...c.resources, ...conceptsForCourse(c, page.data.concepts)];
   return items.some((item) => item.sample) || Object.values(page.notesByTopic).some((n) => n.meta.sample);
 }
 
-// Tabs with content; Overview is always there
+function courseSessions() {
+  const codes = page.course.modules.map((m) => m.info.code);
+  return page.sessions.filter((s) => codes.includes(s.moduleCode));
+}
+
+function courseExams() {
+  return page.exams.filter((exam) => exam.courseIds.includes(page.course.id));
+}
+
+// Tabs with content; Overview is always there. Schedule/Exam show while loading from UniBo.
 function availableTabs() {
   const c = page.course;
+  const loading = page.unibo === "loading";
   const has = {
     overview: true,
+    schedule: loading || courseSessions().length > 0,
+    exam: loading || courseExams().length > 0,
     topics: Object.keys(page.notesByTopic).length > 0,
-    concepts: conceptsForCourse(c.id, page.data.concepts).length > 0,
+    concepts: conceptsForCourse(c, page.data.concepts).length > 0,
     practice: c.flashcards.length + c.questions.length > 0,
     resources: c.resources.length > 0,
   };
   return TABS.filter((tab) => has[tab.key]);
 }
 
-// Topics that have notes, in order (for the sidebar and Previous/Next)
+// Topics with notes, in order: module by module (for the sidebar and Previous/Next)
 function topicsWithNotes() {
   return page.course.topics.filter((t) => page.notesByTopic[t.id]);
 }
 
-// ----- Building the page -----
+function moduleOfTopic(topicId) {
+  return page.course.modules.find((m) => m.id === moduleIdOf(topicId));
+}
+
+// ----- Header -----
 
 function renderHeader(tab, tabs) {
-  const info = page.course.course;
+  const info = page.course.info;
+  const term = page.data.term;
   const header = createElement("section", "card course-header");
   header.style.setProperty("--course-color", courseColor(page.course, page.index));
 
   const titleRow = createElement("div", "notes-heading");
   const titleBox = createElement("div", "course-title-box");
   titleBox.appendChild(createElement("span", "course-icon", info.icon || "📘"));
-  const title = createElement("h2", null, info.title);
+  const title = createElement("h2", null, info.name + (info.integrated ? " (I.C.)" : ""));
   title.appendChild(createElement("span", "course-code", ` ${info.code}`));
   titleBox.appendChild(title);
   titleRow.appendChild(titleBox);
@@ -109,9 +130,13 @@ function renderHeader(tab, tabs) {
   titleRow.appendChild(actions);
   header.appendChild(titleRow);
 
-  // Teaching status + personal progress
+  // Badges: group, CFU, cycle, teaching status, personal progress
   const statusRow = createElement("div", "course-status-row");
-  const status = teachingStatus(info, todayKey());
+  const group = page.course.group;
+  if (group) statusRow.appendChild(createElement("span", `plan-badge plan-badge-${group.kind}`, group.badge || group.label));
+  statusRow.appendChild(createElement("span", "schedule-meta", `${info.cfu} CFU · cycle ${courseCycles(info)}`));
+  const dates = courseDates(info);
+  const status = teachingStatus({ teachingStart: dates.start, teachingEnd: dates.end }, todayKey());
   if (status) {
     statusRow.appendChild(createElement("span", `status-badge status-${status.key}`, status.label));
     if (status.detail) statusRow.appendChild(createElement("span", "schedule-meta", status.detail));
@@ -127,8 +152,7 @@ function renderHeader(tab, tabs) {
   header.appendChild(statusRow);
 
   if (hasSampleContent()) {
-    header.appendChild(createElement("p", "demo-note",
-      "Sample content — written to test the layout, not real study notes."));
+    header.appendChild(createElement("p", "demo-note", "Sample content — written to test the layout, not real study notes."));
   }
 
   const tabBar = createElement("div", "track-tabs page-tabs");
@@ -157,15 +181,15 @@ function renderPage() {
   const panel = createElement("section", "card course-panel");
   coursePage.appendChild(panel);
   if (tab === "overview") renderOverview(panel);
+  if (tab === "schedule") renderSchedule(panel, params);
+  if (tab === "exam") renderExam(panel);
   if (tab === "topics") renderTopics(panel, params);
   if (tab === "concepts") renderConcepts(panel);
-  if (tab === "practice") renderPractice(panel, { course: page.course, params, topicTitle, topicLink, navigate, refreshHeader: renderPage });
+  if (tab === "practice") renderPractice(panel, { course: page.course, params, topicTitle, topicLink, navigate });
   if (tab === "resources") renderResources(panel);
-
   highlightTarget();
 }
 
-// If the address ends with #some-id, scroll to that item and highlight it
 function highlightTarget() {
   const id = decodeURIComponent(window.location.hash.slice(1));
   const target = id && document.getElementById(id);
@@ -175,10 +199,55 @@ function highlightTarget() {
   }
 }
 
+function externalButton(label, url) {
+  const link = createElement("a", "button", label);
+  link.href = url;
+  link.target = "_blank";
+  link.rel = "noopener";
+  return link;
+}
+
+// ----- Overview -----
+
+function planStatusBox() {
+  const box = createElement("div", "plan-status-box");
+  const programme = page.data.programme;
+  const plan = loadPlan(programme);
+  const term = page.data.term;
+  const inPlan = selectedCourseCodes(term, plan.choices).includes(page.course.code);
+  if (!plan.saved) {
+    box.appendChild(document.createTextNode("Planning your semester? "));
+    const link = createElement("a", null, "Open the Study Plan →");
+    link.href = "studyplan.html";
+    box.appendChild(link);
+    return box;
+  }
+  if (!inPlan) {
+    box.appendChild(document.createTextNode("Not in your study plan. "));
+    const link = createElement("a", null, "Change your plan →");
+    link.href = "studyplan.html";
+    box.appendChild(link);
+    return box;
+  }
+  box.appendChild(createElement("strong", null, "✓ In your study plan · "));
+  const select = createElement("select", "course-status-select");
+  select.setAttribute("aria-label", "Your status for this course");
+  for (const status of COURSE_STATUSES) select.appendChild(new Option(COURSE_STATUS_LABELS[status], status));
+  select.value = plan.statuses[page.course.code] || "";
+  select.addEventListener("change", () => {
+    const fresh = loadPlan(programme);
+    if (select.value) fresh.statuses[page.course.code] = select.value;
+    else delete fresh.statuses[page.course.code];
+    savePlan(fresh);
+  });
+  box.appendChild(select);
+  return box;
+}
+
 function renderOverview(panel) {
-  const info = page.course.course;
+  const info = page.course.info;
   panel.appendChild(createElement("h3", null, "Overview"));
-  panel.appendChild(createElement("p", null, info.description));
+  panel.appendChild(planStatusBox());
 
   const facts = createElement("dl", "course-facts");
   const fact = (label, value) => {
@@ -186,47 +255,115 @@ function renderOverview(panel) {
     facts.appendChild(createElement("dt", null, label));
     facts.appendChild(createElement("dd", null, value));
   };
-  fact(info.professors && info.professors.length > 1 ? "Professors" : "Professor", (info.professors || []).join(", "));
-  fact("Credits", info.credits ? `${info.credits} CFU` : "");
-  fact("Teaching period", info.teachingPeriod);
-  fact("Academic year", info.academicYear);
-  fact("Assessment", info.assessment);
+  fact("Code", info.code);
+  fact("Credits", `${info.cfu} CFU`);
+  if (page.course.group) fact("Study plan group", `${page.course.group.label} · ${page.course.group.badge || ""}`);
+  fact("Cycle", courseCycles(info));
+  fact("Integrated course", info.integrated ? `Yes: ${info.modules.length} modules, examined together as one course` : "");
+  fact("Cohort", page.data.cohort.label);
   panel.appendChild(facts);
 
-  if (info.textbooks && info.textbooks.length) {
-    panel.appendChild(createElement("h4", null, "Textbooks"));
-    const list = createElement("ul", "plain-list");
-    for (const book of info.textbooks) list.appendChild(createElement("li", null, book));
-    panel.appendChild(list);
-  }
-
-  panel.appendChild(createElement("h4", null, "Topics covered"));
-  if (page.course.topics.length === 0) {
-    panel.appendChild(createElement("p", "placeholder", "The topic list hasn't been published yet. Check the official course page."));
-  } else {
-    const list = createElement("ol", "topic-preview");
-    for (const topic of page.course.topics) {
-      const item = createElement("li");
-      item.appendChild(page.notesByTopic[topic.id]
-        ? pageLink(topic.title, { tab: "topics", topic: topic.id })
-        : document.createTextNode(topic.title));
-      list.appendChild(item);
-    }
-    panel.appendChild(list);
-  }
-
   const links = createElement("div", "button-row");
-  for (const [label, url] of [["Official course page ↗", info.officialUrl], ["Open on Virtuale ↗", info.virtualeUrl]]) {
-    if (!url) continue;
-    const link = createElement("a", "button", label);
-    link.href = url;
-    link.target = "_blank";
-    link.rel = "noopener";
-    links.appendChild(link);
-  }
+  if (info.officialUrl) links.appendChild(externalButton("Official UniBo page ↗", info.officialUrl));
+  links.appendChild(externalButton("Open on Virtuale ↗", info.modules[0].virtualeUrl || page.data.programme.programme.virtualeUrl));
   panel.appendChild(links);
+  if (!info.officialUrl) panel.appendChild(createElement("p", "schedule-meta", "The official course page hasn't been published yet."));
+
+  if (page.unibo === "failed") {
+    panel.appendChild(createElement("p", "demo-note", "The class schedule and exam dates couldn't be loaded from UniBo right now. Please try again later."));
+  }
+
+  for (const module of page.course.modules) {
+    const m = module.info;
+    const box = createElement("section", "module-box");
+    box.appendChild(createElement("h4", null, info.integrated ? `Module: ${m.name} (${m.code})` : `About this course`));
+    if (m.description) box.appendChild(createElement("p", null, m.description));
+    const mf = createElement("dl", "course-facts");
+    const add = (label, value) => {
+      if (!value) return;
+      mf.appendChild(createElement("dt", null, label));
+      mf.appendChild(createElement("dd", null, value));
+    };
+    add(m.professors.length > 1 ? "Professors" : "Professor", m.professors.join(", "));
+    if (info.integrated) add("Credits", `${m.cfu} CFU`);
+    add("Teaching period", m.teachingStart && m.teachingEnd
+      ? `${formatDay(m.teachingStart, { day: "numeric", month: "short" })} – ${formatDay(m.teachingEnd, { day: "numeric", month: "short", year: "numeric" })} (cycle ${m.cycle})`
+      : "");
+    add("Assessment", m.assessment);
+    box.appendChild(mf);
+    if (m.textbooks && m.textbooks.length) {
+      box.appendChild(createElement("h5", null, "Textbooks"));
+      const list = createElement("ul", "plain-list");
+      for (const book of m.textbooks) list.appendChild(createElement("li", null, book));
+      box.appendChild(list);
+    }
+    box.appendChild(createElement("h5", null, "Topics covered"));
+    if (module.topics.length === 0) {
+      box.appendChild(createElement("p", "placeholder", "The topic list hasn't been published yet."));
+    } else {
+      const list = createElement("ol", "topic-preview");
+      for (const topic of module.topics) {
+        const item = createElement("li");
+        item.appendChild(page.notesByTopic[topic.id] ? pageLink(topic.title, { tab: "topics", topic: topic.id }) : document.createTextNode(topic.title));
+        list.appendChild(item);
+      }
+      box.appendChild(list);
+    }
+    if (info.integrated && m.officialUrl) {
+      const link = createElement("a", "inline-link", "Official module page ↗");
+      link.href = m.officialUrl;
+      link.target = "_blank";
+      link.rel = "noopener";
+      box.appendChild(link);
+    }
+    panel.appendChild(box);
+  }
   panel.appendChild(createElement("p", "schedule-meta",
     "Official slides, recordings and materials are only on Virtuale. This site links to them and never re-uploads them."));
+}
+
+// ----- Schedule and Exam (live from UniBo) -----
+
+function renderSchedule(panel, params) {
+  panel.appendChild(createElement("h3", null, "Schedule"));
+  if (page.unibo === "loading") {
+    panel.appendChild(createElement("p", "placeholder", "Loading the timetable from UniBo…"));
+    return;
+  }
+  const showPast = params.past === "1";
+  const today = todayKey();
+  const all = courseSessions();
+  const visible = all.filter((s) => showPast || s.dateKey >= today);
+  const bar = createElement("div", "schedule-filters");
+  bar.appendChild(pageLink(showPast ? "Hide past classes" : `Show past classes (${all.length - visible.length})`,
+    showPast ? { tab: "schedule" } : { tab: "schedule", past: "1" }, "inline-link"));
+  panel.appendChild(bar);
+  panel.appendChild(createElement("p", "schedule-meta", `${visible.length} class${visible.length === 1 ? "" : "es"} · from the official UniBo timetable`));
+  if (visible.length === 0) panel.appendChild(createElement("p", "placeholder", "No upcoming classes. This course's teaching period has ended."));
+  else panel.appendChild(scheduleDays(visible, page.data.index, today));
+}
+
+function renderExam(panel) {
+  panel.appendChild(createElement("h3", null, "Exam"));
+  if (page.unibo === "loading") {
+    panel.appendChild(createElement("p", "placeholder", "Loading exam dates from UniBo…"));
+    return;
+  }
+  const today = todayKey();
+  const exams = courseExams();
+  const upcoming = exams.filter((e) => e.dateKey >= today);
+  const note = createElement("p", "note", "Register for exams on ");
+  const alma = createElement("a", null, "AlmaEsami");
+  alma.href = "https://almaesami.unibo.it/almaesami/welcome.htm";
+  alma.target = "_blank";
+  alma.rel = "noopener";
+  note.appendChild(alma);
+  note.appendChild(document.createTextNode(" or the myUniBo app. Dates come from the official UniBo exam page."));
+  panel.appendChild(note);
+  if (upcoming.length === 0) panel.appendChild(createElement("p", "placeholder", "No upcoming exam dates published yet."));
+  const list = createElement("div", "exam-list");
+  for (const exam of upcoming) list.appendChild(examItem(exam, today));
+  panel.appendChild(list);
 }
 
 // ----- Topics -----
@@ -238,67 +375,71 @@ function renderTopics(panel, params) {
   }
   const progress = loadProgress();
   panel.appendChild(createElement("h3", null, "Topics"));
-  const list = createElement("ol", "topic-list");
-  for (const topic of page.course.topics) {
-    const notes = page.notesByTopic[topic.id];
-    const item = createElement("li", notes ? "topic-row" : "topic-row is-empty");
-    const main = createElement("div", "topic-row-main");
-    main.appendChild(notes ? pageLink(topic.title, { tab: "topics", topic: topic.id }, "topic-title")
-      : createElement("span", "topic-title", topic.title));
-
-    const cards = page.course.flashcards.filter((c) => c.topic === topic.id).length;
-    const questions = page.course.questions.filter((q) => q.topic === topic.id).length;
-    const meta = [notes ? `Notes · ${readingMinutes(notes)} min read` : "No notes yet"];
-    if (cards) meta.push(`${cards} flashcard${cards === 1 ? "" : "s"}`);
-    if (questions) meta.push(`${questions} question${questions === 1 ? "" : "s"}`);
-    main.appendChild(createElement("span", "schedule-meta", meta.join(" · ")));
-    item.appendChild(main);
-
-    const side = createElement("div", "topic-row-side");
-    if (notes && notes.meta.sample) side.appendChild(sampleTag());
-    if (notes) {
-      const status = getTopicStatus(progress, topic.id);
-      side.appendChild(createElement("span", `topic-status status-${status || "none"}`, `${STATUS_ICONS[status]} ${STATUS_LABELS[status]}`));
+  for (const module of page.course.modules) {
+    if (page.course.modules.length > 1) panel.appendChild(createElement("h4", "module-heading", `${module.info.name} (${module.info.code})`));
+    if (module.topics.length === 0) {
+      panel.appendChild(createElement("p", "placeholder", "No topics yet."));
+      continue;
     }
-    item.appendChild(side);
-    list.appendChild(item);
+    const list = createElement("ol", "topic-list");
+    for (const topic of module.topics) {
+      const notes = page.notesByTopic[topic.id];
+      const item = createElement("li", notes ? "topic-row" : "topic-row is-empty");
+      const main = createElement("div", "topic-row-main");
+      main.appendChild(notes ? pageLink(topic.title, { tab: "topics", topic: topic.id }, "topic-title") : createElement("span", "topic-title", topic.title));
+      const cards = page.course.flashcards.filter((c) => c.topic === topic.id).length;
+      const questions = page.course.questions.filter((q) => q.topic === topic.id).length;
+      const meta = [notes ? `Notes · ${readingMinutes(notes)} min read` : "No notes yet"];
+      if (cards) meta.push(`${cards} flashcard${cards === 1 ? "" : "s"}`);
+      if (questions) meta.push(`${questions} question${questions === 1 ? "" : "s"}`);
+      main.appendChild(createElement("span", "schedule-meta", meta.join(" · ")));
+      item.appendChild(main);
+      const side = createElement("div", "topic-row-side");
+      if (notes && notes.meta.sample) side.appendChild(sampleTag());
+      if (notes) {
+        const status = getTopicStatus(progress, topic.id);
+        side.appendChild(createElement("span", `topic-status status-${status || "none"}`, `${STATUS_ICONS[status]} ${STATUS_LABELS[status]}`));
+      }
+      item.appendChild(side);
+      list.appendChild(item);
+    }
+    panel.appendChild(list);
   }
-  panel.appendChild(list);
   const invite = createElement("p", "schedule-meta", "Want to write notes for a topic without notes yet? ");
   invite.appendChild(formButton("Contribute", page.settings.contributeFormUrl, "inline-link"));
   panel.appendChild(invite);
 }
 
-// About 200 words per minute
 function readingMinutes(notes) {
   const words = `${notes.review} ${notes.notes}`.split(/\s+/).filter(Boolean).length;
   return Math.max(1, Math.round(words / 200));
 }
 
-// Sidebar (wide screens) or dropdown (phones) to move between topics
+// Sidebar (wide screens) or dropdown (phones), grouped by module
 function topicNavigator(currentId) {
   const progress = loadProgress();
   const nav = createElement("nav", "topic-sidebar");
   nav.setAttribute("aria-label", "Topics");
   nav.appendChild(createElement("h4", null, "Topics"));
-  const list = createElement("ol");
-  for (const topic of page.course.topics) {
-    const item = createElement("li");
-    if (page.notesByTopic[topic.id]) {
-      const status = getTopicStatus(progress, topic.id);
-      const link = pageLink("", { tab: "topics", topic: topic.id }, topic.id === currentId ? "is-current" : "");
-      link.appendChild(createElement("span", `topic-status-icon status-${status || "none"}`, STATUS_ICONS[status]));
-      link.appendChild(document.createTextNode(topic.title));
-      if (topic.id === currentId) link.setAttribute("aria-current", "page");
-      item.appendChild(link);
-    } else {
-      item.appendChild(createElement("span", "is-empty", topic.title));
+  for (const module of page.course.modules) {
+    if (page.course.modules.length > 1) nav.appendChild(createElement("p", "sidebar-module", module.info.name));
+    const list = createElement("ol");
+    for (const topic of module.topics) {
+      const item = createElement("li");
+      if (page.notesByTopic[topic.id]) {
+        const status = getTopicStatus(progress, topic.id);
+        const link = pageLink("", { tab: "topics", topic: topic.id }, topic.id === currentId ? "is-current" : "");
+        link.appendChild(createElement("span", `topic-status-icon status-${status || "none"}`, STATUS_ICONS[status]));
+        link.appendChild(document.createTextNode(topic.title));
+        if (topic.id === currentId) link.setAttribute("aria-current", "page");
+        item.appendChild(link);
+      } else {
+        item.appendChild(createElement("span", "is-empty", topic.title));
+      }
+      list.appendChild(item);
     }
-    list.appendChild(item);
+    nav.appendChild(list);
   }
-  nav.appendChild(list);
-
-  // Phones: a dropdown instead of the long list
   const select = createElement("select", "topic-jump");
   select.setAttribute("aria-label", "Go to topic");
   for (const topic of topicsWithNotes()) select.appendChild(new Option(topic.title, topic.id));
@@ -309,7 +450,6 @@ function topicNavigator(currentId) {
   return { nav, jump };
 }
 
-// "On this page": links to the notes' sub-headings
 function onThisPage(article) {
   const headings = [...article.querySelectorAll("h2, h3")];
   if (headings.length < 2) return null;
@@ -333,7 +473,6 @@ function onThisPage(article) {
   return box;
 }
 
-// Not started · Read · Understood
 function statusButtons(topicId) {
   const box = createElement("div", "status-buttons");
   box.setAttribute("role", "group");
@@ -346,7 +485,7 @@ function statusButtons(topicId) {
     button.addEventListener("click", () => {
       setTopicStatus(topicId, status);
       const y = window.scrollY;
-      renderPage(); // updates the progress bar, sidebar and buttons
+      renderPage();
       window.scrollTo(0, y);
     });
     box.appendChild(button);
@@ -363,6 +502,7 @@ function renderTopicReader(panel, topicId) {
     return;
   }
   const notes = page.notesByTopic[topic.id];
+  const module = moduleOfTopic(topic.id);
   if (!notes) {
     panel.appendChild(pageLink("← All topics", { tab: "topics" }, "back-link"));
     panel.appendChild(createElement("h3", null, topic.title));
@@ -379,16 +519,15 @@ function renderTopicReader(panel, topicId) {
   panel.appendChild(layout);
 
   main.appendChild(jump);
+  if (page.course.modules.length > 1) main.appendChild(createElement("p", "reader-module", `Module: ${module.info.name}`));
   const titleRow = createElement("div", "notes-heading");
   titleRow.appendChild(createElement("h3", "reader-title", topic.title));
   titleRow.appendChild(saveButton(topic.id));
   main.appendChild(titleRow);
   main.appendChild(createElement("p", "schedule-meta reader-meta", `${readingMinutes(notes)} min read`));
 
-  // Disclaimer, author, date, report link: on every notes page
   const notice = createElement("div", "notes-disclaimer");
-  notice.appendChild(createElement("strong", null, page.settings.disclaimer ||
-    "Student-made, may contain errors. Always check the official materials."));
+  notice.appendChild(createElement("strong", null, page.settings.disclaimer || "Student-made, may contain errors. Always check the official materials."));
   const meta = [];
   if (notes.meta.updated) meta.push(`Last updated: ${formatDay(notes.meta.updated, { day: "numeric", month: "short", year: "numeric" })}`);
   meta.push(`Author: ${notes.meta.author || "Anonymous"}`);
@@ -402,24 +541,21 @@ function renderTopicReader(panel, topicId) {
     const review = createElement("div", "review-box");
     review.appendChild(createElement("h4", null, "5-minute review"));
     const body = createElement("div", "markdown");
-    renderNotesInto(body, notes.review, page.course.folder);
+    renderNotesInto(body, notes.review, module.folder);
     review.appendChild(body);
     main.appendChild(review);
   }
-
   const article = createElement("article", "markdown notes-body");
-  renderNotesInto(article, notes.notes, page.course.folder);
+  renderNotesInto(article, notes.notes, module.folder);
   const contents = onThisPage(article);
   if (contents) main.appendChild(contents);
   main.appendChild(article);
 
-  // Progress on this topic
   const progressBox = createElement("div", "topic-progress-box");
   progressBox.appendChild(createElement("h4", null, "How well do you know this topic?"));
   progressBox.appendChild(statusButtons(topic.id));
   main.appendChild(progressBox);
 
-  // Practice and concepts for this topic
   const cards = page.course.flashcards.filter((c) => c.topic === topic.id).length;
   const questions = page.course.questions.filter((q) => q.topic === topic.id).length;
   const concepts = page.data.concepts.filter((c) => (c.topics || []).includes(topic.id));
@@ -438,7 +574,6 @@ function renderTopicReader(panel, topicId) {
     main.appendChild(more);
   }
 
-  // Previous / Next topic
   const ordered = topicsWithNotes();
   const position = ordered.findIndex((t) => t.id === topic.id);
   const pager = createElement("div", "topic-pager");
@@ -454,7 +589,7 @@ function renderTopicReader(panel, topicId) {
 function renderConcepts(panel) {
   panel.appendChild(createElement("h3", null, "Key Concepts"));
   panel.appendChild(createElement("p", "schedule-meta", "One glossary is shared by all courses. These are the concepts used in this course."));
-  const concepts = conceptsForCourse(page.course.id, page.data.concepts).sort((a, b) => a.term.localeCompare(b.term));
+  const concepts = conceptsForCourse(page.course, page.data.concepts).sort((a, b) => a.term.localeCompare(b.term));
   const list = createElement("div", "concept-list");
   for (const concept of concepts) list.appendChild(conceptCard(concept));
   panel.appendChild(list);
@@ -504,7 +639,6 @@ function renderResources(panel) {
     head.appendChild(saveButton(resource.id));
     card.appendChild(head);
     if (resource.description) card.appendChild(createElement("p", null, resource.description));
-
     const meta = createElement("p", "schedule-meta");
     const parts = [];
     if (resource.contributor) parts.push(`Shared by ${resource.contributor}`);
@@ -520,8 +654,26 @@ function renderResources(panel) {
   panel.appendChild(list);
 }
 
+// ----- Start -----
+
+// Loads the class schedule and exam dates from UniBo, then redraws (keeping the scroll position)
+async function loadUniboData() {
+  const sources = page.data.cohort.sources;
+  const [sessions, exams] = await Promise.allSettled([fetchTimetable(sources.timetableFeed), fetchExams(sources.examDates)]);
+  if (sessions.status === "fulfilled") page.sessions = sessions.value;
+  if (exams.status === "fulfilled") page.exams = matchExamsToTerm(exams.value, page.data.term);
+  page.unibo = sessions.status === "rejected" && exams.status === "rejected" ? "failed" : "ready";
+  if (sessions.status === "rejected" || exams.status === "rejected") {
+    console.error("UniBo data:", sessions.reason || exams.reason);
+  }
+  const y = window.scrollY;
+  renderPage();
+  window.scrollTo(0, y);
+}
+
 async function initCoursePage() {
-  const courseId = new URLSearchParams(window.location.search).get("course");
+  const params = new URLSearchParams(window.location.search);
+  const requested = params.get("course");
   const showMessage = (text) => {
     coursePage.innerHTML = "";
     const box = createElement("section", "card");
@@ -532,24 +684,34 @@ async function initCoursePage() {
     coursePage.appendChild(box);
   };
 
-  if (!courseId) return showMessage("No course was chosen.");
+  if (!requested) return showMessage("No course was chosen.");
   try {
     page.data = await loadAll();
     page.settings = page.data.settings;
+    // Old links used module IDs (e.g. course=fund-health-economics): forward to the course
+    let courseId = requested;
+    if (!page.data.courses.some((c) => c.id === requested)) {
+      const module = page.data.modules.find((m) => m.id === requested);
+      if (module) {
+        courseId = module.courseId;
+        params.set("course", courseId);
+        history.replaceState(null, "", "course.html?" + params.toString() + window.location.hash);
+      }
+    }
     page.index = page.data.courses.findIndex((c) => c.id === courseId);
     page.course = page.data.courses[page.index];
-    if (!page.course) return showMessage(`Sorry, we couldn't find the course "${courseId}".`);
+    if (!page.course) return showMessage(`Sorry, we couldn't find the course "${requested}".`);
 
-    // Load the notes of every topic that has notes
-    const withNotes = page.course.topics.filter((t) => t.notes);
-    const loaded = await Promise.all(withNotes.map((t) => loadNotes(page.course, t)));
-    withNotes.forEach((topic, i) => {
-      if (loaded[i]) page.notesByTopic[topic.id] = loaded[i];
-    });
+    for (const module of page.course.modules) {
+      const withNotes = module.topics.filter((t) => t.notes);
+      const loaded = await Promise.all(withNotes.map((t) => loadNotes(module, t)));
+      withNotes.forEach((topic, i) => { if (loaded[i]) page.notesByTopic[topic.id] = loaded[i]; });
+    }
 
-    document.title = `${page.course.course.title} – Notes – EU-HEM Student Hub`;
+    document.title = `${page.course.info.name} – EU-HEM Student Hub`;
     renderPage();
     window.addEventListener("popstate", renderPage);
+    loadUniboData();
   } catch (error) {
     console.error("Could not load course:", error);
     showMessage("Sorry, this course could not be loaded right now. Please try again later.");

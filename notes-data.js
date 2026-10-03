@@ -82,47 +82,71 @@ function reviewPoints(review) {
   return review.split(/\r?\n/).filter((line) => /^\s*[-*]\s+\S/.test(line));
 }
 
-// Loads everything for one course. Missing files simply mean "no items of that type".
-async function loadCourse(courseId, read = fetchText) {
-  const folder = `${CONTENT_ROOT}courses/${courseId}/`;
-  const course = await readJson(read, folder + "course.json", null);
-  if (!course) return null;
+// Structure: Course -> Module -> Topic.
+// Course and module facts come from content/programme.json (the one shared data file).
+// Student content for a module lives in content/modules/<module-id>/ (all files optional).
 
+// Loads the student content of one module. Missing files simply mean "no items of that type".
+async function loadModuleContent(moduleInfo, courseId, read = fetchText) {
+  const folder = `${CONTENT_ROOT}modules/${moduleInfo.id}/`;
   const [topics, flashcards, questions, resources] = await Promise.all([
     readJson(read, folder + "topics.json", []),
     readJson(read, folder + "flashcards.json", []),
     readJson(read, folder + "questions.json", []),
     readJson(read, folder + "resources.json", []),
   ]);
-  return { id: courseId, folder, course, topics, flashcards, questions, resources };
+  return { id: moduleInfo.id, courseId, folder, info: moduleInfo, topics, flashcards, questions, resources };
 }
 
 // Loads one topic's notes file, split into front matter, review and notes
-async function loadNotes(courseData, topic, read = fetchText) {
+async function loadNotes(moduleData, topic, read = fetchText) {
   if (!topic.notes) return null;
-  const text = await read(courseData.folder + topic.notes);
+  const text = await read(moduleData.folder + topic.notes);
   if (text === null) return null;
   const { meta, body } = parseFrontMatter(text);
   return { meta, ...splitReview(body) };
 }
 
-// Loads settings, the course list, every course and the shared concepts
+// Loads settings, the programme, every course with its modules' content, and the shared concepts.
+// Each course also gets combined lists of all its modules' topics, flashcards, questions, resources.
 async function loadAll(read = fetchText) {
-  const [settings, courseIds, concepts] = await Promise.all([
+  const [settings, programme, concepts] = await Promise.all([
     readJson(read, CONTENT_ROOT + "settings.json", {}),
-    readJson(read, CONTENT_ROOT + "courses.json", []),
+    loadProgramme(read),
     readJson(read, CONTENT_ROOT + "concepts.json", []),
   ]);
-  const courses = (await Promise.all(courseIds.map((id) => loadCourse(id, read)))).filter(Boolean);
-  return { settings, courses, concepts };
+  const cohort = currentCohort(programme);
+  const term = currentTerm(programme);
+  const courses = await Promise.all(term.courses.map(async (info) => {
+    const modules = await Promise.all(info.modules.map((m) => loadModuleContent(m, info.id, read)));
+    const all = (list) => modules.flatMap((m) => m[list]);
+    return {
+      id: info.id, code: info.code, info, group: groupOfCourse(term, info.code), modules,
+      topics: all("topics"), flashcards: all("flashcards"), questions: all("questions"), resources: all("resources"),
+    };
+  }));
+  const modules = courses.flatMap((c) => c.modules);
+  return { settings, programme, index: programmeIndex(programme), cohort, term, courses, modules, concepts };
 }
 
 // ----- IDs and links -----
-// Every ID starts with its course: "fund-health-economics.fc.001".
-// Concepts are shared, so they start with "concept.".
+// Every item ID starts with its MODULE: "fund-health-economics.fc.001".
+// Concepts are shared, so they start with "concept.". Course IDs have no dot.
 
-function courseIdOf(itemId) {
+function moduleIdOf(itemId) {
   return itemId.split(".")[0];
+}
+
+// The course an item belongs to. Also accepts a course ID, or a module ID (old links).
+function courseIdOf(itemId, data) {
+  const first = moduleIdOf(itemId);
+  if (data.courses.some((c) => c.id === first)) return first;
+  const module = data.modules.find((m) => m.id === first);
+  return module ? module.courseId : first;
+}
+
+function moduleById(moduleId, data) {
+  return data.modules.find((m) => m.id === moduleId) || null;
 }
 
 function itemTypeOf(itemId) {
@@ -142,55 +166,60 @@ function courseUrl(courseId, params = {}) {
 // The address that opens an item on its page
 function itemUrl(itemId, data) {
   const type = itemTypeOf(itemId);
-  const courseId = courseIdOf(itemId);
-  if (type === "course") return courseUrl(itemId);
+  if (type === "concept") {
+    // A concept opens on the Key Concepts tab of the course of its first topic
+    const concept = data && data.concepts.find((c) => c.id === itemId);
+    const firstTopic = concept && concept.topics && concept.topics[0];
+    if (firstTopic) return courseUrl(courseIdOf(firstTopic, data), { tab: "concepts" }) + "#" + itemId;
+    return "notes.html?tab=concepts#" + itemId;
+  }
+  const courseId = courseIdOf(itemId, data);
+  if (type === "course") return courseUrl(courseId);
   if (type === "topic") return courseUrl(courseId, { tab: "topics", topic: itemId });
   if (type === "flashcard") return courseUrl(courseId, { tab: "practice", card: itemId });
   if (type === "question") return courseUrl(courseId, { tab: "practice", question: itemId }) + "#" + itemId;
-  if (type === "resource") return courseUrl(courseId, { tab: "resources" }) + "#" + itemId;
-  // A concept opens on the Key Concepts tab of the course of its first topic
-  const concept = data && data.concepts.find((c) => c.id === itemId);
-  const firstTopic = concept && concept.topics && concept.topics[0];
-  if (firstTopic) return courseUrl(courseIdOf(firstTopic), { tab: "concepts" }) + "#" + itemId;
-  return "notes.html?tab=concepts#" + itemId;
+  return courseUrl(courseId, { tab: "resources" }) + "#" + itemId;
 }
 
-// Finds an item by its ID in loaded data. Returns { type, item, course } or null.
+// Finds an item by its ID in loaded data. Returns { type, item, title, course, module } or null.
 function findItem(itemId, data) {
   const type = itemTypeOf(itemId);
   if (type === "concept") {
     const item = data.concepts.find((c) => c.id === itemId);
-    return item ? { type, item, title: item.term, course: null } : null;
+    return item ? { type, item, title: item.term, course: null, module: null } : null;
   }
-  const course = data.courses.find((c) => c.id === courseIdOf(itemId));
+  const course = data.courses.find((c) => c.id === courseIdOf(itemId, data));
   if (!course) return null;
-  if (type === "course") return { type, item: course.course, title: course.course.title, course };
-  const lists = { topic: course.topics, flashcard: course.flashcards, question: course.questions, resource: course.resources };
+  if (type === "course") return { type, item: course.info, title: course.info.name, course, module: null };
+  const module = moduleById(moduleIdOf(itemId), data);
+  if (!module) return null;
+  const lists = { topic: module.topics, flashcard: module.flashcards, question: module.questions, resource: module.resources };
   const item = lists[type].find((i) => i.id === itemId);
   if (!item) return null;
-  const title = item.title || item.front || item.question;
-  return { type, item, title, course };
+  return { type, item, title: item.title || item.front || item.question, course, module };
 }
 
-// Topics whose IDs are listed, looked up across all courses
+// A topic, with its module and course
 function topicById(topicId, data) {
-  const course = data.courses.find((c) => c.id === courseIdOf(topicId));
-  const topic = course && course.topics.find((t) => t.id === topicId);
-  return topic ? { topic, course } : null;
+  const module = moduleById(moduleIdOf(topicId), data);
+  const topic = module && module.topics.find((t) => t.id === topicId);
+  if (!topic) return null;
+  return { topic, module, course: data.courses.find((c) => c.id === module.courseId) };
 }
 
-// Concepts that belong to at least one topic of this course
-function conceptsForCourse(courseId, concepts) {
-  return concepts.filter((c) => (c.topics || []).some((t) => courseIdOf(t) === courseId));
+// Concepts that belong to at least one topic of this course (any of its modules)
+function conceptsForCourse(course, concepts) {
+  const moduleIds = course.modules.map((m) => m.id);
+  return concepts.filter((c) => (c.topics || []).some((t) => moduleIds.includes(moduleIdOf(t))));
 }
 
 // ----- Course colour and teaching status -----
 
-// Used when a course.json has no "color"
+// Used when a course has no "color" in programme.json
 const COURSE_PALETTE = ["#1f6fb2", "#2e7d32", "#6a1b9a", "#ef6c00", "#00838f", "#ad1457", "#5d4037", "#3949ab"];
 
-function courseColor(courseData, index) {
-  const color = courseData.course.color;
+function courseColor(course, index) {
+  const color = course.info.color;
   return /^#[0-9a-fA-F]{6}$/.test(color || "") ? color : COURSE_PALETTE[index % COURSE_PALETTE.length];
 }
 
@@ -259,11 +288,11 @@ function markdownToPlainText(markdown) {
     .trim();
 }
 
-// One entry per searchable item: { id, type, title, text, courseTitle }
+// One entry per searchable item: { id, type, title, text, courseTitle, courseId }
 function buildSearchIndex(data, notesByTopic) {
   const entries = [];
   for (const course of data.courses) {
-    const courseTitle = course.course.title;
+    const courseTitle = course.info.name;
     for (const topic of course.topics) {
       const notes = notesByTopic[topic.id];
       if (!notes) continue; // only topics with notes are searchable content
@@ -285,7 +314,10 @@ function buildSearchIndex(data, notesByTopic) {
   for (const concept of data.concepts) {
     entries.push({ id: concept.id, type: "concept", title: concept.term, courseTitle: "", text: concept.explanation });
   }
-  for (const entry of entries) entry.searchable = simplify(`${entry.title} ${entry.text}`);
+  for (const entry of entries) {
+    entry.searchable = simplify(`${entry.title} ${entry.text}`);
+    entry.courseId = entry.type === "concept" ? "" : courseIdOf(entry.id, data);
+  }
   return entries;
 }
 
@@ -362,10 +394,15 @@ function sampleTag() {
 }
 
 // Allows the checker (Node.js) to reuse this file. Browsers ignore this part.
+// In Node, the programme helpers (loadProgramme, currentTerm, ...) come from programme.js.
 if (typeof module !== "undefined") {
+  const programmeHelpers = require("./programme.js");
+  for (const [name, value] of Object.entries(programmeHelpers)) {
+    if (typeof globalThis[name] === "undefined") globalThis[name] = value;
+  }
   module.exports = {
     CONTENT_ROOT, QUESTION_TYPES, DIFFICULTIES, RESOURCE_TYPES,
-    readJson, parseFrontMatter, splitReview, reviewPoints, loadCourse, loadNotes, loadAll,
-    courseIdOf, itemTypeOf, teachingStatus,
+    readJson, parseFrontMatter, splitReview, reviewPoints, loadModuleContent, loadNotes, loadAll,
+    moduleIdOf, courseIdOf, itemTypeOf, teachingStatus,
   };
 }
