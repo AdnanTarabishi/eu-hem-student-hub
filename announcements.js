@@ -67,6 +67,12 @@ function toDateKey(year, month, day) {
   return !isNaN(date) && dateToKey(date) === key ? key : null;
 }
 
+// "urgent", " URGENT " -> "Urgent", so capitalisation and extra spaces in the sheet don't matter
+function normalizeCategory(text) {
+  const value = (text || "").trim();
+  return CATEGORY_ORDER.find((category) => category.toLowerCase() === value.toLowerCase()) || value;
+}
+
 // "Yes", "TRUE" (a checkbox in Google Sheets), "Y" or "1" -> pinned
 function isPinnedValue(text) {
   return ["yes", "true", "y", "1"].includes((text || "").trim().toLowerCase());
@@ -107,7 +113,7 @@ function rowsToAnnouncements(rows) {
       row: index, // position in the sheet, used to order announcements on the same day
       date: date || "",
       title,
-      category: cell(row, "category"),
+      category: normalizeCategory(cell(row, "category")),
       message: cell(row, "message"),
       link: safeLink(cell(row, "link")),
       pinned: isPinnedValue(cell(row, "pinned")),
