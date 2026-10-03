@@ -10,7 +10,7 @@ A free, volunteer website for students of the EU-HEM master's program (European 
 - Calendar subscription (Google, Apple, Outlook) with classes, exams and registration deadlines
 - City guide for Bologna (housing, transport, healthcare, documents, study places and more)
 - Students directory, currently a **demo with fictional data** (`data/sample-students.csv`)
-- Notes, summaries and student resources (coming soon)
+- Notes & Resources: student-made notes, flashcards, practice questions and a shared glossary per course (pilot: Fundamentals in Health Economics)
 - Useful links, including Virtuale for official course materials
 
 ## Disclaimer
@@ -22,6 +22,13 @@ Plain HTML, CSS and JavaScript, hosted on GitHub Pages.
 The calendar file in `calendar/` is rebuilt every 6 hours by a GitHub Actions workflow
 (`.github/workflows/update-calendar.yml`) running `scripts/build-calendar.js`.
 To rebuild it yourself: `node scripts/build-calendar.js` (needs Node.js 18 or newer).
+
+## Notes & Resources
+Study content (notes, flashcards, questions, concepts, resources) lives in `content/` as
+JSON and Markdown files. Adding content never requires code changes.
+- Format and examples: [docs/content-format.md](docs/content-format.md)
+- Check content before committing: `node scripts/check-content.js`
+- Preview locally: `node scripts/preview.js`, then open http://localhost:8000/notes.html
 
 ## Announcements
 Announcements come from a CSV set by `ANNOUNCEMENTS_URL` at the top of `announcements.js`

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Announcements – EU-HEM Student Hub</title>
-  <meta name="description" content="News and announcements for EU-HEM students.">
+  <title>Course – EU-HEM Student Hub</title>
+  <meta name="description" content="Student-made notes and practice for an EU-HEM course.">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,11 +14,11 @@
       <p class="site-title"><a href="index.html">EU-HEM Student Hub</a></p>
       <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
       <nav class="site-nav">
-        <a href="announcements.html" aria-current="page">Announcements</a>
+        <a href="announcements.html">Announcements</a>
         <a href="index.html#schedule">Timetable</a>
         <a href="index.html#exams">Exams</a>
         <a href="index.html#calendar">Calendar</a>
-        <a href="notes.html">Notes</a>
+        <a href="notes.html" aria-current="page">Notes</a>
         <a href="city-guide.html">City Guide</a>
         <a href="students.html">Students</a>
         <a href="index.html#links">Useful Links</a>
@@ -28,20 +28,11 @@
   </header>
 
   <main class="container">
-    <section class="card announcements-page">
-      <h2>Announcements</h2>
-
-      <!-- announcements.js shows this only while the sample (fake) data is used -->
-      <p id="announcement-demo-note" class="demo-note" hidden>
-        <strong>Demo announcements</strong> — these are examples only, not real news.
-      </p>
-
-      <!-- announcements.js adds one button per category -->
-      <div id="announcement-filters" class="track-tabs announcement-filters" role="tablist" aria-label="Filter by category"></div>
-
-      <p id="announcement-status" class="placeholder">Loading announcements...</p>
-      <div id="announcement-list" class="announcement-list"></div>
-    </section>
+    <!-- One template page for every course: course.html?course=<course-id>
+         notes-course.js fills it from content/courses/<course-id>/ -->
+    <div id="course-page">
+      <p id="course-status" class="placeholder">Loading course…</p>
+    </div>
   </main>
 
   <footer class="site-footer">
@@ -50,8 +41,15 @@
     </div>
   </footer>
 
+  <!-- "marked" converts the Markdown notes to HTML (same version as the City Guide) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/18.0.14/lib/marked.umd.min.js"
+          integrity="sha512-trN9mtGYvoySPVI909KTnwbJI9AkKPydRCV/qAsUG1+q39hhpKltEag9b5JpdjeIZn5i8IH62hHRFdbKwMFh9w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="utils.js"></script>
   <script src="announcements.js"></script>
+  <script src="notes-data.js"></script>
+  <script src="notes-practice.js"></script>
+  <script src="notes-course.js"></script>
 
 </body>
 </html>

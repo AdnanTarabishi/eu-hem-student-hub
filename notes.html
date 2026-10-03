@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notes & Resources – EU-HEM Student Hub</title>
+  <meta name="description" content="Student-made notes, flashcards and practice questions for EU-HEM courses.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <p class="site-title"><a href="index.html">EU-HEM Student Hub</a></p>
+      <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
+      <nav class="site-nav">
+        <a href="announcements.html">Announcements</a>
+        <a href="index.html#schedule">Timetable</a>
+        <a href="index.html#exams">Exams</a>
+        <a href="index.html#calendar">Calendar</a>
+        <a href="notes.html" aria-current="page">Notes</a>
+        <a href="city-guide.html">City Guide</a>
+        <a href="students.html">Students</a>
+        <a href="index.html#links">Useful Links</a>
+        <a href="index.html#about">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card notes-intro">
+      <div class="notes-heading">
+        <h2>Notes &amp; Resources</h2>
+        <!-- notes-landing.js sets the link from content/settings.json -->
+        <span id="contribute-slot"></span>
+      </div>
+      <p>
+        Student-made notes, flashcards and practice questions for 1st-year courses.
+        Official lectures and slides stay on <a href="https://virtuale.unibo.it" target="_blank" rel="noopener">Virtuale</a>.
+      </p>
+
+      <label class="search-pill notes-search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+        <input id="notes-search" type="search" placeholder="Search notes, concepts, flashcards, questions…" aria-label="Search notes and resources">
+      </label>
+    </section>
+
+    <!-- Search results replace the tabs while you type -->
+    <section id="search-results" class="card" hidden></section>
+
+    <div id="landing-tabs" class="track-tabs page-tabs" role="tablist" aria-label="Sections"></div>
+    <p id="landing-status" class="placeholder">Loading courses…</p>
+    <div id="landing-content"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>EU-HEM Student Hub &middot; Unofficial student project</p>
+    </div>
+  </footer>
+
+  <script src="utils.js"></script>
+  <script src="announcements.js"></script>
+  <script src="notes-data.js"></script>
+  <script src="notes-landing.js"></script>
+
+</body>
+</html>

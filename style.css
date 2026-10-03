@@ -815,6 +815,546 @@ main {
   color: #3e2a00;
 }
 
+/* ===== Notes & Resources ===== */
+
+/* Title on one side, buttons on the other; they stack on narrow screens */
+.notes-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+}
+
+.notes-heading h2,
+.notes-heading h3,
+.notes-heading h4 {
+  margin: 0;
+}
+
+.notes-search {
+  margin-top: 12px;
+}
+
+.page-tabs {
+  margin: 0 0 16px;
+}
+
+/* Course tabs are links (so the address changes); make them look like the other tabs */
+a.track-tab {
+  text-decoration: none;
+}
+
+.back-link {
+  display: inline-block;
+  margin: 16px 0 8px;
+  font-weight: 600;
+}
+
+/* Small grey "Sample" tag on sample content */
+.sample-tag {
+  display: inline-block;
+  margin: 0 6px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: #eceff3;
+  color: var(--color-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+.save-button {
+  border: 1px solid #c9d3de;
+  background: var(--color-card);
+  color: var(--color-primary);
+  border-radius: 999px;
+  padding: 3px 12px;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.save-button[aria-pressed="true"] {
+  background: var(--color-primary-light);
+  font-weight: 600;
+}
+
+.button-light {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.inline-link {
+  font-weight: 600;
+}
+
+.inline-link.is-disabled {
+  color: var(--color-muted);
+  font-weight: 400;
+}
+
+/* An item someone arrived at from a link (search, study list) */
+.is-highlighted {
+  box-shadow: 0 0 0 3px #f9a825;
+  border-radius: 8px;
+}
+
+/* Landing: course cards */
+.course-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.course-card {
+  display: block;
+  background: var(--color-card);
+  border-radius: 10px;
+  border-top: 3px solid var(--color-primary);
+  padding: 14px 16px;
+  color: var(--color-text);
+  text-decoration: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.course-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
+}
+
+.course-card.is-overview-only {
+  border-top-color: #c9d3de;
+}
+
+.course-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.course-card-title {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.course-card-counts {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.course-card-counts.is-empty {
+  font-weight: 400;
+  font-style: italic;
+  color: var(--color-muted);
+}
+
+/* Course page */
+.course-header {
+  margin-bottom: 16px;
+}
+
+.course-header .page-tabs {
+  margin: 12px 0 0;
+}
+
+.course-code {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-muted);
+}
+
+.course-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.course-facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 6px 16px;
+  margin: 12px 0;
+}
+
+.course-facts dt {
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+.course-facts dd {
+  margin: 0;
+}
+
+.plain-list,
+.topic-preview {
+  margin-top: 4px;
+}
+
+/* Topics list */
+.topic-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.topic-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 0;
+  border-bottom: 1px solid #e6ebf0;
+}
+
+.topic-row-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.topic-title {
+  font-weight: 600;
+}
+
+.topic-row.is-empty .topic-title {
+  font-weight: 400;
+  color: var(--color-muted);
+}
+
+/* A topic's notes */
+.notes-disclaimer {
+  margin: 12px 0;
+  padding: 10px 14px;
+  background: #fff8e1;
+  border-left: 4px solid #f9a825;
+  border-radius: 4px;
+}
+
+.notes-meta {
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.review-box {
+  margin: 16px 0;
+  padding: 12px 16px;
+  background: var(--color-primary-light);
+  border-radius: 8px;
+}
+
+.review-box h4 {
+  margin: 0 0 4px;
+  color: var(--color-primary);
+}
+
+.markdown table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.markdown th,
+.markdown td {
+  border: 1px solid #dde3ea;
+  padding: 6px 10px;
+  text-align: left;
+}
+
+.markdown th {
+  background: var(--color-primary-light);
+}
+
+.markdown blockquote {
+  margin: 12px 0;
+  padding: 6px 12px;
+  border-left: 4px solid var(--color-primary);
+  background: #f7f9fc;
+}
+
+.plain-markdown {
+  white-space: pre-line;
+}
+
+.topic-extras {
+  margin-top: 24px;
+  padding-top: 12px;
+  border-top: 1px solid #e6ebf0;
+}
+
+.topic-extras h4 {
+  margin: 0 0 8px;
+}
+
+.chip {
+  display: inline-block;
+  margin: 2px 4px 2px 0;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--color-primary-light);
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+/* Concepts and resources */
+.concept-list,
+.resource-list,
+.question-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.concept-card,
+.resource-card,
+.question-card {
+  border: 1px solid #dde3ea;
+  border-radius: 8px;
+  padding: 12px 16px;
+  scroll-margin-top: 12px;
+}
+
+.concept-card p,
+.resource-card p {
+  margin: 6px 0 0;
+}
+
+.resource-type {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 1px 10px;
+  border-radius: 999px;
+  background: #ede7f6;
+  color: #4a2c8a;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.resource-title {
+  font-weight: 600;
+}
+
+/* Practice: flashcards */
+.practice-section + .practice-section {
+  margin-top: 32px;
+  padding-top: 8px;
+  border-top: 1px solid #e6ebf0;
+}
+
+.flashcard-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.flashcard-counter {
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+.flashcard {
+  margin: 8px 0;
+  padding: 20px;
+  min-height: 140px;
+  border-radius: 10px;
+  border: 1px solid #c9d8e8;
+  background: linear-gradient(180deg, #ffffff, var(--color-primary-light));
+}
+
+.flashcard-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-muted);
+}
+
+.flashcard-front {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 4px 0 16px;
+}
+
+.flashcard-back {
+  margin: 4px 0 0;
+  padding-top: 12px;
+  border-top: 1px dashed #c9d8e8;
+}
+
+/* Practice: questions */
+.difficulty {
+  text-transform: capitalize;
+}
+
+.question-type,
+.difficulty {
+  display: inline-block;
+  padding: 1px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.question-type { background: var(--color-primary-light); color: var(--color-primary); }
+.difficulty-easy { background: #e3f2e9; color: #1b6b45; }
+.difficulty-medium { background: #fbf0dc; color: #8a5a0b; }
+.difficulty-hard { background: #fbe4e4; color: #a12a2a; }
+
+.meta-spacer {
+  flex: 1;
+}
+
+.question-text {
+  font-weight: 600;
+  margin: 10px 0;
+}
+
+.choice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.choice-row {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.choice {
+  text-align: left;
+  border: 1px solid #c9d3de;
+  background: var(--color-card);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.choice:hover:not(:disabled) {
+  border-color: var(--color-primary);
+}
+
+.choice:disabled {
+  cursor: default;
+  color: var(--color-text);
+}
+
+.choice.is-correct {
+  background: #e3f2e9;
+  border-color: #1b6b45;
+}
+
+.choice.is-wrong {
+  background: #fbe4e4;
+  border-color: #a12a2a;
+}
+
+.answer-feedback {
+  margin: 8px 0 0;
+  font-weight: 600;
+}
+
+.answer-feedback.is-right { color: #1b6b45; }
+.answer-feedback.is-wrong { color: #a12a2a; }
+
+.short-answer {
+  width: 100%;
+  font: inherit;
+  padding: 8px;
+  border: 1px solid #c9d3de;
+  border-radius: 8px;
+}
+
+.question-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.explanation {
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: #f7f9fc;
+  border-left: 4px solid var(--color-primary);
+  border-radius: 4px;
+}
+
+.explanation p {
+  margin: 4px 0;
+}
+
+/* My Study List and search */
+.study-list,
+.search-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.study-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #e6ebf0;
+}
+
+.study-type {
+  display: inline-block;
+  margin-right: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.study-title,
+.search-title {
+  font-weight: 600;
+}
+
+.study-item .schedule-meta {
+  display: block;
+}
+
+.search-group {
+  margin: 16px 0 4px;
+  color: var(--color-primary);
+}
+
+.search-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #e6ebf0;
+}
+
+.search-snippet {
+  margin: 2px 0 0;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+@media (max-width: 640px) {
+  .course-facts {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .course-facts dd {
+    margin-bottom: 8px;
+  }
+
+  .flashcard {
+    padding: 14px;
+  }
+}
+
 /* On narrow phone screens, put the time above the details */
 @media (max-width: 500px) {
   .schedule-item {
