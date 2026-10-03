@@ -8,17 +8,18 @@
 //   "Update available · Reload", and old saved copies are deleted.
 // Nothing personal is stored here: only public site files and public data.
 
-const VERSION = "68ee71c1";
+const VERSION = "da837c6a";
 const SITE_CACHE = `site-${VERSION}`;
 const DATA_CACHE = "data"; // kept across versions, so offline data survives an update
 
 const SITE_FILES = [
   "./", "index.html", "studyplan.html", "timetable.html", "exams.html", "calendar.html",
   "notes.html", "course.html", "create.html", "city-guide.html", "announcements.html", "students.html",
+  "privacy.html", "contact.html",
   "style.css", "icons.svg", "manifest.webmanifest",
-  "fonts/inter-latin.woff2", "fonts/inter-latin-ext.woff2",
+  "fonts/inter-latin.woff2", "fonts/inter-latin-ext.woff2", "fonts/source-serif-4-latin-600.woff2",
   "img/app-icon.svg", "img/app-icon-192.png", "img/favicon-32.png", "img/apple-touch-icon.png",
-  "theme.js", "site-nav.js", "utils.js", "ui.js", "search.js", "pwa.js", "announcements.js",
+  "theme.js", "home.js", "site-nav.js", "utils.js", "ui.js", "search.js", "pwa.js", "announcements.js",
   "programme.js", "unibo-data.js", "dashboard.js", "onboarding.js", "studyplan.js",
   "timetable.js", "exams.js", "calendar.js", "guide.js", "students.js",
   "notes-data.js", "notes-progress.js", "notes-render.js", "notes-landing.js", "notes-course.js",

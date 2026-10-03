@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- EU-HEM Student Hub app icon: "EU" in the site blue with a yellow accent bar.
-       Drawn as shapes (no font needed). PNG copies are made by scripts/make-icons.js. -->
-  <rect width="512" height="512" rx="112" fill="#1f4e79"/>
+  <!-- EU-HEM Student Hub app icon: "EU" on the site's dark ink colour with a terracotta accent bar.
+       Drawn as shapes (no font needed). The PNG copies in img/ were rendered from this file with headless Chrome. -->
+  <rect width="512" height="512" rx="112" fill="#20242a"/>
   <g fill="#ffffff">
     <!-- E -->
     <path d="M118 150h126v40h-80v42h72v38h-72v52h82v40H118z"/>
     <!-- U -->
     <path d="M276 150h46v126c0 26 14 40 36 40s36-14 36-40V150h46v128c0 54-32 86-82 86s-82-32-82-86z"/>
   </g>
-  <rect x="118" y="392" width="276" height="22" rx="11" fill="#f9a825"/>
+  <rect x="118" y="392" width="276" height="22" rx="11" fill="#c4613b"/>
 </svg>

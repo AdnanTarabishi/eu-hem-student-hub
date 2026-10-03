@@ -18,6 +18,8 @@ const PAIRS = [
   ["--color-muted", "--color-card", 4.5],
   ["--color-muted", "--color-background", 4.5],
   ["--color-muted", "--color-surface-alt", 4.5],
+  ["--color-muted", "--color-surface-muted", 4.5],
+  ["--color-primary", "--color-surface-alt", 4.5],
   ["--color-primary", "--color-card", 4.5],
   ["--color-primary", "--color-background", 4.5],
   ["--color-primary", "--color-primary-light", 4.5],
@@ -40,10 +42,21 @@ function readBlock(css, selector) {
   if (start === -1) throw new Error(`Not found in style.css: ${selector}`);
   while (start !== -1) {
     const body = css.slice(start, css.indexOf("}", start));
-    for (const match of body.matchAll(/(--[\w-]+):\s*(#[0-9a-fA-F]{3,6})\s*;/g)) vars[match[1]] = match[2];
+    for (const match of body.matchAll(/(--[\w-]+):\s*(#[0-9a-fA-F]{3,6}|var\(--[\w-]+\))\s*;/g)) vars[match[1]] = match[2];
     start = css.indexOf(selector + " {", start + 1);
   }
   return vars;
+}
+
+// "var(--brand-ink)" -> that variable's colour (the brand palette is referenced by name)
+function resolve(vars) {
+  const out = {};
+  for (const [name, value] of Object.entries(vars)) {
+    let v = value;
+    for (let i = 0; i < 5 && v.startsWith("var("); i++) v = vars[v.slice(4, -1)] || v;
+    out[name] = v;
+  }
+  return out;
 }
 
 // "#1f4e79" -> relative luminance (how bright the colour looks), as defined by WCAG
@@ -76,8 +89,8 @@ function checkTheme(name, vars) {
 
 function main() {
   const css = fs.readFileSync(path.join(__dirname, "..", "style.css"), "utf8");
-  const light = readBlock(css, ":root");
-  const dark = { ...light, ...readBlock(css, ':root:not([data-theme="light"])') };
+  const light = resolve(readBlock(css, ":root"));
+  const dark = resolve({ ...readBlock(css, ":root"), ...readBlock(css, ':root:not([data-theme="light"])') });
   console.log("Light mode");
   const failures = checkTheme("light", light);
   console.log("Dark mode");

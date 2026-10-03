@@ -5,8 +5,12 @@
 
 // The cities we have guides for. To add a city: write docs/content/<city>-guide.md
 // and add one line here. Only cities in this list can be loaded.
+// A city with file: null is planned: its page says "Coming soon" until the guide is written.
 const CITY_GUIDES = {
-  bologna: { name: "Bologna", file: "docs/content/bologna-guide.md" },
+  bologna: { name: "Bologna", country: "Italy", file: "docs/content/bologna-guide.md" },
+  oslo: { name: "Oslo", country: "Norway", file: null },
+  innsbruck: { name: "Innsbruck", country: "Austria", file: null },
+  rotterdam: { name: "Rotterdam", country: "Netherlands", file: null },
 };
 const DEFAULT_CITY = "bologna";
 
@@ -19,6 +23,19 @@ function headingId(text) {
     .replace(/^\d+\.\s*/, "")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
+}
+
+// A planned city without a guide yet
+function showComingSoon(guide) {
+  document.title = `${guide.name} City Guide – EU-HEM Student Hub`;
+  guideArticle.innerHTML = "";
+  guideArticle.appendChild(createElement("p", "coming-soon-badge", "Coming soon"));
+  guideArticle.appendChild(createElement("h1", null, `${guide.name} City Guide`));
+  guideArticle.appendChild(createElement("p", null,
+    `A practical guide to living and studying in ${guide.name} (${guide.country}): housing, transport, healthcare, study places and student tips, written by EU-HEM students.`));
+  const back = createElement("a", "button", "← Back to the homepage");
+  back.href = "index.html";
+  guideArticle.appendChild(back);
 }
 
 function showGuideError(message) {
@@ -94,6 +111,10 @@ async function loadGuide() {
   const guide = CITY_GUIDES[cityKey.toLowerCase()];
   if (!guide) {
     showGuideError(`Sorry, there is no guide for "${cityKey}" yet.`);
+    return;
+  }
+  if (!guide.file) {
+    showComingSoon(guide);
     return;
   }
 

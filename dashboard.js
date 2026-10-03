@@ -137,6 +137,21 @@ async function renderPlan() {
 
 // ----- Start -----
 
+// A request that takes longer than this counts as failed, so a card never shows "loading" forever
+const DASH_TIMEOUT_MS = 20000;
+
+function withTimeout(promise, ms = DASH_TIMEOUT_MS) {
+  return Promise.race([promise, new Promise((resolve, reject) => setTimeout(() => reject(new Error("Timed out")), ms))]);
+}
+
+// Any card still showing grey loading shapes gets an error message instead
+function failRemainingCards(message) {
+  for (const id of ["dash-today", "dash-exam", "dash-plan"]) {
+    const box = document.getElementById(id);
+    if (box && box.querySelector(".skeleton-group")) box.replaceChildren(createElement("p", "dash-empty", message));
+  }
+}
+
 async function initDashboard() {
   const now = new Date();
   document.getElementById("dash-date").textContent = formatDay(todayKey(), { weekday: "long", day: "numeric", month: "long", year: "numeric" });
@@ -144,14 +159,14 @@ async function initDashboard() {
   for (const id of ["dash-today", "dash-exam", "dash-plan"]) document.getElementById(id).appendChild(skeleton(3));
 
   try {
-    dash.programme = await getProgramme();
+    dash.programme = await withTimeout(getProgramme());
     dash.index = programmeIndex(dash.programme);
     dash.mine = myModuleCodes(dash.programme); // null without a saved plan
     renderPlan();
     const cohort = currentCohort(dash.programme);
     const term = currentTerm(dash.programme);
     const isMine = (codes) => !dash.mine || codes.some((c) => dash.mine.includes(c));
-    const [sessions, exams] = await Promise.allSettled([fetchTimetable(cohort.sources.timetableFeed), fetchExams(cohort.sources.examDates)]);
+    const [sessions, exams] = await Promise.allSettled([withTimeout(fetchTimetable(cohort.sources.timetableFeed)), withTimeout(fetchExams(cohort.sources.examDates))]);
     if (sessions.status === "fulfilled") renderToday(sessions.value.filter((s) => isMine([s.moduleCode])));
     else document.getElementById("dash-today").replaceChildren(createElement("p", "dash-empty", "The timetable couldn't be loaded from UniBo right now."));
     if (exams.status === "fulfilled") renderExam(matchExamsToTerm(exams.value, term).filter((e) => isMine(e.codes)));
@@ -163,6 +178,7 @@ async function initDashboard() {
     }
   } catch (error) {
     console.error("Dashboard:", error);
+    failRemainingCards("This couldn't be loaded right now. Please try again later.");
   }
 }
 

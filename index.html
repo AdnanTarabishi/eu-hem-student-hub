@@ -5,112 +5,208 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EU-HEM Student Hub</title>
-  <meta name="description" content="Unofficial student-run hub for the EU-HEM master's program.">
+  <meta name="description" content="Unofficial student-run hub for the EU-HEM master's program: schedules, study resources, students, cities and helpful tools.">
 
   <!-- Link to our stylesheet (controls colors, fonts, layout) -->
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=31168ab6">
-  <meta name="theme-color" content="#1f4e79">
+  <link rel="preload" href="fonts/source-serif-4-latin-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css?v=b65a180a">
+  <meta name="theme-color" content="#20242a">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="icon" href="img/app-icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <script src="theme.js?v=2016aab7"></script>
+  <!-- Homepage settings (photo, cohort numbers) + starts the photo download early -->
+  <script src="home.js?v=ae4dec45"></script>
 </head>
-<body>
+<body class="home-page">
 
   <!-- Top of the page: site name and navigation menu -->
   <header class="site-header">
     <div class="container">
-      <h1 class="site-title">EU-HEM Student Hub</h1>
+      <p class="site-title"><a href="index.html">EU-HEM Student Hub</a></p>
       <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
       <!-- site-nav.js builds the menu here (defined once for all pages) -->
       <nav class="site-nav" id="site-nav" data-current="" aria-label="Main menu"></nav>
-      <script src="site-nav.js?v=10831d04"></script>
+      <script src="site-nav.js?v=b2783667"></script>
     </div>
   </header>
 
-  <main class="container">
+  <main class="home">
 
-    <!-- Greeting (dashboard.js fills the date and greeting) -->
-    <section class="dash-hero">
-      <div>
-        <p id="dash-date" class="dash-date"></p>
-        <h1 id="dash-greeting">Welcome 👋</h1>
-        <p class="dash-sub">Your EU-HEM semester at a glance: classes, exams, your plan and the latest news.</p>
+    <!-- 1. Hero: cohort photo (HERO_IMAGE in home.js), title, buttons, cohort numbers -->
+    <section class="home-hero" aria-labelledby="hero-title">
+      <div id="hero-media" class="home-hero-media"></div>
+      <div class="container home-hero-inner">
+        <p class="hero-badge">Unofficial student-run platform</p>
+        <h1 id="hero-title">EU-HEM Student Hub</h1>
+        <p class="hero-tagline">Everything EU-HEM, in one place.</p>
+        <p class="hero-sentence">Schedules, study resources, students, cities, and helpful tools — built by students, for students.</p>
+        <div class="hero-actions">
+          <a class="button hero-button" href="#explore">Explore the Hub</a>
+          <a class="button hero-button-secondary" href="timetable.html">View Timetable</a>
+        </div>
+      </div>
+      <!-- 2. Cohort statistics (filled from the settings in home.js) -->
+      <div class="home-stats-bar">
+        <ul id="home-stats" class="container home-stats" aria-label="The cohort in numbers" hidden></ul>
+      </div>
+    </section>
+    <!-- Adds the photo and the numbers now, before the page is drawn -->
+    <script>buildHomeHero();</script>
+
+    <!-- 3. This week: live cards (dashboard.js fills them) -->
+    <section class="home-section" aria-labelledby="week-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="week-title" class="section-title">This Week</h2>
+          <p class="week-greeting"><span id="dash-greeting">Welcome 👋</span> <span id="dash-date" class="week-date"></span></p>
+        </div>
+        <script>fillWeekGreeting();</script>
+
+        <div class="dash-grid">
+          <section class="dash-card dash-today" aria-labelledby="dash-today-title">
+            <h3 id="dash-today-title"><svg class="icon" aria-hidden="true"><use href="icons.svg#clock"></use></svg> Today</h3>
+            <div id="dash-today" class="dash-body"></div>
+            <a class="dash-more" href="timetable.html">Open timetable →</a>
+          </section>
+
+          <section class="dash-card" aria-labelledby="dash-exam-title">
+            <h3 id="dash-exam-title"><svg class="icon" aria-hidden="true"><use href="icons.svg#exams"></use></svg> Next exam</h3>
+            <div id="dash-exam" class="dash-body"></div>
+            <a class="dash-more" href="exams.html">All exams →</a>
+          </section>
+
+          <section class="dash-card" aria-labelledby="dash-plan-title">
+            <h3 id="dash-plan-title"><svg class="icon" aria-hidden="true"><use href="icons.svg#study-plan"></use></svg> My plan</h3>
+            <div id="dash-plan" class="dash-body"></div>
+            <a class="dash-more" href="studyplan.html">Open Study Plan →</a>
+          </section>
+
+          <section id="announcements" class="dash-card dash-wide" aria-labelledby="dash-news-title">
+            <h3 id="dash-news-title"><svg class="icon" aria-hidden="true"><use href="icons.svg#announcements"></use></svg> Announcements</h3>
+            <p id="home-announcement-demo-note" class="demo-note" hidden>
+              <strong>Demo announcements</strong> — examples only, not real news.
+            </p>
+            <!-- announcements.js fills this with the latest announcements -->
+            <p id="latest-announcements-status" class="placeholder">Loading announcements…</p>
+            <div id="latest-announcements" class="announcement-list"></div>
+            <a class="dash-more see-all" href="announcements.html">See all announcements →</a>
+          </section>
+        </div>
+
+        <!-- First-visit welcome and setup checklist (onboarding.js) -->
+        <div id="welcome-slot"></div>
       </div>
     </section>
 
-    <!-- First-visit welcome and setup checklist (onboarding.js) -->
-    <div id="welcome-slot"></div>
-
-    <div class="dash-grid">
-      <!-- dashboard.js fills these cards -->
-      <section class="dash-card dash-today" aria-labelledby="dash-today-title">
-        <h2 id="dash-today-title"><svg class="icon" aria-hidden="true"><use href="icons.svg#clock"></use></svg> Today</h2>
-        <div id="dash-today" class="dash-body"></div>
-        <a class="dash-more" href="timetable.html">Open timetable →</a>
-      </section>
-
-      <section class="dash-card" aria-labelledby="dash-exam-title">
-        <h2 id="dash-exam-title"><svg class="icon" aria-hidden="true"><use href="icons.svg#exams"></use></svg> Next exam</h2>
-        <div id="dash-exam" class="dash-body"></div>
-        <a class="dash-more" href="exams.html">All exams →</a>
-      </section>
-
-      <section class="dash-card" aria-labelledby="dash-plan-title">
-        <h2 id="dash-plan-title"><svg class="icon" aria-hidden="true"><use href="icons.svg#study-plan"></use></svg> My plan</h2>
-        <div id="dash-plan" class="dash-body"></div>
-        <a class="dash-more" href="studyplan.html">Open Study Plan →</a>
-      </section>
-
-      <section id="announcements" class="dash-card dash-wide" aria-labelledby="dash-news-title">
-        <h2 id="dash-news-title"><svg class="icon" aria-hidden="true"><use href="icons.svg#announcements"></use></svg> Announcements</h2>
-        <p id="home-announcement-demo-note" class="demo-note" hidden>
-          <strong>Demo announcements</strong> — examples only, not real news.
-        </p>
-        <!-- announcements.js fills this with the latest announcements -->
-        <p id="latest-announcements-status" class="placeholder">Loading announcements...</p>
-        <div id="latest-announcements" class="announcement-list"></div>
-        <a class="dash-more see-all" href="announcements.html">See all announcements →</a>
-      </section>
-    </div>
-
-    <!-- Quick links to every section -->
-    <section aria-labelledby="tiles-title">
-      <h2 id="tiles-title" class="section-title">Explore</h2>
-      <div class="tiles">
-        <a class="tile" href="studyplan.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#study-plan"></use></svg><strong>Study Plan</strong><span>Choose courses, track CFU</span></a>
-        <a class="tile" href="timetable.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#timetable"></use></svg><strong>Timetable</strong><span>Week view, rooms, maps</span></a>
-        <a class="tile" href="exams.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#exams"></use></svg><strong>Exams</strong><span>Dates and registration</span></a>
-        <a class="tile" href="calendar.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#calendar"></use></svg><strong>Calendar</strong><span>Subscribe on your phone</span></a>
-        <a class="tile" href="notes.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#notes"></use></svg><strong>Notes &amp; Resources</strong><span>Notes, flashcards, quizzes</span></a>
-        <a class="tile" href="city-guide.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#guide"></use></svg><strong>City Guide</strong><span>Life in Bologna</span></a>
-        <a class="tile" href="announcements.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#announcements"></use></svg><strong>Announcements</strong><span>News from classmates</span></a>
-        <a class="tile" href="students.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#students"></use></svg><strong>Students</strong><span>Meet your cohort</span></a>
+    <!-- 4. Explore: every section of the site -->
+    <section id="explore" class="home-section home-section-alt" aria-labelledby="explore-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="explore-title" class="section-title">Explore</h2>
+          <p class="section-sub">Everything on the Hub, one tap away.</p>
+        </div>
+        <div class="tiles">
+          <a class="tile" href="studyplan.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#study-plan"></use></svg><strong>Study Plan</strong><span>Pick courses, track CFU</span></a>
+          <a class="tile" href="timetable.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#timetable"></use></svg><strong>Timetable</strong><span>Classes, rooms, maps</span></a>
+          <a class="tile" href="exams.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#exams"></use></svg><strong>Exams</strong><span>Dates and registration</span></a>
+          <a class="tile" href="calendar.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#calendar"></use></svg><strong>Calendar</strong><span>Subscribe on your phone</span></a>
+          <a class="tile" href="notes.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#notes"></use></svg><strong>Notes &amp; Resources</strong><span>Notes, flashcards, quizzes</span></a>
+          <a class="tile" href="city-guide.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#guide"></use></svg><strong>City Guide</strong><span>Life in Bologna</span></a>
+          <a class="tile" href="announcements.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#announcements"></use></svg><strong>Announcements</strong><span>News for the cohort</span></a>
+          <a class="tile" href="students.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#students"></use></svg><strong>Students</strong><span>Meet your classmates</span></a>
+        </div>
       </div>
     </section>
 
-    <div class="dash-footer-grid">
-      <section id="links" class="card">
-        <h2>Useful Links</h2>
-        <ul class="link-list">
-          <li><a href="https://virtuale.unibo.it" target="_blank" rel="noopener">Virtuale (UniBo)</a>: official lectures and course materials</li>
-          <li><a href="https://studenti.unibo.it" target="_blank" rel="noopener">Studenti Online</a>: study plan, certificates, bus pass</li>
-          <li><a href="https://almaesami.unibo.it/almaesami/welcome.htm" target="_blank" rel="noopener">AlmaEsami</a>: exam registration</li>
-          <li><a href="https://corsi.unibo.it/2cycle/euHealthEconomicsManagement" target="_blank" rel="noopener">EU-HEM course website</a>: official information</li>
+    <!-- 5. Notes & Resources preview (no content shown here, only what kinds exist) -->
+    <section class="home-section" aria-labelledby="notes-title">
+      <div class="container home-split">
+        <div class="home-split-text">
+          <h2 id="notes-title" class="section-title">Notes &amp; Resources</h2>
+          <p class="section-sub">Student-created learning material. Official lecture materials remain on
+            <a href="https://virtuale.unibo.it" target="_blank" rel="noopener">Virtuale</a>.</p>
+          <a class="button" href="notes.html">Browse Notes &amp; Resources</a>
+        </div>
+        <ul class="mini-cards">
+          <li class="mini-card"><svg class="icon" aria-hidden="true"><use href="icons.svg#notes"></use></svg><strong>Course Notes</strong><span>Topic by topic, written by students</span></li>
+          <li class="mini-card"><svg class="icon" aria-hidden="true"><use href="icons.svg#file"></use></svg><strong>Summaries</strong><span>The key points before an exam</span></li>
+          <li class="mini-card"><svg class="icon" aria-hidden="true"><use href="icons.svg#flashcards"></use></svg><strong>Flashcards</strong><span>Spaced repetition that remembers your progress</span></li>
+          <li class="mini-card"><svg class="icon" aria-hidden="true"><use href="icons.svg#list"></use></svg><strong>Practice Questions</strong><span>Check yourself, with explanations</span></li>
         </ul>
-      </section>
+      </div>
+    </section>
 
-      <section id="about" class="card">
-        <h2>About</h2>
-        <p>
-          A free, volunteer project by EU-HEM students, for EU-HEM students.
-          It is not an official website of the University of Bologna or any partner university.
-          Your study plan and progress are saved only on your device.
-        </p>
-      </section>
-    </div>
+    <!-- 6. Meet the cohort (numbers from home.js; decorative only: no names or personal data) -->
+    <section class="home-section home-section-alt" aria-labelledby="cohort-title">
+      <div class="container home-split">
+        <div class="home-split-text">
+          <h2 id="cohort-title" class="section-title">Meet the Cohort</h2>
+          <p class="section-sub"><span data-setting="STUDENT_COUNT"></span> students from <span data-setting="COUNTRY_COUNT"></span> countries,
+            bringing together diverse academic and professional backgrounds.</p>
+          <a class="button" href="students.html">Explore Student Directory</a>
+          <p id="cohort-demo-note" class="cohort-demo-note" hidden>The directory currently shows <strong>demo profiles</strong>, not real students.</p>
+        </div>
+        <div class="cohort-art" aria-hidden="true">
+          <div id="cohort-dots" class="cohort-dots"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Life across EU-HEM: the cities of the programme -->
+    <section class="home-section" aria-labelledby="cities-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="cities-title" class="section-title">Life Across EU-HEM</h2>
+          <p class="section-sub">Practical guides to the cities of the programme, written by students.</p>
+        </div>
+        <div class="city-cards">
+          <a class="city-card" href="city-guide.html?city=bologna">
+            <span class="city-country">Italy</span><strong>Bologna</strong>
+            <span>Housing, transport, healthcare, study places</span><span class="city-status is-ready">Read the guide →</span>
+          </a>
+          <a class="city-card" href="city-guide.html?city=oslo">
+            <span class="city-country">Norway</span><strong>Oslo</strong>
+            <span>For the Oslo track</span><span class="city-status">Coming soon</span>
+          </a>
+          <a class="city-card" href="city-guide.html?city=innsbruck">
+            <span class="city-country">Austria</span><strong>Innsbruck</strong>
+            <span>For the Innsbruck track</span><span class="city-status">Coming soon</span>
+          </a>
+          <a class="city-card" href="city-guide.html?city=rotterdam">
+            <span class="city-country">Netherlands</span><strong>Rotterdam</strong>
+            <span>For the Rotterdam track</span><span class="city-status">Coming soon</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Useful links and about -->
+    <section class="home-section home-section-alt" aria-labelledby="links-title">
+      <div class="container home-links-grid">
+        <div id="links">
+          <h2 id="links-title" class="section-title">Useful Links</h2>
+          <ul class="compact-links">
+            <li><a href="https://virtuale.unibo.it" target="_blank" rel="noopener">Virtuale (UniBo)</a><span>Official lectures and course materials</span></li>
+            <li><a href="https://studenti.unibo.it" target="_blank" rel="noopener">Studenti Online</a><span>Study plan, certificates, bus pass</span></li>
+            <li><a href="https://almaesami.unibo.it/almaesami/welcome.htm" target="_blank" rel="noopener">AlmaEsami</a><span>Exam registration</span></li>
+            <li><a href="https://corsi.unibo.it/2cycle/euHealthEconomicsManagement" target="_blank" rel="noopener">EU-HEM course website</a><span>Official information</span></li>
+          </ul>
+        </div>
+        <div id="about">
+          <h2 class="section-title">About</h2>
+          <p>A free, volunteer project by EU-HEM students, for EU-HEM students.
+            It is not an official website of the University of Bologna or any partner university.
+            Your study plan and progress are saved only on your device.</p>
+          <p><a href="privacy.html">Privacy</a> · <a href="contact.html">Contact</a></p>
+        </div>
+      </div>
+      <!-- PHOTO CREDIT: hidden until we know the photographer. To show it: replace the text in
+           brackets with their name and delete the word "hidden" below. -->
+      <p class="container photo-credit" hidden>Cover photo: [photographer's name], EU-HEM cohort 2026.</p>
+    </section>
   </main>
 
   <footer class="site-footer">
@@ -130,7 +226,7 @@
   <script defer src="unibo-data.js?v=7939f2b4"></script>
   <script defer src="notes-data.js?v=44a1e162"></script>
   <script defer src="notes-progress.js?v=09768295"></script>
-  <script defer src="dashboard.js?v=eb8d913f"></script>
+  <script defer src="dashboard.js?v=d8100937"></script>
   <script defer src="onboarding.js?v=818ae25e"></script>
 
 </body>
