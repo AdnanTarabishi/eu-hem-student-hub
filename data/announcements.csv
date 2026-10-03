@@ -1,4 +1,4 @@
 Date,Title,Category,Message,Link,Pinned,Expires,Posted by
 2026-10-01,[TEST] Welcome to the EU-HEM Student Hub,Student,"This is a test announcement. The Student Hub collects our timetable, exam dates, city guides and more in one place. Feedback is welcome!",,Yes,,Student Hub team
-2026-10-01,[TEST] Lecture room change,Social,Test only: this checks the red urgent banner. It should disappear automatically after the expiry date.,https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/timetable,No,2026-10-03,Student Hub team
+2026-10-01,[TEST] Lecture room change,urgent,Test only: this checks the red urgent banner. It should disappear automatically after the expiry date.,https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/timetable,No,2026-10-03,Student Hub team
 2026-09-28,[TEST] Aperitivo on Friday,Social,Test only: a social event example with a link and an expiry date.,,No,2026-10-10,Student Hub team
