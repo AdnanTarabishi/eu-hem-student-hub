@@ -1184,6 +1184,28 @@ SUMMARY:Last day to register: Statistics For Healthcare
 DESCRIPTION:Exam on 2026-11-03 at 11:00. Register on AlmaEsami.
 END:VEVENT
 BEGIN:VEVENT
+UID:exam-2026-11-04-13-00-219-WS01-128-AULA-B-BERTI-PICHAT@eu-hem-student-h
+ ub
+DTSTAMP:20260101T000000Z
+DTSTART;TZID=Europe/Rome:20261104T130000
+DTEND;TZID=Europe/Rome:20261104T150000
+SUMMARY:Exam: Our Right To Health: Needs\, Resources And Society
+LOCATION:219_WS01_128 - AULA B BERTI PICHAT
+DESCRIPTION:Type: Written\nTeacher: Frischhut Markus\nRegistration closes: 
+ 2026-11-01\nEnd time is an estimate (2 h). Register on AlmaEsami.\nSource:
+  official UniBo exam dates
+END:VEVENT
+BEGIN:VEVENT
+UID:registration-2026-11-04-13-00-219-WS01-128-AULA-B-BERTI-PICHAT@eu-hem-s
+ tudent-hub
+DTSTAMP:20260101T000000Z
+DTSTART;VALUE=DATE:20261101
+DTEND;VALUE=DATE:20261102
+SUMMARY:Last day to register: Our Right To Health: Needs\, Resources And So
+ ciety
+DESCRIPTION:Exam on 2026-11-04 at 13:00. Register on AlmaEsami.
+END:VEVENT
+BEGIN:VEVENT
 UID:exam-2026-11-04-15-00-LAB-G-LAB-T-Via-Ranzani-1-@eu-hem-student-hub
 DTSTAMP:20260101T000000Z
 DTSTART;TZID=Europe/Rome:20261104T150000
@@ -1321,6 +1343,26 @@ DTSTART;VALUE=DATE:20270110
 DTEND;VALUE=DATE:20270111
 SUMMARY:Last day to register: Statistics For Healthcare
 DESCRIPTION:Exam on 2027-01-14 at 09:00. Register on AlmaEsami.
+END:VEVENT
+BEGIN:VEVENT
+UID:exam-2027-01-20-13-00-191-WP01-A11-AULA-11@eu-hem-student-hub
+DTSTAMP:20260101T000000Z
+DTSTART;TZID=Europe/Rome:20270120T130000
+DTEND;TZID=Europe/Rome:20270120T150000
+SUMMARY:Exam: Our Right To Health: Needs\, Resources And Society
+LOCATION:191_WP01_A11 - AULA 11
+DESCRIPTION:Type: Written\nTeacher: Frischhut Markus\nRegistration closes: 
+ 2027-01-17\nEnd time is an estimate (2 h). Register on AlmaEsami.\nSource:
+  official UniBo exam dates
+END:VEVENT
+BEGIN:VEVENT
+UID:registration-2027-01-20-13-00-191-WP01-A11-AULA-11@eu-hem-student-hub
+DTSTAMP:20260101T000000Z
+DTSTART;VALUE=DATE:20270117
+DTEND;VALUE=DATE:20270118
+SUMMARY:Last day to register: Our Right To Health: Needs\, Resources And So
+ ciety
+DESCRIPTION:Exam on 2027-01-20 at 13:00. Register on AlmaEsami.
 END:VEVENT
 BEGIN:VEVENT
 UID:exam-2027-01-22-09-00-Aula-3-Scaravilli@eu-hem-student-hub
