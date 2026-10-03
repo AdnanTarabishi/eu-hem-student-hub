@@ -1,3 +1,6 @@
 # Calendar files must keep Windows-style line endings (CRLF), as the iCalendar standard requires.
 # "-text" tells Git never to convert them.
 *.ics -text
+
+# Written by the announcements robot exactly as Google sends it; don't convert line endings
+data/announcements.csv -text

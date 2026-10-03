@@ -6,12 +6,11 @@
 
 // ----- Settings -----
 
-// Where announcements come from: the class Google Sheet, downloaded as CSV.
-// This is the sheet's "export" address (its sharing link with /edit... replaced by /export?format=csv).
-// The sheet must be shared as "Anyone with the link: Viewer".
+// Where announcements come from: a copy of the class Google Sheet that a GitHub robot
+// refreshes every 15 minutes (scripts/fetch-announcements.js). Reading our own copy works
+// even where ad blockers or networks block Google. The sheet's address is set in that script.
 // For demo data instead, use: "data/sample-announcements.csv"
-const ANNOUNCEMENTS_URL =
-  "https://docs.google.com/spreadsheets/d/1yDfWywa8DWZsKgl_UeA0_8kLzSDnW2PmnH91LbUp6Wg/export?format=csv";
+const ANNOUNCEMENTS_URL = "data/announcements.csv";
 
 // "New" badge for announcements posted in the last 3 days (today + the 2 days before)
 const NEW_FOR_DAYS = 3;
