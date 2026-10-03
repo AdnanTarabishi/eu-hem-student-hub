@@ -15,17 +15,9 @@
     <div class="container">
       <p class="site-title"><a href="index.html">EU-HEM Student Hub</a></p>
       <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
-      <nav class="site-nav">
-        <a href="announcements.html">Announcements</a>
-        <a href="index.html#schedule">Timetable</a>
-        <a href="index.html#exams">Exams</a>
-        <a href="index.html#calendar">Calendar</a>
-        <a href="notes.html">Notes</a>
-        <a href="city-guide.html" aria-current="page">City Guide</a>
-        <a href="students.html">Students</a>
-        <a href="index.html#links">Useful Links</a>
-        <a href="index.html#about">About</a>
-      </nav>
+      <!-- site-nav.js builds the menu here (defined once for all pages) -->
+      <nav class="site-nav" id="site-nav" data-current="city-guide" aria-label="Main menu"></nav>
+      <script src="site-nav.js"></script>
     </div>
   </header>
 

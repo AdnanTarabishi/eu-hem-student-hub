@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study Plan – EU-HEM Student Hub</title>
+  <meta name="description" content="Plan your EU-HEM courses: choose options, check CFU and follow your progress.">
+  <link rel="stylesheet" href="style.css">
+  <script src="theme.js"></script>
+</head>
+<body class="wide-page">
+
+  <header class="site-header">
+    <div class="container">
+      <p class="site-title"><a href="index.html">EU-HEM Student Hub</a></p>
+      <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
+      <!-- site-nav.js builds the menu here (defined once for all pages) -->
+      <nav class="site-nav" id="site-nav" data-current="studyplan" aria-label="Main menu"></nav>
+      <script src="site-nav.js"></script>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Clearly visible: this page does not submit anything -->
+    <section class="plan-notice" role="note">
+      <div>
+        <p class="plan-notice-title">ⓘ This is a planning tool. It does not submit your study plan.</p>
+        <p id="plan-deadline">Official submission deadline: …</p>
+      </div>
+      <a id="plan-submit" class="button" href="https://studenti.unibo.it" target="_blank" rel="noopener">Submit on Studenti Online ↗</a>
+    </section>
+
+    <section class="card">
+      <div class="notes-heading">
+        <h2>Study Plan &amp; Progress</h2>
+        <button id="plan-reset" type="button" class="button button-danger">Reset my plan</button>
+      </div>
+      <p id="plan-source" class="schedule-meta">Loading the rules…</p>
+      <p class="demo-note">💾 Saved on this device only. Nothing is sent anywhere.</p>
+
+      <!-- studyplan.js fills the semester tabs, the view switch, the summary and the course groups -->
+      <div id="plan-terms" class="track-tabs page-tabs" role="tablist" aria-label="Semester"></div>
+      <div id="plan-views" class="filter-chips" role="tablist" aria-label="View"></div>
+      <div id="plan-summary"></div>
+    </section>
+
+    <div id="plan-content"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>EU-HEM Student Hub &middot; Unofficial student project</p>
+    </div>
+  </footer>
+
+  <script src="utils.js"></script>
+  <script src="announcements.js"></script>
+  <script src="programme.js"></script>
+  <script src="studyplan.js"></script>
+
+</body>
+</html>

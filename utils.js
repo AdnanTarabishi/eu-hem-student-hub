@@ -119,3 +119,17 @@ function writeStorage(key, value) {
     return false;
   }
 }
+
+// A progress bar element: <div class="progress-bar"><span style="width: 40%"></span></div>
+function progressBar(percent, label) {
+  const bar = createElement("div", "progress-bar");
+  bar.setAttribute("role", "progressbar");
+  bar.setAttribute("aria-valuemin", "0");
+  bar.setAttribute("aria-valuemax", "100");
+  bar.setAttribute("aria-valuenow", String(percent));
+  bar.setAttribute("aria-label", label || `${percent}% done`);
+  const fill = createElement("span");
+  fill.style.width = `${percent}%`;
+  bar.appendChild(fill);
+  return bar;
+}
