@@ -1,5 +1,6 @@
-/* ===== Font: Inter, hosted on this site (SIL Open Font License, see fonts/LICENSE-Inter-OFL.txt) =====
-   Not loaded from Google Fonts, so visitors' browsers don't contact Google (privacy by design). */
+/* ===== Fonts, hosted on this site (SIL Open Font License, see fonts/LICENSE-*.txt) =====
+   Not loaded from Google Fonts, so visitors' browsers don't contact Google (privacy by design).
+   Inter: all text. Source Serif 4: big titles only (the "European academic" touch). */
 @font-face {
   font-family: "Inter";
   font-style: normal;
@@ -20,58 +21,91 @@
     U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("fonts/source-serif-4-latin-600.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("fonts/source-serif-4-latin-ext-600.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 /* ===== Scales: one set of sizes for the whole site ===== */
 :root {
   --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-heading: var(--font-serif);
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
   --radius-pill: 999px;
   --shadow-sm: 0 1px 2px var(--color-shadow), 0 1px 3px var(--color-shadow);
-  --shadow-md: 0 4px 12px var(--color-shadow), 0 1px 3px var(--color-shadow);
+  --shadow-md: 0 4px 14px var(--color-shadow), 0 1px 3px var(--color-shadow);
   --shadow-lg: 0 12px 32px var(--color-shadow-strong);
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
   --header-height: 64px;
+}
+
+/* ===== Brand palette: warm, European, inspired by Bologna =====
+   Change the site's look here. The colour names below (--color-…) point to these. */
+:root {
+  --brand-terracotta: #a64b2a;   /* links, buttons, accents */
+  --brand-ink: #20242a;          /* header, dark text, hero */
+  --brand-paper: #f7f4ef;        /* page background */
+  --brand-white: #ffffff;        /* cards */
+  --brand-muted: #667085;        /* secondary text */
+  --brand-ochre: #c98b2e;        /* small highlights (Bologna's yellow walls) */
 }
 
 /* ===== Color palette =====
    Defined once here as "variables" so we can change the whole site's look in one place. */
 :root {
   color-scheme: light;
-  --color-primary: #1f4e79;
-  --color-primary-light: #e8f0f8;
-  --color-primary-border: #c9d8e8;
+  --color-primary: var(--brand-terracotta);
+  --color-primary-light: #f6ebe5;
+  --color-primary-border: #e7cfc3;
   --color-on-primary: #ffffff;
-  --color-header-bg: #1f4e79;
+  --color-header-bg: var(--brand-ink);
   --color-header-text: #ffffff;
-  --color-text: #222222;
-  --color-muted: #666666;
-  --color-faint: #b0b8c1;
-  --color-background: #f5f7fa;
-  --color-card: #ffffff;
-  --color-surface-alt: #f7f9fc;
-  --color-surface-zebra: #fafbfd;
-  --color-surface-muted: #f0f1f3;
-  --color-border: #dde3ea;
-  --color-divider: #e6ebf0;
-  --color-input-border: #c9d3de;
-  --color-shadow: rgba(0, 0, 0, 0.08);
-  --color-shadow-strong: rgba(0, 0, 0, 0.14);
-  --color-accent: #f9a825;
-  --color-warning-bg: #fff8e1;
-  --color-success-bg: #e3f2e9;
+  --color-text: var(--brand-ink);
+  --color-muted: var(--brand-muted);
+  --color-faint: #b9b2a8;
+  --color-background: var(--brand-paper);
+  --color-card: var(--brand-white);
+  --color-surface-alt: #fbf9f6;
+  --color-surface-zebra: #fcfbf8;
+  --color-surface-muted: #f8f5f0;
+  --color-border: #e6dfd5;
+  --color-divider: #eee8e0;
+  --color-input-border: #d3cabe;
+  --color-shadow: rgba(32, 36, 42, 0.07);
+  --color-shadow-strong: rgba(32, 36, 42, 0.13);
+  --color-accent: var(--brand-ochre);
+  --color-warning-bg: #fdf4e3;
+  --color-success-bg: #e5f1e8;
   --color-success-text: #1b6b45;
-  --color-danger-bg: #fbe4e4;
+  --color-danger-bg: #fbe6e3;
   --color-danger-text: #a12a2a;
   --color-urgent: #b71c1c;
-  --pill-blue-bg: #e3eefb;
-  --pill-blue-text: #1f4e79;
+  --pill-blue-bg: #e6eef7;
+  --pill-blue-text: #24507a;
   --pill-purple-bg: #ede7f6;
   --pill-purple-text: #4a2c8a;
   --pill-amber-bg: #fbf0dc;
   --pill-amber-text: #8a5a0b;
-  --pill-orange-bg: #fff0e0;
-  --pill-orange-text: #9a4b00;
+  --pill-orange-bg: #fbeee6;
+  --pill-orange-text: #96431f;
   --pill-pink-bg: #f6e6f0;
   --pill-pink-text: #8a2f63;
 }
@@ -79,29 +113,31 @@
 /* ===== Dark mode =====
    The same colour names with dark values. They apply when the device is set to dark mode
    (unless the visitor chose light with the 🌙/☀️ button), or when the visitor chose dark.
-   theme.js sets data-theme="light" or "dark" on <html> when the button is used. */
+   theme.js sets data-theme="light" or "dark" on <html> when the button is used.
+   The two blocks below must stay identical. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --color-primary: #8ab8e8;
-    --color-primary-light: #1b2b3c;
-    --color-primary-border: #2e4560;
-    --color-on-primary: #0d1a28;
-    --color-header-bg: #13263a;
-    --color-header-text: #e6edf5;
-    --color-text: #e3e8ee;
-    --color-muted: #9aa7b4;
-    --color-faint: #5d6a77;
-    --color-background: #0e141b;
-    --color-card: #17202a;
-    --color-surface-alt: #1d2833;
-    --color-surface-zebra: #1a242e;
-    --color-surface-muted: #222d38;
-    --color-border: #2b3744;
-    --color-divider: #232e39;
-    --color-input-border: #3a4857;
+    --color-primary: #e9a07f;
+    --color-primary-light: #33241e;
+    --color-primary-border: #563a2e;
+    --color-on-primary: #1d1512;
+    --color-header-bg: #15171b;
+    --color-header-text: #efe9e2;
+    --color-text: #ece6df;
+    --color-muted: #a8adb8;
+    --color-faint: #5f646d;
+    --color-background: #121418;
+    --color-card: #1c1f24;
+    --color-surface-alt: #22262c;
+    --color-surface-zebra: #1f2228;
+    --color-surface-muted: #282c33;
+    --color-border: #30343b;
+    --color-divider: #282c32;
+    --color-input-border: #3d424a;
     --color-shadow: rgba(0, 0, 0, 0.45);
     --color-shadow-strong: rgba(0, 0, 0, 0.6);
+    --color-accent: #e0a64f;
     --color-warning-bg: #2f2812;
     --color-success-bg: #163222;
     --color-success-text: #7fd3a2;
@@ -113,8 +149,8 @@
     --pill-purple-text: #c6b4f2;
     --pill-amber-bg: #362c12;
     --pill-amber-text: #e9c46a;
-    --pill-orange-bg: #3b2a14;
-    --pill-orange-text: #f6b56d;
+    --pill-orange-bg: #3b2416;
+    --pill-orange-text: #f2ad85;
     --pill-pink-bg: #3a2031;
     --pill-pink-text: #eda5d1;
   }
@@ -122,25 +158,26 @@
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --color-primary: #8ab8e8;
-  --color-primary-light: #1b2b3c;
-  --color-primary-border: #2e4560;
-  --color-on-primary: #0d1a28;
-  --color-header-bg: #13263a;
-  --color-header-text: #e6edf5;
-  --color-text: #e3e8ee;
-  --color-muted: #9aa7b4;
-  --color-faint: #5d6a77;
-  --color-background: #0e141b;
-  --color-card: #17202a;
-  --color-surface-alt: #1d2833;
-  --color-surface-zebra: #1a242e;
-  --color-surface-muted: #222d38;
-  --color-border: #2b3744;
-  --color-divider: #232e39;
-  --color-input-border: #3a4857;
+  --color-primary: #e9a07f;
+  --color-primary-light: #33241e;
+  --color-primary-border: #563a2e;
+  --color-on-primary: #1d1512;
+  --color-header-bg: #15171b;
+  --color-header-text: #efe9e2;
+  --color-text: #ece6df;
+  --color-muted: #a8adb8;
+  --color-faint: #5f646d;
+  --color-background: #121418;
+  --color-card: #1c1f24;
+  --color-surface-alt: #22262c;
+  --color-surface-zebra: #1f2228;
+  --color-surface-muted: #282c33;
+  --color-border: #30343b;
+  --color-divider: #282c32;
+  --color-input-border: #3d424a;
   --color-shadow: rgba(0, 0, 0, 0.45);
   --color-shadow-strong: rgba(0, 0, 0, 0.6);
+  --color-accent: #e0a64f;
   --color-warning-bg: #2f2812;
   --color-success-bg: #163222;
   --color-success-text: #7fd3a2;
@@ -152,8 +189,8 @@
   --pill-purple-text: #c6b4f2;
   --pill-amber-bg: #362c12;
   --pill-amber-text: #e9c46a;
-  --pill-orange-bg: #3b2a14;
-  --pill-orange-text: #f6b56d;
+  --pill-orange-bg: #3b2416;
+  --pill-orange-text: #f2ad85;
   --pill-pink-bg: #3a2031;
   --pill-pink-text: #eda5d1;
 }
@@ -2965,7 +3002,7 @@ mark {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr repeat(3, 1fr);
+  grid-template-columns: 2fr repeat(4, 1fr);
   gap: 24px;
 }
 
@@ -3677,21 +3714,6 @@ details > summary {
 }
 
 /* ===== Home dashboard ===== */
-.dash-hero {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 12px;
-  margin: 8px 0 20px;
-}
-
-.dash-hero h1 {
-  margin: 2px 0 4px;
-  font-size: clamp(1.8rem, 4vw, 2.4rem);
-  font-weight: 800;
-}
-
 .dash-date {
   margin: 0;
   font-size: 0.85rem;
@@ -3724,7 +3746,8 @@ details > summary {
   min-width: 0;
 }
 
-.dash-card h2 {
+.dash-card h2,
+.dash-card h3 {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -3734,7 +3757,8 @@ details > summary {
   color: var(--color-text);
 }
 
-.dash-card h2 .icon {
+.dash-card h2 .icon,
+.dash-card h3 .icon {
   color: var(--color-primary);
 }
 
@@ -4270,80 +4294,759 @@ main.container {
   }
 }
 
-/* ===== Home hero with the cohort photo (index.html, HERO_IMAGE) ===== */
-.dash-hero.has-photo {
+/* =====================================================================
+   Homepage (index.html): hero, cohort numbers and community sections
+   ===================================================================== */
+
+/* Big titles use the serif heading font on every page */
+h1 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* The homepage has no top padding: the hero touches the header */
+main.home {
+  padding: 0;
+}
+
+/* "Explore the Hub" scrolls smoothly (not when the device asks for less motion),
+   and stops below the sticky header */
+@media (prefers-reduced-motion: no-preference) {
+  html:has(.home-page) {
+    scroll-behavior: smooth;
+  }
+}
+
+.home [id] {
+  scroll-margin-top: calc(var(--header-height) + 16px);
+}
+
+/* ----- 1. Hero ----- */
+.home-hero {
   position: relative;
-  min-height: clamp(220px, 34vw, 340px);
-  padding: 24px 28px;
-  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 62vh;
+  min-height: 62svh; /* svh = the screen height without the phone address bar */
+  background: var(--brand-ink); /* shown while the photo loads, or if it is missing */
+  color: #ffffff;
   overflow: hidden;
-  box-shadow: var(--shadow-md);
   isolation: isolate;
 }
 
-.dash-hero-photo,
-.dash-hero-photo img {
+.home-hero-media,
+.home-hero-media picture,
+.home-hero-media img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+}
+
+.home-hero-media {
   z-index: -2;
 }
 
-.dash-hero-photo img {
-  object-fit: cover;
-  object-position: center 72%; /* keep the people in view, not the sky */
+.home-hero-media img {
+  object-fit: cover; /* fills the hero like background-size: cover */
+  object-position: center 68%; /* keep the people in view, not the sky */
 }
 
-/* Dark fade at the bottom, so the white text is readable on any part of the photo */
-.dash-hero.has-photo::after {
+/* Dark overlay: a light tint everywhere, stronger at the bottom where the text is */
+.home-hero::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(to top, rgba(8, 20, 34, 0.85) 0%, rgba(8, 20, 34, 0.45) 45%, rgba(8, 20, 34, 0) 75%);
+  background:
+    linear-gradient(to top, rgba(20, 22, 26, 0.92) 0%, rgba(20, 22, 26, 0.7) 38%, rgba(20, 22, 26, 0.3) 75%),
+    rgba(20, 22, 26, 0.2);
 }
 
-.dash-hero.has-photo .dash-hero-text {
-  align-self: flex-end;
+.home-hero-inner {
+  padding-top: 48px;
+  padding-bottom: 28px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.hero-badge {
+  display: inline-block;
+  margin: 0 0 14px;
+  padding: 4px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: var(--radius-pill);
+  background: rgba(20, 22, 26, 0.35);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.home-hero h1 {
+  margin: 0;
+  font-size: clamp(2.3rem, 5.5vw, 4rem);
+  line-height: 1.05;
   color: #ffffff;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-.dash-hero.has-photo .dash-date {
-  color: #ffd166;
+.hero-tagline {
+  margin: 10px 0 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.2rem, 2.4vw, 1.6rem);
+  color: #f3dccf;
 }
 
-.dash-hero.has-photo .dash-sub {
+.hero-sentence {
+  max-width: 560px;
+  margin: 10px 0 0;
+  font-size: 1.02rem;
+  line-height: 1.55;
   color: rgba(255, 255, 255, 0.92);
 }
 
-/* Phones: photo on top, text underneath (so the text doesn't cover everyone's faces) */
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.hero-actions .button {
+  padding: 12px 22px;
+  font-size: 1rem;
+  text-shadow: none;
+}
+
+.hero-button {
+  background: var(--brand-terracotta);
+  color: #ffffff;
+}
+
+.hero-button-secondary {
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.home-hero a:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+}
+
+/* Returning students (a study plan is saved): a shorter hero, so "This Week" is higher up */
+.home-compact .home-hero {
+  min-height: 38vh;
+  min-height: 38svh;
+}
+
+.home-compact .hero-badge,
+.home-compact .hero-sentence {
+  display: none;
+}
+
+.home-compact .home-hero-inner {
+  padding-top: 32px;
+  padding-bottom: 20px;
+}
+
+.home-compact .hero-actions {
+  margin-top: 16px;
+}
+
+/* ----- 2. Cohort numbers ----- */
+.home-stats-bar {
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(20, 22, 26, 0.55);
+  backdrop-filter: blur(6px);
+}
+
+.home-stats {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  margin: 0 auto;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  list-style: none;
+}
+
+.home-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2px 8px;
+  text-align: center;
+}
+
+.home-stat + .home-stat {
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.home-stat-number {
+  /* Equal-width digits in a box as wide as the final number, so counting up never moves anything */
+  display: inline-block;
+  min-width: calc(var(--digits, 3) * 0.62em);
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-variant-numeric: tabular-nums lining-nums;
+  line-height: 1.1;
+  color: #ffffff;
+}
+
+.home-stat-label {
+  margin-top: 2px;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ----- Sections ----- */
+.home-section {
+  padding: 56px 0;
+}
+
+.home-section + .home-section {
+  border-top: 1px solid var(--color-divider);
+}
+
+.home-section-alt {
+  background: var(--color-surface-alt);
+}
+
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
+  margin-bottom: 22px;
+}
+
+.home .section-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.55rem, 3vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.section-sub {
+  margin: 6px 0 0;
+  color: var(--color-muted);
+  font-size: 1.02rem;
+}
+
+.week-greeting {
+  margin: 0;
+  color: var(--color-muted);
+  font-weight: 600;
+}
+
+.week-date::before {
+  content: "· ";
+}
+
+.week-date:empty {
+  display: none;
+}
+
+/* ----- 3. This Week: the live cards ----- */
+.home .dash-grid {
+  margin-bottom: 0;
+}
+
+.home .dash-card {
+  padding: 20px 22px;
+  border-radius: 16px;
+}
+
+.home #welcome-slot:not(:empty) {
+  margin-top: 20px;
+}
+
+/* ----- 4. Explore ----- */
+.home .tiles {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+}
+
+.home .tile {
+  padding: 18px;
+  border-radius: 16px;
+}
+
+.home .tile:hover {
+  border-color: var(--color-primary-border);
+}
+
+/* ----- 5. Notes & Resources and 6. Meet the cohort: text + cards side by side ----- */
+.home-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  gap: 32px 48px;
+  align-items: center;
+}
+
+.home-split-text .button {
+  margin-top: 18px;
+}
+
+.mini-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mini-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: var(--color-card);
+  box-shadow: var(--shadow-sm);
+}
+
+.mini-card .icon {
+  width: 22px;
+  height: 22px;
+  margin-bottom: 4px;
+  color: var(--color-primary);
+}
+
+.mini-card span {
+  color: var(--color-muted);
+  font-size: 0.88rem;
+}
+
+.cohort-demo-note {
+  margin: 12px 0 0;
+  color: var(--color-muted);
+  font-size: 0.88rem;
+}
+
+/* Decorative: one small dot per student, in the palette colours */
+.cohort-art {
+  padding: 22px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: var(--color-card);
+  box-shadow: var(--shadow-sm);
+}
+
+.cohort-dots {
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  gap: 8px;
+}
+
+.cohort-dots span {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--color-primary);
+  opacity: 0.85;
+}
+
+.cohort-dots span:nth-child(3n + 2) {
+  background: var(--color-accent);
+}
+
+.cohort-dots span:nth-child(5n + 3) {
+  background: var(--color-text);
+  opacity: 0.7;
+}
+
+.cohort-dots span:nth-child(7n + 1) {
+  background: var(--color-primary-border);
+  opacity: 1;
+}
+
+/* ----- 7. Cities ----- */
+.city-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.city-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px;
+  border: 1px solid var(--color-border);
+  border-top: 4px solid var(--color-primary);
+  border-radius: 16px;
+  background: var(--color-card);
+  color: var(--color-text);
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease);
+}
+
+.city-card:nth-child(2) { border-top-color: #3d6a8c; }
+.city-card:nth-child(3) { border-top-color: #5f7d4e; }
+.city-card:nth-child(4) { border-top-color: var(--color-accent); }
+
+.city-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.city-card strong {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.city-card span {
+  color: var(--color-muted);
+  font-size: 0.88rem;
+}
+
+.city-card .city-country {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.city-card .city-status {
+  margin-top: auto;
+  padding-top: 10px;
+  font-weight: 600;
+}
+
+.city-card .city-status.is-ready {
+  color: var(--color-primary);
+}
+
+/* ----- 8. Useful links + about ----- */
+.home-links-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: 32px 48px;
+}
+
+.compact-links {
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.compact-links li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.compact-links a {
+  font-weight: 600;
+}
+
+.compact-links span {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+#about p {
+  margin: 14px 0 0;
+  color: var(--color-muted);
+  line-height: 1.6;
+}
+
+.photo-credit {
+  margin-top: 28px;
+  color: var(--color-muted);
+  font-size: 0.8rem;
+}
+
+/* City guide "coming soon" (guide.js) */
+.coming-soon-badge {
+  display: inline-block;
+  margin: 0 0 8px;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* ----- Less motion when the device asks for it ----- */
+@media (prefers-reduced-motion: reduce) {
+  .tile:hover,
+  .city-card:hover,
+  .course-card:hover,
+  .exam-card:hover {
+    transform: none;
+  }
+}
+
+/* ----- Tablets ----- */
+@media (max-width: 1000px) {
+  .home .tiles,
+  .city-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-split,
+  .home-links-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ----- Phones ----- */
 @media (max-width: 600px) {
-  .dash-hero.has-photo {
-    display: block;
-    min-height: 0;
-    padding: 0;
-    background: #13263a;
+  .home-hero {
+    min-height: 72vh;
+    min-height: 72svh;
+    text-align: center;
   }
 
-  .dash-hero-photo {
-    position: relative;
-    display: block;
-    height: auto;
-    aspect-ratio: 16 / 10;
+  .home-hero-inner {
+    padding-top: 32px;
+    padding-bottom: 20px;
   }
 
-  .dash-hero-photo img {
-    z-index: 0;
+  .hero-sentence {
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  .dash-hero.has-photo::after {
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .home-compact .home-hero {
+    min-height: 40vh;
+    min-height: 40svh;
+  }
+
+  /* Numbers: 2 x 2 */
+  .home-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-flow: row;
+    row-gap: 10px;
+  }
+
+  .home-stat + .home-stat {
+    border-left: none;
+  }
+
+  .home-stat:nth-child(even) {
+    border-left: 1px solid rgba(255, 255, 255, 0.14);
+  }
+
+  .home-section {
+    padding: 40px 0;
+  }
+
+  .mini-cards,
+  .city-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home .tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cohort-dots {
+    gap: 6px;
+  }
+}
+
+/* ===== Simple text pages (privacy.html, contact.html) ===== */
+.text-page {
+  max-width: 760px;
+  margin: 0 auto;
+  line-height: 1.65;
+}
+
+.text-page h1 {
+  margin: 4px 0 8px;
+  font-size: clamp(1.9rem, 4vw, 2.5rem);
+}
+
+.text-page h2 {
+  margin: 28px 0 6px;
+  font-size: 1.15rem;
+}
+
+.text-page-lead {
+  font-size: 1.08rem;
+  color: var(--color-muted);
+}
+
+.text-page-updated {
+  margin-top: 28px;
+  color: var(--color-muted);
+  font-size: 0.88rem;
+}
+
+.draft-badge {
+  display: inline-block;
+  margin: 0 0 8px;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--color-warning-bg);
+  color: var(--pill-amber-text);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.placeholder-box {
+  margin: 20px 0;
+  padding: 16px 18px;
+  border: 2px dashed var(--color-input-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-alt);
+}
+
+.placeholder-box p {
+  margin: 4px 0 0;
+  color: var(--color-muted);
+}
+
+/* Hero fixes: full-width content box (a centred box inside a flex column otherwise shrinks
+   to fit its content), and a tighter phone layout so the top of "This Week" peeks out */
+.home-hero > .container,
+.home-stats-bar > .container {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .home-hero {
+    min-height: 66vh;
+    min-height: 66svh;
+  }
+
+  .home-hero-media img {
+    object-position: center 88%; /* phones crop to a tall shape: aim at the people */
+  }
+
+  .home-hero-inner {
+    padding-top: 24px;
+    padding-bottom: 16px;
+  }
+
+  .hero-badge {
+    margin-bottom: 10px;
+    font-size: 0.7rem;
+  }
+
+  .home-hero h1 {
+    font-size: 2.05rem;
+  }
+
+  .hero-tagline {
+    margin-top: 6px;
+    font-size: 1.1rem;
+  }
+
+  .hero-sentence {
+    font-size: 0.93rem;
+    line-height: 1.45;
+  }
+
+  .hero-actions {
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .hero-actions .button {
+    flex: 1 1 0;
+    padding: 11px 10px;
+    font-size: 0.95rem;
+  }
+
+  .home-stats {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    row-gap: 6px;
+  }
+
+  .home-stat-number {
+    font-size: 1.45rem;
+  }
+
+  .home-stat-label {
+    font-size: 0.74rem;
+  }
+}
+
+/* Very narrow phones (under 360 px): stack the two buttons */
+@media (max-width: 359px) {
+  .hero-actions {
+    flex-direction: column;
+  }
+}
+
+/* Calmer cohort dots: smaller, softer, in a narrower box */
+.cohort-art {
+  max-width: 460px;
+  justify-self: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.cohort-dots {
+  gap: 9px;
+}
+
+.cohort-dots span {
+  opacity: 0.55;
+}
+
+.cohort-dots span:nth-child(3n + 2) {
+  opacity: 0.6;
+}
+
+.cohort-dots span:nth-child(5n + 3) {
+  opacity: 0.35;
+}
+
+/* Phones: two columns for the small cards, so the page is shorter */
+@media (max-width: 600px) {
+  .mini-cards,
+  .city-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .mini-card,
+  .city-card {
+    padding: 14px;
+  }
+
+  .mini-card span:not(:first-child) {
+    font-size: 0.82rem;
+  }
+
+  .city-card strong {
+    font-size: 1.15rem;
+  }
+
+  .city-card span:not(.city-country):not(.city-status) {
     display: none;
   }
+}
 
-  .dash-hero.has-photo .dash-hero-text {
-    padding: 14px 18px 18px;
-    text-shadow: none;
+/* Header: icon-only search up to 1100 px, so the tagline, menu and buttons fit (e.g. at 1024 px) */
+@media (max-width: 1100px) {
+  .header-button .search-label,
+  .header-button kbd {
+    display: none;
   }
 }

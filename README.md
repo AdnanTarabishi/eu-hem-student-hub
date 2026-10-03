@@ -5,7 +5,7 @@ A free, volunteer website for students of the EU-HEM master's program (European 
 **Live site:** https://adnantarabishi.github.io/eu-hem-student-hub/
 
 ## What's on it
-- **Home dashboard:** today's classes (now / next), the next exam with a countdown, your plan's progress and the latest announcements, plus a 5-step welcome checklist for new visitors
+- **Homepage:** a hero with the cohort photo and cohort numbers, "This Week" (today's classes, next exam, your plan, announcements), Explore, a Notes & Resources preview, Meet the Cohort, and the programme's cities; returning students (with a saved study plan) get a shorter hero
 - **Study Plan & Progress:** plan your courses with the official rules (CFU, required and optional groups), track each course (Studying → Exam booked → Passed) and see a timeline. A planning tool only: it does not submit anything.
 - **Timetable** (`timetable.html`): 1st-year classes loaded live from the official UniBo timetable, in a Week or List view, with "My courses only", room map links and "add this class to my calendar"
 - **Exams** (`exams.html`): 1st-year exam dates with countdown and registration status (opens / open / closed), loaded live from the official UniBo exam dates page
@@ -40,8 +40,14 @@ My Study List, theme, timetable view, welcome checklist. Nothing is sent anywher
 
 The header, main menu and footer are drawn on every page by `site-nav.js`.
 
-**Design system:** colours, sizes, corners and shadows are variables at the top of `style.css`
-(light and dark mode). Font: Inter, stored in `fonts/` (no Google Fonts, so no visitor data goes to Google).
+**Homepage settings:** the photo, cohort numbers and programme end date are in one block at the
+top of `home.js` (`HERO_IMAGE`, `STUDENT_COUNT`, `COUNTRY_COUNT`, `TRACK_COUNT`, `PROGRAM_END_DATE`).
+For a new photo, put the JPG in `assets/images/` with WebP copies named `<name>-640.webp`,
+`<name>-960.webp` and `<name>-1280.webp`. The photo credit is at the bottom of `index.html`.
+
+**Design system:** the brand palette (terracotta, ink, warm paper) is at the top of `style.css` as
+`--brand-…` variables; every other colour, size, corner and shadow variable builds on it (light and dark mode).
+Fonts: Inter for text and Source Serif 4 for big titles, stored in `fonts/` (no Google Fonts, so no visitor data goes to Google).
 Icons: `icons.svg` (from Lucide), used as `<svg class="icon"><use href="icons.svg#calendar"></use></svg>`.
 Shared helpers (toasts, skeletons, add-to-calendar files, map links) are in `ui.js`.
 Check colour contrast (WCAG AA, light and dark): `node scripts/check-contrast.js`.
@@ -88,10 +94,15 @@ It currently uses fictional demo data. Before using real data:
   consenting students and only the 4 directory columns, never the raw form responses (emails, timestamps).
 - Never commit real student data to this repository. `private-data/` and `*.private.csv` are git-ignored.
 
+## Privacy and contact pages
+`privacy.html` is a **draft** written from what the code does; review it before relying on it.
+`contact.html` has a placeholder where the contact method goes.
+
 ## Adding a city guide
 City guides are Markdown files shown by one template page, `city-guide.html`.
 1. Write the guide as `docs/content/<city>-guide.md`, using the same structure as
    `docs/content/bologna-guide.md` (a `>` "Last checked" + disclaimer block under the title,
    then numbered `##` sections).
-2. Add one line for the city to `CITY_GUIDES` in `guide.js`.
+2. Add one line for the city to `CITY_GUIDES` in `guide.js` (Oslo, Innsbruck and Rotterdam are already
+   there with `file: null`, which shows "Coming soon": just fill in the file name).
 3. The guide is then at `city-guide.html?city=<city>`.

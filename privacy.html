@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy (draft) – EU-HEM Student Hub</title>
+  <meta name="description" content="How the EU-HEM Student Hub handles data: what is loaded, what stays on your device, and who to ask.">
+  <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css?v=b65a180a">
+  <meta name="theme-color" content="#20242a">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="img/app-icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <script src="theme.js?v=2016aab7"></script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <p class="site-title"><a href="index.html">EU-HEM Student Hub</a></p>
+      <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
+      <!-- site-nav.js builds the menu here (defined once for all pages) -->
+      <nav class="site-nav" id="site-nav" data-current="" aria-label="Main menu"></nav>
+      <script src="site-nav.js?v=b2783667"></script>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="card text-page">
+      <!-- DRAFT: written from what the code does on 3 October 2026. Review before publishing. -->
+      <p class="draft-badge">Draft: not yet reviewed</p>
+      <h1>Privacy</h1>
+      <p class="text-page-lead">The short version: there are no accounts, no tracking and no analytics.
+        Your study plan and progress stay on your own device.</p>
+
+      <h2>What stays on your device</h2>
+      <p>Some choices are saved in your browser's own storage (called <em>localStorage</em>), on your device only.
+        They are never sent to us or to anyone else:</p>
+      <ul>
+        <li>your study plan and course statuses</li>
+        <li>your progress in Notes &amp; Resources and your saved study list</li>
+        <li>light or dark mode, the timetable view, "My courses only", and the welcome checklist</li>
+      </ul>
+      <p>If you install the Hub as an app, your device also keeps copies of the site's public pages and data,
+        so it works offline. To remove everything, clear this site's data in your browser settings.</p>
+
+      <h2>What the site loads, and from where</h2>
+      <ul>
+        <li><strong>GitHub Pages</strong> hosts the site. Like any web host, GitHub receives your IP address
+          when you visit (see GitHub's privacy statement).</li>
+        <li><strong>University of Bologna:</strong> the timetable and exam dates are loaded directly from
+          corsi.unibo.it by your browser, so UniBo's servers see that request.</li>
+        <li><strong>Announcements</strong> are written in a Google Sheet. A robot copies them to this site,
+          so your browser does not contact Google to show them.</li>
+        <li><strong>Notes and the City Guide</strong> use two small libraries (for text and formulas) from
+          cdnjs (Cloudflare), which sees that request.</li>
+        <li><strong>Fonts</strong> are stored on this site, so no font service is contacted.</li>
+        <li><strong>Links</strong> to Google Maps, Google Calendar, Outlook, Virtuale and other sites only
+          contact those services when you click them.</li>
+      </ul>
+
+      <h2>Accounts, cookies and tracking</h2>
+      <p>There are no accounts or logins. The site sets no cookies, and uses no analytics, advertising
+        or tracking tools.</p>
+
+      <h2>Students directory</h2>
+      <p>The directory currently shows <strong>fictional demo profiles</strong>. Real profiles will only be
+        added with each student's consent, and phone numbers and personal emails will never be published.</p>
+
+      <h2>The group photo</h2>
+      <p>The homepage shows a group photo of the EU-HEM cohort. If you appear in it and would like it changed
+        or removed (for example, blurred or replaced), please <a href="contact.html">contact us</a>
+        and we will act on it promptly.</p>
+
+      <h2>Questions</h2>
+      <p>This is a volunteer student project. For any privacy question or request, see the
+        <a href="contact.html">Contact page</a>.</p>
+
+      <p class="text-page-updated">Last updated: [date, to fill in when the draft is approved].</p>
+      <p><a href="index.html">← Back to the homepage</a></p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>EU-HEM Student Hub &middot; Unofficial student project</p>
+    </div>
+  </footer>
+
+  <script defer src="utils.js?v=671dcb1b"></script>
+  <script defer src="ui.js?v=3026c782"></script>
+  <script defer src="search.js?v=488e0e19"></script>
+  <script defer src="pwa.js?v=c9212bf8"></script>
+  <script defer src="announcements.js?v=4ad85af3"></script>
+
+</body>
+</html>

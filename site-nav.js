@@ -202,7 +202,7 @@ function siteIcon(name, className = "icon") {
     const brandBox = make("div", "footer-brand");
     brandBox.appendChild(make("strong", null, "EU-HEM Student Hub"));
     brandBox.appendChild(make("p", null,
-      "Unofficial, free, student-run. Not affiliated with the University of Bologna or partner universities. Always check official sources."));
+      "An independent, student-run platform created to help EU-HEM students navigate academics, resources and student life."));
     grid.appendChild(brandBox);
     for (const entry of SITE_MENU.filter((e) => e.items)) {
       const column = make("div");
@@ -235,9 +235,33 @@ function siteIcon(name, className = "icon") {
     install.appendChild(installButton);
     helpList.appendChild(install);
     help.appendChild(helpList);
+    // "About" column: about the site, privacy, contact, useful links and the code on GitHub
+    const about = make("div");
+    about.appendChild(make("h3", null, "About"));
+    const aboutList = make("ul");
+    for (const [label, href] of [
+      ["About", "index.html#about"],
+      ["Privacy", "privacy.html"],
+      ["Contact", "contact.html"],
+      ["Useful Links", "index.html#links"],
+      ["GitHub", "https://github.com/AdnanTarabishi/eu-hem-student-hub"],
+    ]) {
+      const li = make("li");
+      const a = make("a", null, label);
+      a.href = href;
+      if (href.startsWith("https://")) {
+        a.target = "_blank";
+        a.rel = "noopener";
+      }
+      li.appendChild(a);
+      aboutList.appendChild(li);
+    }
+    about.appendChild(aboutList);
+    grid.appendChild(about);
     footer.appendChild(grid);
     footer.appendChild(make("p", "footer-bottom",
-      "Made by EU-HEM students, for EU-HEM students. Your study plan and progress are saved only on your device."));
+      "This is an unofficial student project and is not an official website of the University of Bologna, EU-HEM, or any partner university. " +
+      "Your study plan and progress are saved only on your device."));
   }
   const afterLoad = () => {
     addSkipLink();
