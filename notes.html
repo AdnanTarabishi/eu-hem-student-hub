@@ -6,6 +6,10 @@
   <title>Notes & Resources – EU-HEM Student Hub</title>
   <meta name="description" content="Student-made notes, flashcards and practice questions for EU-HEM courses.">
   <link rel="stylesheet" href="style.css">
+  <!-- KaTeX typesets maths formulas. The integrity hashes make the browser refuse changed files. -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.18.9/katex.min.css"
+        integrity="sha512-Rfg9EdqjpGE1A2hfXuPwoCjeoAj6tmGYP07mO3x1JLqebk59EeWLbXw2kPBb2kK6qNB+Sn2vr/+/WPtV3zg4Tg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
   <script src="theme.js"></script>
 </head>
 <body>
@@ -29,20 +33,27 @@
   </header>
 
   <main class="container">
-    <section class="card notes-intro">
+    <!-- Hero: title, totals, search, contribute -->
+    <section class="notes-hero">
       <div class="notes-heading">
-        <h2>Notes &amp; Resources</h2>
+        <div>
+          <h2>Notes &amp; Resources</h2>
+          <p class="notes-hero-text">
+            Student-made notes, flashcards and practice questions for 1st-year courses.
+            Official lectures and slides stay on <a href="https://virtuale.unibo.it" target="_blank" rel="noopener">Virtuale</a>.
+          </p>
+        </div>
         <!-- notes-landing.js sets the link from content/settings.json -->
         <span id="contribute-slot"></span>
       </div>
-      <p>
-        Student-made notes, flashcards and practice questions for 1st-year courses.
-        Official lectures and slides stay on <a href="https://virtuale.unibo.it" target="_blank" rel="noopener">Virtuale</a>.
-      </p>
+
+      <!-- notes-landing.js fills in the totals -->
+      <div id="hero-stats" class="hero-stats" aria-label="Content totals"></div>
 
       <label class="search-pill notes-search">
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
         <input id="notes-search" type="search" placeholder="Search notes, concepts, flashcards, questions…" aria-label="Search notes and resources">
+        <kbd class="search-key" title="Press / to search">/</kbd>
       </label>
     </section>
 
@@ -60,9 +71,17 @@
     </div>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.18.9/katex.min.js"
+          integrity="sha512-GhPAsUUkFs/ecbt0rvbBtWH4Te4RBSq5cblJRUfSvBXPL6Q8mAAriATm+tqxrbjsDGvoQYS9q9ww4XE0Osl+MQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.18.9/contrib/auto-render.min.js"
+          integrity="sha512-0HzJcHCD+wBh9kNUUcm3DWH9IbNDfudsYyMD5EHwSuFK6aEsaa/UEPqqk4t0pm4bbmwR6A11yNsD7Q+nz6XF+Q=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="utils.js"></script>
   <script src="announcements.js"></script>
   <script src="notes-data.js"></script>
+  <script src="notes-progress.js"></script>
+  <script src="notes-render.js"></script>
   <script src="notes-landing.js"></script>
 
 </body>

@@ -1062,7 +1062,7 @@ a.track-tab {
   display: block;
   background: var(--color-card);
   border-radius: 10px;
-  border-top: 3px solid var(--color-primary);
+  border-top: 4px solid var(--course-color, var(--color-primary));
   padding: 14px 16px;
   color: var(--color-text);
   text-decoration: none;
@@ -1085,7 +1085,7 @@ a.track-tab {
 
 .course-card-title {
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--color-text);
 }
 
 .course-card-counts {
@@ -1103,6 +1103,7 @@ a.track-tab {
 /* Course page */
 .course-header {
   margin-bottom: 16px;
+  border-top: 4px solid var(--course-color, var(--color-primary));
 }
 
 .course-header .page-tabs {
@@ -1501,6 +1502,639 @@ a.track-tab {
 
   .flashcard {
     padding: 14px;
+  }
+}
+
+/* ===== Notes & Resources: upgrade ===== */
+
+/* The course page is wider, to fit the topic sidebar next to the notes */
+.wide-page .container {
+  max-width: 1150px;
+}
+
+/* Landing hero */
+.notes-hero {
+  margin: 24px 0 16px;
+  padding: 24px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-card));
+  border: 1px solid var(--color-primary-border);
+}
+
+.notes-hero h2 {
+  margin: 0 0 4px;
+  font-size: 1.8rem;
+  color: var(--color-primary);
+}
+
+.notes-hero-text {
+  margin: 0;
+  max-width: 640px;
+}
+
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  margin: 18px 0 14px;
+}
+
+.hero-stat,
+.progress-tile {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-stat-number {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--color-primary);
+}
+
+.hero-stat-label {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.search-key {
+  border: 1px solid var(--color-input-border);
+  border-radius: 4px;
+  padding: 0 6px;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+mark {
+  background: #ffe58a;
+  color: #222222;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+/* Filter chips (search results, flashcard modes) */
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 8px 0;
+}
+
+.filter-chip {
+  border: 1px solid var(--color-input-border);
+  background: var(--color-card);
+  color: var(--color-text);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.filter-chip[aria-pressed="true"] {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-on-primary);
+  font-weight: 600;
+}
+
+.filter-course {
+  flex: 0 1 260px;
+  padding: 5px 12px;
+}
+
+/* Course cards: icon, status, progress */
+.course-group-title {
+  margin: 20px 0 10px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-muted);
+}
+
+.course-card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.course-card-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.course-icon {
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  background: color-mix(in srgb, var(--course-color, var(--color-primary)) 16%, transparent);
+}
+
+.course-icon.small {
+  flex-basis: 30px;
+  width: 30px;
+  height: 30px;
+  font-size: 1rem;
+  border-radius: 8px;
+}
+
+.course-card-badges,
+.course-status-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin-top: 10px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 1px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.status-now { background: var(--color-success-bg); color: var(--color-success-text); }
+.status-upcoming { background: var(--pill-blue-bg); color: var(--pill-blue-text); }
+.status-finished { background: var(--color-surface-muted); color: var(--color-muted); }
+
+.course-card-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.course-card-progress .progress-bar {
+  flex: 1;
+}
+
+.progress-bar {
+  height: 8px;
+  min-width: 80px;
+  border-radius: 999px;
+  background: var(--color-surface-muted);
+  overflow: hidden;
+}
+
+.progress-bar span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--course-color, var(--color-primary));
+  transition: width 0.3s ease;
+}
+
+/* Course page header */
+.course-title-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.course-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1 1 260px;
+}
+
+.course-progress .progress-bar {
+  flex: 0 1 200px;
+}
+
+/* My progress */
+.progress-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.progress-tile {
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+}
+
+.progress-table {
+  display: flex;
+  flex-direction: column;
+}
+
+.progress-row {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-divider);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.progress-row:hover .course-card-title {
+  text-decoration: underline;
+}
+
+.progress-row-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress-row-cell .progress-bar {
+  margin-bottom: 4px;
+}
+
+.progress-tools {
+  margin-top: 16px;
+}
+
+.button-danger {
+  background: var(--color-danger-bg);
+  color: var(--color-danger-text);
+}
+
+/* Topic list: status */
+.topic-row-side {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.topic-status {
+  font-size: 0.8rem;
+  white-space: nowrap;
+  color: var(--color-muted);
+}
+
+.topic-status.status-read { color: var(--pill-amber-text); }
+.topic-status.status-understood { color: var(--color-success-text); font-weight: 600; }
+
+/* Reader: sidebar + notes */
+.reader-layout {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: 28px;
+}
+
+.topic-sidebar {
+  position: sticky;
+  top: 12px;
+  align-self: start;
+  max-height: calc(100vh - 24px);
+  overflow-y: auto;
+  padding-right: 8px;
+  border-right: 1px solid var(--color-divider);
+}
+
+.topic-sidebar h4 {
+  margin: 0 0 8px;
+}
+
+.topic-sidebar ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.topic-sidebar li a,
+.topic-sidebar li .is-empty {
+  display: flex;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.topic-sidebar li a:hover {
+  background: var(--color-surface-alt);
+}
+
+.topic-sidebar li a.is-current {
+  background: var(--color-primary-light);
+  font-weight: 600;
+}
+
+.topic-sidebar .is-empty {
+  color: var(--color-faint);
+}
+
+.topic-status-icon {
+  flex: 0 0 14px;
+  color: var(--color-muted);
+}
+
+.topic-status-icon.status-read { color: var(--pill-amber-text); }
+.topic-status-icon.status-understood { color: var(--color-success-text); }
+
+.topic-jump-label {
+  display: none;
+}
+
+.reader-title {
+  font-size: 1.5rem;
+}
+
+.reader-meta {
+  margin: 2px 0 0;
+}
+
+.on-this-page {
+  margin: 12px 0;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.on-this-page ul {
+  margin: 4px 0 0;
+  padding-left: 18px;
+}
+
+.on-this-page a.is-sub {
+  font-size: 0.85rem;
+}
+
+.notes-body h2,
+.notes-body h3 {
+  scroll-margin-top: 12px;
+}
+
+/* Images in notes */
+.notes-figure {
+  margin: 16px 0;
+  text-align: center;
+}
+
+.zoom-button {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 6px;
+  background: #ffffff; /* diagrams are drawn for a white background */
+  cursor: zoom-in;
+  max-width: 100%;
+}
+
+.zoom-button img {
+  display: block;
+  max-width: 100%;
+  max-height: 420px;
+  height: auto;
+}
+
+.notes-figure figcaption {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.image-zoom {
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  max-width: 95vw;
+  max-height: 95vh;
+  background: #ffffff;
+  color: #222222;
+}
+
+.image-zoom::backdrop {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.image-zoom img {
+  display: block;
+  max-width: 90vw;
+  max-height: 80vh;
+  margin: 0 auto;
+}
+
+.image-zoom-caption {
+  margin: 8px 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.image-zoom-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: #eceff3;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Topic progress buttons */
+.topic-progress-box {
+  margin-top: 24px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: var(--color-surface-alt);
+}
+
+.topic-progress-box h4 {
+  margin: 0 0 8px;
+}
+
+.status-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.status-button {
+  border: 1px solid var(--color-input-border);
+  background: var(--color-card);
+  color: var(--color-text);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.status-button[aria-pressed="true"].status-none { background: var(--color-surface-muted); font-weight: 600; }
+.status-button[aria-pressed="true"].status-read { background: var(--pill-amber-bg); color: var(--pill-amber-text); border-color: var(--pill-amber-text); font-weight: 600; }
+.status-button[aria-pressed="true"].status-understood { background: var(--color-success-bg); color: var(--color-success-text); border-color: var(--color-success-text); font-weight: 600; }
+
+/* Previous / Next topic */
+.topic-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-divider);
+}
+
+.pager-link {
+  font-weight: 600;
+  max-width: 48%;
+}
+
+.pager-link.is-next {
+  text-align: right;
+  margin-left: auto;
+}
+
+/* Smart flashcards */
+.flashcard-done {
+  text-align: center;
+  padding: 24px 12px;
+  border: 1px dashed var(--color-primary-border);
+  border-radius: 10px;
+  margin-top: 12px;
+}
+
+.flashcard-done-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+
+.grade-button {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 82px;
+  line-height: 1.2;
+}
+
+.grade-when {
+  font-size: 0.75rem;
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+.grade-again { background: var(--color-danger-bg); color: var(--color-danger-text); }
+.grade-hard { background: var(--pill-amber-bg); color: var(--pill-amber-text); }
+.grade-good { background: var(--color-success-bg); color: var(--color-success-text); }
+.grade-easy { background: var(--pill-blue-bg); color: var(--pill-blue-text); }
+
+/* Quiz */
+.quiz-box {
+  margin-top: 8px;
+}
+
+.quiz-setup {
+  margin-bottom: 12px;
+}
+
+.quiz-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.quiz-clock {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.quiz-clock.is-low {
+  color: var(--color-danger-text);
+}
+
+.quiz-question {
+  margin-top: 12px;
+}
+
+.quiz-after {
+  margin-top: 10px;
+}
+
+.quiz-quit {
+  margin-top: 12px;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: var(--color-muted);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.quiz-result {
+  text-align: center;
+  padding: 16px;
+  border-radius: 10px;
+  background: var(--color-surface-alt);
+  margin-bottom: 16px;
+}
+
+.quiz-score {
+  margin: 0;
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.quiz-result .progress-bar {
+  max-width: 320px;
+  margin: 8px auto 0;
+}
+
+.quiz-review {
+  margin-bottom: 10px;
+}
+
+/* KaTeX formulas follow the text colour (also in dark mode) */
+.katex {
+  font-size: 1.05em;
+}
+
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 4px 0;
+}
+
+/* Phones and small tablets */
+@media (max-width: 860px) {
+  .reader-layout {
+    grid-template-columns: minmax(0, 1fr); /* minmax(0, ...) lets the column shrink to the screen */
+    gap: 0;
+  }
+
+  .topic-sidebar {
+    display: none;
+  }
+
+  .topic-jump-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .topic-jump {
+    flex: 1;
+    min-width: 0;
+    padding: 6px;
+    font-size: 0.95rem;
+  }
+
+  .progress-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
   }
 }
 

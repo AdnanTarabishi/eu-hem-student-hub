@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 300" role="img" aria-labelledby="title desc">
+  <title id="title">Demand curve for health care</title>
+  <desc id="desc">A downward-sloping demand curve: when the price of care falls from P1 to P2, the quantity demanded rises from Q1 to Q2.</desc>
+  <rect width="420" height="300" fill="#ffffff"/>
+  <!-- Axes -->
+  <g stroke="#333333" stroke-width="2" fill="none">
+    <path d="M60 20 V250 H400"/>
+    <path d="M54 30 L60 20 L66 30"/>
+    <path d="M390 244 L400 250 L390 256"/>
+  </g>
+  <!-- Demand curve -->
+  <path d="M80 45 C 150 140, 230 200, 380 228" stroke="#1f4e79" stroke-width="3.5" fill="none"/>
+  <text x="372" y="214" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#1f4e79">D</text>
+  <!-- Two points on the curve -->
+  <g stroke="#2e7d32" stroke-width="1.5" stroke-dasharray="5 4">
+    <path d="M60 107 H142 V250"/>
+    <path d="M60 196 H262 V250"/>
+  </g>
+  <circle cx="142" cy="107" r="5" fill="#2e7d32"/>
+  <circle cx="262" cy="196" r="5" fill="#2e7d32"/>
+  <g font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#333333">
+    <text x="36" y="112">P₁</text>
+    <text x="36" y="201">P₂</text>
+    <text x="134" y="270">Q₁</text>
+    <text x="254" y="270">Q₂</text>
+    <text x="14" y="16">Price of care</text>
+    <text x="300" y="290">Quantity of care</text>
+  </g>
+  <text x="170" y="80" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#666666">Sample diagram</text>
+</svg>

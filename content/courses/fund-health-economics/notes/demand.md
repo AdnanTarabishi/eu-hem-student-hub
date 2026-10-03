@@ -17,6 +17,18 @@ sample: true
 ### How to structure a topic
 Start with the main question the topic answers, then explain the key model step by step.
 
+### Example formula
+Formulas use `$...$` inside a sentence, for example price elasticity $\varepsilon = \frac{\%\Delta Q}{\%\Delta P}$, or `$$...$$` on their own line:
+
+$$
+\varepsilon = \frac{\Delta Q / Q}{\Delta P / P}
+$$
+
+### Example diagram
+Images are stored in the course's `images/` folder. Click the picture to enlarge it.
+
+![Sample demand curve: when the price of care falls from P1 to P2, the quantity demanded rises from Q1 to Q2](images/demand-curve.svg)
+
 ### Example sub-section
 Use short paragraphs, **bold** for key terms, and lists for steps:
 

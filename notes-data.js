@@ -184,6 +184,27 @@ function conceptsForCourse(courseId, concepts) {
   return concepts.filter((c) => (c.topics || []).some((t) => courseIdOf(t) === courseId));
 }
 
+// ----- Course colour and teaching status -----
+
+// Used when a course.json has no "color"
+const COURSE_PALETTE = ["#1f6fb2", "#2e7d32", "#6a1b9a", "#ef6c00", "#00838f", "#ad1457", "#5d4037", "#3949ab"];
+
+function courseColor(courseData, index) {
+  const color = courseData.course.color;
+  return /^#[0-9a-fA-F]{6}$/.test(color || "") ? color : COURSE_PALETTE[index % COURSE_PALETTE.length];
+}
+
+// "Teaching now" / "Coming up" / "Finished", from teachingStart/teachingEnd and today's date
+function teachingStatus(info, today) {
+  const start = info.teachingStart;
+  const end = info.teachingEnd;
+  if (!start || !end) return null;
+  const inDays = (n, what) => (n === 0 ? `${what} today` : n === 1 ? `${what} tomorrow` : `${what} in ${n} days`);
+  if (today < start) return { key: "upcoming", label: "Coming up", detail: inDays(daysBetween(today, start), "starts") };
+  if (today > end) return { key: "finished", label: "Finished", detail: "" };
+  return { key: "now", label: "Teaching now", detail: inDays(daysBetween(today, end), "ends") };
+}
+
 // ----- My Study List (bookmarks) -----
 // Saved in this browser only (localStorage), as a list of { id, savedAt }.
 
@@ -275,6 +296,40 @@ function searchIndex(entries, query) {
   return entries.filter((entry) => words.every((word) => entry.searchable.includes(word)));
 }
 
+// Wraps the matching words of "text" in <mark>, safely (no HTML is built from text).
+// Matching ignores accents and capitals, like the search itself.
+function highlightMatches(text, query) {
+  const fragment = document.createDocumentFragment();
+  const words = simplify(query).split(/\s+/).filter(Boolean);
+  // Simplified version of the text + where each simplified letter came from in the original
+  let simple = "";
+  const origin = [];
+  for (let i = 0; i < text.length; i++) {
+    const s = simplify(text[i]);
+    for (let k = 0; k < s.length; k++) {
+      simple += s[k];
+      origin.push(i);
+    }
+  }
+  const marked = new Array(text.length).fill(false);
+  for (const word of words) {
+    let at = simple.indexOf(word);
+    while (at !== -1) {
+      for (let k = at; k < at + word.length; k++) marked[origin[k]] = true;
+      at = simple.indexOf(word, at + word.length);
+    }
+  }
+  let i = 0;
+  while (i < text.length) {
+    let j = i;
+    while (j < text.length && marked[j] === marked[i]) j++;
+    const piece = text.slice(i, j);
+    fragment.appendChild(marked[i] ? createElement("mark", null, piece) : document.createTextNode(piece));
+    i = j;
+  }
+  return fragment;
+}
+
 // A short piece of text around the first matching word
 function searchSnippet(entry, query) {
   const word = simplify(query).split(/\s+/).filter(Boolean)[0] || "";
@@ -311,6 +366,6 @@ if (typeof module !== "undefined") {
   module.exports = {
     CONTENT_ROOT, QUESTION_TYPES, DIFFICULTIES, RESOURCE_TYPES,
     readJson, parseFrontMatter, splitReview, reviewPoints, loadCourse, loadNotes, loadAll,
-    courseIdOf, itemTypeOf,
+    courseIdOf, itemTypeOf, teachingStatus,
   };
 }

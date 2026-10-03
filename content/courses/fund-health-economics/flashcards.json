@@ -10,7 +10,7 @@
     "id": "fund-health-economics.fc.002",
     "topic": "fund-health-economics.demand",
     "front": "What does a price elasticity of demand of -0.2 mean?",
-    "back": "A 10% rise in price lowers the quantity demanded by about 2%. Demand is inelastic: it reacts only a little to price.",
+    "back": "Elasticity $\\varepsilon = \\frac{\\%\\Delta Q}{\\%\\Delta P} = -0.2$: a 10% rise in price lowers the quantity demanded by about 2%. Demand is inelastic: it reacts only a little to price.",
     "sample": true
   },
   {

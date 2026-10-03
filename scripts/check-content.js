@@ -185,6 +185,22 @@ async function main() {
         if (points < 5 || points > 10) error(file, `"5-minute review" has ${points} bullet points; it should have 5 to 10`);
       }
       if (!notes.notes) warn(file, "has a review but no notes below it");
+
+      // Images: ![description](images/file.png), relative to the course folder
+      for (const match of `${notes.review}\n${notes.notes}`.matchAll(/!\[([^\]]*)\]\(([^)\s]+)[^)]*\)/g)) {
+        const [, alt, src] = match;
+        if (!alt.trim()) error(file, `image "${src}" needs a short description: ![description](${src})`);
+        if (/^https?:\/\//.test(src)) {
+          warn(file, `image "${src}" is loaded from another website; it's safer to save it in the course's images/ folder`);
+          continue;
+        }
+        const imagePath = path.join(ROOT, course.folder, src);
+        if (!fs.existsSync(imagePath)) {
+          error(file, `image "${src}" not found (expected at ${course.folder}${src})`);
+        } else if (fs.statSync(imagePath).size > 500 * 1024) {
+          warn(file, `image "${src}" is larger than 500 KB; it will load slowly on phones`);
+        }
+      }
     }
 
     const fcFile = `${course.folder}flashcards.json`;
