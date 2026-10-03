@@ -5,33 +5,46 @@ A free, volunteer website for students of the EU-HEM master's program (European 
 **Live site:** https://adnantarabishi.github.io/eu-hem-student-hub/
 
 ## What's on it
-- 1st-year class timetable, loaded live from the official UniBo timetable
+- **Study Plan & Progress:** plan your courses with the official rules (CFU, required and optional groups), track each course (Studying → Exam booked → Passed) and see a timeline. A planning tool only: it does not submit anything.
+- 1st-year class timetable, loaded live from the official UniBo timetable, with a "My courses only" switch
 - 1st-year exam dates with countdown and registration status, loaded live from the official UniBo exam dates page
-- Calendar subscription (Google, Apple, Outlook) with classes, exams and registration deadlines
+- Calendar subscription (Google, Apple, Outlook): one calendar with every course, or one with exactly your study plan
+- One page per course: Overview, Schedule, Exam, Topics, Key Concepts, Practice, Resources
+- Notes & Resources: student-made notes, flashcards, practice questions and a shared glossary (pilot: Fundamentals in Health Economics)
 - City guide for Bologna (housing, transport, healthcare, documents, study places and more)
 - Students directory, currently a **demo with fictional data** (`data/sample-students.csv`)
-- Notes & Resources: student-made notes, flashcards, practice questions and a shared glossary per course (pilot: Fundamentals in Health Economics)
 - Useful links, including Virtuale for official course materials
 
 ## Disclaimer
 This is an **unofficial student project**. It is not affiliated with or endorsed by the University of Bologna or any partner university. Always check official university sources for authoritative information.
 
 ## Tech
-Plain HTML, CSS and JavaScript, hosted on GitHub Pages.
+Plain HTML, CSS and JavaScript, hosted on GitHub Pages. Preview locally: `node scripts/preview.js`,
+then open http://localhost:8000.
 
-The calendar file in `calendar/` is rebuilt every 6 hours by a GitHub Actions workflow
-(`.github/workflows/update-calendar.yml`) running `scripts/build-calendar.js`.
-To rebuild it yourself: `node scripts/build-calendar.js` (needs Node.js 18 or newer).
+**One shared course data file:** `content/programme.json` holds every course, module, professor,
+teaching period and the study plan rules. Every section reads it; nothing about courses is
+written anywhere else. Check it with `node scripts/check-content.js`, and compare it with the
+live UniBo timetable with `node scripts/check-programme.js`.
+
+**Calendars** in `calendar/` are rebuilt every 6 hours by a GitHub Actions workflow
+(`.github/workflows/update-calendar.yml`) running `scripts/build-calendar.js`: the full
+calendar plus one calendar per possible study plan. To rebuild them yourself:
+`node scripts/build-calendar.js` (needs Node.js 18 or newer).
+
+**Saved in the browser only (localStorage):** study plan choices and statuses, Notes progress,
+My Study List, theme. Nothing is sent anywhere.
+
+The main menu is defined once in `site-nav.js`.
 
 ## Notes & Resources
-Study content (notes, flashcards, questions, concepts, resources) lives in `content/` as
-JSON and Markdown files. Adding content never requires code changes.
+Study content (notes, flashcards, questions, concepts, resources) lives in `content/modules/`
+as JSON and Markdown files. Adding content never requires code changes.
 - Format and examples: [docs/content-format.md](docs/content-format.md)
 - Easiest way to write a flashcard, question, concept or resource: the form at `create.html`
 - Features: topic notes with formulas and diagrams, spaced-repetition flashcards, quizzes,
   progress tracking and search. Progress is saved only in each student's browser.
 - Check content before committing: `node scripts/check-content.js`
-- Preview locally: `node scripts/preview.js`, then open http://localhost:8000/notes.html
 
 ## Announcements
 Announcements come from a CSV set by `ANNOUNCEMENTS_URL` at the top of `announcements.js`

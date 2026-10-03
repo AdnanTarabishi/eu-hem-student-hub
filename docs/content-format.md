@@ -1,44 +1,48 @@
-# Content format: Notes & Resources
+# Content format: courses, study plan, Notes & Resources
 
-This document describes how study content is stored. Adding or changing content never
-requires code changes: you only add or edit the files described here.
+This document describes how course data and study content are stored. Adding or changing
+content never requires code changes: you only add or edit the files described here.
 
-Structure: **Course → Topic → Resource type** (notes, flashcards, questions, resources),
-plus **one shared glossary** of key concepts for all courses.
+- **Course facts and study plan rules** live in ONE file: `content/programme.json`. Every
+  section of the site reads it (study plan, timetable, exams, calendar, Notes & Resources).
+- **Student content** lives per module in `content/modules/<module-id>/`.
+- Structure: **Course → Module → Topic → Resource type** (notes, flashcards, questions,
+  resources), plus **one shared glossary** of key concepts for all courses.
 
 ## Folder layout
 
 ```
 content/
+  programme.json             ← THE shared course data: cohorts, terms, study plan rules, courses, modules
   settings.json              ← form links and disclaimer text
-  courses.json               ← which courses exist, in display order
   concepts.json              ← the shared glossary (all courses)
-  courses/
-    <course-id>/
-      course.json            ← overview: description, professors, books, assessment, links
+  modules/
+    <module-id>/             ← one folder per module (all files optional)
       topics.json            ← ordered list of topics
       notes/<name>.md        ← notes for one topic (Markdown + front matter)
-      flashcards.json        ← optional
-      questions.json         ← optional
-      resources.json         ← optional
+      images/                ← pictures used in the notes
+      flashcards.json · questions.json · resources.json
 ```
 
-Every file except `course.json` is optional. A missing file means "no items yet", and the
-matching tab on the course page is hidden.
+Every file in a module folder is optional. A missing file means "no items yet", and the
+matching tab on the course page is hidden. A module without a folder simply has no
+student content yet.
 
 ## Before you commit: run the checker
 
 ```
-node scripts/check-content.js
+node scripts/check-content.js      ← checks programme.json and all content
+node scripts/check-programme.js    ← compares programme.json with the live UniBo timetable
 ```
 
-It reads every file the same way the website does, and lists problems in plain English:
-broken JSON (a missing comma or quote), duplicate IDs, links to topics that don't exist,
-missing notes files, wrong answer formats, and a "5-minute review" outside 5–10 points.
-**Errors** must be fixed; **warnings** are worth a look.
+The checker reads every file the same way the website does, and lists problems in plain
+English: broken JSON (a missing comma or quote), duplicate IDs or codes, a course in no study
+plan group, CFU that don't add up, module dates outside their cycle, links to topics that
+don't exist, missing notes files, wrong answer formats, and a "5-minute review" outside 5–10
+points. **Errors** must be fixed; **warnings** are worth a look.
 
 To see your changes before publishing: `node scripts/preview.js`, then open
-http://localhost:8000/notes.html.
+http://localhost:8000.
 
 ## IDs: the most important rule
 
@@ -48,78 +52,89 @@ reorder items freely; just keep the ID.
 
 | Item | ID pattern | Example |
 |---|---|---|
-| Course | `<course>` | `fund-health-economics` |
-| Topic | `<course>.<short-name>` | `fund-health-economics.demand` |
-| Flashcard | `<course>.fc.<number>` | `fund-health-economics.fc.007` |
-| Question | `<course>.q.<number>` | `fund-health-economics.q.007` |
-| Resource | `<course>.r.<number>` | `fund-health-economics.r.004` |
+| Course | `<course>` | `fund-health-econ-management` |
+| Module | `<module>` | `fund-health-economics` |
+| Topic | `<module>.<short-name>` | `fund-health-economics.demand` |
+| Flashcard | `<module>.fc.<number>` | `fund-health-economics.fc.007` |
+| Question | `<module>.q.<number>` | `fund-health-economics.q.007` |
+| Resource | `<module>.r.<number>` | `fund-health-economics.r.004` |
 | Concept | `concept.<short-name>` | `concept.moral-hazard` |
 
 - Use lowercase letters, numbers and dashes only.
 - For new flashcards/questions/resources, use the next free number. Don't reuse the number of a deleted item.
-- The part before the first dot tells which course an item belongs to.
+- The part before the first dot tells which **module** an item belongs to; `programme.json` says which course that module is in.
+- A course with a single module uses the same ID for the course and its module (e.g. `right-to-health`).
 
 ## Writing JSON safely
 
 JSON is a strict text format for data. The usual mistakes:
 - Text must be in **double quotes**: `"title": "Moral hazard"`.
 - Items in a list are separated by **commas**, but there's **no comma after the last one**.
-- `true` and `false` are written **without quotes**.
+- `true`, `false` and `null` are written **without quotes**.
 - A `"` inside a text must be written as `\"`. An apostrophe (`'`) is fine as it is.
 
 The checker tells you the file, line and column of any JSON mistake.
 
 ---
 
-## settings.json
-
-```json
-{
-  "contributeFormUrl": "https://forms.gle/...",
-  "reportErrorFormUrl": "https://forms.gle/...",
-  "disclaimer": "Student-made, may contain errors. Always check the official materials."
-}
-```
-An empty form link shows the button as "(form coming soon)".
-
-## courses.json
-
-The course IDs, in the order they appear on the landing page. Each needs a folder
-`content/courses/<id>/` with a `course.json`.
-
-```json
-["intro-economics", "fund-statistics", "fund-health-economics"]
-```
-
-## course.json (Overview tab)
+## programme.json (the shared course data)
 
 Official facts, summarised **in our own words**. Link to official materials; never copy them.
+Nesting: **cohort → term → study plan rules + courses → modules**. To add Semester 2, add a
+term; for Year 2 or the next cohort, add a term or a cohort. No code changes.
 
 ```json
 {
-  "id": "fund-health-economics",
-  "code": "79060",
-  "title": "Fundamentals in Health Economics",
-  "academicYear": "2026/27",
-  "credits": 5,
-  "teachingPeriod": "16 Sep – 22 Oct 2026",
-  "professors": ["Daniele Fabbri"],
-  "description": "How economists analyse health and health care ...",
-  "assessment": "Closed-book written exam, 90 minutes. Grades on the 18–30 scale.",
-  "textbooks": ["Bhattacharya, J., Hyde, T. & Tu, P. (2014). Health Economics. Palgrave Macmillan."],
-  "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518742",
-  "virtualeUrl": "https://virtuale.unibo.it"
+  "schemaVersion": 1,
+  "programme": { "code": "6759", "name": "Health Economics and Management",
+                 "virtualeUrl": "https://virtuale.unibo.it", "studentsOnlineUrl": "https://studenti.unibo.it" },
+  "cohorts": [{
+    "id": "2026-27", "label": "2026/27", "lastChecked": "2026-10-03",
+    "sources": { "structureDiagram": "https://…", "timetableFeed": "https://…", "examDates": "https://…" },
+    "studyPlanSubmission": { "url": "https://studenti.unibo.it", "deadline": null },
+    "terms": [{
+      "id": "y1-s1", "year": 1, "semester": 1, "label": "Semester 1", "requiredCfu": 30,
+      "cycles": [
+        { "id": "1", "label": "Cycle 1", "start": "2026-09-07", "end": "2026-10-24" },
+        { "id": "2", "label": "Cycle 2", "start": "2026-11-09", "end": "2026-12-16" }
+      ],
+      "groups": [
+        { "id": "crash", "label": "Crash courses", "badge": "Optional", "kind": "optional",
+          "min": 0, "max": 2, "countsTowardRequired": false, "courses": ["B1076", "97484"] },
+        { "id": "core", "label": "Core courses", "badge": "Required", "kind": "required", "courses": ["97177", "96500"] },
+        { "id": "quant", "label": "Quantitative methods", "badge": "Required · choose one", "kind": "choose-one",
+          "courses": ["96496", "96525"], "advice": null }
+      ],
+      "courses": [{
+        "code": "97177", "id": "fund-health-econ-management",
+        "name": "Fundamental in Health Economics and Management", "integrated": true,
+        "cfu": 10, "type": "B", "icon": "🩺", "color": "#2e7d32", "officialUrl": "https://…",
+        "modules": [{
+          "code": "79060", "id": "fund-health-economics", "name": "Fundamentals in Health Economics",
+          "cfu": 5, "cycle": "1", "ssd": "ECON-01/A", "professors": ["Daniele Fabbri"],
+          "teachingStart": "2026-09-16", "teachingEnd": "2026-10-22",
+          "officialUrl": "https://…/course-unit/2026/518742", "virtualeUrl": "https://virtuale.unibo.it",
+          "description": "…", "assessment": "…", "textbooks": ["…"]
+        }]
+      }]
+    }]
+  }]
 }
 ```
-Required: `id` (same as the folder name), `code`, `title`, `description`.
 
-Optional extras:
+**Study plan rules** (`groups`): `kind` is `required` (all courses, locked), `choose-one`
+(radio buttons) or `optional` (checkboxes with `min`/`max`). `countsTowardRequired: false`
+makes CFU "extra" (crash courses). `advice: null` shows a "to be written by students"
+placeholder; put the students' text there when it exists. `deadline: null` shows a
+placeholder; replace it with a date like `"2026-11-20"` when the official deadline is known.
 
-| Field | Example | What it does |
-|---|---|---|
-| `teachingStart`, `teachingEnd` | `"2026-09-16"`, `"2026-10-22"` | Shows "Teaching now / Coming up / Finished" and groups the course on the landing page. Give both or neither. |
-| `icon` | `"🩺"` | One emoji shown on the course card and page. |
-| `color` | `"#2e7d32"` | The course's colour (card edge, progress bar). Must look like `#RRGGBB`. |
+**Courses:** every course is in exactly one group; its `cfu` equals its modules' total; a
+course with one module lists itself as that module. `officialUrl` can be `null` if UniBo
+hasn't published a page yet. `icon` (one emoji) and `color` (`#RRGGBB`) are optional.
+
+**Modules:** `cycle` must be one of the term's cycles, and the teaching dates must fall
+inside it. Run `node scripts/check-programme.js` from time to time: it compares professors and
+teaching dates with the live UniBo timetable.
 
 ## topics.json
 
@@ -132,7 +147,7 @@ down; to rename, change `title`; to remove, delete the line (and check nothing e
   {"id": "fund-health-economics.market-failures", "title": "Market failures in health care"}
 ]
 ```
-`notes` is optional: the path of the topic's notes file, relative to the course folder.
+`notes` is optional: the path of the topic's notes file, relative to the module folder.
 
 ## Notes: notes/<name>.md
 
@@ -250,8 +265,8 @@ A typo in a formula shows it in red instead of breaking the page.
 
 ## Images and diagrams (in notes)
 
-1. Save the image in the course's `images/` folder, e.g.
-   `content/courses/fund-health-economics/images/demand-curve.svg`.
+1. Save the image in the module's `images/` folder, e.g.
+   `content/modules/fund-health-economics/images/demand-curve.svg`.
 2. In the notes, write `![Short description of the image](images/demand-curve.svg)`.
 
 - The description is required: it is shown as the caption and read aloud by screen readers.
