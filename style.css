@@ -1,3 +1,39 @@
+/* ===== Font: Inter, hosted on this site (SIL Open Font License, see fonts/LICENSE-Inter-OFL.txt) =====
+   Not loaded from Google Fonts, so visitors' browsers don't contact Google (privacy by design). */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("fonts/inter-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("fonts/inter-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ===== Scales: one set of sizes for the whole site ===== */
+:root {
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+  --shadow-sm: 0 1px 2px var(--color-shadow), 0 1px 3px var(--color-shadow);
+  --shadow-md: 0 4px 12px var(--color-shadow), 0 1px 3px var(--color-shadow);
+  --shadow-lg: 0 12px 32px var(--color-shadow-strong);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --header-height: 64px;
+}
+
 /* ===== Color palette =====
    Defined once here as "variables" so we can change the whole site's look in one place. */
 :root {
@@ -165,15 +201,33 @@ textarea {
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-family: var(--font-sans);
+  font-size: 16px;
   line-height: 1.6;
   color: var(--color-text);
   background: var(--color-background);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+.icon {
+  width: 1.15em;
+  height: 1.15em;
+  flex: none;
+  vertical-align: -0.2em;
 }
 
 /* Keeps content centered and not too wide on big screens */
 .container {
-  max-width: 900px;
+  max-width: 1040px;
   margin: 0 auto;
   padding: 0 16px;
 }
@@ -184,15 +238,30 @@ a {
 
 /* ===== Header ===== */
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
   background: var(--color-header-bg);
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(0, 0, 0, 0.08));
   color: var(--color-header-text);
-  padding: 24px 0;
+  padding: 14px 0;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06), 0 4px 18px rgba(0, 0, 0, 0.12);
+  transition: padding 0.2s var(--ease);
+}
+
+.site-header.is-compact {
+  padding: 6px 0;
+}
+
+.site-header.is-compact .site-tagline {
+  display: none;
 }
 
 .site-title {
   margin: 0;
-  font-size: 1.8rem;
-  font-weight: 700;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 /* On the guide page the site title is a link back to the home page */
@@ -203,8 +272,9 @@ a {
 
 
 .site-tagline {
-  margin: 4px 0 16px;
-  opacity: 0.9;
+  margin: 0;
+  font-size: 0.8rem;
+  opacity: 0.8;
 }
 
 /* flex-wrap lets menu links move to a new line on small phone screens */
@@ -386,15 +456,18 @@ main {
 
 .card {
   background: var(--color-card);
-  border-radius: 8px;
-  padding: 20px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
   margin-bottom: 20px;
-  box-shadow: 0 1px 3px var(--color-shadow);
+  box-shadow: var(--shadow-sm);
 }
 
 .card h2 {
   margin-top: 0;
   color: var(--color-primary);
+  font-size: 1.45rem;
+  font-weight: 750;
 }
 
 .note {
@@ -530,20 +603,37 @@ main {
 }
 
 .button {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   background: var(--color-primary);
   color: var(--color-on-primary);
-  border: none;
-  border-radius: 6px;
-  padding: 8px 14px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  padding: 9px 16px;
+  font: inherit;
   font-size: 0.95rem;
   font-weight: 600;
+  line-height: 1.2;
   text-decoration: none;
   cursor: pointer;
+  transition: transform 0.12s var(--ease), box-shadow 0.15s var(--ease), filter 0.15s var(--ease);
 }
 
 .button:hover {
-  opacity: 0.9;
+  filter: brightness(1.08);
+  box-shadow: var(--shadow-sm);
+}
+
+.button:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.button-quiet {
+  background: transparent;
+  color: var(--color-primary);
+  border-color: var(--color-border);
 }
 
 .copy-row {
@@ -2767,10 +2857,271 @@ mark {
   }
 }
 
-/* ===== Footer ===== */
+
+/* ===== Header bar, skip link, focus, footer (drawn by site-nav.js) ===== */
+.header-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px 20px;
+}
+
+.brand {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding-right: 0;
+}
+
+.header-bar .site-nav {
+  flex: 1;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.header-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-header-text);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s var(--ease);
+}
+
+.header-button:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.header-button kbd {
+  font-family: inherit;
+  font-size: 0.72rem;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+/* The theme button now sits in the header bar instead of floating */
+.header-actions .theme-toggle {
+  position: static;
+  width: 38px;
+  height: 38px;
+}
+
+.site-title {
+  padding-right: 0;
+}
+
+/* "Skip to content": invisible until reached with the keyboard */
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  background: var(--color-card);
+  color: var(--color-primary);
+  font-weight: 700;
+  box-shadow: var(--shadow-lg);
+  transition: top 0.15s var(--ease);
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+/* A clear outline for keyboard users (not shown for mouse clicks) */
+:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.site-header :focus-visible {
+  outline-color: #ffd54f;
+}
+
 .site-footer {
-  text-align: center;
+  margin-top: 32px;
+  padding: 32px 0 24px;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-card);
   color: var(--color-muted);
   font-size: 0.9rem;
-  padding: 16px 0 32px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr repeat(3, 1fr);
+  gap: 24px;
+}
+
+.footer-grid h3 {
+  margin: 0 0 8px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text);
+}
+
+.footer-grid ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-grid li {
+  padding: 3px 0;
+}
+
+.footer-grid a,
+.footer-grid button.footer-link {
+  color: var(--color-muted);
+  text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.footer-grid a:hover,
+.footer-grid button.footer-link:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.footer-brand strong {
+  display: block;
+  color: var(--color-text);
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.footer-bottom {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-divider);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 760px) {
+  .header-bar {
+    flex-wrap: wrap;
+  }
+
+  .header-bar .site-nav {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .header-button .search-label,
+  .header-button kbd {
+    display: none;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Icons in the menu */
+.menu-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.menu > .menu-item > .menu-link .icon {
+  display: none;
+}
+
+.menu-dropdown .menu-link .icon {
+  color: var(--color-primary);
+  opacity: 0.85;
+}
+
+.header-actions .theme-toggle {
+  justify-content: center;
+  padding: 0;
+}
+
+/* Header layout fixes: wider header row, one-line menu, "Menu" button only on phones */
+.site-header .container {
+  max-width: 1200px;
+}
+
+.menu {
+  flex-wrap: nowrap;
+}
+
+.header-actions .menu-toggle {
+  display: none;
+}
+
+main.container {
+  padding-top: 24px;
+  padding-bottom: 32px;
+}
+
+@media (max-width: 960px) {
+  .site-tagline {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .header-actions .menu-toggle {
+    display: inline-flex;
+  }
+
+  .menu {
+    flex-wrap: wrap;
+  }
+}
+
+/* Phones: title and header buttons on one row */
+@media (max-width: 760px) {
+  .header-bar {
+    gap: 10px 8px;
+  }
+
+  .header-actions {
+    gap: 6px;
+  }
+
+  .header-button {
+    height: 36px;
+    padding: 0 10px;
+  }
+
+  .header-actions .theme-toggle,
+  .header-actions .search-button {
+    width: 36px;
+    padding: 0;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 420px) {
+  .site-title {
+    font-size: 1.08rem;
+  }
 }

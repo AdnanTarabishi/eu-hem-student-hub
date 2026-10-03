@@ -31,11 +31,12 @@
 
   // 2. Add the toggle button once the header exists
   function addToggle() {
-    const header = document.querySelector(".site-header .container");
+    // In the header bar (site-nav.js), before the phone "Menu" button; otherwise top-right of the header
+    const header = document.querySelector(".header-actions") || document.querySelector(".site-header .container");
     if (!header || header.querySelector(".theme-toggle")) return;
     const button = document.createElement("button");
     button.type = "button";
-    button.className = "theme-toggle";
+    button.className = "theme-toggle header-button";
     const update = () => {
       const dark = currentTheme() === "dark";
       button.textContent = dark ? "☀️" : "🌙";
@@ -55,7 +56,9 @@
     // If the device switches theme and the visitor hasn't chosen, update the icon
     if (window.matchMedia) window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", update);
     update();
-    header.prepend(button);
+    const menuButton = header.querySelector(".menu-toggle");
+    if (menuButton) header.insertBefore(button, menuButton);
+    else header.prepend(button);
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", addToggle);

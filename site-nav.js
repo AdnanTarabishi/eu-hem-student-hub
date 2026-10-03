@@ -1,37 +1,55 @@
-// ===== Main menu =====
-// The menu is defined ONCE here and drawn on every page, so a change happens in one place.
-// Each page has <nav id="site-nav" data-current="..."> and loads this file right after it.
-// Wide screens: dropdown groups. Phones: one "☰ Menu" button with the groups listed.
+// ===== Site frame: header bar, main menu, footer =====
+// Defined ONCE here and drawn on every page, so a change happens in one place.
+// Each page has <nav id="site-nav" data-current="..."> in its header and loads this file right after it.
+// - Header bar: site name, menu (dropdowns on wide screens, one "Menu" panel on phones),
+//   search button (opens search.js) and the light/dark button (added by theme.js)
+// - "Skip to content" link for keyboard users
+// - The header shrinks while scrolling
+// - Footer with links
 
 const SITE_MENU = [
   {
     label: "Academics",
     items: [
-      { key: "studyplan", label: "Study Plan", href: "studyplan.html" },
-      { key: "timetable", label: "Timetable", href: "index.html#schedule" },
-      { key: "exams", label: "Exams", href: "index.html#exams" },
-      { key: "calendar", label: "Calendar", href: "index.html#calendar" },
-      { key: "notes", label: "Notes & Resources", href: "notes.html" },
+      { key: "studyplan", label: "Study Plan", href: "studyplan.html", icon: "study-plan" },
+      { key: "timetable", label: "Timetable", href: "timetable.html", icon: "timetable" },
+      { key: "exams", label: "Exams", href: "exams.html", icon: "exams" },
+      { key: "calendar", label: "Calendar", href: "calendar.html", icon: "calendar" },
+      { key: "notes", label: "Notes & Resources", href: "notes.html", icon: "notes" },
     ],
   },
   {
     label: "Life",
-    items: [{ key: "city-guide", label: "City Guide", href: "city-guide.html" }],
+    items: [{ key: "city-guide", label: "City Guide", href: "city-guide.html", icon: "guide" }],
   },
   {
     label: "Community",
     items: [
-      { key: "announcements", label: "Announcements", href: "announcements.html" },
-      { key: "students", label: "Students", href: "students.html" },
+      { key: "announcements", label: "Announcements", href: "announcements.html", icon: "announcements" },
+      { key: "students", label: "Students", href: "students.html", icon: "students" },
     ],
   },
-  { key: "about", label: "About", href: "index.html#about" },
+  { key: "about", label: "About", href: "index.html#about", icon: "info" },
 ];
 
-(function buildMenu() {
+// An icon from icons.svg: <svg class="icon"><use href="icons.svg#name"></use></svg>
+function siteIcon(name, className = "icon") {
+  const ns = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(ns, "svg");
+  svg.setAttribute("class", className);
+  svg.setAttribute("aria-hidden", "true");
+  const use = document.createElementNS(ns, "use");
+  use.setAttribute("href", `icons.svg#${name}`);
+  svg.appendChild(use);
+  return svg;
+}
+
+(function buildSiteFrame() {
   const nav = document.getElementById("site-nav");
   if (!nav) return;
   const current = nav.dataset.current || "";
+  const header = nav.closest(".site-header");
+  const container = nav.parentElement;
   nav.textContent = "";
 
   const make = (tag, className, text) => {
@@ -41,27 +59,61 @@ const SITE_MENU = [
     return element;
   };
 
-  // Phones: one button that opens the whole menu
-  const toggle = make("button", "menu-toggle", "☰ Menu");
+  // --- Skip link + a target for it ---
+  const main = document.querySelector("main");
+  if (main) {
+    main.id = main.id || "main";
+    main.tabIndex = -1;
+    const skip = make("a", "skip-link", "Skip to content");
+    skip.href = "#" + main.id;
+    document.body.prepend(skip);
+  }
+
+  // --- Header bar: [site name + tagline] [menu] [search · theme · menu button] ---
+  const bar = make("div", "header-bar");
+  const brand = make("div", "brand");
+  for (const element of [container.querySelector(".site-title"), container.querySelector(".site-tagline")]) {
+    if (element) brand.appendChild(element);
+  }
+  const actions = make("div", "header-actions");
+  const searchButton = make("button", "header-button search-button");
+  searchButton.type = "button";
+  searchButton.setAttribute("aria-label", "Search the site (Ctrl+K)");
+  searchButton.appendChild(siteIcon("search"));
+  searchButton.appendChild(make("span", "search-label", "Search"));
+  searchButton.appendChild(make("kbd", null, navigator.platform && /Mac/.test(navigator.platform) ? "⌘K" : "Ctrl K"));
+  searchButton.addEventListener("click", () => document.dispatchEvent(new CustomEvent("open-search")));
+  actions.appendChild(searchButton);
+
+  const toggle = make("button", "header-button menu-toggle");
   toggle.type = "button";
   toggle.setAttribute("aria-expanded", "false");
   toggle.setAttribute("aria-controls", "site-menu");
-  nav.appendChild(toggle);
+  const toggleLabel = make("span", null, "Menu");
+  toggle.appendChild(siteIcon("menu"));
+  toggle.appendChild(toggleLabel);
 
+  bar.appendChild(brand);
+  bar.appendChild(nav);
+  bar.appendChild(actions);
+  actions.appendChild(toggle);
+  container.prepend(bar);
+
+  // --- Menu ---
   const menu = make("ul", "menu");
   menu.id = "site-menu";
   const groupButtons = [];
-
   const link = (item) => {
-    const a = make("a", "menu-link", item.label);
+    const a = make("a", "menu-link");
     a.href = item.href;
+    if (item.icon) a.appendChild(siteIcon(item.icon));
+    a.appendChild(document.createTextNode(item.label));
     if (item.key === current) {
       a.setAttribute("aria-current", "page");
       a.classList.add("is-current");
     }
     return a;
   };
-
   SITE_MENU.forEach((entry, i) => {
     const li = make("li", "menu-item");
     if (!entry.items) {
@@ -97,16 +149,16 @@ const SITE_MENU = [
   function closeGroups() {
     for (const button of groupButtons) button.setAttribute("aria-expanded", "false");
   }
-
-  toggle.addEventListener("click", (event) => {
-    event.stopPropagation();
-    const open = !nav.classList.contains("is-open");
+  function setPanel(open) {
     nav.classList.toggle("is-open", open);
     toggle.setAttribute("aria-expanded", String(open));
-    toggle.textContent = open ? "✕ Close" : "☰ Menu";
+    toggleLabel.textContent = open ? "Close" : "Menu";
+    toggle.querySelector("use").setAttribute("href", `icons.svg#${open ? "close" : "menu"}`);
+  }
+  toggle.addEventListener("click", (event) => {
+    event.stopPropagation();
+    setPanel(!nav.classList.contains("is-open"));
   });
-
-  // Click outside or Esc: close everything
   document.addEventListener("click", (event) => {
     if (!nav.contains(event.target)) closeGroups();
   });
@@ -115,21 +167,69 @@ const SITE_MENU = [
     const openButton = groupButtons.find((b) => b.getAttribute("aria-expanded") === "true");
     closeGroups();
     if (nav.classList.contains("is-open")) {
-      nav.classList.remove("is-open");
-      toggle.setAttribute("aria-expanded", "false");
-      toggle.textContent = "☰ Menu";
+      setPanel(false);
       toggle.focus();
     } else if (openButton) {
       openButton.focus();
     }
   });
-  // Following a link to a section of the same page (e.g. #exams): close the menu
   menu.addEventListener("click", (event) => {
     if (event.target.closest("a")) {
       closeGroups();
-      nav.classList.remove("is-open");
-      toggle.setAttribute("aria-expanded", "false");
-      toggle.textContent = "☰ Menu";
+      setPanel(false);
     }
   });
+
+  // --- The header shrinks while scrolling ---
+  if (header) {
+    const onScroll = () => header.classList.toggle("is-compact", window.scrollY > 40);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+
+  // --- Footer ---
+  const footer = document.querySelector(".site-footer .container");
+  if (footer) {
+    footer.textContent = "";
+    const grid = make("div", "footer-grid");
+    const brandBox = make("div", "footer-brand");
+    brandBox.appendChild(make("strong", null, "EU-HEM Student Hub"));
+    brandBox.appendChild(make("p", null,
+      "Unofficial, free, student-run. Not affiliated with the University of Bologna or partner universities. Always check official sources."));
+    grid.appendChild(brandBox);
+    for (const entry of SITE_MENU.filter((e) => e.items)) {
+      const column = make("div");
+      column.appendChild(make("h3", null, entry.label));
+      const list = make("ul");
+      for (const item of entry.items) {
+        const li = make("li");
+        const a = make("a", null, item.label);
+        a.href = item.href;
+        li.appendChild(a);
+        list.appendChild(li);
+      }
+      column.appendChild(list);
+      grid.appendChild(column);
+    }
+    // "Help" goes in the last column
+    const help = grid.lastElementChild;
+    help.appendChild(make("h3", "footer-help", "Help"));
+    const helpList = make("ul");
+    const started = make("li");
+    const startedLink = make("a", null, "Getting started");
+    startedLink.href = "index.html#welcome";
+    started.appendChild(startedLink);
+    helpList.appendChild(started);
+    const install = make("li", "footer-install");
+    install.hidden = true; // shown by pwa.js where the browser can install the app
+    const installButton = make("button", "footer-link", "Install the app");
+    installButton.type = "button";
+    installButton.addEventListener("click", () => document.dispatchEvent(new CustomEvent("install-app")));
+    install.appendChild(installButton);
+    helpList.appendChild(install);
+    help.appendChild(helpList);
+    footer.appendChild(grid);
+    footer.appendChild(make("p", "footer-bottom",
+      "Made by EU-HEM students, for EU-HEM students. Your study plan and progress are saved only on your device."));
+  }
 })();
