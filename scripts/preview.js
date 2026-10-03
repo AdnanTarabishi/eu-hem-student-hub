@@ -25,6 +25,8 @@ const TYPES = {
   ".svg": "image/svg+xml",
   ".png": "image/png",
   ".jpg": "image/jpeg",
+  ".webmanifest": "application/manifest+json",
+  ".woff2": "font/woff2",
 };
 
 const server = http.createServer((request, response) => {

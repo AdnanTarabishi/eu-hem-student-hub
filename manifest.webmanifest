@@ -1,0 +1,22 @@
+{
+  "name": "EU-HEM Student Hub",
+  "short_name": "EU-HEM Hub",
+  "description": "Unofficial student-run hub for the EU-HEM master's program: timetable, exams, study plan, notes and city guide.",
+  "id": "./",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f7fa",
+  "theme_color": "#1f4e79",
+  "lang": "en",
+  "icons": [
+    { "src": "img/app-icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "img/app-icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "img/app-icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Timetable", "url": "./timetable.html", "icons": [{ "src": "img/app-icon-192.png", "sizes": "192x192" }] },
+    { "name": "Exams", "url": "./exams.html", "icons": [{ "src": "img/app-icon-192.png", "sizes": "192x192" }] },
+    { "name": "Notes & Resources", "url": "./notes.html", "icons": [{ "src": "img/app-icon-192.png", "sizes": "192x192" }] }
+  ]
+}
