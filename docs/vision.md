@@ -49,7 +49,6 @@ Think Notion + Google Drive + Calendar + Student Directory + WhatsApp community 
 
 ### 5. Life & Mobility
 - City guides for each program city (Bologna, Oslo, Innsbruck, Rotterdam...): housing, transport, SIM, banks, groceries, gyms, cafés, libraries, study places, healthcare, residence permits, useful apps, cost of living, discounts, student tips. Kept up to date by students.
-- First Week Guide for each new cohort.
 - EU-HEM Survival Guide from past cohorts: where they lived, electives, hardest courses, city costs, internships, thesis, mobility experience, "What I wish I knew before starting".
 - Mobility Planner (later, not needed now): a checklist for each move (housing, residence permit, registration, insurance, travel, documents, deadlines).
 
@@ -66,7 +65,7 @@ Roles listed above, plus moderation of user-submitted content.
 Answers students' questions using the hub's own content. Must be cost-aware.
 
 ## Phases
-- Phase 1 (now, no login, static site on GitHub Pages): live timetable (done), Exam & Deadline Center, city guides and First Week Guide, announcements, useful links, calendar subscription.
+- Phase 1 (now, no login, static site on GitHub Pages): live timetable (done), Exam & Deadline Center, city guides, announcements, useful links, calendar subscription.
 - Phase 2 (login + database): university-email login, profiles, directory, world map, course pages with student notes. Needs a backend (candidate: Supabase). Decision to be made together with Adnan.
 - Phase 3: events and RSVP, opportunities board, polls, find people, admin roles, weekly digest.
 - Phase 4: AI assistant, smart search, gallery, Survival Guide archive, Cohort Book, Mobility Planner.
