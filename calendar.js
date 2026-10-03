@@ -12,16 +12,30 @@ async function setUpCalendarLinks() {
     const response = await fetch(CALENDAR_LIST_URL);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const calendars = await response.json();
+    const programme = await getProgramme();
+    const cohort = currentCohort(programme);
+    const term = currentTerm(programme);
 
-    // Newest 1st-year calendar (the list is sorted by cohort)
-    const current = calendars.filter((c) => c.year === 1).pop();
+    // With a complete saved study plan: the calendar of exactly that plan.
+    // Otherwise: the full calendar with every 1st-year course.
+    const plan = loadPlan(programme);
+    const complete = plan.saved && planSummary(term, plan.choices).complete;
+    const key = complete ? planKey(term, plan.choices) : null;
+    const mine = key && calendars.find((c) => c.cohort === cohort.id && c.term === term.id && c.plan === key);
+    const full = calendars.find((c) => c.cohort === cohort.id && !c.plan) || calendars.filter((c) => c.year === 1 && !c.plan).pop();
+    const current = mine || full;
     if (!current) throw new Error("No calendar listed");
 
     // Full web address of the file, e.g. https://.../calendar/eu-hem-2026-27-year1.ics
     const httpsUrl = new URL("calendar/" + current.file, window.location.href).href;
     // "webcal://" tells the computer to open the link in its calendar app
     const webcalUrl = httpsUrl.replace(/^https?:/, "webcal:");
-    const calendarName = `EU-HEM 1st year ${current.cohort.replace("-", "/")}`;
+    const calendarName = mine ? `EU-HEM my courses ${cohort.label}` : `EU-HEM 1st year ${cohort.label}`;
+    document.getElementById("calendar-plan-note").textContent = mine
+      ? "This calendar has only the courses in your study plan. If you change your plan, subscribe to the new link and remove the old calendar."
+      : plan.saved
+        ? "Complete your study plan to get a calendar with only your courses. This one has every 1st-year course."
+        : "This calendar has every 1st-year course. Save a study plan to get one with only your courses.";
 
     document.getElementById("calendar-google").href =
       "https://calendar.google.com/calendar/r?cid=" + encodeURIComponent(webcalUrl);

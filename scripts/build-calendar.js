@@ -1,6 +1,9 @@
 // ===== Calendar builder =====
-// Creates a calendar file (.ics) with 1st-year classes, exams and exam registration
-// deadlines, so students can subscribe in Google, Apple or Outlook Calendar.
+// Creates calendar files (.ics) with classes, exams and exam registration deadlines,
+// so students can subscribe in Google, Apple or Outlook Calendar:
+// - one full calendar with every 1st-year course (eu-hem-2026-27-year1.ics)
+// - one calendar per possible study plan (e.g. eu-hem-2026-27-y1s1-96496-C8393-B1076.ics)
+// Courses, modules, study plan rules and the UniBo addresses all come from content/programme.json.
 //
 // Runs on GitHub Actions every few hours (see .github/workflows/update-calendar.yml).
 // Run it yourself with:  node scripts/build-calendar.js
@@ -11,9 +14,8 @@
 const fs = require("fs");
 const path = require("path");
 
-const TIMETABLE_URL =
-  "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/timetable/@@orario_reale_json?anno=1";
-const EXAMS_URL = "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates";
+const programmeRules = require("../programme.js");
+const PROGRAMME_FILE = path.join(__dirname, "..", "content", "programme.json");
 
 const OUTPUT_DIR = path.join(__dirname, "..", "calendar");
 
@@ -54,25 +56,18 @@ function parseUniboDate(text) {
   return { dateKey: `${year}-${month}-${day.padStart(2, "0")}`, time: time ? time.padStart(5, "0") : "" };
 }
 
-// Academic year label for a date: Sept 2026 - Aug 2027 -> "2026-27"
-function academicYear(dateKey) {
-  const [year, month] = dateKey.split("-").map(Number);
-  const startYear = month >= 9 ? year : year - 1;
-  return `${startYear}-${String(startYear + 1).slice(2)}`;
-}
-
 // --- Reading UniBo data ---
 
-async function fetchTimetable() {
-  const response = await fetch(TIMETABLE_URL);
+async function fetchTimetable(url) {
+  const response = await fetch(url);
   if (!response.ok) throw new Error(`Timetable: HTTP ${response.status}`);
   const raw = await response.json();
   return raw.map((s) => ({
     id: `${s.extCode}-${s.start}`,
     start: s.start, // "2026-09-07T09:00:00"
     end: s.end,
-    course: toTitleCase(s.title.split("/").pop()),
-    allNames: s.title.split("/").map(toTitleCase),
+    moduleCode: s.cod_modulo,
+    feedTitle: s.title,
     room: s.aule.map((a) => `${a.des_edificio}, ${a.des_indirizzo}`).join(" + "),
     teacher: s.docente || "",
     online: s.teledidattica,
@@ -80,8 +75,8 @@ async function fetchTimetable() {
   }));
 }
 
-async function fetchExams() {
-  const response = await fetch(EXAMS_URL);
+async function fetchExams(url) {
+  const response = await fetch(url);
   if (!response.ok) throw new Error(`Exams: HTTP ${response.status}`);
   const html = await response.text();
 
@@ -108,14 +103,16 @@ async function fetchExams() {
 
       const registrationDates = [...(fields["Subscriptions list:"] || "").matchAll(/<span>([^<]*)<\/span>/g)]
         .map((m) => parseUniboDate(m[1]));
-      const componentName = htmlToText(fields["Componente:"] || "").split(" - ").pop().trim();
+      const component = htmlToText(fields["Componente:"] || "");
+      const componentCode = (component.match(/^([A-Z0-9]+)\s*-/) || [])[1] || "";
+      const componentName = component.split(" - ").pop().trim();
       const typeText = htmlToText(fields["Test type:"] || "");
 
       const names = [courseName];
       if (componentName) names.push(toTitleCase(componentName));
 
       exams.push({
-        code,
+        codes: [code, componentCode].filter(Boolean),
         dateKey: when.dateKey,
         time: when.time,
         names,
@@ -140,22 +137,33 @@ function mergeDuplicates(exams) {
       continue;
     }
     for (const name of exam.names) if (!existing.names.includes(name)) existing.names.push(name);
+    for (const code of exam.codes) if (!existing.codes.includes(code)) existing.codes.push(code);
     for (const t of exam.teachers) if (!existing.teachers.includes(t)) existing.teachers.push(t);
   }
   return [...byKey.values()];
 }
 
-// Keep exams whose course appears in the 1st-year timetable
-function keepFirstYearExams(exams, sessions) {
-  const firstYearNames = new Set(sessions.flatMap((s) => s.allNames));
-  return exams
-    .map((exam) => ({ ...exam, names: exam.names.filter((n) => firstYearNames.has(n)) }))
-    .filter((exam) => exam.names.length > 0);
+// Keeps the exams of this term's courses (matched by official code) and names them from
+// programme.json. exam.courseCodes says which courses an exam belongs to.
+function matchExamsToTerm(exams, term) {
+  const result = [];
+  for (const exam of exams) {
+    const courses = term.courses.filter((c) => exam.codes.includes(c.code) || c.modules.some((m) => exam.codes.includes(m.code)));
+    if (courses.length === 0) continue;
+    const modules = courses.flatMap((c) => c.modules.filter((m) => exam.codes.includes(m.code)));
+    const course = courses[0];
+    const title = course.integrated && modules.length ? [...new Set(modules.map((m) => m.name))].join(" / ") : course.name;
+    result.push({ ...exam, courseCodes: courses.map((c) => c.code), title });
+  }
+  return result;
 }
 
-function examTitle(exam) {
-  const plain = exam.names.filter((n) => !n.includes("(I.C.)"));
-  return (plain.length ? plain : exam.names).join(" / ");
+// Classes of this term's modules, named from programme.json
+function matchSessionsToTerm(sessions, term) {
+  const modules = new Map(term.courses.flatMap((c) => c.modules.map((m) => [m.code, { course: c, module: m }])));
+  return sessions
+    .filter((s) => modules.has(s.moduleCode))
+    .map((s) => ({ ...s, courseCode: modules.get(s.moduleCode).course.code, course: modules.get(s.moduleCode).module.name }));
 }
 
 // --- Writing the .ics calendar file ---
@@ -221,14 +229,14 @@ const VTIMEZONE = [
 // A fixed timestamp keeps the file identical when nothing changed (no needless updates)
 const DTSTAMP = "DTSTAMP:20260101T000000Z";
 
-function buildCalendar(cohort, sessions, exams) {
+function buildCalendar(calendarName, sessions, exams) {
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
     "PRODID:-//EU-HEM Student Hub//Calendar//EN",
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
-    `X-WR-CALNAME:EU-HEM 1st year ${cohort.replace("-", "/")}`,
+    `X-WR-CALNAME:${calendarName}`,
     "X-WR-CALDESC:Unofficial. Classes and exams from the official UniBo pages.",
     "X-WR-TIMEZONE:Europe/Rome",
     "REFRESH-INTERVAL;VALUE=DURATION:PT6H",
@@ -253,7 +261,7 @@ function buildCalendar(cohort, sessions, exams) {
   }
 
   for (const exam of exams) {
-    const title = examTitle(exam);
+    const title = exam.title;
     const start = `${exam.dateKey}T${exam.time || "09:00"}:00`;
     const description = [
       exam.type && `Type: ${exam.type}`,
@@ -295,30 +303,53 @@ function buildCalendar(cohort, sessions, exams) {
 
 // --- Main ---
 
-async function main() {
-  const sessions = await fetchTimetable();
-  if (sessions.length === 0) throw new Error("Timetable is empty, not updating the calendar");
+function writeIfChanged(fileName, content) {
+  const full = path.join(OUTPUT_DIR, fileName);
+  if (fs.existsSync(full) && fs.readFileSync(full, "utf8") === content) return false;
+  fs.writeFileSync(full, content);
+  return true;
+}
 
-  const exams = keepFirstYearExams(mergeDuplicates(await fetchExams()), sessions)
+async function main() {
+  const programme = JSON.parse(fs.readFileSync(PROGRAMME_FILE, "utf8"));
+  const cohort = programmeRules.currentCohort(programme);
+  const term = programmeRules.currentTerm(programme);
+
+  const sessions = matchSessionsToTerm(await fetchTimetable(cohort.sources.timetableFeed), term)
+    .sort((a, b) => a.start.localeCompare(b.start));
+  if (sessions.length === 0) throw new Error("Timetable is empty, not updating the calendar");
+  const exams = matchExamsToTerm(mergeDuplicates(await fetchExams(cohort.sources.examDates)), term)
     .sort((a, b) => (a.dateKey + a.time).localeCompare(b.dateKey + b.time));
 
-  // The cohort is the academic year of the first class, e.g. "2026-27"
-  const cohort = academicYear(sessions.map((s) => s.start).sort()[0].slice(0, 10));
-  const fileName = `eu-hem-${cohort}-year1.ics`;
-
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
-  fs.writeFileSync(path.join(OUTPUT_DIR, fileName), buildCalendar(cohort, sessions, exams));
+  const entries = [];
+  let changed = 0;
 
-  // A small list of available calendars, so the website knows which file to link to
-  const manifestPath = path.join(OUTPUT_DIR, "calendars.json");
-  const manifest = fs.existsSync(manifestPath) ? JSON.parse(fs.readFileSync(manifestPath, "utf8")) : [];
-  if (!manifest.some((c) => c.file === fileName)) {
-    manifest.push({ cohort, year: 1, file: fileName });
-    manifest.sort((a, b) => a.cohort.localeCompare(b.cohort));
-    fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + "\n");
+  // 1. The full calendar (same file name as before, so existing subscriptions keep working)
+  const fullFile = `eu-hem-${cohort.id}-year${term.year}.ics`;
+  changed += writeIfChanged(fullFile, buildCalendar(`EU-HEM 1st year ${cohort.label}`, sessions, exams));
+  entries.push({ cohort: cohort.id, term: term.id, year: term.year, file: fullFile, plan: null });
+
+  // 2. One calendar per possible study plan (worked out from the rules)
+  for (const choices of programmeRules.allPlanCombinations(term)) {
+    const key = programmeRules.planKey(term, choices);
+    const codes = programmeRules.selectedCourseCodes(term, choices);
+    const file = `eu-hem-${cohort.id}-y${term.year}s${term.semester}-${key}.ics`;
+    const mySessions = sessions.filter((s) => codes.includes(s.courseCode));
+    const myExams = exams.filter((e) => e.courseCodes.some((c) => codes.includes(c)));
+    changed += writeIfChanged(file, buildCalendar(`EU-HEM my courses ${cohort.label} (${key})`, mySessions, myExams));
+    entries.push({ cohort: cohort.id, term: term.id, year: term.year, file, plan: key, courses: codes });
   }
 
-  console.log(`Wrote calendar/${fileName}: ${sessions.length} classes, ${exams.length} exams`);
+  // A list of the calendars, so the website knows which file to link to.
+  // Entries of other cohorts/terms are kept.
+  const manifestPath = path.join(OUTPUT_DIR, "calendars.json");
+  const old = fs.existsSync(manifestPath) ? JSON.parse(fs.readFileSync(manifestPath, "utf8")) : [];
+  const kept = old.filter((c) => !(c.cohort === cohort.id && (c.term === term.id || c.term === undefined)));
+  const manifest = [...kept, ...entries].sort((a, b) => (a.cohort + (a.plan || "")).localeCompare(b.cohort + (b.plan || "")));
+  writeIfChanged("calendars.json", JSON.stringify(manifest, null, 2) + "\n");
+
+  console.log(`${entries.length} calendars (${changed} changed): ${sessions.length} classes, ${exams.length} exams in the full calendar`);
 }
 
 main().catch((error) => {

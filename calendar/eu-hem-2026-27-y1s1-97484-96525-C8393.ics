@@ -3,7 +3,7 @@ VERSION:2.0
 PRODID:-//EU-HEM Student Hub//Calendar//EN
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
-X-WR-CALNAME:EU-HEM 1st year 2026/27
+X-WR-CALNAME:EU-HEM my courses 2026/27 (97484-96525-C8393)
 X-WR-CALDESC:Unofficial. Classes and exams from the official UniBo pages.
 X-WR-TIMEZONE:Europe/Rome
 REFRESH-INTERVAL;VALUE=DURATION:PT6H
@@ -36,16 +36,6 @@ LOCATION:AULA "ITALO SCARDOVI " (ex Aula I)\, Via delle Belle Arti\, 41 - B
 DESCRIPTION:Siegfried Walch\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
-UID:class-2026-000-388568-I-B1076-2026-09-07T13-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20260907T130000
-DTEND;TZID=Europe/Rome:20260907T170000
-SUMMARY:Introduction to Economics
-LOCATION:AULA "ITALO SCARDOVI " (ex Aula I)\, Via delle Belle Arti\, 41 - B
- ologna
-DESCRIPTION:Adelajda Matuka\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
 UID:class-2026-000-409407-I-97484-2026-09-08T09-00-00@eu-hem-student-hub
 DTSTAMP:20260101T000000Z
 DTSTART;TZID=Europe/Rome:20260908T090000
@@ -53,25 +43,6 @@ DTEND;TZID=Europe/Rome:20260908T120000
 SUMMARY:Introduction to Management
 LOCATION:AULA MAGNA\, PIAZZA Antonino Scaravilli 1/2 - Bologna
 DESCRIPTION:Siegfried Walch\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-388568-I-B1076-2026-09-08T13-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20260908T130000
-DTEND;TZID=Europe/Rome:20260908T170000
-SUMMARY:Introduction to Economics
-LOCATION:AULA MAGNA\, PIAZZA Antonino Scaravilli 1/2 - Bologna
-DESCRIPTION:Adelajda Matuka\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-388568-I-B1076-2026-09-09T09-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20260909T090000
-DTEND;TZID=Europe/Rome:20260909T130000
-SUMMARY:Introduction to Economics
-LOCATION:AULA "ITALO SCARDOVI " (ex Aula I)\, Via delle Belle Arti\, 41 - B
- ologna
-DESCRIPTION:Adelajda Matuka\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
 UID:class-2026-000-409407-I-97484-2026-09-09T14-00-00@eu-hem-student-hub
@@ -103,15 +74,6 @@ LOCATION:AULA A. GHIGI (Accesso da via S. Giacomo\, 9)\, Via Selmi\, 3 - Bo
 DESCRIPTION:Siegfried Walch\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
-UID:class-2026-000-388568-I-B1076-2026-09-12T09-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20260912T090000
-DTEND;TZID=Europe/Rome:20260912T130000
-SUMMARY:Introduction to Economics
-LOCATION:AULA 1\, PIAZZA Antonino Scaravilli 1/2 - Bologna
-DESCRIPTION:Adelajda Matuka\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
 UID:class-2026-000-380198-I-74948-2026-09-14T11-00-00@eu-hem-student-hub
 DTSTAMP:20260101T000000Z
 DTSTART;TZID=Europe/Rome:20260914T110000
@@ -119,15 +81,6 @@ DTEND;TZID=Europe/Rome:20260914T140000
 SUMMARY:Statistics for Healthcare
 LOCATION:AULA M1 C. ANDREATTA\, Piazza di Porta San Donato\, 1 - Bologna
 DESCRIPTION:Martin Forster\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-381358-I-96498-2026-09-14T14-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20260914T140000
-DTEND;TZID=Europe/Rome:20260914T170000
-SUMMARY:Fundamentals of Statistics for Healthcare
-LOCATION:AULA A (FARMACOLOGIA)\, Via Irnerio\, 48 - Bologna
-DESCRIPTION:Sara Capacci\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
 UID:class-2026-000-380157-I-79060-2026-09-16T08-00-00@eu-hem-student-hub
@@ -157,15 +110,6 @@ LOCATION:AULA C BERTI PICHAT\, Viale Carlo Berti Pichat\, 6-6/2 - Bologna
 DESCRIPTION:Daniele Fabbri\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
-UID:class-2026-000-381358-I-96498-2026-09-18T14-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20260918T140000
-DTEND;TZID=Europe/Rome:20260918T160000
-SUMMARY:Fundamentals of Statistics for Healthcare
-LOCATION:AULA 1\, PIAZZA Antonino Scaravilli 1/2 - Bologna
-DESCRIPTION:Sara Capacci\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
 UID:class-2026-000-380157-I-79060-2026-09-21T12-00-00@eu-hem-student-hub
 DTSTAMP:20260101T000000Z
 DTSTART;TZID=Europe/Rome:20260921T120000
@@ -174,15 +118,6 @@ SUMMARY:Fundamentals in Health Economics
 LOCATION:Online
 DESCRIPTION:Daniele Fabbri\nTutor session dott. Nicola Barbieri\nOnline\nSo
  urce: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-388568-I-B1076-2026-09-22T14-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20260922T140000
-DTEND;TZID=Europe/Rome:20260922T180000
-SUMMARY:Introduction to Economics
-LOCATION:AULA A (FARMACOLOGIA)\, Via Irnerio\, 48 - Bologna
-DESCRIPTION:Adelajda Matuka\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
 UID:class-2026-000-380157-I-79060-2026-09-23T08-00-00@eu-hem-student-hub
@@ -203,15 +138,6 @@ LOCATION:AULA 11\, PIAZZA Antonino Scaravilli 1/2 - Bologna
 DESCRIPTION:Martin Forster\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
-UID:class-2026-000-381358-I-96498-2026-09-24T11-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20260924T110000
-DTEND;TZID=Europe/Rome:20260924T140000
-SUMMARY:Fundamentals of Statistics for Healthcare
-LOCATION:AULA 2\, PIAZZA Antonino Scaravilli 1/2 - Bologna
-DESCRIPTION:Sara Capacci\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
 UID:class-2026-000-380198-I-74948-2026-09-24T15-00-00@eu-hem-student-hub
 DTSTAMP:20260101T000000Z
 DTSTART;TZID=Europe/Rome:20260924T150000
@@ -228,15 +154,6 @@ DTEND;TZID=Europe/Rome:20260925T140000
 SUMMARY:Fundamentals in Health Economics
 LOCATION:AULA C BERTI PICHAT\, Viale Carlo Berti Pichat\, 6-6/2 - Bologna
 DESCRIPTION:Daniele Fabbri\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-381358-I-96498-2026-09-25T14-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20260925T140000
-DTEND;TZID=Europe/Rome:20260925T160000
-SUMMARY:Fundamentals of Statistics for Healthcare
-LOCATION:AULA 1\, PIAZZA Antonino Scaravilli 1/2 - Bologna
-DESCRIPTION:Sara Capacci\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
 UID:class-2026-000-380157-I-79060-2026-09-28T12-00-00@eu-hem-student-hub
@@ -268,26 +185,6 @@ LOCATION:AULA MAGNA ANATOMIA OLIVO\, Via Irnerio\, 48 - Bologna
 DESCRIPTION:Daniele Fabbri\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
-UID:class-2026-000-381358-I-96498-2026-09-30T16-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20260930T160000
-DTEND;TZID=Europe/Rome:20260930T180000
-SUMMARY:Fundamentals of Statistics for Healthcare
-LOCATION:AULA MAGNA ANATOMIA COMPARATA\, Via Selmi\, 3 - Bologna
-DESCRIPTION:Sara Capacci\nTutor session: dott. Paolo Abondio\nSource: offic
- ial UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-381358-I-96498-2026-10-01T11-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261001T110000
-DTEND;TZID=Europe/Rome:20261001T140000
-SUMMARY:Fundamentals of Statistics for Healthcare
-LOCATION:AULA A (Accesso da via Centotrecento\, 18)\, Via Centotrecento\, 1
- 8 - Bologna
-DESCRIPTION:Sara Capacci\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
 UID:class-2026-000-380198-I-74948-2026-10-01T15-00-00@eu-hem-student-hub
 DTSTAMP:20260101T000000Z
 DTSTART;TZID=Europe/Rome:20261001T150000
@@ -307,15 +204,6 @@ LOCATION:AULA C BERTI PICHAT\, Viale Carlo Berti Pichat\, 6-6/2 - Bologna
 DESCRIPTION:Daniele Fabbri\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
-UID:class-2026-000-381358-I-96498-2026-10-02T14-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261002T140000
-DTEND;TZID=Europe/Rome:20261002T170000
-SUMMARY:Fundamentals of Statistics for Healthcare
-LOCATION:AULA 1\, PIAZZA Antonino Scaravilli 1/2 - Bologna
-DESCRIPTION:Sara Capacci\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
 UID:class-2026-000-380198-I-74948-2026-10-05T11-00-00@eu-hem-student-hub
 DTSTAMP:20260101T000000Z
 DTSTART;TZID=Europe/Rome:20261005T110000
@@ -323,15 +211,6 @@ DTEND;TZID=Europe/Rome:20261005T140000
 SUMMARY:Statistics for Healthcare
 LOCATION:AULA 21\, PIAZZA Antonino Scaravilli 1/2 - Bologna
 DESCRIPTION:Martin Forster\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-381358-I-96498-2026-10-05T14-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261005T140000
-DTEND;TZID=Europe/Rome:20261005T170000
-SUMMARY:Fundamentals of Statistics for Healthcare
-LOCATION:AULA B\, VIA Irnerio 42 - Bologna
-DESCRIPTION:Sara Capacci\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
 UID:class-2026-000-380157-I-79060-2026-10-07T08-00-00@eu-hem-student-hub
@@ -350,16 +229,6 @@ DTEND;TZID=Europe/Rome:20261007T140000
 SUMMARY:Statistics for Healthcare
 LOCATION:AULA MAGNA ANATOMIA OLIVO\, Via Irnerio\, 48 - Bologna
 DESCRIPTION:Martin Forster\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-381358-I-96498-2026-10-07T16-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261007T160000
-DTEND;TZID=Europe/Rome:20261007T180000
-SUMMARY:Fundamentals of Statistics for Healthcare
-LOCATION:AULA MAGNA ANATOMIA COMPARATA\, Via Selmi\, 3 - Bologna
-DESCRIPTION:Sara Capacci\nTutor session: dott. Paolo Abondio\nSource: offic
- ial UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
 UID:class-2026-000-381451-I-96500-2026-10-08T09-00-00@eu-hem-student-hub
@@ -396,24 +265,6 @@ DTEND;TZID=Europe/Rome:20261009T150000
 SUMMARY:Fundamentals in Health Economics
 LOCATION:AULA MAGNA\, Viale Carlo Berti Pichat\, 5 - Bologna
 DESCRIPTION:Daniele Fabbri\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-381358-I-96498-2026-10-09T16-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261009T160000
-DTEND;TZID=Europe/Rome:20261009T190000
-SUMMARY:Fundamentals of Statistics for Healthcare
-LOCATION:AULA 11\, PIAZZA Antonino Scaravilli 1/2 - Bologna
-DESCRIPTION:Sara Capacci\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-381358-I-96498-2026-10-12T09-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261012T090000
-DTEND;TZID=Europe/Rome:20261012T110000
-SUMMARY:Fundamentals of Statistics for Healthcare
-LOCATION:AULA 1\, PIAZZA Antonino Scaravilli 1/2 - Bologna
-DESCRIPTION:Sara Capacci\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
 UID:class-2026-000-380198-I-74948-2026-10-12T13-00-00@eu-hem-student-hub
@@ -454,16 +305,6 @@ LOCATION:AULA MAGNA ANATOMIA OLIVO\, Via Irnerio\, 48 - Bologna
 DESCRIPTION:Martin Forster\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
-UID:class-2026-000-381358-I-96498-2026-10-14T16-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261014T160000
-DTEND;TZID=Europe/Rome:20261014T180000
-SUMMARY:Fundamentals of Statistics for Healthcare
-LOCATION:AULA MAGNA ANATOMIA COMPARATA\, Via Selmi\, 3 - Bologna
-DESCRIPTION:Sara Capacci\nTutor session: dott. Paolo Abondio\nSource: offic
- ial UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
 UID:class-2026-000-381451-I-96500-2026-10-15T09-00-00@eu-hem-student-hub
 DTSTAMP:20260101T000000Z
 DTSTART;TZID=Europe/Rome:20261015T090000
@@ -500,24 +341,6 @@ SUMMARY:Our Right to Health: Needs\, Resources and Society
 LOCATION:AULA C (Accesso da via Centotrecento\, 18)\, Via Centotrecento\, 1
  8 - Bologna
 DESCRIPTION:Markus Frischhut\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-381358-I-96498-2026-10-16T14-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261016T140000
-DTEND;TZID=Europe/Rome:20261016T170000
-SUMMARY:Fundamentals of Statistics for Healthcare
-LOCATION:AULA 1\, PIAZZA Antonino Scaravilli 1/2 - Bologna
-DESCRIPTION:Sara Capacci\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-381358-I-96498-2026-10-19T09-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261019T090000
-DTEND;TZID=Europe/Rome:20261019T120000
-SUMMARY:Fundamentals of Statistics for Healthcare
-LOCATION:AULA 1\, PIAZZA Antonino Scaravilli 1/2 - Bologna
-DESCRIPTION:Sara Capacci\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
 UID:class-2026-000-380198-I-74948-2026-10-19T12-00-00@eu-hem-student-hub
@@ -565,16 +388,6 @@ DTEND;TZID=Europe/Rome:20261021T160000
 SUMMARY:Fundamentals in Health Economics
 LOCATION:RANZANI A\, Via Camillo Ranzani\, 14 - Bologna
 DESCRIPTION:Daniele Fabbri\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-381358-I-96498-2026-10-21T16-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261021T160000
-DTEND;TZID=Europe/Rome:20261021T180000
-SUMMARY:Fundamentals of Statistics for Healthcare
-LOCATION:AULA MAGNA ANATOMIA COMPARATA\, Via Selmi\, 3 - Bologna
-DESCRIPTION:Sara Capacci\nTutor session: dott. Paolo Abondio\nSource: offic
- ial UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
 UID:class-2026-000-381451-I-96500-2026-10-22T08-00-00@eu-hem-student-hub
@@ -632,16 +445,6 @@ LOCATION:AULA A (FARMACOLOGIA)\, Via Irnerio\, 48 - Bologna
 DESCRIPTION:Rossella Verzulli\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
-UID:class-2026-000-381359-I-96499-2026-11-11T09-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261111T090000
-DTEND;TZID=Europe/Rome:20261111T120000
-SUMMARY:Fundamentals of Econometrics
-LOCATION:AULA D (Accesso da via Centotrecento\, 18)\, Via Centotrecento\, 1
- 8 - Bologna
-DESCRIPTION:Elisabetta De Cao\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
 UID:class-2026-000-380158-I-87428-2026-11-11T13-00-00@eu-hem-student-hub
 DTSTAMP:20260101T000000Z
 DTSTART;TZID=Europe/Rome:20261111T130000
@@ -660,16 +463,6 @@ LOCATION:AULA FILOPANTI\, VIALE Quirico Filopanti 5 - Bologna
 DESCRIPTION:Elisabetta De Cao\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
-UID:class-2026-000-381359-I-96499-2026-11-12T13-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261112T130000
-DTEND;TZID=Europe/Rome:20261112T150000
-SUMMARY:Fundamentals of Econometrics
-LOCATION:AULA ENRIQUES\, Piazza di Porta San Donato\, 5 - Bologna
-DESCRIPTION:Elisabetta De Cao\nTutor session Ozlem Yasar\nSource: official 
- UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
 UID:class-2026-000-380199-I-32626-2026-11-12T16-00-00@eu-hem-student-hub
 DTSTAMP:20260101T000000Z
 DTSTART;TZID=Europe/Rome:20261112T160000
@@ -680,15 +473,6 @@ DESCRIPTION:Elisabetta De Cao\nTutor session Ayishatu Awol Tanko\nSource: o
  fficial UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
-UID:class-2026-000-381359-I-96499-2026-11-13T09-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261113T090000
-DTEND;TZID=Europe/Rome:20261113T120000
-SUMMARY:Fundamentals of Econometrics
-LOCATION:AULA EMILIO PASQUINI\, VIA Zamboni 32 - Bologna
-DESCRIPTION:Elisabetta De Cao\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
 UID:class-2026-000-404833-I-C8393-2026-11-13T13-00-00@eu-hem-student-hub
 DTSTAMP:20260101T000000Z
 DTSTART;TZID=Europe/Rome:20261113T130000
@@ -696,24 +480,6 @@ DTEND;TZID=Europe/Rome:20261113T160000
 SUMMARY:Health Systems
 LOCATION:AULA 11\, PIAZZA Antonino Scaravilli 1/2 - Bologna
 DESCRIPTION:Rossella Verzulli\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-401821-I-70125-2026-11-13T16-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261113T160000
-DTEND;TZID=Europe/Rome:20261113T180000
-SUMMARY:International Law and Health
-LOCATION:AULA 11\, PIAZZA Antonino Scaravilli 1/2 - Bologna
-DESCRIPTION:Andre Pieter Den Exter\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-401821-I-70125-2026-11-14T08-30-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261114T083000
-DTEND;TZID=Europe/Rome:20261114T123000
-SUMMARY:International Law and Health
-LOCATION:AULA 1\, PIAZZA Antonino Scaravilli 1/2 - Bologna
-DESCRIPTION:Andre Pieter Den Exter\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
 UID:class-2026-000-380199-I-32626-2026-11-16T13-00-00@eu-hem-student-hub
@@ -743,16 +509,6 @@ LOCATION:AULA A (FARMACOLOGIA)\, Via Irnerio\, 48 - Bologna
 DESCRIPTION:Rossella Verzulli\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
-UID:class-2026-000-381359-I-96499-2026-11-18T09-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261118T090000
-DTEND;TZID=Europe/Rome:20261118T120000
-SUMMARY:Fundamentals of Econometrics
-LOCATION:AULA D (Accesso da via Centotrecento\, 18)\, Via Centotrecento\, 1
- 8 - Bologna
-DESCRIPTION:Elisabetta De Cao\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
 UID:class-2026-000-380199-I-32626-2026-11-18T13-00-00@eu-hem-student-hub
 DTSTAMP:20260101T000000Z
 DTSTART;TZID=Europe/Rome:20261118T130000
@@ -772,16 +528,6 @@ LOCATION:AULA B (ANATOMIA)\, Via Irnerio\, 48 - Bologna
 DESCRIPTION:Francesco Ciabuschi\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
-UID:class-2026-000-381359-I-96499-2026-11-19T13-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261119T130000
-DTEND;TZID=Europe/Rome:20261119T150000
-SUMMARY:Fundamentals of Econometrics
-LOCATION:AULA ENRIQUES\, Piazza di Porta San Donato\, 5 - Bologna
-DESCRIPTION:Elisabetta De Cao\nTutor session Ozlem Yasar\nSource: official 
- UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
 UID:class-2026-000-380199-I-32626-2026-11-19T16-00-00@eu-hem-student-hub
 DTSTAMP:20260101T000000Z
 DTSTART;TZID=Europe/Rome:20261119T160000
@@ -792,15 +538,6 @@ DESCRIPTION:Elisabetta De Cao\nTutor session Ayishatu Awol Tanko\nSource: o
  fficial UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
-UID:class-2026-000-381359-I-96499-2026-11-20T09-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261120T090000
-DTEND;TZID=Europe/Rome:20261120T120000
-SUMMARY:Fundamentals of Econometrics
-LOCATION:AULA EMILIO PASQUINI\, VIA Zamboni 32 - Bologna
-DESCRIPTION:Elisabetta De Cao\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
 UID:class-2026-000-404833-I-C8393-2026-11-20T13-00-00@eu-hem-student-hub
 DTSTAMP:20260101T000000Z
 DTSTART;TZID=Europe/Rome:20261120T130000
@@ -808,24 +545,6 @@ DTEND;TZID=Europe/Rome:20261120T160000
 SUMMARY:Health Systems
 LOCATION:AULA 11\, PIAZZA Antonino Scaravilli 1/2 - Bologna
 DESCRIPTION:Rossella Verzulli\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-401821-I-70125-2026-11-20T16-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261120T160000
-DTEND;TZID=Europe/Rome:20261120T180000
-SUMMARY:International Law and Health
-LOCATION:AULA 11\, PIAZZA Antonino Scaravilli 1/2 - Bologna
-DESCRIPTION:Andre Pieter Den Exter\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-401821-I-70125-2026-11-21T08-30-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261121T083000
-DTEND;TZID=Europe/Rome:20261121T123000
-SUMMARY:International Law and Health
-LOCATION:AULA 1\, PIAZZA Antonino Scaravilli 1/2 - Bologna
-DESCRIPTION:Andre Pieter Den Exter\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
 UID:class-2026-000-380199-I-32626-2026-11-23T11-00-00@eu-hem-student-hub
@@ -856,16 +575,6 @@ LOCATION:AULA A (FARMACOLOGIA)\, Via Irnerio\, 48 - Bologna
 DESCRIPTION:Rossella Verzulli\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
-UID:class-2026-000-381359-I-96499-2026-11-25T09-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261125T090000
-DTEND;TZID=Europe/Rome:20261125T120000
-SUMMARY:Fundamentals of Econometrics
-LOCATION:AULA D (Accesso da via Centotrecento\, 18)\, Via Centotrecento\, 1
- 8 - Bologna
-DESCRIPTION:Elisabetta De Cao\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
 UID:class-2026-000-380199-I-32626-2026-11-25T13-00-00@eu-hem-student-hub
 DTSTAMP:20260101T000000Z
 DTSTART;TZID=Europe/Rome:20261125T130000
@@ -885,25 +594,6 @@ LOCATION:AULA MAGNA\, Via Filippo Re\, 10 - Bologna
 DESCRIPTION:Francesco Ciabuschi\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
-UID:class-2026-000-381359-I-96499-2026-11-26T13-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261126T130000
-DTEND;TZID=Europe/Rome:20261126T150000
-SUMMARY:Fundamentals of Econometrics
-LOCATION:AULA ENRIQUES\, Piazza di Porta San Donato\, 5 - Bologna
-DESCRIPTION:Elisabetta De Cao\nTutor session Ozlem Yasar\nSource: official 
- UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-381359-I-96499-2026-11-27T09-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261127T090000
-DTEND;TZID=Europe/Rome:20261127T120000
-SUMMARY:Fundamentals of Econometrics
-LOCATION:AULA EMILIO PASQUINI\, VIA Zamboni 32 - Bologna
-DESCRIPTION:Elisabetta De Cao\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
 UID:class-2026-000-404833-I-C8393-2026-11-27T13-00-00@eu-hem-student-hub
 DTSTAMP:20260101T000000Z
 DTSTART;TZID=Europe/Rome:20261127T130000
@@ -911,24 +601,6 @@ DTEND;TZID=Europe/Rome:20261127T160000
 SUMMARY:Health Systems
 LOCATION:AULA 11\, PIAZZA Antonino Scaravilli 1/2 - Bologna
 DESCRIPTION:Rossella Verzulli\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-401821-I-70125-2026-11-27T16-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261127T160000
-DTEND;TZID=Europe/Rome:20261127T180000
-SUMMARY:International Law and Health
-LOCATION:AULA 11\, PIAZZA Antonino Scaravilli 1/2 - Bologna
-DESCRIPTION:Andre Pieter Den Exter\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-401821-I-70125-2026-11-28T08-30-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261128T083000
-DTEND;TZID=Europe/Rome:20261128T123000
-SUMMARY:International Law and Health
-LOCATION:AULA 1\, PIAZZA Antonino Scaravilli 1/2 - Bologna
-DESCRIPTION:Andre Pieter Den Exter\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
 UID:class-2026-000-380199-I-32626-2026-11-30T11-00-00@eu-hem-student-hub
@@ -958,16 +630,6 @@ LOCATION:AULA A (FARMACOLOGIA)\, Via Irnerio\, 48 - Bologna
 DESCRIPTION:Rossella Verzulli\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
-UID:class-2026-000-381359-I-96499-2026-12-02T09-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261202T090000
-DTEND;TZID=Europe/Rome:20261202T120000
-SUMMARY:Fundamentals of Econometrics
-LOCATION:AULA D (Accesso da via Centotrecento\, 18)\, Via Centotrecento\, 1
- 8 - Bologna
-DESCRIPTION:Elisabetta De Cao\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
 UID:class-2026-000-380199-I-32626-2026-12-02T13-00-00@eu-hem-student-hub
 DTSTAMP:20260101T000000Z
 DTSTART;TZID=Europe/Rome:20261202T130000
@@ -987,16 +649,6 @@ LOCATION:AULA MAGNA\, Via Filippo Re\, 10 - Bologna
 DESCRIPTION:Francesco Ciabuschi\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
-UID:class-2026-000-381359-I-96499-2026-12-03T13-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261203T130000
-DTEND;TZID=Europe/Rome:20261203T150000
-SUMMARY:Fundamentals of Econometrics
-LOCATION:AULA ENRIQUES\, Piazza di Porta San Donato\, 5 - Bologna
-DESCRIPTION:Elisabetta De Cao\nTutor session Ozlem Yasar\nSource: official 
- UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
 UID:class-2026-000-380199-I-32626-2026-12-03T16-00-00@eu-hem-student-hub
 DTSTAMP:20260101T000000Z
 DTSTART;TZID=Europe/Rome:20261203T160000
@@ -1007,15 +659,6 @@ DESCRIPTION:Elisabetta De Cao\nTutor session Ayishatu Awol Tanko\nSource: o
  fficial UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
-UID:class-2026-000-381359-I-96499-2026-12-04T09-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261204T090000
-DTEND;TZID=Europe/Rome:20261204T120000
-SUMMARY:Fundamentals of Econometrics
-LOCATION:AULA EMILIO PASQUINI\, VIA Zamboni 32 - Bologna
-DESCRIPTION:Elisabetta De Cao\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
 UID:class-2026-000-404833-I-C8393-2026-12-04T13-00-00@eu-hem-student-hub
 DTSTAMP:20260101T000000Z
 DTSTART;TZID=Europe/Rome:20261204T130000
@@ -1023,34 +666,6 @@ DTEND;TZID=Europe/Rome:20261204T160000
 SUMMARY:Health Systems
 LOCATION:AULA 11\, PIAZZA Antonino Scaravilli 1/2 - Bologna
 DESCRIPTION:Rossella Verzulli\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-401821-I-70125-2026-12-04T16-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261204T160000
-DTEND;TZID=Europe/Rome:20261204T180000
-SUMMARY:International Law and Health
-LOCATION:AULA 11\, PIAZZA Antonino Scaravilli 1/2 - Bologna
-DESCRIPTION:Andre Pieter Den Exter\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-401821-I-70125-2026-12-05T08-30-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261205T083000
-DTEND;TZID=Europe/Rome:20261205T123000
-SUMMARY:International Law and Health
-LOCATION:AULA A - S.P.V.\, VIA San Petronio vecchio 32 - Bologna
-DESCRIPTION:Andre Pieter Den Exter\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-381359-I-96499-2026-12-09T09-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261209T090000
-DTEND;TZID=Europe/Rome:20261209T120000
-SUMMARY:Fundamentals of Econometrics
-LOCATION:AULA D (Accesso da via Centotrecento\, 18)\, Via Centotrecento\, 1
- 8 - Bologna
-DESCRIPTION:Elisabetta De Cao\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
 UID:class-2026-000-380199-I-32626-2026-12-09T13-00-00@eu-hem-student-hub
@@ -1073,15 +688,6 @@ DESCRIPTION:Elisabetta De Cao\nTutor session Ayishatu Awol Tanko\nSource: o
  fficial UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
-UID:class-2026-000-381359-I-96499-2026-12-11T09-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261211T090000
-DTEND;TZID=Europe/Rome:20261211T120000
-SUMMARY:Fundamentals of Econometrics
-LOCATION:AULA EMILIO PASQUINI\, VIA Zamboni 32 - Bologna
-DESCRIPTION:Elisabetta De Cao\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
 UID:class-2026-000-404833-I-C8393-2026-12-11T13-00-00@eu-hem-student-hub
 DTSTAMP:20260101T000000Z
 DTSTART;TZID=Europe/Rome:20261211T130000
@@ -1089,24 +695,6 @@ DTEND;TZID=Europe/Rome:20261211T160000
 SUMMARY:Health Systems
 LOCATION:AULA 11\, PIAZZA Antonino Scaravilli 1/2 - Bologna
 DESCRIPTION:Rossella Verzulli\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-401821-I-70125-2026-12-11T16-00-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261211T160000
-DTEND;TZID=Europe/Rome:20261211T180000
-SUMMARY:International Law and Health
-LOCATION:AULA 11\, PIAZZA Antonino Scaravilli 1/2 - Bologna
-DESCRIPTION:Andre Pieter Den Exter\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:class-2026-000-401821-I-70125-2026-12-12T08-30-00@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261212T083000
-DTEND;TZID=Europe/Rome:20261212T123000
-SUMMARY:International Law and Health
-LOCATION:AULA 1\, PIAZZA Antonino Scaravilli 1/2 - Bologna
-DESCRIPTION:Andre Pieter Den Exter\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
 UID:class-2026-000-380199-I-32626-2026-12-14T11-00-00@eu-hem-student-hub
@@ -1125,25 +713,6 @@ DTEND;TZID=Europe/Rome:20261215T160000
 SUMMARY:Health Systems
 LOCATION:AULA B (ANATOMIA)\, Via Irnerio\, 48 - Bologna
 DESCRIPTION:Rossella Verzulli\nSource: official UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
-UID:exam-2026-10-27-09-00-Aula-22-Scaravilli@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261027T090000
-DTEND;TZID=Europe/Rome:20261027T110000
-SUMMARY:Exam: Introduction to Economics
-LOCATION:Aula 22 Scaravilli
-DESCRIPTION:Type: Written\nTeacher: Matuka Adelajda\nRegistration closes: 2
- 026-10-23\nEnd time is an estimate (2 h). Register on AlmaEsami.\nSource: 
- official UniBo exam dates
-END:VEVENT
-BEGIN:VEVENT
-UID:registration-2026-10-27-09-00-Aula-22-Scaravilli@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;VALUE=DATE:20261023
-DTEND;VALUE=DATE:20261024
-SUMMARY:Last day to register: Introduction to Economics
-DESCRIPTION:Exam on 2026-10-27 at 09:00. Register on AlmaEsami.
 END:VEVENT
 BEGIN:VEVENT
 UID:exam-2026-10-27-10-00-BELMELORO-B@eu-hem-student-hub
@@ -1204,86 +773,6 @@ DTEND;VALUE=DATE:20261102
 SUMMARY:Last day to register: Our Right to Health: Needs\, Resources and So
  ciety
 DESCRIPTION:Exam on 2026-11-04 at 13:00. Register on AlmaEsami.
-END:VEVENT
-BEGIN:VEVENT
-UID:exam-2026-11-04-15-00-LAB-G-LAB-T-Via-Ranzani-1-@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261104T150000
-DTEND;TZID=Europe/Rome:20261104T170000
-SUMMARY:Exam: Fundamentals of Statistics for Healthcare
-LOCATION:LAB G - LAB T (Via Ranzani\, 1)
-DESCRIPTION:Type: Written\nTeacher: Capacci Sara\nRegistration closes: 2026
- -10-31\nEnd time is an estimate (2 h). Register on AlmaEsami.\nSource: off
- icial UniBo exam dates
-END:VEVENT
-BEGIN:VEVENT
-UID:registration-2026-11-04-15-00-LAB-G-LAB-T-Via-Ranzani-1-@eu-hem-student
- -hub
-DTSTAMP:20260101T000000Z
-DTSTART;VALUE=DATE:20261031
-DTEND;VALUE=DATE:20261101
-SUMMARY:Last day to register: Fundamentals of Statistics for Healthcare
-DESCRIPTION:Exam on 2026-11-04 at 15:00. Register on AlmaEsami.
-END:VEVENT
-BEGIN:VEVENT
-UID:exam-2026-11-04-16-30-LAB-G-LAB-T-Via-Ranzani-1-@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261104T163000
-DTEND;TZID=Europe/Rome:20261104T183000
-SUMMARY:Exam: Fundamentals of Statistics for Healthcare
-LOCATION:LAB G - LAB T (Via Ranzani\, 1)
-DESCRIPTION:Type: Written\nTeacher: Capacci Sara\nRegistration closes: 2026
- -10-31\nEnd time is an estimate (2 h). Register on AlmaEsami.\nSource: off
- icial UniBo exam dates
-END:VEVENT
-BEGIN:VEVENT
-UID:registration-2026-11-04-16-30-LAB-G-LAB-T-Via-Ranzani-1-@eu-hem-student
- -hub
-DTSTAMP:20260101T000000Z
-DTSTART;VALUE=DATE:20261031
-DTEND;VALUE=DATE:20261101
-SUMMARY:Last day to register: Fundamentals of Statistics for Healthcare
-DESCRIPTION:Exam on 2026-11-04 at 16:30. Register on AlmaEsami.
-END:VEVENT
-BEGIN:VEVENT
-UID:exam-2026-12-17-11-00-Laboratorio-informatico@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261217T110000
-DTEND;TZID=Europe/Rome:20261217T130000
-SUMMARY:Exam: Fundamentals of Econometrics
-LOCATION:Laboratorio informatico
-DESCRIPTION:Type: Practical\nTeacher: De Cao Elisabetta\nRegistration close
- s: 2026-12-13\nEnd time is an estimate (2 h). Register on AlmaEsami.\nSour
- ce: official UniBo exam dates
-END:VEVENT
-BEGIN:VEVENT
-UID:registration-2026-12-17-11-00-Laboratorio-informatico@eu-hem-student-hu
- b
-DTSTAMP:20260101T000000Z
-DTSTART;VALUE=DATE:20261213
-DTEND;VALUE=DATE:20261214
-SUMMARY:Last day to register: Fundamentals of Econometrics
-DESCRIPTION:Exam on 2026-12-17 at 11:00. Register on AlmaEsami.
-END:VEVENT
-BEGIN:VEVENT
-UID:exam-2026-12-17-12-15-Laboratorio-informatico@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20261217T121500
-DTEND;TZID=Europe/Rome:20261217T141500
-SUMMARY:Exam: Fundamentals of Econometrics
-LOCATION:Laboratorio informatico
-DESCRIPTION:Type: Practical\nTeacher: De Cao Elisabetta\nRegistration close
- s: 2026-12-13\nEnd time is an estimate (2 h). Register on AlmaEsami.\nSour
- ce: official UniBo exam dates
-END:VEVENT
-BEGIN:VEVENT
-UID:registration-2026-12-17-12-15-Laboratorio-informatico@eu-hem-student-hu
- b
-DTSTAMP:20260101T000000Z
-DTSTART;VALUE=DATE:20261213
-DTEND;VALUE=DATE:20261214
-SUMMARY:Last day to register: Fundamentals of Econometrics
-DESCRIPTION:Exam on 2026-12-17 at 12:15. Register on AlmaEsami.
 END:VEVENT
 BEGIN:VEVENT
 UID:exam-2026-12-17-14-00-laboratorio-informatico@eu-hem-student-hub
@@ -1384,26 +873,6 @@ SUMMARY:Last day to register: Fundamentals in Health Economics
 DESCRIPTION:Exam on 2027-01-22 at 09:00. Register on AlmaEsami.
 END:VEVENT
 BEGIN:VEVENT
-UID:exam-2027-01-26-11-00-LABORATORIO-2-Via-Zamboni-34-@eu-hem-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20270126T110000
-DTEND;TZID=Europe/Rome:20270126T130000
-SUMMARY:Exam: Fundamentals of Statistics for Healthcare
-LOCATION:LABORATORIO 2 (Via Zamboni\, 34)
-DESCRIPTION:Type: Written\nTeacher: Capacci Sara\nRegistration closes: 2027
- -01-22\nEnd time is an estimate (2 h). Register on AlmaEsami.\nSource: off
- icial UniBo exam dates
-END:VEVENT
-BEGIN:VEVENT
-UID:registration-2027-01-26-11-00-LABORATORIO-2-Via-Zamboni-34-@eu-hem-stud
- ent-hub
-DTSTAMP:20260101T000000Z
-DTSTART;VALUE=DATE:20270122
-DTEND;VALUE=DATE:20270123
-SUMMARY:Last day to register: Fundamentals of Statistics for Healthcare
-DESCRIPTION:Exam on 2027-01-26 at 11:00. Register on AlmaEsami.
-END:VEVENT
-BEGIN:VEVENT
 UID:exam-2027-01-29-13-30-Lab-Inf-B-Accesso-da-Via-Zamboni-34-@eu-hem-stude
  nt-hub
 DTSTAMP:20260101T000000Z
@@ -1423,26 +892,5 @@ DTSTART;VALUE=DATE:20270125
 DTEND;VALUE=DATE:20270126
 SUMMARY:Last day to register: Econometrics
 DESCRIPTION:Exam on 2027-01-29 at 13:30. Register on AlmaEsami.
-END:VEVENT
-BEGIN:VEVENT
-UID:exam-2027-01-29-15-00-Lab-Inf-B-Accesso-da-Via-Zamboni-34-@eu-hem-stude
- nt-hub
-DTSTAMP:20260101T000000Z
-DTSTART;TZID=Europe/Rome:20270129T150000
-DTEND;TZID=Europe/Rome:20270129T170000
-SUMMARY:Exam: Fundamentals of Econometrics
-LOCATION:Lab Inf. B (Accesso da Via Zamboni\, 34)
-DESCRIPTION:Type: Practical\nTeacher: De Cao Elisabetta\nRegistration close
- s: 2027-01-25\nEnd time is an estimate (2 h). Register on AlmaEsami.\nSour
- ce: official UniBo exam dates
-END:VEVENT
-BEGIN:VEVENT
-UID:registration-2027-01-29-15-00-Lab-Inf-B-Accesso-da-Via-Zamboni-34-@eu-h
- em-student-hub
-DTSTAMP:20260101T000000Z
-DTSTART;VALUE=DATE:20270125
-DTEND;VALUE=DATE:20270126
-SUMMARY:Last day to register: Fundamentals of Econometrics
-DESCRIPTION:Exam on 2027-01-29 at 15:00. Register on AlmaEsami.
 END:VEVENT
 END:VCALENDAR
