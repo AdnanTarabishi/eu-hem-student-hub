@@ -1,12 +1,161 @@
 /* ===== Color palette =====
    Defined once here as "variables" so we can change the whole site's look in one place. */
 :root {
+  color-scheme: light;
   --color-primary: #1f4e79;
   --color-primary-light: #e8f0f8;
+  --color-primary-border: #c9d8e8;
+  --color-on-primary: #ffffff;
+  --color-header-bg: #1f4e79;
+  --color-header-text: #ffffff;
   --color-text: #222222;
   --color-muted: #666666;
+  --color-faint: #b0b8c1;
   --color-background: #f5f7fa;
   --color-card: #ffffff;
+  --color-surface-alt: #f7f9fc;
+  --color-surface-zebra: #fafbfd;
+  --color-surface-muted: #f0f1f3;
+  --color-border: #dde3ea;
+  --color-divider: #e6ebf0;
+  --color-input-border: #c9d3de;
+  --color-shadow: rgba(0, 0, 0, 0.08);
+  --color-shadow-strong: rgba(0, 0, 0, 0.14);
+  --color-accent: #f9a825;
+  --color-warning-bg: #fff8e1;
+  --color-success-bg: #e3f2e9;
+  --color-success-text: #1b6b45;
+  --color-danger-bg: #fbe4e4;
+  --color-danger-text: #a12a2a;
+  --color-urgent: #b71c1c;
+  --pill-blue-bg: #e3eefb;
+  --pill-blue-text: #1f4e79;
+  --pill-purple-bg: #ede7f6;
+  --pill-purple-text: #4a2c8a;
+  --pill-amber-bg: #fbf0dc;
+  --pill-amber-text: #8a5a0b;
+  --pill-orange-bg: #fff0e0;
+  --pill-orange-text: #9a4b00;
+  --pill-pink-bg: #f6e6f0;
+  --pill-pink-text: #8a2f63;
+}
+
+/* ===== Dark mode =====
+   The same colour names with dark values. They apply when the device is set to dark mode
+   (unless the visitor chose light with the 🌙/☀️ button), or when the visitor chose dark.
+   theme.js sets data-theme="light" or "dark" on <html> when the button is used. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --color-primary: #8ab8e8;
+    --color-primary-light: #1b2b3c;
+    --color-primary-border: #2e4560;
+    --color-on-primary: #0d1a28;
+    --color-header-bg: #13263a;
+    --color-header-text: #e6edf5;
+    --color-text: #e3e8ee;
+    --color-muted: #9aa7b4;
+    --color-faint: #5d6a77;
+    --color-background: #0e141b;
+    --color-card: #17202a;
+    --color-surface-alt: #1d2833;
+    --color-surface-zebra: #1a242e;
+    --color-surface-muted: #222d38;
+    --color-border: #2b3744;
+    --color-divider: #232e39;
+    --color-input-border: #3a4857;
+    --color-shadow: rgba(0, 0, 0, 0.45);
+    --color-shadow-strong: rgba(0, 0, 0, 0.6);
+    --color-warning-bg: #2f2812;
+    --color-success-bg: #163222;
+    --color-success-text: #7fd3a2;
+    --color-danger-bg: #3b1c1c;
+    --color-danger-text: #f3a0a0;
+    --pill-blue-bg: #1c2f47;
+    --pill-blue-text: #9cc6f2;
+    --pill-purple-bg: #2a2242;
+    --pill-purple-text: #c6b4f2;
+    --pill-amber-bg: #362c12;
+    --pill-amber-text: #e9c46a;
+    --pill-orange-bg: #3b2a14;
+    --pill-orange-text: #f6b56d;
+    --pill-pink-bg: #3a2031;
+    --pill-pink-text: #eda5d1;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-primary: #8ab8e8;
+  --color-primary-light: #1b2b3c;
+  --color-primary-border: #2e4560;
+  --color-on-primary: #0d1a28;
+  --color-header-bg: #13263a;
+  --color-header-text: #e6edf5;
+  --color-text: #e3e8ee;
+  --color-muted: #9aa7b4;
+  --color-faint: #5d6a77;
+  --color-background: #0e141b;
+  --color-card: #17202a;
+  --color-surface-alt: #1d2833;
+  --color-surface-zebra: #1a242e;
+  --color-surface-muted: #222d38;
+  --color-border: #2b3744;
+  --color-divider: #232e39;
+  --color-input-border: #3a4857;
+  --color-shadow: rgba(0, 0, 0, 0.45);
+  --color-shadow-strong: rgba(0, 0, 0, 0.6);
+  --color-warning-bg: #2f2812;
+  --color-success-bg: #163222;
+  --color-success-text: #7fd3a2;
+  --color-danger-bg: #3b1c1c;
+  --color-danger-text: #f3a0a0;
+  --pill-blue-bg: #1c2f47;
+  --pill-blue-text: #9cc6f2;
+  --pill-purple-bg: #2a2242;
+  --pill-purple-text: #c6b4f2;
+  --pill-amber-bg: #362c12;
+  --pill-amber-text: #e9c46a;
+  --pill-orange-bg: #3b2a14;
+  --pill-orange-text: #f6b56d;
+  --pill-pink-bg: #3a2031;
+  --pill-pink-text: #eda5d1;
+}
+
+/* Form fields follow the theme too */
+input,
+select,
+textarea {
+  background: var(--color-card);
+  color: var(--color-text);
+  border: 1px solid var(--color-input-border);
+  border-radius: 4px;
+}
+
+/* 🌙/☀️ button in the header (added by theme.js) */
+.site-header .container {
+  position: relative;
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 0;
+  right: 16px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: transparent;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.site-title {
+  padding-right: 48px;
 }
 
 /* ===== Base styles ===== */
@@ -35,8 +184,8 @@ a {
 
 /* ===== Header ===== */
 .site-header {
-  background: var(--color-primary);
-  color: #ffffff;
+  background: var(--color-header-bg);
+  color: var(--color-header-text);
   padding: 24px 0;
 }
 
@@ -69,7 +218,7 @@ a {
 }
 
 .site-nav a {
-  color: #ffffff;
+  color: var(--color-header-text);
   text-decoration: none;
   font-weight: 600;
 }
@@ -89,7 +238,7 @@ main {
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 20px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 3px var(--color-shadow);
 }
 
 .card h2 {
@@ -179,7 +328,7 @@ main {
 .badge {
   display: inline-block;
   background: var(--color-primary);
-  color: #ffffff;
+  color: var(--color-on-primary);
   font-size: 0.75rem;
   padding: 1px 8px;
   border-radius: 10px;
@@ -218,7 +367,7 @@ main {
 
 /* Registration currently open: make it stand out */
 .exam-registration.is-open {
-  color: #1b5e20;
+  color: var(--color-success-text);
   font-weight: 600;
 }
 
@@ -232,7 +381,7 @@ main {
 .button {
   display: inline-block;
   background: var(--color-primary);
-  color: #ffffff;
+  color: var(--color-on-primary);
   border: none;
   border-radius: 6px;
   padding: 8px 14px;
@@ -291,8 +440,8 @@ main {
 .guide-notice {
   margin: 0 0 20px;
   padding: 12px 16px;
-  background: #fff8e1;
-  border-left: 4px solid #f9a825;
+  background: var(--color-warning-bg);
+  border-left: 4px solid var(--color-accent);
   border-radius: 4px;
 }
 
@@ -361,7 +510,7 @@ main {
 
 .guide th,
 .guide td {
-  border: 1px solid #dde3ea;
+  border: 1px solid var(--color-border);
   padding: 8px 10px;
   text-align: left;
   vertical-align: top;
@@ -375,8 +524,8 @@ main {
 .demo-banner {
   margin: 24px 0 16px;
   padding: 12px 16px;
-  background: #fff8e1;
-  border-left: 4px solid #f9a825;
+  background: var(--color-warning-bg);
+  border-left: 4px solid var(--color-accent);
   border-radius: 4px;
 }
 
@@ -391,7 +540,7 @@ main {
   border-top: 3px solid var(--color-primary);
   border-radius: 10px;
   padding: 14px 18px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 3px var(--color-shadow);
 }
 
 .directory-title {
@@ -414,7 +563,7 @@ main {
 .count-pill {
   background: var(--color-primary-light);
   color: var(--color-primary);
-  border: 1px solid #c9d8e8;
+  border: 1px solid var(--color-primary-border);
   border-radius: 999px;
   padding: 2px 12px;
   font-size: 0.85rem;
@@ -429,7 +578,7 @@ main {
   gap: 4px;
   padding: 4px;
   background: var(--color-background);
-  border: 1px solid #dde3ea;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   max-width: 100%;
 }
@@ -452,7 +601,7 @@ main {
 
 .track-tab[aria-selected="true"] {
   background: var(--color-primary);
-  color: #ffffff;
+  color: var(--color-on-primary);
   font-weight: 600;
 }
 
@@ -471,7 +620,7 @@ main {
   align-items: center;
   gap: 8px;
   background: var(--color-card);
-  border: 1px solid #c9d3de;
+  border: 1px solid var(--color-input-border);
   border-radius: 999px;
   padding: 8px 16px;
 }
@@ -503,7 +652,7 @@ main {
   flex: 0 1 220px;
   min-width: 0;
   background: var(--color-card);
-  border: 1px solid #c9d3de;
+  border: 1px solid var(--color-input-border);
   border-radius: 999px;
   padding: 9px 14px;
   font: inherit;
@@ -530,7 +679,7 @@ main {
   background: var(--color-card);
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 3px var(--color-shadow);
   margin-bottom: 24px;
 }
 
@@ -541,7 +690,7 @@ main {
 
 .directory-table th {
   background: var(--color-primary);
-  color: #ffffff;
+  color: var(--color-on-primary);
   font-size: 0.85rem;
   font-weight: 600;
   text-align: left;
@@ -550,12 +699,12 @@ main {
 
 .directory-table td {
   padding: 10px 14px;
-  border-bottom: 1px solid #e6ebf0;
+  border-bottom: 1px solid var(--color-divider);
   vertical-align: middle;
 }
 
 .directory-table tbody tr:nth-child(even) {
-  background: #fafbfd;
+  background: var(--color-surface-zebra);
 }
 
 .directory-table tbody tr:hover {
@@ -593,7 +742,7 @@ main {
 }
 
 .empty-value {
-  color: #b0b8c1;
+  color: var(--color-faint);
 }
 
 /* Track pills: one soft colour per track */
@@ -606,13 +755,13 @@ main {
   white-space: nowrap;
 }
 
-.track-color-0 { background: #e3f2e9; color: #1b6b45; }
-.track-color-1 { background: #e3eefb; color: #1f4e79; }
-.track-color-2 { background: #fbf0dc; color: #8a5a0b; }
-.track-color-3 { background: #f6e6f0; color: #8a2f63; }
+.track-color-0 { background: var(--color-success-bg); color: var(--color-success-text); }
+.track-color-1 { background: var(--pill-blue-bg); color: var(--pill-blue-text); }
+.track-color-2 { background: var(--pill-amber-bg); color: var(--pill-amber-text); }
+.track-color-3 { background: var(--pill-pink-bg); color: var(--pill-pink-text); }
 
 .track-none {
-  background: #f0f1f3;
+  background: var(--color-surface-muted);
   color: var(--color-muted);
   font-style: italic;
   font-weight: 400;
@@ -641,7 +790,7 @@ main {
   .directory-table tbody tr {
     position: relative;
     padding: 12px 14px;
-    border-bottom: 1px solid #e6ebf0;
+    border-bottom: 1px solid var(--color-divider);
   }
 
   .directory-table td {
@@ -685,7 +834,7 @@ main {
 
 /* Red bar at the top of every page when there is an active Urgent announcement */
 .urgent-banner {
-  background: #b71c1c;
+  background: var(--color-urgent);
   color: #ffffff;
   padding: 10px 0;
   font-size: 0.95rem;
@@ -697,8 +846,8 @@ main {
 }
 
 .demo-note {
-  background: #fff8e1;
-  border-left: 4px solid #f9a825;
+  background: var(--color-warning-bg);
+  border-left: 4px solid var(--color-accent);
   padding: 8px 12px;
   border-radius: 4px;
 }
@@ -714,7 +863,7 @@ main {
 }
 
 .announcement {
-  border: 1px solid #dde3ea;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 14px 16px;
   scroll-margin-top: 12px;
@@ -726,7 +875,7 @@ main {
 
 /* The announcement someone arrived at from a link */
 .announcement.is-highlighted {
-  box-shadow: 0 0 0 3px #f9a825;
+  box-shadow: 0 0 0 3px var(--color-accent);
 }
 
 .announcement-meta {
@@ -798,12 +947,12 @@ main {
   white-space: nowrap;
 }
 
-.category-university { background: #e3eefb; color: #1f4e79; }
-.category-academic { background: #ede7f6; color: #4a2c8a; }
-.category-student { background: #e3f2e9; color: #1b6b45; }
-.category-social { background: #fff0e0; color: #9a4b00; }
-.category-urgent { background: #b71c1c; color: #ffffff; }
-.category-other { background: #f0f1f3; color: var(--color-muted); }
+.category-university { background: var(--pill-blue-bg); color: var(--pill-blue-text); }
+.category-academic { background: var(--pill-purple-bg); color: var(--pill-purple-text); }
+.category-student { background: var(--color-success-bg); color: var(--color-success-text); }
+.category-social { background: var(--pill-orange-bg); color: var(--pill-orange-text); }
+.category-urgent { background: var(--color-urgent); color: #ffffff; }
+.category-other { background: var(--color-surface-muted); color: var(--color-muted); }
 
 .pinned-badge {
   background: var(--color-primary-light);
@@ -811,7 +960,7 @@ main {
 }
 
 .new-badge {
-  background: #f9a825;
+  background: var(--color-accent);
   color: #3e2a00;
 }
 
@@ -857,7 +1006,7 @@ a.track-tab {
   margin: 0 6px;
   padding: 1px 8px;
   border-radius: 999px;
-  background: #eceff3;
+  background: var(--color-surface-muted);
   color: var(--color-muted);
   font-size: 0.75rem;
   font-weight: 600;
@@ -865,7 +1014,7 @@ a.track-tab {
 }
 
 .save-button {
-  border: 1px solid #c9d3de;
+  border: 1px solid var(--color-input-border);
   background: var(--color-card);
   color: var(--color-primary);
   border-radius: 999px;
@@ -897,7 +1046,7 @@ a.track-tab {
 
 /* An item someone arrived at from a link (search, study list) */
 .is-highlighted {
-  box-shadow: 0 0 0 3px #f9a825;
+  box-shadow: 0 0 0 3px var(--color-accent);
   border-radius: 8px;
 }
 
@@ -917,15 +1066,15 @@ a.track-tab {
   padding: 14px 16px;
   color: var(--color-text);
   text-decoration: none;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 3px var(--color-shadow);
 }
 
 .course-card:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
+  box-shadow: 0 2px 8px var(--color-shadow-strong);
 }
 
 .course-card.is-overview-only {
-  border-top-color: #c9d3de;
+  border-top-color: var(--color-input-border);
 }
 
 .course-card-head {
@@ -1007,7 +1156,7 @@ a.track-tab {
   justify-content: space-between;
   gap: 8px;
   padding: 10px 0;
-  border-bottom: 1px solid #e6ebf0;
+  border-bottom: 1px solid var(--color-divider);
 }
 
 .topic-row-main {
@@ -1028,8 +1177,8 @@ a.track-tab {
 .notes-disclaimer {
   margin: 12px 0;
   padding: 10px 14px;
-  background: #fff8e1;
-  border-left: 4px solid #f9a825;
+  background: var(--color-warning-bg);
+  border-left: 4px solid var(--color-accent);
   border-radius: 4px;
 }
 
@@ -1058,7 +1207,7 @@ a.track-tab {
 
 .markdown th,
 .markdown td {
-  border: 1px solid #dde3ea;
+  border: 1px solid var(--color-border);
   padding: 6px 10px;
   text-align: left;
 }
@@ -1071,7 +1220,7 @@ a.track-tab {
   margin: 12px 0;
   padding: 6px 12px;
   border-left: 4px solid var(--color-primary);
-  background: #f7f9fc;
+  background: var(--color-surface-alt);
 }
 
 .plain-markdown {
@@ -1081,7 +1230,7 @@ a.track-tab {
 .topic-extras {
   margin-top: 24px;
   padding-top: 12px;
-  border-top: 1px solid #e6ebf0;
+  border-top: 1px solid var(--color-divider);
 }
 
 .topic-extras h4 {
@@ -1110,7 +1259,7 @@ a.track-tab {
 .concept-card,
 .resource-card,
 .question-card {
-  border: 1px solid #dde3ea;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 12px 16px;
   scroll-margin-top: 12px;
@@ -1126,8 +1275,8 @@ a.track-tab {
   margin-right: 8px;
   padding: 1px 10px;
   border-radius: 999px;
-  background: #ede7f6;
-  color: #4a2c8a;
+  background: var(--pill-purple-bg);
+  color: var(--pill-purple-text);
   font-size: 0.75rem;
   font-weight: 600;
 }
@@ -1140,7 +1289,7 @@ a.track-tab {
 .practice-section + .practice-section {
   margin-top: 32px;
   padding-top: 8px;
-  border-top: 1px solid #e6ebf0;
+  border-top: 1px solid var(--color-divider);
 }
 
 .flashcard-top {
@@ -1160,8 +1309,8 @@ a.track-tab {
   padding: 20px;
   min-height: 140px;
   border-radius: 10px;
-  border: 1px solid #c9d8e8;
-  background: linear-gradient(180deg, #ffffff, var(--color-primary-light));
+  border: 1px solid var(--color-primary-border);
+  background: linear-gradient(180deg, var(--color-card), var(--color-primary-light));
 }
 
 .flashcard-label {
@@ -1181,7 +1330,7 @@ a.track-tab {
 .flashcard-back {
   margin: 4px 0 0;
   padding-top: 12px;
-  border-top: 1px dashed #c9d8e8;
+  border-top: 1px dashed var(--color-primary-border);
 }
 
 /* Practice: questions */
@@ -1199,9 +1348,9 @@ a.track-tab {
 }
 
 .question-type { background: var(--color-primary-light); color: var(--color-primary); }
-.difficulty-easy { background: #e3f2e9; color: #1b6b45; }
-.difficulty-medium { background: #fbf0dc; color: #8a5a0b; }
-.difficulty-hard { background: #fbe4e4; color: #a12a2a; }
+.difficulty-easy { background: var(--color-success-bg); color: var(--color-success-text); }
+.difficulty-medium { background: var(--pill-amber-bg); color: var(--pill-amber-text); }
+.difficulty-hard { background: var(--color-danger-bg); color: var(--color-danger-text); }
 
 .meta-spacer {
   flex: 1;
@@ -1225,7 +1374,7 @@ a.track-tab {
 
 .choice {
   text-align: left;
-  border: 1px solid #c9d3de;
+  border: 1px solid var(--color-input-border);
   background: var(--color-card);
   border-radius: 8px;
   padding: 8px 12px;
@@ -1243,13 +1392,13 @@ a.track-tab {
 }
 
 .choice.is-correct {
-  background: #e3f2e9;
-  border-color: #1b6b45;
+  background: var(--color-success-bg);
+  border-color: var(--color-success-text);
 }
 
 .choice.is-wrong {
-  background: #fbe4e4;
-  border-color: #a12a2a;
+  background: var(--color-danger-bg);
+  border-color: var(--color-danger-text);
 }
 
 .answer-feedback {
@@ -1257,14 +1406,14 @@ a.track-tab {
   font-weight: 600;
 }
 
-.answer-feedback.is-right { color: #1b6b45; }
-.answer-feedback.is-wrong { color: #a12a2a; }
+.answer-feedback.is-right { color: var(--color-success-text); }
+.answer-feedback.is-wrong { color: var(--color-danger-text); }
 
 .short-answer {
   width: 100%;
   font: inherit;
   padding: 8px;
-  border: 1px solid #c9d3de;
+  border: 1px solid var(--color-input-border);
   border-radius: 8px;
 }
 
@@ -1280,7 +1429,7 @@ a.track-tab {
 .explanation {
   margin-top: 10px;
   padding: 10px 14px;
-  background: #f7f9fc;
+  background: var(--color-surface-alt);
   border-left: 4px solid var(--color-primary);
   border-radius: 4px;
 }
@@ -1303,7 +1452,7 @@ a.track-tab {
   justify-content: space-between;
   gap: 12px;
   padding: 10px 0;
-  border-bottom: 1px solid #e6ebf0;
+  border-bottom: 1px solid var(--color-divider);
 }
 
 .study-type {
@@ -1331,7 +1480,7 @@ a.track-tab {
 
 .search-list li {
   padding: 8px 0;
-  border-bottom: 1px solid #e6ebf0;
+  border-bottom: 1px solid var(--color-divider);
 }
 
 .search-snippet {

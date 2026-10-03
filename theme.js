@@ -1,0 +1,63 @@
+// ===== Light / dark mode =====
+// Loaded at the top of every page (in <head>), so the right colours apply before
+// anything is drawn - no white flash in dark mode.
+// By default the site follows the device setting. The 🌙/☀️ button overrides it,
+// and the choice is remembered in this browser.
+
+(function () {
+  const STORAGE_KEY = "euhem-theme";
+  const root = document.documentElement;
+
+  function savedTheme() {
+    try {
+      const value = window.localStorage.getItem(STORAGE_KEY);
+      return value === "light" || value === "dark" ? value : null;
+    } catch {
+      return null; // storage blocked: just follow the device
+    }
+  }
+
+  function deviceTheme() {
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+
+  function currentTheme() {
+    return root.dataset.theme || deviceTheme();
+  }
+
+  // 1. Apply a saved choice immediately
+  const saved = savedTheme();
+  if (saved) root.dataset.theme = saved;
+
+  // 2. Add the toggle button once the header exists
+  function addToggle() {
+    const header = document.querySelector(".site-header .container");
+    if (!header || header.querySelector(".theme-toggle")) return;
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "theme-toggle";
+    const update = () => {
+      const dark = currentTheme() === "dark";
+      button.textContent = dark ? "☀️" : "🌙";
+      button.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+      button.title = button.getAttribute("aria-label");
+    };
+    button.addEventListener("click", () => {
+      const next = currentTheme() === "dark" ? "light" : "dark";
+      root.dataset.theme = next;
+      try {
+        window.localStorage.setItem(STORAGE_KEY, next);
+      } catch {
+        // storage blocked: the choice lasts until the page is closed
+      }
+      update();
+    });
+    // If the device switches theme and the visitor hasn't chosen, update the icon
+    if (window.matchMedia) window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", update);
+    update();
+    header.prepend(button);
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", addToggle);
+  else addToggle();
+})();
