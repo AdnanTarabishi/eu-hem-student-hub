@@ -113,6 +113,14 @@ Official facts, summarised **in our own words**. Link to official materials; nev
 ```
 Required: `id` (same as the folder name), `code`, `title`, `description`.
 
+Optional extras:
+
+| Field | Example | What it does |
+|---|---|---|
+| `teachingStart`, `teachingEnd` | `"2026-09-16"`, `"2026-10-22"` | Shows "Teaching now / Coming up / Finished" and groups the course on the landing page. Give both or neither. |
+| `icon` | `"🩺"` | One emoji shown on the course card and page. |
+| `color` | `"#2e7d32"` | The course's colour (card edge, progress bar). Must look like `#RRGGBB`. |
+
 ## topics.json
 
 An ordered list. **Order in the file = order on the page.** To reorder, move lines up or
@@ -222,6 +230,48 @@ One glossary for all courses. `topics` lists the topic IDs where the concept app
   }
 ]
 ```
+
+## Maths formulas
+
+Formulas work in notes, flashcards, questions, explanations and concepts. They are typeset
+with KaTeX (the same formula language as LaTeX).
+
+| Where | Write | Shows |
+|---|---|---|
+| Inside a sentence | `$\varepsilon = \frac{\%\Delta Q}{\%\Delta P}$` | ε = %ΔQ / %ΔP as a proper fraction |
+| On its own line | `$$ E = mc^2 $$` | a centred formula |
+
+Two catches:
+- **In JSON files, every backslash must be doubled:** write `"$\\frac{a}{b}$"` in
+  `flashcards.json`, but `$\frac{a}{b}$` in a Markdown notes file.
+- **`$` starts a formula,** so write money as "€" or "USD".
+
+A typo in a formula shows it in red instead of breaking the page.
+
+## Images and diagrams (in notes)
+
+1. Save the image in the course's `images/` folder, e.g.
+   `content/courses/fund-health-economics/images/demand-curve.svg`.
+2. In the notes, write `![Short description of the image](images/demand-curve.svg)`.
+
+- The description is required: it is shown as the caption and read aloud by screen readers.
+- Students can click an image to enlarge it.
+- Prefer SVG (sharp at any size) or PNG/JPG under 500 KB. Only use images you drew yourself or
+  are allowed to share. Never copy slides from Virtuale.
+
+## The "Create an item" helper
+
+`create.html` (button "✎ Create an item" on the Notes pages) is a form for flashcards,
+questions, concepts and resources. It shows a live preview, fills in the next free ID, checks
+the item with the same rules as the checker, and gives you JSON to paste into the right file.
+It doesn't send or save anything.
+
+## Study progress (not content)
+
+Topic status (Read / Understood), the flashcard review schedule, quiz scores and the study
+streak are saved only in each student's browser (`euhem-progress-v1`), never in this
+repository. Students can download a backup and restore it on another device from the
+"My progress" tab.
 
 ## Sample content
 

@@ -474,8 +474,11 @@ document.addEventListener("keydown", (event) => {
 async function initLanding() {
   try {
     landingData = await loadAll();
-    document.getElementById("contribute-slot").appendChild(
-      formButton("Contribute", landingData.settings.contributeFormUrl, "button contribute-button"));
+    const slot = document.getElementById("contribute-slot");
+    const create = createElement("a", "button button-light", "✎ Create an item");
+    create.href = "create.html";
+    slot.appendChild(create);
+    slot.appendChild(formButton("Contribute", landingData.settings.contributeFormUrl, "button contribute-button"));
     renderHeroStats();
     landingStatus.hidden = true;
     buildLandingTabs();

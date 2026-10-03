@@ -102,6 +102,9 @@ function renderHeader(tab, tabs) {
   titleRow.appendChild(titleBox);
   const actions = createElement("div", "course-actions");
   actions.appendChild(saveButton(page.course.id));
+  const create = createElement("a", "button button-light", "✎ Create an item");
+  create.href = `create.html?course=${encodeURIComponent(page.course.id)}`;
+  actions.appendChild(create);
   actions.appendChild(formButton("Contribute", page.settings.contributeFormUrl, "button contribute-button"));
   titleRow.appendChild(actions);
   header.appendChild(titleRow);

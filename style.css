@@ -1885,14 +1885,19 @@ mark {
   padding: 6px;
   background: #ffffff; /* diagrams are drawn for a white background */
   cursor: zoom-in;
-  max-width: 100%;
+  /* A real width (not "shrink to fit"), so the image inside has something to size against */
+  display: block;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .zoom-button img {
   display: block;
-  max-width: 100%;
-  max-height: 420px;
+  width: 100%;
   height: auto;
+  max-height: 420px;
+  object-fit: contain;
 }
 
 .notes-figure figcaption {
@@ -2093,6 +2098,128 @@ mark {
 
 .quiz-review {
   margin-bottom: 10px;
+}
+
+/* "Create an item" helper */
+#contribute-slot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.create-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.create-side {
+  position: sticky;
+  top: 12px;
+}
+
+.create-form h3 {
+  margin: 18px 0 8px;
+  font-size: 1.05rem;
+}
+
+.create-form h3:first-child {
+  margin-top: 0;
+}
+
+.create-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.create-field input,
+.create-field select,
+.create-field textarea,
+.create-option input[type="text"] {
+  font: inherit;
+  font-weight: 400;
+  padding: 8px;
+  width: 100%;
+}
+
+.create-hint {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--color-muted);
+}
+
+.create-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.create-row .create-field {
+  flex: 1 1 160px;
+}
+
+.create-topics,
+.create-options {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 8px 12px 12px;
+  margin: 0 0 12px;
+}
+
+.create-topics legend,
+.create-options legend {
+  font-weight: 600;
+  padding: 0 4px;
+}
+
+.create-topics .checkbox-label {
+  padding: 3px 0;
+}
+
+.create-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+}
+
+.create-letter {
+  font-weight: 700;
+  width: 1.2em;
+}
+
+.create-problems {
+  color: var(--color-danger-text);
+  margin-top: 0;
+}
+
+.create-steps {
+  padding-left: 20px;
+  font-size: 0.9rem;
+}
+
+.create-json {
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  overflow-x: auto;
+  font-size: 0.85rem;
+  white-space: pre;
+}
+
+@media (max-width: 860px) {
+  .create-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .create-side {
+    position: static;
+  }
 }
 
 /* KaTeX formulas follow the text colour (also in dark mode) */

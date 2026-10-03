@@ -27,6 +27,9 @@ To rebuild it yourself: `node scripts/build-calendar.js` (needs Node.js 18 or ne
 Study content (notes, flashcards, questions, concepts, resources) lives in `content/` as
 JSON and Markdown files. Adding content never requires code changes.
 - Format and examples: [docs/content-format.md](docs/content-format.md)
+- Easiest way to write a flashcard, question, concept or resource: the form at `create.html`
+- Features: topic notes with formulas and diagrams, spaced-repetition flashcards, quizzes,
+  progress tracking and search. Progress is saved only in each student's browser.
 - Check content before committing: `node scripts/check-content.js`
 - Preview locally: `node scripts/preview.js`, then open http://localhost:8000/notes.html
 
