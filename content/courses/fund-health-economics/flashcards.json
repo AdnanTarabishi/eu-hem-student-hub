@@ -1,0 +1,44 @@
+[
+  {
+    "id": "fund-health-economics.fc.001",
+    "topic": "fund-health-economics.demand",
+    "front": "Why is the demand for health care called a 'derived demand'?",
+    "back": "Because what people really want is health. Health care is demanded mainly as a means to produce health.",
+    "sample": true
+  },
+  {
+    "id": "fund-health-economics.fc.002",
+    "topic": "fund-health-economics.demand",
+    "front": "What does a price elasticity of demand of -0.2 mean?",
+    "back": "A 10% rise in price lowers the quantity demanded by about 2%. Demand is inelastic: it reacts only a little to price.",
+    "sample": true
+  },
+  {
+    "id": "fund-health-economics.fc.003",
+    "topic": "fund-health-economics.demand",
+    "front": "Name three non-price factors that affect the demand for health care.",
+    "back": "For example: health status, income, insurance coverage, time costs (travel and waiting), and information about one's own condition.",
+    "sample": true
+  },
+  {
+    "id": "fund-health-economics.fc.004",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What is moral hazard in health insurance?",
+    "back": "Insured people tend to use more care (or take less care to stay healthy) because insurance lowers the price they face.",
+    "sample": true
+  },
+  {
+    "id": "fund-health-economics.fc.005",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What is a deductible?",
+    "back": "An amount the insured person pays out of pocket each year before the insurance starts paying.",
+    "sample": true
+  },
+  {
+    "id": "fund-health-economics.fc.006",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "Coinsurance vs copayment: what is the difference?",
+    "back": "Coinsurance is a percentage of the cost of care (e.g. 20%). A copayment is a fixed amount per service (e.g. 10 euros per visit).",
+    "sample": true
+  }
+]

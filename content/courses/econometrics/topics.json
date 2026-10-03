@@ -1,0 +1,9 @@
+[
+  {"id": "econometrics.simple-regression", "title": "Simple linear regression"},
+  {"id": "econometrics.multiple-regression", "title": "Multiple regression"},
+  {"id": "econometrics.inference", "title": "Statistical inference in regression"},
+  {"id": "econometrics.asymptotics", "title": "Large-sample (asymptotic) properties of OLS"},
+  {"id": "econometrics.data-issues", "title": "Practical data issues"},
+  {"id": "econometrics.dummy-variables", "title": "Dummy variables"},
+  {"id": "econometrics.heteroskedasticity", "title": "Heteroskedasticity"}
+]

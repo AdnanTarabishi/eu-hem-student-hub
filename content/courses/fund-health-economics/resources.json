@@ -1,0 +1,31 @@
+[
+  {
+    "id": "fund-health-economics.r.001",
+    "title": "RAND Health Insurance Experiment",
+    "type": "Website",
+    "url": "https://www.rand.org/health-care/projects/hie.html",
+    "date": "2026-10-03",
+    "topic": "fund-health-economics.moral-hazard",
+    "description": "Overview of the famous experiment on how cost-sharing changes the use of health care.",
+    "sample": true
+  },
+  {
+    "id": "fund-health-economics.r.002",
+    "title": "WHO: Health financing",
+    "type": "Website",
+    "url": "https://www.who.int/health-topics/health-financing",
+    "date": "2026-10-03",
+    "description": "How countries raise and pool money for health, with links to data and reports.",
+    "sample": true
+  },
+  {
+    "id": "fund-health-economics.r.003",
+    "title": "Cost-sharing terms on one page",
+    "type": "Cheat sheet",
+    "contributor": "Anonymous",
+    "date": "2026-10-03",
+    "topic": "fund-health-economics.moral-hazard",
+    "description": "Sample student contribution: a one-page summary of deductibles, copayments and coinsurance.",
+    "sample": true
+  }
+]

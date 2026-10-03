@@ -1,0 +1,37 @@
+[
+  {
+    "id": "concept.derived-demand",
+    "term": "Derived demand",
+    "explanation": "A demand for something that is wanted for what it produces, not for itself. Health care is wanted because it helps produce health.",
+    "topics": ["fund-health-economics.demand"],
+    "sample": true
+  },
+  {
+    "id": "concept.price-elasticity",
+    "term": "Price elasticity of demand",
+    "explanation": "How strongly the quantity demanded reacts to a change in price: the % change in quantity divided by the % change in price.",
+    "topics": ["fund-health-economics.demand"],
+    "sample": true
+  },
+  {
+    "id": "concept.moral-hazard",
+    "term": "Moral hazard",
+    "explanation": "When being insured changes behaviour: people use more care, or take less care of their health, because insurance lowers the price they face.",
+    "topics": ["fund-health-economics.moral-hazard"],
+    "sample": true
+  },
+  {
+    "id": "concept.cost-sharing",
+    "term": "Cost-sharing",
+    "explanation": "Making the insured person pay part of the cost of care, for example through deductibles, copayments or coinsurance.",
+    "topics": ["fund-health-economics.moral-hazard"],
+    "sample": true
+  },
+  {
+    "id": "concept.adverse-selection",
+    "term": "Adverse selection",
+    "explanation": "When people know more about their own health risk than the insurer, high-risk people are more likely to buy insurance. This can push premiums up and drive low-risk people out.",
+    "topics": ["fund-health-economics.adverse-selection"],
+    "sample": true
+  }
+]

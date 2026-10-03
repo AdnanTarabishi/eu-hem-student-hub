@@ -80,16 +80,6 @@ function buildTableOfContents() {
   guideArticle.appendChild(backLink());
 }
 
-// Links to other websites open in a new tab
-function openExternalLinksInNewTab() {
-  for (const link of guideArticle.querySelectorAll("a[href]")) {
-    if (link.hostname && link.hostname !== window.location.hostname) {
-      link.target = "_blank";
-      link.rel = "noopener";
-    }
-  }
-}
-
 // Wide tables scroll sideways inside their own box instead of stretching the page
 function wrapTables() {
   for (const table of guideArticle.querySelectorAll("table")) {
@@ -123,7 +113,7 @@ async function loadGuide() {
     styleNoticeBox();
     styleOtherQuotes();
     buildTableOfContents();
-    openExternalLinksInNewTab();
+    openExternalLinksInNewTab(guideArticle);
     wrapTables();
 
     // If the address already points at a section (e.g. #housing), jump there now that it exists

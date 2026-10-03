@@ -1,0 +1,6 @@
+[
+  {"id": "fund-statistics.descriptive", "title": "Descriptive statistics: centre, spread and graphs"},
+  {"id": "fund-statistics.distributions", "title": "Random variables and distributions (Normal, Student's t)"},
+  {"id": "fund-statistics.estimation", "title": "Samples, point estimates and confidence intervals"},
+  {"id": "fund-statistics.hypothesis-tests", "title": "Hypothesis tests for one mean and two means"}
+]

@@ -1,0 +1,19 @@
+{
+  "id": "fund-econometrics",
+  "code": "96499",
+  "title": "Fundamentals of Econometrics",
+  "academicYear": "2026/27",
+  "credits": 5,
+  "teachingPeriod": "11 Nov – 11 Dec 2026",
+  "professors": [
+    "Elisabetta De Cao"
+  ],
+  "description": "The main tools economists use for empirical work: regression models and strategies to identify causal effects, so you can read and critically assess applied research.",
+  "assessment": "In-class quizzes, group problem sets and a final exam. Details on Virtuale. No AI during the final exam.",
+  "textbooks": [
+    "Wooldridge, J. M. (2019). Introductory Econometrics: A Modern Approach (7th ed.).",
+    "Angrist, J. D. & Pischke, J.-S. (2014). Mastering 'Metrics: The Path from Cause to Effect. Princeton University Press."
+  ],
+  "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518698",
+  "virtualeUrl": "https://virtuale.unibo.it"
+}

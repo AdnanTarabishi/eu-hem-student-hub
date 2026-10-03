@@ -1,0 +1,20 @@
+{
+  "id": "fund-healthcare-management",
+  "code": "87428",
+  "title": "Fundamentals in Healthcare Management",
+  "academicYear": "2026/27",
+  "credits": 5,
+  "teachingPeriod": "10 Nov – 3 Dec 2026",
+  "professors": [
+    "Francesco Ciabuschi"
+  ],
+  "description": "Core management ideas and tools applied to health, pharma and biotech organisations, taught through lectures and group case studies.",
+  "assessment": "50% in-class work (cases and presentations) and 50% final written exam (multiple choice and open questions). For non-attending students the exam counts 100%.",
+  "textbooks": [
+    "Gomez-Mejia, L. R., Balkin, D. B. & Cardy, R. L. (2012). Management. McGraw-Hill.",
+    "Collis, D. J. & Montgomery, C. A. (2005). Corporate Strategy: A Resource-Based Approach (2nd ed.). McGraw-Hill.",
+    "Hill, C. W. Global Business Today (11th ed.). McGraw-Hill."
+  ],
+  "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518743",
+  "virtualeUrl": "https://virtuale.unibo.it"
+}

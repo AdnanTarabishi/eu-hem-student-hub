@@ -1,0 +1,18 @@
+{
+  "id": "intro-economics",
+  "code": "B1076",
+  "title": "Introduction to Economics",
+  "academicYear": "2026/27",
+  "credits": 3,
+  "teachingPeriod": "7 Sep – 22 Sep 2026",
+  "professors": [
+    "Adelajda Matuka"
+  ],
+  "description": "A short refresher on the core ideas of economics: how people and firms make choices, how markets reach equilibrium, and when markets fail.",
+  "assessment": "No final exam. Attendance and active participation are encouraged.",
+  "textbooks": [
+    "Mankiw, N. G. Principles of Economics. Cengage Learning (any recent edition)."
+  ],
+  "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518755",
+  "virtualeUrl": "https://virtuale.unibo.it"
+}

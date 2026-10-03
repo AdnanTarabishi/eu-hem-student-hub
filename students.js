@@ -69,11 +69,6 @@ function rowsToStudents(rows) {
 
 // ----- Search and filters -----
 
-// "José" -> "jose": lower case and without accents, so searches match either way
-function simplify(text) {
-  return text.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
-}
-
 function filterStudents(students, searchText, country, track) {
   const search = simplify(searchText.trim());
   return students.filter((student) => {

@@ -1,0 +1,20 @@
+{
+  "id": "fund-statistics",
+  "code": "96498",
+  "title": "Fundamentals of Statistics for Healthcare",
+  "academicYear": "2026/27",
+  "credits": 5,
+  "teachingPeriod": "14 Sep – 21 Oct 2026",
+  "professors": [
+    "Sara Capacci"
+  ],
+  "description": "The basics of statistical measurement and probability for health data: describing data, sampling, and a first look at inference. Practical sessions use Excel.",
+  "assessment": "Computer-based written exam (90 minutes): multiple-choice/short questions, interpreting statistical output, and applied exercises on a dataset. A formula sheet and tables are provided.",
+  "textbooks": [
+    "Rosner, B. (2016). Fundamentals of Biostatistics. Cengage.",
+    "Agresti, A. (2018). Statistical Methods for the Social Sciences (5th ed.). Pearson.",
+    "Plichta Kellar, S. B. & Kelvin, E. A. (2013). Munro's Statistical Methods for Health Care Research. Wolters Kluwer."
+  ],
+  "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518697",
+  "virtualeUrl": "https://virtuale.unibo.it"
+}

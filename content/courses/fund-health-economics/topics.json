@@ -1,0 +1,13 @@
+[
+  {"id": "fund-health-economics.special", "title": "What makes health care special"},
+  {"id": "fund-health-economics.market-failures", "title": "Market failures in health care"},
+  {"id": "fund-health-economics.demand", "title": "Demand for health care", "notes": "notes/demand.md"},
+  {"id": "fund-health-economics.health-capital", "title": "Health capital and health inequalities"},
+  {"id": "fund-health-economics.physician-agency", "title": "Physician agency and supplier-induced demand"},
+  {"id": "fund-health-economics.insurance-demand", "title": "Risk, risk aversion and demand for insurance"},
+  {"id": "fund-health-economics.insurers", "title": "How insurers behave"},
+  {"id": "fund-health-economics.moral-hazard", "title": "Moral hazard and demand-side cost-sharing", "notes": "notes/moral-hazard.md"},
+  {"id": "fund-health-economics.supply-side", "title": "Supply-side cost-sharing and managed care"},
+  {"id": "fund-health-economics.adverse-selection", "title": "Adverse selection, competition and renewability"},
+  {"id": "fund-health-economics.government", "title": "Government intervention in insurance markets"}
+]

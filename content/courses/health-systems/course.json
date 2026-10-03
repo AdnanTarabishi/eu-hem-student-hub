@@ -1,0 +1,18 @@
+{
+  "id": "health-systems",
+  "code": "C8393",
+  "title": "Health Systems",
+  "academicYear": "2026/27",
+  "credits": 5,
+  "teachingPeriod": "10 Nov – 15 Dec 2026",
+  "professors": [
+    "Rossella Verzulli"
+  ],
+  "description": "How health systems in OECD countries are organised, funded and reformed, compared side by side with their strengths and weaknesses.",
+  "assessment": "Presentation of an assigned reading plus a final written exam with open questions (the exam is two thirds of the grade). Without the presentation, a longer exam counts 100%. No AI during the exam.",
+  "textbooks": [
+    "Toth, F. (2021). Comparative Health Systems: A New Framework. Cambridge University Press."
+  ],
+  "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/558081",
+  "virtualeUrl": "https://virtuale.unibo.it"
+}

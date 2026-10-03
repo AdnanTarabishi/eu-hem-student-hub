@@ -84,3 +84,38 @@ function parseCsv(text) {
   }
   return rows;
 }
+
+// "José" -> "jose": lower case and without accents, so searches match either way
+function simplify(text) {
+  return String(text).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
+// Links to other websites (inside "container") open in a new tab
+function openExternalLinksInNewTab(container) {
+  for (const link of container.querySelectorAll("a[href]")) {
+    if (link.hostname && link.hostname !== window.location.hostname) {
+      link.target = "_blank";
+      link.rel = "noopener";
+    }
+  }
+}
+
+// Browser storage that never crashes the page: some browsers block it (e.g. some private modes).
+// Values are stored as JSON text. readStorage returns "fallback" if nothing can be read.
+function readStorage(key, fallback) {
+  try {
+    const text = window.localStorage.getItem(key);
+    return text === null ? fallback : JSON.parse(text);
+  } catch {
+    return fallback;
+  }
+}
+
+function writeStorage(key, value) {
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value));
+    return true;
+  } catch {
+    return false;
+  }
+}

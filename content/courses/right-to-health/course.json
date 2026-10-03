@@ -1,0 +1,19 @@
+{
+  "id": "right-to-health",
+  "code": "96500",
+  "title": "Our Right to Health: Needs, Resources and Society",
+  "academicYear": "2026/27",
+  "credits": 5,
+  "teachingPeriod": "8 Oct – 23 Oct 2026",
+  "professors": [
+    "Markus Frischhut"
+  ],
+  "description": "An overview of health law with a focus on EU health law (economic freedoms, non-discrimination, human rights, values and ethics) and a comparison of Beveridge and Bismarck health systems.",
+  "assessment": "On-site written exam with multiple-choice and essay questions, for attending and non-attending students. No AI during the exam.",
+  "textbooks": [
+    "Frischhut, M. (2026). What one should know about the European Union (EU): A quick introduction to EU law (5th ed.). NWV.",
+    "Greer, S. L. et al. (2024). Everything you always wanted to know about European Union health policy but were afraid to ask (4th ed.)."
+  ],
+  "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518699",
+  "virtualeUrl": "https://virtuale.unibo.it"
+}
