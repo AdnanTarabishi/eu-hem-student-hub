@@ -227,6 +227,115 @@ async function checkProgramme() {
   return modules;
 }
 
+// ----- tracks.json (the Tracks page) -----
+// Checks that every reference points to something that exists, required texts are filled in,
+// and a few facts from the official 2026 track overview that must never change by accident.
+async function checkTracks() {
+  const FILE = "content/tracks.json";
+  const t = require("../tracks-data.js");
+  let file;
+  try {
+    file = await t.loadTracksFile(readFromDisk);
+  } catch {
+    error(FILE, "file is missing");
+    return;
+  }
+  const cohortIds = new Set();
+  for (const cohort of file.cohorts || []) {
+    const at = `${FILE} (cohort ${cohort.id})`;
+    if (!/^\d{4}-\d{4}$/.test(cohort.id || "")) error(at, `cohort "id" should look like "2026-2028"`);
+    if (cohortIds.has(cohort.id)) error(at, "this cohort id is used twice");
+    cohortIds.add(cohort.id);
+
+    const universities = cohort.universities || {};
+    for (const [id, uni] of Object.entries(universities)) {
+      for (const field of ["name", "city", "country", "guide"]) requireText(uni, field, `${at} university "${id}"`);
+      if (uni.programmePage) checkUrl(uni.programmePage.url, "programmePage", `${at} university "${id}"`);
+      const guideFile = (uni.guide || "").split("?")[0];
+      if (guideFile && !fs.existsSync(path.join(ROOT, guideFile))) error(`${at} university "${id}"`, `guide page "${guideFile}" does not exist`);
+    }
+    const themeIds = new Set((cohort.themes || []).map((th) => th.id));
+    const groupIds = new Set((cohort.sectorGroups || []).map((g) => g.id));
+
+    for (const [id, course] of Object.entries(cohort.courses || {})) {
+      const where = `${at} course "${id}"`;
+      requireText(course, "name", where);
+      if (!universities[course.university]) error(where, `unknown university "${course.university}"`);
+      if (!Array.isArray(course.themes)) error(where, `"themes" must be a list (it can be empty: [])`);
+      for (const theme of course.themes || []) if (!themeIds.has(theme)) error(where, `unknown theme "${theme}"`);
+      if ("credits" in course && course.credits !== null && typeof course.credits !== "number") error(where, `"credits" must be a number or null`);
+    }
+
+    const trackIds = new Set();
+    for (const track of cohort.tracks || []) {
+      const where = `${at} track "${track.id}"`;
+      if (trackIds.has(track.id)) error(where, "this track id is used twice");
+      trackIds.add(track.id);
+      for (const field of ["abbr", "name", "letter"]) requireText(track, field, where);
+      const numbers = (track.semesters || []).map((s) => s.number).join(",");
+      if (numbers !== "2,3") error(where, `needs Semester 2 and Semester 3 (found: ${numbers || "none"})`);
+      for (const semester of track.semesters || []) {
+        const sw = `${where} semester ${semester.number}`;
+        if (!universities[semester.university]) error(sw, `unknown university "${semester.university}"`);
+        const used = [...semester.required, ...semester.choices.flatMap((c) => c.options.flat())];
+        for (const id of used) {
+          const course = cohort.courses[id];
+          if (!course) error(sw, `course "${id}" is not in "courses"`);
+          else if (course.university !== semester.university) error(sw, `course "${id}" belongs to "${course.university}", not to this semester's university`);
+        }
+        for (const choice of semester.choices) {
+          if (!["elective", "complementary"].includes(choice.kind)) error(sw, `choice "kind" must be "elective" or "complementary"`);
+          if (choice.rule !== null && typeof choice.rule !== "string") error(sw, `choice "rule" must be text, or null for "not stated in the source"`);
+        }
+      }
+      if ((track.thesis || []).length !== 2) error(where, `"thesis" must list the 2 universities of the track`);
+      for (const uni of track.thesis || []) {
+        if (!track.semesters.some((s) => s.university === uni)) error(where, `thesis university "${uni}" is not one of the track's universities`);
+      }
+      for (const sector of track.sectors || []) if (!groupIds.has(sector.group)) error(where, `sector "${sector.label}" has unknown group "${sector.group}"`);
+      for (const page of track.programmePages || []) checkUrl(page.url, "programmePages", where);
+      const s = track.student || {};
+      for (const field of ["question", "description", "centralQuestion", "overview", "typicalProblem"]) requireText(s, field, `${where} student`);
+      if (!Array.isArray(s.fit) || s.fit.length === 0) error(`${where} student`, `"fit" needs at least one statement`);
+    }
+
+    // Facts from the official overview that the comparison must show (sanity checks)
+    const cell = (trackId, theme) => {
+      const track = t.trackById(cohort, trackId);
+      return track ? t.themeCell(cohort, track, theme) : null;
+    };
+    if (cohort.id === "2026-2028") {
+      const expect = (trackId, theme, status, text) => {
+        const found = cell(trackId, theme);
+        if (!found || found.status !== status) error(at, `sanity check failed: ${text} (found: ${found ? found.status : "no track"})`);
+      };
+      expect("eeh", "evaluation", "required", "Health Technology Assessment must be a required course in EEH");
+      expect("phm", "evaluation", "required", "Health Technology Assessment must be a required course in PHM");
+      expect("mhi", "evaluation", "required", "Economic Evaluation must be a required course in MHI");
+      expect("ep", "evaluation", "elective", "economic evaluation must be elective only in E&P");
+      for (const [trackId, courseId] of [["eeh", "eur-hta"], ["phm", "eur-hta"], ["mhi", "mci-economic-evaluation"]]) {
+        const track = t.trackById(cohort, trackId);
+        if (track && !t.trackCourses(cohort, track).some((c) => c.id === courseId && c.status === "required")) {
+          error(at, `sanity check failed: "${courseId}" must be required in ${trackId.toUpperCase()}`);
+        }
+      }
+    }
+
+    // Quiz: every answer gives points to real tracks
+    for (const [i, question] of (cohort.quiz?.questions || []).entries()) {
+      for (const answer of question.answers) {
+        for (const trackId of Object.keys(answer.points)) {
+          if (!trackIds.has(trackId)) error(`${at} quiz question ${i + 1}`, `answer "${answer.text}" gives points to unknown track "${trackId}"`);
+        }
+      }
+    }
+    // Quiz: the highest possible score must match "maxScore"
+    const best = (cohort.quiz?.questions || []).reduce((sum, q) => sum + Math.max(...q.answers.flatMap((a) => Object.values(a.points))), 0);
+    if (cohort.quiz && best !== cohort.quiz.maxScore) error(`${at} quiz`, `"maxScore" is ${cohort.quiz.maxScore} but the questions add up to ${best}`);
+    for (const page of cohort.sources?.pages || []) checkUrl(page.url, "sources", at);
+  }
+}
+
 async function main() {
   // --- Step 1: is every JSON file valid? (A broken file stops the rest from being checked.) ---
   for (const file of allJsonFiles(path.join(ROOT, "content"))) {
@@ -256,6 +365,9 @@ async function main() {
 
   // --- programme.json (courses, modules, study plan rules) ---
   const modules = await checkProgramme();
+
+  // --- tracks.json (Tracks page) ---
+  await checkTracks();
 
   // --- topics (first, so everything else can link to them) ---
   const topicIds = new Set();

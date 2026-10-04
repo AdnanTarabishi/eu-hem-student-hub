@@ -1,0 +1,484 @@
+{
+  "note": "Tracks page data (tracks.html). Facts (courses, credits, rules, cities, sectors) come from the official 'EU-HEM tracks overview 2026'. Everything under 'student' and the quiz is written by students and is not official. Format: docs/tracks-format.md",
+  "cohorts": [
+    {
+      "id": "2026-2028",
+      "label": "Cohort 2026-2028",
+      "lastReviewed": "October 2026",
+      "choiceFinal": true,
+
+      "universities": {
+        "unibo": {
+          "name": "University of Bologna",
+          "city": "Bologna",
+          "country": "Italy",
+          "guide": "city-guide.html?city=bologna",
+          "programmePage": { "label": "University of Bologna: EU-HEM course website", "url": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement" }
+        },
+        "uio": {
+          "name": "University of Oslo",
+          "city": "Oslo",
+          "country": "Norway",
+          "guide": "city-guide.html?city=oslo",
+          "programmePage": { "label": "University of Oslo: EU-HEM programme structure", "url": "https://www.uio.no/english/studies/programmes/hem-master/structure/" }
+        },
+        "eur": {
+          "name": "Erasmus University Rotterdam",
+          "city": "Rotterdam",
+          "country": "Netherlands",
+          "guide": "city-guide.html?city=rotterdam",
+          "programmePage": { "label": "Erasmus University Rotterdam: EU-HEM, during your study", "url": "https://www.eur.nl/en/master/european-master-health-economics-and-management/during-your-study" }
+        },
+        "mci": {
+          "name": "MCI | The Entrepreneurial School",
+          "city": "Innsbruck",
+          "country": "Austria",
+          "guide": "city-guide.html?city=innsbruck",
+          "programmePage": { "label": "MCI Innsbruck: European Health Economics & Management", "url": "https://www.mci.edu/en/study/master/european-health-economics-management" }
+        }
+      },
+
+      "semester1": {
+        "university": "unibo",
+        "summary": "Common for everyone: economics, management, statistics and econometrics, plus introductions to ethics, political science and law."
+      },
+      "semester4": "Master's thesis at one of the two universities of your track.",
+
+      "sectorsAllTracks": [
+        "Consulting",
+        "Pharmaceutical and biotech companies",
+        "Research institutes and universities (including PhD)",
+        "Government and public health organisations",
+        "Healthcare providers and hospitals",
+        "International and non-profit organisations",
+        "Technology and data-driven roles"
+      ],
+
+      "sectorGroups": [
+        { "id": "consultancy", "label": "Consultancy" },
+        { "id": "research", "label": "Research and academia (incl. PhD)" },
+        { "id": "pharma", "label": "Pharmaceutical and biotech" },
+        { "id": "public", "label": "Public health, policy and government" },
+        { "id": "providers", "label": "Healthcare providers" },
+        { "id": "regulators", "label": "Regulatory bodies and reimbursement agencies" }
+      ],
+
+      "themes": [
+        { "id": "evaluation", "label": "Economic evaluation & HTA" },
+        { "id": "econometrics", "label": "Econometrics & causal methods" },
+        { "id": "policy", "label": "Health policy" },
+        { "id": "leadership", "label": "Leadership & organisation" },
+        { "id": "finance", "label": "Finance" },
+        { "id": "epidemiology", "label": "Epidemiology & public health" },
+        { "id": "global", "label": "Global health" },
+        { "id": "ethics", "label": "Ethics" },
+        { "id": "pharma", "label": "Pharmaceutical markets & pricing" },
+        { "id": "qualitative", "label": "Qualitative research" },
+        { "id": "internship", "label": "Internship option" }
+      ],
+
+      "courses": {
+        "eur-choice-modelling": { "name": "Choice Modelling in Health", "university": "eur", "themes": ["evaluation"] },
+        "eur-pricing-market-access": { "name": "Pharmaceutical Pricing & Market Access", "university": "eur", "themes": ["pharma"] },
+        "eur-healthcare-ethics": { "name": "Healthcare Ethics", "university": "eur", "themes": ["ethics"] },
+        "eur-hta": { "name": "Health Technology Assessment", "university": "eur", "themes": ["evaluation"] },
+        "eur-advanced-modelling": { "name": "Advanced Health Economic Modelling", "university": "eur", "themes": ["evaluation"] },
+        "eur-behavioural-decision": { "name": "Behavioural Decision Theory in Health", "university": "eur", "themes": [] },
+        "eur-global-health-econ": { "name": "Global Health Economics", "university": "eur", "themes": ["global"] },
+        "eur-health-econ-development": { "name": "Health & Economic Development: Policies and Evaluation", "university": "eur", "themes": ["global", "policy"] },
+        "eur-comparative-policy": { "name": "Comparative Health Policy", "university": "eur", "themes": ["policy"] },
+        "eur-public-health-econ": { "name": "Public Health Economics", "university": "eur", "themes": ["epidemiology"] },
+        "eur-design-thinking": { "name": "Design Thinking for Data Driven Prevention / Design Thinking for Global Health", "university": "eur", "themes": ["epidemiology", "global"] },
+        "eur-financing-systems": { "name": "Economics and Financing of Health Care Systems", "university": "eur", "themes": ["policy"] },
+        "eur-patient-centered": { "name": "Patient Centered Care Delivery", "university": "eur", "themes": ["leadership"] },
+        "eur-advanced-research": { "name": "Advanced Research Methods", "university": "eur", "themes": [] },
+
+        "uio-hecon4270": { "name": "Health Economics – Incentives and Contracts", "code": "HECON4270", "university": "uio", "themes": [] },
+        "uio-hmet4220": { "name": "Applied Micro Econometrics", "code": "HMET4220", "university": "uio", "themes": ["econometrics"] },
+        "uio-hfin4210": { "name": "Finance and Investment", "code": "HFIN4210", "university": "uio", "credits": 10, "themes": ["finance"] },
+        "uio-hman4210": { "name": "Leadership, Management and Organization Development", "code": "HMAN4210", "university": "uio", "credits": 10, "themes": ["leadership"] },
+        "uio-heval4210": { "name": "Economic Evaluation and Decision-Analytic Modelling in Healthcare", "code": "HEVAL4210", "university": "uio", "credits": 10, "themes": ["evaluation"] },
+        "uio-fhe4110": { "name": "Fundamentals in Data Management and Statistics", "code": "FHE4110", "university": "uio", "credits": 5, "themes": [] },
+        "uio-fhe4130": { "name": "Infection Epidemiology, Prevention and Control", "code": "FHE4130", "university": "uio", "credits": 5, "themes": ["epidemiology"] },
+        "uio-heval5130": { "name": "Modeling in Economic Evaluation II", "code": "HEVAL5130", "university": "uio", "themes": ["evaluation"] },
+        "uio-hmet4210": { "name": "Research Design", "code": "HMET4210", "university": "uio", "themes": ["econometrics"] },
+        "uio-heval5200": { "name": "Topics in Economic Evaluation", "code": "HEVAL5200", "university": "uio", "themes": ["evaluation"] },
+        "uio-hman4230": { "name": "Internship", "code": "HMAN4230", "university": "uio", "credits": 5, "themes": ["internship"] },
+        "uio-fhe4120": { "name": "Introduction to Logistic and Cox Regression", "code": "FHE4120", "university": "uio", "credits": 5, "themes": ["epidemiology"] },
+        "uio-fhe5100": { "name": "Register-based Studies", "code": "FHE5100", "university": "uio", "credits": null, "themes": ["epidemiology"] },
+        "uio-fhe5110": { "name": "Introduction to Causal Inference", "code": "FHE5110", "university": "uio", "credits": null, "themes": ["econometrics"] },
+        "uio-hman5190": { "name": "Health System Coordination: Policy Analysis and Implementation", "code": "HMAN5190", "university": "uio", "credits": 10, "themes": ["policy"] },
+
+        "unibo-pharma-markets": { "name": "Law and Economics of Pharmaceutical Markets (I.C.)", "university": "unibo", "themes": ["pharma"] },
+        "unibo-policy-evaluation": { "name": "Planning and Evaluation of Health Policy", "university": "unibo", "themes": ["policy"] },
+        "unibo-seminars": { "name": "Seminars in Health Economics", "university": "unibo", "themes": [] },
+        "unibo-internship": { "name": "Internship", "university": "unibo", "themes": ["internship"] },
+        "unibo-international-law": { "name": "International Law and Health", "university": "unibo", "themes": ["policy", "global"] },
+        "unibo-health-systems": { "name": "Health Systems", "university": "unibo", "themes": ["policy"] },
+        "unibo-lmic": { "name": "Health Economics and Policy in Low and Middle Income Countries", "university": "unibo", "themes": ["global", "policy"] },
+        "unibo-risky-behaviours": { "name": "Economics of Risky Health Behaviours", "university": "unibo", "themes": ["epidemiology"] },
+        "unibo-behavioral-public": { "name": "Behavioral Public Economics & Policy", "university": "unibo", "themes": ["policy"] },
+
+        "mci-law-public-health": { "name": "Law and Public Health Practice", "university": "mci", "themes": ["policy", "epidemiology"] },
+        "mci-economic-evaluation": { "name": "Economic Evaluation", "university": "mci", "themes": ["evaluation"] },
+        "mci-ethical-decision": { "name": "Ethical Decision Making", "university": "mci", "themes": ["ethics"] },
+        "mci-qualitative": { "name": "Qualitative Research Methods", "university": "mci", "themes": ["qualitative"] },
+        "mci-simulation-methods": { "name": "Real Life Simulation Methods", "university": "mci", "themes": ["leadership"] },
+        "mci-simulation-practice": { "name": "Real Life Simulation Practice", "university": "mci", "themes": ["leadership"] },
+        "mci-applied-finance": { "name": "Applied Finance Management", "university": "mci", "themes": ["finance"] },
+        "mci-inclusive-leadership": { "name": "Inclusive Leadership in Global Health", "university": "mci", "themes": ["leadership", "global"] },
+        "mci-analysis-epidemiology": { "name": "Analysis and Epidemiology", "university": "mci", "themes": ["epidemiology"] },
+        "mci-digitalization": { "name": "Digitalization in Social & Health Management", "university": "mci", "themes": ["leadership"] },
+        "mci-environmental-econ": { "name": "Environmental & Health Economics", "university": "mci", "themes": ["epidemiology"] },
+        "mci-health-promotion": { "name": "Health Promotion and Integrated Care", "university": "mci", "themes": ["epidemiology"] },
+        "mci-global-social-policies": { "name": "Global Health & Social Policies", "university": "mci", "themes": ["global", "policy"] },
+        "mci-determinants": { "name": "Determinants of Health", "university": "mci", "themes": ["epidemiology"] },
+        "mci-intercultural": { "name": "Intercultural & Transcultural Communication", "university": "mci", "themes": [] }
+      },
+
+      "tracks": [
+        {
+          "id": "eeh",
+          "letter": "A",
+          "abbr": "EEH",
+          "name": "Economic Evaluation in Healthcare",
+          "accent": "#a64b2a",
+          "focusAreas": ["Health Technology Assessment", "Decision-analytic modelling", "Reimbursement decision-making"],
+          "semesters": [
+            {
+              "number": 2,
+              "university": "eur",
+              "required": ["eur-choice-modelling", "eur-pricing-market-access", "eur-healthcare-ethics", "eur-hta", "eur-advanced-modelling"],
+              "choices": [
+                { "kind": "elective", "rule": "Choose one", "options": [["eur-behavioural-decision"], ["eur-global-health-econ"], ["eur-health-econ-development"]] }
+              ]
+            },
+            {
+              "number": 3,
+              "university": "uio",
+              "required": ["uio-heval5130", "uio-hmet4210", "uio-heval5200"],
+              "choices": [
+                { "kind": "elective", "rule": "Choose 10 EC", "options": [["uio-hman4230"], ["uio-fhe4120"], ["uio-fhe5100"], ["uio-fhe5110"], ["uio-hman5190"]] }
+              ]
+            }
+          ],
+          "thesis": ["eur", "uio"],
+          "sectors": [
+            { "label": "Consultancy", "group": "consultancy" },
+            { "label": "Regulatory bodies and reimbursement agencies", "group": "regulators" },
+            { "label": "Pharmaceutical and biotech companies", "group": "pharma" },
+            { "label": "Research, including PhD", "group": "research" }
+          ],
+          "alsoMentioned": [],
+          "programmePages": [
+            { "label": "EU-HEM: Economic Evaluation in Healthcare", "url": "https://eu-hem.eu/economic-evaluation-in-healthcare/" }
+          ],
+          "student": {
+            "question": "Is a healthcare intervention worth its cost?",
+            "description": "Explore how healthcare systems decide whether treatments, technologies and interventions provide enough value to justify their costs.",
+            "tags": ["HTA", "Economic Evaluation", "Decision Modelling", "Pricing & Market Access", "Reimbursement"],
+            "centralQuestion": "How should limited healthcare resources be used?",
+            "overview": "Healthcare systems constantly face difficult choices. A treatment may save lives but cost hundreds of thousands of euros. Economic evaluation helps decision-makers compare costs, outcomes and uncertainty in a systematic way.",
+            "typicalProblem": "A new therapy can significantly improve survival, but its cost is extremely high. How should we measure its long-term benefits? Which costs should count? How much should the healthcare system be willing to pay?",
+            "fit": [
+              "You enjoy numbers and models.",
+              "You are interested in pharmaceuticals, HTA or market access.",
+              "You like asking whether an intervention provides enough value for its cost.",
+              "You enjoy structured decision-making under uncertainty."
+            ],
+            "secondYearQuotes": []
+          }
+        },
+        {
+          "id": "ep",
+          "letter": "B",
+          "abbr": "E&P",
+          "name": "Health Economics & Policy",
+          "accent": "#3d6a8c",
+          "focusAreas": ["Health economics", "Evaluation of health policies", "Decision-making"],
+          "semesters": [
+            {
+              "number": 2,
+              "university": "uio",
+              "required": ["uio-hecon4270", "uio-hmet4220"],
+              "choices": [
+                { "kind": "elective", "rule": "Choose one option", "options": [["uio-hfin4210"], ["uio-hman4210"], ["uio-heval4210"], ["uio-fhe4110", "uio-fhe4130"]] }
+              ]
+            },
+            {
+              "number": 3,
+              "university": "unibo",
+              "required": ["unibo-pharma-markets", "unibo-policy-evaluation"],
+              "choices": [
+                { "kind": "complementary", "rule": "Choose one", "options": [["unibo-seminars"], ["unibo-internship"]] },
+                {
+                  "kind": "elective",
+                  "rule": "Choose two",
+                  "options": [["unibo-international-law"], ["unibo-health-systems"], ["unibo-lmic"], ["unibo-risky-behaviours"], ["unibo-behavioral-public"]],
+                  "notes": { "unibo-international-law": "If not taken in Semester 1", "unibo-health-systems": "If not taken in Semester 1" }
+                }
+              ]
+            }
+          ],
+          "thesis": ["uio", "unibo"],
+          "sectors": [
+            { "label": "Public health and policy", "group": "public" },
+            { "label": "Healthcare providers", "group": "providers" },
+            { "label": "Academia and research", "group": "research" },
+            { "label": "Consultancy", "group": "consultancy" }
+          ],
+          "alsoMentioned": [],
+          "programmePages": [
+            { "label": "EU-HEM: Health Economics & Policy", "url": "https://eu-hem.eu/health-economics-policy/" }
+          ],
+          "student": {
+            "question": "Does a health policy actually work, and for whom?",
+            "description": "Use economics, econometrics and real-world evidence to understand how health policies influence costs, access, behaviour, equity and health outcomes.",
+            "tags": ["Health Economics", "Econometrics", "Policy Evaluation", "Real-world Data", "Pharmaceutical Policy"],
+            "centralQuestion": "How can we know whether a healthcare policy actually improves society?",
+            "overview": "Healthcare policies affect prices, behaviour, access, inequality, spending and health outcomes. This track combines economic theory with quantitative analysis to understand these effects and support better policy decisions.",
+            "typicalProblem": "A government wants to cap medicine prices. Will the policy reduce spending? Could it affect innovation or medicine availability? Will the effects be equal across different groups?",
+            "fit": [
+              "You enjoy statistics and empirical research.",
+              "You are interested in government and healthcare policy.",
+              "You want to understand whether policies cause measurable change.",
+              "You like combining economics with real-world data."
+            ],
+            "secondYearQuotes": []
+          }
+        },
+        {
+          "id": "mhi",
+          "letter": "C",
+          "abbr": "MHI",
+          "name": "Management of Healthcare Institutions",
+          "accent": "#5f7d4e",
+          "focusAreas": ["Leadership", "Organisational development", "Policy and regulation"],
+          "semesters": [
+            {
+              "number": 2,
+              "university": "uio",
+              "required": ["uio-hfin4210", "uio-hman4210"],
+              "choices": [
+                { "kind": "elective", "rule": null, "options": [["uio-hecon4270"], ["uio-heval4210"], ["uio-hman4230"], ["uio-hmet4220"], ["uio-fhe4110"], ["uio-fhe4130"]] }
+              ]
+            },
+            {
+              "number": 3,
+              "university": "mci",
+              "required": ["mci-law-public-health", "mci-economic-evaluation", "mci-ethical-decision", "mci-qualitative"],
+              "choices": [
+                { "kind": "complementary", "rule": "Choose one pair", "options": [["mci-simulation-methods", "mci-simulation-practice"], ["mci-applied-finance", "mci-inclusive-leadership"]] }
+              ]
+            }
+          ],
+          "thesis": ["uio", "mci"],
+          "sectors": [
+            { "label": "Healthcare providers", "group": "providers" },
+            { "label": "Academia and research", "group": "research" },
+            { "label": "Pharmaceutical and biotech industry", "group": "pharma" },
+            { "label": "Public health and policy", "group": "public" }
+          ],
+          "alsoMentioned": [],
+          "programmePages": [
+            { "label": "EU-HEM: Management of Healthcare Institutions", "url": "https://eu-hem.eu/management-of-healthcare-institutions/" }
+          ],
+          "student": {
+            "question": "How do we make healthcare organisations work better?",
+            "description": "Explore how healthcare organisations can lead people, manage resources, respond to change and deliver better care in complex environments.",
+            "tags": ["Leadership", "Healthcare Management", "Finance", "Organisational Development", "Ethics"],
+            "centralQuestion": "How do you lead a healthcare organisation through complexity and change?",
+            "overview": "Hospitals and healthcare organisations constantly balance quality, people, finances, regulation, innovation and limited resources. This track looks at healthcare from the perspective of the organisation and the people who lead it.",
+            "typicalProblem": "A hospital faces staff shortages, rising admissions and financial pressure while considering a major digital-health investment. How should leadership balance innovation, finances, staff support and patient care?",
+            "fit": [
+              "You are interested in leadership and management.",
+              "You enjoy solving organisational problems.",
+              "You can imagine working with hospitals, providers or healthcare companies.",
+              "You like combining people, strategy, finance and innovation."
+            ],
+            "secondYearQuotes": []
+          }
+        },
+        {
+          "id": "phm",
+          "letter": "D",
+          "abbr": "PHM",
+          "name": "Population Health Management",
+          "accent": "#9c6b1e",
+          "focusAreas": ["Public health", "Environmental health", "Management & policy", "Global health"],
+          "semesters": [
+            {
+              "number": 2,
+              "university": "mci",
+              "required": ["mci-ethical-decision", "mci-analysis-epidemiology", "mci-digitalization", "mci-environmental-econ"],
+              "choices": [
+                { "kind": "elective", "rule": "Choose one", "options": [["mci-health-promotion"], ["mci-global-social-policies"]] },
+                { "kind": "elective", "rule": "Choose one", "options": [["mci-determinants"], ["mci-intercultural"]] }
+              ],
+              "choicesNote": "Two electives in total: one from each pair."
+            },
+            {
+              "number": 3,
+              "university": "eur",
+              "required": ["eur-comparative-policy", "eur-hta", "eur-public-health-econ", "eur-design-thinking"],
+              "choices": [
+                { "kind": "elective", "rule": "Choose one", "options": [["eur-financing-systems"], ["eur-patient-centered"], ["eur-advanced-research"]] }
+              ]
+            }
+          ],
+          "thesis": ["mci", "eur"],
+          "sectors": [
+            { "label": "Healthcare providers", "group": "providers" },
+            { "label": "Public health agencies and governmental bodies", "group": "public" },
+            { "label": "Research, including PhD and analyst positions", "group": "research" }
+          ],
+          "alsoMentioned": ["International organisations", "NGOs", "Consultancy", "Pharmaceutical industry"],
+          "programmePages": [
+            { "label": "EU-HEM: Population Health Management", "url": "https://eu-hem.eu/population-health-management/" }
+          ],
+          "student": {
+            "question": "How can we improve the health of entire populations?",
+            "description": "Understand the wider social, economic and environmental drivers of health and learn how evidence-based interventions can improve outcomes across communities.",
+            "tags": ["Population Health", "Epidemiology", "Global Health", "Environmental Health", "Prevention", "Health Policy"],
+            "centralQuestion": "How can we improve health before people ever reach the hospital?",
+            "overview": "Health outcomes are shaped by far more than medical treatment. Income, environment, behaviour, access, education and social conditions all matter. This track looks at how health systems and communities can design interventions that improve outcomes at scale.",
+            "typicalProblem": "A low-income community has high rates of diabetes, hypertension and obesity. Medical treatment alone has not solved the problem. Which social, environmental and healthcare factors drive these outcomes, and what population-level intervention could change them?",
+            "fit": [
+              "You care about prevention and inequalities.",
+              "You enjoy public or global health.",
+              "You want to understand health at community and system level.",
+              "You are interested in epidemiology, environment and social determinants of health."
+            ],
+            "secondYearQuotes": []
+          }
+        }
+      ],
+
+      "texts": {
+        "studentLabel": "Descriptions, 'fit' statements and the quiz are written by students. Course lists and locations come from the official EU-HEM track overview 2026.",
+        "typicalProblemNote": "Adapted from the official track overview.",
+        "notStated": "Not stated in the source",
+        "hero": {
+          "badge": "EU-HEM Tracks · Cohort 2026-2028",
+          "heading": "Explore Your EU-HEM Track",
+          "tagline": "Four specialisations. Four perspectives on healthcare. One joint degree.",
+          "text": "After the common first semester in Bologna, your track shapes what you study, where you live, and the perspective you develop on healthcare challenges.",
+          "note": "Student-built guide. Always verify academic requirements with EU-HEM."
+        },
+        "myTrackNote": "Saved on this device only. Nothing is sent anywhere.",
+        "journeyHeading": "One foundation. Four paths.",
+        "finalCallout": "The track choice is final once submitted.",
+        "compareIntro": "No track is better than another. They approach healthcare problems from different angles.",
+        "careerHeading": "Your track does not define your career",
+        "careerText": "The tracks create different areas of emphasis, but EU-HEM remains an interdisciplinary degree. Alumni across tracks work in consulting, pharmaceutical and biotech companies, research, government, healthcare providers, international organisations and technology-related roles. Your internships, thesis, background and later experience also shape where you go next.",
+        "quizLabel": "An informal student-built orientation tool, not an official EU-HEM recommendation. If you have already chosen, this is just for fun.",
+        "quizCloseMatch": "You have a close match between two tracks. That is normal: the tracks overlap substantially.",
+        "quizAdvice": "Talk to the track coordinators and second-year students before deciding.",
+        "quizResultSentence": "Your answers lean towards the question at the heart of this track: “{centralQuestion}”",
+        "sourcesDisclaimer": "Course names and electives may change. Official EU-HEM and partner-university information remains authoritative."
+      },
+
+      "faq": [
+        { "q": "Can I change tracks later?", "a": "No. The submitted choice is final." },
+        { "q": "Does my track determine my thesis university?", "a": "You write your thesis at one of the two universities of your track." },
+        { "q": "Does choosing one track limit me to one industry?", "a": "No. Career sectors overlap significantly across tracks." },
+        { "q": "Which tracks are more quantitative?", "a": "It depends on what you mean by quantitative, and on your electives. From the course lists: EEH requires modelling courses (Advanced Health Economic Modelling, Modeling in Economic Evaluation II) and Research Design. E&P requires Applied Micro Econometrics. PHM requires Analysis and Epidemiology. MHI requires Economic Evaluation and Qualitative Research Methods, and offers Applied Micro Econometrics and data courses as Semester 2 electives." },
+        { "q": "Is one track better for a PhD?", "a": "Research and PhD paths appear among the common sectors of several tracks. What matters is the research questions and methods that interest you." },
+        { "q": "Should I choose based on cities?", "a": "City matters, but academic content and professional interests should come first.", "audience": "future" }
+      ],
+
+      "quiz": {
+        "maxScore": 21,
+        "closeMatchPoints": 2,
+        "questions": [
+          {
+            "text": "Which question interests you most?",
+            "answers": [
+              { "text": "Is this new treatment worth its cost?", "points": { "eeh": 3 } },
+              { "text": "Did this health policy actually cause better outcomes?", "points": { "ep": 3 } },
+              { "text": "How should this hospital respond to its current challenges?", "points": { "mhi": 3 } },
+              { "text": "How can we improve health across this community?", "points": { "phm": 3 } }
+            ]
+          },
+          {
+            "text": "Which type of work sounds most appealing?",
+            "answers": [
+              { "text": "Building and interpreting economic models", "points": { "eeh": 3 } },
+              { "text": "Analysing real-world data and policies", "points": { "ep": 3 } },
+              { "text": "Leading teams and improving organisations", "points": { "mhi": 3 } },
+              { "text": "Designing population-level interventions", "points": { "phm": 3 } }
+            ]
+          },
+          {
+            "text": "Which topics attract you most?",
+            "answers": [
+              { "text": "HTA, reimbursement and market access", "points": { "eeh": 3 } },
+              { "text": "Econometrics, incentives and public policy", "points": { "ep": 3 } },
+              { "text": "Leadership, finance and organisational change", "points": { "mhi": 3 } },
+              { "text": "Epidemiology, prevention and global health", "points": { "phm": 3 } }
+            ]
+          },
+          {
+            "text": "Where can you most easily imagine yourself working?",
+            "answers": [
+              { "text": "Pharma, HTA agency or HEOR consultancy", "points": { "eeh": 2, "mhi": 1 } },
+              { "text": "Government, policy institute or research organisation", "points": { "ep": 2, "phm": 1 } },
+              { "text": "Hospital, healthcare provider or management consultancy", "points": { "mhi": 2, "phm": 1, "ep": 1 } },
+              { "text": "Public-health agency, NGO or international organisation", "points": { "phm": 2, "ep": 1 } }
+            ]
+          },
+          {
+            "text": "Which skill would you most like to strengthen?",
+            "answers": [
+              { "text": "Economic modelling", "points": { "eeh": 2 } },
+              { "text": "Causal and policy analysis", "points": { "ep": 2 } },
+              { "text": "Leadership and strategic management", "points": { "mhi": 2 } },
+              { "text": "Population-health intervention design", "points": { "phm": 2 } }
+            ]
+          },
+          {
+            "text": "Which course cluster sounds most exciting?",
+            "answers": [
+              { "text": "HTA + Advanced Health Economic Modelling + Pricing", "points": { "eeh": 3 } },
+              { "text": "Applied Micro Econometrics + Policy Evaluation", "points": { "ep": 3 } },
+              { "text": "Finance + Leadership + Qualitative Research", "points": { "mhi": 3 } },
+              { "text": "Epidemiology + Environmental Health + Global Health", "points": { "phm": 3 } }
+            ]
+          },
+          {
+            "text": "You are happiest when a problem is framed around...",
+            "answers": [
+              { "text": "Value for money", "points": { "eeh": 2 } },
+              { "text": "Evidence and policy impact", "points": { "ep": 2 } },
+              { "text": "People and organisations", "points": { "mhi": 2 } },
+              { "text": "Communities and populations", "points": { "phm": 2 } }
+            ]
+          },
+          {
+            "text": "Which sentence sounds most like you?",
+            "answers": [
+              { "text": "I want to help decide which technologies healthcare systems should fund.", "points": { "eeh": 3 } },
+              { "text": "I want to understand and improve health policy using evidence.", "points": { "ep": 3 } },
+              { "text": "I want to help healthcare organisations perform and lead better.", "points": { "mhi": 3 } },
+              { "text": "I want to improve health outcomes across populations.", "points": { "phm": 3 } }
+            ]
+          }
+        ]
+      },
+
+      "sources": {
+        "official": "EU-HEM tracks overview 2026 (official document sent to students)",
+        "pages": [
+          { "label": "EU-HEM: Programme", "url": "https://eu-hem.eu/programme/" },
+          { "label": "EU-HEM: Economic Evaluation in Healthcare", "url": "https://eu-hem.eu/economic-evaluation-in-healthcare/" },
+          { "label": "EU-HEM: Health Economics & Policy", "url": "https://eu-hem.eu/health-economics-policy/" },
+          { "label": "EU-HEM: Management of Healthcare Institutions", "url": "https://eu-hem.eu/management-of-healthcare-institutions/" },
+          { "label": "EU-HEM: Population Health Management", "url": "https://eu-hem.eu/population-health-management/" },
+          { "label": "Erasmus University Rotterdam: EU-HEM, during your study", "url": "https://www.eur.nl/en/master/european-master-health-economics-and-management/during-your-study" },
+          { "label": "MCI Innsbruck: European Health Economics & Management", "url": "https://www.mci.edu/en/study/master/european-health-economics-management" },
+          { "label": "University of Oslo: EU-HEM programme structure (course names and codes)", "url": "https://www.uio.no/english/studies/programmes/hem-master/structure/" }
+        ]
+      }
+    }
+  ]
+}
