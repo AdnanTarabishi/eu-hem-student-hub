@@ -72,10 +72,10 @@ function main() {
   for (const t of themes) {
     const w = enrichment.relevance.weights[t.id] || {};
     const counts = enrich.themeCourseCounts(cohort, t.id);
-    lines.push(`| ${t.label} | ${trackIds.map((id) => `${w[id]} (${counts[id].required}R ${counts[id].elective}E)`).join(" | ")} | ${w.basis}${w.basis === "proposal" ? " ⚑" : ""} |`);
+    lines.push(`| ${t.label} | ${trackIds.map((id) => `${w[id]} (${counts[id].required}R ${counts[id].elective}E)`).join(" | ")} | ${w.basis}${w.basis === "proposal" ? " ⚑" : ""}${w.secondary ? ", secondary" : ""} |`);
   }
   lines.push("");
-  lines.push("⚑ Proposal: no course in tracks.json carries this theme, so the weights are set by hand and need your approval. R/E = required/elective courses carrying the theme.");
+  lines.push("⚑ Proposal: no course in tracks.json carries this theme, so the weights are set by hand. Secondary: adds to a score but never justifies a track on its own. R/E = required/elective courses carrying the theme.");
   lines.push("");
 
   // Disagreements with pass 2
@@ -83,15 +83,15 @@ function main() {
   const diffs = entries.filter((e) => pass2[e.id] && (!sameSet(e.themes, pass2[e.id].themes) || !sameSet(e.statedMethods, pass2[e.id].statedMethods) || !sameSet(e.statedCountries, pass2[e.id].statedCountries)));
   lines.push(`## Disagreements with the independent second pass (${diffs.length})`);
   lines.push("");
-  lines.push("The second pass was made separately, from the titles and the written rules only, without seeing the first pass.");
+  lines.push("The second pass was made separately, from the titles and the written rules only, without seeing the first pass. Each disagreement was then reviewed case by case; the final classification (in the file) and the reason are shown.");
   lines.push("");
-  lines.push("| id | Title | Differs in | Pass 1 (in the file) | Pass 2 |");
-  lines.push("|---|---|---|---|---|");
+  lines.push("| id | Title | Differs in | Final (in the file) | Pass 2 | Reason |");
+  lines.push("|---|---|---|---|---|---|");
   const summary = (r) => [r.themes.map(label).join(", ") || "–", r.statedMethods.length ? `method: ${r.statedMethods.map(method).join(", ")}` : "", r.statedCountries.length ? `place: ${r.statedCountries.join(", ")}` : ""].filter(Boolean).join("; ");
   for (const e of diffs) {
     const o = pass2[e.id];
     const what = [!sameSet(e.themes, o.themes) && "themes", !sameSet(e.statedMethods, o.statedMethods) && "method", !sameSet(e.statedCountries, o.statedCountries) && "place"].filter(Boolean).join(", ");
-    lines.push(`| ${e.id} | ${cell(e.title)} | ${what} | ${cell(summary(e))} | ${cell(summary(o))} |`);
+    lines.push(`| ${e.id} | ${cell(e.title)} | ${what} | ${cell(summary(e))} | ${cell(summary(o))} | ${cell(e.note || "")} |`);
   }
   lines.push("");
 
@@ -102,7 +102,7 @@ function main() {
   lines.push("|---|---|---|---|---|---|---|---|");
   const sorted = [...entries].sort((a, b) => order[a.confidence] - order[b.confidence] || a.id.localeCompare(b.id));
   for (const e of sorted) {
-    const rel = relevance[e.id].map((r) => abbr[r.trackId]).join(", ") || "–";
+    const rel = e.trackOverride ? `${e.trackOverride.tracks.map((id) => abbr[id]).join(", ") || "none"} (override: ${e.trackOverride.reason})` : relevance[e.id].map((r) => `${abbr[r.trackId]} (via ${label(r.because)})`).join(", ") || "–";
     lines.push(`| ${e.id} | ${cell(e.title)}${e.note ? `<br>_${cell(e.note)}_` : ""} | ${e.unclassified ? "_unclassified_" : e.themes.map(label).join(", ")} | ${e.statedMethods.map(method).join(", ") || "–"} | ${e.statedCountries.join(", ") || "–"} | ${e.confidence} | ${rel} | ${e.status} |`);
   }
   lines.push("");

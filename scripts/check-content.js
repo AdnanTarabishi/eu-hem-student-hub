@@ -426,6 +426,8 @@ function checkThesisEnrichment() {
     if (!w) { error(E, `relevance.weights: theme "${theme}" has no weights`); continue; }
     for (const id of trackIds) if (typeof w[id] !== "number" || w[id] < 0 || w[id] > 1) error(E, `relevance.weights.${theme}: "${id}" needs a number from 0 to 1`);
     if (!["derived", "proposal"].includes(w.basis)) error(E, `relevance.weights.${theme}: "basis" must be "derived" or "proposal"`);
+    if ("secondary" in w && typeof w.secondary !== "boolean") error(E, `relevance.weights.${theme}: "secondary" must be true or false`);
+    if (w.basis === "proposal" && !w.note) warn(E, `relevance.weights.${theme}: a proposal should explain itself in "note"`);
     if (w.basis === "derived") {
       const derived = enrich.derivedWeights(cohort, theme);
       if (!derived) warn(E, `relevance.weights.${theme}: no course in tracks.json carries this theme any more; make it a "proposal"`);
@@ -433,10 +435,11 @@ function checkThesisEnrichment() {
     }
   }
   for (const id of Object.keys(weights)) if (!themes.includes(id)) error(E, `relevance.weights: unknown theme "${id}"`);
-  const { threshold, secondRatio, maxTracks } = enrichment.relevance;
-  if (!(threshold > 0 && threshold <= 1) || !(secondRatio > 0 && secondRatio <= 1) || !(maxTracks >= 1 && maxTracks <= 2)) {
-    error(E, "relevance: threshold and secondRatio must be between 0 and 1, maxTracks 1 or 2");
+  const { threshold, secondRatio, maxTracks, primarySupport = 0 } = enrichment.relevance;
+  if (!(threshold > 0 && threshold <= 1) || !(secondRatio > 0 && secondRatio <= 1) || !(maxTracks >= 1 && maxTracks <= 2) || !(primarySupport >= 0 && primarySupport <= 1)) {
+    error(E, "relevance: threshold, secondRatio and primarySupport must be between 0 and 1, maxTracks 1 or 2");
   }
+  if (themes.every((id) => weights[id] && weights[id].secondary)) error(E, "relevance.weights: at least one theme must not be secondary");
 
   // Records
   const visible = new Map(archive.records.map((r) => [r.id, r]));

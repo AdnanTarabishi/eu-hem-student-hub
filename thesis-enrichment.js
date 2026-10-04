@@ -63,6 +63,9 @@ function derivedWeights(tracksCohort, themeId) {
 
 // -> [{ trackId, score, because: themeId }] (at most maxTracks), following the rules in
 // enrichment.relevance; a per-thesis trackOverride replaces the calculation.
+// "Secondary" themes (weights row with secondary: true) add to a score but can never justify a track
+// on their own: a track is only possible when a non-secondary theme of the thesis gives it a weight of
+// at least primarySupport.
 function trackRelevance(entry, enrichment, trackIds) {
   if (!entry) return [];
   if (entry.trackOverride) {
@@ -70,15 +73,17 @@ function trackRelevance(entry, enrichment, trackIds) {
   }
   const themes = entry.themes || [];
   if (!themes.length) return [];
-  const { weights, threshold, secondRatio, maxTracks } = enrichment.relevance;
-  const scores = trackIds.map((trackId) => {
-    const values = themes.map((theme) => (weights[theme] ? weights[theme][trackId] || 0 : 0));
-    const score = values.reduce((a, b) => a + b, 0) / themes.length;
-    // The theme that contributes most, for the one-line explanation
-    let because = themes[0];
-    themes.forEach((theme, i) => { if (values[i] > (weights[because] ? weights[because][trackId] || 0 : 0)) because = theme; });
-    return { trackId, score: Math.round(score * 1000) / 1000, because };
+  const { weights, threshold, secondRatio, maxTracks, primarySupport = 0 } = enrichment.relevance;
+  const weightOf = (theme, trackId) => (weights[theme] ? weights[theme][trackId] || 0 : 0);
+  const primary = themes.filter((theme) => !(weights[theme] && weights[theme].secondary));
+  const allScores = trackIds.map((trackId) => {
+    const score = themes.reduce((sum, theme) => sum + weightOf(theme, trackId), 0) / themes.length;
+    // The explanation names the strongest non-secondary theme (the one backed by courses)
+    const because = [...primary].sort((a, b) => weightOf(b, trackId) - weightOf(a, trackId))[0] || null;
+    const supported = because !== null && weightOf(because, trackId) >= primarySupport;
+    return { trackId, score: Math.round(score * 1000) / 1000, because, supported };
   });
+  const scores = allScores.filter((s) => s.supported).map(({ supported, ...s }) => s);
   scores.sort((a, b) => b.score - a.score || trackIds.indexOf(a.trackId) - trackIds.indexOf(b.trackId));
   const top = scores[0];
   if (!top || top.score < threshold) return [];

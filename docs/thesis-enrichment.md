@@ -29,12 +29,13 @@ thesis discovery needs:
 | `policy` | Health policy (incl. law & regulation) | tracks.json |
 | `leadership` | Leadership & organisation | tracks.json |
 | `finance` | Finance (incl. insurance, funding) | tracks.json |
-| `epidemiology` | Epidemiology & public health (incl. prevention, population health) | tracks.json |
+| `epidemiology` | Epidemiology & public health (incl. prevention, population health; environmental topics are under `planetary`) | tracks.json |
 | `global` | Global health | tracks.json |
 | `ethics` | Ethics | tracks.json |
 | `digital` | Digital health & innovation | thesis-enrichment.json |
 | `inequalities` | Inequalities & social determinants | thesis-enrichment.json |
 | `patient` | Patient-centred care & behaviour | thesis-enrichment.json |
+| `planetary` | Environmental & planetary health (sustainability, climate, carbon, pollution, One Health) | thesis-enrichment.json |
 
 `econometrics` and `qualitative` (in tracks.json) are **methods**, not topics: for theses they are covered
 by **stated methods** below. `internship` is not a topic. What each theme includes is written in
@@ -46,7 +47,7 @@ by **stated methods** below. `internship` is not a topic. What each theme includ
   "statedMethods": ["case-study"], "statedCountries": [], "confidence": "high", "status": "draft" }
 ```
 - `id`: the thesis id from the archive. `title`: a **reading aid only**; it must equal the archive title.
-- `themes`: 1–3 theme ids, from what the **title** supports, never from the legacy track. A title too
+- `themes`: 1–3 theme ids, from what the **title** supports, never from the legacy track. **Precision over coverage**: when in doubt, fewer themes. `pharma` is only used when the title involves pricing, reimbursement, market access, patents, pharmaceutical regulation or similar market/policy issues; a drug being the intervention is not enough. A title too
   vague for any theme gets `"themes": []` and `"unclassified": true`.
 - `statedMethods`: **only** when the title names the method (list in `methods`). Never inferred.
 - `statedCountries`: countries or regions **named** in the title (adjectives become the place:
@@ -63,11 +64,16 @@ per current track (`relevance.weights`).
 - **Derived** weights come from the course lists in `tracks.json`: for each track,
   2 × required + 1 × elective courses carrying the theme, divided by the highest track.
 - **Proposal** weights (⚑) are set by hand for themes no course carries (`digital`, `inequalities`,
-  `patient`), with a `note` saying why.
+  `patient`, `planetary`), with a `note` saying why.
+- **Secondary** themes (`"secondary": true`: `digital`, `inequalities`, `patient`) are supporting
+  evidence only: they add to a score but can never justify a track on their own. A track is only possible
+  when a non-secondary theme of the thesis gives it at least `primarySupport` (0.3).
 - A thesis's score per track = the average weight of its themes. A track is shown if it scores at least
   `threshold`; a second one only if it reaches `secondRatio` × the top score; at most `maxTracks` (2);
   none if more than 2 tracks tie for the top.
-- The page explains each result in one line, e.g. "Related to Economic Evaluation in Healthcare because
+- It is fine for a thesis to show **no** current track: the archive should never imply more certainty than
+  the title supports. Use `"trackOverride": { "tracks": [], "reason": "…" }` to suppress a weak mapping.
+- The page explains each result in one line (always naming the course-backed theme), e.g. "Related to Economic Evaluation in Healthcare because
   that track has required courses in economic evaluation & HTA."
 - Always presented as a Student Hub interpretation: "potentially relevant to", never "belongs to".
 
@@ -117,5 +123,6 @@ population, data source, findings or supervisor.
   development session.
 - **Pass 2:** independent, by a separate Claude agent that saw only the titles and the written rules.
   It is stored in `docs/thesis-review-pass2.json`.
-- **Comparison:** every disagreement between the two passes is listed in `docs/thesis-review.md`.
+- **Comparison:** every disagreement between the two passes is listed in `docs/thesis-review.md`, and
+  each was reviewed case by case, with the reason in the entry's `note`.
 - **Status:** all entries start as `draft` until a student reviews them.
