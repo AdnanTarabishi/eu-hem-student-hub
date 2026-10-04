@@ -1,6 +1,6 @@
 # Thesis enrichment: Student Hub classification of past thesis titles
 
-The Thesis page will let students explore past thesis topics by **research theme**, by **potential
+The Thesis page lets students explore past thesis topics by **research theme**, by **potential
 relevance to the current four tracks**, and by **related topics**. This document explains where that
 information comes from and how to correct it.
 
@@ -126,3 +126,12 @@ population, data source, findings or supervisor.
 - **Comparison:** every disagreement between the two passes is listed in `docs/thesis-review.md`, and
   each was reviewed case by case, with the reason in the entry's `note`.
 - **Status:** all entries start as `draft` until a student reviews them.
+
+## Where it appears on the page (thesis.html)
+- **Explore the archive** (tabs: Interest | Current track | Legacy track | University; the tab is kept in the
+  address as `browse=`).
+- **Filters** Theme, Current track relevance and Stated method (address: `theme=`, `currentTrack=`, `method=`).
+- **Cards:** a "Student Hub classification" layer under the historical badges (max 2 themes, then "+n").
+- **Detail:** all themes, stated method, places, relevance with its one-line explanation, related past topics.
+- **Search** covers titles and stated places only; a theme name or synonym in the query only *suggests* a theme filter.
+- "Draft classification — under review" is shown while any shown entry is still `draft`.

@@ -6760,7 +6760,7 @@ main.home {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  padding: 0 18px 14px;
+  padding: 0 18px 10px;
 }
 
 .thesis-badge {
@@ -6818,56 +6818,266 @@ main.home {
   margin: 16px auto 0;
 }
 
-/* ----- Browse ----- */
-.thesis-browse-grid {
+/* ----- Browse: one panel with tabs ----- */
+.thesis-browse-head {
+  margin-bottom: 12px;
+}
+
+.thesis-mytrack {
+  margin: 4px 0 0;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.thesis-link-button {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-primary);
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.thesis-browse-panel {
+  margin-top: 12px;
+}
+
+.thesis-browse-intro {
+  margin: 0 0 4px;
+}
+
+.thesis-class-note {
+  margin: 0 0 12px;
+  color: var(--color-muted);
+  font-size: 0.86rem;
+}
+
+.thesis-pills {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 10px;
 }
 
-.thesis-browse-grid.is-universities {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.thesis-browse-card {
+.thesis-pill {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 4px;
-  padding: 16px;
+  gap: 2px;
+  min-width: 0;
+  padding: 10px 14px;
   border: 1px solid var(--color-border);
-  border-radius: 14px;
+  border-radius: 12px;
   background: var(--color-card);
   color: var(--color-text);
   font: inherit;
   text-align: left;
   cursor: pointer;
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.15s var(--ease), box-shadow 0.15s var(--ease);
 }
 
-.thesis-browse-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+.thesis-pill:hover {
+  border-color: var(--color-primary-border);
 }
 
-.thesis-browse-card strong {
-  font-family: var(--font-heading);
-  font-size: 1.1rem;
+/* Selected: a check mark in the text plus a thicker border (never colour alone) */
+.thesis-pill[aria-pressed="true"] {
+  padding: 9px 13px;
+  border: 2px solid var(--color-primary);
+}
+
+.thesis-pill strong {
   font-weight: 600;
+  overflow-wrap: anywhere;
 }
 
-.thesis-browse-card span:last-child {
+.thesis-pill-code {
   color: var(--color-muted);
-  font-size: 0.88rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-.thesis-browse-code {
+.thesis-pill-count {
+  color: var(--color-muted);
+  font-size: 0.84rem;
+}
+
+.thesis-matrix-box {
+  margin-top: 20px;
+}
+
+.thesis-matrix-box h3 {
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+}
+
+/* ----- Student Hub classification (filters, cards, details) ----- */
+.thesis-filter-hint {
+  display: block;
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  font-weight: 400;
+}
+
+.thesis-filter-note {
+  margin: 10px 0 0;
+  color: var(--color-muted);
+  font-size: 0.84rem;
+}
+
+.thesis-suggest {
+  margin: 14px 0 0;
+  font-size: 0.92rem;
+}
+
+.thesis-count-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 16px 0 10px;
+}
+
+.thesis-count-row .thesis-count {
+  margin: 0;
+}
+
+/* The draft note sits next to the count; Inspire me stays on the right */
+.thesis-count-row .thesis-draft {
+  margin-right: auto;
+}
+
+.thesis-draft {
+  display: inline-block;
+  padding: 0 7px;
+  border: 1px dashed var(--color-input-border);
+  border-radius: var(--radius-pill);
   color: var(--color-muted);
   font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.thesis-classification {
+  margin: 0 18px 14px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--color-divider);
+}
+
+.thesis-class-label {
+  margin-right: 6px;
+  color: var(--color-muted);
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+.thesis-class-items {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.thesis-theme {
+  padding: 1px 9px;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-light);
+  color: var(--color-text);
+  font-size: 0.78rem;
+}
+
+.thesis-theme.is-none,
+.thesis-theme.is-more {
+  background: var(--color-surface-alt);
+  color: var(--color-muted);
+}
+
+.thesis-rel {
+  color: var(--color-muted);
+  font-size: 0.8rem;
+}
+
+.thesis-rel-track {
+  color: var(--color-text);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.thesis-detail-class {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border: 1px dashed var(--color-input-border);
+  border-radius: 12px;
+}
+
+.thesis-card-details .thesis-detail-class h4 {
+  margin-top: 0;
+}
+
+.thesis-detail-list {
+  margin: 0;
+}
+
+.thesis-detail-list dt {
+  margin-top: 8px;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.thesis-detail-list dd {
+  margin: 2px 0 0;
+}
+
+.thesis-relevance {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.thesis-relevance .thesis-small {
+  display: block;
+  margin: 2px 0 6px;
+}
+
+.thesis-related-list {
+  display: grid;
+  gap: 8px;
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.thesis-related-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.thesis-related-item:hover {
+  border-color: var(--color-primary-border);
+}
+
+.thesis-related-title {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.thesis-related-meta {
+  color: var(--color-muted);
+  font-size: 0.8rem;
 }
 
 .thesis-matrix-wrap {
@@ -6997,18 +7207,7 @@ main.home {
   font-size: 0.92rem;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .thesis-browse-card:hover {
-    transform: none;
-  }
-}
-
 @media (max-width: 1000px) {
-  .thesis-browse-grid,
-  .thesis-browse-grid.is-universities {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .thesis-filter-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -7061,7 +7260,19 @@ main.home {
   }
 
   .thesis-badges {
-    padding: 0 14px 12px;
+    padding: 0 14px 10px;
+  }
+
+  .thesis-classification {
+    margin: 0 14px 12px;
+  }
+
+  .thesis-pills {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .thesis-browse-tabs .track-tab {
+    padding: 6px 10px;
   }
 
   .thesis-card-details {
@@ -7069,9 +7280,4 @@ main.home {
   }
 }
 
-@media (max-width: 420px) {
-  .thesis-browse-grid,
-  .thesis-browse-grid.is-universities {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
+

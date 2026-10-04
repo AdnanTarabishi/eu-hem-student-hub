@@ -1,16 +1,23 @@
 // ===== Past Thesis Explorer: data helpers =====
 // Search, filters, counts and the address (URL) state for thesis.html. No page drawing here
 // (that's thesis.js), so everything can be tested in Node. Uses simplify() from utils.js.
+// Historical fields (cohort, legacy track, university) and Student Hub classifications (theme,
+// current-track relevance, stated method; from content/thesis-enrichment.json) are filtered alike,
+// but the classifications are attached to the records at load time and never stored in the archive.
 
 const THESIS_ARCHIVE_URL = "content/thesis-archive.json";
 const THESIS_CONFIG_URL = "content/thesis-config.json";
 const THESIS_SORTS = { newest: "Newest cohort first", oldest: "Oldest cohort first", title: "Title A–Z" };
-const THESIS_FILTERS = ["cohort", "track", "university"];
+const THESIS_FILTERS = ["cohort", "track", "university", "theme", "currentTrack", "method"];
+const THESIS_BROWSE_TABS = ["interest", "currentTrack", "legacy", "university"];
 
+// The archive, its settings, the Student Hub enrichment and the current tracks (one definition)
 async function loadThesisFiles(read) {
   const get = async (url) => JSON.parse(read ? await read(url) : await (await fetch(url)).text());
-  const [archive, config] = await Promise.all([get(THESIS_ARCHIVE_URL), get(THESIS_CONFIG_URL)]);
-  return { archive, config };
+  const [archive, config, enrichment, tracks] = await Promise.all([
+    get(THESIS_ARCHIVE_URL), get(THESIS_CONFIG_URL), get("content/thesis-enrichment.json"), get("content/tracks.json"),
+  ]);
+  return { archive, config, enrichment, tracks };
 }
 
 // ----- Text -----
@@ -96,8 +103,10 @@ function phraseMatches(phrase, words) {
 }
 
 // All terms must match (any order). Returns the matched word indexes, or null if no match.
-function matchTitle(terms, words) {
-  const plain = words.map((w) => w.word);
+// Optional extra words (the places named in the title) can also satisfy a term; their indexes come
+// after the title's (behind a separator that never matches), so only title words get highlighted.
+function matchTitle(terms, words, extraWords = []) {
+  const plain = [...words.map((w) => w.word), ...(extraWords.length ? ["\u0000", ...extraWords.map((w) => w.word)] : [])];
   const matched = new Set();
   for (const term of terms) {
     let found = false;
@@ -115,15 +124,27 @@ function matchTitle(terms, words) {
 
 // ----- Filters and counts -----
 
-// The archive prepared once for searching
-function prepareRecords(records) {
-  return records.map((record) => ({ ...record, words: titleWords(record.titleDisplay) }));
+// The archive prepared once for searching. classify(record) may add Student Hub fields:
+// { themes, statedMethods, statedCountries, currentTracks, … } (see thesis.js).
+function prepareRecords(records, classify = () => ({})) {
+  return records.map((record) => {
+    const extra = { themes: [], statedMethods: [], statedCountries: [], currentTracks: [], ...classify(record) };
+    return { ...record, ...extra, words: titleWords(record.titleDisplay), placeWords: titleWords(extra.statedCountries.join(" , ")) };
+  });
 }
 
-const FILTER_FIELD = { cohort: "cohort", track: "trackCode", university: "universityCode" };
+const FILTER_FIELD = {
+  cohort: "cohort", track: "trackCode", university: "universityCode",
+  theme: "themes", currentTrack: "currentTracks", method: "statedMethods",
+};
+
+function fieldHas(record, key, value) {
+  const field = record[FILTER_FIELD[key]];
+  return Array.isArray(field) ? field.includes(value) : field === value;
+}
 
 function passesFilters(record, state, except) {
-  return THESIS_FILTERS.every((key) => key === except || !state[key] || record[FILTER_FIELD[key]] === state[key]);
+  return THESIS_FILTERS.every((key) => key === except || !state[key] || fieldHas(record, key, state[key]));
 }
 
 // Records matching the search (with highlights), before filters: [{ record, matched }]
@@ -132,7 +153,7 @@ function searchRecords(prepared, query, synonyms) {
   if (!terms.length) return prepared.map((record) => ({ record, matched: new Set() }));
   const results = [];
   for (const record of prepared) {
-    const matched = matchTitle(terms, record.words);
+    const matched = matchTitle(terms, record.words, record.placeWords || []);
     if (matched) results.push({ record, matched });
   }
   return results;
@@ -157,8 +178,8 @@ function optionCounts(prepared, state, synonyms, key) {
   const counts = {};
   for (const { record } of searchRecords(prepared, state.q, synonyms)) {
     if (!passesFilters(record, state, key)) continue;
-    const value = record[FILTER_FIELD[key]];
-    counts[value] = (counts[value] || 0) + 1;
+    const field = record[FILTER_FIELD[key]];
+    for (const value of Array.isArray(field) ? field : [field]) counts[value] = (counts[value] || 0) + 1;
   }
   return counts;
 }
@@ -183,10 +204,13 @@ function cohortsNewestFirst(records) {
 
 // ----- The address (URL) -----
 
-// ?q=…&cohort=…&track=…&university=…&sort=…&topic=… -> state (unknown values are ignored)
-function stateFromParams(params, records) {
+// ?q=…&cohort=…&track=…&university=…&theme=…&currentTrack=…&method=…&sort=…&browse=…&topic=…
+// -> state. Unknown values are ignored. "topic" is the open thesis; "theme" is a research theme.
+// allowed: { themes: [ids], currentTracks: [ids], methods: [ids] }
+function stateFromParams(params, records, allowed = {}) {
   const get = (name) => (params.get(name) || "").trim();
   const known = (value, field) => (records.some((r) => r[field] === value) ? value : "");
+  const listed = (value, list) => ((list || []).includes(value) ? value : "");
   const sort = get("sort");
   const topic = get("topic");
   return {
@@ -194,7 +218,11 @@ function stateFromParams(params, records) {
     cohort: known(get("cohort"), "cohort"),
     track: known(get("track"), "trackCode"),
     university: known(get("university"), "universityCode"),
+    theme: listed(get("theme"), allowed.themes),
+    currentTrack: listed(get("currentTrack"), allowed.currentTracks),
+    method: listed(get("method"), allowed.methods),
     sort: THESIS_SORTS[sort] ? sort : "newest",
+    browse: listed(get("browse"), THESIS_BROWSE_TABS) || "interest",
     topic: records.some((r) => r.id === topic) ? topic : "",
   };
 }
@@ -205,15 +233,34 @@ function paramsFromState(state) {
   if (state.q) params.set("q", state.q);
   for (const key of THESIS_FILTERS) if (state[key]) params.set(key, state[key]);
   if (state.sort && state.sort !== "newest") params.set("sort", state.sort);
+  if (state.browse && state.browse !== "interest") params.set("browse", state.browse);
   if (state.topic) params.set("topic", state.topic);
   const text = params.toString();
   return text ? `?${text}` : "";
+}
+
+// ----- "Filter by theme" suggestion -----
+
+// The theme whose name or synonym appears in the query (as whole words), or null. Used only to
+// suggest a theme filter; the search results themselves stay title-based.
+// themes: [{ id, label }], synonyms: { themeId: ["…"] }
+function themeSuggestion(query, themes, synonyms = {}) {
+  const q = " " + searchText(query || "") + " ";
+  if (!q.trim()) return null;
+  let best = null;
+  for (const theme of themes) {
+    for (const phrase of [theme.label, ...(synonyms[theme.id] || [])]) {
+      const p = searchText(phrase || "");
+      if (p && q.includes(" " + p + " ") && (!best || p.length > best.length)) best = { id: theme.id, length: p.length };
+    }
+  }
+  return best ? best.id : null;
 }
 
 if (typeof module !== "undefined") {
   module.exports = {
     searchText, titleWords, cohortLabel, wordMatches, queryTerms, matchTitle, prepareRecords,
     searchRecords, thesisResults, optionCounts, archiveCounts, cohortsNewestFirst,
-    stateFromParams, paramsFromState, THESIS_SORTS, THESIS_FILTERS,
+    stateFromParams, paramsFromState, themeSuggestion, THESIS_SORTS, THESIS_FILTERS, THESIS_BROWSE_TABS,
   };
 }
