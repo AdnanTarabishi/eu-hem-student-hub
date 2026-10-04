@@ -8,6 +8,7 @@ A free, volunteer website for students of the EU-HEM master's program (European 
 - **Homepage:** a hero with the cohort photo and cohort numbers, "This Week" (today's classes, next exam, your plan, announcements), Explore, a Notes & Resources preview, Meet the Cohort, and the programme's cities; returning students (with a saved study plan) get a shorter hero
 - **Study Plan & Progress:** plan your courses with the official rules (CFU, required and optional groups), track each course (Studying → Exam booked → Passed) and see a timeline. A planning tool only: it does not submit anything.
 - **Tracks** (`tracks.html`): the four specialisation tracks (EEH, E&P, MHI, PHM) from the official 2026 overview: journey, courses per semester with exact elective rules, a factual comparison, "My track" (saved on this device only), cities, careers and an informal student-built quiz
+- **Past Thesis Explorer** (`thesis.html`): search and filter thesis titles from earlier cohorts (an informal list shared by a previous student, with the old six-track structure), for inspiration
 - **Timetable** (`timetable.html`): 1st-year classes loaded live from the official UniBo timetable, in a Week or List view, with "My courses only", room map links and "add this class to my calendar"
 - **Exams** (`exams.html`): 1st-year exam dates with countdown and registration status (opens / open / closed), loaded live from the official UniBo exam dates page
 - Calendar subscription (Google, Apple, Outlook): one calendar with every course, or one with exactly your study plan
@@ -101,6 +102,12 @@ year's cohort: [docs/tracks-format.md](docs/tracks-format.md)). Facts come from 
 overview 2026*; the PDF itself is never added to this repository or linked. Oslo courses use the University
 of Oslo's official titles. Descriptions, "fit" statements and the quiz are written by students and labelled
 as such. `check-content.js` validates the file, including sanity checks on key facts.
+
+## Thesis page
+`thesis.html` reads `content/thesis-archive.json`, which is **generated** from the thesis spreadsheet by
+`node scripts/import-thesis.js "<path to .xlsx>"` (no library needed). Corrections and hidden records go in
+`content/thesis-overrides.json`; synonyms, names and repository links in `content/thesis-config.json`.
+Full guide: [docs/thesis-import.md](docs/thesis-import.md). The spreadsheet itself is not committed.
 
 ## Privacy and contact pages
 `privacy.html` is a **draft** written from what the code does; review it before relying on it.

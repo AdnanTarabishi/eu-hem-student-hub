@@ -17,6 +17,7 @@ const SITE_MENU = [
       { key: "exams", label: "Exams", href: "exams.html", icon: "exams" },
       { key: "calendar", label: "Calendar", href: "calendar.html", icon: "calendar" },
       { key: "notes", label: "Notes & Resources", href: "notes.html", icon: "notes" },
+      { key: "thesis", label: "Thesis", href: "thesis.html", icon: "library" },
     ],
   },
   {

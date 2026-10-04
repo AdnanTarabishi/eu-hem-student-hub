@@ -236,6 +236,9 @@ function coursesPanel(track) {
   const thesis = createElement("div", "course-semester");
   thesis.appendChild(createElement("h3", null, "Semester 4 · Thesis"));
   thesis.appendChild(createElement("p", null, `${c.semester4} For this track: ${track.thesis.map((u) => cityOf(u).city).join(" or ")}.`));
+  const past = createElement("a", null, "Browse past thesis topics from earlier cohorts →");
+  past.href = "thesis.html";
+  thesis.appendChild(past);
   panel.appendChild(thesis);
   for (const page of track.programmePages) {
     const more = createElement("p", "course-source");

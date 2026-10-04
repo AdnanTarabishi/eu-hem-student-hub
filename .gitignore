@@ -2,3 +2,7 @@
 # or in one of these, which Git will ignore:
 private-data/
 *.private.csv
+
+# Source spreadsheets (e.g. the thesis list): keep them outside the repository;
+# only the generated content/thesis-archive.json is published.
+*.xlsx
