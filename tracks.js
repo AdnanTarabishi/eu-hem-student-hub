@@ -4,7 +4,7 @@
 // an accordion on phones), careers across tracks, cities, FAQ and sources.
 
 // tabs: the open section per track, kept when the layout switches between tabs and accordion
-const tracksPage = { cohort: null, narrow: null, tabs: {} };
+const tracksPage = { cohort: null, narrow: null, compareNarrow: null, compareTwo: null, tabs: {} };
 const NARROW_QUERY = "(max-width: 640px)";
 
 // ----- Small helpers -----
@@ -412,6 +412,403 @@ function openTrack(trackId) {
   details.scrollIntoView({ block: "start" });
 }
 
+// ----- 2. My track (saved in this browser only) -----
+
+// The saved track, if it exists in this cohort; otherwise null
+function myTrack() {
+  const saved = loadMyTrack();
+  return saved ? trackById(tracksPage.cohort, saved.track) : null;
+}
+
+// Marks "my track" everywhere on the page (journey, cards, explorer, comparison)
+function highlightMyTrack() {
+  const mine = myTrack();
+  for (const element of document.querySelectorAll(".tracks [data-track]")) {
+    element.classList.toggle("is-mine", !!mine && element.dataset.track === mine.id);
+  }
+  for (const label of document.querySelectorAll(".mine-label")) label.remove();
+  if (!mine) return;
+  for (const element of document.querySelectorAll(`.journey-path[data-track="${mine.id}"] .journey-track, .track-card[data-track="${mine.id}"], th[data-track="${mine.id}"]`)) {
+    element.appendChild(createElement("span", "mine-label", "Your track"));
+  }
+}
+
+function semesterSummary(track, semester) {
+  const c = tracksPage.cohort;
+  const uni = cityOf(semester.university);
+  const box = createElement("div", "my-track-semester");
+  box.appendChild(createElement("span", "journey-step-label", `Semester ${semester.number}`));
+  box.appendChild(createElement("strong", null, uni.city));
+  box.appendChild(createElement("span", "tracks-city-uni", uni.name));
+  const list = createElement("ul", "track-course-list");
+  for (const id of semester.required) list.appendChild(createElement("li", null, courseInfo(c, id).name));
+  box.appendChild(list);
+  for (const choice of semester.choices) {
+    const kind = choice.kind === "complementary" ? "Complementary courses" : "Electives";
+    box.appendChild(createElement("p", "course-note", `+ ${kind}: ${choice.rule ? choice.rule.toLowerCase() : `how many to choose is ${c.texts.notStated.toLowerCase()}`} (see Courses below)`));
+  }
+  return box;
+}
+
+function renderMyTrack(editing = false) {
+  const c = tracksPage.cohort;
+  const section = document.getElementById("my-track");
+  section.innerHTML = "";
+  sectionHead(section, "my-track-title", "My track");
+  const mine = myTrack();
+
+  if (mine && !editing) {
+    const card = createElement("div", "my-track-card");
+    card.dataset.track = mine.id;
+    card.style.setProperty("--track-accent", mine.accent);
+    const head = createElement("div", "my-track-head");
+    head.appendChild(trackBadge(mine));
+    head.appendChild(createElement("h3", null, mine.name));
+    const change = createElement("button", "button button-quiet", "Change");
+    change.type = "button";
+    change.addEventListener("click", () => {
+      renderMyTrack(true);
+      document.querySelector("#my-track .track-pick")?.focus();
+    });
+    head.appendChild(change);
+    card.appendChild(head);
+    const grid = createElement("div", "my-track-grid");
+    for (const semester of mine.semesters) grid.appendChild(semesterSummary(mine, semester));
+    const thesis = createElement("div", "my-track-semester");
+    thesis.appendChild(createElement("span", "journey-step-label", "Semester 4 · thesis"));
+    thesis.appendChild(createElement("strong", null, mine.thesis.map((u) => cityOf(u).city).join(" or ")));
+    const guides = createElement("ul", "my-track-guides");
+    for (const semester of mine.semesters) {
+      const uni = cityOf(semester.university);
+      const li = createElement("li");
+      const a = createElement("a", null, `${uni.city} City Guide${uni.city === "Bologna" ? "" : " (coming soon)"} →`);
+      a.href = uni.guide;
+      li.appendChild(a);
+      guides.appendChild(li);
+    }
+    thesis.appendChild(guides);
+    grid.appendChild(thesis);
+    card.appendChild(grid);
+    const more = createElement("a", null, `All ${mine.abbr} courses, careers and cities →`);
+    more.href = `#track-${mine.id}`;
+    more.addEventListener("click", () => openTrack(mine.id));
+    card.appendChild(more);
+    card.appendChild(createElement("p", "course-note", c.texts.myTrackNote));
+    section.appendChild(card);
+  } else {
+    section.appendChild(createElement("p", "section-sub",
+      "Already chose your track? Pick it here to see your own summary, and to have it highlighted on this page."));
+    const picker = createElement("div", "track-picker");
+    picker.setAttribute("role", "group");
+    picker.setAttribute("aria-label", "Choose your track");
+    for (const track of c.tracks) {
+      const button = createElement("button", "track-pick");
+      button.type = "button";
+      button.style.setProperty("--track-accent", track.accent);
+      button.setAttribute("aria-pressed", String(!!mine && mine.id === track.id));
+      button.appendChild(trackBadge(track));
+      button.appendChild(createElement("strong", null, track.name));
+      button.appendChild(createElement("span", null, trackRoute(c, track)));
+      button.addEventListener("click", () => {
+        saveMyTrack(c.id, track.id);
+        renderMyTrack();
+        highlightMyTrack();
+        if (typeof toast === "function") toast(`Saved: ${track.abbr} is your track (on this device only) ✓`);
+        document.querySelector("#my-track .my-track-card h3")?.focus?.();
+      });
+      picker.appendChild(button);
+    }
+    section.appendChild(picker);
+    const foot = createElement("div", "my-track-foot");
+    foot.appendChild(createElement("p", "course-note", c.texts.myTrackNote));
+    if (mine) {
+      const cancel = createElement("button", "button button-quiet", "Cancel");
+      cancel.type = "button";
+      cancel.addEventListener("click", () => renderMyTrack());
+      foot.appendChild(cancel);
+      const clear = createElement("button", "button button-quiet", "Remove my track");
+      clear.type = "button";
+      clear.addEventListener("click", () => {
+        saveMyTrack(c.id, null);
+        renderMyTrack();
+        highlightMyTrack();
+        if (typeof toast === "function") toast("Your track was removed from this device");
+      });
+      foot.appendChild(clear);
+    }
+    section.appendChild(foot);
+  }
+  show("my-track");
+}
+
+// ----- 5. Compare the tracks (factual, from the course tags) -----
+
+const COMPARE_QUERY = "(max-width: 900px)";
+const STATUS_MARK = { required: "●", elective: "◐", none: "○" };
+
+function statusBlock(cell) {
+  const box = createElement("div", `compare-cell is-${cell.status}`);
+  const label = createElement("span", "compare-status");
+  label.appendChild(createElement("span", "compare-mark", STATUS_MARK[cell.status]));
+  label.lastChild.setAttribute("aria-hidden", "true");
+  label.appendChild(document.createTextNode(` ${TRACK_STATUS[cell.status]}`));
+  box.appendChild(label);
+  const names = [...cell.required, ...cell.elective.map((n) => (cell.status === "required" ? `${n} (elective)` : n))];
+  if (names.length) box.appendChild(createElement("span", "compare-courses", names.join("; ")));
+  return box;
+}
+
+// The extra factual rows: mobility, thesis, most common sectors
+function factRows() {
+  const c = tracksPage.cohort;
+  return [
+    ["Mobility", (t) => trackRoute(c, t)],
+    ["Thesis", (t) => t.thesis.map((u) => cityOf(u).city).join(" or ")],
+    ["Most common sectors", (t) => t.sectors.map((s) => s.label).join("; ")],
+  ];
+}
+
+function compareLegend() {
+  const legend = createElement("ul", "compare-legend");
+  legend.setAttribute("aria-label", "Legend");
+  for (const status of ["required", "elective", "none"]) {
+    const li = createElement("li", `is-${status}`);
+    const mark = createElement("span", "compare-mark", STATUS_MARK[status]);
+    mark.setAttribute("aria-hidden", "true");
+    li.appendChild(mark);
+    li.appendChild(document.createTextNode(` ${TRACK_STATUS[status]}`));
+    legend.appendChild(li);
+  }
+  return legend;
+}
+
+function compareTable() {
+  const c = tracksPage.cohort;
+  const wrap = createElement("div", "compare-table-wrap");
+  const table = createElement("table", "compare-table");
+  table.appendChild(createElement("caption", "visually-hidden", "Comparison of the four tracks by theme"));
+  const head = createElement("thead");
+  const headRow = createElement("tr");
+  headRow.appendChild(createElement("th", null, "Theme"));
+  headRow.lastChild.setAttribute("scope", "col");
+  for (const track of c.tracks) {
+    const th = createElement("th");
+    th.setAttribute("scope", "col");
+    th.dataset.track = track.id;
+    th.style.setProperty("--track-accent", track.accent);
+    th.appendChild(trackBadge(track));
+    th.appendChild(createElement("span", "compare-track-name", track.name));
+    headRow.appendChild(th);
+  }
+  head.appendChild(headRow);
+  table.appendChild(head);
+  const body = createElement("tbody");
+  for (const theme of c.themes) {
+    const row = createElement("tr");
+    const th = createElement("th", null, theme.label);
+    th.setAttribute("scope", "row");
+    row.appendChild(th);
+    for (const track of c.tracks) {
+      const td = createElement("td");
+      td.dataset.track = track.id;
+      td.appendChild(statusBlock(themeCell(c, track, theme.id)));
+      row.appendChild(td);
+    }
+    body.appendChild(row);
+  }
+  for (const [label, value] of factRows()) {
+    const row = createElement("tr", "compare-fact");
+    const th = createElement("th", null, label);
+    th.setAttribute("scope", "row");
+    row.appendChild(th);
+    for (const track of c.tracks) {
+      const td = createElement("td", null, value(track));
+      td.dataset.track = track.id;
+      row.appendChild(td);
+    }
+    body.appendChild(row);
+  }
+  table.appendChild(body);
+  wrap.appendChild(table);
+  return wrap;
+}
+
+// Phones: one card per theme, the four tracks listed underneath
+function compareCards() {
+  const c = tracksPage.cohort;
+  const list = createElement("div", "compare-cards");
+  const rows = [
+    ...c.themes.map((theme) => [theme.label, (t) => statusBlock(themeCell(c, t, theme.id))]),
+    ...factRows().map(([label, value]) => [label, (t) => createElement("span", "compare-courses", value(t))]),
+  ];
+  for (const [label, render] of rows) {
+    const card = createElement("section", "compare-card");
+    card.appendChild(createElement("h3", null, label));
+    const items = createElement("ul");
+    for (const track of c.tracks) {
+      const li = createElement("li");
+      li.dataset.track = track.id;
+      li.appendChild(trackBadge(track));
+      li.appendChild(render(track));
+      items.appendChild(li);
+    }
+    card.appendChild(items);
+    list.appendChild(card);
+  }
+  return list;
+}
+
+function renderCompare() {
+  const c = tracksPage.cohort;
+  const section = document.getElementById("compare");
+  section.innerHTML = "";
+  sectionHead(section, "compare-title", "Compare the tracks", c.texts.compareIntro);
+  section.appendChild(createElement("p", "course-note",
+    "Built from the official course lists: each course is tagged with the themes it covers, and every cell names the courses behind it."));
+  section.appendChild(compareLegend());
+  section.appendChild(tracksPage.compareNarrow ? compareCards() : compareTable());
+  renderCompareTwo(section);
+  renderOverlaps(section);
+  show("compare");
+}
+
+// ----- Compare two tracks side by side -----
+
+function compareTwoBody(a, b) {
+  const c = tracksPage.cohort;
+  const box = createElement("div", "compare-two-body");
+  if (a.id === b.id) {
+    box.appendChild(createElement("p", "course-note", "Pick two different tracks to compare."));
+    return box;
+  }
+  const rows = [
+    ["Mobility", (t) => document.createTextNode(trackRoute(c, t))],
+    ["Thesis", (t) => document.createTextNode(t.thesis.map((u) => cityOf(u).city).join(" or "))],
+    ...requiredSemesterRows(),
+    ...c.themes.map((theme) => [theme.label, (t) => statusBlock(themeCell(c, t, theme.id))]),
+    ["Most common sectors", (t) => document.createTextNode(t.sectors.map((s) => s.label).join("; "))],
+  ];
+  const grid = createElement("div", "compare-two-grid");
+  grid.appendChild(createElement("span", "compare-two-corner"));
+  for (const track of [a, b]) {
+    const head = createElement("div", "compare-two-head");
+    head.dataset.track = track.id;
+    head.style.setProperty("--track-accent", track.accent);
+    head.appendChild(trackBadge(track));
+    head.appendChild(createElement("strong", null, track.name));
+    grid.appendChild(head);
+  }
+  for (const [label, render] of rows) {
+    grid.appendChild(createElement("div", "compare-two-label", label));
+    for (const track of [a, b]) {
+      const cell = createElement("div", "compare-two-cell");
+      cell.dataset.label = label;
+      cell.appendChild(render(track));
+      grid.appendChild(cell);
+    }
+  }
+  box.appendChild(grid);
+  const shared = sharedCourses(c, a, b);
+  const cities = sharedCities(c, a, b);
+  const note = createElement("p", "compare-two-shared");
+  note.appendChild(createElement("strong", null, "In common: "));
+  const parts = [];
+  if (cities.length) parts.push(cities.map((x) => `${x.city} (Semester ${x.semesterA} for ${a.abbr}, Semester ${x.semesterB} for ${b.abbr})`).join("; "));
+  if (shared.length) parts.push(`${shared.length} shared course${shared.length === 1 ? "" : "s"}: ${shared.map((x) => x.name).join("; ")}`);
+  note.appendChild(document.createTextNode(parts.length ? parts.join(". ") + "." : "no shared city or course in Semesters 2 and 3."));
+  box.appendChild(note);
+  return box;
+}
+
+// Rows "Semester 2: required" and "Semester 3: required": the city and its required courses
+function requiredSemesterRows() {
+  const c = tracksPage.cohort;
+  return [2, 3].map((n) => [`Semester ${n}: required`, (t) => {
+    const semester = t.semesters.find((s) => s.number === n);
+    const span = createElement("span");
+    span.appendChild(createElement("strong", null, cityOf(semester.university).city));
+    span.appendChild(createElement("span", "compare-courses", semester.required.map((id) => courseInfo(c, id).name).join("; ")));
+    return span;
+  }]);
+}
+
+function renderCompareTwo(section) {
+  const c = tracksPage.cohort;
+  const box = createElement("div", "compare-two");
+  box.id = "compare-two";
+  box.appendChild(createElement("h3", null, "Compare two tracks"));
+  const pickers = createElement("div", "compare-two-pickers");
+  const mine = myTrack();
+  const first = tracksPage.compareTwo?.[0] || (mine ? mine.id : c.tracks[0].id);
+  const second = tracksPage.compareTwo?.[1] || c.tracks.find((t) => t.id !== first).id;
+  const selects = [first, second].map((value, i) => {
+    const label = createElement("label", null, i === 0 ? "Track 1" : "Track 2");
+    const select = createElement("select");
+    select.id = `compare-pick-${i + 1}`;
+    for (const track of c.tracks) {
+      const option = createElement("option", null, `${track.abbr} · ${track.name}`);
+      option.value = track.id;
+      option.selected = track.id === value;
+      select.appendChild(option);
+    }
+    label.appendChild(select);
+    pickers.appendChild(label);
+    return select;
+  });
+  box.appendChild(pickers);
+  let body = compareTwoBody(trackById(c, first), trackById(c, second));
+  box.appendChild(body);
+  const update = () => {
+    tracksPage.compareTwo = selects.map((s) => s.value);
+    const next = compareTwoBody(trackById(c, selects[0].value), trackById(c, selects[1].value));
+    body.replaceWith(next);
+    body = next;
+  };
+  for (const select of selects) select.addEventListener("change", update);
+  section.appendChild(box);
+}
+
+// Used by the quiz result (step 4): show two tracks side by side
+function showCompareTwo(idA, idB) {
+  tracksPage.compareTwo = [idA, idB];
+  renderCompare();
+  highlightMyTrack();
+  document.getElementById("compare-two").scrollIntoView({ block: "start" });
+}
+
+// ----- What tracks share (computed from the data) -----
+
+function renderOverlaps(section) {
+  const c = tracksPage.cohort;
+  const box = createElement("div", "track-overlaps");
+  box.appendChild(createElement("h3", null, "What tracks share"));
+  const list = createElement("ul");
+  for (const pair of trackOverlaps(c)) {
+    const li = createElement("li", "overlap-item");
+    const head = createElement("div", "overlap-head");
+    head.appendChild(trackBadge(pair.a));
+    head.appendChild(createElement("span", null, "+"));
+    head.appendChild(trackBadge(pair.b));
+    li.appendChild(head);
+    const facts = createElement("ul", "overlap-facts");
+    for (const city of pair.cities) {
+      facts.appendChild(createElement("li", null, city.semesterA === city.semesterB
+        ? `Both spend Semester ${city.semesterA} in ${city.city}.`
+        : `Both include ${city.city}: Semester ${city.semesterA} for ${pair.a.abbr}, Semester ${city.semesterB} for ${pair.b.abbr}.`));
+    }
+    if (pair.courses.length) {
+      facts.appendChild(createElement("li", null,
+        `${pair.courses.length === 1 ? "Shared course" : `${pair.courses.length} shared courses`}: ${pair.courses.map((x) => x.name).join("; ")}.`));
+    }
+    li.appendChild(facts);
+    list.appendChild(li);
+  }
+  box.appendChild(list);
+  box.appendChild(createElement("p", "course-note",
+    "A shared course means the same course at the same university appears in both tracks (as a required course or an option)."));
+  section.appendChild(box);
+}
+
 // ----- 7. Careers across tracks -----
 
 function renderCareers() {
@@ -530,25 +927,37 @@ async function initTracksPage() {
     tracksPage.cohort = tracksCohort(file);
     const media = window.matchMedia(NARROW_QUERY);
     tracksPage.narrow = media.matches;
+    tracksPage.compareNarrow = window.matchMedia(COMPARE_QUERY).matches;
+    renderMyTrack();
     renderJourney();
     renderTrackCards();
+    renderCompare();
     renderExplorer();
     renderCareers();
     renderCities();
     renderFaq();
     renderSources();
     renderTracksHero(); // last: its buttons depend on which sections exist
+    highlightMyTrack();
     status.remove();
+    // The comparison is a table on wide screens and cards on phones
+    window.matchMedia(COMPARE_QUERY).addEventListener("change", (event) => {
+      tracksPage.compareNarrow = event.matches;
+      renderCompare();
+      highlightMyTrack();
+    });
     // Screen width changed between phone and wide: redraw the explorer in the other layout
     media.addEventListener("change", (event) => {
       tracksPage.narrow = event.matches;
       const open = [...document.querySelectorAll(".track-detail[open]")].map((d) => d.dataset.track);
       renderExplorer();
       for (const id of open) document.getElementById(`track-${id}`).open = true;
+      highlightMyTrack();
     });
     // Arriving with tracks.html#track-eeh: open that track
     const match = window.location.hash.match(/^#track-([a-z]+)$/);
     if (match) openTrack(match[1]);
+    else if (myTrack()) document.getElementById(`track-${myTrack().id}`).open = true; // my track open by default
   } catch (error) {
     console.error("Tracks:", error);
     status.textContent = "Sorry, the tracks could not be loaded right now. Please try again later.";

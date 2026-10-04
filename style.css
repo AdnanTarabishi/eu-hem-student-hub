@@ -5814,3 +5814,444 @@ main.home {
   gap: 4px 16px;
   margin-bottom: 18px;
 }
+
+/* ----- Tracks: My track ----- */
+.mine-label {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--brand-ink);
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  vertical-align: middle;
+}
+
+.track-picker {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.track-pick {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  min-height: 120px;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-top: 4px solid var(--track-accent);
+  border-radius: 14px;
+  background: var(--color-card);
+  color: var(--color-text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s var(--ease), box-shadow 0.15s var(--ease);
+}
+
+.track-pick:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.track-pick[aria-pressed="true"] {
+  box-shadow: 0 0 0 2px var(--track-accent), var(--shadow-sm);
+}
+
+.track-pick strong {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.track-pick span:last-child {
+  color: var(--color-muted);
+  font-size: 0.86rem;
+}
+
+.my-track-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.my-track-foot .course-note {
+  margin: 0 auto 0 0;
+}
+
+.my-track-card {
+  padding: 22px;
+  border: 1px solid var(--color-border);
+  border-left: 5px solid var(--track-accent);
+  border-radius: 16px;
+  background: var(--color-card);
+  box-shadow: var(--shadow-sm);
+}
+
+.my-track-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.my-track-head h3 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.45rem;
+  font-weight: 600;
+}
+
+.my-track-head .button {
+  margin-left: auto;
+}
+
+.my-track-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.my-track-semester {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+}
+
+.my-track-semester strong {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.my-track-semester .track-course-list {
+  margin-top: 8px;
+  font-size: 0.92rem;
+}
+
+.my-track-guides {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  line-height: 1.8;
+}
+
+.my-track-guides a {
+  font-weight: 600;
+}
+
+/* ----- Tracks: Compare ----- */
+.compare-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin: 14px 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.compare-mark {
+  display: inline-block;
+  width: 1.1em;
+  text-align: center;
+}
+
+.is-required .compare-mark,
+.compare-cell.is-required .compare-status {
+  color: var(--color-primary);
+}
+
+.is-none .compare-mark,
+.compare-cell.is-none .compare-status {
+  color: var(--color-muted);
+}
+
+.compare-table-wrap {
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: var(--color-card);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 0.9rem;
+}
+
+.compare-table th,
+.compare-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--color-divider);
+  text-align: left;
+  vertical-align: top;
+}
+
+.compare-table thead th {
+  background: var(--color-surface-alt);
+}
+
+.compare-table thead th:first-child {
+  width: 19%;
+}
+
+.compare-table tbody th {
+  font-weight: 700;
+}
+
+.compare-track-name {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.compare-table tr:last-child th,
+.compare-table tr:last-child td {
+  border-bottom: none;
+}
+
+.compare-table .compare-fact th,
+.compare-table .compare-fact td {
+  background: var(--color-surface-alt);
+}
+
+/* My track's column */
+.compare-table th.is-mine,
+.compare-table td.is-mine {
+  background: var(--color-primary-light);
+}
+
+.compare-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.compare-status {
+  font-weight: 700;
+}
+
+.compare-courses {
+  display: block;
+  color: var(--color-muted);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.compare-cards {
+  display: grid;
+  gap: 12px;
+}
+
+.compare-card {
+  padding: 14px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: var(--color-card);
+}
+
+.compare-card h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.compare-card ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.compare-card li {
+  display: grid;
+  grid-template-columns: 5.4em minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  padding: 8px 0;
+  border-top: 1px solid var(--color-divider);
+}
+
+.compare-card li.is-mine {
+  margin: 0 -8px;
+  padding: 8px;
+  border-radius: 8px;
+  background: var(--color-primary-light);
+}
+
+.compare-card .track-badge {
+  justify-content: center;
+  padding: 3px 6px;
+}
+
+/* Compare two tracks */
+.compare-two,
+.track-overlaps {
+  margin-top: 28px;
+  padding: 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: var(--color-card);
+  box-shadow: var(--shadow-sm);
+}
+
+.compare-two h3,
+.track-overlaps h3 {
+  margin: 0 0 12px;
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.compare-two-pickers {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.compare-two-pickers label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+
+.compare-two-pickers select {
+  padding: 8px;
+  font: inherit;
+}
+
+.compare-two-grid {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.7fr) minmax(0, 1fr) minmax(0, 1fr);
+  font-size: 0.9rem;
+}
+
+.compare-two-grid > * {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.compare-two-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  border-bottom: 2px solid var(--track-accent);
+}
+
+.compare-two-head strong {
+  font-family: var(--font-heading);
+  font-weight: 600;
+}
+
+.compare-two-label {
+  font-weight: 700;
+}
+
+.compare-two-shared {
+  margin: 14px 0 0;
+  line-height: 1.55;
+}
+
+/* What tracks share */
+.track-overlaps > ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.overlap-item {
+  padding: 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-surface-alt);
+}
+
+.overlap-head {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-weight: 700;
+}
+
+.overlap-facts {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track-pick:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 1000px) {
+  .track-picker {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .my-track-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .track-picker,
+  .my-track-grid,
+  .track-overlaps > ul {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .track-pick {
+    min-height: 0;
+  }
+
+  .compare-two,
+  .track-overlaps,
+  .my-track-card {
+    padding: 16px;
+  }
+
+  /* Compare two: label on its own line, the two tracks side by side under it */
+  .compare-two-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .compare-two-corner {
+    display: none;
+  }
+
+  .compare-two-label {
+    grid-column: 1 / -1;
+    padding-bottom: 2px;
+    border-bottom: none;
+    background: var(--color-surface-alt);
+  }
+}
