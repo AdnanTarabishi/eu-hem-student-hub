@@ -73,8 +73,8 @@ function buildArchive(rows, config, overrides = {}) {
       universityName: config.universities[universityCode] ? config.universities[universityCode].name : "",
       titleOriginal: String(titleOriginal),
       titleDisplay,
-      topics: [],
-      relevantCurrentTracks: [],
+      // Themes and current-track relevance are NOT stored here: they are a Student Hub interpretation
+      // and live only in content/thesis-enrichment.json (see docs/thesis-enrichment.md)
       link: "",
       row: line,
     };

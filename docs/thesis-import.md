@@ -6,9 +6,10 @@ student. It is an **informal, incomplete list**, never an official archive; the 
 ## The three files
 | File | Edit by hand? | What it holds |
 |---|---|---|
-| `content/thesis-archive.json` | **No, generated** | One record per thesis (id, cohort, legacy track, university, original and display title, plus empty `topics`, `relevantCurrentTracks`, `link` for later). Replaced on every import. |
+| `content/thesis-archive.json` | **No, generated** | One record per thesis (id, cohort, legacy track, university, original and display title, and an empty `link` for later). Replaced on every import. It never contains classifications. |
 | `content/thesis-config.json` | Yes | Legacy track names, university names and thesis repository links, **search synonyms**, the example titles, page texts. |
 | `content/thesis-overrides.json` | Yes | Your corrections: a better display title, or hide a record. Starts as `{}`. |
+| `content/thesis-enrichment.json` | Yes | Student Hub themes, stated methods/places and current-track relevance, by id. See [thesis-enrichment.md](thesis-enrichment.md). |
 
 The spreadsheet itself is **not** kept in the repository (`*.xlsx` is in `.gitignore`). Keep it on
 your computer; only the generated JSON is published.
@@ -75,3 +76,5 @@ word ending in "y" also finds "-ies" (inequality → inequalities).
 ## Adding a track or university code
 Add it to `legacyTracks` or `universities` in `thesis-config.json` (with a verified `repository`
 link, or `null`), then run the import again.
+
+After a re-import, new or changed titles need an entry in `content/thesis-enrichment.json`: the checker lists any thesis without one.

@@ -387,6 +387,98 @@ function checkThesis() {
   }
 }
 
+// ----- Thesis enrichment (Student Hub classification of the thesis titles) -----
+// content/thesis-enrichment.json must fit the archive, the shared taxonomy in tracks.json and its own
+// allowed lists, and must never carry historical source fields.
+function checkThesisEnrichment() {
+  const E = "content/thesis-enrichment.json";
+  const file = path.join(ROOT, "content", "thesis-enrichment.json");
+  const archiveFile = path.join(ROOT, "content", "thesis-archive.json");
+  if (!fs.existsSync(file) || !fs.existsSync(archiveFile) || !fs.existsSync(path.join(ROOT, "thesis-enrichment.js"))) return;
+  global.readStorage = global.readStorage || (() => null);
+  const tracks = require("../tracks-data.js");
+  global.trackCourses = tracks.trackCourses;
+  global.courseInfo = tracks.courseInfo;
+  const enrich = require("../thesis-enrichment.js");
+  const enrichment = JSON.parse(fs.readFileSync(file, "utf8"));
+  const archive = JSON.parse(fs.readFileSync(archiveFile, "utf8"));
+  const cohort = tracks.tracksCohort(JSON.parse(fs.readFileSync(path.join(ROOT, "content", "tracks.json"), "utf8")));
+  const trackIds = cohort.tracks.map((t) => t.id);
+
+  // Taxonomy: reused ids must exist in tracks.json; added ones need id + label; no id twice
+  const curriculum = new Set((cohort.themes || []).map((t) => t.id));
+  for (const id of enrichment.taxonomy.reused || []) {
+    if (!curriculum.has(id)) error(E, `taxonomy.reused: "${id}" is not a theme in content/tracks.json`);
+  }
+  for (const t of enrichment.taxonomy.added || []) {
+    if (!t.id || !t.label) error(E, `taxonomy.added: every added theme needs an "id" and a "label"`);
+    if (curriculum.has(t.id)) error(E, `taxonomy.added: "${t.id}" already exists in content/tracks.json; list it under "reused" instead`);
+  }
+  const themes = enrich.topicThemes(enrichment, cohort).map((t) => t.id);
+  if (new Set(themes).size !== themes.length) error(E, "taxonomy: a theme id is listed twice");
+  for (const id of Object.keys(enrichment.taxonomy.synonyms || {})) if (!themes.includes(id)) error(E, `taxonomy.synonyms: unknown theme "${id}"`);
+  const methods = new Set((enrichment.methods || []).map((m) => m.id));
+
+  // Weights: every theme x every current track; derived rows still match tracks.json
+  const weights = enrichment.relevance.weights || {};
+  for (const theme of themes) {
+    const w = weights[theme];
+    if (!w) { error(E, `relevance.weights: theme "${theme}" has no weights`); continue; }
+    for (const id of trackIds) if (typeof w[id] !== "number" || w[id] < 0 || w[id] > 1) error(E, `relevance.weights.${theme}: "${id}" needs a number from 0 to 1`);
+    if (!["derived", "proposal"].includes(w.basis)) error(E, `relevance.weights.${theme}: "basis" must be "derived" or "proposal"`);
+    if (w.basis === "derived") {
+      const derived = enrich.derivedWeights(cohort, theme);
+      if (!derived) warn(E, `relevance.weights.${theme}: no course in tracks.json carries this theme any more; make it a "proposal"`);
+      else if (trackIds.some((id) => derived[id] !== w[id])) warn(E, `relevance.weights.${theme}: no longer matches the courses in tracks.json. Run: node scripts/thesis-weights.js --write`);
+    }
+  }
+  for (const id of Object.keys(weights)) if (!themes.includes(id)) error(E, `relevance.weights: unknown theme "${id}"`);
+  const { threshold, secondRatio, maxTracks } = enrichment.relevance;
+  if (!(threshold > 0 && threshold <= 1) || !(secondRatio > 0 && secondRatio <= 1) || !(maxTracks >= 1 && maxTracks <= 2)) {
+    error(E, "relevance: threshold and secondRatio must be between 0 and 1, maxTracks 1 or 2");
+  }
+
+  // Records
+  const visible = new Map(archive.records.map((r) => [r.id, r]));
+  const seen = new Set();
+  const sourceFields = ["cohort", "trackCode", "trackName", "universityCode", "universityName", "titleOriginal", "titleDisplay", "link", "topics", "relevantCurrentTracks"];
+  let unclassified = 0;
+  for (const entry of enrichment.records || []) {
+    const where = `${E} ${entry.id}`;
+    if (seen.has(entry.id)) error(where, "this id is listed twice");
+    seen.add(entry.id);
+    const record = visible.get(entry.id);
+    if (!record) {
+      // Hidden records (overrides) are ignored; anything else is an unknown id
+      if (!/^t-[0-9a-f]{8}$/.test(entry.id || "")) error(where, "not a thesis id (they look like t-1a2b3c4d)");
+      else warn(where, "no visible thesis has this id (hidden, or the title changed on re-import); it is ignored");
+      continue;
+    }
+    for (const field of sourceFields) if (field in entry) error(where, `"${field}" is a historical source field and must not be set here`);
+    if (entry.title !== record.titleDisplay) error(where, `"title" must equal the archive title exactly (it is only a reading aid): "${record.titleDisplay}"`);
+    if (!Array.isArray(entry.themes)) error(where, '"themes" must be a list');
+    else {
+      if (entry.themes.length > 3) error(where, "at most 3 themes");
+      for (const t of entry.themes) if (!themes.includes(t)) error(where, `unknown theme "${t}"`);
+      if (!entry.themes.length && !entry.unclassified) error(where, 'needs at least one theme, or "unclassified": true');
+      if (entry.themes.length && entry.unclassified) error(where, '"unclassified" is only for entries without themes');
+      if (entry.unclassified) unclassified++;
+    }
+    for (const m of entry.statedMethods || []) if (!methods.has(m)) error(where, `unknown stated method "${m}"`);
+    if (!Array.isArray(entry.statedCountries) || entry.statedCountries.some((c) => typeof c !== "string" || !c.trim())) error(where, '"statedCountries" must be a list of names (it can be empty)');
+    if (!enrich.ENRICHMENT_CONFIDENCE.includes(entry.confidence)) error(where, `"confidence" must be ${enrich.ENRICHMENT_CONFIDENCE.join(", ")}`);
+    if (!enrich.ENRICHMENT_STATUS.includes(entry.status)) error(where, `"status" must be ${enrich.ENRICHMENT_STATUS.join(" or ")}`);
+    if (entry.trackOverride) {
+      const o = entry.trackOverride;
+      if (!Array.isArray(o.tracks) || o.tracks.length > 2 || o.tracks.some((t) => !trackIds.includes(t))) error(where, `trackOverride.tracks: at most 2 of ${trackIds.join(", ")}`);
+      if (!o.reason || !String(o.reason).trim()) error(where, "trackOverride needs a short reason");
+    }
+  }
+  const missing = [...visible.keys()].filter((id) => !seen.has(id));
+  if (missing.length) error(E, `${missing.length} visible thesis/theses have no entry: ${missing.slice(0, 5).join(", ")}${missing.length > 5 ? " …" : ""}`);
+  if (unclassified) warn(E, `${unclassified} thesis/theses are marked "unclassified"`);
+}
+
 async function main() {
   // --- Step 1: is every JSON file valid? (A broken file stops the rest from being checked.) ---
   for (const file of allJsonFiles(path.join(ROOT, "content"))) {
@@ -422,6 +514,7 @@ async function main() {
 
   // --- thesis archive (Past Thesis Explorer) ---
   checkThesis();
+  checkThesisEnrichment();
 
   // --- topics (first, so everything else can link to them) ---
   const topicIds = new Set();
