@@ -60,6 +60,8 @@ the same, and the page can tell which courses two tracks share.
 - `code`: optional (only when the university publishes one). Not shown on the page.
 - `credits`: a number = shown as "10 EC"; `null` = "Credits not stated in the source";
   leave it out = nothing shown (used for required courses whose credits the source doesn't give).
+- `creditsSource`: optional, where the credits come from when the official overview states them for this
+  course in another track's list only (the course is the same, so the credits are shown in every track).
 - `themes`: which comparison rows the course counts for (can be `[]`). **The comparison table is built
   from these tags**, so tagging a course changes the table.
 
