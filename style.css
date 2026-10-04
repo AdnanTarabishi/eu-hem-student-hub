@@ -5050,3 +5050,767 @@ main.home {
     display: none;
   }
 }
+
+/* =====================================================================
+   Tracks page (tracks.html, tracks.js)
+   Each track has an accent colour (--track-accent, from content/tracks.json),
+   used only for small accents: the name or abbreviation is always shown too.
+   ===================================================================== */
+.tracks {
+  padding-bottom: 48px;
+}
+
+.tracks [id] {
+  scroll-margin-top: calc(var(--header-height) + 16px);
+}
+
+.tracks-section {
+  margin-top: 56px;
+}
+
+/* ----- Hero ----- */
+.tracks-hero {
+  padding: 36px 32px;
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 100% 0%, var(--color-primary-light), transparent 55%),
+    var(--color-card);
+  box-shadow: var(--shadow-sm);
+}
+
+.tracks-hero .hero-badge {
+  border-color: var(--color-primary-border);
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  text-shadow: none;
+}
+
+.tracks-hero h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  line-height: 1.1;
+}
+
+.tracks-tagline {
+  margin: 10px 0 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.15rem, 2.2vw, 1.4rem);
+  color: var(--color-primary);
+}
+
+.tracks-hero-text {
+  max-width: 640px;
+  margin: 12px 0 0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.tracks-hero .hero-actions {
+  margin-top: 20px;
+}
+
+.tracks-hero-note {
+  margin: 18px 0 0;
+  color: var(--color-muted);
+  font-size: 0.88rem;
+}
+
+.student-label {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin: 12px 0 0;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  background: var(--color-warning-bg);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.student-label .icon {
+  margin-top: 2px;
+  color: var(--pill-amber-text);
+}
+
+/* ----- Track badge: "A · EEH" ----- */
+.track-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-card);
+  color: var(--color-text);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.track-badge::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--track-accent, var(--color-primary));
+}
+
+/* ----- Journey ----- */
+.journey {
+  display: grid;
+  grid-template-columns: minmax(170px, 220px) minmax(0, 1fr);
+  gap: 0 28px;
+  align-items: center;
+}
+
+.journey-start {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 18px;
+  border-radius: 16px;
+  background: var(--brand-ink);
+  color: #ffffff;
+}
+
+.journey-start strong {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.journey-start span:last-child {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.88rem;
+}
+
+.journey-start .journey-step-label {
+  color: #f3dccf;
+}
+
+.journey-step-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.journey-paths {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0 0 0 22px;
+  list-style: none;
+  border-left: 2px solid var(--color-border);
+}
+
+.journey-path {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 2fr);
+  gap: 10px 16px;
+  align-items: center;
+  padding: 12px 16px;
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--track-accent);
+  border-radius: 12px;
+  background: var(--color-card);
+}
+
+/* The branch line from Bologna to each track */
+.journey-path::before {
+  content: "";
+  position: absolute;
+  left: -24px;
+  top: 50%;
+  width: 22px;
+  border-top: 2px solid var(--color-border);
+}
+
+.journey-track {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  align-items: center;
+}
+
+.journey-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.journey-step {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.journey-step strong {
+  font-size: 0.98rem;
+}
+
+.journey-path.is-mine,
+.track-card.is-mine,
+.track-detail.is-mine {
+  box-shadow: 0 0 0 2px var(--track-accent), var(--shadow-sm);
+}
+
+.tracks-callout {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 18px 0 0;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-light);
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.tracks-callout .icon {
+  color: var(--color-primary);
+}
+
+/* ----- Four track cards ----- */
+.track-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.track-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 22px;
+  border: 1px solid var(--color-border);
+  border-top: 4px solid var(--track-accent);
+  border-radius: 16px;
+  background: var(--color-card);
+  box-shadow: var(--shadow-sm);
+}
+
+.track-card h3 {
+  margin: 4px 0 0;
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.track-question {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--color-primary);
+}
+
+.track-route {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin: 0;
+  color: var(--color-muted);
+  font-weight: 600;
+}
+
+.track-description {
+  margin: 0;
+  line-height: 1.55;
+}
+
+.track-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 2px 0 6px;
+  padding: 0;
+  list-style: none;
+}
+
+.track-tags li {
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  font-size: 0.8rem;
+}
+
+.track-card .button {
+  margin-top: auto;
+}
+
+/* ----- Detailed explorer ----- */
+.track-detail {
+  margin-bottom: 12px;
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--track-accent);
+  border-radius: 14px;
+  background: var(--color-card);
+  box-shadow: var(--shadow-sm);
+}
+
+.track-detail > summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  align-items: center;
+  padding: 16px 20px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.track-detail > summary::-webkit-details-marker {
+  display: none;
+}
+
+.track-detail > summary::after {
+  content: "+";
+  margin-left: auto;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--color-muted);
+}
+
+.track-detail[open] > summary::after {
+  content: "–";
+}
+
+.track-detail-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.track-detail-title strong {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.track-detail-title span {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.track-detail-body {
+  padding: 0 20px 20px;
+}
+
+.explorer-tabs .track-tabs {
+  margin-bottom: 16px;
+}
+
+.explorer-panel:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.explorer-panel-body h3 {
+  margin: 18px 0 8px;
+  font-size: 1rem;
+}
+
+.explorer-panel-body > :first-child {
+  margin-top: 0;
+}
+
+.track-central {
+  margin: 0 0 10px;
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  color: var(--color-primary);
+}
+
+.typical-problem {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+}
+
+.typical-problem h3 {
+  margin-top: 0;
+}
+
+.typical-problem p {
+  margin: 0;
+  line-height: 1.55;
+}
+
+.typical-problem-note,
+.course-note,
+.course-source,
+.course-context {
+  margin: 8px 0 0;
+  color: var(--color-muted);
+  font-size: 0.86rem;
+}
+
+.course-semester {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-divider);
+}
+
+.course-group-label {
+  margin: 12px 0 4px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.course-rule {
+  padding: 1px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: 0.82rem;
+}
+
+.course-rule.is-unknown {
+  background: var(--color-warning-bg);
+  color: var(--pill-amber-text);
+}
+
+.track-course-list {
+  margin: 0;
+  padding-left: 20px;
+  line-height: 1.55;
+}
+
+.course-options {
+  list-style: circle;
+}
+
+.course-extra {
+  color: var(--color-muted);
+  font-size: 0.88rem;
+}
+
+.course-plus {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.sector-list,
+.fit-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sector-list li {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.fit-list li {
+  display: flex;
+  gap: 8px;
+  padding: 6px 0;
+  line-height: 1.5;
+}
+
+.fit-list .icon {
+  margin-top: 3px;
+  color: var(--color-primary);
+}
+
+.student-written {
+  display: inline-block;
+  margin: 0 0 6px;
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
+  background: var(--color-warning-bg);
+  color: var(--pill-amber-text);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.second-year blockquote {
+  margin: 8px 0;
+  padding: 8px 14px;
+  border-left: 3px solid var(--color-primary-border);
+}
+
+.second-year cite {
+  display: block;
+  margin-top: 4px;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+.track-city-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.track-city {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-surface-alt);
+}
+
+.track-city strong {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.track-city a {
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+/* Phones: each section of a track is its own fold */
+.explorer-fold {
+  border-top: 1px solid var(--color-divider);
+}
+
+.explorer-fold > summary {
+  padding: 12px 0;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.explorer-fold > .explorer-panel-body {
+  padding-bottom: 14px;
+}
+
+/* ----- Careers across tracks ----- */
+.careers-text {
+  max-width: 760px;
+  line-height: 1.6;
+}
+
+.sector-overlap {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: var(--color-card);
+}
+
+.sector-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 16px;
+  align-items: center;
+  padding: 12px 16px;
+}
+
+.sector-row + .sector-row {
+  border-top: 1px solid var(--color-divider);
+}
+
+.sector-name {
+  display: flex;
+  flex-direction: column;
+}
+
+.sector-name span {
+  color: var(--color-muted);
+  font-size: 0.82rem;
+}
+
+.sector-tracks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.sector-chip {
+  min-width: 3.4em;
+  padding: 3px 8px;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-pill);
+  color: var(--color-faint);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.sector-chip.is-listed {
+  border: 1px solid var(--track-accent);
+  background: var(--color-card);
+  color: var(--color-text);
+  box-shadow: inset 4px 0 0 var(--track-accent);
+}
+
+/* ----- Cities ----- */
+.tracks-city-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.tracks-city-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: var(--color-card);
+  box-shadow: var(--shadow-sm);
+}
+
+.tracks-city-card h3 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.tracks-city-card .city-country {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.tracks-city-uni {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.88rem;
+}
+
+.city-presence {
+  margin: 8px 0;
+  padding-left: 18px;
+  line-height: 1.6;
+}
+
+.tracks-city-card a {
+  margin-top: auto;
+  font-weight: 600;
+}
+
+/* ----- FAQ ----- */
+.faq-item {
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.faq-item > summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  align-items: center;
+  padding: 14px 0;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.faq-item > p {
+  margin: 0 0 16px;
+  line-height: 1.6;
+  max-width: 760px;
+}
+
+.faq-audience {
+  padding: 1px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  color: var(--color-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* ----- Sources ----- */
+.sources-list {
+  margin: 0;
+  padding-left: 20px;
+  line-height: 1.8;
+}
+
+/* ----- Tablets and phones ----- */
+@media (max-width: 1000px) {
+  .tracks-city-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .journey {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .journey-paths {
+    margin-left: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .tracks-hero {
+    padding: 24px 18px;
+  }
+
+  .tracks-section {
+    margin-top: 40px;
+  }
+
+  .track-card-grid,
+  .track-city-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .journey-path {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .journey-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .journey-thesis {
+    grid-column: 1 / -1;
+  }
+
+  .track-detail > summary,
+  .track-detail-body {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .sector-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 400px) {
+  .tracks-city-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Section titles on the Tracks page use the same serif style as the homepage */
+.tracks .section-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.55rem, 3vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.tracks .section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
+  margin-bottom: 18px;
+}

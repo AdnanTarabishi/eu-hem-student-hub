@@ -8,14 +8,14 @@
 //   "Update available · Reload", and old saved copies are deleted.
 // Nothing personal is stored here: only public site files and public data.
 
-const VERSION = "da837c6a";
+const VERSION = "3294cb68";
 const SITE_CACHE = `site-${VERSION}`;
 const DATA_CACHE = "data"; // kept across versions, so offline data survives an update
 
 const SITE_FILES = [
   "./", "index.html", "studyplan.html", "timetable.html", "exams.html", "calendar.html",
   "notes.html", "course.html", "create.html", "city-guide.html", "announcements.html", "students.html",
-  "privacy.html", "contact.html",
+  "privacy.html", "contact.html", "tracks.html",
   "style.css", "icons.svg", "manifest.webmanifest",
   "fonts/inter-latin.woff2", "fonts/inter-latin-ext.woff2", "fonts/source-serif-4-latin-600.woff2",
   "img/app-icon.svg", "img/app-icon-192.png", "img/favicon-32.png", "img/apple-touch-icon.png",
@@ -24,6 +24,7 @@ const SITE_FILES = [
   "timetable.js", "exams.js", "calendar.js", "guide.js", "students.js",
   "notes-data.js", "notes-progress.js", "notes-render.js", "notes-landing.js", "notes-course.js",
   "notes-practice.js", "notes-quiz.js", "notes-create.js",
+  "tracks-data.js", "tracks.js",
 ];
 
 // Data: always try the internet first

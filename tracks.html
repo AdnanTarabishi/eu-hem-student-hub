@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tracks – EU-HEM Student Hub</title>
+  <meta name="description" content="The four EU-HEM specialisation tracks: courses, cities, careers and how they compare. A student-built guide.">
+  <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css?v=a331f3c8">
+  <meta name="theme-color" content="#20242a">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="img/app-icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <script src="theme.js?v=2016aab7"></script>
+</head>
+<body class="tracks-page">
+
+  <header class="site-header">
+    <div class="container">
+      <p class="site-title"><a href="index.html">EU-HEM Student Hub</a></p>
+      <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
+      <!-- site-nav.js builds the menu here (defined once for all pages) -->
+      <nav class="site-nav" id="site-nav" data-current="tracks" aria-label="Main menu"></nav>
+      <script src="site-nav.js?v=59ecbeb9"></script>
+    </div>
+  </header>
+
+  <!-- tracks.js fills every section from content/tracks.json (format: docs/tracks-format.md) -->
+  <main class="container tracks">
+    <p id="tracks-status" class="placeholder" aria-live="polite">Loading the tracks…</p>
+
+    <!-- 1. Hero -->
+    <section id="tracks-hero" class="tracks-hero" aria-labelledby="tracks-title" hidden></section>
+
+    <!-- 2. My track (step 3) -->
+    <section id="my-track" class="tracks-section" aria-labelledby="my-track-title" hidden></section>
+
+    <!-- 3. How the tracks work: the journey -->
+    <section id="journey" class="tracks-section" aria-labelledby="journey-title" hidden></section>
+
+    <!-- 4. The four tracks -->
+    <section id="track-cards" class="tracks-section" aria-labelledby="track-cards-title" hidden></section>
+
+    <!-- 5. Compare (step 3) -->
+    <section id="compare" class="tracks-section" aria-labelledby="compare-title" hidden></section>
+
+    <!-- 6. Detailed explorer -->
+    <section id="explorer" class="tracks-section" aria-labelledby="explorer-title" hidden></section>
+
+    <!-- 7. Careers across tracks -->
+    <section id="careers" class="tracks-section" aria-labelledby="careers-title" hidden></section>
+
+    <!-- 8. Cities -->
+    <section id="cities" class="tracks-section" aria-labelledby="cities-title" hidden></section>
+
+    <!-- 9. Quiz (step 4) -->
+    <section id="quiz" class="tracks-section" aria-labelledby="quiz-title" hidden></section>
+
+    <!-- 10. FAQ -->
+    <section id="faq" class="tracks-section" aria-labelledby="faq-title" hidden></section>
+
+    <!-- 11. Sources -->
+    <section id="sources" class="tracks-section" aria-labelledby="sources-title" hidden></section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>EU-HEM Student Hub &middot; Unofficial student project</p>
+    </div>
+  </footer>
+
+  <script defer src="utils.js?v=671dcb1b"></script>
+  <script defer src="ui.js?v=3026c782"></script>
+  <script defer src="search.js?v=488e0e19"></script>
+  <script defer src="pwa.js?v=c9212bf8"></script>
+  <script defer src="announcements.js?v=4ad85af3"></script>
+  <script defer src="tracks-data.js?v=2b1d8a20"></script>
+  <script defer src="tracks.js?v=186c97e8"></script>
+
+</body>
+</html>

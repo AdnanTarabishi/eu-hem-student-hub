@@ -12,6 +12,7 @@ const SITE_MENU = [
     label: "Academics",
     items: [
       { key: "studyplan", label: "Study Plan", href: "studyplan.html", icon: "study-plan" },
+      { key: "tracks", label: "Tracks", href: "tracks.html", icon: "route" },
       { key: "timetable", label: "Timetable", href: "timetable.html", icon: "timetable" },
       { key: "exams", label: "Exams", href: "exams.html", icon: "exams" },
       { key: "calendar", label: "Calendar", href: "calendar.html", icon: "calendar" },
