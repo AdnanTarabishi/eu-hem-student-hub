@@ -1,7 +1,7 @@
 // ===== Tracks page (tracks.html) =====
 // Draws every section from content/tracks.json, using the helpers in tracks-data.js.
-// Sections: hero, journey, the four track cards, the detailed explorer (tabs on wide screens,
-// an accordion on phones), careers across tracks, cities, FAQ and sources.
+// Sections: hero, my track, journey, the four track cards, the comparison, the detailed explorer
+// (tabs on wide screens, an accordion on phones), careers across tracks, cities, quiz, FAQ and sources.
 
 // tabs: the open section per track, kept when the layout switches between tabs and accordion
 const tracksPage = { cohort: null, narrow: null, compareNarrow: null, compareTwo: null, tabs: {} };
@@ -882,6 +882,181 @@ function renderCities() {
   show("cities");
 }
 
+// ----- 9. Quiz "Which track fits you?" -----
+// One question at a time, answers shuffled every time, nothing saved or sent anywhere.
+
+const quizState = { index: 0, answers: [] };
+
+function quizBox() {
+  return document.getElementById("quiz-box");
+}
+
+function renderQuiz() {
+  const c = tracksPage.cohort;
+  const section = document.getElementById("quiz");
+  sectionHead(section, "quiz-title", "Which track fits you?");
+  const label = createElement("p", "student-label");
+  label.appendChild(siteIcon("info"));
+  label.appendChild(document.createTextNode(` ${c.texts.quizLabel}`));
+  section.appendChild(label);
+  const box = createElement("div", "quiz-box");
+  box.id = "quiz-box";
+  section.appendChild(box);
+  quizIntro();
+  show("quiz");
+}
+
+function quizIntro() {
+  const c = tracksPage.cohort;
+  const box = quizBox();
+  box.innerHTML = "";
+  box.appendChild(createElement("p", "quiz-intro",
+    `${c.quiz.questions.length} short questions, one at a time. Nothing is saved or sent anywhere.`));
+  const start = createElement("button", "button", "Start the quiz");
+  start.type = "button";
+  start.addEventListener("click", () => {
+    quizState.index = 0;
+    quizState.answers = [];
+    quizQuestion();
+  });
+  box.appendChild(start);
+}
+
+function quizQuestion() {
+  const c = tracksPage.cohort;
+  const { questions } = c.quiz;
+  const question = questions[quizState.index];
+  const box = quizBox();
+  box.innerHTML = "";
+
+  const progress = createElement("div", "quiz-progress");
+  const count = createElement("span", "quiz-count", `Question ${quizState.index + 1} of ${questions.length}`);
+  progress.appendChild(count);
+  progress.appendChild(progressBar(Math.round((quizState.index / questions.length) * 100), `${quizState.index} of ${questions.length} questions answered`));
+  box.appendChild(progress);
+
+  const title = createElement("h3", "quiz-question", question.text);
+  title.tabIndex = -1; // receives focus, so screen readers read the new question
+  box.appendChild(title);
+
+  const list = createElement("div", "quiz-answers");
+  list.setAttribute("role", "group");
+  list.setAttribute("aria-label", question.text);
+  const chosen = quizState.answers[quizState.index];
+  for (const answer of shuffled(question.answers)) {
+    const button = createElement("button", "quiz-answer", answer.text);
+    button.type = "button";
+    if (answer === chosen) button.setAttribute("aria-pressed", "true");
+    button.addEventListener("click", () => {
+      quizState.answers[quizState.index] = answer;
+      if (quizState.index + 1 < questions.length) {
+        quizState.index++;
+        quizQuestion();
+      } else {
+        quizResult();
+      }
+    });
+    list.appendChild(button);
+  }
+  // Arrow keys move between answers (Tab works too)
+  list.addEventListener("keydown", (event) => {
+    const buttons = [...list.children];
+    const at = buttons.indexOf(document.activeElement);
+    if (at < 0) return;
+    const next = { ArrowDown: at + 1, ArrowRight: at + 1, ArrowUp: at - 1, ArrowLeft: at - 1 }[event.key];
+    if (next === undefined) return;
+    event.preventDefault();
+    buttons[(next + buttons.length) % buttons.length].focus();
+  });
+  box.appendChild(list);
+
+  if (quizState.index > 0) {
+    const back = createElement("button", "button button-quiet quiz-back", "← Back");
+    back.type = "button";
+    back.addEventListener("click", () => {
+      quizState.index--;
+      quizQuestion();
+    });
+    box.appendChild(back);
+  }
+  title.focus({ preventScroll: true });
+  box.scrollIntoView({ block: "nearest" });
+}
+
+function quizResult() {
+  const c = tracksPage.cohort;
+  const box = quizBox();
+  box.innerHTML = "";
+  const ranked = rankTracks(c, quizScores(c, quizState.answers));
+  const max = c.quiz.maxScore;
+
+  const title = createElement("h3", "quiz-question", "Your result");
+  title.tabIndex = -1;
+  box.appendChild(title);
+
+  // All four tracks as labelled bars, not just a winner
+  const bars = createElement("ul", "quiz-bars");
+  bars.setAttribute("aria-label", "Points per track");
+  for (const { track, score } of ranked) {
+    const li = createElement("li", "quiz-bar-row");
+    li.style.setProperty("--track-accent", track.accent);
+    const name = createElement("div", "quiz-bar-label");
+    name.appendChild(trackBadge(track));
+    name.appendChild(createElement("span", null, track.name));
+    li.appendChild(name);
+    const bar = createElement("div", "quiz-bar");
+    bar.setAttribute("aria-hidden", "true");
+    const fill = createElement("span");
+    fill.style.width = `${Math.round((score / max) * 100)}%`;
+    bar.appendChild(fill);
+    li.appendChild(bar);
+    li.appendChild(createElement("span", "quiz-bar-score", `${score} of ${max} points`));
+    bars.appendChild(li);
+  }
+  box.appendChild(bars);
+
+  if (isCloseMatch(ranked, c.quiz.closeMatchPoints)) {
+    box.appendChild(createElement("p", "tracks-callout quiz-close", c.texts.quizCloseMatch));
+  }
+
+  // The top two, each with one sentence and a way to explore it
+  const top = createElement("div", "quiz-top");
+  ranked.slice(0, 2).forEach(({ track }, i) => {
+    const card = createElement("div", "quiz-top-card");
+    card.style.setProperty("--track-accent", track.accent);
+    card.appendChild(createElement("span", "journey-step-label", i === 0 ? "Closest match" : "Second closest"));
+    const head = createElement("div", "quiz-top-head");
+    head.appendChild(trackBadge(track));
+    head.appendChild(createElement("strong", null, track.name));
+    card.appendChild(head);
+    card.appendChild(createElement("p", null, c.texts.quizResultSentence.replace("{centralQuestion}", track.student.centralQuestion)));
+    const explore = createElement("a", "button button-light", `Explore ${track.abbr}`);
+    explore.href = `#track-${track.id}`;
+    explore.addEventListener("click", () => openTrack(track.id));
+    card.appendChild(explore);
+    top.appendChild(card);
+  });
+  box.appendChild(top);
+
+  const actions = createElement("div", "quiz-actions");
+  const compare = createElement("button", "button", `Compare ${ranked[0].track.abbr} and ${ranked[1].track.abbr} side by side`);
+  compare.type = "button";
+  compare.addEventListener("click", () => showCompareTwo(ranked[0].track.id, ranked[1].track.id));
+  actions.appendChild(compare);
+  const retake = createElement("button", "button button-quiet", "Retake");
+  retake.type = "button";
+  retake.addEventListener("click", () => {
+    quizState.index = 0;
+    quizState.answers = [];
+    quizQuestion();
+  });
+  actions.appendChild(retake);
+  box.appendChild(actions);
+  box.appendChild(createElement("p", "quiz-advice", c.texts.quizAdvice));
+  title.focus({ preventScroll: true });
+  box.scrollIntoView({ block: "nearest" });
+}
+
 // ----- 10. FAQ -----
 
 function renderFaq() {
@@ -935,6 +1110,7 @@ async function initTracksPage() {
     renderExplorer();
     renderCareers();
     renderCities();
+    renderQuiz();
     renderFaq();
     renderSources();
     renderTracksHero(); // last: its buttons depend on which sections exist

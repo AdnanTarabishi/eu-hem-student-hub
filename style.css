@@ -5634,12 +5634,16 @@ main.home {
 .sector-chip {
   min-width: 3.4em;
   padding: 3px 8px;
-  border: 1px dashed var(--color-border);
+  border: 1px dashed var(--color-input-border);
   border-radius: var(--radius-pill);
-  color: var(--color-faint);
+  color: var(--color-muted); /* readable; "not listed" is shown by the dashed outline and the missing tick */
   font-size: 0.78rem;
   font-weight: 700;
   text-align: center;
+}
+
+.sector-chip.is-listed::before {
+  content: "✓ ";
 }
 
 .sector-chip.is-listed {
@@ -6253,5 +6257,207 @@ main.home {
     padding-bottom: 2px;
     border-bottom: none;
     background: var(--color-surface-alt);
+  }
+}
+
+/* ----- Tracks: quiz ----- */
+.quiz-box {
+  margin-top: 16px;
+  padding: 24px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  background: var(--color-card);
+  box-shadow: var(--shadow-sm);
+}
+
+.quiz-intro {
+  margin: 0 0 14px;
+  font-size: 1.02rem;
+}
+
+.quiz-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.quiz-count {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.quiz-question {
+  margin: 0 0 16px;
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 2.6vw, 1.55rem);
+  font-weight: 600;
+}
+
+/* The question gets focus only so screen readers read it out; no outline needed */
+.quiz-question:focus,
+.quiz-question:focus-visible {
+  outline: none;
+}
+
+.quiz-answers {
+  display: grid;
+  gap: 10px;
+}
+
+.quiz-answer {
+  min-height: 56px;
+  padding: 14px 18px;
+  border: 1px solid var(--color-input-border);
+  border-radius: 12px;
+  background: var(--color-surface-alt);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s var(--ease), background 0.15s var(--ease);
+}
+
+.quiz-answer:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.quiz-answer[aria-pressed="true"] {
+  border-color: var(--color-primary);
+  box-shadow: inset 4px 0 0 var(--color-primary);
+}
+
+.quiz-back {
+  margin-top: 14px;
+}
+
+.quiz-bars {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+}
+
+.quiz-bar-row {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1.6fr) auto;
+  gap: 8px 14px;
+  align-items: center;
+}
+
+.quiz-bar-label {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px 8px;
+  align-items: center;
+  font-weight: 600;
+}
+
+.quiz-bar {
+  height: 12px;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+.quiz-bar span {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--track-accent);
+  transition: width 0.6s var(--ease);
+}
+
+.quiz-bar-score {
+  color: var(--color-muted);
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.quiz-close {
+  margin: 0 0 16px;
+}
+
+.quiz-top {
+  display: grid;
+  align-items: stretch;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.quiz-top-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-top: 4px solid var(--track-accent);
+  border-radius: 14px;
+  background: var(--color-surface-alt);
+}
+
+.quiz-top-card p {
+  margin: 0;
+  line-height: 1.55;
+}
+
+.quiz-top-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  align-items: center;
+}
+
+.quiz-top-head strong {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.quiz-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.quiz-advice {
+  margin: 14px 0 0;
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quiz-bar span,
+  .quiz-answer {
+    transition: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .quiz-box {
+    padding: 16px;
+  }
+
+  .quiz-bar-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .quiz-bar-label {
+    grid-column: 1 / -1;
+  }
+
+  .quiz-top {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .quiz-actions .button {
+    flex: 1 1 100%;
   }
 }

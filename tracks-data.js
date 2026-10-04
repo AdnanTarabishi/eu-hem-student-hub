@@ -106,6 +106,43 @@ function trackRoute(cohort, track) {
   return track.semesters.map((s) => cohort.universities[s.university].city).join(" → ");
 }
 
+// ----- Quiz "Which track fits you?" (nothing is saved or sent) -----
+
+// A shuffled copy (Fisher–Yates), so an answer's position never reveals its track.
+// `random` can be replaced in tests.
+function shuffled(list, random = Math.random) {
+  const copy = [...list];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+// answers[i] = the chosen answer of question i (an answer object from the data)
+// -> { eeh: 12, ep: 7, … } for every track of the cohort
+function quizScores(cohort, answers) {
+  const scores = Object.fromEntries(cohort.tracks.map((t) => [t.id, 0]));
+  for (const answer of answers) {
+    if (!answer) continue;
+    for (const [trackId, points] of Object.entries(answer.points)) scores[trackId] += points;
+  }
+  return scores;
+}
+
+// Tracks from highest to lowest score (equal scores keep the data's order): [{ track, score }]
+function rankTracks(cohort, scores) {
+  return cohort.tracks
+    .map((track, order) => ({ track, score: scores[track.id], order }))
+    .sort((a, b) => b.score - a.score || a.order - b.order)
+    .map(({ track, score }) => ({ track, score }));
+}
+
+// True when the top two are within closeMatchPoints of each other
+function isCloseMatch(ranked, closeMatchPoints) {
+  return ranked.length > 1 && ranked[0].score - ranked[1].score <= closeMatchPoints;
+}
+
 // ----- "My track", saved in this browser only -----
 const MY_TRACK_KEY = "euhem-track-v1";
 
@@ -124,5 +161,6 @@ if (typeof module !== "undefined") {
   module.exports = {
     TRACKS_URL, TRACK_STATUS, loadTracksFile, tracksCohort, trackById, courseInfo, trackCourses,
     themeCell, sharedCourses, sharedCities, trackOverlaps, cityPresence, trackRoute, MY_TRACK_KEY,
+    shuffled, quizScores, rankTracks, isCloseMatch,
   };
 }

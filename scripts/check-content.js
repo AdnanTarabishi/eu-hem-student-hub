@@ -232,6 +232,8 @@ async function checkProgramme() {
 // and a few facts from the official 2026 track overview that must never change by accident.
 async function checkTracks() {
   const FILE = "content/tracks.json";
+  // Skipped in a copy of only the content, which has no site files
+  if (!fs.existsSync(path.join(ROOT, "tracks-data.js"))) return;
   const t = require("../tracks-data.js");
   let file;
   try {
