@@ -28,7 +28,7 @@ statistics answer as `not asked`.
 | The backend | `integrations/directory-apps-script/Code.gs` | Pasted into Google Apps Script. **No IDs or secrets** in the file |
 | Backend setup | `integrations/directory-apps-script/README.md` | Step by step, plus the fortnightly clean-up |
 | Tests | `tests/directory/` | Backend logic against in-memory stand-ins for Google; the form in a real browser |
-| Privacy text | `privacy.html#student-directory` | Rewritten for v2 on 5 October 2026, **waiting for review** |
+| Privacy text | `privacy.html#student-directory` | Rewritten for v2 and revised after review on 5 October 2026 |
 
 Track names: the current tracks (`eeh`, `ep`, `mhi`, `phm`) come from `content/tracks.json`; the checker makes
 sure `Code.gs` uses the same names. The legacy specialisations for alumni (`dmh` Decision Making in Healthcare,
@@ -53,16 +53,17 @@ to `current` and move the graduated one to the top of `alumni`. People not liste
    that open links cannot confirm anyone.
 5. An administrator then reviews the row (see "Statuses" below). The website never stores or shows the data.
 
-## Statuses: email, role and review are separate
-| Column | Values | Set by |
-|---|---|---|
-| `Status` | `unconfirmed` → `pending` → `approved` / `rejected` | script (first two), admin (last two) |
-| `Email Confirmed At` | date | script, when the confirm button is pressed |
-| `Role Verification Status` | `pending` → `verified` / `rejected` | admin only, by hand |
-| `Role Verified At` | date | admin only, by hand |
+## Three separate states: email verified ≠ EU-HEM role verified ≠ admin approved
+| State | Column(s) | Values | Set by |
+|---|---|---|---|
+| **Email verified** | `Email Confirmed At` (and `Status` unconfirmed → pending) | date | the script, only when the "Confirm my email" button is pressed |
+| **EU-HEM role verified** | `Role Verification Status`, `Role Verified At` | `pending` → `verified` / `rejected`; date | an admin, by hand |
+| **Admin approved** | `Status` | `pending` → `approved` / `rejected` (+ `Approved At` or `Rejected At`) | an admin, by hand |
 
-A confirmed email means only that the person controls that address. **Role verification** means an admin has
-checked their relationship with EU-HEM. Never approve someone because their email is confirmed.
+They never change each other: confirming an email does not verify the role or approve the row, and verifying
+the role does not approve it. Nothing the browser sends can set any of them (tested in
+`tests/directory/backend.test.js`). A confirmed email means only that the person controls that address; never
+approve someone because their email is confirmed.
 
 **Future publishing rules (not built yet, nothing is published now):**
 - Public profile: `Directory Eligible` TRUE, `Profile Visibility` public, email confirmed, role `verified`,
@@ -72,10 +73,12 @@ checked their relationship with EU-HEM. Never approve someone because their emai
 - Public photo: all of the public-profile rules **and** `Photo Visibility` public.
 
 ## Sheet columns
-The 41 columns of onboarding v1 keep their order. v2 appends 12 columns at the end: `User Type`, `Directory
+The 41 columns of onboarding v1 keep their order. v2 appends 15 columns at the end: `User Type`, `Directory
 Eligible`, `EU-HEM Cohort`, `Home Institution`, `Home Programme`, `Programme Role`, `Courses / Areas
 Involved`, `Shared Courses`, `Feature Interests`, `Feature Suggestion`, `Role Verification Status`, `Role
-Verified At`. Running `setup()` adds missing columns at the end and never moves or rewrites old rows; old rows
+Verified At`, and three dates an admin fills in for the retention rules: `Rejected At`, `Last Reconfirmed At`
+(alumni), `Participation Ends` (end of the course / academic period for shared-course students; last confirmed
+involvement for staff). Running `setup()` adds missing columns at the end and never moves or rewrites old rows; old rows
 simply have empty new columns.
 
 What some columns hold:
@@ -96,6 +99,29 @@ Interests`, `Languages`, `Hobbies / Interests`, `I Can Help With`, `I'd Like to 
 The **Options** tab is rewritten by `setup()`: every allowed value with its stored id and label (user types,
 academic fields, current and legacy tracks, degrees, roles, features, visibility, role verification). It holds
 no student data.
+
+## Retention schedule
+The values live in **one place in the code**: `RETENTION` in `Code.gs`. The confirmation link, the
+`retentionReport()` admin function and the tests read them from there. This table and the privacy page
+(`data-retention` spans) show the same values, and `scripts/check-content.js` fails if any of them differ. To
+change a period: change `RETENTION`, this table and the privacy page, then run the checks.
+
+| Key in `RETENTION` | Value | Rule |
+|---|---|---|
+| `unconfirmedDays` | 14 | Unconfirmed registration deleted, with its photo, this many days after submission (also how long the confirmation link works) |
+| `rejectedDays` | 30 | Rejected / invalid registration deleted this many days after `Rejected At`, unless a privacy or support request is still open |
+| `studentMonthsAfterGraduation` | 6 | Current students kept while enrolled, then up to this many months after expected graduation; invite them to continue as alumni first. If they explicitly choose to, change `User Type` to `alumni` and fill in `Last Reconfirmed At` |
+| `graduationMonthDay` | 09-30 | Expected graduation: this day of the cohort's final year (2026–2028 → 30 September 2028) |
+| `alumniMonths` | 24 | Alumni kept at most this many months after the last confirmation or reconfirmation (`Last Reconfirmed At`, else `Email Confirmed At`) |
+| `reminderDays` | 60 | Reminder window: alumni are asked to reconfirm (and graduating students invited to stay as alumni) this many days before the end; no reply → delete |
+| `sharedCourseMonths` | 12 | Shared-course students deleted this many months after `Participation Ends` (end of the course / academic period), unless another active use was explicitly agreed |
+| `staffMonthsAfterInvolvement` | 12 | Faculty / staff / partners kept while involved and up to this many months after `Participation Ends` (last confirmed involvement) |
+| `deletionRequestDays` | 30 | Withdrawal or deletion request: profile and photo deleted without unnecessary delay, at the latest within this many days, unless a legal reason requires keeping a specific record |
+
+**How to apply it:** run `retentionReport()` in the Apps Script editor every two weeks. It lists each row that
+is due (`delete`), needs a reminder (`ask`) or needs a missing date (`fill`), using row numbers and
+registration ids only. It deletes nothing: delete the row and its photo by hand, then empty the Drive bin. Once a
+year, also review all registrations and delete those no longer needed.
 
 ## Privacy rules (the same table in the form and the server)
 | Profile | Photo | LinkedIn | Email |
@@ -126,6 +152,7 @@ in someone's browser are then refused with "The privacy information has changed"
 - `directory-options.js` has exactly the backend's `OPTIONS` and `VIS_RULES`; email is never public; only a
   public profile may have public details; students and alumni are eligible, the other two types are not.
 - The current track names in `Code.gs` match `content/tracks.json`.
+- The retention values on the privacy page and in this document equal `RETENTION` in `Code.gs`.
 
 ## Going live (in this order)
 1. **Use a dedicated Student Hub Google account** (done: **euhem.studenthub@gmail.com**). Do every step below

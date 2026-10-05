@@ -20,8 +20,8 @@ const JPEG = Buffer.concat([Buffer.from([0xff, 0xd8, 0xff, 0xe0]), Buffer.alloc(
 const linkOf = (g, i = 0) => new URL(g.mails[i].body.match(/https:\S+/)[0]).searchParams;
 
 /* ----- setup and Sheet schema ----- */
-t('setup creates all 53 columns and the Options tab', () => {
-  const g = fresh(); assert.strictEqual(g.grid[0].length, 53);
+t('setup creates all 56 columns and the Options tab', () => {
+  const g = fresh(); assert.strictEqual(g.grid[0].length, 56);
   assert.strictEqual(g.grid[0][40], 'Confirm Email Sent'); assert.strictEqual(g.grid[0][41], 'User Type');
   const options = g.sheets.Options.grid.map((r) => r.join('|')).join('\n');
   for (const s of ['current_student', 'Nursing & Midwifery', 'Decision Making in Healthcare', 'ai_study_assistant', 'verified']) assert.ok(options.includes(s), s);
@@ -30,7 +30,7 @@ t('an existing v1 Sheet gets the new columns appended; old columns and rows stay
   const g = fresh(); const v1 = g.grid[0].slice(0, 41);
   g.grid.length = 0; g.grid.push(v1.slice(), v1.map((h) => 'old ' + h));
   g.ctx.setup();
-  assert.deepStrictEqual(g.grid[0].slice(0, 41), v1); assert.strictEqual(g.grid[0].length, 53);
+  assert.deepStrictEqual(g.grid[0].slice(0, 41), v1); assert.strictEqual(g.grid[0].length, 56);
   assert.strictEqual(g.grid[1][3], 'old Full Name'); assert.strictEqual(g.grid[1][45], undefined);
   assert.strictEqual(g.post(student()).ok, true); assert.strictEqual(g.row(2)['User Type'], 'current_student');
 });
@@ -243,4 +243,86 @@ t('hourly limit stops a flood', () => { const g = fresh(); let last;
   assert.strictEqual(last.code, 'BUSY'); assert.strictEqual(g.grid.length, 61); });
 t('unexpected errors do not leak details', () => { const g = fresh(); g.ctx.SpreadsheetApp.openById = () => { throw new Error('secret internal detail'); };
   const r = g.post(student()); assert.strictEqual(r.ok, false); assert.ok(!JSON.stringify(r).includes('secret')); });
+
+/* ----- three separate states: email confirmed ≠ role verified ≠ admin approved ----- */
+t('email confirmed, role verified and admin approved are three separate states', () => {
+  const g = fresh(); g.post(student()); const q = linkOf(g);
+  g.confirm(q.get('id'), q.get('token'));
+  let row = g.row(1);
+  assert.ok(row['Email Confirmed At'], 'email confirmed');
+  assert.strictEqual(row['Role Verification Status'], 'pending', 'confirming the email does not verify the role');
+  assert.strictEqual(row['Status'], 'pending', 'confirming the email does not approve');
+  assert.deepStrictEqual([row['Public Publish Eligible'], row['Cohort Publish Eligible']], [false, false]);
+  // An admin verifies the role by hand: the status is still not approved
+  g.grid[1][g.grid[0].indexOf('Role Verification Status')] = 'verified';
+  row = g.row(1); assert.strictEqual(row['Status'], 'pending');
+  // Nothing the browser sends can set these states
+  g.post(student({ email: 'z@x.org', Status: 'approved', roleVerificationStatus: 'verified', emailConfirmedAt: '2026-01-01' }));
+  row = g.row(2); assert.deepStrictEqual([row['Status'], row['Role Verification Status'], row['Email Confirmed At']], ['unconfirmed', 'pending', '']);
+});
+t('old Script Properties ALLOWED_EMAIL_DOMAINS and COLLECT_PHONE have no effect', () => {
+  const g = fresh({ ALLOWED_EMAIL_DOMAINS: 'studio.unibo.it', COLLECT_PHONE: 'true' });
+  assert.strictEqual(g.post(alumnus({ email: 'someone@gmail.com', phone: '+39 333 1234567' })).ok, true);
+  assert.strictEqual(g.row(1)['Phone / WhatsApp'], '');
+});
+
+/* ----- retention (values from RETENTION in Code.gs, never typed here) ----- */
+const vm = require('vm');
+const R = (g) => vm.runInContext('RETENTION', g.ctx);
+const DAY = 86400000;
+const col = (g, name) => g.grid[0].indexOf(name);
+const setCell = (g, i, name, v) => { g.grid[i][col(g, name)] = v; };
+const report = (g, now) => [...g.ctx.retentionReport(now)].map((x) => `${x.row}:${x.action}`);
+t('retention: every value lives in RETENTION; the confirmation link lasts unconfirmedDays', () => {
+  const g = fresh(); const ret = R(g);
+  for (const k of ['unconfirmedDays', 'rejectedDays', 'studentMonthsAfterGraduation', 'graduationMonthDay', 'alumniMonths', 'reminderDays',
+    'sharedCourseMonths', 'staffMonthsAfterInvolvement', 'deletionRequestDays']) assert.ok(ret[k] !== undefined, k);
+  g.post(student()); assert.ok(g.mails[0].body.includes(`works for ${ret.unconfirmedDays} days`));
+  const q = linkOf(g);
+  setCell(g, 1, 'Submitted At', new Date(Date.now() - (ret.unconfirmedDays + 1) * DAY));
+  assert.strictEqual(g.confirm(q.get('id'), q.get('token')).title, 'Link expired');
+});
+t('retention: unconfirmed rows are due after unconfirmedDays; rejected rows rejectedDays after "Rejected At"', () => {
+  const g = fresh(); const ret = R(g); g.post(student()); g.post(alumnus({ email: 'r@x.org' }));
+  const now = Date.now();
+  assert.ok(!report(g, now).includes('2:delete'));
+  assert.ok(report(g, now + (ret.unconfirmedDays + 1) * DAY).includes('2:delete'));
+  setCell(g, 2, 'Status', 'rejected');
+  assert.ok(report(g, now).includes('3:fill'), 'asks for Rejected At');
+  setCell(g, 2, 'Rejected At', new Date(now));
+  assert.ok(!report(g, now + (ret.rejectedDays - 1) * DAY).includes('3:delete'));
+  assert.ok(report(g, now + (ret.rejectedDays + 1) * DAY).includes('3:delete'));
+});
+t('retention: current students until studentMonthsAfterGraduation after the cohort ends, with an alumni invitation first', () => {
+  const g = fresh(); const ret = R(g); g.post(student({ cohort: '2026–2028' })); setCell(g, 1, 'Status', 'pending');
+  const end = new Date('2028-' + ret.graduationMonthDay + 'T00:00:00'); end.setMonth(end.getMonth() + ret.studentMonthsAfterGraduation);
+  assert.deepStrictEqual(report(g, new Date('2027-06-01').getTime()), []);
+  assert.deepStrictEqual(report(g, end.getTime() - (ret.reminderDays - 1) * DAY), ['2:ask']);
+  assert.deepStrictEqual(report(g, end.getTime() + DAY), ['2:delete']);
+});
+t('retention: alumni alumniMonths after the last (re)confirmation, reminder reminderDays before', () => {
+  const g = fresh(); const ret = R(g); g.post(alumnus()); setCell(g, 1, 'Status', 'approved');
+  const base = new Date('2026-10-05T00:00:00'); setCell(g, 1, 'Email Confirmed At', base);
+  const end = new Date(base); end.setMonth(end.getMonth() + ret.alumniMonths);
+  assert.deepStrictEqual(report(g, end.getTime() - (ret.reminderDays + 5) * DAY), []);
+  assert.deepStrictEqual(report(g, end.getTime() - (ret.reminderDays - 5) * DAY), ['2:ask']);
+  assert.deepStrictEqual(report(g, end.getTime() + DAY), ['2:delete']);
+  setCell(g, 1, 'Last Reconfirmed At', new Date(end.getTime() - 10 * DAY));
+  assert.deepStrictEqual(report(g, end.getTime() + DAY), [], 'reconfirming restarts the period');
+});
+t('retention: shared-course and staff rows need "Participation Ends", then sharedCourseMonths / staffMonthsAfterInvolvement', () => {
+  const g = fresh(); const ret = R(g); g.post(shared()); g.post(faculty());
+  setCell(g, 1, 'Status', 'pending'); setCell(g, 2, 'Status', 'approved');
+  assert.deepStrictEqual(report(g, Date.now()), ['2:fill', '3:fill']);
+  const ends = new Date('2027-01-31T00:00:00'); setCell(g, 1, 'Participation Ends', ends); setCell(g, 2, 'Participation Ends', ends);
+  const after = (m) => { const d = new Date(ends); d.setMonth(d.getMonth() + m); return d.getTime(); };
+  assert.deepStrictEqual(report(g, after(ret.sharedCourseMonths) - DAY), []);
+  assert.deepStrictEqual(report(g, after(Math.max(ret.sharedCourseMonths, ret.staffMonthsAfterInvolvement)) + DAY), ['2:delete', '3:delete']);
+});
+t('retention report shows row numbers and ids only, never names or emails', () => {
+  const g = fresh(); g.post(student({ fullName: 'Secret Person' })); const logs = [];
+  g.ctx.console.log = (s) => logs.push(s);
+  g.ctx.retentionReport(Date.now() + 400 * DAY);
+  assert.ok(logs.join(' ').includes('Row 2')); assert.ok(!/Secret|studio\.unibo/.test(logs.join(' ')));
+});
 console.log(n + ' backend checks passed');

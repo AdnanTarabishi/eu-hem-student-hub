@@ -15,6 +15,7 @@ function makeSheet() {
       return {
         getDisplayValues: () => Array.from({ length: nr }, (_, i) => Array.from({ length: nc }, (_, j) => disp((grid[r - 1 + i] || [])[c - 1 + j]))),
         getValue: () => (grid[r - 1] || [])[c - 1],
+        getValues: () => Array.from({ length: nr }, (_, i) => Array.from({ length: nc }, (_, j) => (grid[r - 1 + i] || [])[c - 1 + j] ?? '')),
         setValue(v) { (grid[r - 1] = grid[r - 1] || [])[c - 1] = v; },
         setValues(vals) { vals.forEach((row, i) => row.forEach((v, j) => { (grid[r - 1 + i] = grid[r - 1 + i] || [])[c - 1 + j] = v; })); }
       };

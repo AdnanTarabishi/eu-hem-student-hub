@@ -565,7 +565,8 @@ function checkDirectory() {
   const headers = (code.match(/const HEADERS = Object\.freeze\(\[([\s\S]*?)\]\);/) || [])[1] || "";
   const listed = [...headers.matchAll(/'((?:[^'\\]|\\.)*)'|"([^"]*)"/g)].map((m) => m[1] ?? m[2]);
   const v2 = ["User Type", "Directory Eligible", "EU-HEM Cohort", "Home Institution", "Home Programme", "Programme Role",
-    "Courses / Areas Involved", "Shared Courses", "Feature Interests", "Feature Suggestion", "Role Verification Status", "Role Verified At"];
+    "Courses / Areas Involved", "Shared Courses", "Feature Interests", "Feature Suggestion", "Role Verification Status", "Role Verified At",
+    "Rejected At", "Last Reconfirmed At", "Participation Ends"];
   if (listed[0] !== "Submission ID" || listed[40] !== "Confirm Email Sent") error(G, "the first 41 columns (onboarding v1) must keep their order");
   for (const h of v2) if (!listed.includes(h)) error(G, `HEADERS is missing the column "${h}"`);
 
@@ -575,8 +576,8 @@ function checkDirectory() {
   let backend, frontend;
   try {
     const box = {};
-    require("vm").runInNewContext(`${code}\n;this.__options = OPTIONS; this.__rules = VIS_RULES;`, box);
-    backend = { OPTIONS: box.__options, VIS_RULES: box.__rules };
+    require("vm").runInNewContext(`${code}\n;this.__options = OPTIONS; this.__rules = VIS_RULES; this.__retention = RETENTION;`, box);
+    backend = { OPTIONS: box.__options, VIS_RULES: box.__rules, RETENTION: box.__retention };
     const page = { window: {} };
     require("vm").runInNewContext(options, page);
     frontend = page.window.EUHEM_DIRECTORY_OPTIONS;
@@ -598,6 +599,21 @@ function checkDirectory() {
   for (const id of ["shared_course_student", "faculty_staff"]) if (backend.OPTIONS.directoryEligible[id] !== false) error(G, `${id} must not be directory eligible`);
   for (const id of Object.values(frontend.FIELD_GROUPS || []).flatMap((g) => g.ids)) {
     if (!backend.OPTIONS.academicFields[id]) error("directory-options.js", `FIELD_GROUPS lists an unknown academic field "${id}"`);
+  }
+
+  // Retention periods: RETENTION in Code.gs is the source; the privacy page and the docs table must agree
+  const retention = backend.RETENTION || {};
+  const shownOnPage = [...privacy.matchAll(/<span data-retention="(\w+)">\s*([\d-]+)/g)];
+  if (!shownOnPage.length) error("privacy.html", "shows no retention periods (data-retention spans)");
+  for (const [, key, value] of shownOnPage) {
+    if (!(key in retention)) error("privacy.html", `data-retention="${key}" is not a key of RETENTION in ${G}`);
+    else if (String(retention[key]) !== value) error("privacy.html", `retention "${key}" says ${value}, but RETENTION.${key} in ${G} is ${retention[key]}`);
+  }
+  const docs = read("docs/student-directory.md") || "";
+  for (const key of Object.keys(retention)) {
+    const row = docs.match(new RegExp("\\|\\s*`" + key + "`\\s*\\|\\s*([^|]+?)\\s*\\|"));
+    if (!row) error("docs/student-directory.md", `the retention table has no row for "${key}"`);
+    else if (row[1] !== String(retention[key])) error("docs/student-directory.md", `retention "${key}" says ${row[1]}, but RETENTION.${key} in ${G} is ${retention[key]}`);
   }
 
   // Current track names: content/tracks.json is the source for the whole site

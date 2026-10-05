@@ -32,10 +32,11 @@ Check in a private browser window that the Sheet link shows "You need access".
 | `SPREADSHEET_ID` | from the Sheet address, between `/d/` and `/edit` |
 | `PHOTO_FOLDER_ID` | from the folder address, after `/folders/` (leave out to disable photos) |
 | `CONTACT_EMAIL` | `euhem.studenthub@gmail.com` (shown in emails as the address to write to) |
-| `REQUIRE_EMAIL_CONFIRMATION` | `true` |
+| `REQUIRE_EMAIL_CONFIRMATION` | `true` (optional: confirmation is on unless this is `false`) |
 
-`ALLOWED_EMAIL_DOMAINS` and `COLLECT_PHONE` from onboarding v1 are no longer used; delete them if they exist.
-Any email domain is accepted (alumni may no longer have a university address).
+`ALLOWED_EMAIL_DOMAINS` and `COLLECT_PHONE` from onboarding v1 are **not read by the code any more**. If
+they exist they have no effect, and they are safe to delete (a test checks this). Any email domain is accepted
+(alumni may no longer have a university address).
 
 ## 3. Run setup once (and after every update of Code.gs)
 
@@ -43,7 +44,7 @@ In the editor choose the function `setup` and press Run. Google asks for permiss
 to send email as the Student Hub account. Accept. `setup`:
 
 - creates the `Submissions` tab, or adds any **missing columns at the end** (old columns and rows are never
-  moved or rewritten; upgrading from v1 adds the 12 v2 columns);
+  moved or rewritten; upgrading from v1 adds the 15 v2 columns);
 - rewrites the human-readable `Options` tab (every allowed value with its id; no student data).
 
 The execution log should end with "Setup OK" and show your contact email (not "NOT SET").
@@ -77,16 +78,17 @@ Copy the Web app address ending in `/exec` into `directory-config.js`.
 
 Delete the test rows and test photos afterwards.
 
-## Status values
+## Three separate states
 
-| Column | Values |
-|---|---|
-| `Status` | `unconfirmed` (email not confirmed yet) → `pending` (confirmed, waiting for review) → `approved` / `rejected` (set by you) |
-| `Role Verification Status` | `pending` (every new row) → `verified` / `rejected` (set by you after checking the person's connection to EU-HEM) |
+| State | Column | Values |
+|---|---|---|
+| Email verified | `Email Confirmed At`; `Status` `unconfirmed` → `pending` | set by the script when the button is pressed |
+| EU-HEM role verified | `Role Verification Status` (+ `Role Verified At`) | `pending` → `verified` / `rejected`, set by you after checking the person's connection to EU-HEM |
+| Admin approved | `Status` (+ `Approved At` or `Rejected At`) | `pending` → `approved` / `rejected`, set by you |
 
-Fill `Role Verified At` when you verify. Confirming an email is **not** role verification: anyone can type
-someone else's address, and a confirmed address only shows control of that inbox. Never approve a row whose role
-you have not verified.
+Email verified ≠ role verified ≠ approved. Anyone can type someone else's address, and a confirmed address only
+shows control of that inbox. Never approve a row whose role you have not verified. When you reject, fill in
+`Rejected At` (the retention rules count from it).
 
 Students from another programme and faculty/staff (`Directory Eligible` FALSE) never go into the Student
 Directory, whatever their status.
@@ -103,18 +105,24 @@ Directory, whatever their status.
 Paste the new `Code.gs`, run `setup()` again, then Deploy → Manage deployments → edit the existing deployment →
 Version: New version → Deploy. The `/exec` address stays the same.
 
-## Every two weeks (Student Hub addition)
+## Every two weeks: the retention report
 
-The confirmation email and the privacy page promise that unconfirmed registrations are deleted.
-`Code.gs` does not do this automatically, so do it by hand:
+The privacy page promises fixed retention periods (see "Retention schedule" in docs/student-directory.md; the
+values are `RETENTION` at the top of `Code.gs`). In the editor choose `retentionReport` and press Run. The log
+lists, by row number and registration id only:
 
-- Filter `Status` = `unconfirmed` and delete every row whose `Submitted At` is more than 14 days ago,
-  together with its photo (`Photo Drive File ID`). Then empty the Drive bin.
+- `delete`: delete the row and its photo (`Photo Drive File ID`), then empty the Drive bin;
+- `ask`: send the reminder (alumni: "do you want to stay?"; graduating students: "continue as alumni?");
+  when an alumnus confirms, fill in `Last Reconfirmed At`; when a student chooses to continue as alumni,
+  change `User Type` to `alumni` and fill in `Last Reconfirmed At`;
+- `fill`: a date the rules need is missing (`Rejected At`, or `Participation Ends` for shared-course
+  students and staff).
 
-## Once a year (Student Hub addition)
+The report never deletes anything itself. Deletion requests are handled within 30 days (`deletionRequestDays`).
 
-The privacy page promises a yearly review of alumni, shared-course and staff registrations: delete those that
-are no longer needed. Current students' data is deleted at the latest when their cohort graduates.
+## Once a year
+
+Review all registrations and delete those that are no longer needed.
 
 ## When the privacy text changes (Student Hub addition)
 

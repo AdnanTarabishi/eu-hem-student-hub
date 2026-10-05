@@ -66,7 +66,8 @@
         or tracking tools.</p>
 
       <!-- Rewritten for onboarding v2 (consent version directory-v2-2026-10) on 5 October 2026, from join.js and
-           integrations/directory-apps-script/Code.gs. Waiting for the maintainer's review.
+           integrations/directory-apps-script/Code.gs. Revised after the maintainer's review on 5 October 2026.
+           The retention values (data-retention) must equal RETENTION in Code.gs: scripts/check-content.js checks them.
            If this section changes meaning, change the consent version in BOTH directory-config.js and
            Code.gs (see docs/student-directory.md). -->
       <h2 id="student-directory">Student Directory and registration</h2>
@@ -122,14 +123,20 @@
       <p>After you register, we send one email with a link. The link opens a page with a
         <strong>"Confirm my email"</strong> button; only pressing that button confirms that the address is yours
         (email security systems sometimes open links automatically, so opening the link alone does nothing).
-        The link works for 14 days. If a registration is not confirmed within 14 days, we delete it by hand. If
-        you received such an email but did not register, simply ignore it.</p>
+        The link works for <span data-retention="unconfirmedDays">14 days</span>. If a registration is not
+        confirmed within that time, we delete it, including any photo. If you received such an email but did not
+        register, simply ignore it.</p>
 
-      <h3>Confirming your email is not the same as being verified</h3>
-      <p>A confirmed email only shows that you control that address. Separately, a person from the Student Hub
-        team checks your connection to EU-HEM (for example, that you are really a current student) before
-        anything about you could ever be shown to others. Every registration is reviewed; nothing is approved or
-        published automatically.</p>
+      <h3>Three separate checks: email, connection to EU-HEM, approval</h3>
+      <ul>
+        <li><strong>Email confirmed</strong> only shows that you control that address.</li>
+        <li><strong>Connection verified</strong> means a person from the Student Hub team has checked your
+          relationship with EU-HEM (for example, that you are really a current student). Confirming your email
+          does not do this.</li>
+        <li><strong>Approved</strong> is a separate review decision by the team.</li>
+      </ul>
+      <p>None of the three happens automatically because of another, and <strong>nothing is published
+        automatically</strong>.</p>
 
       <h3>Where your information is stored</h3>
       <p>Your answers are stored in a <strong>private Google Sheet</strong>, and your photo in a
@@ -149,18 +156,20 @@
         you asked.</p>
 
       <h3>Who can see a Directory profile: three choices</h3>
-      <p>Current students and alumni choose one; nothing is chosen for you.</p>
+      <p>Current students and alumni choose one; no option is preselected.</p>
       <ul>
-        <li><strong>Public:</strong> once your email is confirmed, your connection to EU-HEM is verified and the
-          profile is approved, the details you set to Public may appear on the public Students page. Your email is
-          never public.</li>
-        <li><strong>EU-HEM students only:</strong> your profile stays private for now. It may later be shown only to
-          verified EU-HEM members, once a secure login exists.</li>
+        <li><strong>Public</strong> (marked "Best for networking" in the form): the details you set to Public may
+          appear on the public Students page, but only once your email is confirmed, your connection to EU-HEM is
+          verified and the profile is approved. Your email is never public.</li>
+        <li><strong>EU-HEM students only</strong> (marked "More private"): your profile stays private for now. It
+          may later be shown only to verified EU-HEM members, once a secure login exists, and only with the same
+          three checks.</li>
         <li><strong>Do not publish my profile yet:</strong> we keep your information, but your individual profile
           is not displayed anywhere.</li>
       </ul>
-      <p>With a Public profile you can still keep your photo or LinkedIn for EU-HEM members only, or hidden. An
-        "EU-HEM students only" profile can never have public details.</p>
+      <p>"Advanced privacy settings" let you choose for each detail separately: with a Public profile you can
+        still keep your photo or LinkedIn for EU-HEM members only, or hidden. An "EU-HEM students only" profile can
+        never have public details. Your email can never be public.</p>
       <p><strong>Today, no real profile is displayed anywhere</strong>, whatever you choose, and there are no
         accounts yet. Coming soon: registered users will have their own Student Hub account and dashboard where
         they can update their information and privacy settings. Until then, write to us to change anything.</p>
@@ -175,12 +184,35 @@
 
       <h3>Changing or deleting your information</h3>
       <p>To change or delete your information at any time, <a href="contact.html">contact us</a> or reply to the
-        confirmation email. When you ask us to delete it, we delete your entry in the Sheet and your photo, and
-        empty the Drive bin.</p>
-      <p>How long we keep it: for current students, <strong>at the latest until your cohort graduates</strong>
-        (30 September 2028 for the 2026–2028 cohort), unless you ask us to keep your profile longer. For alumni,
-        students from another programme and staff, we <strong>review registrations once a year</strong> and delete
-        those that are no longer needed.</p>
+        confirmation email. If you withdraw your consent or ask us to delete your information, we delete your
+        entry in the Sheet and your photo (and empty the Drive bin) without unnecessary delay, and at the latest
+        within <span data-retention="deletionRequestDays">30 days</span>, unless the law requires us to keep a
+        specific record.</p>
+
+      <h3>How long we keep your information</h3>
+      <p>We keep it only as long as it is needed for the reason you registered:</p>
+      <ul>
+        <li><strong>Unconfirmed registrations:</strong> deleted after
+          <span data-retention="unconfirmedDays">14 days</span>, including any photo.</li>
+        <li><strong>Rejected or invalid registrations:</strong> deleted within
+          <span data-retention="rejectedDays">30 days</span> of the decision, unless you have an open privacy or
+          support request with us.</li>
+        <li><strong>Current EU-HEM students:</strong> kept while you are enrolled, then for up to
+          <span data-retention="studentMonthsAfterGraduation">6 months</span> after your cohort's expected
+          graduation (30 September of its final year). Before that, we may invite you to continue as an alumnus; if
+          you say yes, the alumni rule applies, otherwise we delete your profile and photo.</li>
+        <li><strong>EU-HEM alumni:</strong> kept for at most <span data-retention="alumniMonths">24 months</span>
+          after you last confirmed that you want to stay. We ask at least every two years; if you do not confirm
+          within <span data-retention="reminderDays">60 days</span> of our reminder, we delete your profile and
+          photo.</li>
+        <li><strong>Students from another programme:</strong> deleted
+          <span data-retention="sharedCourseMonths">12 months</span> after the end of the course or academic period
+          you attended, unless we have agreed another use with you.</li>
+        <li><strong>Faculty, staff and partners:</strong> kept while you are involved with EU-HEM and for up to
+          <span data-retention="staffMonthsAfterInvolvement">12 months</span> after your last confirmed
+          involvement.</li>
+      </ul>
+      <p>We also review all registrations once a year and delete those that are no longer needed.</p>
 
       <h3>Your rights</h3>
       <p>Under the GDPR you can ask us to:</p>

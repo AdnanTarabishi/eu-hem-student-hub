@@ -15,7 +15,8 @@
  *   REQUIRE_EMAIL_CONFIRMATION  optional  "true" (default) or "false"
  *   CONTACT_EMAIL               optional  the Student Hub address students write to (reply-to of emails)
  *
- * (ALLOWED_EMAIL_DOMAINS and COLLECT_PHONE from onboarding v1 are no longer used.)
+ * ALLOWED_EMAIL_DOMAINS and COLLECT_PHONE from onboarding v1 are not read anywhere any more: if they still
+ * exist in Script Properties they have no effect and can safely be deleted.
  *
  * First use, and after every update of this file: run setup() once from the editor. It authorises the
  * script, adds any missing columns at the END of the "Submissions" tab (existing columns and rows are
@@ -30,8 +31,22 @@ const SETTINGS = Object.freeze({
   MIN_FORM_MS: 3000,
   MAX_PHOTO_BYTES: 2 * 1024 * 1024,
   MAX_PER_HOUR: 60,
-  MAX_ROWS: 400,
-  CONFIRM_DAYS: 14
+  MAX_ROWS: 400
+});
+
+// How long registrations are kept. The ONLY place these numbers live in the code: the confirmation link,
+// retentionReport() and the tests read them from here. privacy.html and docs/student-directory.md show
+// the same values; scripts/check-content.js fails if they differ. Change a value here first.
+const RETENTION = Object.freeze({
+  unconfirmedDays: 14,                  // unconfirmed registration (and its photo) deleted; also the link's lifetime
+  rejectedDays: 30,                     // rejected / invalid registration deleted after the rejection
+  studentMonthsAfterGraduation: 6,      // current students: after the cohort's expected graduation
+  graduationMonthDay: '09-30',          // expected graduation: this day in the cohort's final year
+  alumniMonths: 24,                     // alumni: from the last confirmation or reconfirmation
+  reminderDays: 60,                     // alumni reconfirmation / invitation to continue as alumni: notice period
+  sharedCourseMonths: 12,               // shared-course students: after the end of the course / academic period
+  staffMonthsAfterInvolvement: 12,      // faculty / staff / partners: after the last confirmed involvement
+  deletionRequestDays: 30               // a withdrawal or deletion request is handled within this time
 });
 
 // The order of the first 41 columns is onboarding v1; never reorder or remove them (old rows depend on it).
@@ -51,7 +66,9 @@ const HEADERS = Object.freeze([
   // onboarding v2
   'User Type','Directory Eligible','EU-HEM Cohort','Home Institution','Home Programme','Programme Role',
   'Courses / Areas Involved','Shared Courses','Feature Interests','Feature Suggestion',
-  'Role Verification Status','Role Verified At'
+  'Role Verification Status','Role Verified At',
+  // retention (filled in by an admin; see retentionReport)
+  'Rejected At','Last Reconfirmed At','Participation Ends'
 ]);
 
 // Stable ids and their labels. The same lists are in directory-options.js for the form;
@@ -588,7 +605,10 @@ function buildRecord_(p, photo, requestId, token) {
     'Feature Interests': p.featureInterests,
     'Feature Suggestion': t(p.featureSuggestion),
     'Role Verification Status': 'pending',
-    'Role Verified At': ''
+    'Role Verified At': '',
+    'Rejected At': '',
+    'Last Reconfirmed At': '',
+    'Participation Ends': ''
   };
 }
 
@@ -668,7 +688,7 @@ function sendConfirmation_(p, requestId, token) {
       'Please confirm that this email address belongs to you:',
       link,
       '',
-      'Opening the link will take you to a confirmation page. Your email is only confirmed after you press "Confirm my email". The link works for ' + SETTINGS.CONFIRM_DAYS + ' days.',
+      'Opening the link will take you to a confirmation page. Your email is only confirmed after you press "Confirm my email". The link works for ' + RETENTION.unconfirmedDays + ' days.',
       '',
       'Your connection to EU-HEM: ' + { current_student: 'Current student', alumni: 'Alumni',
         shared_course_student: 'Shared-course student', faculty_staff: 'Faculty or staff' }[p.userType]
@@ -712,7 +732,7 @@ function confirmEmail_(id, token) {
       if (row['Email Confirmed At']) return 'already';
       if (!row['Confirm Token Hash'] || row['Confirm Token Hash'] !== hash_(token)) return 'invalid';
       const submitted = new Date(sheet.getRange(row._row, table.headers.indexOf('Submitted At') + 1).getValue()).getTime();
-      if (isFinite(submitted) && Date.now() - submitted > SETTINGS.CONFIRM_DAYS * 86400000) return 'expired';
+      if (isFinite(submitted) && Date.now() - submitted > RETENTION.unconfirmedDays * DAY_MS_) return 'expired';
       setCell_(sheet, table.headers, row._row, 'Email Confirmed At', new Date());
       setCell_(sheet, table.headers, row._row, 'Confirm Token Hash', '');
       if (row['Status'] === 'unconfirmed') setCell_(sheet, table.headers, row._row, 'Status', 'pending');
@@ -741,6 +761,80 @@ function confirmPage_(id, token) {
     button: 'Confirm my email',
     script: script
   });
+}
+
+/* ------------------------------------------------------------------ */
+/* Retention                                                           */
+/* ------------------------------------------------------------------ */
+
+const DAY_MS_ = 86400000;
+
+/**
+ * Run from the editor (every two weeks is enough). Lists the rows that are due for deletion, or need an
+ * admin action, under RETENTION. It deletes NOTHING: you delete the row and its photo by hand (then empty
+ * the Drive bin). The log shows only row numbers and registration ids, no names or emails.
+ */
+function retentionReport(now) {
+  const sheet = openSheet_(false);
+  const table = readTable_(sheet);
+  const values = table.rows.length ? sheet.getRange(2, 1, table.rows.length, table.headers.length).getValues() : [];
+  const items = retentionDue_(table.headers, values, now ? new Date(now) : new Date());
+  const lines = items.map(function (it) { return 'Row ' + it.row + ' (' + it.id + '): ' + it.action + ' - ' + it.reason; });
+  console.log(lines.length ? lines.join('\n') : 'Nothing is due under the retention rules.');
+  return items;
+}
+
+/** The retention rules, one row at a time. action: "delete", "ask" (send a reminder) or "fill" (a date is missing). */
+function retentionDue_(headers, values, now) {
+  const col = function (name) { return headers.indexOf(name); };
+  const date = function (v) {
+    if (v instanceof Date) return v;
+    if (!v) return null;
+    const d = new Date(v);
+    return isFinite(d.getTime()) ? d : null;
+  };
+  const addMonths = function (d, m) { const x = new Date(d.getTime()); x.setMonth(x.getMonth() + m); return x; };
+  const addDays = function (d, n) { return new Date(d.getTime() + n * DAY_MS_); };
+  const items = [];
+  values.forEach(function (r, i) {
+    const get = function (name) { return col(name) === -1 ? '' : r[col(name)]; };
+    const add = function (action, reason) { items.push({ row: i + 2, id: String(get('Submission ID')), action: action, reason: reason }); };
+    const status = String(get('Status'));
+    const type = String(get('User Type') || 'current_student'); // v1 rows were all current students
+
+    if (status === 'unconfirmed') {
+      const at = date(get('Submitted At'));
+      if (at && now > addDays(at, RETENTION.unconfirmedDays)) add('delete', 'unconfirmed for more than ' + RETENTION.unconfirmedDays + ' days');
+      return;
+    }
+    if (status === 'rejected' || String(get('Role Verification Status')) === 'rejected') {
+      const at = date(get('Rejected At'));
+      if (!at) add('fill', 'rejected: fill in "Rejected At"');
+      else if (now > addDays(at, RETENTION.rejectedDays)) add('delete', 'rejected more than ' + RETENTION.rejectedDays + ' days ago');
+      return;
+    }
+    if (type === 'current_student') {
+      const m = String(get('EU-HEM Cohort')).match(/(\d{4})$/);
+      if (!m) { add('fill', 'no cohort end year: check "EU-HEM Cohort"'); return; }
+      const end = addMonths(new Date(m[1] + '-' + RETENTION.graduationMonthDay + 'T00:00:00'), RETENTION.studentMonthsAfterGraduation);
+      if (now > end) add('delete', 'more than ' + RETENTION.studentMonthsAfterGraduation + ' months after expected graduation (unless they chose to continue as alumni)');
+      else if (now > addDays(end, -RETENTION.reminderDays)) add('ask', 'invite them to continue as alumni before ' + end.toISOString().slice(0, 10));
+    } else if (type === 'alumni') {
+      const base = date(get('Last Reconfirmed At')) || date(get('Email Confirmed At')) || date(get('Submitted At'));
+      if (!base) return;
+      const end = addMonths(base, RETENTION.alumniMonths);
+      if (now > end) add('delete', 'not reconfirmed within ' + RETENTION.alumniMonths + ' months');
+      else if (now > addDays(end, -RETENTION.reminderDays)) add('ask', 'ask them to reconfirm before ' + end.toISOString().slice(0, 10) + ', then fill in "Last Reconfirmed At"');
+    } else {
+      const months = type === 'shared_course_student' ? RETENTION.sharedCourseMonths : RETENTION.staffMonthsAfterInvolvement;
+      const ends = date(get('Participation Ends'));
+      if (!ends) add('fill', type === 'shared_course_student'
+        ? 'fill in "Participation Ends" (end of the course / academic period)'
+        : 'fill in "Participation Ends" (last confirmed involvement)');
+      else if (now > addMonths(ends, months)) add('delete', 'more than ' + months + ' months after "Participation Ends"');
+    }
+  });
+  return items;
 }
 
 /* ------------------------------------------------------------------ */
