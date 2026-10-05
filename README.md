@@ -116,7 +116,7 @@ Full guide: [docs/thesis-import.md](docs/thesis-import.md). The spreadsheet itse
 
 ## Privacy and contact pages
 `privacy.html` was written from what the code does and approved on 5 October 2026. Keep it in sync when the code changes.
-`contact.html` and the "Who is responsible" section of `privacy.html` have a placeholder for the Student Hub email.
+`contact.html` and the "Who is responsible" section of `privacy.html` give the Student Hub email, euhem.studenthub@gmail.com.
 
 ## City guides
 `city-guide.html` shows the index of all cities (with a comparison table and "Your next city" for
