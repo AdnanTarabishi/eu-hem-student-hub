@@ -1,15 +1,22 @@
 // ===== City guides: data helpers =====
-// The list of city guides and the rules every guide follows. No page drawing here (that's
-// guide.js), so the search window and scripts/check-content.js can use the same functions.
+// The list of city guides and the rules every guide follows. Page drawing is in guide.js; the only
+// exception is cityCoverPhoto(), shared by the City Guide index and the homepage city cards.
+// The search window and scripts/check-content.js use the same functions.
 
 // One line per city. `university` is its id in content/tracks.json, where the city's name,
 // country and university name are written (only there). `file: null` = guide not written yet.
 // To add a city: write docs/content/<city>-guide.md and add one line here (see docs/city-guides.md).
+// `cover` is the photo on the city cards (index and homepage): one of the guide's own photos,
+// given without "-640.webp", with its alt text and a short credit (the full credit is in the guide).
 const CITY_GUIDES = [
-  { id: "bologna", university: "unibo", file: "docs/content/bologna-guide.md" },
-  { id: "oslo", university: "uio", file: "docs/content/oslo-guide.md" },
-  { id: "rotterdam", university: "eur", file: "docs/content/rotterdam-guide.md" },
-  { id: "innsbruck", university: "mci", file: "docs/content/innsbruck-guide.md" },
+  { id: "bologna", university: "unibo", file: "docs/content/bologna-guide.md",
+    cover: { image: "assets/images/cities/bologna/piazza-maggiore", alt: "Piazza Maggiore seen from above", credit: "Photo: Iulia Fioravanti, CC BY-SA 4.0" } },
+  { id: "oslo", university: "uio", file: "docs/content/oslo-guide.md",
+    cover: { image: "assets/images/cities/oslo/opera-house-winter", alt: "The Opera House by the fjord in winter", credit: "Photo: Luca Nebuloni, CC BY 2.0" } },
+  { id: "rotterdam", university: "eur", file: "docs/content/rotterdam-guide.md",
+    cover: { image: "assets/images/cities/rotterdam/erasmus-bridge", alt: "The Erasmus Bridge and towers at dusk", credit: "Photo: Michielverbeek, CC BY-SA 4.0" } },
+  { id: "innsbruck", university: "mci", file: "docs/content/innsbruck-guide.md",
+    cover: { image: "assets/images/cities/innsbruck/inn-river-nordkette", alt: "Colourful houses on the Inn river below the mountains", credit: "Photo: Ikiwaner, CC BY-SA 3.0" } },
 ];
 
 // Every guide has these sections, in this order, as "## 1. At a glance" … "## 16. Sources"
@@ -101,6 +108,23 @@ function trackCityTimeline(cohort, track, today) {
     if (next) nextFound = true;
     return { number: semester.number, university: semester.university, city: cohort.universities[semester.university].city, label: timing.label, next };
   });
+}
+
+// The cover photo of a city card: <span class="city-card-photo"><img><span>credit</span></span>
+function cityCoverPhoto(cover) {
+  const box = document.createElement("span");
+  box.className = "city-card-photo";
+  const img = document.createElement("img");
+  img.src = `${cover.image}-640.webp`;
+  img.alt = cover.alt;
+  img.width = 640;
+  img.height = 427;
+  img.loading = "lazy";
+  const credit = document.createElement("span");
+  credit.className = "city-card-credit";
+  credit.textContent = cover.credit;
+  box.append(img, credit);
+  return box;
 }
 
 if (typeof module !== "undefined") {
