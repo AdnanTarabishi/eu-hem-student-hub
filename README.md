@@ -115,8 +115,8 @@ as such. `check-content.js` validates the file, including sanity checks on key f
 Full guide: [docs/thesis-import.md](docs/thesis-import.md). The spreadsheet itself is not committed.
 
 ## Privacy and contact pages
-`privacy.html` is a **draft** written from what the code does; review it before relying on it.
-`contact.html` has a placeholder where the contact method goes.
+`privacy.html` was written from what the code does and approved on 5 October 2026. Keep it in sync when the code changes.
+`contact.html` and the "Who is responsible" section of `privacy.html` have a placeholder for the Student Hub email.
 
 ## Adding a city guide
 City guides are Markdown files shown by one template page, `city-guide.html`.

@@ -13,7 +13,7 @@ not to list it (`noindex`).
 | The backend | `integrations/directory-apps-script/Code.gs` | Pasted into Google Apps Script. **No IDs or secrets** in the file |
 | Backend setup | `integrations/directory-apps-script/README.md` | Step by step, plus the fortnightly clean-up |
 | Tests | `tests/directory/` | Backend logic against in-memory stand-ins for Google; the form in a real browser |
-| Privacy text | `privacy.html#student-directory` | Draft until reviewed |
+| Privacy text | `privacy.html#student-directory` | Approved 5 October 2026 |
 
 ### How a submission travels
 1. The student fills in three steps. `join.js` checks the answers in the browser and shrinks the photo there
@@ -64,7 +64,7 @@ so nobody joins under text they haven't seen. Wording fixes that don't change me
    `CONTACT_EMAIL`.
 3. Put the dedicated email on `contact.html` and in "Who is responsible" on `privacy.html` (replace both
    placeholders; the checker refuses an endpoint while either is there).
-4. Review and approve the privacy draft (`privacy.html`), and fill in "Last updated".
+4. ~~Review and approve the privacy draft~~ Done 5 October 2026. If the text changes later, update "Last updated".
 5. Paste the `/exec` address into `directory-config.js` → `endpoint`. Run `node scripts/check-content.js`
    and `node scripts/stamp-versions.js`.
 6. Test with dummy data (backend README, step 5), including the confirmation email at a real
