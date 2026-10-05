@@ -175,7 +175,8 @@ function brandLockup(make) {
       menu.appendChild(li);
       return;
     }
-    const isCurrentGroup = entry.items.some((item) => item.key === current);
+    // join.html belongs to Community (it has no menu entry of its own)
+    const isCurrentGroup = entry.items.some((item) => item.key === current || (current === "join" && item.key === "students"));
     const button = make("button", isCurrentGroup ? "menu-group is-current" : "menu-group", entry.label);
     button.type = "button";
     button.setAttribute("aria-expanded", "false");

@@ -9,9 +9,15 @@ const NARROW_QUERY = "(max-width: 640px)";
 
 // ----- Small helpers -----
 
+// A track's colour: the CSS token (--track-eeh …, with lighter dark-mode versions in style.css),
+// falling back to the colour in content/tracks.json
+function trackAccent(track) {
+  return `var(--track-${track.id}, ${track.accent})`;
+}
+
 function trackBadge(track) {
   const badge = createElement("span", "track-badge", `${track.letter} · ${track.abbr}`);
-  badge.style.setProperty("--track-accent", track.accent);
+  badge.style.setProperty("--track-accent", trackAccent(track));
   return badge;
 }
 
@@ -100,7 +106,7 @@ function renderJourney() {
   for (const track of c.tracks) {
     const li = createElement("li", "journey-path");
     li.dataset.track = track.id;
-    li.style.setProperty("--track-accent", track.accent);
+    li.style.setProperty("--track-accent", trackAccent(track));
     const name = createElement("div", "journey-track");
     name.appendChild(trackBadge(track));
     name.appendChild(createElement("strong", null, track.name));
@@ -123,7 +129,7 @@ function renderJourney() {
   section.appendChild(journey);
 
   if (c.choiceFinal) {
-    const callout = createElement("p", "tracks-callout");
+    const callout = createElement("p", "tracks-callout tracks-callout-warning");
     callout.appendChild(siteIcon("alert"));
     callout.appendChild(document.createTextNode(` ${c.texts.finalCallout}`));
     section.appendChild(callout);
@@ -141,7 +147,7 @@ function renderTrackCards() {
   for (const track of c.tracks) {
     const card = createElement("article", "track-card");
     card.dataset.track = track.id;
-    card.style.setProperty("--track-accent", track.accent);
+    card.style.setProperty("--track-accent", trackAccent(track));
     card.appendChild(trackBadge(track));
     card.appendChild(createElement("h3", null, track.name));
     card.appendChild(createElement("p", "track-question", track.student.question));
@@ -388,7 +394,7 @@ function renderExplorer() {
     const details = createElement("details", "track-detail");
     details.id = `track-${track.id}`;
     details.dataset.track = track.id;
-    details.style.setProperty("--track-accent", track.accent);
+    details.style.setProperty("--track-accent", trackAccent(track));
     const summary = createElement("summary");
     summary.appendChild(trackBadge(track));
     const title = createElement("span", "track-detail-title");
@@ -463,7 +469,7 @@ function renderMyTrack(editing = false) {
   if (mine && !editing) {
     const card = createElement("div", "my-track-card");
     card.dataset.track = mine.id;
-    card.style.setProperty("--track-accent", mine.accent);
+    card.style.setProperty("--track-accent", trackAccent(mine));
     const head = createElement("div", "my-track-head");
     head.appendChild(trackBadge(mine));
     head.appendChild(createElement("h3", null, mine.name));
@@ -507,7 +513,7 @@ function renderMyTrack(editing = false) {
     for (const track of c.tracks) {
       const button = createElement("button", "track-pick");
       button.type = "button";
-      button.style.setProperty("--track-accent", track.accent);
+      button.style.setProperty("--track-accent", trackAccent(track));
       button.setAttribute("aria-pressed", String(!!mine && mine.id === track.id));
       button.appendChild(trackBadge(track));
       button.appendChild(createElement("strong", null, track.name));
@@ -598,7 +604,7 @@ function compareTable() {
     const th = createElement("th");
     th.setAttribute("scope", "col");
     th.dataset.track = track.id;
-    th.style.setProperty("--track-accent", track.accent);
+    th.style.setProperty("--track-accent", trackAccent(track));
     th.appendChild(trackBadge(track));
     th.appendChild(createElement("span", "compare-track-name", track.name));
     headRow.appendChild(th);
@@ -696,7 +702,7 @@ function compareTwoBody(a, b) {
   for (const track of [a, b]) {
     const head = createElement("div", "compare-two-head");
     head.dataset.track = track.id;
-    head.style.setProperty("--track-accent", track.accent);
+    head.style.setProperty("--track-accent", trackAccent(track));
     head.appendChild(trackBadge(track));
     head.appendChild(createElement("strong", null, track.name));
     grid.appendChild(head);
@@ -834,7 +840,7 @@ function renderCareers() {
     for (const track of c.tracks) {
       const listed = tracks.includes(track);
       const chip = createElement("span", listed ? "sector-chip is-listed" : "sector-chip", track.abbr);
-      chip.style.setProperty("--track-accent", track.accent);
+      chip.style.setProperty("--track-accent", trackAccent(track));
       if (!listed) chip.setAttribute("aria-hidden", "true");
       chips.appendChild(chip);
     }
@@ -1002,7 +1008,7 @@ function quizResult() {
   bars.setAttribute("aria-label", "Points per track");
   for (const { track, score } of ranked) {
     const li = createElement("li", "quiz-bar-row");
-    li.style.setProperty("--track-accent", track.accent);
+    li.style.setProperty("--track-accent", trackAccent(track));
     const name = createElement("div", "quiz-bar-label");
     name.appendChild(trackBadge(track));
     name.appendChild(createElement("span", null, track.name));
@@ -1026,7 +1032,7 @@ function quizResult() {
   const top = createElement("div", "quiz-top");
   ranked.slice(0, 2).forEach(({ track }, i) => {
     const card = createElement("div", "quiz-top-card");
-    card.style.setProperty("--track-accent", track.accent);
+    card.style.setProperty("--track-accent", trackAccent(track));
     card.appendChild(createElement("span", "journey-step-label", i === 0 ? "Closest match" : "Second closest"));
     const head = createElement("div", "quiz-top-head");
     head.appendChild(trackBadge(track));

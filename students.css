@@ -1,38 +1,16 @@
 /* ===== Students explorer (students.html) =====
-   Uses the site's colour names from style.css, so light and dark mode work automatically.
-   Only the map colour scale is defined here (one warm terracotta scale, light and dark). */
+   Uses the design tokens from style.css (docs/design-system.md), so light and dark mode work
+   automatically. The map uses the shared community-map scale (--map-0 … --map-4, --map-selected). */
 
 :root {
-  --sx-map-0: #e9e3da;
-  --sx-map-1: #f1d3c4;
-  --sx-map-2: #dfa184;
-  --sx-map-3: #c46f4b;
-  --sx-map-4: #8f3c1f;
-  --sx-map-stroke: #ffffff;
-  --sx-map-selected: #20242a;
-  --sx-map-sea: #f3efe8;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --sx-map-0: #2c3037;
-    --sx-map-1: #4a3128;
-    --sx-map-2: #7c4631;
-    --sx-map-3: #b8653f;
-    --sx-map-4: #eaa07c;
-    --sx-map-stroke: #15171b;
-    --sx-map-selected: #ffffff;
-    --sx-map-sea: #181b20;
-  }
-}
-:root[data-theme="dark"] {
-  --sx-map-0: #2c3037;
-  --sx-map-1: #4a3128;
-  --sx-map-2: #7c4631;
-  --sx-map-3: #b8653f;
-  --sx-map-4: #eaa07c;
-  --sx-map-stroke: #15171b;
-  --sx-map-selected: #ffffff;
-  --sx-map-sea: #181b20;
+  --sx-map-0: var(--map-0);
+  --sx-map-1: var(--map-1);
+  --sx-map-2: var(--map-2);
+  --sx-map-3: var(--map-3);
+  --sx-map-4: var(--map-4);
+  --sx-map-stroke: var(--color-card);
+  --sx-map-selected: var(--map-selected);
+  --sx-map-sea: var(--map-sea);
 }
 
 .students-explorer {
@@ -160,9 +138,10 @@
 }
 .sx-stat-value {
   font-family: var(--font-heading);
-  font-size: 1.7rem;
+  font-size: clamp(1.7rem, 1.4rem + 1vw, 2.2rem);
   font-weight: 600;
-  color: var(--color-primary);
+  line-height: 1.15;
+  color: var(--color-heading);
 }
 .sx-stat-label {
   font-size: 0.85rem;
@@ -1250,4 +1229,126 @@
 .sx-preview .sx-segmented > label + label {
   border-left: 0;
   border-top: 1px solid var(--color-input-border);
+}
+
+/* ===== Design-system alignment (2026 redesign) ===== */
+.sx-hero h1 {
+  font-size: var(--fs-h1);
+}
+
+.sx-hero {
+  padding-bottom: var(--space-2);
+}
+
+.sx-stat {
+  border-radius: var(--radius-md);
+  box-shadow: none;
+}
+
+/* Active filter chips: soft terracotta (the brand's "selected" colour) */
+.sx-chip {
+  background: var(--color-brand-soft);
+  border-color: color-mix(in srgb, var(--color-brand) 45%, transparent);
+  color: var(--color-brand-text);
+  font-weight: 600;
+}
+
+.sx-clear {
+  color: var(--color-link);
+}
+
+.sx-section-title {
+  font-size: var(--fs-h2);
+  color: var(--color-heading);
+}
+
+.sx-map-card,
+.sx-country-panel,
+.sx-insight-card,
+.sx-card {
+  box-shadow: var(--shadow-xs);
+}
+
+.sx-card {
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+
+.sx-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.sx-country-item[aria-pressed="true"] {
+  border-color: var(--color-brand);
+  background: var(--color-brand-soft);
+  color: var(--color-brand-text);
+}
+
+.sx-bar-fill {
+  background: var(--color-navy);
+}
+
+.sx-cta {
+  background: var(--surface-navy);
+  border: none;
+  color: var(--text-on-navy);
+  padding: var(--space-8) clamp(20px, 4vw, 48px);
+}
+
+.sx-cta h2 {
+  color: #fff;
+}
+
+.sx-cta p {
+  color: var(--text-on-navy-muted);
+}
+
+.sx-cta .button-secondary {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.sx-cta .button-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sx-locked-card {
+  background: var(--surface-subtle);
+}
+
+.sx-locked-title::before {
+  content: none;
+}
+
+.sx-locked-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.sx-locked-title .icon {
+  width: 30px;
+  height: 30px;
+  padding: 7px;
+  border-radius: 50%;
+  background: var(--color-surface-muted);
+  color: var(--color-muted);
+}
+
+/* Track code chip: darkened track colour, text that contrasts in both themes */
+.sx-track-code {
+  background: color-mix(in srgb, var(--track-accent) 86%, #000);
+  color: #fff;
+}
+
+:root[data-theme="dark"] .sx-track-code {
+  background: var(--track-accent);
+  color: var(--surface-page);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .sx-track-code {
+    background: var(--track-accent);
+    color: var(--surface-page);
+  }
 }

@@ -8,14 +8,15 @@
   <title>Join the Directory – EU-HEM Student Hub</title>
   <meta name="description" content="Join the EU-HEM community on the Student Hub. You control who can see your profile.">
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=8a2df1f3">
-  <link rel="stylesheet" href="join.css?v=6ecf464f">
-  <meta name="theme-color" content="#20242a">
+  <link rel="stylesheet" href="style.css?v=14d7e979">
+  <link rel="stylesheet" href="join.css?v=e91b469e">
+  <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="icon" href="img/app-icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-  <script src="theme.js?v=2016aab7"></script>
+  <script src="theme.js?v=d51d4769"></script>
 </head>
 <body>
 
@@ -25,8 +26,8 @@
       <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
       <!-- site-nav.js builds the menu here (defined once for all pages). No menu entry of its own:
            this page is reached from the "Join the directory" button on the Students page. -->
-      <nav class="site-nav" id="site-nav" data-current="students" aria-label="Main menu"></nav>
-      <script src="site-nav.js?v=00f10cac"></script>
+      <nav class="site-nav" id="site-nav" data-current="join" aria-label="Main menu"></nav>
+      <script src="site-nav.js?v=bfaf352c"></script>
     </div>
   </header>
 
@@ -43,7 +44,7 @@
           everyone helps shape the Student Hub. It takes about two minutes.
         </p>
         <div class="trust-strip" role="note">
-          <span aria-hidden="true">🔐</span>
+          <span class="trust-icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#lock"></use></svg></span>
           <div>
             <strong>You control who can see your profile.</strong>
             <span>Nothing is published automatically. Every registration is reviewed first, and you can ask us to change or delete it at any time.</span>
@@ -90,25 +91,25 @@
             <div class="role-grid">
               <label class="role-card">
                 <input type="radio" name="userType" value="current_student">
-                <span class="role-icon" aria-hidden="true">🎓</span>
+                <span class="role-icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#graduation"></use></svg></span>
                 <span class="role-copy"><strong>Current EU-HEM student</strong>
                   <small>I am currently enrolled in the EU-HEM programme.</small></span>
               </label>
               <label class="role-card">
                 <input type="radio" name="userType" value="alumni">
-                <span class="role-icon" aria-hidden="true">🌍</span>
+                <span class="role-icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#globe"></use></svg></span>
                 <span class="role-copy"><strong>EU-HEM alumnus / former student</strong>
                   <small>I studied in EU-HEM in a previous cohort.</small></span>
               </label>
               <label class="role-card">
                 <input type="radio" name="userType" value="shared_course_student">
-                <span class="role-icon" aria-hidden="true">📚</span>
+                <span class="role-icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#library"></use></svg></span>
                 <span class="role-copy"><strong>Student from another programme</strong>
                   <small>I am enrolled in another programme but attend one or more courses shared with EU-HEM.</small></span>
               </label>
               <label class="role-card">
                 <input type="radio" name="userType" value="faculty_staff">
-                <span class="role-icon" aria-hidden="true">🏛️</span>
+                <span class="role-icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#students"></use></svg></span>
                 <span class="role-copy"><strong>Faculty, staff or programme partner</strong>
                   <small>I am involved with EU-HEM as faculty, lecturer, coordinator, supervisor, programme staff, partner, or guest contributor.</small></span>
               </label>
@@ -377,7 +378,7 @@
 
             <label class="privacy-card">
               <input type="radio" name="profileVisibility" value="public">
-              <span class="privacy-icon" aria-hidden="true">🌍</span>
+              <span class="privacy-icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#globe"></use></svg></span>
               <span class="privacy-copy">
                 <span class="privacy-badge badge-network">Best for networking</span>
                 <strong>Public</strong>
@@ -391,7 +392,7 @@
 
             <label class="privacy-card">
               <input type="radio" name="profileVisibility" value="cohort">
-              <span class="privacy-icon" aria-hidden="true">🎓</span>
+              <span class="privacy-icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#graduation"></use></svg></span>
               <span class="privacy-copy">
                 <span class="privacy-badge badge-private">More private</span>
                 <strong>EU-HEM students only</strong>
@@ -402,7 +403,7 @@
 
             <label class="privacy-card">
               <input type="radio" name="profileVisibility" value="hidden">
-              <span class="privacy-icon" aria-hidden="true">🔒</span>
+              <span class="privacy-icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#lock"></use></svg></span>
               <span class="privacy-copy">
                 <strong>Do not publish my profile yet</strong>
                 <small>Save my information, but do not display my individual profile.</small>

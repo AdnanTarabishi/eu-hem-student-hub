@@ -142,7 +142,7 @@
           "letter": "A",
           "abbr": "EEH",
           "name": "Economic Evaluation in Healthcare",
-          "accent": "#a64b2a",
+          "accent": "#2f6daa",
           "focusAreas": ["Health Technology Assessment", "Decision-analytic modelling", "Reimbursement decision-making"],
           "semesters": [
             {
@@ -194,7 +194,7 @@
           "letter": "B",
           "abbr": "E&P",
           "name": "Health Economics & Policy",
-          "accent": "#3d6a8c",
+          "accent": "#6b5aa6",
           "focusAreas": ["Health economics", "Evaluation of health policies", "Decision-making"],
           "semesters": [
             {
@@ -252,7 +252,7 @@
           "letter": "C",
           "abbr": "MHI",
           "name": "Management of Healthcare Institutions",
-          "accent": "#5f7d4e",
+          "accent": "#c75b3a",
           "focusAreas": ["Leadership", "Organisational development", "Policy and regulation"],
           "semesters": [
             {
@@ -304,7 +304,7 @@
           "letter": "D",
           "abbr": "PHM",
           "name": "Population Health Management",
-          "accent": "#9c6b1e",
+          "accent": "#3d7d6a",
           "focusAreas": ["Public health", "Environmental health", "Management & policy", "Global health"],
           "semesters": [
             {

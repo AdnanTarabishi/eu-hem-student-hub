@@ -165,14 +165,15 @@
   --action-navy-hover: var(--navy-800);
   --color-link: var(--blue-600);
   --color-focus: #1f5fae;
-  --color-brand: var(--terracotta-600);        /* main calls to action, active underline */
+  --color-brand: var(--terracotta-600);        /* active underline, accents, map highlights */
+  --color-brand-action: #c0562f;               /* filled CTA buttons: #C75B3A darkened a touch for AA with white text */
   --color-brand-hover: var(--terracotta-700);
   --color-brand-soft: var(--terracotta-100);
   --color-brand-text: var(--terracotta-700);   /* terracotta as text (AA on white) */
   --color-info-soft: var(--blue-100);
 
   /* Semantic states (terracotta is never used for errors) */
-  --success: #2e7d5b;
+  --success: #2b7556; /* #2E7D5B in the brief, darkened slightly for AA on its background */
   --success-bg: #e9f5ef;
   --warning: #9a6416; /* #B7791F in the brief, darkened for AA text contrast */
   --warning-bg: #fff4db;
@@ -190,6 +191,11 @@
   --track-mhi-soft: #f8e9e2;
   --track-phm: #3d7d6a;
   --track-phm-soft: #e9f3ef;
+  /* Track colour as small text on its soft background (AA) */
+  --track-eeh-text: var(--track-eeh);
+  --track-ep-text: var(--track-ep);
+  --track-mhi-text: #a9472d;
+  --track-phm-text: #336a5a;
 
   /* City accents (secondary only) */
   --city-bologna: #c75b3a;
@@ -227,7 +233,7 @@
   --color-input-border: var(--border-input);
   --color-shadow: rgba(15, 43, 91, 0.06);
   --color-shadow-strong: rgba(15, 43, 91, 0.14);
-  --color-accent: var(--terracotta-600);
+  --color-accent: #b7791f; /* notices, demo labels, highlights (warning amber; terracotta stays for brand emphasis) */
   --color-warning-bg: var(--warning-bg);
   --color-success-bg: var(--success-bg);
   --color-success-text: var(--success);
@@ -274,6 +280,7 @@
     --color-link: #74a7df;
     --color-focus: #74a7df;
     --color-brand: #e78562;
+    --color-brand-action: #e78562;
     --color-brand-hover: #f09a7b;
     --color-brand-soft: #3a2621;
     --color-brand-text: #f0a184;
@@ -294,6 +301,8 @@
     --track-mhi-soft: #3a2621;
     --track-phm: #6fc29b;
     --track-phm-soft: #15302a;
+    --track-mhi-text: #e78562;
+    --track-phm-text: #6fc29b;
     --city-bologna: #e78562;
     --city-oslo: #7fb0cf;
     --city-innsbruck: #8cc0a4;
@@ -314,7 +323,7 @@
     --color-surface-muted: #1f2a38;
     --color-shadow: rgba(0, 0, 0, 0.35);
     --color-shadow-strong: rgba(0, 0, 0, 0.55);
-    --color-accent: #e78562;
+    --color-accent: #e0a64f;
     --pill-blue-text: #9cc6f2;
     --pill-purple-bg: #2a2442;
     --pill-purple-text: #c6b4f2;
@@ -348,6 +357,7 @@
   --color-link: #74a7df;
   --color-focus: #74a7df;
   --color-brand: #e78562;
+  --color-brand-action: #e78562;
   --color-brand-hover: #f09a7b;
   --color-brand-soft: #3a2621;
   --color-brand-text: #f0a184;
@@ -368,6 +378,8 @@
   --track-mhi-soft: #3a2621;
   --track-phm: #6fc29b;
   --track-phm-soft: #15302a;
+  --track-mhi-text: #e78562;
+  --track-phm-text: #6fc29b;
   --city-bologna: #e78562;
   --city-oslo: #7fb0cf;
   --city-innsbruck: #8cc0a4;
@@ -388,7 +400,7 @@
   --color-surface-muted: #1f2a38;
   --color-shadow: rgba(0, 0, 0, 0.35);
   --color-shadow-strong: rgba(0, 0, 0, 0.55);
-  --color-accent: #e78562;
+  --color-accent: #e0a64f;
   --pill-blue-text: #9cc6f2;
   --pill-purple-bg: #2a2442;
   --pill-purple-text: #c6b4f2;
@@ -929,11 +941,14 @@ main {
   display: none;
 }
 
-/* Narrower desktops: shorter search button, no descriptor */
-@media (max-width: 1240px) {
+/* Narrower desktops: no descriptor below 1320px, then a shorter search button */
+@media (max-width: 1320px) {
   .brand-descriptor {
     display: none;
   }
+}
+
+@media (max-width: 1240px) {
 
   .search-button {
     min-width: 0;
@@ -1331,7 +1346,7 @@ main {
 }
 
 .button-primary {
-  background: var(--color-brand);
+  background: var(--color-brand-action);
   color: #fff;
 }
 
@@ -1481,13 +1496,13 @@ button:hover .arrow,
 
 /* Track pills: one colour system for the whole site (EEH blue, E&P purple, MHI terracotta, PHM green) */
 .track-color-0,
-.track-pill-eeh { background: var(--track-eeh-soft); color: var(--track-eeh); }
+.track-pill-eeh { background: var(--track-eeh-soft); color: var(--track-eeh-text); }
 .track-color-1,
-.track-pill-ep { background: var(--track-ep-soft); color: var(--track-ep); }
+.track-pill-ep { background: var(--track-ep-soft); color: var(--track-ep-text); }
 .track-color-2,
-.track-pill-mhi { background: var(--track-mhi-soft); color: var(--track-mhi); }
+.track-pill-mhi { background: var(--track-mhi-soft); color: var(--track-mhi-text); }
 .track-color-3,
-.track-pill-phm { background: var(--track-phm-soft); color: var(--track-phm); }
+.track-pill-phm { background: var(--track-phm-soft); color: var(--track-phm-text); }
 
 /* =====================================================================
    8. FILTERS AND CHIPS (shared look for Students, Thesis, Notes)
@@ -1703,9 +1718,9 @@ button:hover .arrow,
 /* ===== City guide ===== */
 .guide h1 {
   margin-top: 0;
-  font-size: 1.6rem;
-  line-height: 1.3;
-  color: var(--color-primary);
+  font-size: var(--fs-h1);
+  line-height: 1.15;
+  color: var(--color-heading);
 }
 
 .guide h2 {
@@ -1880,9 +1895,9 @@ button:hover .arrow,
 
 .guide-city-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-  gap: 14px;
-  margin: 20px 0;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-5);
+  margin: var(--space-6) 0;
   padding: 0;
   list-style: none;
 }
@@ -1894,22 +1909,31 @@ button:hover .arrow,
   height: 100%;
   padding: 14px 16px;
   border: 1px solid var(--color-border);
-  border-top: 4px solid var(--color-primary);
-  border-radius: var(--radius-md);
+  border-top: 3px solid var(--city-accent, var(--color-brand));
+  border-radius: var(--radius-lg);
   background: var(--color-card);
   color: var(--color-text);
   text-decoration: none;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
+
+.guide-city-card[href*="bologna"] { --city-accent: var(--city-bologna); }
+.guide-city-card[href*="oslo"] { --city-accent: var(--city-oslo); }
+.guide-city-card[href*="rotterdam"] { --city-accent: var(--city-rotterdam); }
+.guide-city-card[href*="innsbruck"] { --city-accent: var(--city-innsbruck); }
 
 .guide-city-card:hover,
 .guide-city-card:focus-visible {
-  border-color: var(--color-primary);
+  border-color: var(--color-primary-border);
+  border-top-color: var(--city-accent, var(--color-brand));
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 .guide-city-card strong {
   font-family: var(--font-heading);
-  font-size: 1.25rem;
-  color: var(--color-primary);
+  font-size: 1.4rem;
+  color: var(--color-heading);
 }
 
 .guide-city-card .city-country,
@@ -1921,8 +1945,10 @@ button:hover .arrow,
 
 .guide-city-card .city-country {
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-size: 0.75rem;
+  letter-spacing: var(--tracking-eyebrow);
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  color: var(--city-accent, var(--color-muted));
 }
 
 .guide-city-card .city-status {
@@ -2853,8 +2879,8 @@ button:hover .arrow,
 }
 
 .new-badge {
-  background: var(--color-accent);
-  color: #3e2a00;
+  background: var(--color-brand);
+  color: #fff;
 }
 
 /* ===== Notes & Resources ===== */
@@ -3401,8 +3427,10 @@ a.track-tab {
 /* ===== Notes & Resources: upgrade ===== */
 
 /* The course page is wider, to fit the topic sidebar next to the notes */
-.wide-page .container {
-  max-width: 1150px;
+/* Data-heavy pages (Study Plan, Timetable, Exams, course pages) use the wide layout width.
+   Only the page content: the header and footer keep their own widths. */
+.wide-page main.container {
+  max-width: var(--width-wide);
 }
 
 /* Landing hero */
@@ -3415,9 +3443,10 @@ a.track-tab {
 }
 
 .notes-hero h2 {
+  font-family: var(--font-heading);
   margin: 0 0 4px;
   font-size: 1.8rem;
-  color: var(--color-primary);
+  color: var(--color-heading);
 }
 
 .notes-hero-text {
@@ -3439,10 +3468,11 @@ a.track-tab {
 }
 
 .hero-stat-number {
+  font-family: var(--font-heading);
   font-size: 1.6rem;
   font-weight: 700;
   line-height: 1.1;
-  color: var(--color-primary);
+  color: var(--color-heading);
 }
 
 .hero-stat-label {
@@ -4532,7 +4562,7 @@ mark {
   gap: 12px;
   padding: 10px 16px;
   border-radius: var(--radius-pill);
-  background: #1d2833;
+  background: var(--navy-900);
   color: #ffffff;
   font-size: 0.92rem;
   font-weight: 600;
@@ -4552,7 +4582,7 @@ mark {
   border-radius: var(--radius-pill);
   padding: 4px 12px;
   background: #ffffff;
-  color: #1d2833;
+  color: var(--navy-900);
   font: inherit;
   font-weight: 700;
   cursor: pointer;
@@ -4677,7 +4707,7 @@ details > summary {
 
 /* ===== Page intro (title at the top of a page) ===== */
 .page-intro {
-  margin: 8px 0 18px;
+  margin: var(--space-4) 0 var(--space-6);
 }
 
 .page-intro h1 {
@@ -4685,9 +4715,9 @@ details > summary {
   align-items: center;
   gap: 12px;
   margin: 0 0 6px;
-  font-size: clamp(1.6rem, 3vw, 2.1rem);
-  font-weight: 800;
-  color: var(--color-text);
+  font-size: var(--fs-h1);
+  font-weight: 600;
+  color: var(--color-heading);
 }
 
 .page-intro h1 .icon {
@@ -5549,8 +5579,8 @@ details > summary {
 }
 
 .setup-step.is-done .setup-check {
-  background: #2e7d32;
-  border-color: #2e7d32;
+  background: var(--success);
+  border-color: var(--success);
   animation: pop 0.3s var(--ease);
 }
 
@@ -5599,7 +5629,7 @@ details > summary {
 /* ===== Offline banner (pwa.js) ===== */
 .offline-banner {
   padding: 8px 16px;
-  background: #5f6b7a;
+  background: var(--navy-800);
   color: #ffffff;
   font-size: 0.9rem;
   font-weight: 600;
@@ -6604,144 +6634,6 @@ main.home {
   color: var(--color-muted);
 }
 
-/* Hero fixes: full-width content box (a centred box inside a flex column otherwise shrinks
-   to fit its content), and a tighter phone layout so the top of "This Week" peeks out */
-.home-hero > .container,
-.home-stats-bar > .container {
-  width: 100%;
-}
-
-@media (max-width: 600px) {
-  .home-hero {
-    min-height: 66vh;
-    min-height: 66svh;
-  }
-
-  .home-hero-media img {
-    object-position: center 88%; /* phones crop to a tall shape: aim at the people */
-  }
-
-  .home-hero-inner {
-    padding-top: 24px;
-    padding-bottom: 16px;
-  }
-
-  .hero-badge {
-    margin-bottom: 10px;
-    font-size: 0.7rem;
-  }
-
-  .home-hero h1 {
-    font-size: 2.05rem;
-  }
-
-  .hero-tagline {
-    margin-top: 6px;
-    font-size: 1.1rem;
-  }
-
-  .hero-sentence {
-    font-size: 0.93rem;
-    line-height: 1.45;
-  }
-
-  .hero-actions {
-    flex-direction: row;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 16px;
-  }
-
-  .hero-actions .button {
-    flex: 1 1 0;
-    padding: 11px 10px;
-    font-size: 0.95rem;
-  }
-
-  .home-stats {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    row-gap: 6px;
-  }
-
-  .home-stat-number {
-    font-size: 1.45rem;
-  }
-
-  .home-stat-label {
-    font-size: 0.74rem;
-  }
-}
-
-/* Very narrow phones (under 360 px): stack the two buttons */
-@media (max-width: 359px) {
-  .hero-actions {
-    flex-direction: column;
-  }
-}
-
-/* Calmer cohort dots: smaller, softer, in a narrower box */
-.cohort-art {
-  max-width: 460px;
-  justify-self: center;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.cohort-dots {
-  gap: 9px;
-}
-
-.cohort-dots span {
-  opacity: 0.55;
-}
-
-.cohort-dots span:nth-child(3n + 2) {
-  opacity: 0.6;
-}
-
-.cohort-dots span:nth-child(5n + 3) {
-  opacity: 0.35;
-}
-
-/* Phones: two columns for the small cards, so the page is shorter */
-@media (max-width: 600px) {
-  .mini-cards,
-  .city-cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-  }
-
-  .mini-card,
-  .city-card {
-    padding: 14px;
-  }
-
-  .mini-card span:not(:first-child) {
-    font-size: 0.82rem;
-  }
-
-  .city-card strong {
-    font-size: 1.15rem;
-  }
-
-  .city-card span:not(.city-country):not(.city-status):not(.city-card-photo):not(.city-card-credit) {
-    display: none;
-  }
-
-  .city-card .city-card-photo {
-    margin: -14px -14px 8px;
-  }
-}
-
-/* Header: icon-only search up to 1100 px, so the tagline, menu and buttons fit (e.g. at 1024 px) */
-@media (max-width: 1100px) {
-  .header-button .search-label,
-  .header-button kbd {
-    display: none;
-  }
-}
-
 /* =====================================================================
    Tracks page (tracks.html, tracks.js)
    Each track has an accent colour (--track-accent, from content/tracks.json),
@@ -6787,7 +6679,7 @@ main.home {
   margin: 10px 0 0;
   font-family: var(--font-heading);
   font-size: clamp(1.15rem, 2.2vw, 1.4rem);
-  color: var(--color-primary);
+  color: var(--color-heading);
 }
 
 .tracks-hero-text {
@@ -6861,8 +6753,8 @@ main.home {
   flex-direction: column;
   gap: 2px;
   padding: 18px;
-  border-radius: 16px;
-  background: var(--brand-ink);
+  border-radius: var(--radius-lg);
+  background: var(--surface-navy);
   color: #ffffff;
 }
 
@@ -6998,7 +6890,12 @@ main.home {
   margin: 0;
   font-family: var(--font-heading);
   font-size: 1.1rem;
-  color: var(--color-primary);
+  color: var(--track-accent, var(--color-link));
+}
+
+.tracks-callout-warning {
+  background: var(--warning-bg) !important;
+  color: var(--warning) !important;
 }
 
 .track-route {
@@ -8194,7 +8091,7 @@ main.home {
   margin: 10px 0 0;
   font-family: var(--font-heading);
   font-size: clamp(1.15rem, 2.2vw, 1.4rem);
-  color: var(--color-primary);
+  color: var(--color-heading);
 }
 
 .thesis-intro-text {

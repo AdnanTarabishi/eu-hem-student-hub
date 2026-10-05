@@ -18,12 +18,13 @@ window.EUHEM_STUDENTS_CONFIG = {
   savedStorageKey: "euhem-saved-profiles-v1", // this browser only; stores profile ids, nothing else
   joinUrl: "join.html",
 
-  // Short labels and colours for the four tracks (colours as in content/tracks.json)
+  // Short labels and colours for the four tracks (as in content/tracks.json; the page uses the CSS tokens
+  // --track-eeh … from style.css, which also have lighter dark-mode versions)
   tracks: {
-    eeh: { short: "EEH", accent: "#a64b2a" },
-    ep: { short: "E&P", accent: "#3d6a8c" },
-    mhi: { short: "MHI", accent: "#5f7d4e" },
-    phm: { short: "PHM", accent: "#9c6b1e" },
+    eeh: { short: "EEH", accent: "#2f6daa" },
+    ep: { short: "E&P", accent: "#6b5aa6" },
+    mhi: { short: "MHI", accent: "#c75b3a" },
+    phm: { short: "PHM", accent: "#3d7d6a" },
   },
 
   // The map (built by scripts/build-world-map.js from Natural Earth). viewBox = the visible window.
