@@ -118,11 +118,8 @@ Full guide: [docs/thesis-import.md](docs/thesis-import.md). The spreadsheet itse
 `privacy.html` was written from what the code does and approved on 5 October 2026. Keep it in sync when the code changes.
 `contact.html` and the "Who is responsible" section of `privacy.html` have a placeholder for the Student Hub email.
 
-## Adding a city guide
-City guides are Markdown files shown by one template page, `city-guide.html`.
-1. Write the guide as `docs/content/<city>-guide.md`, using the same structure as
-   `docs/content/bologna-guide.md` (a `>` "Last checked" + disclaimer block under the title,
-   then numbered `##` sections).
-2. Add one line for the city to `CITY_GUIDES` in `guide.js` (Oslo, Innsbruck and Rotterdam are already
-   there with `file: null`, which shows "Coming soon": just fill in the file name).
-3. The guide is then at `city-guide.html?city=<city>`.
+## City guides
+`city-guide.html` shows the index of all cities (with a comparison table and "Your next city" for
+students who saved a track); `city-guide.html?city=oslo` shows one city. Each guide is a Markdown file
+in `docs/content/`, listed in `guide-data.js`. Which tracks study in a city always comes from
+`content/tracks.json`. How to update a price, add a student tip or add a city: `docs/city-guides.md`.

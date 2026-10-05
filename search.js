@@ -29,11 +29,6 @@
     });
   }
 
-  // Same rule as guide.js: "1. First-week checklist" -> "first-week-checklist"
-  function guideHeadingId(text) {
-    return text.toLowerCase().replace(/^\d+\.\s*/, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-  }
-
   async function buildEntries() {
     const list = [];
     const add = (type, title, url, text = "", context = "", meta = "") =>
@@ -82,17 +77,19 @@
       console.error("Search: announcements", error);
     }
 
-    // City Guide sections
+    // City Guide sections, for every city with a guide (list in guide-data.js)
     try {
-      const response = await fetch("docs/content/bologna-guide.md");
-      if (response.ok) {
-        const markdown = await response.text();
-        for (const section of markdown.split(/\n(?=## )/).slice(1)) {
-          const heading = section.split("\n")[0].replace(/^##\s+/, "").trim();
-          const body = section.split("\n").slice(1).join(" ").replace(/[#*>|_`-]+/g, " ");
-          add("guide", heading.replace(/^\d+\.\s*/, ""), `city-guide.html#${guideHeadingId(heading)}`, body, "Bologna");
+      await loadScript("guide-data.js");
+      await Promise.all(CITY_GUIDES.filter((g) => g.file).map(async (guide) => {
+        const response = await fetch(guide.file);
+        if (!response.ok) return;
+        const city = guide.id[0].toUpperCase() + guide.id.slice(1);
+        for (const section of guideSections(parseGuide(await response.text()).body)) {
+          const body = section.text.replace(/<!--[\s\S]*?-->/g, " ").replace(/\[S\d+\]/g, " ").replace(/[#*>|_`-]+/g, " ");
+          if (!body.trim()) continue; // e.g. Student tips before anyone wrote one
+          add("guide", section.title, `city-guide.html?city=${guide.id}#${guideHeadingId(section.heading)}`, body, city);
         }
-      }
+      }));
     } catch (error) {
       console.error("Search: guide", error);
     }

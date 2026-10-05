@@ -163,6 +163,32 @@ function fillHomeSettings() {
   }
 }
 
-if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded", fillHomeSettings);
+// ----- "Life Across EU-HEM": the city cards, from the same data as the City Guide -----
+// (guide-data.js lists the guides; content/tracks.json says who studies where and when)
+async function fillCityCards() {
+  const container = document.getElementById("city-cards");
+  if (!container || typeof CITY_GUIDES === "undefined" || typeof loadTracksFile !== "function") return;
+  try {
+    const cohort = tracksCohort(await loadTracksFile());
+    container.innerHTML = "";
+    for (const guide of CITY_GUIDES) {
+      const university = cohort.universities[guide.university];
+      const card = document.createElement("a");
+      card.className = "city-card";
+      card.href = `city-guide.html?city=${guide.id}`;
+      card.append(createElement("span", "city-country", university.country), createElement("strong", null, university.city),
+        createElement("span", null, cityPresenceText(cohort, guide.university)),
+        createElement("span", guide.file ? "city-status is-ready" : "city-status", guide.file ? "Read the guide →" : "Coming soon"));
+      container.appendChild(card);
+    }
+  } catch (error) {
+    console.error("City cards:", error); // the cards written in index.html stay
+  }
+}
+
+if (typeof document !== "undefined") {
+  document.addEventListener("DOMContentLoaded", fillHomeSettings);
+  document.addEventListener("DOMContentLoaded", fillCityCards);
+}
 
 if (typeof module !== "undefined") module.exports = { heroSrcset, daysUntil, homeStats };
