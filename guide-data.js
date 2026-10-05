@@ -6,17 +6,18 @@
 // One line per city. `university` is its id in content/tracks.json, where the city's name,
 // country and university name are written (only there). `file: null` = guide not written yet.
 // To add a city: write docs/content/<city>-guide.md and add one line here (see docs/city-guides.md).
-// `cover` is the photo on the city cards (index and homepage): one of the guide's own photos,
+// `cover` is the picture on the city cards (index and homepage): one of the guide's own pictures,
 // given without "-640.webp", with its alt text and a short credit (the full credit is in the guide).
+// An AI-generated cover has the credit "AI-generated illustration", shown on the card.
 const CITY_GUIDES = [
   { id: "bologna", university: "unibo", file: "docs/content/bologna-guide.md",
-    cover: { image: "assets/images/cities/bologna/piazza-maggiore", alt: "Piazza Maggiore seen from above", credit: "Photo: Iulia Fioravanti, CC BY-SA 4.0" } },
+    cover: { image: "assets/images/cities/bologna/ai-towers-sunset", alt: "AI-generated illustration of Bologna's rooftops and towers at sunset", credit: "AI-generated illustration" } },
   { id: "oslo", university: "uio", file: "docs/content/oslo-guide.md",
-    cover: { image: "assets/images/cities/oslo/opera-house-winter", alt: "The Opera House by the fjord in winter", credit: "Photo: Luca Nebuloni, CC BY 2.0" } },
+    cover: { image: "assets/images/cities/oslo/ai-opera-sunset", alt: "AI-generated illustration of the Opera House on the fjord at sunset", credit: "AI-generated illustration" } },
   { id: "rotterdam", university: "eur", file: "docs/content/rotterdam-guide.md",
-    cover: { image: "assets/images/cities/rotterdam/erasmus-bridge", alt: "The Erasmus Bridge and towers at dusk", credit: "Photo: Michielverbeek, CC BY-SA 4.0" } },
+    cover: { image: "assets/images/cities/rotterdam/ai-erasmus-bridge-sunset", alt: "AI-generated illustration of the Erasmus Bridge and skyline at sunset", credit: "AI-generated illustration" } },
   { id: "innsbruck", university: "mci", file: "docs/content/innsbruck-guide.md",
-    cover: { image: "assets/images/cities/innsbruck/inn-river-nordkette", alt: "Colourful houses on the Inn river below the mountains", credit: "Photo: Ikiwaner, CC BY-SA 3.0" } },
+    cover: { image: "assets/images/cities/innsbruck/ai-inn-river-sunset", alt: "AI-generated illustration of the Inn river and the mountains at sunset", credit: "AI-generated illustration" } },
 ];
 
 // Every guide has these sections, in this order, as "## 1. At a glance" … "## 16. Sources"

@@ -1108,6 +1108,21 @@ main {
   color: #fff;
 }
 
+/* AI-generated pictures carry a visible badge (and say so in the caption and alt text) */
+.guide-photos figure.is-ai::before {
+  content: "AI illustration";
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 1;
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
+  background: rgba(0, 0, 0, 0.68);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
 @media (max-width: 860px) {
   .guide-photos {
     grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -147,7 +147,7 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     const photos = await page.$$eval('.guide-photos figure', (all) => all.map((f) => ({
       src: f.querySelector('img').getAttribute('src'), alt: f.querySelector('img').alt, caption: f.querySelector('figcaption')?.textContent || '' })));
     for (const photo of photos) {
-      assert.ok(photo.alt && /Photo: /.test(photo.caption), `${city}: ${photo.src} needs alt text and a credit`);
+      assert.ok(photo.alt && /Photo: |AI-generated illustration, not a photo/.test(photo.caption), `${city}: ${photo.src} needs alt text and a credit or AI label`);
       await page.$eval(`img[src="${photo.src}"]`, (img) => img.scrollIntoView());
       await page.waitForFunction((src) => { const img = document.querySelector(`img[src="${src}"]`); return img.complete && img.naturalWidth > 0; }, photo.src);
     }
