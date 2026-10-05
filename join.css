@@ -371,15 +371,31 @@
   line-height: 1.45;
 }
 
-.directory-join .recommended-badge {
+/* Badges on the privacy cards (text, not only colour, says what they mean) */
+.directory-join .privacy-badge {
   display: inline-block;
   margin: 0 0 6px;
-  padding: 3px 7px;
+  padding: 3px 9px;
   border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.directory-join .badge-network {
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+}
+
+.directory-join .badge-private {
   background: var(--color-primary-light);
   color: var(--color-primary);
-  font-size: 0.7rem;
-  font-weight: 800;
+}
+
+.directory-join .privacy-copy .coming-soon-note {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--color-border);
+  font-style: italic;
 }
 
 .directory-join .advanced-privacy {
@@ -536,6 +552,221 @@
   border: 0;
 }
 
+/* ----- Onboarding v2: who you are, courses, feature chips ----- */
+
+/* Fields hidden by role or condition must stay hidden even where a rule sets display */
+.directory-join [hidden] {
+  display: none !important;
+}
+
+.directory-join .role-fieldset,
+.directory-join .feature-fieldset,
+.directory-join .check-fieldset {
+  margin: 0 0 18px;
+  padding: 0;
+  border: 0;
+}
+
+.directory-join .role-fieldset > legend,
+.directory-join .feature-fieldset > legend {
+  margin-bottom: 12px;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.directory-join .role-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.directory-join .role-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 10px;
+  align-items: flex-start;
+  min-height: 100%;
+  padding: 16px 16px 16px 14px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-card);
+  cursor: pointer;
+  transition: border-color 0.15s var(--ease), box-shadow 0.15s var(--ease);
+}
+
+/* The radio sits on the card so the whole card is one keyboard-reachable choice */
+.directory-join .role-card input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.directory-join .role-card:hover {
+  border-color: var(--color-primary-border);
+}
+
+.directory-join .role-card:has(input:checked) {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary-border);
+  background: var(--color-primary-light);
+}
+
+.directory-join .role-card:has(input:checked) .role-copy strong::after {
+  content: " ✓";
+  color: var(--color-primary);
+}
+
+.directory-join .role-card:has(input:focus-visible) {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.directory-join .role-icon {
+  font-size: 1.6rem;
+  line-height: 1.2;
+}
+
+.directory-join .role-copy strong,
+.directory-join .role-copy small {
+  display: block;
+}
+
+.directory-join .role-copy small {
+  margin-top: 3px;
+  color: var(--color-muted);
+  line-height: 1.45;
+}
+
+.directory-join .visit-note {
+  margin: 0 0 20px;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.directory-join .check-fieldset > legend {
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.directory-join .check-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 14px;
+  margin-bottom: 12px;
+}
+
+.directory-join .check-list label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 0;
+  cursor: pointer;
+}
+
+.directory-join .check-list input {
+  width: auto;
+  margin-top: 4px;
+}
+
+.directory-join .feature-fieldset {
+  margin-top: 26px;
+  padding: 18px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-alt);
+}
+
+.directory-join .feature-fieldset > p {
+  margin: 0 0 12px;
+  color: var(--color-muted);
+}
+
+.directory-join .optional-tag {
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--color-card);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-muted);
+}
+
+.directory-join .feature-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.directory-join .feature-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-card);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.directory-join .feature-chip input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.directory-join .feature-chip:has(input:checked) {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.directory-join .feature-chip:has(input:checked)::before {
+  content: "✓ ";
+  white-space: pre;
+}
+
+.directory-join .feature-chip:has(input:focus-visible) {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.directory-join .feature-count {
+  margin: 10px 0 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-muted);
+}
+
+.directory-join .note-card {
+  display: block;
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  border-left: 4px solid var(--color-primary);
+  border-radius: 0 11px 11px 0;
+  background: var(--color-primary-light);
+}
+
+.directory-join .note-card strong,
+.directory-join .note-card span {
+  display: block;
+}
+
+.directory-join .note-card span {
+  margin-top: 4px;
+}
+
 /* ----- Phones ----- */
 @media (max-width: 700px) {
   .directory-join .hero {
@@ -582,6 +813,26 @@
 
   .directory-join .privacy-card {
     grid-template-columns: 22px 34px 1fr;
+    padding: 14px;
+  }
+
+  .directory-join .role-grid,
+  .directory-join .check-list {
+    grid-template-columns: 1fr;
+  }
+
+  /* Smaller chips so several fit on a line (still at least 40px tall for fingers) */
+  .directory-join .feature-chips {
+    gap: 6px;
+  }
+
+  .directory-join .feature-chip {
+    min-height: 40px;
+    padding: 6px 11px;
+    font-size: 0.82rem;
+  }
+
+  .directory-join .feature-fieldset {
     padding: 14px;
   }
 }

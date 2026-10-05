@@ -6,10 +6,10 @@
   <!-- Asks search engines not to list this page (it does not block visitors) -->
   <meta name="robots" content="noindex">
   <title>Join the Directory – EU-HEM Student Hub</title>
-  <meta name="description" content="Join the EU-HEM Student Directory. You control who can see your profile.">
+  <meta name="description" content="Join the EU-HEM community on the Student Hub. You control who can see your profile.">
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=8a2df1f3">
-  <link rel="stylesheet" href="join.css?v=bc21fbc3">
+  <link rel="stylesheet" href="join.css?v=a1546ecd">
   <meta name="theme-color" content="#20242a">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
@@ -30,23 +30,23 @@
     </div>
   </header>
 
-  <!-- The form comes from the reviewed "Join the Directory" package (join.js handles it; its styles
-       in join.css only apply inside .directory-join). It sends to the Google Apps Script set in
-       directory-config.js; see docs/student-directory.md. -->
+  <!-- Onboarding v2 (see docs/student-directory.md). join.js shows only the fields of the chosen
+       connection to EU-HEM; its styles in join.css only apply inside .directory-join. It sends to the
+       Google Apps Script set in directory-config.js. The choices come from directory-options.js. -->
   <main class="directory-join">
     <section class="hero">
       <div class="hero-inner">
-        <span class="eyebrow">STUDENT DIRECTORY</span>
-        <h1>Join the EU-HEM Directory</h1>
+        <span class="eyebrow">STUDENT HUB</span>
+        <h1>Join the EU-HEM community</h1>
         <p class="hero-lead">
-          Help us build a better picture of our cohort and make it easier for students to connect.
-          Only five fields are required. Everything else is optional.
+          Tell us how you're connected to EU-HEM. Current students and alumni can join the Student Directory;
+          everyone helps shape the Student Hub. It takes about two minutes.
         </p>
         <div class="trust-strip" role="note">
           <span aria-hidden="true">🔐</span>
           <div>
             <strong>You control who can see your profile.</strong>
-            <span>Nothing is published automatically. Every submission is reviewed first, and you can ask us to change or delete it at any time.</span>
+            <span>Nothing is published automatically. Every registration is reviewed first, and you can ask us to change or delete it at any time.</span>
           </div>
         </div>
       </div>
@@ -62,14 +62,14 @@
           <div class="progress-fill" id="progressFill"></div>
         </div>
         <ol class="step-labels" aria-label="Form steps">
-          <li class="is-active" data-step-label="1">Essentials</li>
-          <li data-step-label="2">About you</li>
-          <li data-step-label="3">Privacy</li>
+          <li class="is-active" data-step-label="1">Connection &amp; essentials</li>
+          <li data-step-label="2">Profile &amp; preferences</li>
+          <li data-step-label="3">Privacy &amp; confirmation</li>
         </ol>
       </div>
 
       <form id="directoryForm" novalidate>
-        <h2 id="formTitle" class="sr-only">EU-HEM student directory profile form</h2>
+        <h2 id="formTitle" class="sr-only">EU-HEM Student Hub registration</h2>
 
         <!-- Honeypot: humans should never fill this -->
         <div class="honeypot" aria-hidden="true">
@@ -81,71 +81,140 @@
         <section class="form-step is-active" data-step="1" aria-labelledby="step1Title">
           <div class="step-heading">
             <span class="step-kicker">STEP 1</span>
-            <h2 id="step1Title">The essentials</h2>
-            <p>Just the basics. This part should take less than a minute.</p>
+            <h2 id="step1Title">Your connection &amp; essentials</h2>
+            <p>Start with how you're connected to EU-HEM. Only the questions for you will appear.</p>
           </div>
 
-          <div class="field-grid">
+          <fieldset class="role-fieldset">
+            <legend>How are you connected to EU-HEM? <span class="required">*</span></legend>
+            <div class="role-grid">
+              <label class="role-card">
+                <input type="radio" name="userType" value="current_student">
+                <span class="role-icon" aria-hidden="true">🎓</span>
+                <span class="role-copy"><strong>Current EU-HEM student</strong>
+                  <small>I am currently enrolled in the EU-HEM programme.</small></span>
+              </label>
+              <label class="role-card">
+                <input type="radio" name="userType" value="alumni">
+                <span class="role-icon" aria-hidden="true">🌍</span>
+                <span class="role-copy"><strong>EU-HEM alumnus / former student</strong>
+                  <small>I studied in EU-HEM in a previous cohort.</small></span>
+              </label>
+              <label class="role-card">
+                <input type="radio" name="userType" value="shared_course_student">
+                <span class="role-icon" aria-hidden="true">📚</span>
+                <span class="role-copy"><strong>Student from another programme</strong>
+                  <small>I am enrolled in another programme but attend one or more courses shared with EU-HEM.</small></span>
+              </label>
+              <label class="role-card">
+                <input type="radio" name="userType" value="faculty_staff">
+                <span class="role-icon" aria-hidden="true">🏛️</span>
+                <span class="role-copy"><strong>Faculty, staff or programme partner</strong>
+                  <small>I am involved with EU-HEM as faculty, lecturer, coordinator, supervisor, programme staff, partner, or guest contributor.</small></span>
+              </label>
+            </div>
+            <p class="field-error" id="userTypeError"></p>
+          </fieldset>
+          <p class="visit-note">Just visiting or considering EU-HEM? You don't need an account to explore the
+            public parts of the Student Hub. <a href="index.html">Explore the Student Hub</a></p>
+          <p class="sr-only" id="roleAnnouncer" aria-live="polite"></p>
+
+          <div class="field-grid" id="roleFields" hidden>
             <div class="field field-wide">
               <label for="fullName">Full name <span class="required">*</span></label>
-              <input id="fullName" name="fullName" type="text" autocomplete="name" maxlength="120" required>
+              <input id="fullName" name="fullName" type="text" autocomplete="name" maxlength="120">
               <p class="field-error" id="fullNameError"></p>
             </div>
 
             <div class="field field-wide">
-              <label for="universityEmail">University email <span class="required">*</span></label>
-              <input id="universityEmail" name="universityEmail" type="email" autocomplete="email" maxlength="180" required>
-              <p class="field-help" id="universityEmailHelp">We send one email to confirm the address is yours. It is never shown publicly.</p>
-              <p class="field-error" id="universityEmailError"></p>
+              <label for="email">Email address <span class="required">*</span></label>
+              <input id="email" name="email" type="email" autocomplete="email" maxlength="180" aria-describedby="emailHelp">
+              <p class="field-help" id="emailHelp"></p>
+              <p class="field-error" id="emailError"></p>
             </div>
 
-            <div class="field">
+            <!-- Current students and alumni -->
+            <div class="field" data-roles="current_student alumni">
+              <label for="cohort">EU-HEM cohort <span class="required">*</span></label>
+              <select id="cohort" name="cohort"></select>
+              <p class="field-error" id="cohortError"></p>
+            </div>
+            <div class="field" data-roles="current_student alumni" data-when="cohort=other" hidden>
+              <label for="cohortOther">Your cohort <span class="required">*</span></label>
+              <input id="cohortOther" name="cohortOther" type="text" maxlength="40" placeholder="e.g. 2017–2019">
+              <p class="field-error" id="cohortOtherError"></p>
+            </div>
+
+            <div class="field" data-roles="current_student alumni">
               <label for="primaryCountry">Primary country you represent <span class="required">*</span></label>
               <input id="primaryCountry" name="primaryCountry" list="countryList" autocomplete="country-name"
-                     maxlength="100" placeholder="Start typing a country…" required>
+                     maxlength="100" placeholder="Start typing a country…">
               <datalist id="countryList"></datalist>
               <p class="field-help">Used for the future cohort map if your privacy choices allow it.</p>
               <p class="field-error" id="primaryCountryError"></p>
             </div>
 
-            <div class="field">
+            <div class="field" data-roles="current_student alumni">
               <label for="previousField">Previous academic field <span class="required">*</span></label>
-              <select id="previousField" name="previousField" required>
-                <option value="">Choose a field…</option>
-                <option>Medicine</option>
-                <option>Economics</option>
-                <option>Public Health</option>
-                <option>Pharmacy</option>
-                <option>Business &amp; Management</option>
-                <option>Health Sciences</option>
-                <option>Life Sciences</option>
-                <option>Social Sciences</option>
-                <option>Psychology / Behavioural Sciences</option>
-                <option>Engineering / Technology</option>
-                <option>Law</option>
-                <option>Other</option>
-              </select>
-              <p class="field-help">This is the subject area you studied, not the degree type.</p>
+              <select id="previousField" name="previousField"></select>
+              <p class="field-help">The subject you studied before EU-HEM, not the degree type.</p>
               <p class="field-error" id="previousFieldError"></p>
             </div>
-
-            <div class="field field-wide is-hidden" id="previousFieldOtherWrap">
-              <label for="previousFieldOther">Please specify your field <span class="required">*</span></label>
+            <div class="field field-wide" data-roles="current_student alumni" data-when="previousField=other" hidden>
+              <label for="previousFieldOther">Please specify your academic field <span class="required">*</span></label>
               <input id="previousFieldOther" name="previousFieldOther" type="text" maxlength="110">
               <p class="field-error" id="previousFieldOtherError"></p>
             </div>
 
-            <div class="field field-wide">
-              <label for="euhemTrack">EU-HEM track <span class="required">*</span></label>
-              <select id="euhemTrack" name="euhemTrack" required>
-                <option value="">Choose your track…</option>
-                <option>Economic Evaluation in Healthcare</option>
-                <option>Health Economics &amp; Policy</option>
-                <option>Management of Healthcare Institutions</option>
-                <option>Population Health Management</option>
-                <option>Not decided yet</option>
-              </select>
-              <p class="field-error" id="euhemTrackError"></p>
+            <div class="field field-wide" data-roles="current_student alumni">
+              <label for="track" id="trackLabel">EU-HEM track <span class="required">*</span></label>
+              <select id="track" name="track"></select>
+              <p class="field-error" id="trackError"></p>
+            </div>
+            <div class="field field-wide" data-roles="alumni" data-when="track=other_former" hidden>
+              <label for="trackOther">Your former specialisation <span class="required">*</span></label>
+              <input id="trackOther" name="trackOther" type="text" maxlength="110">
+              <p class="field-error" id="trackOtherError"></p>
+            </div>
+
+            <!-- Students from another programme -->
+            <div class="field" data-roles="shared_course_student">
+              <label for="homeInstitution">Home institution <span class="required">*</span></label>
+              <input id="homeInstitution" name="homeInstitution" type="text" maxlength="160" autocomplete="organization">
+              <p class="field-error" id="homeInstitutionError"></p>
+            </div>
+            <div class="field" data-roles="shared_course_student">
+              <label for="homeProgramme">Home programme <span class="required">*</span></label>
+              <input id="homeProgramme" name="homeProgramme" type="text" maxlength="160" placeholder="e.g. MSc Economics">
+              <p class="field-error" id="homeProgrammeError"></p>
+            </div>
+            <fieldset class="field field-wide check-fieldset" data-roles="shared_course_student" id="sharedCourses">
+              <legend>Which EU-HEM/shared course(s) do you attend? <span class="required">*</span></legend>
+              <div class="check-list" id="sharedCourseList"></div>
+              <label for="sharedCoursesOther" class="field-label">Another course, if not listed</label>
+              <input id="sharedCoursesOther" name="sharedCoursesOther" type="text" maxlength="120" placeholder="e.g. a seminar or elective">
+              <p class="field-error" id="sharedCoursesError"></p>
+            </fieldset>
+
+            <!-- Faculty, staff and partners -->
+            <div class="field" data-roles="faculty_staff">
+              <label for="organisation">Institution / organisation <span class="required">*</span></label>
+              <input id="organisation" name="organisation" type="text" maxlength="160" autocomplete="organization">
+              <p class="field-error" id="organisationError"></p>
+            </div>
+            <div class="field" data-roles="faculty_staff">
+              <label for="programmeRole">Role <span class="required">*</span></label>
+              <select id="programmeRole" name="programmeRole"></select>
+              <p class="field-error" id="programmeRoleError"></p>
+            </div>
+            <div class="field field-wide" data-roles="faculty_staff" data-when="programmeRole=other" hidden>
+              <label for="programmeRoleOther">Please specify your role <span class="required">*</span></label>
+              <input id="programmeRoleOther" name="programmeRoleOther" type="text" maxlength="110">
+              <p class="field-error" id="programmeRoleOtherError"></p>
+            </div>
+            <div class="field field-wide" data-roles="faculty_staff">
+              <label for="coursesInvolved">Courses / areas you're involved with</label>
+              <input id="coursesInvolved" name="coursesInvolved" type="text" maxlength="300" placeholder="e.g. Health Systems, thesis supervision">
             </div>
           </div>
 
@@ -159,18 +228,18 @@
         <section class="form-step" data-step="2" aria-labelledby="step2Title" hidden>
           <div class="step-heading">
             <span class="step-kicker">STEP 2 · OPTIONAL</span>
-            <h2 id="step2Title">Tell us a little more</h2>
-            <p>Skip anything you don't want to add. To change your profile later, contact the Student Hub team.</p>
+            <h2 id="step2Title">Your profile &amp; Student Hub preferences</h2>
+            <p id="step2Lead">Everything here is optional. Skip anything you don't want to add.</p>
           </div>
 
-          <div class="photo-uploader">
+          <div class="photo-uploader" data-roles="current_student alumni">
             <div class="photo-preview" id="photoPreview" aria-live="polite">
               <span id="photoPlaceholder" aria-hidden="true">👤</span>
               <img id="photoImage" alt="Profile photo preview" hidden>
             </div>
             <div class="photo-controls">
               <label for="profilePhoto" class="field-label">Profile photo</label>
-              <p class="field-help">Optional. JPEG, PNG or WebP. It is resized in your browser before upload, which also removes hidden data such as location.</p>
+              <p class="field-help">JPEG, PNG or WebP. It is resized in your browser before upload, which also removes hidden data such as location.</p>
               <div class="inline-actions">
                 <label class="btn btn-secondary file-button" for="profilePhoto">Choose photo</label>
                 <button type="button" class="btn btn-ghost" id="removePhoto" hidden>Remove</button>
@@ -182,86 +251,59 @@
           </div>
 
           <div class="field-grid">
-            <div class="field">
-              <label for="additionalCountry">Additional country / cultural background</label>
-              <input id="additionalCountry" name="additionalCountry" list="countryList" maxlength="100">
+            <div class="field field-wide" data-roles="current_student alumni">
+              <label for="additionalCountry">Additional country you also identify with — optional</label>
+              <input id="additionalCountry" name="additionalCountry" list="countryList" maxlength="100" aria-describedby="additionalCountryHelp">
+              <p class="field-help" id="additionalCountryHelp">Use this if another country is meaningfully part of your
+                background — for example, you have dual nationality, grew up or lived there for a significant period, or
+                have a strong family or cultural connection. Your primary country will still be used for the cohort map.</p>
             </div>
 
-            <div class="field">
-              <label for="previousDegree">Previous degree</label>
-              <input id="previousDegree" name="previousDegree" type="text" maxlength="100" placeholder="e.g. MD, BSc, BA, MSc">
-              <p class="field-help">Degree type, while “academic field” describes what you studied.</p>
+            <div class="field" data-roles="current_student alumni">
+              <label for="previousDegree">Highest completed degree before EU-HEM</label>
+              <select id="previousDegree" name="previousDegree"></select>
+            </div>
+            <div class="field" data-roles="current_student alumni" data-when="previousDegree=other" hidden>
+              <label for="previousDegreeOther">Please specify your degree <span class="required">*</span></label>
+              <input id="previousDegreeOther" name="previousDegreeOther" type="text" maxlength="110">
+              <p class="field-error" id="previousDegreeOtherError"></p>
             </div>
 
-            <div class="field field-wide">
-              <label for="previousUniversity">Previous university</label>
+            <div class="field field-wide" data-roles="current_student alumni">
+              <label for="previousUniversity">University / institution before EU-HEM</label>
               <input id="previousUniversity" name="previousUniversity" type="text" maxlength="160">
             </div>
 
-            <div class="field field-wide">
+            <div class="field field-wide" data-roles="current_student alumni">
               <label for="shortBio">Short bio</label>
-              <textarea id="shortBio" name="shortBio" rows="4" maxlength="250"
-                        placeholder="Tell your classmates a little about your background and interests…"></textarea>
-              <div class="counter-row"><span></span><span id="bioCounter">0 / 250</span></div>
+              <p class="field-help" id="shortBioHelp">Introduce yourself in 2–3 sentences. You could mention what you studied or
+                worked on before EU-HEM, what interests you now, and something you'd be happy to connect with classmates about.
+                Avoid putting contact details here — you can share your LinkedIn separately.</p>
+              <textarea id="shortBio" name="shortBio" rows="4" maxlength="350" aria-describedby="shortBioHelp bioCounter"
+                placeholder="Previously studied Pharmacy and worked in healthcare. Interested in health economics, market access and digital health, and always happy to connect over research or travel."></textarea>
+              <div class="counter-row"><span></span><span id="bioCounter" aria-live="polite">0 / 350</span></div>
             </div>
 
             <div class="field field-wide">
-              <label for="professionalInterests">Professional interests</label>
-              <input id="professionalInterests" name="professionalInterests" type="text" maxlength="400"
-                     placeholder="e.g. Healthcare management, Digital health, HTA">
-              <p class="field-help">Separate multiple interests with commas.</p>
-            </div>
-
-            <div class="field field-wide">
-              <label for="researchInterests">Research interests</label>
-              <input id="researchInterests" name="researchInterests" type="text" maxlength="400"
-                     placeholder="e.g. Health systems, AI in healthcare, Policy evaluation">
-            </div>
-
-            <div class="field field-wide">
-              <label for="languages">Languages</label>
-              <input id="languages" name="languages" type="text" maxlength="300"
-                     placeholder="e.g. Arabic — Native, English — Advanced, Italian — Beginner">
-            </div>
-
-            <div class="field field-wide">
-              <label for="hobbies">Hobbies / interests</label>
-              <input id="hobbies" name="hobbies" type="text" maxlength="300"
-                     placeholder="e.g. Movies, travel, running, cooking, photography">
-            </div>
-
-            <div class="field field-wide">
-              <label for="canHelpWith">I can help with…</label>
-              <input id="canHelpWith" name="canHelpWith" type="text" maxlength="350"
-                     placeholder="What could classmates reach out to you about?">
-            </div>
-
-            <div class="field field-wide">
-              <label for="connectAbout">I'd like to connect about…</label>
-              <input id="connectAbout" name="connectAbout" type="text" maxlength="350"
-                     placeholder="Research, thesis ideas, entrepreneurship, study groups…">
-            </div>
-
-            <div class="field">
-              <label for="linkedin">LinkedIn</label>
+              <label for="linkedin">LinkedIn — optional</label>
               <input id="linkedin" name="linkedin" type="url" inputmode="url" maxlength="250"
-                     placeholder="https://www.linkedin.com/in/...">
+                     placeholder="https://www.linkedin.com/in/..." aria-describedby="linkedinHelp">
+              <p class="field-help" id="linkedinHelp">Add your LinkedIn if you'd like classmates to learn more about your
+                background and make it easier to build professional connections across the international EU-HEM community.</p>
               <p class="field-error" id="linkedinError"></p>
             </div>
-
-            <div class="field">
-              <label for="instagram">Instagram</label>
-              <input id="instagram" name="instagram" type="text" maxlength="120" placeholder="@username">
-              <p class="field-error" id="instagramError"></p>
-            </div>
-
-            <div class="field field-wide" data-phone-field>
-              <label for="phone">Phone / WhatsApp</label>
-              <input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="40" placeholder="+39 …">
-              <p class="field-help">Optional and hidden by default. It is never shown publicly.</p>
-              <p class="field-error" id="phoneError"></p>
-            </div>
           </div>
+
+          <fieldset class="feature-fieldset">
+            <legend>Help shape the Student Hub <span class="optional-tag">optional</span></legend>
+            <p>Which parts of the Student Hub would you most like to use or see improved? Choose as many as you like.</p>
+            <div class="feature-chips" id="featureChips"></div>
+            <p class="feature-count" id="featureCount" aria-live="polite">0 selected</p>
+            <div class="field" data-when="feature=other" hidden>
+              <label for="featureSuggestion">What would you like us to build or improve?</label>
+              <input id="featureSuggestion" name="featureSuggestion" type="text" maxlength="300">
+            </div>
+          </fieldset>
 
           <div class="step-actions">
             <button type="button" class="btn btn-secondary" data-back>Back</button>
@@ -273,34 +315,40 @@
         <section class="form-step" data-step="3" aria-labelledby="step3Title" hidden>
           <div class="step-heading">
             <span class="step-kicker">STEP 3</span>
-            <h2 id="step3Title">Choose your privacy</h2>
-            <p>Choose who may eventually see your individual profile. Nothing is published automatically.</p>
+            <h2 id="step3Title">Privacy &amp; confirmation</h2>
+            <p id="step3Lead">Choose who may eventually see your profile. Nothing is published automatically.</p>
           </div>
 
-          <fieldset class="privacy-fieldset">
-            <legend>Who can see your profile? <span class="required">*</span></legend>
+          <fieldset class="privacy-fieldset" data-roles="current_student alumni">
+            <legend>Who can see your Student Directory profile? <span class="required">*</span></legend>
 
             <label class="privacy-card">
-              <input type="radio" name="profileVisibility" value="public" required>
+              <input type="radio" name="profileVisibility" value="public">
               <span class="privacy-icon" aria-hidden="true">🌍</span>
               <span class="privacy-copy">
+                <span class="privacy-badge badge-network">Best for networking</span>
                 <strong>Public</strong>
-                <small>Your approved profile may be visible to anyone visiting the Student Hub. Contact information still follows its own privacy settings.</small>
-              </span>
-            </label>
-
-            <label class="privacy-card privacy-recommended">
-              <input type="radio" name="profileVisibility" value="cohort" required checked>
-              <span class="privacy-icon" aria-hidden="true">🎓</span>
-              <span class="privacy-copy">
-                <span class="recommended-badge">Recommended</span>
-                <strong>EU-HEM students only</strong>
-                <small>Your profile stays private for now and may later be shown only to verified EU-HEM students after secure login is available.</small>
+                <small>Your approved profile can be visible to anyone visiting the Student Hub. This makes it easier for
+                  classmates, alumni and future professional connections to discover you.</small>
+                <small class="coming-soon-note">Coming soon: you'll have your own Student Hub account and dashboard, where
+                  you'll be able to edit your profile anytime and choose exactly which information is public, visible only
+                  to EU-HEM members, or hidden.</small>
               </span>
             </label>
 
             <label class="privacy-card">
-              <input type="radio" name="profileVisibility" value="hidden" required>
+              <input type="radio" name="profileVisibility" value="cohort">
+              <span class="privacy-icon" aria-hidden="true">🎓</span>
+              <span class="privacy-copy">
+                <span class="privacy-badge badge-private">More private</span>
+                <strong>EU-HEM students only</strong>
+                <small>Your profile will remain private for now and may later be visible only to verified EU-HEM members
+                  after secure login is available.</small>
+              </span>
+            </label>
+
+            <label class="privacy-card">
+              <input type="radio" name="profileVisibility" value="hidden">
               <span class="privacy-icon" aria-hidden="true">🔒</span>
               <span class="privacy-copy">
                 <strong>Do not publish my profile yet</strong>
@@ -310,67 +358,58 @@
             <p class="field-error" id="profileVisibilityError"></p>
           </fieldset>
 
-          <details class="advanced-privacy" id="advancedPrivacy">
+          <details class="advanced-privacy" id="advancedPrivacy" data-roles="current_student alumni">
             <summary>Advanced privacy settings</summary>
-            <p class="field-help">Fine-tune optional fields. Invalid combinations are automatically prevented.</p>
-
+            <p class="field-help" id="advancedHelp">Choose who may see each detail. Your profile choice above sets the limits; your email is never public.</p>
             <div class="privacy-grid">
               <div class="field">
                 <label for="photoVisibility">Profile photo</label>
                 <select id="photoVisibility" name="photoVisibility"></select>
               </div>
-
-              <div class="field">
-                <label for="emailVisibility">University email</label>
-                <select id="emailVisibility" name="emailVisibility"></select>
-              </div>
-
               <div class="field">
                 <label for="linkedinVisibility">LinkedIn</label>
                 <select id="linkedinVisibility" name="linkedinVisibility"></select>
               </div>
-
               <div class="field">
-                <label for="instagramVisibility">Instagram</label>
-                <select id="instagramVisibility" name="instagramVisibility"></select>
-              </div>
-
-              <div class="field" data-phone-field>
-                <label for="phoneVisibility">Phone / WhatsApp</label>
-                <select id="phoneVisibility" name="phoneVisibility"></select>
+                <label for="emailVisibility">Email address</label>
+                <select id="emailVisibility" name="emailVisibility"></select>
               </div>
             </div>
           </details>
 
-          <fieldset class="consent-card">
-            <legend>Help us show the diversity of the EU-HEM community <span class="required">*</span></legend>
-            <p>
-              Allow your non-contact profile information to contribute to anonymous, aggregated cohort statistics?
-              This may include country represented, academic background and EU-HEM track.
-              Your name, photo, email, phone number and individual profile will never be shown as part of these statistics.
-            </p>
+          <fieldset class="consent-card" data-roles="current_student alumni">
+            <legend>Anonymous community statistics <span class="required">*</span></legend>
+            <p>Allow my non-contact profile information to contribute to anonymous, aggregated EU-HEM community statistics?</p>
+            <p class="field-help">This may include information such as country represented, academic background, cohort and
+              EU-HEM track. Your name, photo, email and individual profile will never be shown as part of these statistics.</p>
             <div class="radio-inline">
-              <label><input type="radio" name="analyticsConsent" value="yes" required> Yes</label>
-              <label><input type="radio" name="analyticsConsent" value="no" required> No</label>
+              <label><input type="radio" name="analyticsConsent" value="yes"> Yes</label>
+              <label><input type="radio" name="analyticsConsent" value="no"> No</label>
             </div>
             <p class="field-error" id="analyticsConsentError"></p>
           </fieldset>
 
+          <div class="note-card" data-roles="shared_course_student faculty_staff">
+            <strong>Your registration will not be added to the Student Directory.</strong>
+            <span>The Student Directory is for current EU-HEM students and alumni. Your information stays private
+              with the Student Hub team, who use it to confirm your connection to EU-HEM.</span>
+          </div>
+
           <label class="consent-check">
-            <input type="checkbox" id="privacyAcknowledgement" name="privacyAcknowledgement" value="yes" required>
+            <input type="checkbox" id="privacyAcknowledgement" name="privacyAcknowledgement" value="yes">
             <span>
-              I have reviewed the <a href="privacy.html#student-directory" target="_blank" rel="noopener">Directory privacy information</a>
-              and understand how my profile visibility choices will be used.
+              I have reviewed the <a href="privacy.html#student-directory" target="_blank" rel="noopener">privacy information</a>
+              and understand how my information and choices will be used.
             </span>
           </label>
           <p class="field-error" id="privacyAcknowledgementError"></p>
 
-          <div class="summary-card" id="privacySummary" aria-live="polite"></div>
+          <div class="summary-card" id="privacySummary" aria-live="polite" hidden></div>
 
           <div class="step-actions">
             <button type="button" class="btn btn-secondary" data-back>Back</button>
             <button type="submit" class="btn btn-primary" id="submitButton">
-              <span id="submitButtonText">Submit profile</span>
+              <span id="submitButtonText">Join the Directory</span>
               <span class="spinner" id="submitSpinner" hidden aria-hidden="true"></span>
             </button>
           </div>
@@ -380,11 +419,13 @@
       </form>
 
       <section class="success-card" id="successCard" hidden tabindex="-1">
-        <div class="success-icon" aria-hidden="true">✓</div>
-        <h2>Thanks — your profile has been submitted.</h2>
-        <p id="successConfirmText"></p>
+        <div class="success-icon" aria-hidden="true">✉️</div>
+        <h2>Check your email</h2>
+        <p id="successConfirmText">We've sent a confirmation message to your email address. Open it and press the
+          confirmation button to verify that the address belongs to you.</p>
+        <p>Your registration will remain unconfirmed until that step is completed.</p>
         <p id="successVisibilityText"></p>
-        <p>Nothing is published automatically. To change or delete your profile, <a href="contact.html">contact the Student Hub team</a>.</p>
+        <p>To change or delete your information, <a href="contact.html">contact the Student Hub team</a>.</p>
         <a class="btn btn-primary" href="index.html">Explore the Student Hub</a>
       </section>
 
@@ -402,8 +443,10 @@
   <script defer src="search.js?v=5cf2db17"></script>
   <script defer src="pwa.js?v=c9212bf8"></script>
   <script defer src="announcements.js?v=4ad85af3"></script>
-  <script defer src="directory-config.js?v=a6272eb1"></script>
-  <script defer src="join.js?v=e7425dd6"></script>
+  <script defer src="programme.js?v=bc6eeb23"></script>
+  <script defer src="directory-config.js?v=c1f67154"></script>
+  <script defer src="directory-options.js?v=c2c512f8"></script>
+  <script defer src="join.js?v=5e8ba634"></script>
 
 </body>
 </html>
