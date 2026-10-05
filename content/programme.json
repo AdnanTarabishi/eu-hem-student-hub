@@ -20,7 +20,9 @@
       "studyPlanSubmission": {
         "url": "https://studenti.unibo.it",
         "deadline": null,
-        "deadlineNote": "PLACEHOLDER: add the official study plan deadline here (from the UniBo course website)."
+        "noDeadline": true,
+        "deadlineNote": "There is no deadline, but you must fill in your study plan before you can register for exams on AlmaEsami.",
+        "deadlineSource": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/study-plan-eu-hem"
       },
       "terms": [
         {

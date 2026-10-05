@@ -369,9 +369,13 @@ async function initStudyPlan() {
     document.getElementById("plan-submit").href = submission.url || planPage.programme.programme.studentsOnlineUrl;
     const deadline = document.getElementById("plan-deadline");
     deadline.textContent = "Official submission deadline: ";
-    deadline.appendChild(submission.deadline
-      ? createElement("strong", null, formatDay(submission.deadline))
-      : createElement("strong", "placeholder-text", "⚠ PLACEHOLDER: deadline to be added"));
+    if (submission.deadline) deadline.appendChild(createElement("strong", null, formatDay(submission.deadline)));
+    else if (submission.noDeadline) {
+      // The course states there is no deadline; the note says what the plan is needed for
+      deadline.appendChild(createElement("strong", null, "none."));
+      if (submission.deadlineNote) deadline.appendChild(document.createTextNode(` ${submission.deadlineNote.replace(/^There is no deadline, but y/, "Y")} `));
+      if (submission.deadlineSource) deadline.appendChild(externalLink("Source ↗", submission.deadlineSource));
+    } else deadline.appendChild(createElement("strong", "placeholder-text", "⚠ PLACEHOLDER: deadline to be added"));
 
     const source = document.getElementById("plan-source");
     source.textContent = `Rules for cohort ${cohort.label}. Last checked: ${formatDay(cohort.lastChecked, { day: "numeric", month: "short", year: "numeric" })}. `;

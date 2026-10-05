@@ -120,7 +120,11 @@ async function checkProgramme() {
     const submission = cohort.studyPlanSubmission || {};
     checkUrl(submission.url, "studyPlanSubmission.url", cw);
     if (submission.deadline) checkDate(submission.deadline, "studyPlanSubmission.deadline", cw);
-    else warn(cw, `the study plan submission deadline is still a placeholder ("deadline": null)`);
+    else if (submission.noDeadline) {
+      // "No deadline" is a real answer only with the official page that says so
+      if (!submission.deadlineSource) error(cw, `"noDeadline": true needs a "deadlineSource" (the official page saying so)`);
+      else checkUrl(submission.deadlineSource, "studyPlanSubmission.deadlineSource", cw);
+    } else warn(cw, `the study plan submission deadline is still a placeholder ("deadline": null)`);
 
     for (const term of cohort.terms || []) {
       const tw = `${file} (${cohort.id} / ${term.id})`;
