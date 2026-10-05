@@ -9,7 +9,7 @@ const CITY_GUIDES = [
   { id: "bologna", university: "unibo", file: "docs/content/bologna-guide.md" },
   { id: "oslo", university: "uio", file: "docs/content/oslo-guide.md" },
   { id: "rotterdam", university: "eur", file: "docs/content/rotterdam-guide.md" },
-  { id: "innsbruck", university: "mci", file: null },
+  { id: "innsbruck", university: "mci", file: "docs/content/innsbruck-guide.md" },
 ];
 
 // Every guide has these sections, in this order, as "## 1. At a glance" … "## 16. Sources"
