@@ -6,9 +6,9 @@ headings and `-` for bullet points). You never need to touch the code to change 
 | City | File | Status |
 |---|---|---|
 | Bologna | `docs/content/bologna-guide.md` | full format with photos, checked 5 October 2026 |
-| Oslo | `docs/content/oslo-guide.md` | full format, checked 5 October 2026 |
-| Rotterdam | `docs/content/rotterdam-guide.md` | full format, checked 5 October 2026 |
-| Innsbruck | `docs/content/innsbruck-guide.md` | full format, checked 5 October 2026 |
+| Oslo | `docs/content/oslo-guide.md` | full format with photos, checked 5 October 2026 |
+| Rotterdam | `docs/content/rotterdam-guide.md` | full format with photos, checked 5 October 2026 |
+| Innsbruck | `docs/content/innsbruck-guide.md` | full format with photos, checked 5 October 2026 |
 
 The page `city-guide.html` shows the index of all cities; `city-guide.html?city=oslo` shows one city.
 
@@ -82,6 +82,9 @@ Free photos from [Wikimedia Commons](https://commons.wikimedia.org/) are fine if
 3. The caption must say what it shows, then `Photo: <photographer>, <year>`, the licence with its link
    (for example CC BY-SA 4.0) and a link to the photo's Commons page. Write "(cropped)" if you cropped it.
    The checker refuses a photo without these.
+4. The **first** photo is shown large; pick the one that says the most about the city.
+5. The photo on the city cards (City Guide index and homepage) is the `cover` in `guide-data.js`:
+   the image path without `-640.webp`, its alt text and a short credit like `Photo: Name, CC BY-SA 4.0`.
 
 ## How to add a new city
 1. Make sure the university is in `content/tracks.json` (its `guide` link must be

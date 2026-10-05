@@ -139,8 +139,8 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
   await page.context().close();
   ok('dark mode: the guide renders on the dark background');
 
-  // ----- Every other guide: same layout as Oslo; photos load and carry their credit -----
-  for (const guide of guides.CITY_GUIDES.filter((g) => g.file && g.id !== 'oslo')) {
+  // ----- Every guide: 16 sections, photos load and carry their credit -----
+  for (const guide of guides.CITY_GUIDES.filter((g) => g.file)) {
     const city = cohort.universities[guide.university].city;
     page = await open(`city-guide.html?city=${guide.id}`, { viewport: { width: 375, height: 800 } });
     await page.waitForSelector('.guide-section');

@@ -90,6 +90,7 @@ async function showCityIndex(cohort) {
     const university = cohort ? cohort.universities[guide.university] : null;
     const card = createElement("a", "guide-city-card");
     card.href = `city-guide.html?city=${guide.id}`;
+    if (guide.cover) card.appendChild(cityCoverPhoto(guide.cover));
     if (university) card.appendChild(createElement("span", "city-country", university.country));
     card.appendChild(createElement("strong", null, cityName(cohort, guide)));
     if (university) card.appendChild(createElement("span", "guide-city-university", university.name));
@@ -246,7 +247,11 @@ function fillAtAGlance(section, guide, facts, cohort) {
     if (facts[key]) add(GUIDE_FACTS[key], facts[key]);
   }
   add("Last checked", checkedDate(facts["last-checked"]));
-  section.querySelector(".guide-section-body").prepend(list);
+  // The facts go right after the city's photos (if it has any), so the guide opens with the city
+  const body = section.querySelector(".guide-section-body");
+  const photos = body.querySelector(".guide-photos");
+  if (photos) photos.after(list);
+  else body.prepend(list);
 }
 
 // Student tips stay hidden until a tip is written (an HTML comment alone counts as empty)

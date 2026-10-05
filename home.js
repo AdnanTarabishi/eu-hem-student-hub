@@ -176,6 +176,7 @@ async function fillCityCards() {
       const card = document.createElement("a");
       card.className = "city-card";
       card.href = `city-guide.html?city=${guide.id}`;
+      if (guide.cover) card.appendChild(cityCoverPhoto(guide.cover));
       card.append(createElement("span", "city-country", university.country), createElement("strong", null, university.city),
         createElement("span", null, cityPresenceText(cohort, guide.university)),
         createElement("span", guide.file ? "city-status is-ready" : "city-status", guide.file ? "Read the guide →" : "Coming soon"));

@@ -388,6 +388,14 @@ function checkCityGuides() {
     if (university.guide !== `city-guide.html?city=${guide.id}`) {
       error("content/tracks.json", `university "${guide.university}": "guide" should be "city-guide.html?city=${guide.id}"`);
     }
+    if (guide.cover) {
+      const at = `${G}: cover of "${guide.id}"`;
+      for (const size of [640, 1200]) {
+        if (!fs.existsSync(path.join(ROOT, `${guide.cover.image}-${size}.webp`))) error(at, `"${guide.cover.image}-${size}.webp" does not exist`);
+      }
+      if (!guide.cover.alt) error(at, "needs alt text");
+      if (!/^Photo: .+, (CC|Public domain)/.test(guide.cover.credit || "")) error(at, 'credit must look like "Photo: <name>, CC BY-SA 4.0"');
+    }
     if (!guide.file) continue;
     const where = guide.file;
     if (!fs.existsSync(path.join(ROOT, guide.file))) {
