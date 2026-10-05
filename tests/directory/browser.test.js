@@ -1,4 +1,4 @@
-// The Join the Directory form (onboarding v2) in a real browser (installed Chrome), sending to
+// The Join the Directory form (onboarding v3) in a real browser (installed Chrome), sending to
 // Code.gs running on in-memory Google services (gas-mock.js). Run: node tests/directory/browser.test.js .
 const http = require('http'), fs = require('fs'), path = require('path'), assert = require('assert');
 const { chromium } = require('playwright');
@@ -132,6 +132,22 @@ const PNG = Buffer.from(fs.readFileSync(path.join(__dirname, 'png.b64'), 'utf8')
   assert.strictEqual(await page.textContent('#featureCount'), '3 selected');
   assert.strictEqual(await visible(page, '#featureSuggestion'), true);
   await page.fill('#featureSuggestion', 'A sports calendar');
+  // Mobility experience: optional; sharing only for a real answer; "Clear my answer" skips it again
+  assert.strictEqual(await visible(page, '#mobilitySection'), true);
+  assert.strictEqual(await page.locator('input[name="citizenshipGroup"]:checked').count(), 0);
+  assert.strictEqual(await page.locator('#citizenshipVisibility').isDisabled(), true);
+  await page.check('input[name="citizenshipGroup"][value="prefer_not_to_say"]');
+  assert.strictEqual(await page.locator('#citizenshipVisibility').isDisabled(), true, 'prefer not to say cannot be shared');
+  await page.check('input[name="citizenshipGroup"][value="non_eu_eea_swiss"]');
+  assert.strictEqual(await page.locator('#citizenshipVisibility').inputValue(), 'private', 'private by default');
+  await page.selectOption('#citizenshipVisibility', 'cohort');
+  await page.click('[data-clear="citizenshipGroup"]');
+  assert.strictEqual(await page.locator('input[name="citizenshipGroup"]:checked').count(), 0);
+  assert.strictEqual(await page.locator('#citizenshipVisibility').inputValue(), 'private');
+  await page.check('input[name="citizenshipGroup"][value="non_eu_eea_swiss"]'); await page.selectOption('#citizenshipVisibility', 'cohort');
+  await page.check('input[name="studyVisaExperience"][value="yes"]');
+  assert.deepStrictEqual(await page.locator('#citizenshipVisibility option').allTextContents(), ['Keep private', 'Share with verified EU-HEM students']);
+  ok('mobility experience: optional citizenship group and study-visa answers, private by default, sharing only for real answers, can be cleared');
   ok('step 2: short profile only (no Instagram, phone, interests); degree "Other", 350-character bio, LinkedIn check, photo, feature chips with counter and "Other"');
   await next(page, 2);
 
@@ -146,6 +162,8 @@ const PNG = Buffer.from(fs.readFileSync(path.join(__dirname, 'png.b64'), 'utf8')
 
   await page.check('input[name="profileVisibility"][value="cohort"]');
   assert.deepStrictEqual(await page.locator('#photoVisibility option').allTextContents(), ['EU-HEM members only', 'Hidden']);
+  await page.click('#advancedPrivacy summary');
+  await page.selectOption('#degreeVisibility', 'cohort'); // set by hand while the profile is EU-HEM only
   await page.check('input[name="profileVisibility"][value="public"]');
   assert.deepStrictEqual(await page.locator('#photoVisibility option').allTextContents(), ['Public', 'EU-HEM members only', 'Hidden']);
   assert.deepStrictEqual(await page.locator('#emailVisibility option').allTextContents(), ['EU-HEM members only', 'Hidden']);
@@ -153,8 +171,15 @@ const PNG = Buffer.from(fs.readFileSync(path.join(__dirname, 'png.b64'), 'utf8')
   await page.check('input[name="profileVisibility"][value="hidden"]');
   assert.deepStrictEqual(await page.locator('#linkedinVisibility option').allTextContents(), ['Hidden']);
   await page.check('input[name="profileVisibility"][value="public"]');
-  await page.click('#advancedPrivacy summary'); await page.selectOption('#photoVisibility', 'cohort');
-  ok('advanced privacy follows the profile: cohort cannot choose public; email never public and hidden by default');
+  assert.strictEqual(await page.locator('#degreeVisibility').inputValue(), 'cohort', 'a hand-set detail is never widened silently');
+  assert.strictEqual(await page.locator('#countryVisibility').inputValue(), 'public', 'untouched details follow the profile');
+  assert.strictEqual(await page.locator('#bioVisibility').inputValue(), 'public');
+  await page.selectOption('#photoVisibility', 'cohort');
+  assert.strictEqual(await page.locator('#mobilityStatisticsConsent').isChecked(), false);
+  const summaryText = await page.textContent('#privacySummary');
+  for (const sText of ['Degree: EU-HEM members only', 'Countries: Public', 'Citizenship group: Shared with verified EU-HEM students (never public)',
+    'Study-visa experience: Private', 'Mobility statistics: No']) assert.ok(summaryText.includes(sText), sText);
+  ok('advanced privacy follows the profile: cohort cannot choose public; email never public and hidden by default; hand-set details never widen; summary lists every detail');
 
   await page.click('#submitButton');
   assert.match(await page.textContent('#analyticsConsentError'), /Yes or No/);
@@ -176,6 +201,9 @@ const PNG = Buffer.from(fs.readFileSync(path.join(__dirname, 'png.b64'), 'utf8')
     ['current_student', true, '2026–2028', "I haven't chosen my track yet"]);
   assert.deepStrictEqual([row['Previous Academic Field'], row['Previous Degree'], row['University Email']], ['Other: Veterinary Medicine', 'Other: DVM', 'someone@gmail.com']);
   assert.deepStrictEqual([row['Profile Visibility'], row['Photo Visibility'], row['LinkedIn Visibility'], row['University Email Visibility']], ['public', 'cohort', 'public', 'hidden']);
+  assert.deepStrictEqual([row['Citizenship Group'], row['Citizenship Visibility'], row['Study Visa Experience'], row['Study Visa Experience Scope'],
+    row['Study Visa Experience Visibility'], row['Mobility Statistics Consent']], ['non_eu_eea_swiss', 'cohort', 'yes', 'first_semester_italy', 'private', 'no']);
+  assert.deepStrictEqual(JSON.parse(row['Field Visibility JSON']), { country: 'public', field: 'public', degree: 'cohort', university: 'public', track: 'public', bio: 'public' });
   assert.deepStrictEqual([row['Feature Interests'], row['Feature Suggestion'], row['Role Verification Status'], row['Status']], ['timetable, thesis, other', 'A sports calendar', 'pending', 'unconfirmed']);
   assert.strictEqual(gas.files.length, 1); assert.strictEqual(gas.files[0].blob.mime, 'image/jpeg');
   assert.strictEqual(gas.mails.length, 1); assert.strictEqual(preflights, 0);
@@ -214,6 +242,7 @@ const PNG = Buffer.from(fs.readFileSync(path.join(__dirname, 'png.b64'), 'utf8')
   row = lastRow();
   assert.deepStrictEqual([row['User Type'], row['EU-HEM Track'], row['Previous Academic Field'], row['Profile Visibility'], row['Directory Eligible']],
     ['alumni', 'Global Health', 'Dentistry & Oral Health', 'cohort', true]);
+  assert.deepStrictEqual([row['Citizenship Group'], row['Study Visa Experience'], row['Mobility Statistics Consent']], ['not_provided', 'not_provided', 'no'], 'skipped stays skipped');
   ok('alumnus with a legacy specialisation (Global Health), Dentistry, EU-HEM-only profile');
   await page.close();
 
@@ -230,7 +259,8 @@ const PNG = Buffer.from(fs.readFileSync(path.join(__dirname, 'png.b64'), 'utf8')
   assert.strictEqual(await visible(page, '#linkedin'), true);
   await next(page, 2);
   assert.strictEqual(await visible(page, '.privacy-fieldset'), false); assert.strictEqual(await visible(page, '#advancedPrivacy'), false);
-  assert.strictEqual(await visible(page, '.consent-card'), false);
+  assert.strictEqual(await page.locator('.consent-card:visible').count(), 0);
+  assert.strictEqual(await page.locator('#mobilitySection:visible').count(), 0);
   assert.match(await page.textContent('.note-card'), /will not be added to the Student Directory/);
   assert.strictEqual(await page.textContent('#submitButtonText'), 'Submit registration');
   await page.check('#privacyAcknowledgement'); await submit(page); await page.waitForSelector('#successCard:not([hidden])');

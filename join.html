@@ -9,7 +9,7 @@
   <meta name="description" content="Join the EU-HEM community on the Student Hub. You control who can see your profile.">
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=8a2df1f3">
-  <link rel="stylesheet" href="join.css?v=a1546ecd">
+  <link rel="stylesheet" href="join.css?v=6ecf464f">
   <meta name="theme-color" content="#20242a">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
@@ -294,6 +294,59 @@
             </div>
           </div>
 
+          <!-- Optional and private by default. Never worked out from the country or anything else. -->
+          <fieldset class="mobility-fieldset" id="mobilitySection" data-roles="current_student alumni">
+            <legend>Mobility experience <span class="optional-tag">optional</span></legend>
+            <p class="field-help">Both questions can be skipped. Your answers stay private unless you choose to share
+              them, and they are never shown on the public site.</p>
+
+            <fieldset class="sub-fieldset">
+              <legend>Citizenship group — optional</legend>
+              <p class="field-help">This may help us understand students' administrative and mobility experiences. It is
+                separate from the country you represent on the map. If you hold more than one citizenship and at least
+                one is from an EU or EEA country, or Switzerland, choose the first option.</p>
+              <div class="radio-stack">
+                <label class="radio-row"><input type="radio" name="citizenshipGroup" value="eu_eea_swiss"> <span>EU / EEA / Swiss citizen</span></label>
+                <label class="radio-row"><input type="radio" name="citizenshipGroup" value="non_eu_eea_swiss"> <span>Non-EU / EEA / Swiss citizen<small>I do not hold citizenship of an EU or EEA country, or Switzerland.</small></span></label>
+                <label class="radio-row"><input type="radio" name="citizenshipGroup" value="prefer_not_to_say"> <span>Prefer not to say</span></label>
+              </div>
+              <button type="button" class="link-button" data-clear="citizenshipGroup">Clear my answer</button>
+              
+              <div class="field share-field">
+                <label for="citizenshipVisibility">Who may see this answer?</label>
+                <select id="citizenshipVisibility" name="citizenshipVisibility">
+                  <option value="private">Keep private</option>
+                  <option value="cohort">Share with verified EU-HEM students</option>
+                </select>
+                <p class="field-help share-note" data-share-note>Sharing is optional. If enabled, verified EU-HEM students may use this field to find peers with similar mobility experiences once secure member access is available.</p>
+              </div>
+            </fieldset>
+
+            <fieldset class="sub-fieldset">
+              <legend>For your first EU-HEM semester in Italy, did you need to apply for a study visa before travelling? — optional</legend>
+              <p class="field-help">This records your own experience, not a legal assessment. Visa, residence-permit and
+                mobility requirements depend on your circumstances. Please do not enter visa or passport numbers or upload
+                documents. Practical information with official sources: <a href="city-guide.html?city=bologna" target="_blank" rel="noopener">Bologna city guide</a>.</p>
+              <div class="radio-stack">
+                <label class="radio-row"><input type="radio" name="studyVisaExperience" value="yes"> <span>Yes</span></label>
+                <label class="radio-row"><input type="radio" name="studyVisaExperience" value="no"> <span>No</span></label>
+                <label class="radio-row"><input type="radio" name="studyVisaExperience" value="not_sure"> <span>Not sure</span></label>
+                <label class="radio-row"><input type="radio" name="studyVisaExperience" value="not_applicable"> <span>Not applicable</span></label>
+                <label class="radio-row"><input type="radio" name="studyVisaExperience" value="prefer_not_to_say"> <span>Prefer not to say</span></label>
+              </div>
+              <button type="button" class="link-button" data-clear="studyVisaExperience">Clear my answer</button>
+              
+              <div class="field share-field">
+                <label for="studyVisaExperienceVisibility">Who may see this answer?</label>
+                <select id="studyVisaExperienceVisibility" name="studyVisaExperienceVisibility">
+                  <option value="private">Keep private</option>
+                  <option value="cohort">Share with verified EU-HEM students</option>
+                </select>
+                <p class="field-help share-note" data-share-note>Sharing is optional. If enabled, verified EU-HEM students may see this answer once secure member access is available.</p>
+              </div>
+            </fieldset>
+          </fieldset>
+
           <fieldset class="feature-fieldset">
             <legend>Help shape the Student Hub <span class="optional-tag">optional</span></legend>
             <p>Which parts of the Student Hub would you most like to use or see improved? Choose as many as you like.</p>
@@ -360,8 +413,33 @@
 
           <details class="advanced-privacy" id="advancedPrivacy" data-roles="current_student alumni">
             <summary>Advanced privacy settings</summary>
-            <p class="field-help" id="advancedHelp">Choose who may see each detail. Your profile choice above sets the limits; your email is never public.</p>
+            <p class="field-help" id="advancedHelp">Choose who may see each detail. Your profile choice above sets the limits; your email is never public.
+              A detail you change here is never made more visible automatically, even if you later change your profile setting.</p>
             <div class="privacy-grid">
+              <div class="field">
+                <label for="countryVisibility">Countries (primary and additional)</label>
+                <select id="countryVisibility" name="countryVisibility"></select>
+              </div>
+              <div class="field">
+                <label for="fieldVisibility">Academic background</label>
+                <select id="fieldVisibility" name="fieldVisibility"></select>
+              </div>
+              <div class="field">
+                <label for="degreeVisibility">Degree</label>
+                <select id="degreeVisibility" name="degreeVisibility"></select>
+              </div>
+              <div class="field">
+                <label for="universityVisibility">Previous university</label>
+                <select id="universityVisibility" name="universityVisibility"></select>
+              </div>
+              <div class="field">
+                <label for="trackVisibility">EU-HEM track</label>
+                <select id="trackVisibility" name="trackVisibility"></select>
+              </div>
+              <div class="field">
+                <label for="bioVisibility">Short bio</label>
+                <select id="bioVisibility" name="bioVisibility"></select>
+              </div>
               <div class="field">
                 <label for="photoVisibility">Profile photo</label>
                 <select id="photoVisibility" name="photoVisibility"></select>
@@ -387,6 +465,18 @@
               <label><input type="radio" name="analyticsConsent" value="no"> No</label>
             </div>
             <p class="field-error" id="analyticsConsentError"></p>
+          </fieldset>
+
+          <fieldset class="consent-card" data-roles="current_student alumni">
+            <legend>Mobility statistics <span class="optional-tag">optional</span></legend>
+            <label class="consent-check">
+              <input type="checkbox" id="mobilityStatisticsConsent" name="mobilityStatisticsConsent" value="yes">
+              <span>Allow my citizenship-group and optional study-visa response to contribute to anonymous, aggregated
+                mobility statistics.</span>
+            </label>
+            <p class="field-help">No individual citizenship or visa response will be published. Small groups may be
+              combined or omitted. This is separate from the community statistics choice above; saying no does not
+              affect your registration or your profile.</p>
           </fieldset>
 
           <div class="note-card" data-roles="shared_course_student faculty_staff">
@@ -444,9 +534,10 @@
   <script defer src="pwa.js?v=c9212bf8"></script>
   <script defer src="announcements.js?v=4ad85af3"></script>
   <script defer src="programme.js?v=bc6eeb23"></script>
-  <script defer src="directory-config.js?v=c1f67154"></script>
-  <script defer src="directory-options.js?v=c2c512f8"></script>
-  <script defer src="join.js?v=5e8ba634"></script>
+  <script defer src="directory-config.js?v=bb28e887"></script>
+  <script defer src="countries.js?v=9ba10988"></script>
+  <script defer src="directory-options.js?v=cefd40bc"></script>
+  <script defer src="join.js?v=6e572f2a"></script>
 
 </body>
 </html>

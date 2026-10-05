@@ -7,7 +7,7 @@ window.EUHEM_DIRECTORY_CONFIG = {
 
   // Must match CONSENT_VERSION in integrations/directory-apps-script/Code.gs. Change both when the
   // privacy text changes meaning (see docs/student-directory.md); scripts/check-content.js compares them.
-  consentVersion: "directory-v2-2026-10",
+  consentVersion: "directory-v3-2026-10",
 
   // EU-HEM cohorts offered in the form ("start–end", two years apart). Add a line each year:
   // a new cohort goes to the top of `current`; a graduated one moves to the top of `alumni`.

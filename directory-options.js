@@ -97,15 +97,35 @@ window.EUHEM_DIRECTORY_OPTIONS = {
       mobility_housing: "Housing & Mobility Planner",
       other: "Other"
     },
+    citizenshipGroups: {
+      eu_eea_swiss: "EU / EEA / Swiss citizen",
+      non_eu_eea_swiss: "Non-EU / EEA / Swiss citizen",
+      prefer_not_to_say: "Prefer not to say"
+    },
+    studyVisaExperience: { yes: "Yes", no: "No", not_sure: "Not sure", not_applicable: "Not applicable", prefer_not_to_say: "Prefer not to say" },
+    mobilityVisibility: { private: "Keep private", cohort: "Share with verified EU-HEM students" },
     visibility: { public: "Public", cohort: "EU-HEM members only", hidden: "Hidden" },
     roleVerification: { pending: "Pending", verified: "Verified", rejected: "Rejected" }
   },
 
   // Which visibility each detail may have, for each profile choice. Email is never public.
+  // Nothing can be wider than the profile itself. Citizenship and study-visa answers are not here:
+  // they are never public (mobilityVisibility: private or verified EU-HEM students only).
   VIS_RULES: {
-    public: { photo: ["public", "cohort", "hidden"], linkedin: ["public", "cohort", "hidden"], email: ["cohort", "hidden"] },
-    cohort: { photo: ["cohort", "hidden"], linkedin: ["cohort", "hidden"], email: ["cohort", "hidden"] },
-    hidden: { photo: ["hidden"], linkedin: ["hidden"], email: ["hidden"] }
+    public: {
+      photo: ["public", "cohort", "hidden"], linkedin: ["public", "cohort", "hidden"], email: ["cohort", "hidden"],
+      country: ["public", "cohort", "hidden"], field: ["public", "cohort", "hidden"], degree: ["public", "cohort", "hidden"],
+      university: ["public", "cohort", "hidden"], track: ["public", "cohort", "hidden"], bio: ["public", "cohort", "hidden"]
+    },
+    cohort: {
+      photo: ["cohort", "hidden"], linkedin: ["cohort", "hidden"], email: ["cohort", "hidden"],
+      country: ["cohort", "hidden"], field: ["cohort", "hidden"], degree: ["cohort", "hidden"],
+      university: ["cohort", "hidden"], track: ["cohort", "hidden"], bio: ["cohort", "hidden"]
+    },
+    hidden: {
+      photo: ["hidden"], linkedin: ["hidden"], email: ["hidden"],
+      country: ["hidden"], field: ["hidden"], degree: ["hidden"], university: ["hidden"], track: ["hidden"], bio: ["hidden"]
+    }
   },
 
   // Form only: how the academic fields are grouped in the list

@@ -15,7 +15,7 @@ A free, volunteer website for students of the EU-HEM master's program (European 
 - One page per course: Overview, Schedule, Exam, Topics, Key Concepts, Practice, Resources
 - Notes & Resources: student-made notes, flashcards, practice questions and a shared glossary (pilot: Fundamentals in Health Economics)
 - City guides for Bologna, Oslo, Rotterdam and Innsbruck (permits, housing, healthcare, transport, study places and more)
-- Students directory, currently a **demo with fictional data** (`data/sample-students.csv`)
+- **Students explorer** (`students.html`): community map, profile cards and list, filters and privacy-aware statistics, currently a **demo with 40 fictional people** (`data/demo-students.json`)
 - Useful links, including Virtuale for official course materials
 - **Search the whole site** with the 🔍 button, Ctrl+K (⌘K on Mac) or `/`
 - **Installable app that works offline** (on phones: "Install app" / "Add to Home Screen")
@@ -89,15 +89,16 @@ Sheet columns (any order): `Date | Title | Category | Message | Link | Pinned | 
 - Don't put personal data (phone numbers, private emails) in announcements: the published sheet is public.
 
 ## Students directory and privacy
-The directory page reads a CSV file set by `DATA_SOURCE_URL` at the top of `students.js`.
-It currently uses fictional demo data. Before using real data:
-- Only students who **gave consent** may appear.
-- Google Sheets "Publish to web" makes the **whole tab public**. Publish a separate tab with only
-  consenting students and only the 4 directory columns, never the raw form responses (emails, timestamps).
+The Students explorer (`students.html`) shows **only fictional demo data** in Phase 1
+(`data/demo-students.json`, made by `node scripts/build-demo-students.js`). All privacy rules live in
+`students-data.js`; settings in `students-config.js`. Read [docs/students-explorer.md](docs/students-explorer.md)
+before changing anything. In short:
+- Never export the private registration Sheet to the site (no "Publish to web", CSV, gviz or JSON exports).
+  Real profiles need the Phase 2 login and a server that applies the same privacy rules.
 - Never commit real student data to this repository. `private-data/` and `*.private.csv` are git-ignored.
 
 Current students, alumni, students from shared courses and staff register through **join.html** ("Join the
-Directory", onboarding v2; only current students and alumni can be in the Directory), which sends to a private Google Apps Script
+Directory", onboarding v3; only current students and alumni can be in the Directory), which sends to a private Google Apps Script
 backend. It stays switched off until `endpoint` is set in `directory-config.js`. See
 [docs/student-directory.md](docs/student-directory.md) for how it works, the go-live checklist and the tests
 (`npm install` once, then `npm test`).
