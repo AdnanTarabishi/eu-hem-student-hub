@@ -351,6 +351,120 @@ async function checkTracks() {
 // - the endpoint is empty or a Google Apps Script /exec address (nothing else may receive the data)
 // - the form cannot be switched on while the Contact page still has no way to reach us
 // - no Google Sheet or Drive folder ID is ever written in these files (they live in Script Properties)
+// City guides (list in guide-data.js, rules in docs/city-guides.md):
+// - every guide belongs to a university of tracks.json, and the university's "guide" link matches
+// - a guide with a facts block has all facts, the 16 sections in order, each filled in (Student tips
+//   may stay empty), and EU/EEA and non-EU parts in "Residence and registration" and "Healthcare"
+// - every line with a price (NOK, EUR, €, kr and a number) has a source tag like [S12], every tag is listed in
+//   Sources, and every source has a title, an https address and a "checked" date
+// - tracks are never typed in a guide: guide.js takes them from tracks.json
+// - the disclaimer and the "Report something outdated" link are in the template (guide.js)
+function checkCityGuides() {
+  const G = "guide-data.js";
+  if (!fs.existsSync(path.join(ROOT, G))) return;
+  const guides = require("../guide-data.js");
+  const tracksFile = JSON.parse(fs.readFileSync(path.join(ROOT, "content/tracks.json"), "utf8"));
+  const cohort = tracksFile.cohorts[tracksFile.cohorts.length - 1];
+  const today = new Date().toISOString().slice(0, 10);
+
+  const template = fs.readFileSync(path.join(ROOT, "guide.js"), "utf8");
+  for (const text of ["This is a student-made summary, not legal advice. Rules change. The official pages linked here are authoritative.",
+    "Follow those first.", "Report something outdated"]) {
+    if (!template.includes(text)) error("guide.js", `the text "${text}" must be on every guide page`);
+  }
+
+  for (const id of Object.keys(cohort.universities)) {
+    if (!guides.CITY_GUIDES.some((g) => g.university === id)) error(G, `university "${id}" in tracks.json has no city in CITY_GUIDES`);
+  }
+  const trackNames = cohort.tracks.map((t) => t.abbr);
+
+  for (const guide of guides.CITY_GUIDES) {
+    const university = cohort.universities[guide.university];
+    if (!university) {
+      error(G, `city "${guide.id}": university "${guide.university}" is not in content/tracks.json`);
+      continue;
+    }
+    if (university.guide !== `city-guide.html?city=${guide.id}`) {
+      error("content/tracks.json", `university "${guide.university}": "guide" should be "city-guide.html?city=${guide.id}"`);
+    }
+    if (!guide.file) continue;
+    const where = guide.file;
+    if (!fs.existsSync(path.join(ROOT, guide.file))) {
+      error(G, `city "${guide.id}": file "${guide.file}" does not exist`);
+      continue;
+    }
+    const text = fs.readFileSync(path.join(ROOT, guide.file), "utf8").replace(/\r\n/g, "\n");
+    const parsed = guides.parseGuide(text);
+    if (!parsed.structured) {
+      warn(where, "older format: no facts block and not yet the 16 sections (see docs/city-guides.md)");
+      continue;
+    }
+
+    // Facts
+    for (const key of guides.GUIDE_REQUIRED_FACTS) {
+      if (!parsed.facts[key]) error(where, `fact "${key}" is missing or empty in the block at the top`);
+    }
+    if (parsed.facts.university && parsed.facts.university !== guide.university) {
+      error(where, `"university: ${parsed.facts.university}" but guide-data.js says "${guide.university}"`);
+    }
+    const checked = parsed.facts["last-checked"];
+    if (checked && (!DATE_PATTERN.test(checked) || isNaN(Date.parse(checked)))) error(where, `"last-checked" must be a date like 2026-10-05`);
+    else if (checked > today) error(where, `"last-checked" (${checked}) is in the future`);
+
+    // Sections
+    const sections = guides.guideSections(parsed.body);
+    const expected = guides.GUIDE_SECTIONS.map((title, i) => `${i + 1}. ${title}`);
+    const found = sections.map((s) => s.heading);
+    if (found.join("|") !== expected.join("|")) {
+      const firstWrong = expected.findIndex((heading, i) => found[i] !== heading);
+      error(where, `sections must be exactly "## 1. At a glance" … "## 16. Sources" in order; ` +
+        `expected "## ${expected[firstWrong]}" but found "${found[firstWrong] ? "## " + found[firstWrong] : "nothing"}"`);
+    }
+    for (const section of sections) {
+      const content = section.text.replace(/<!--[\s\S]*?-->/g, "").trim();
+      if (!content && !["At a glance", "Student tips"].includes(section.title)) {
+        error(where, `section "${section.heading}" is empty: write it, or write "Not verified. Check the official page: <link>"`);
+      }
+      if (["Residence and registration", "Healthcare"].includes(section.title)) {
+        const subheadings = (section.text.match(/^### .*$/gm) || []).join("\n");
+        if (!/EU\/EEA/.test(subheadings)) error(where, `section "${section.heading}" needs a "### EU/EEA students" part`);
+        if (!/non-EU/i.test(subheadings)) error(where, `section "${section.heading}" needs a "### Non-EU students" part`);
+      }
+    }
+
+    // Prices need a source; sources must be listed and well formed
+    const lines = text.split("\n");
+    const used = new Set();
+    const defined = new Map();
+    let inSources = false;
+    lines.forEach((line, i) => {
+      const at = `${where}:${i + 1}`;
+      if (/^## /.test(line)) inSources = /Sources\s*$/.test(line);
+      if (inSources) {
+        if (!line.trim() || /^## /.test(line)) return;
+        const source = line.match(/^- \[(S\d+)\] (.+?) — (\S+) — checked (\d{4}-\d{2}-\d{2})$/);
+        if (!source) return error(at, `a source must look like "- [S1] Title — https://… — checked 2026-10-05"`);
+        const [, tag, , url, date] = source;
+        if (defined.has(tag)) error(at, `source ${tag} is listed twice`);
+        defined.set(tag, i + 1);
+        if (!/^https:\/\/[a-z0-9.-]+\.[a-z]{2,}(\/\S*)?$/i.test(url)) error(at, `source ${tag}: "${url}" is not a well-formed https address`);
+        if (isNaN(Date.parse(date)) || date > today) error(at, `source ${tag}: "checked ${date}" is not a valid past date`);
+        return;
+      }
+      for (const tag of guides.sourceTags(line)) used.add(tag);
+      if (/\b(NOK|EUR|kr)\b|€/.test(line) && /\d/.test(line) && !guides.sourceTags(line).length) {
+        error(at, `a price without a source tag like [S12]: "${line.trim().slice(0, 70)}"`);
+      }
+      const track = trackNames.find((name) => new RegExp(`(^|[^\\w&])${name.replace("&", "\\&")}([^\\w&]|$)`).test(line));
+      if (track && !line.startsWith("<!--")) {
+        error(at, `"${track}": don't type tracks in a guide; the page shows them from content/tracks.json`);
+      }
+    });
+    for (const tag of used) if (!defined.has(tag)) error(where, `source tag [${tag}] is used but not listed in "16. Sources"`);
+    for (const [tag, line] of defined) if (!used.has(tag)) warn(`${where}:${line}`, `source ${tag} is listed but never used`);
+  }
+}
+
 function checkDirectory() {
   const C = "directory-config.js";
   const G = "integrations/directory-apps-script/Code.gs";
@@ -574,6 +688,9 @@ async function main() {
 
   // --- Join the Directory (form settings, backend, contact) ---
   checkDirectory();
+
+  // --- City guides (docs/content/<city>-guide.md) ---
+  checkCityGuides();
 
   // --- topics (first, so everything else can link to them) ---
   const topicIds = new Set();

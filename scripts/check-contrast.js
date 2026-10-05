@@ -26,6 +26,10 @@ const PAIRS = [
   ["--color-on-primary", "--color-primary", 4.5],
   ["--color-header-text", "--color-header-bg", 4.5],
   ["--color-success-text", "--color-success-bg", 4.5],
+  // City guide: the "Your next city" box and the sticky Contents menu
+  ["--color-text", "--color-success-bg", 4.5],
+  ["--color-primary", "--color-success-bg", 4.5],
+  ["--color-text", "--color-primary-light", 4.5],
   ["--color-danger-text", "--color-danger-bg", 4.5],
   ["--color-text", "--color-warning-bg", 4.5],
   ["--pill-blue-text", "--pill-blue-bg", 4.5],

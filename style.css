@@ -798,6 +798,316 @@ main {
   background: var(--color-primary-light);
 }
 
+.guide caption {
+  caption-side: top;
+  text-align: left;
+  padding-bottom: 6px;
+  font-size: 0.88rem;
+  color: var(--color-muted);
+}
+
+/* ----- City guides: index, notices, "My track" ----- */
+.guide-breadcrumb {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+.guide-intro {
+  margin-top: 0;
+  color: var(--color-muted);
+}
+
+.guide-notice .guide-checked {
+  font-weight: 700;
+}
+
+.guide-notice p + p {
+  margin-top: 6px;
+}
+
+.guide-report {
+  font-size: 0.9rem;
+}
+
+.guide-disclaimer {
+  margin-top: 24px;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.guide-my-track {
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  background: var(--color-success-bg);
+  border-left: 4px solid var(--color-primary);
+  border-radius: 4px;
+}
+
+.guide-my-track p {
+  margin: 0;
+}
+
+.guide-my-track p + p {
+  margin-top: 4px;
+}
+
+.guide-my-track-next {
+  font-size: 1.05rem;
+}
+
+.guide-my-track-next a {
+  font-weight: 700;
+}
+
+.guide-my-track-note {
+  font-size: 0.88rem;
+}
+
+.guide-city-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 14px;
+  margin: 20px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.guide-city-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  height: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--color-border);
+  border-top: 4px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  background: var(--color-card);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.guide-city-card:hover,
+.guide-city-card:focus-visible {
+  border-color: var(--color-primary);
+}
+
+.guide-city-card strong {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: var(--color-primary);
+}
+
+.guide-city-card .city-country,
+.guide-city-university,
+.guide-city-presence {
+  font-size: 0.88rem;
+  color: var(--color-muted);
+}
+
+.guide-city-card .city-country {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.75rem;
+}
+
+.guide-city-card .city-status {
+  margin-top: auto;
+  padding-top: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.guide-city-card .city-status.is-ready {
+  color: var(--color-primary);
+}
+
+.guide-compare th[scope="row"] {
+  white-space: nowrap;
+}
+
+.guide-compare-note {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+/* ----- City guide page: "At a glance", contents menu, folding sections, sources ----- */
+.guide-glance {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 6px 16px;
+  margin: 0 0 12px;
+}
+
+.guide-glance dt {
+  font-weight: 600;
+}
+
+.guide-glance dd {
+  margin: 0;
+}
+
+/* The contents menu sticks under the site header while scrolling */
+.guide-jump {
+  position: sticky;
+  top: calc(var(--guide-sticky-top, var(--header-height)) + 4px);
+  z-index: 5;
+  margin: 0 0 8px;
+  padding: 8px 14px;
+  background: var(--color-primary-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.guide-jump summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.guide-jump ol {
+  max-height: 65vh;
+  overflow-y: auto;
+  margin: 8px 0;
+  padding-left: 1.6em;
+}
+
+.guide-jump li {
+  padding: 3px 0;
+}
+
+@media (min-width: 640px) {
+  .guide-jump ol {
+    columns: 2;
+    column-gap: 28px;
+  }
+
+  .guide-jump li {
+    break-inside: avoid;
+  }
+}
+
+.guide-section h2 {
+  scroll-margin-top: calc(var(--guide-sticky-top, var(--header-height)) + 64px);
+  margin-bottom: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-primary-light);
+}
+
+.guide-section li[id] {
+  scroll-margin-top: calc(var(--guide-sticky-top, var(--header-height)) + 64px);
+}
+
+/* The heading of a folding section is one big button */
+.guide-fold {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 4px 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.guide-fold::after {
+  content: "+";
+  flex: none;
+  width: 1.6em;
+  height: 1.6em;
+  border-radius: 50%;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  line-height: 1.6em;
+  text-align: center;
+}
+
+.guide-fold[aria-expanded="true"]::after {
+  content: "−";
+}
+
+.guide-fold:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.source-tag {
+  font-size: 0.75em;
+  white-space: nowrap;
+  text-decoration: none;
+  color: var(--color-muted);
+}
+
+.source-tag:hover,
+.source-tag:focus-visible {
+  text-decoration: underline;
+  color: var(--color-primary);
+}
+
+.guide-section li[id]:target {
+  background: var(--color-warning-bg);
+}
+
+/* On phones, tables become one card per row, each value labelled with its column */
+@media (max-width: 600px) {
+  .guide-cards-on-phone thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  .guide-cards-on-phone,
+  .guide-cards-on-phone tbody,
+  .guide-cards-on-phone tr,
+  .guide-cards-on-phone th,
+  .guide-cards-on-phone td {
+    display: block;
+    width: 100%;
+  }
+
+  .guide-cards-on-phone tr {
+    margin-bottom: 10px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+  }
+
+  .guide-cards-on-phone th,
+  .guide-cards-on-phone td {
+    border: none;
+    border-bottom: 1px solid var(--color-divider);
+  }
+
+  .guide-cards-on-phone caption {
+    display: block;
+  }
+
+  .guide-cards-on-phone td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-muted);
+  }
+
+  .guide-glance {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .guide-glance dd {
+    margin-bottom: 8px;
+  }
+}
+
 /* ===== Students directory ===== */
 .demo-banner {
   margin: 24px 0 16px;
