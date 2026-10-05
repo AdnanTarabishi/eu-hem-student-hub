@@ -569,6 +569,11 @@ function checkDirectory() {
     "Rejected At", "Last Reconfirmed At", "Participation Ends"];
   if (listed[0] !== "Submission ID" || listed[40] !== "Confirm Email Sent") error(G, "the first 41 columns (onboarding v1) must keep their order");
   for (const h of v2) if (!listed.includes(h)) error(G, `HEADERS is missing the column "${h}"`);
+  const v3 = ["Citizenship Group", "Citizenship Visibility", "Study Visa Experience", "Study Visa Experience Scope",
+    "Study Visa Experience Visibility", "Mobility Statistics Consent", "Field Visibility JSON"];
+  for (const h of v3) if (!listed.includes(h)) error(G, `HEADERS is missing the v3 column "${h}"`);
+  const doubled = listed.filter((h, i) => listed.indexOf(h) !== i);
+  if (doubled.length) error(G, `HEADERS lists a column twice: ${doubled.join(", ")}`);
 
   // The form's choices and privacy rules must be exactly the backend's (the backend enforces them)
   const options = read("directory-options.js");
@@ -591,9 +596,14 @@ function checkDirectory() {
   if (!same(backend.VIS_RULES, frontend.VIS_RULES)) error("directory-options.js", `VIS_RULES differ from ${G}: the form and the server would apply different privacy limits`);
   for (const [profile, rules] of Object.entries(backend.VIS_RULES)) {
     if (rules.email.includes("public")) error(G, `VIS_RULES.${profile}: the email can never be public`);
-    for (const kind of ["photo", "linkedin"]) {
+    for (const kind of Object.keys(rules)) {
       if (profile !== "public" && rules[kind].includes("public")) error(G, `VIS_RULES.${profile}.${kind}: only a public profile may have public details`);
+      if (profile === "hidden" && rules[kind].some((v) => v !== "hidden")) error(G, `VIS_RULES.hidden.${kind}: a hidden profile shows nothing`);
     }
+  }
+  // Citizenship and study-visa answers are never public: their only choices are private / members
+  if (!same(Object.keys(backend.OPTIONS.mobilityVisibility || {}), ["private", "cohort"])) {
+    error(G, "OPTIONS.mobilityVisibility must be exactly private and cohort (citizenship and visa answers are never public)");
   }
   for (const id of ["current_student", "alumni"]) if (backend.OPTIONS.directoryEligible[id] !== true) error(G, `${id} must be directory eligible`);
   for (const id of ["shared_course_student", "faculty_staff"]) if (backend.OPTIONS.directoryEligible[id] !== false) error(G, `${id} must not be directory eligible`);
@@ -623,6 +633,66 @@ function checkDirectory() {
     if (backend.OPTIONS.currentTracks[track.id] !== track.name) {
       error(G, `OPTIONS.currentTracks.${track.id} should be "${track.name}" as in content/tracks.json`);
     }
+  }
+}
+
+// Students explorer: demo data only, never a private export (docs/students-explorer.md)
+function checkStudents() {
+  const read = (file) => (fs.existsSync(path.join(ROOT, file)) ? fs.readFileSync(path.join(ROOT, file), "utf8") : null);
+  const C = "students-config.js";
+  const configText = read(C);
+  if (configText === null) return;
+  const box = { window: { EUHEM_DIRECTORY_CONFIG: { cohorts: { current: ["x"] } } } };
+  try {
+    require("vm").runInNewContext(configText, box);
+  } catch (e) {
+    return error(C, `cannot be read: ${e.message}`);
+  }
+  const config = box.window.EUHEM_STUDENTS_CONFIG || {};
+  if (config.dataMode !== "demo") {
+    error(C, `dataMode "${config.dataMode}": Phase 1 has only "demo". Real profiles need a login and a server that applies the privacy rules (docs/students-explorer.md)`);
+  }
+
+  // The demo file: fictional, marked, and free of contact data
+  const demoText = read(config.demoDataUrl || "data/demo-students.json");
+  if (demoText === null) return error(C, `demo data ${config.demoDataUrl} is missing`);
+  let demo;
+  try { demo = JSON.parse(demoText); } catch (e) { return error(config.demoDataUrl, `is not valid JSON: ${e.message}`); }
+  if (demo.isDemo !== true || !Array.isArray(demo.records) || demo.records.some((r) => r.isDemo !== true)) {
+    error(config.demoDataUrl, "every record (and the file) must have isDemo: true. Never put real registrations here");
+  }
+  if (/@|https?:\/\/|www\./i.test(demoText)) error(config.demoDataUrl, "must not contain email or web addresses (demo LinkedIn is the word \"example\")");
+  const aggregates = read(config.demoAggregatesUrl || "data/demo-aggregates.json");
+  if (aggregates === null || JSON.parse(aggregates).isDemo !== true) error(config.demoAggregatesUrl, "must exist and be marked isDemo: true");
+
+  // No page may suggest publishing the private Sheet ("Publish to web" CSV, gviz, JSON exports)
+  // (The README may mention "Publish to web" for the announcements sheet, which is public on purpose.)
+  for (const file of ["students.js", "students-config.js", "students-data.js", "join.js", "README.md"]) {
+    const text = read(file) || "";
+    const pattern = file === "README.md" ? /sample-students\.csv|DATA_SOURCE_URL/ : /Publish to web|gviz|output=csv|sample-students\.csv|DATA_SOURCE_URL/i;
+    if (pattern.test(text)) {
+      error(file, "mentions a published Sheet export or the old CSV directory. Private registrations are never exported to the site");
+    }
+  }
+
+  // Track colours as on the Tracks page
+  const tracksFile = JSON.parse(read("content/tracks.json") || "{}");
+  const cohort = (tracksFile.cohorts || []).at(-1);
+  for (const track of (cohort && cohort.tracks) || []) {
+    const mine = (config.tracks || {})[track.id];
+    if (!mine) error(C, `tracks has no entry for "${track.id}"`);
+    else if (track.accent && mine.accent.toLowerCase() !== track.accent.toLowerCase()) error(C, `tracks.${track.id}.accent should be ${track.accent} as in content/tracks.json`);
+  }
+
+  // Map asset: local, with its source recorded
+  const map = read((config.map || {}).url || "");
+  if (map === null) error(C, `map.url ${(config.map || {}).url} is missing`);
+  else if (!/data-source="Natural Earth/.test(map)) error(config.map.url, "must record its source (data-source=\"Natural Earth …\")");
+
+  // Offline copies: the explorer's files must be in the service worker
+  const sw = read("sw.js") || "";
+  for (const file of ["students.css", "students-config.js", "students-data.js", "countries.js", "assets/map/world-countries.svg"]) {
+    if (!sw.includes(`"${file}"`)) error("sw.js", `SITE_FILES is missing "${file}"`);
   }
 }
 
@@ -806,6 +876,7 @@ async function main() {
 
   // --- Join the Directory (form settings, backend, contact) ---
   checkDirectory();
+  checkStudents();
 
   // --- City guides (docs/content/<city>-guide.md) ---
   checkCityGuides();

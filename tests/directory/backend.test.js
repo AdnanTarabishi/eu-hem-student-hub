@@ -4,7 +4,7 @@ const assert = require('assert');
 const CODE = process.argv[2];
 let n = 0; const t = (name, fn) => { fn(); n++; console.log('  ok  ' + name); };
 const uuid = () => require('crypto').randomUUID();
-const common = { elapsedMs: 9000, website: '', consentVersion: 'directory-v2-2026-10', privacyAcknowledgement: 'yes' };
+const common = { elapsedMs: 9000, website: '', consentVersion: 'directory-v3-2026-10', privacyAcknowledgement: 'yes' };
 const student = (over = {}) => Object.assign({ requestId: uuid() }, common, {
   userType: 'current_student', fullName: 'Test Student', email: 'Test.Student@studio.unibo.it', cohort: '2026–2028',
   primaryCountry: 'Italy', previousField: 'medicine', track: 'phm', profileVisibility: 'public', analyticsConsent: 'yes' }, over);
@@ -20,8 +20,8 @@ const JPEG = Buffer.concat([Buffer.from([0xff, 0xd8, 0xff, 0xe0]), Buffer.alloc(
 const linkOf = (g, i = 0) => new URL(g.mails[i].body.match(/https:\S+/)[0]).searchParams;
 
 /* ----- setup and Sheet schema ----- */
-t('setup creates all 56 columns and the Options tab', () => {
-  const g = fresh(); assert.strictEqual(g.grid[0].length, 56);
+t('setup creates all 63 columns and the Options tab', () => {
+  const g = fresh(); assert.strictEqual(g.grid[0].length, 63);
   assert.strictEqual(g.grid[0][40], 'Confirm Email Sent'); assert.strictEqual(g.grid[0][41], 'User Type');
   const options = g.sheets.Options.grid.map((r) => r.join('|')).join('\n');
   for (const s of ['current_student', 'Nursing & Midwifery', 'Decision Making in Healthcare', 'ai_study_assistant', 'verified']) assert.ok(options.includes(s), s);
@@ -30,7 +30,7 @@ t('an existing v1 Sheet gets the new columns appended; old columns and rows stay
   const g = fresh(); const v1 = g.grid[0].slice(0, 41);
   g.grid.length = 0; g.grid.push(v1.slice(), v1.map((h) => 'old ' + h));
   g.ctx.setup();
-  assert.deepStrictEqual(g.grid[0].slice(0, 41), v1); assert.strictEqual(g.grid[0].length, 56);
+  assert.deepStrictEqual(g.grid[0].slice(0, 41), v1); assert.strictEqual(g.grid[0].length, 63);
   assert.strictEqual(g.grid[1][3], 'old Full Name'); assert.strictEqual(g.grid[1][45], undefined);
   assert.strictEqual(g.post(student()).ok, true); assert.strictEqual(g.row(2)['User Type'], 'current_student');
 });
@@ -48,7 +48,7 @@ t('current student: complete submission stored, eligible, role verification pend
   assert.deepStrictEqual([row['Previous Academic Field'], row['Previous Degree'], row['Additional Country']],
     ['Medicine', 'Medicine (MD / MBBS / equivalent)', 'Syria']);
   assert.deepStrictEqual([row['Status'], row['Role Verification Status'], row['Role Verified At']], ['unconfirmed', 'pending', '']);
-  assert.deepStrictEqual([row['Feature Interests'], row['Consent Version'], row['Public Publish Eligible']], ['timetable, thesis', 'directory-v2-2026-10', false]);
+  assert.deepStrictEqual([row['Feature Interests'], row['Consent Version'], row['Public Publish Eligible']], ['timetable, thesis', 'directory-v3-2026-10', false]);
   assert.strictEqual(row['University Email'], 'test.student@studio.unibo.it');
 });
 t('directoryEligible from the browser is ignored', () => {
@@ -158,6 +158,102 @@ t('statistics consent is required (yes/no) for students and alumni', () => { con
   assert.strictEqual(g.post(student({ analyticsConsent: '' })).code, 'INVALID_VALUE');
   g.post(alumnus({ analyticsConsent: 'no' })); assert.strictEqual(g.row(1)['Anonymous Aggregated Statistics Consent'], 'no'); });
 
+/* ----- v3: citizenship group, study-visa experience, mobility consent, per-detail visibility ----- */
+const V3_COLUMNS = ['Citizenship Group', 'Citizenship Visibility', 'Study Visa Experience', 'Study Visa Experience Scope',
+  'Study Visa Experience Visibility', 'Mobility Statistics Consent', 'Field Visibility JSON'];
+const mob = (row) => V3_COLUMNS.slice(0, 6).map((c) => row[c] ?? '');
+t('v3 columns are appended at the end, in order', () => {
+  const g = fresh(); assert.deepStrictEqual(g.grid[0].slice(56), V3_COLUMNS);
+  const options = g.sheets.Options.grid.map((r) => r.join('|')).join('\n');
+  for (const s of ['eu_eea_swiss', 'non_eu_eea_swiss', 'prefer_not_to_say', 'not_applicable', 'Share with verified EU-HEM students']) assert.ok(options.includes(s), s);
+});
+t('citizenship: three answers stored as ids; skipped is "not_provided", distinct from "prefer_not_to_say"', () => {
+  const g = fresh();
+  ['eu_eea_swiss', 'non_eu_eea_swiss', 'prefer_not_to_say'].forEach((v, i) => g.post(student({ email: `c${i}@x.org`, citizenshipGroup: v })));
+  g.post(student({ email: 'skip@x.org' }));
+  assert.deepStrictEqual([1, 2, 3, 4].map((i) => g.row(i)['Citizenship Group']), ['eu_eea_swiss', 'non_eu_eea_swiss', 'prefer_not_to_say', 'not_provided']);
+  for (const bad of ['EU', 'eu', 'stateless', 'Italy']) assert.strictEqual(g.post(student({ email: 'b@x.org', citizenshipGroup: bad })).code, 'INVALID_VALUE', bad);
+});
+t('citizenship is never worked out from the country (dual-citizenship counterexamples)', () => {
+  const g = fresh();
+  g.post(student({ primaryCountry: 'Syria', additionalCountry: 'Germany', citizenshipGroup: 'eu_eea_swiss' }));
+  g.post(student({ email: 'nl@x.org', primaryCountry: 'Netherlands', citizenshipGroup: 'non_eu_eea_swiss' }));
+  g.post(student({ email: 'it@x.org', primaryCountry: 'Italy' }));
+  g.post(student({ email: 'sy@x.org', primaryCountry: 'Syria' }));
+  assert.deepStrictEqual([1, 2, 3, 4].map((i) => g.row(i)['Citizenship Group']), ['eu_eea_swiss', 'non_eu_eea_swiss', 'not_provided', 'not_provided']);
+});
+t('citizenship and visa sharing: private by default, never public, members only, nothing from a hidden profile', () => {
+  const g = fresh();
+  g.post(student({ citizenshipGroup: 'eu_eea_swiss', studyVisaExperience: 'no' })); // public profile, no sharing choice
+  g.post(student({ email: 'a@x.org', profileVisibility: 'cohort', citizenshipGroup: 'non_eu_eea_swiss', citizenshipVisibility: 'cohort',
+    studyVisaExperience: 'yes', studyVisaExperienceVisibility: 'cohort' }));
+  g.post(student({ email: 'h@x.org', profileVisibility: 'hidden', citizenshipGroup: 'eu_eea_swiss', citizenshipVisibility: 'cohort',
+    studyVisaExperience: 'no', studyVisaExperienceVisibility: 'cohort' }));
+  g.post(student({ email: 'p@x.org', citizenshipGroup: 'prefer_not_to_say', citizenshipVisibility: 'cohort', studyVisaExperienceVisibility: 'cohort' }));
+  const vis = (i) => [g.row(i)['Citizenship Visibility'], g.row(i)['Study Visa Experience Visibility']];
+  assert.deepStrictEqual(vis(1), ['private', 'private'], 'a public profile does not make citizenship public');
+  assert.deepStrictEqual(vis(2), ['cohort', 'cohort']);
+  assert.deepStrictEqual(vis(3), ['private', 'private'], 'hidden profile');
+  assert.deepStrictEqual(vis(4), ['private', 'private'], 'prefer not to say / skipped are never shared');
+  assert.strictEqual(g.post(student({ email: 'x@x.org', citizenshipGroup: 'eu_eea_swiss', citizenshipVisibility: 'public' })).code, 'INVALID_VALUE');
+});
+t('study-visa experience: five answers, self-reported scope; skipped stays "not_provided"; never derived from citizenship', () => {
+  const g = fresh();
+  ['yes', 'no', 'not_sure', 'not_applicable', 'prefer_not_to_say'].forEach((v, i) => g.post(student({ email: `v${i}@x.org`, studyVisaExperience: v })));
+  g.post(student({ email: 'n@x.org', citizenshipGroup: 'non_eu_eea_swiss', primaryCountry: 'India' }));
+  for (let i = 1; i <= 5; i++) assert.strictEqual(g.row(i)['Study Visa Experience Scope'], 'first_semester_italy');
+  assert.deepStrictEqual([g.row(6)['Study Visa Experience'], g.row(6)['Study Visa Experience Scope']], ['not_provided', '']);
+  assert.strictEqual(g.post(student({ email: 'b@x.org', studyVisaExperience: 'visa D-123' })).code, 'INVALID_VALUE');
+});
+t('mobility-statistics consent: separate, "no" unless an explicit "yes"', () => {
+  const g = fresh();
+  g.post(student({ citizenshipGroup: 'eu_eea_swiss' })); g.post(student({ email: 'y@x.org', mobilityStatisticsConsent: 'yes' }));
+  g.post(student({ email: 't@x.org', mobilityStatisticsConsent: true })); g.post(student({ email: 's@x.org', analyticsConsent: 'yes', mobilityStatisticsConsent: 'no' }));
+  assert.deepStrictEqual([1, 2, 3, 4].map((i) => g.row(i)['Mobility Statistics Consent']), ['no', 'yes', 'no', 'no']);
+  assert.strictEqual(g.row(4)['Anonymous Aggregated Statistics Consent'], 'yes', 'general and mobility statistics are separate');
+});
+t('per-detail visibility: missing = hidden, clamped to the profile, never wider', () => {
+  const g = fresh(); const fv = (i) => JSON.parse(g.row(i)['Field Visibility JSON']);
+  g.post(student());
+  g.post(student({ email: 'a@x.org', fieldVisibility: { country: 'public', field: 'cohort', degree: 'hidden', university: 'public', track: 'public', bio: 'cohort' } }));
+  g.post(student({ email: 'b@x.org', profileVisibility: 'cohort', fieldVisibility: { country: 'public', field: 'public', degree: 'public', university: 'public', track: 'public', bio: 'public' } }));
+  g.post(student({ email: 'c@x.org', profileVisibility: 'hidden', fieldVisibility: { country: 'public', track: 'cohort' } }));
+  const all = (v) => ({ country: v, field: v, degree: v, university: v, track: v, bio: v });
+  assert.deepStrictEqual(fv(1), all('hidden'));
+  assert.deepStrictEqual(fv(2), { country: 'public', field: 'cohort', degree: 'hidden', university: 'public', track: 'public', bio: 'cohort' });
+  assert.deepStrictEqual(fv(3), all('cohort'));
+  assert.deepStrictEqual(fv(4), all('hidden'));
+  assert.strictEqual(g.post(student({ email: 'd@x.org', fieldVisibility: { country: 'everyone' } })).code, 'INVALID_VALUE');
+});
+t('shared-course and staff registrations get no mobility or directory-visibility data', () => {
+  const g = fresh(); const extra = { citizenshipGroup: 'non_eu_eea_swiss', citizenshipVisibility: 'cohort', studyVisaExperience: 'yes',
+    mobilityStatisticsConsent: 'yes', fieldVisibility: { country: 'public' } };
+  g.post(shared(extra)); g.post(faculty(extra));
+  for (const i of [1, 2]) for (const c of V3_COLUMNS) assert.strictEqual(g.row(i)[c], '', `${i} ${c}`);
+});
+t('confirmation email never mentions citizenship or visa answers', () => {
+  const g = fresh(); g.post(student({ citizenshipGroup: 'non_eu_eea_swiss', citizenshipVisibility: 'cohort', studyVisaExperience: 'yes', profileVisibility: 'cohort' }));
+  assert.ok(!/citizen|visa|EEA|mobility/i.test(g.mails[0].body));
+});
+t('migrateV3 fills only empty cells with "nothing given" values, never infers, and is repeatable', () => {
+  const g = fresh(); const v2 = g.grid[0].slice(0, 56);
+  const oldRow = v2.map((h) => (h === 'Primary Country' ? 'Syria' : h === 'Profile Visibility' ? 'public' : 'old ' + h));
+  g.grid.length = 0; g.grid.push(v2.slice(), oldRow.slice(), oldRow.slice());
+  g.ctx.setup();
+  assert.strictEqual(g.grid[0].length, 63); assert.strictEqual(g.grid[1][56], undefined, 'setup alone writes no values');
+  g.grid[2][g.grid[0].indexOf('Citizenship Group')] = 'eu_eea_swiss'; // an answer already there
+  assert.match(g.ctx.migrateV3(), /2 row\(s\) checked, 11 empty cell/);
+  assert.deepStrictEqual(mob(g.row(1)), ['not_provided', 'private', 'not_provided', '', 'private', 'no']);
+  assert.deepStrictEqual(JSON.parse(g.row(1)['Field Visibility JSON']), { country: 'hidden', field: 'hidden', degree: 'hidden', university: 'hidden', track: 'hidden', bio: 'hidden' });
+  assert.strictEqual(g.row(2)['Citizenship Group'], 'eu_eea_swiss', 'existing values are never overwritten');
+  assert.strictEqual(g.row(1)['Full Name'], 'old Full Name');
+  assert.match(g.ctx.migrateV3(), /0 empty cell/);
+});
+t('duplicate headers stop the script instead of writing to the wrong column', () => {
+  const g = fresh(); g.grid[0].push('Citizenship Group');
+  assert.strictEqual(g.post(student()).code, 'NOT_CONFIGURED'); assert.strictEqual(g.grid.length, 1);
+});
+
 /* ----- email confirmation: two stages ----- */
 t('confirmation email: wording, link, contact; no profile details', () => {
   const g = fresh(); g.post(student({ shortBio: 'secret bio', primaryCountry: 'Syria' })); const m = g.mails[0];
@@ -212,6 +308,7 @@ t('honeypot, too-fast, bad consent, bad JSON are refused', () => { const g = fre
   assert.strictEqual(g.post(student({ elapsedMs: 500 })).code, 'INVALID_REQUEST');
   assert.strictEqual(g.post(student({ privacyAcknowledgement: '' })).code, 'CONSENT_REQUIRED');
   assert.strictEqual(g.post(student({ consentVersion: 'directory-v1-2026-10' })).code, 'CONSENT_VERSION');
+  assert.strictEqual(g.post(student({ consentVersion: 'directory-v2-2026-10' })).code, 'CONSENT_VERSION', 'v2 consent does not count as v3');
   assert.strictEqual(g.post('not json').code, 'INVALID_REQUEST');
   assert.strictEqual(g.post(student({ requestId: '<script>' })).code, 'INVALID_REQUEST');
   assert.strictEqual(g.grid.length, 1); });

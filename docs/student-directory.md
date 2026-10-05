@@ -1,4 +1,4 @@
-# Student Directory: the "Join the Directory" form (onboarding v2)
+# Student Directory: the "Join the Directory" form (onboarding v3)
 
 People register with the Student Hub through **join.html**, reached from the "Join the directory" button on the
 Students page. The page has no menu entry of its own, and search engines are asked not to list it (`noindex`).
@@ -28,7 +28,7 @@ statistics answer as `not asked`.
 | The backend | `integrations/directory-apps-script/Code.gs` | Pasted into Google Apps Script. **No IDs or secrets** in the file |
 | Backend setup | `integrations/directory-apps-script/README.md` | Step by step, plus the fortnightly clean-up |
 | Tests | `tests/directory/` | Backend logic against in-memory stand-ins for Google; the form in a real browser |
-| Privacy text | `privacy.html#student-directory` | Rewritten for v2 and revised after review on 5 October 2026 |
+| Privacy text | `privacy.html#student-directory` | Rewritten for v2, revised 5 October 2026; v3 additions (mobility experience) 6 October 2026 |
 
 Track names: the current tracks (`eeh`, `ep`, `mhi`, `phm`) come from `content/tracks.json`; the checker makes
 sure `Code.gs` uses the same names. The legacy specialisations for alumni (`dmh` Decision Making in Healthcare,
@@ -81,6 +81,28 @@ Verified At`, and three dates an admin fills in for the retention rules: `Reject
 involvement for staff). Running `setup()` adds missing columns at the end and never moves or rewrites old rows; old rows
 simply have empty new columns.
 
+**v3 appends 7 more columns** (63 in total): `Citizenship Group`, `Citizenship Visibility`, `Study Visa
+Experience`, `Study Visa Experience Scope`, `Study Visa Experience Visibility`, `Mobility Statistics Consent`,
+`Field Visibility JSON`. Values (ids, see the Options tab):
+- `Citizenship Group`: `eu_eea_swiss`, `non_eu_eea_swiss`, `prefer_not_to_say`, or `not_provided` (skipped).
+  Never filled in from the country or any other column.
+- `Study Visa Experience`: `yes`, `no`, `not_sure`, `not_applicable`, `prefer_not_to_say` or `not_provided`.
+  `Study Visa Experience Scope` is `first_semester_italy` when answered (the only question asked so far).
+  Self-reported; never derived from citizenship.
+- `Citizenship Visibility`, `Study Visa Experience Visibility`: `private` (default) or `cohort` (verified EU-HEM
+  students). Never public. Forced to `private` for a hidden profile, a skipped question or "Prefer not to say".
+- `Mobility Statistics Consent`: `yes` only after an explicit tick; otherwise `no`. Separate from
+  `Anonymous Aggregated Statistics Consent`.
+- `Field Visibility JSON`: e.g. `{"country":"public","field":"public","degree":"cohort","university":"public","track":"public","bio":"hidden"}`.
+  A missing value counts as `hidden`; nothing is wider than the profile (see the table below).
+- Shared-course students and staff: all seven are empty.
+
+**Upgrading an existing Sheet:** run `setup()` (adds the columns), then `migrateV3()` once. It fills only
+**empty** cells of old rows: citizenship and visa `not_provided`, both visibilities `private`, mobility consent
+`no` (never backfilled), every per-detail visibility `hidden`. It never overwrites an answer and never infers
+anything, and running it again changes nothing. Because older rows get `hidden` per-detail settings, an older
+public profile would show only the name until the person chooses again (correct, since they never chose).
+
 What some columns hold:
 - `University Email`: the registration email of every user type (the name is kept for old rows).
 - `Home Institution`: the home institution of a shared-course student, or the institution / organisation of
@@ -124,18 +146,26 @@ registration ids only. It deletes nothing: delete the row and its photo by hand,
 year, also review all registrations and delete those no longer needed.
 
 ## Privacy rules (the same table in the form and the server)
-| Profile | Photo | LinkedIn | Email |
+| Profile | Countries, background, degree, university, track, bio, photo, LinkedIn | Email | Citizenship group, study-visa experience |
 |---|---|---|---|
-| Public | public / EU-HEM only / hidden | public / EU-HEM only / hidden | EU-HEM only / hidden |
-| EU-HEM students only | EU-HEM only / hidden | EU-HEM only / hidden | EU-HEM only / hidden |
-| Do not publish yet | hidden | hidden | hidden |
+| Public | public / EU-HEM only / hidden | EU-HEM only / hidden | private / EU-HEM only |
+| EU-HEM students only | EU-HEM only / hidden | EU-HEM only / hidden | private / EU-HEM only |
+| Do not publish yet | hidden | hidden | private |
 
 No profile option is preselected; the email defaults to hidden and can never be public. The server clamps any
-other request to the next more private value.
+other request to the next more private value. In the form, details the person does not touch follow the profile;
+a detail they set by hand is never widened when they change the profile (it is narrowed if the profile allows
+less, and comes back if the profile allows it again). The form shows a final summary of every setting.
+
+"EU-HEM members / students only" means: verified participating EU-HEM students and alumni across the supported
+cohorts, checked by the Student Hub administrator. Not staff, not shared-course students. Widening it needs a
+privacy-text change and a new consent version.
 
 ## The consent version (change it in both places)
 `directory-config.js` → `consentVersion` and `Code.gs` → `SETTINGS.CONSENT_VERSION` must be identical. It is
-**`directory-v2-2026-10`** since onboarding v2 (new user types, fields, purposes and confirmation flow).
+**`directory-v3-2026-10`** since onboarding v3 (optional citizenship group and study-visa experience, mobility
+statistics consent, per-detail visibility). v2 was `directory-v2-2026-10`; earlier registrations keep the version
+they agreed to and are never treated as having accepted v3.
 
 When the privacy section changes **meaning** (a new field, purpose, storage place, keeping data longer, a new
 visibility option), change both to the same new value and deploy a new version of the script. Forms still open
@@ -148,7 +178,9 @@ in someone's browser are then refused with "The privacy information has changed"
   page has no email (mailto) link.
 - No Google Sheet or Drive folder ID appears in the directory files.
 - Nothing still restricts registration to @studio.unibo.it (v1).
-- `Code.gs` keeps the 41 v1 columns in order and has every v2 column.
+- `Code.gs` keeps the 41 v1 columns in order, has every v2 and v3 column, and no column twice.
+- Citizenship and visa answers can only be private or EU-HEM only (`OPTIONS.mobilityVisibility`); a hidden
+  profile shows nothing; only a public profile may have public details.
 - `directory-options.js` has exactly the backend's `OPTIONS` and `VIS_RULES`; email is never public; only a
   public profile may have public details; students and alumni are eligible, the other two types are not.
 - The current track names in `Code.gs` match `content/tracks.json`.
@@ -176,9 +208,10 @@ One-time setup: `npm install` (Playwright, which drives your installed Chrome). 
 npm test
 ```
 This runs the content checker, the backend checks (`tests/directory/backend.test.js`), the form in a browser
-(`tests/directory/browser.test.js`) and the City Guide checks. They use in-memory stand-ins for Google's
+(`tests/directory/browser.test.js`), the Students explorer (`tests/students/`) and the City Guide checks. They use in-memory stand-ins for Google's
 services, so they do **not** replace a real test of the deployed Web App.
 
 ## Not built yet (later phases)
-Real login, accounts and passwords, a dashboard or profile editor, the interactive cohort map, publishing public
-or EU-HEM-only profiles, an automatic Sheet → public JSON export, permissions, matching and alumni messaging.
+Real login, accounts and passwords, a dashboard or profile editor, publishing real public or EU-HEM-only
+profiles (the Students explorer shows fictional demo data only, see docs/students-explorer.md), an automatic
+Sheet → public JSON export, permissions, matching and alumni messaging.

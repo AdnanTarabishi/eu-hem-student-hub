@@ -1,5 +1,5 @@
 /**
- * EU-HEM Student Hub — registration backend, onboarding v2 (Google Apps Script, V8 runtime)
+ * EU-HEM Student Hub — registration backend, onboarding v3 (Google Apps Script, V8 runtime)
  *
  * Receives the "Join the Directory" form, checks it again on the server, stores it in a private
  * Google Sheet (photo in a private Drive folder) and emails a confirmation link.
@@ -21,13 +21,17 @@
  * First use, and after every update of this file: run setup() once from the editor. It authorises the
  * script, adds any missing columns at the END of the "Submissions" tab (existing columns and rows are
  * never moved or rewritten) and rewrites the human-readable "Options" tab.
+ *
+ * Upgrading a Sheet that already has v2 registrations: run setup(), then migrateV3() once. migrateV3()
+ * only fills EMPTY cells of the v3 columns with "nothing given" values (see V3_DEFAULTS); it never
+ * changes an existing answer and never works anything out from other columns. Running it again is safe.
  */
 
 const SETTINGS = Object.freeze({
   SHEET_NAME: 'Submissions',
   OPTIONS_SHEET_NAME: 'Options',
-  CONSENT_VERSION: 'directory-v2-2026-10',
-  SOURCE: 'student-hub-registration-v2',
+  CONSENT_VERSION: 'directory-v3-2026-10',
+  SOURCE: 'student-hub-registration-v3',
   MIN_FORM_MS: 3000,
   MAX_PHOTO_BYTES: 2 * 1024 * 1024,
   MAX_PER_HOUR: 60,
@@ -68,8 +72,18 @@ const HEADERS = Object.freeze([
   'Courses / Areas Involved','Shared Courses','Feature Interests','Feature Suggestion',
   'Role Verification Status','Role Verified At',
   // retention (filled in by an admin; see retentionReport)
-  'Rejected At','Last Reconfirmed At','Participation Ends'
+  'Rejected At','Last Reconfirmed At','Participation Ends',
+  // v3: optional mobility experience (private by default) and per-detail visibility
+  'Citizenship Group','Citizenship Visibility','Study Visa Experience','Study Visa Experience Scope',
+  'Study Visa Experience Visibility','Mobility Statistics Consent','Field Visibility JSON'
 ]);
+
+// v3 values. "not_provided" (skipped) is different from "prefer_not_to_say" (an answer).
+const NOT_PROVIDED = 'not_provided';
+// The study-visa question is about one situation only: the first EU-HEM semester in Italy
+const VISA_SCOPE = 'first_semester_italy';
+// Profile details with their own visibility (photo, LinkedIn and email keep their own v1 columns)
+const DETAIL_FIELDS = Object.freeze(['country', 'field', 'degree', 'university', 'track', 'bio']);
 
 // Stable ids and their labels. The same lists are in directory-options.js for the form;
 // scripts/check-content.js fails if the two differ.
@@ -167,6 +181,13 @@ const OPTIONS = Object.freeze({
     mobility_housing: 'Housing & Mobility Planner',
     other: 'Other'
   },
+  citizenshipGroups: {
+    eu_eea_swiss: 'EU / EEA / Swiss citizen',
+    non_eu_eea_swiss: 'Non-EU / EEA / Swiss citizen',
+    prefer_not_to_say: 'Prefer not to say'
+  },
+  studyVisaExperience: { yes: 'Yes', no: 'No', not_sure: 'Not sure', not_applicable: 'Not applicable', prefer_not_to_say: 'Prefer not to say' },
+  mobilityVisibility: { private: 'Keep private', cohort: 'Share with verified EU-HEM students' },
   visibility: { public: 'Public', cohort: 'EU-HEM members only', hidden: 'Hidden' },
   roleVerification: { pending: 'Pending', verified: 'Verified', rejected: 'Rejected' }
 });
@@ -174,9 +195,20 @@ const OPTIONS = Object.freeze({
 // Which visibility each detail may have, for each profile choice. Email is never public.
 // The same table is in directory-options.js; scripts/check-content.js compares them.
 const VIS_RULES = Object.freeze({
-  public: { photo: ['public', 'cohort', 'hidden'], linkedin: ['public', 'cohort', 'hidden'], email: ['cohort', 'hidden'] },
-  cohort: { photo: ['cohort', 'hidden'], linkedin: ['cohort', 'hidden'], email: ['cohort', 'hidden'] },
-  hidden: { photo: ['hidden'], linkedin: ['hidden'], email: ['hidden'] }
+  public: {
+    photo: ['public', 'cohort', 'hidden'], linkedin: ['public', 'cohort', 'hidden'], email: ['cohort', 'hidden'],
+    country: ['public', 'cohort', 'hidden'], field: ['public', 'cohort', 'hidden'], degree: ['public', 'cohort', 'hidden'],
+    university: ['public', 'cohort', 'hidden'], track: ['public', 'cohort', 'hidden'], bio: ['public', 'cohort', 'hidden']
+  },
+  cohort: {
+    photo: ['cohort', 'hidden'], linkedin: ['cohort', 'hidden'], email: ['cohort', 'hidden'],
+    country: ['cohort', 'hidden'], field: ['cohort', 'hidden'], degree: ['cohort', 'hidden'],
+    university: ['cohort', 'hidden'], track: ['cohort', 'hidden'], bio: ['cohort', 'hidden']
+  },
+  hidden: {
+    photo: ['hidden'], linkedin: ['hidden'], email: ['hidden'],
+    country: ['hidden'], field: ['hidden'], degree: ['hidden'], university: ['hidden'], track: ['hidden'], bio: ['hidden']
+  }
 });
 
 const PHOTO_MIME = ['image/jpeg','image/png','image/webp'];
@@ -324,6 +356,8 @@ function validate_(b) {
     programmeRole: '', coursesInvolved: '', sharedCourses: '', additionalCountry: '', previousDegree: '',
     previousUniversity: '', shortBio: '', linkedin: '', profileVisibility: 'hidden', photoVisibility: 'hidden',
     emailVisibility: 'hidden', linkedinVisibility: 'hidden', analyticsConsent: 'not asked',
+    fieldVisibility: '', citizenshipGroup: '', citizenshipVisibility: '', studyVisaExperience: '',
+    studyVisaExperienceScope: '', studyVisaExperienceVisibility: '', mobilityStatisticsConsent: '',
     photoBase64: '', photoMimeType: ''
   };
   if (!/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(p.email)) {
@@ -344,6 +378,7 @@ function validate_(b) {
     p.shortBio = optional_(b.shortBio, LIMITS.shortBio);
     p.analyticsConsent = oneOf_(b.analyticsConsent, ['yes', 'no'], 'statistics choice');
     visibility_(b, p);
+    mobility_(b, p);
     photo_(b, p);
   } else if (userType === 'shared_course_student') {
     p.homeInstitution = required_(b.homeInstitution, 'Home institution', LIMITS.institution);
@@ -403,6 +438,36 @@ function visibility_(b, p) {
   p.emailVisibility = clamp_(email, rules.email);
   p.photoVisibility = clamp_(oneOf_(b.photoVisibility || 'hidden', ['public', 'cohort', 'hidden'], 'photo visibility'), rules.photo);
   p.linkedinVisibility = clamp_(oneOf_(b.linkedinVisibility || 'hidden', ['public', 'cohort', 'hidden'], 'LinkedIn visibility'), rules.linkedin);
+  // Every other detail: a missing choice counts as "hidden" (fail closed), and nothing can be wider
+  // than the profile itself.
+  const wanted = b.fieldVisibility && typeof b.fieldVisibility === 'object' && !Array.isArray(b.fieldVisibility) ? b.fieldVisibility : {};
+  const fields = {};
+  DETAIL_FIELDS.forEach(function (key) {
+    const v = text_(wanted[key]) ? oneOf_(wanted[key], ['public', 'cohort', 'hidden'], 'detail visibility') : 'hidden';
+    fields[key] = clamp_(v, rules[key]);
+  });
+  p.fieldVisibility = JSON.stringify(fields);
+}
+
+/** Optional citizenship group and self-reported study-visa experience, and their separate consent.
+ *  Skipped = "not_provided". Private unless the person chose to share with verified EU-HEM students;
+ *  never public; only substantive answers can be shared; a hidden profile shares nothing.
+ *  Nothing here is ever worked out from the country, name or any other answer. */
+function mobility_(b, p) {
+  p.citizenshipGroup = text_(b.citizenshipGroup) ? idOf_(b.citizenshipGroup, OPTIONS.citizenshipGroups, 'citizenship group') : NOT_PROVIDED;
+  p.citizenshipVisibility = shareChoice_(b.citizenshipVisibility, p.citizenshipGroup, p.profileVisibility);
+  p.studyVisaExperience = text_(b.studyVisaExperience)
+    ? idOf_(b.studyVisaExperience, OPTIONS.studyVisaExperience, 'study-visa answer') : NOT_PROVIDED;
+  p.studyVisaExperienceScope = p.studyVisaExperience === NOT_PROVIDED ? '' : VISA_SCOPE;
+  p.studyVisaExperienceVisibility = shareChoice_(b.studyVisaExperienceVisibility, p.studyVisaExperience, p.profileVisibility);
+  // Separate, optional, unticked by default: only an explicit "yes" counts
+  p.mobilityStatisticsConsent = text_(b.mobilityStatisticsConsent) === 'yes' ? 'yes' : 'no';
+}
+
+function shareChoice_(value, answer, profileVisibility) {
+  const wanted = text_(value) ? oneOf_(value, Object.keys(OPTIONS.mobilityVisibility), 'sharing choice') : 'private';
+  if (wanted !== 'cohort' || profileVisibility === 'hidden' || answer === NOT_PROVIDED || answer === 'prefer_not_to_say') return 'private';
+  return 'cohort';
 }
 
 /** Server-side privacy clamp: a choice the profile does not allow becomes the next more private one. */
@@ -498,6 +563,9 @@ function writeOptionsSheet_() {
   add('Programme role', OPTIONS.programmeRoles);
   add('Feature interest (stored as ids, comma-separated)', OPTIONS.features);
   add('Visibility', OPTIONS.visibility);
+  add('Citizenship group (optional; "not_provided" = skipped)', OPTIONS.citizenshipGroups);
+  add('Study-visa experience, first semester in Italy (optional, self-reported)', OPTIONS.studyVisaExperience);
+  add('Citizenship / study-visa sharing', OPTIONS.mobilityVisibility);
   add('Role verification status (set by an admin)', OPTIONS.roleVerification);
   rows.push(['Status (set by the script, then an admin)', 'unconfirmed', 'Email not confirmed yet']);
   rows.push(['Status (set by the script, then an admin)', 'pending', 'Email confirmed, waiting for review']);
@@ -515,6 +583,11 @@ function readTable_(sheet) {
   const missing = HEADERS.filter(function (h) { return headers.indexOf(h) === -1; });
   if (missing.length) {
     console.error('Missing headers (run setup()): ' + missing.join(', '));
+    throw appError_('NOT_CONFIGURED', 'The directory is not configured yet.');
+  }
+  const doubled = HEADERS.filter(function (h) { return headers.indexOf(h) !== headers.lastIndexOf(h); });
+  if (doubled.length) {
+    console.error('Duplicate headers (fix the Sheet by hand): ' + doubled.join(', '));
     throw appError_('NOT_CONFIGURED', 'The directory is not configured yet.');
   }
   const rows = lastRow > 1 ? sheet.getRange(2, 1, lastRow - 1, lastCol).getDisplayValues() : [];
@@ -608,8 +681,59 @@ function buildRecord_(p, photo, requestId, token) {
     'Role Verified At': '',
     'Rejected At': '',
     'Last Reconfirmed At': '',
-    'Participation Ends': ''
+    'Participation Ends': '',
+    'Citizenship Group': p.citizenshipGroup,
+    'Citizenship Visibility': p.citizenshipVisibility,
+    'Study Visa Experience': p.studyVisaExperience,
+    'Study Visa Experience Scope': p.studyVisaExperienceScope,
+    'Study Visa Experience Visibility': p.studyVisaExperienceVisibility,
+    'Mobility Statistics Consent': p.mobilityStatisticsConsent,
+    'Field Visibility JSON': p.fieldVisibility
   };
+}
+
+/* ------------------------------------------------------------------ */
+/* Migration to v3                                                     */
+/* ------------------------------------------------------------------ */
+
+// What older registrations get in the new columns: nothing given, nothing shared, no consent.
+// Older rows did not choose per-detail visibility, so every new detail setting starts as "hidden";
+// the person can widen it only by registering again or asking the Student Hub team.
+const V3_DEFAULTS = Object.freeze({
+  'Citizenship Group': NOT_PROVIDED,
+  'Citizenship Visibility': 'private',
+  'Study Visa Experience': NOT_PROVIDED,
+  'Study Visa Experience Visibility': 'private',
+  'Mobility Statistics Consent': 'no',
+  'Field Visibility JSON': JSON.stringify(DETAIL_FIELDS.reduce(function (o, k) { o[k] = 'hidden'; return o; }, {}))
+});
+
+/** Run once after setup() when upgrading. Fills only EMPTY cells, so it is safe to run again. */
+function migrateV3() {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(30000);
+  try {
+    const sheet = openSheet_(false);
+    ensureHeaders_(sheet);
+    const table = readTable_(sheet);
+    let filled = 0;
+    if (table.rows.length) {
+      Object.keys(V3_DEFAULTS).forEach(function (header) {
+        const range = sheet.getRange(2, table.headers.indexOf(header) + 1, table.rows.length, 1);
+        const values = range.getValues();
+        let changed = false;
+        values.forEach(function (row) {
+          if (row[0] === '' || row[0] === null) { row[0] = V3_DEFAULTS[header]; changed = true; filled++; }
+        });
+        if (changed) range.setValues(values);
+      });
+    }
+    const summary = 'migrateV3: ' + table.rows.length + ' row(s) checked, ' + filled + ' empty cell(s) filled.';
+    console.log(summary);
+    return summary;
+  } finally {
+    lock.releaseLock();
+  }
 }
 
 /* ------------------------------------------------------------------ */

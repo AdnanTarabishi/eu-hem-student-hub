@@ -1,0 +1,55 @@
+{
+ "isDemo": true,
+ "note": "FICTIONAL. Computed from the 40 demo records, never from real registrations.",
+ "minGroupSize": 5,
+ "cohorts": {
+  "2026–2028": {
+   "citizenship": {
+    "denominator": "consenting respondents who chose one of the two citizenship groups",
+    "publishable": false,
+    "total": null,
+    "cells": {
+     "eu_eea_swiss": null,
+     "non_eu_eea_swiss": null
+    },
+    "message": "Not enough publishable data for this breakdown."
+   },
+   "studyVisaExperience": {
+    "denominator": "consenting respondents who answered yes, no, not sure or not applicable",
+    "publishable": true,
+    "total": 23,
+    "cells": {
+     "yes": null,
+     "no": null,
+     "not_sure": 0,
+     "not_applicable": 20
+    },
+    "message": "Some small groups are hidden to protect privacy."
+   }
+  },
+  "2025–2027": {
+   "citizenship": {
+    "denominator": "consenting respondents who chose one of the two citizenship groups",
+    "publishable": false,
+    "total": null,
+    "cells": {
+     "eu_eea_swiss": null,
+     "non_eu_eea_swiss": null
+    },
+    "message": "Not enough publishable data for this breakdown."
+   },
+   "studyVisaExperience": {
+    "denominator": "consenting respondents who answered yes, no, not sure or not applicable",
+    "publishable": false,
+    "total": null,
+    "cells": {
+     "yes": null,
+     "no": null,
+     "not_sure": null,
+     "not_applicable": null
+    },
+    "message": "Not enough publishable data for this breakdown."
+   }
+  }
+ }
+}

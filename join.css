@@ -850,3 +850,95 @@
     display: none;
   }
 }
+
+/* ----- v3: optional mobility experience ----- */
+.directory-join .mobility-fieldset {
+  margin: 26px 0 0;
+  padding: 18px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-alt);
+}
+
+.directory-join .mobility-fieldset > legend {
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.directory-join .sub-fieldset {
+  margin: 16px 0 0;
+  padding: 14px 0 0;
+  border: 0;
+  border-top: 1px solid var(--color-divider);
+}
+
+.directory-join .sub-fieldset > legend {
+  padding: 0;
+  font-weight: 700;
+}
+
+.directory-join .radio-stack {
+  display: grid;
+  gap: 6px;
+  margin: 10px 0 4px;
+}
+
+.directory-join .radio-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-card);
+  cursor: pointer;
+}
+
+.directory-join .radio-row input {
+  width: auto;
+  margin-top: 4px;
+  accent-color: var(--color-primary);
+}
+
+.directory-join .radio-row small {
+  display: block;
+  color: var(--color-muted);
+}
+
+.directory-join .radio-row:has(input:checked) {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.directory-join .link-button {
+  min-height: 36px;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: var(--color-primary);
+  font: inherit;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.directory-join .share-field {
+  margin-top: 8px;
+}
+
+.directory-join .summary-list {
+  margin: 10px 0 0;
+  padding-left: 1.1rem;
+  font-size: 0.92rem;
+}
+
+.directory-join .summary-list span {
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .directory-join .mobility-fieldset {
+    padding: 14px;
+  }
+}

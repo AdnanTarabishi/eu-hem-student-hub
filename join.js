@@ -1,4 +1,4 @@
-// ===== Join the Directory: onboarding v2 =====
+// ===== Join the Directory: onboarding v3 =====
 // One form for four kinds of people (directory-options.js → userTypes). Only the fields of the chosen
 // connection to EU-HEM are shown, checked and sent. The server (Code.gs) checks everything again and
 // decides directory eligibility itself; nothing here can make someone eligible or a profile public.
@@ -33,28 +33,8 @@
   let photo = null; // { base64, type, objectUrl }
   let trackNames = { ...OPTIONS.currentTracks }; // replaced by content/tracks.json when it loads
 
-  const countries = [
-    "Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia","Australia","Austria",
-    "Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia",
-    "Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi","Cabo Verde","Cambodia",
-    "Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo","Costa Rica",
-    "Côte d’Ivoire","Croatia","Cuba","Cyprus","Czechia","Democratic Republic of the Congo","Denmark","Djibouti","Dominica",
-    "Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Eswatini","Ethiopia",
-    "Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea",
-    "Guinea-Bissau","Guyana","Haiti","Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel",
-    "Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon",
-    "Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Madagascar","Malawi","Malaysia","Maldives",
-    "Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia",
-    "Montenegro","Morocco","Mozambique","Myanmar","Namibia","Nauru","Nepal","Netherlands","New Zealand","Nicaragua",
-    "Niger","Nigeria","North Korea","North Macedonia","Norway","Oman","Pakistan","Palau","Palestine","Panama",
-    "Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia","Rwanda",
-    "Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino","São Tomé and Príncipe",
-    "Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands",
-    "Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Sweden","Switzerland",
-    "Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor-Leste","Togo","Tonga","Trinidad and Tobago","Tunisia",
-    "Türkiye","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States",
-    "Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"
-  ];
+  // Country names: countries.js (one list for the whole site, also used by the Students explorer)
+  const countries = (window.EUHEM_COUNTRIES || []).map((country) => country.name);
 
   /* ---------- the chosen connection to EU-HEM ---------- */
 
@@ -353,11 +333,19 @@
   /* ---------- privacy controls (rules in directory-options.js, enforced again by the server) ---------- */
 
   const VIS_LABEL = { public: "Public", cohort: "EU-HEM members only", hidden: "Hidden" };
+  const VIS_ORDER = ["public", "cohort", "hidden"];
+  const DETAILS = ["country", "field", "degree", "university", "track", "bio", "photo", "linkedin", "email"];
+  const DETAIL_LABEL = { country: "Countries", field: "Academic background", degree: "Degree", university: "Previous university",
+    track: "EU-HEM track", bio: "Short bio", photo: "Photo", linkedin: "LinkedIn", email: "Email address" };
+  const chosen = {}; // details the person set by hand, e.g. { degree: "cohort" }
   const profileVisibility = () => form.querySelector('input[name="profileVisibility"]:checked')?.value || "";
 
-  function updatePrivacyControls(useDefaults) {
+  // The narrowest-or-equal allowed value: a detail can become MORE private, never more visible
+  const clampVisibility = (wanted, allowed) => VIS_ORDER.slice(VIS_ORDER.indexOf(wanted)).find((v) => allowed.includes(v)) || "hidden";
+
+  function updatePrivacyControls() {
     const profile = profileVisibility();
-    for (const kind of ["photo", "linkedin", "email"]) {
+    for (const kind of DETAILS) {
       const select = $(`${kind}Visibility`);
       if (!profile) {
         select.replaceChildren(option("", "Choose a profile setting first"));
@@ -366,13 +354,58 @@
       }
       select.disabled = false;
       const allowed = VIS_RULES[profile][kind];
+      // Untouched details follow the profile (email: hidden). A hand-set choice is kept, or narrowed when
+      // the profile allows less, and comes back if the profile allows it again; it is never widened.
       const fallback = kind === "email" ? "hidden" : allowed[0];
-      const wanted = useDefaults ? fallback : (select.value || fallback);
+      const wanted = chosen[kind] ? clampVisibility(chosen[kind], allowed) : fallback;
       select.replaceChildren(...allowed.map((value) => option(value, VIS_LABEL[value])));
-      select.value = allowed.includes(wanted) ? wanted : allowed[allowed.length - 1];
+      select.value = wanted;
     }
+    updateShareControls();
     updatePrivacySummary();
   }
+
+  for (const kind of DETAILS) {
+    $(`${kind}Visibility`).addEventListener("change", (event) => { chosen[kind] = event.target.value; updatePrivacySummary(); });
+  }
+
+  /* ---------- mobility experience (optional; private unless shared; never public) ---------- */
+
+  const SUBSTANTIVE = { citizenshipGroup: ["eu_eea_swiss", "non_eu_eea_swiss"], studyVisaExperience: ["yes", "no", "not_sure", "not_applicable"] };
+  const SHARE_SELECT = { citizenshipGroup: "citizenshipVisibility", studyVisaExperience: "studyVisaExperienceVisibility" };
+  const answer = (name) => form.querySelector(`input[name="${name}"]:checked`)?.value || "";
+
+  // Sharing is possible only for a substantive answer and a profile that is not hidden
+  const shareChosen = {}; // the person's own sharing choice per question
+
+  function updateShareControls() {
+    for (const [name, id] of Object.entries(SHARE_SELECT)) {
+      const select = $(id);
+      const note = select.parentElement.querySelector("[data-share-note]");
+      const canShare = SUBSTANTIVE[name].includes(answer(name)) && profileVisibility() !== "hidden";
+      // Private whenever sharing is not possible; the person's own choice returns when it is again
+      select.value = canShare ? shareChosen[name] || "private" : "private";
+      select.disabled = !canShare;
+      if (!note.dataset.text) note.dataset.text = note.textContent;
+      note.textContent = canShare ? note.dataset.text
+        : profileVisibility() === "hidden" ? "Your profile is not published, so this answer stays private."
+        : "Nothing to share yet: with no answer, or “Prefer not to say”, this stays private.";
+    }
+  }
+
+  for (const name of Object.keys(SHARE_SELECT)) {
+    form.querySelectorAll(`input[name="${name}"]`).forEach((radio) => radio.addEventListener("change", () => { updateShareControls(); updatePrivacySummary(); }));
+    $(SHARE_SELECT[name]).addEventListener("change", (event) => { shareChosen[name] = event.target.value; updatePrivacySummary(); });
+  }
+  form.querySelectorAll("[data-clear]").forEach((button) => {
+    button.addEventListener("click", () => {
+      form.querySelectorAll(`input[name="${button.dataset.clear}"]`).forEach((radio) => { radio.checked = false; });
+      delete shareChosen[button.dataset.clear]; // skipping the question also forgets the sharing choice
+      updateShareControls();
+      updatePrivacySummary();
+    });
+  });
+  $("mobilityStatisticsConsent").addEventListener("change", updatePrivacySummary);
 
   function updatePrivacySummary() {
     const profile = profileVisibility();
@@ -387,11 +420,28 @@
       cohort: " Your profile stays private until a secure login for EU-HEM members exists.",
       hidden: " Your individual profile will not be displayed anywhere."
     }[profile] + " Nothing is published automatically.";
-    summary.replaceChildren(title, text);
+    const list = document.createElement("ul");
+    list.className = "summary-list";
+    const item = (label, value) => {
+      const li = document.createElement("li");
+      const b = document.createElement("span");
+      b.textContent = `${label}: `;
+      li.append(b, document.createTextNode(value));
+      list.append(li);
+    };
+    for (const kind of DETAILS) item(DETAIL_LABEL[kind], VIS_LABEL[$(`${kind}Visibility`).value] || "Hidden");
+    const mobilityText = (name) => {
+      if (!answer(name)) return "Not answered";
+      return $(SHARE_SELECT[name]).value === "cohort" ? "Shared with verified EU-HEM students (never public)" : "Private";
+    };
+    item("Citizenship group", mobilityText("citizenshipGroup"));
+    item("Study-visa experience", mobilityText("studyVisaExperience"));
+    item("Mobility statistics", $("mobilityStatisticsConsent").checked ? "Yes" : "No");
+    summary.replaceChildren(title, text, list);
   }
 
   form.querySelectorAll('input[name="profileVisibility"]').forEach((radio) => {
-    radio.addEventListener("change", () => updatePrivacyControls(true));
+    radio.addEventListener("change", () => updatePrivacyControls());
   });
 
   /* ---------- photo ---------- */
@@ -498,6 +548,13 @@
         linkedinVisibility: $("linkedinVisibility").value || "hidden",
         emailVisibility: $("emailVisibility").value || "hidden",
         analyticsConsent: checked("analyticsConsent"),
+        fieldVisibility: Object.fromEntries(["country", "field", "degree", "university", "track", "bio"]
+          .map((kind) => [kind, $(`${kind}Visibility`).value || "hidden"])),
+        citizenshipGroup: answer("citizenshipGroup"),
+        citizenshipVisibility: $("citizenshipVisibility").value || "private",
+        studyVisaExperience: answer("studyVisaExperience"),
+        studyVisaExperienceVisibility: $("studyVisaExperienceVisibility").value || "private",
+        mobilityStatisticsConsent: $("mobilityStatisticsConsent").checked ? "yes" : "no",
         photoBase64: photo ? photo.base64 : "",
         photoMimeType: photo ? photo.type : ""
       });
@@ -594,7 +651,7 @@
 
   buildStaticLists();
   refreshVisibility();
-  updatePrivacyControls(true);
+  updatePrivacyControls();
   setStep(1, { focus: false });
   loadTrackNames();
   loadSharedCourses();

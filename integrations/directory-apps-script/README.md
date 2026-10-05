@@ -1,4 +1,4 @@
-# Registration backend: Google Apps Script setup (onboarding v2)
+# Registration backend: Google Apps Script setup (onboarding v3)
 
 `Code.gs` receives the "Join the Directory" form, checks it again on the server, stores it in a private
 Google Sheet, stores the optional photo in a private Drive folder, and emails a confirmation link.
@@ -44,10 +44,16 @@ In the editor choose the function `setup` and press Run. Google asks for permiss
 to send email as the Student Hub account. Accept. `setup`:
 
 - creates the `Submissions` tab, or adds any **missing columns at the end** (old columns and rows are never
-  moved or rewritten; upgrading from v1 adds the 15 v2 columns);
+  moved or rewritten; upgrading from v1 adds the 15 v2 columns, from v2 the 7 v3 columns);
 - rewrites the human-readable `Options` tab (every allowed value with its id; no student data).
 
 The execution log should end with "Setup OK" and show your contact email (not "NOT SET").
+
+**Only if the Sheet already has registrations from v2 (or v1):** after `setup`, choose `migrateV3` and press Run
+once. It fills only the empty v3 cells of old rows with "nothing given" values (`not_provided`, `private`, mobility
+consent `no`, every per-detail visibility `hidden`), never changes an existing value and never infers citizenship
+or visa answers. The log says how many rows were checked and cells filled. Running it again is harmless
+("0 empty cell(s) filled").
 
 ## 4. Deploy
 
@@ -102,7 +108,7 @@ Directory, whatever their status.
 
 ## Changing the code later
 
-Paste the new `Code.gs`, run `setup()` again, then Deploy → Manage deployments → edit the existing deployment →
+Paste the new `Code.gs`, run `setup()` again (and `migrateV3()` once when upgrading to v3), then Deploy → Manage deployments → edit the existing deployment →
 Version: New version → Deploy. The `/exec` address stays the same.
 
 ## Every two weeks: the retention report
@@ -138,6 +144,7 @@ so nobody joins under text they have not seen. `node scripts/check-content.js` f
 ## Deleting someone's data
 
 Delete the row in the Sheet and the photo file named in `Photo Drive File ID`, then empty the Drive bin.
+The row includes the citizenship-group and study-visa answers, so they go with it.
 
 ## Never
 

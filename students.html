@@ -8,6 +8,7 @@
   <title>Students – EU-HEM Student Hub</title>
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=8a2df1f3">
+  <link rel="stylesheet" href="students.css?v=0d77829b">
   <meta name="theme-color" content="#20242a">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
@@ -27,66 +28,205 @@
     </div>
   </header>
 
-  <main class="container">
+  <!-- Students explorer. Page code: students.js; privacy rules: students-data.js; settings:
+       students-config.js; documentation: docs/students-explorer.md -->
+  <main class="container students-explorer" id="sx">
 
-    <!-- students.js shows this only while the page uses the sample (fake) data -->
-    <div id="demo-banner" class="demo-banner" role="note">
-      <strong>Demo data</strong> — these are fictional students.
-      The real directory will show current EU-HEM students (and, over time, alumni) who choose to
-      join, only after their profile has been reviewed.
-    </div>
-
-    <!-- Section header: icon, title, count pill, and track tabs -->
-    <section class="directory-header">
-      <div class="directory-title">
-        <!-- "People" icon, drawn with SVG so we don't need an icon library -->
-        <svg class="directory-icon" viewBox="0 0 24 24" aria-hidden="true">
-          <circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9" r="2.5"/>
-          <path d="M2 20c0-3.9 3.1-7 7-7s7 3.1 7 7z"/><path d="M15.5 20c0-2.4-.8-4.5-2.1-6.1A5.5 5.5 0 0 1 22 18.5V20z"/>
-        </svg>
-        <h2>Students</h2>
-        <span id="student-count" class="count-pill">…</span>
+    <!-- 1. Compact hero -->
+    <section class="sx-hero">
+      <div>
+        <h1>Meet the EU-HEM Community</h1>
+        <p class="sx-subtitle">Explore the people, countries and academic backgrounds that make up EU-HEM.</p>
       </div>
-      <!-- students.js adds one tab per track -->
-      <div id="track-tabs" class="track-tabs" role="tablist" aria-label="Filter by track"></div>
+      <div class="sx-hero-actions">
+        <a class="button" href="#sx-map-section" id="sx-explore-map">Explore the map</a>
+        <a class="button button-quiet" href="join.html">Join the directory</a>
+      </div>
     </section>
 
-    <!-- Toolbar: search, country filter and the Join button -->
-    <div class="directory-toolbar">
-      <label class="search-pill">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
-        <input id="student-search" type="search" placeholder="Search by name, country, background..." aria-label="Search students">
-      </label>
-      <select id="country-filter" class="select-pill" aria-label="Filter by country">
-        <option value="">All countries</option>
-      </select>
-      <!-- students.js sets the link (join.html) from the JOIN_FORM_URL setting -->
-      <a id="join-button" class="button join-button" href="#">Join the directory</a>
-    </div>
+    <!-- 2. Demo notice and the demo-only preview switch (students.js hides both outside demo mode) -->
+    <section class="sx-demo" id="sx-demo" aria-labelledby="sx-demo-title">
+      <div class="sx-demo-text">
+        <p id="sx-demo-title"><strong>Demonstration with fictional people.</strong>
+          Every name, background and bio on this page is invented. Real profiles will appear only after
+          students choose to join and their EU-HEM membership has been checked.</p>
+      </div>
+      <fieldset class="sx-preview" id="sx-preview">
+        <legend>Demo preview</legend>
+        <div class="sx-segmented">
+          <label><input type="radio" name="sx-preview" value="public" checked> Public preview</label>
+          <label><input type="radio" name="sx-preview" value="member"> Verified-member preview</label>
+        </div>
+        <p class="sx-hint">Preview controls use fictional data only. They do not sign you in or grant access
+          to any real student information.</p>
+      </fieldset>
+    </section>
 
-    <p id="student-totals" class="student-totals">Loading students...</p>
+    <!-- 3. Summary statistics -->
+    <section class="sx-summary" aria-label="Summary">
+      <ul class="sx-stats" id="sx-stats">
+        <li class="sx-stat"><span class="sx-stat-value">…</span><span class="sx-stat-label">Loading</span></li>
+      </ul>
+    </section>
 
-    <!-- The student list. On phones each row becomes a small stacked card (see style.css). -->
-    <div class="directory-table-wrapper">
-      <table class="directory-table">
-        <thead>
-          <tr>
-            <th class="col-number">#</th>
-            <th>Name</th>
-            <th>Country</th>
-            <th>Background</th>
-            <th>Track</th>
-          </tr>
-        </thead>
-        <tbody id="student-rows"></tbody>
-      </table>
-    </div>
+    <!-- 4. Search and filters -->
+    <section class="sx-filters-section" aria-label="Search and filters">
+      <div class="sx-search-row">
+        <label class="search-pill sx-search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+          <input id="sx-search" type="search" autocomplete="off"
+                 placeholder="Search names, countries, backgrounds, degrees, universities or tracks…"
+                 aria-label="Search profiles">
+        </label>
+        <button type="button" class="button button-quiet sx-filters-toggle" id="sx-filters-toggle"
+                aria-expanded="false" aria-controls="sx-filters">
+          Filters <span class="sx-badge" id="sx-filter-count" hidden>0</span>
+        </button>
+      </div>
+      <!-- students.js fills each group with checkboxes. On phones this panel opens with the Filters button. -->
+      <div class="sx-filters" id="sx-filters">
+        <div class="sx-filter-grid" id="sx-primary-filters"></div>
+        <details class="sx-more" id="sx-more">
+          <summary>More filters</summary>
+          <div class="sx-filter-grid" id="sx-more-filters"></div>
+          <div class="sx-member-filters" id="sx-member-filters"></div>
+        </details>
+      </div>
+    </section>
 
+    <!-- 5. Map with the selected-country panel -->
+    <section class="sx-map-section" id="sx-map-section" aria-labelledby="sx-map-title">
+      <details class="sx-map-details" id="sx-map-details" open>
+        <summary>
+          <span><span class="sx-section-title" id="sx-map-title">Our Community Around the World</span>
+          <span class="sx-subtitle">Select a country to explore the profiles available in your current view.</span></span>
+        </summary>
+        <div class="sx-map-layout">
+          <div class="sx-map-card">
+            <div class="sx-map-toolbar" role="group" aria-label="Map view">
+              <div class="sx-segmented sx-map-presets">
+                <button type="button" data-view="europe" aria-pressed="true">Europe</button>
+                <button type="button" data-view="world" aria-pressed="false">World</button>
+              </div>
+              <div class="sx-map-zoom">
+                <button type="button" data-zoom="in" aria-label="Zoom in">+</button>
+                <button type="button" data-zoom="out" aria-label="Zoom out">−</button>
+                <button type="button" data-zoom="reset">Reset map</button>
+              </div>
+            </div>
+            <div class="sx-map" id="sx-map" aria-busy="true">
+              <p class="sx-map-status">Loading map…</p>
+            </div>
+            <div class="sx-map-tooltip" id="sx-map-tooltip" role="tooltip" hidden></div>
+            <div class="sx-map-foot">
+              <div class="sx-legend" id="sx-legend" aria-label="Legend: visible profiles"></div>
+              <p class="sx-hint" id="sx-map-outside" hidden></p>
+            </div>
+            <p class="sx-hint">The map shows the primary country each student represents. It does not show
+              anyone's current or precise location. Colours count the visible profiles that match every filter
+              except Country, so you can compare countries.</p>
+          </div>
+          <aside class="sx-country-panel" id="sx-country-panel" aria-live="polite"></aside>
+        </div>
+        <details class="sx-country-list" id="sx-country-list-wrap">
+          <summary>Explore by country</summary>
+          <p class="sx-hint">Counts are visible matching profiles in this view. Zero means no visible matching
+            profiles, not that nobody from that country studies in EU-HEM.</p>
+          <ul class="sx-country-list-items" id="sx-country-list"></ul>
+        </details>
+      </details>
+    </section>
+
+    <!-- 6. Active filters, result count and view controls -->
+    <section class="sx-results" aria-labelledby="sx-results-title">
+      <h2 class="visually-hidden" id="sx-results-title">Profiles</h2>
+      <div class="sx-chips" id="sx-chips"></div>
+      <div class="sx-results-bar">
+        <p class="sx-result-count" id="sx-result-count" aria-live="polite">Loading profiles…</p>
+        <div class="sx-results-controls">
+          <button type="button" class="button button-quiet" id="sx-random">Meet someone new</button>
+          <button type="button" class="button button-quiet" id="sx-saved-toggle" aria-pressed="false">Saved (0)</button>
+          <label class="sx-sort">Sort
+            <select id="sx-sort" class="select-pill">
+              <option value="name">Name A–Z</option>
+              <option value="country">Country</option>
+              <option value="background">Academic background</option>
+              <option value="track">Track</option>
+              <option value="cohort">Cohort, newest first</option>
+            </select>
+          </label>
+          <div class="sx-segmented" role="group" aria-label="View">
+            <button type="button" data-layout="cards" aria-pressed="true">Cards</button>
+            <button type="button" data-layout="list" aria-pressed="false">List</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Profiles (cards or list) -->
+      <div id="sx-profiles" class="sx-profiles" aria-busy="true"></div>
+      <nav class="sx-pagination" id="sx-pagination" aria-label="Pages"></nav>
+
+      <!-- 8. One generic card about members-only profiles. Never one placeholder per person. -->
+      <div class="sx-locked-card">
+        <div>
+          <p class="sx-locked-title">Some profiles are members-only</p>
+          <p>Students control who can see their information. Some profiles are available only to verified
+            EU-HEM students, while others are not listed.</p>
+        </div>
+        <button type="button" class="button button-quiet" id="sx-locked-more" aria-expanded="false"
+                aria-controls="sx-locked-explain">How does this work?</button>
+        <div class="sx-locked-explain" id="sx-locked-explain" hidden>
+          <p>Secure member access is planned. There is no student login yet.</p>
+          <p>When it exists, “EU-HEM members” will mean verified participating EU-HEM students across the
+            supported cohorts, checked by the Student Hub administrator (not by the university). Until then,
+            members-only and hidden profiles are never sent to this page.
+            <a href="privacy.html#student-directory">Read the privacy notice</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Insights -->
+    <section class="sx-insights" aria-labelledby="sx-insights-title">
+      <h2 id="sx-insights-title">Cohort insights</h2>
+      <div class="sx-insight-grid">
+        <div class="sx-insight-card">
+          <h3>Who is in this view</h3>
+          <p class="sx-hint">Based on visible profiles in this view, with your filters applied.</p>
+          <div id="sx-directory-insights"></div>
+        </div>
+        <div class="sx-insight-card">
+          <h3>Mobility statistics <span class="sx-tag">Fictional</span></h3>
+          <p class="sx-hint">Whole-cohort figures, prepared in advance from people who separately agreed to
+            mobility statistics. They are not affected by filters and never link to individual profiles.
+            Small groups are hidden; this lowers, but does not remove, the risk of identifying someone.</p>
+          <div id="sx-mobility-insights"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. Call to action -->
+    <section class="sx-cta">
+      <div>
+        <h2>Help represent your cohort</h2>
+        <p>Add your profile and choose what you share with the EU-HEM community.</p>
+      </div>
+      <div class="sx-hero-actions">
+        <a class="button" href="join.html">Join the directory</a>
+        <a class="button button-quiet" href="tracks.html">Explore the tracks</a>
+      </div>
+    </section>
+
+    <!-- Profile details: a native dialog (Escape closes it, focus stays inside while open) -->
+    <dialog class="sx-drawer" id="sx-drawer" aria-labelledby="sx-drawer-name">
+      <div class="sx-drawer-inner" id="sx-drawer-body"></div>
+    </dialog>
   </main>
 
   <footer class="site-footer">
     <div class="container">
-      <p>EU-HEM Student Hub &middot; Unofficial student project</p>
+      <p>EU-HEM Student Hub &middot; Unofficial student project &middot;
+        <a href="privacy.html">Privacy</a> &middot; <a href="contact.html">Contact</a></p>
+      <p class="sx-credit">Map: <a href="https://www.naturalearthdata.com/">Natural Earth</a> (public domain).</p>
     </div>
   </footer>
 
@@ -95,7 +235,12 @@
   <script defer src="search.js?v=5cf2db17"></script>
   <script defer src="pwa.js?v=c9212bf8"></script>
   <script defer src="announcements.js?v=4ad85af3"></script>
-  <script defer src="students.js?v=94849028"></script>
+  <script defer src="directory-config.js?v=bb28e887"></script>
+  <script defer src="directory-options.js?v=cefd40bc"></script>
+  <script defer src="countries.js?v=9ba10988"></script>
+  <script defer src="students-config.js?v=370782b5"></script>
+  <script defer src="students-data.js?v=0447923b"></script>
+  <script defer src="students.js?v=22bbf957"></script>
 
 </body>
 </html>
