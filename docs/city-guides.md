@@ -72,8 +72,14 @@ Sections 3 and 4 always have two parts: `### EU/EEA students` and `### Non-EU st
 4. As soon as the section has a tip, it appears on the page (it is hidden while empty).
 
 ## How to add a photo
-Use **real photos** only (no AI-generated pictures: students should see what the city really looks like).
-Free photos from [Wikimedia Commons](https://commons.wikimedia.org/) are fine if you credit them.
+Most pictures are **real photos**, so students see what the city really looks like. Free photos from
+[Wikimedia Commons](https://commons.wikimedia.org/) are fine if you credit them.
+
+**AI-generated pictures** are allowed (decided on 5 October 2026, mainly for the cover), but always labelled:
+the file name starts with `ai-`, the figure is `<figure class="is-ai">` (this shows an "AI illustration"
+badge), the alt text starts with "AI-generated illustration", and the caption ends with
+"AI-generated illustration, not a photo; the other pictures here are real photos." An AI cover in
+`guide-data.js` has the credit "AI-generated illustration". Keep real photos in every gallery too.
 1. Save the photo as WebP in two sizes, 640 and 1200 pixels wide, in `assets/images/cities/<city>/`
    (for example `piazza-maggiore-640.webp` and `piazza-maggiore-1200.webp`). Keep each under about 200 KB.
 2. In the guide, inside the `<div class="guide-photos">` at the top of "1. At a glance", copy one
@@ -83,8 +89,9 @@ Free photos from [Wikimedia Commons](https://commons.wikimedia.org/) are fine if
    (for example CC BY-SA 4.0) and a link to the photo's Commons page. Write "(cropped)" if you cropped it.
    The checker refuses a photo without these.
 4. The **first** photo is shown large; pick the one that says the most about the city.
-5. The photo on the city cards (City Guide index and homepage) is the `cover` in `guide-data.js`:
-   the image path without `-640.webp`, its alt text and a short credit like `Photo: Name, CC BY-SA 4.0`.
+5. The picture on the city cards (City Guide index and homepage) is the `cover` in `guide-data.js`:
+   the image path without `-640.webp`, its alt text and a short credit like `Photo: Name, CC BY-SA 4.0`
+   (or "AI-generated illustration").
 
 ## How to add a new city
 1. Make sure the university is in `content/tracks.json` (its `guide` link must be

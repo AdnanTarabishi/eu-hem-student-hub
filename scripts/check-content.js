@@ -394,7 +394,10 @@ function checkCityGuides() {
         if (!fs.existsSync(path.join(ROOT, `${guide.cover.image}-${size}.webp`))) error(at, `"${guide.cover.image}-${size}.webp" does not exist`);
       }
       if (!guide.cover.alt) error(at, "needs alt text");
-      if (!/^Photo: .+, (CC|Public domain)/.test(guide.cover.credit || "")) error(at, 'credit must look like "Photo: <name>, CC BY-SA 4.0"');
+      const aiCover = /\/ai-[^/]*$/.test(guide.cover.image);
+      if (aiCover && guide.cover.credit !== "AI-generated illustration") error(at, 'an AI cover must have the credit "AI-generated illustration"');
+      if (aiCover && !/^AI-generated illustration/.test(guide.cover.alt || "")) error(at, 'an AI cover\'s alt text must start with "AI-generated illustration"');
+      if (!aiCover && !/^Photo: .+, (CC|Public domain)/.test(guide.cover.credit || "")) error(at, 'credit must look like "Photo: <name>, CC BY-SA 4.0"');
     }
     if (!guide.file) continue;
     const where = guide.file;
@@ -441,9 +444,21 @@ function checkCityGuides() {
       }
     }
 
-    // Photos: a local file, a description for screen readers, and the credit the licence asks for
-    const figures = parsed.body.match(/<figure>[\s\S]*?<\/figure>/g) || [];
+    // Photos: a local file, a description for screen readers, and the credit the licence asks for.
+    // AI-generated pictures are allowed only when labelled: <figure class="is-ai">, an alt text and a
+    // caption that say "AI-generated illustration", and an image file name starting with "ai-".
+    const figures = parsed.body.match(/<figure[^>]*>[\s\S]*?<\/figure>/g) || [];
     for (const figure of figures) {
+      const isAi = /^<figure class="is-ai">/.test(figure);
+      const named = (figure.match(/<img[^>]*\ssrc="([^"]+)"/) || [])[1] || "";
+      if (isAi !== /\/ai-[^/]*$/.test(named)) error(`${where}: "${named}"`, 'AI images are named "ai-…" and marked <figure class="is-ai">, real photos neither');
+      if (isAi) {
+        const aiAlt = (figure.match(/<img[^>]*\salt="([^"]*)"/) || [])[1] || "";
+        if (!/^AI-generated illustration/.test(aiAlt)) error(`${where}: "${named}"`, 'alt text must start with "AI-generated illustration"');
+        if (!/AI-generated illustration, not a photo/.test(figure)) error(`${where}: "${named}"`, 'caption must say "AI-generated illustration, not a photo"');
+        if (!fs.existsSync(path.join(ROOT, named))) error(`${where}: "${named}"`, "the image file does not exist");
+        continue;
+      }
       const src = (figure.match(/<img[^>]*\ssrc="([^"]+)"/) || [])[1];
       const alt = (figure.match(/<img[^>]*\salt="([^"]*)"/) || [])[1];
       const caption = (figure.match(/<figcaption>([\s\S]*?)<\/figcaption>/) || [])[1] || "";
@@ -457,7 +472,7 @@ function checkCityGuides() {
       if (!/creativecommons\.org\/|[Pp]ublic domain/.test(caption)) error(at, "the caption needs the licence (with its link)");
       if (!/<a href="https:\/\/[^"]+">/.test(caption)) error(at, "the caption needs a link to the photo's source page");
     }
-    if (/<img/.test(parsed.body.replace(/<figure>[\s\S]*?<\/figure>/g, ""))) error(where, "every photo must be inside <figure> with a <figcaption> credit");
+    if (/<img/.test(parsed.body.replace(/<figure[^>]*>[\s\S]*?<\/figure>/g, ""))) error(where, "every photo must be inside <figure> with a <figcaption> credit");
 
     // Prices need a source; sources must be listed and well formed
     const lines = text.split("\n");
