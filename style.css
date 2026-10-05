@@ -923,8 +923,162 @@ main {
   color: var(--color-primary);
 }
 
-.guide-compare th[scope="row"] {
-  white-space: nowrap;
+/* Comparison: choose cities with buttons; topics grouped; the saved track's cities highlighted */
+.guide-compare-intro {
+  margin: 0 0 10px;
+  font-size: 0.92rem;
+  color: var(--color-muted);
+}
+
+.compare-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.compare-chip {
+  min-height: 40px;
+  padding: 6px 14px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-card);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.compare-chip[aria-pressed="true"] {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.compare-chip[aria-pressed="true"]::before {
+  content: "✓ ";
+}
+
+.compare-chip.compare-mine {
+  border-style: dashed;
+}
+
+.compare-chip:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.compare-wrapper {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.guide .compare-table {
+  margin: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.9rem;
+}
+
+.guide .compare-table th,
+.guide .compare-table td {
+  border: none;
+  border-bottom: 1px solid var(--color-divider);
+  min-width: 150px;
+}
+
+.guide .compare-table thead th {
+  background: var(--color-surface-alt);
+  vertical-align: bottom;
+}
+
+.compare-table thead th a {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+}
+
+.compare-who {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-muted);
+}
+
+/* The topic column stays visible while the table scrolls sideways */
+.guide .compare-table th[scope="row"],
+.guide .compare-table thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  min-width: 120px;
+  max-width: 160px;
+  background: var(--color-card);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.guide .compare-table thead th:first-child {
+  background: var(--color-surface-alt);
+}
+
+.guide .compare-table .compare-group th {
+  position: static;
+  max-width: none;
+  padding-top: 14px;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.guide .compare-table .is-mine {
+  background: var(--color-success-bg);
+}
+
+.guide .compare-table thead th.is-mine {
+  box-shadow: inset 0 3px 0 var(--color-primary);
+}
+
+/* Grey text is too faint on the highlight colour, so it uses the normal text colour there */
+.compare-table .is-mine .source-tag,
+.compare-table .is-mine .compare-who {
+  color: var(--color-text);
+}
+
+/* Topic lines are only for phones; wider screens use the topic column */
+.compare-table .compare-topic {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .compare-table .compare-topic {
+    display: table-row;
+  }
+
+  .guide .compare-table .compare-topic th {
+    position: static;
+    max-width: none;
+    padding: 10px 10px 0;
+    border-bottom: none;
+    background: var(--color-card);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-muted);
+  }
+
+  .guide .compare-table th[scope="row"],
+  .guide .compare-table thead th:first-child {
+    display: none;
+  }
+
+  .guide .compare-table td,
+  .guide .compare-table thead th {
+    min-width: 140px;
+  }
 }
 
 .guide-compare-note {

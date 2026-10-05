@@ -50,11 +50,23 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
   });
   ok('index: one card per city, tracks and semesters taken from tracks.json');
   await page.waitForSelector('.guide-compare table');
-  assert.match(await page.textContent('.guide-compare caption'), /^Approximate, checked \d+ \w+ 20\d\d/);
-  const osloRow = await page.$$eval('.guide-compare tbody tr', (rows) => rows.map((r) => r.textContent));
-  assert.ok(osloRow.some((r) => r.includes('Oslo') && r.includes('NOK 393')));
+  assert.match(await page.textContent('.guide-compare-intro'), /Approximate, checked \d+ \w+ 20\d\d/);
+  const groups = await page.$$eval('.compare-group th', (all) => all.map((th) => th.textContent));
+  assert.deepStrictEqual(groups, guides.GUIDE_COMPARE.map((g) => g.group));
+  const rows = await page.$$eval('.compare-table th[scope="row"]', (all) => all.map((th) => th.textContent));
+  assert.deepStrictEqual(rows, guides.GUIDE_COMPARE.flatMap((g) => g.keys.map((k) => guides.GUIDE_FACTS[k])));
+  assert.ok((await page.textContent('.compare-table td[data-city="oslo"]')).includes('NOK 4,510'));
   assert.ok(await page.$('.guide-compare a.source-tag[href^="city-guide.html?city=oslo#source-s"]'));
-  ok('index: comparison table built from the guides\' facts, labelled "Approximate, checked …", with source links');
+  ok('index: comparison grouped by topic (Money, Paperwork, Health, Daily life) from the guides\' facts, with source links');
+  const visible = () => page.$$eval('.compare-table thead th[data-city]', (all) => all.filter((th) => !th.hidden).map((th) => th.dataset.city));
+  assert.deepStrictEqual(await visible(), guides.CITY_GUIDES.map((g) => g.id));
+  await page.click('.compare-chip[data-city="rotterdam"]');
+  assert.ok(!(await visible()).includes('rotterdam'));
+  assert.strictEqual(await page.getAttribute('.compare-chip[data-city="rotterdam"]', 'aria-pressed'), 'false');
+  for (const id of ['bologna', 'oslo', 'innsbruck']) await page.click(`.compare-chip[data-city="${id}"]`);
+  assert.deepStrictEqual(await visible(), ['innsbruck'], 'the last city cannot be removed');
+  ok('index: city buttons show and hide columns; at least one city always stays');
+  assert.strictEqual(await page.$('.compare-mine'), null);
   assert.strictEqual(await page.$('.guide-my-track'), null);
   assert.ok(await page.$('a[href="contact.html"]:text("Report something outdated")'));
   ok('index: no "My track" banner without a saved track; "Report something outdated" link present');
@@ -67,6 +79,12 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
   assert.strictEqual(await page.textContent('.guide-my-track-next'), `Your next city: ${next.city}, Semester ${next.number} (${next.label}) →`);
   assert.strictEqual(await page.getAttribute('.guide-my-track-next a', 'href'), cohort.universities[next.university].guide);
   ok(`"My track" banner: saved MHI on 5 Oct 2026 -> "${next.city}, Semester ${next.number} (${next.label})"`);
+  const mhiCities = mhi.map((s) => guides.CITY_GUIDES.find((g) => g.university === s.university).id);
+  await page.click('.compare-chip[data-city="bologna"]');
+  await page.click('.compare-mine');
+  assert.deepStrictEqual(await page.$$eval('.compare-table thead th[data-city]', (all) => all.filter((th) => !th.hidden).map((th) => th.dataset.city)), mhiCities);
+  assert.deepStrictEqual(await page.$$eval('.compare-table thead th.is-mine', (all) => all.map((th) => th.dataset.city)), mhiCities);
+  ok(`comparison: "My cities (MHI)" shows and highlights ${mhiCities.join(' and ')}`);
   await page.context().close();
 
   // ----- Oslo guide -----

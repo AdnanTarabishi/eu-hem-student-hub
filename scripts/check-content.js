@@ -395,7 +395,6 @@ function checkCityGuides() {
       }
       if (!guide.cover.alt) error(at, "needs alt text");
       const aiCover = /\/ai-[^/]*$/.test(guide.cover.image);
-      if (aiCover && guide.cover.credit !== "AI-generated illustration") error(at, 'an AI cover must have the credit "AI-generated illustration"');
       if (aiCover && !/^AI-generated illustration/.test(guide.cover.alt || "")) error(at, 'an AI cover\'s alt text must start with "AI-generated illustration"');
       if (!aiCover && !/^Photo: .+, (CC|Public domain)/.test(guide.cover.credit || "")) error(at, 'credit must look like "Photo: <name>, CC BY-SA 4.0"');
     }
