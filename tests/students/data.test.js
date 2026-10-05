@@ -68,9 +68,17 @@ t('no real-person data: no emails, no photos, no web addresses, LinkedIn only th
   for (const r of records) { assert.strictEqual(r.photo, null); assert.ok(r.linkedin === null || r.linkedin === 'example'); assert.ok(!('email' in r)); }
 });
 t('the demo generator is deterministic (re-running it changes nothing)', () => {
-  const before = [demoText, fs.readFileSync(path.join(ROOT, 'data/demo-aggregates.json'), 'utf8')];
-  execFileSync(process.execPath, [path.join(ROOT, 'scripts/build-demo-students.js')], { cwd: ROOT });
-  assert.deepStrictEqual([fs.readFileSync(path.join(ROOT, 'data/demo-students.json'), 'utf8'), fs.readFileSync(path.join(ROOT, 'data/demo-aggregates.json'), 'utf8')], before);
+  // Line endings are ignored (Git on Windows may check the files out with CRLF), and the original files are
+  // put back afterwards, so running the tests never leaves changes behind.
+  const files = ['data/demo-students.json', 'data/demo-aggregates.json'].map((f) => path.join(ROOT, f));
+  const before = files.map((f) => fs.readFileSync(f, 'utf8'));
+  const lf = (text) => text.replace(/\r\n/g, '\n');
+  try {
+    execFileSync(process.execPath, [path.join(ROOT, 'scripts/build-demo-students.js')], { cwd: ROOT });
+    assert.deepStrictEqual(files.map((f) => lf(fs.readFileSync(f, 'utf8'))), before.map(lf));
+  } finally {
+    files.forEach((f, i) => fs.writeFileSync(f, before[i]));
+  }
 });
 
 /* ----- privacy projections ----- */

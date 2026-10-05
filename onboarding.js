@@ -27,7 +27,7 @@ const SETUP_STEPS = [
   },
   {
     id: "search", title: "Try search",
-    text: "Press Ctrl K (⌘K on Mac) or tap 🔍 to find any course, note or page.",
+    text: "Press Ctrl K (⌘K on Mac) or tap the search button to find any course, note or page.",
     action: { label: "Try it", event: "open-search" },
   },
   {

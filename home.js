@@ -46,11 +46,11 @@ function daysUntil(dateKey) {
 function homeStats(today = null) {
   const days = today === null ? daysUntil(PROGRAM_END_DATE) : today;
   const stats = [
-    { value: STUDENT_COUNT, label: "Students" },
-    { value: COUNTRY_COUNT, label: "Countries" },
-    { value: TRACK_COUNT, label: "Tracks" },
+    { value: STUDENT_COUNT, label: "Students", icon: "students" },
+    { value: COUNTRY_COUNT, label: "Countries", icon: "globe" },
+    { value: TRACK_COUNT, label: "Tracks", icon: "route" },
   ];
-  if (days !== null && days > 0) stats.push({ value: days, label: "Estimated days to graduation", noCount: true });
+  if (days !== null && days > 0) stats.push({ value: days, label: "Estimated days to graduation", noCount: true, icon: "graduation" });
   return stats;
 }
 
@@ -105,6 +105,9 @@ function buildHomeHero() {
   for (const stat of homeStats()) {
     const item = document.createElement("li");
     item.className = "home-stat";
+    if (stat.icon) {
+      item.insertAdjacentHTML("beforeend", `<svg class="icon home-stat-icon" aria-hidden="true"><use href="icons.svg#${stat.icon}"></use></svg>`);
+    }
     const number = document.createElement("span");
     number.className = "home-stat-number";
     // A fixed width (in digits) so the box doesn't grow while counting up
@@ -141,7 +144,7 @@ function fillWeekGreeting() {
   const hello = hour < 5 ? "Good night" : hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
   const greeting = document.getElementById("dash-greeting");
   const date = document.getElementById("dash-date");
-  if (greeting) greeting.textContent = `${hello} 👋`;
+  if (greeting) greeting.textContent = hello;
   if (date) {
     const noon = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12);
     date.textContent = noon.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
@@ -187,8 +190,36 @@ async function fillCityCards() {
   }
 }
 
+// ----- "Meet the Community": a small, decorative Europe map with the four programme countries -----
+// The same local map as the Students page (assets/map/world-countries.svg, Natural Earth, public domain).
+// It marks only where the programme's universities are, never students.
+const COMMUNITY_MAP_VIEW = "436 16 178 102"; // the "Europe" view, as in students-config.js
+const PROGRAMME_COUNTRIES = ["IT", "NO", "NL", "AT"];
+
+async function fillCommunityMap() {
+  const box = document.getElementById("community-map");
+  if (!box) return;
+  try {
+    const response = await fetch("assets/map/world-countries.svg");
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const svg = new DOMParser().parseFromString(await response.text(), "image/svg+xml").documentElement;
+    if (svg.nodeName !== "svg") throw new Error("not an SVG");
+    svg.setAttribute("viewBox", COMMUNITY_MAP_VIEW);
+    svg.setAttribute("preserveAspectRatio", "xMidYMid slice");
+    svg.setAttribute("focusable", "false");
+    for (const code of PROGRAMME_COUNTRIES) {
+      const path = svg.querySelector(`path[data-code="${code}"]`);
+      if (path) path.classList.add("is-programme");
+    }
+    box.replaceChildren(document.importNode(svg, true));
+  } catch {
+    box.closest(".community-map").hidden = true; // decorative only: hide it quietly
+  }
+}
+
 if (typeof document !== "undefined") {
   document.addEventListener("DOMContentLoaded", fillHomeSettings);
+  document.addEventListener("DOMContentLoaded", fillCommunityMap);
   document.addEventListener("DOMContentLoaded", fillCityCards);
 }
 
