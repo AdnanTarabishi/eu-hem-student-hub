@@ -55,10 +55,15 @@ so nobody joins under text they haven't seen. Wording fixes that don't change me
 - No Google Sheet or Drive folder ID appears in the directory files.
 
 ## Going live (in this order)
+0. Create the dedicated Student Hub email as its own Google account, and do steps 1–2 **signed in to that
+   account**, not a personal one. Apps Script always sends the confirmation email *from* the account that
+   deploys it, so a personal account would show its address to every student. `privacy.html` promises that
+   the Sheet, folder and email belong to the Student Hub's own account.
 1. Restrict the Google Sheet and create a private photo folder (backend README, step 1).
 2. Set up and deploy the Apps Script (backend README, steps 2–4). Use the dedicated Student Hub email as
    `CONTACT_EMAIL`.
-3. Put the dedicated email on `contact.html` (replace the placeholder).
+3. Put the dedicated email on `contact.html` and in "Who is responsible" on `privacy.html` (replace both
+   placeholders; the checker refuses an endpoint while either is there).
 4. Review and approve the privacy draft (`privacy.html`), and fill in "Last updated".
 5. Paste the `/exec` address into `directory-config.js` → `endpoint`. Run `node scripts/check-content.js`
    and `node scripts/stamp-versions.js`.

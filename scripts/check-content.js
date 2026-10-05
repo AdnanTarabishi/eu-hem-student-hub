@@ -379,8 +379,9 @@ function checkDirectory() {
     error(C, `endpoint must be empty or a Google Apps Script address ending in /exec, not "${endpoint}"`);
   }
   const contact = read("contact.html") || "";
-  if (endpoint && /\[Placeholder:/.test(contact)) {
-    error(C, "the form is switched on (endpoint set) but contact.html still has a placeholder: people must be able to ask us to change or delete their profile");
+  const privacy = read("privacy.html") || "";
+  if (endpoint && /\[Placeholder:/.test(contact + privacy)) {
+    error(C, "the form is switched on (endpoint set) but contact.html or privacy.html still has a placeholder: people must be able to ask us to change or delete their profile");
   } else if (!endpoint) {
     warn(C, "endpoint is empty, so the Join the Directory form says it is not open yet");
   }
