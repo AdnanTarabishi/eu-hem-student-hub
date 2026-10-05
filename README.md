@@ -14,7 +14,7 @@ A free, volunteer website for students of the EU-HEM master's program (European 
 - Calendar subscription (Google, Apple, Outlook): one calendar with every course, or one with exactly your study plan
 - One page per course: Overview, Schedule, Exam, Topics, Key Concepts, Practice, Resources
 - Notes & Resources: student-made notes, flashcards, practice questions and a shared glossary (pilot: Fundamentals in Health Economics)
-- City guide for Bologna (housing, transport, healthcare, documents, study places and more)
+- City guides for Bologna, Oslo, Rotterdam and Innsbruck (permits, housing, healthcare, transport, study places and more)
 - Students directory, currently a **demo with fictional data** (`data/sample-students.csv`)
 - Useful links, including Virtuale for official course materials
 - **Search the whole site** with the 🔍 button, Ctrl+K (⌘K on Mac) or `/`

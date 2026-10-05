@@ -139,20 +139,18 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
   await page.context().close();
   ok('dark mode: the guide renders on the dark background');
 
-  // ----- Older guide (Bologna) still works -----
-  page = await open('city-guide.html?city=bologna');
-  await page.waitForSelector('.guide-toc');
-  assert.ok((await page.textContent('h1')).includes('Bologna'));
-  assert.ok(await page.$('.guide-breadcrumb'));
-  await page.context().close();
-  ok('Bologna (older format) still renders with its contents box');
-
-  // ----- Every other guide in the full format: same layout as Oslo -----
+  // ----- Every other guide: same layout as Oslo; photos load and carry their credit -----
   for (const guide of guides.CITY_GUIDES.filter((g) => g.file && g.id !== 'oslo')) {
-    if (!guides.parseGuide(fs.readFileSync(path.join(ROOT, guide.file), 'utf8')).structured) continue;
     const city = cohort.universities[guide.university].city;
     page = await open(`city-guide.html?city=${guide.id}`, { viewport: { width: 375, height: 800 } });
     await page.waitForSelector('.guide-section');
+    const photos = await page.$$eval('.guide-photos figure', (all) => all.map((f) => ({
+      src: f.querySelector('img').getAttribute('src'), alt: f.querySelector('img').alt, caption: f.querySelector('figcaption')?.textContent || '' })));
+    for (const photo of photos) {
+      assert.ok(photo.alt && /Photo: /.test(photo.caption), `${city}: ${photo.src} needs alt text and a credit`);
+      await page.$eval(`img[src="${photo.src}"]`, (img) => img.scrollIntoView());
+      await page.waitForFunction((src) => { const img = document.querySelector(`img[src="${src}"]`); return img.complete && img.naturalWidth > 0; }, photo.src);
+    }
     const titles = await page.$$eval('.guide-section h2', (all) => all.map((h) => h.textContent.trim()));
     assert.deepStrictEqual(titles, guides.GUIDE_SECTIONS.map((t, i) => `${i + 1}. ${t}`));
     assert.ok((await page.textContent('#at-a-glance-body .guide-glance')).includes(guides.cityPresenceText(cohort, guide.university)));
@@ -162,7 +160,8 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
       assert.ok(await page.$(href), `${city}: missing anchor ${href}`);
     }
     await page.context().close();
-    ok(`${city}: 16 sections, tracks from tracks.json, working anchors, no sideways scrolling at 375px`);
+    ok(`${city}: 16 sections, tracks from tracks.json, working anchors, no sideways scrolling at 375px` +
+      (photos.length ? `, ${photos.length} photos load with credits` : ''));
   }
 
   const planned = guides.CITY_GUIDES.find((g) => !g.file);

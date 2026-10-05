@@ -5,7 +5,7 @@ headings and `-` for bullet points). You never need to touch the code to change 
 
 | City | File | Status |
 |---|---|---|
-| Bologna | `docs/content/bologna-guide.md` | older format, to be converted to the 16 sections |
+| Bologna | `docs/content/bologna-guide.md` | full format with photos, checked 5 October 2026 |
 | Oslo | `docs/content/oslo-guide.md` | full format, checked 5 October 2026 |
 | Rotterdam | `docs/content/rotterdam-guide.md` | full format, checked 5 October 2026 |
 | Innsbruck | `docs/content/innsbruck-guide.md` | full format, checked 5 October 2026 |
@@ -70,6 +70,18 @@ Sections 3 and 4 always have two parts: `### EU/EEA students` and `### Non-EU st
    `- Buy a second-hand bike in the first week: they sell out by February.`
 3. No names, phone numbers or emails. Facts with prices still need a source tag.
 4. As soon as the section has a tip, it appears on the page (it is hidden while empty).
+
+## How to add a photo
+Use **real photos** only (no AI-generated pictures: students should see what the city really looks like).
+Free photos from [Wikimedia Commons](https://commons.wikimedia.org/) are fine if you credit them.
+1. Save the photo as WebP in two sizes, 640 and 1200 pixels wide, in `assets/images/cities/<city>/`
+   (for example `piazza-maggiore-640.webp` and `piazza-maggiore-1200.webp`). Keep each under about 200 KB.
+2. In the guide, inside the `<div class="guide-photos">` at the top of "1. At a glance", copy one
+   `<figure>…</figure>` line and change it: the file names, the `alt` text (what the photo shows, for
+   people using screen readers) and the caption.
+3. The caption must say what it shows, then `Photo: <photographer>, <year>`, the licence with its link
+   (for example CC BY-SA 4.0) and a link to the photo's Commons page. Write "(cropped)" if you cropped it.
+   The checker refuses a photo without these.
 
 ## How to add a new city
 1. Make sure the university is in `content/tracks.json` (its `guide` link must be

@@ -2,8 +2,8 @@
 // One template page for every city (city-guide.html?city=oslo). Without ?city it shows the index:
 // a "My track" banner, the city cards and a comparison table of the cities.
 // A guide is a Markdown file (list in guide-data.js) converted to HTML with the "marked" library.
-// Guides with a facts block get the full layout: notice box, "At a glance", a sticky contents menu,
-// folding sections, clickable source tags and tables that become cards on phones.
+// Each guide starts with a facts block and gets the same layout: notice box, "At a glance", a sticky
+// contents menu, folding sections, clickable source tags, photos and tables that become cards on phones.
 // Which tracks study in a city, and when, always comes from content/tracks.json.
 
 const guideArticle = document.getElementById("guide");
@@ -349,75 +349,6 @@ function revealHashTarget() {
   target.scrollIntoView();
 }
 
-// ----- The older guide format (Bologna until it is converted) -----
-
-// The first quote block (the "> Last checked ..." lines) becomes a highlighted notice
-function styleNoticeBox() {
-  const notice = guideArticle.querySelector("h1 + blockquote") || guideArticle.querySelector("blockquote");
-  if (!notice) return;
-  notice.className = "guide-notice";
-  notice.innerHTML = notice.innerHTML.replace(/(Last checked:[^.<]*\.?)/, "<strong>$1</strong>");
-}
-
-// Other quote blocks (like "Student tips") use the site's normal note style
-function styleOtherQuotes() {
-  for (const quote of guideArticle.querySelectorAll("blockquote:not(.guide-notice)")) {
-    quote.classList.add("note");
-  }
-}
-
-// Gives every section heading an id, and builds the "Contents" box from them
-function buildTableOfContents() {
-  const headings = [...guideArticle.querySelectorAll("h2")];
-  if (headings.length === 0) return;
-
-  const toc = createElement("nav", "guide-toc");
-  toc.id = "contents";
-  toc.setAttribute("aria-label", "Contents");
-  toc.appendChild(createElement("h2", null, "Contents"));
-  const list = createElement("ul");
-
-  for (const heading of headings) {
-    heading.id = guideHeadingId(heading.textContent);
-    const link = createElement("a", null, heading.textContent);
-    link.href = "#" + heading.id;
-    const item = createElement("li");
-    item.appendChild(link);
-    list.appendChild(item);
-  }
-  toc.appendChild(list);
-
-  // Put the contents box after the notice box (or after the title if there is none)
-  const anchor = guideArticle.querySelector(".guide-notice") || guideArticle.querySelector("h1");
-  anchor.after(toc);
-
-  // A "back to contents" link at the end of each section, handy on long phone pages
-  const backLink = () => {
-    const link = createElement("a", "guide-back", "↑ Back to contents");
-    link.href = "#contents";
-    return link;
-  };
-  for (const heading of headings.slice(1)) {
-    // Sections are separated by a line (<hr>); put the link before it
-    const before = heading.previousElementSibling?.tagName === "HR" ? heading.previousElementSibling : heading;
-    before.before(backLink());
-  }
-  guideArticle.appendChild(backLink());
-}
-
-function renderOlderGuide(markdown) {
-  // breaks: true keeps single line breaks (e.g. "Last checked" and the disclaimer on separate lines)
-  guideArticle.innerHTML = marked.parse(markdown, { breaks: true });
-  styleNoticeBox();
-  styleOtherQuotes();
-  buildTableOfContents();
-  const back = createElement("a", "guide-breadcrumb", "← All city guides");
-  back.href = "city-guide.html";
-  guideArticle.prepend(back);
-  guideArticle.querySelector(".guide-notice")?.appendChild(reportOutdatedLink());
-  wrapTables();
-}
-
 // ----- Shared -----
 
 // Wide tables scroll sideways inside their own box instead of stretching the page
@@ -483,8 +414,8 @@ async function loadGuidePage() {
 
     // The guides are written by us, so they are trusted. If students can submit
     // content later (Phase 2), it must be cleaned with a sanitizer first.
-    if (parsed.structured) renderStructuredGuide(guide, parsed, cohort);
-    else renderOlderGuide(parsed.body);
+    if (!parsed.structured) throw new Error("Guide has no facts block (see docs/city-guides.md)");
+    renderStructuredGuide(guide, parsed, cohort);
     openExternalLinksInNewTab(guideArticle);
 
     // If the address already points at a section (e.g. #housing), open it and jump there
