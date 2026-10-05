@@ -8,7 +8,7 @@
 const CITY_GUIDES = [
   { id: "bologna", university: "unibo", file: "docs/content/bologna-guide.md" },
   { id: "oslo", university: "uio", file: "docs/content/oslo-guide.md" },
-  { id: "rotterdam", university: "eur", file: null },
+  { id: "rotterdam", university: "eur", file: "docs/content/rotterdam-guide.md" },
   { id: "innsbruck", university: "mci", file: null },
 ];
 

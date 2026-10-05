@@ -7,7 +7,7 @@ headings and `-` for bullet points). You never need to touch the code to change 
 |---|---|---|
 | Bologna | `docs/content/bologna-guide.md` | older format, to be converted to the 16 sections |
 | Oslo | `docs/content/oslo-guide.md` | full format, checked 5 October 2026 |
-| Rotterdam | — | coming soon |
+| Rotterdam | `docs/content/rotterdam-guide.md` | full format, checked 5 October 2026 |
 | Innsbruck | — | coming soon |
 
 The page `city-guide.html` shows the index of all cities; `city-guide.html?city=oslo` shows one city.

@@ -147,11 +147,32 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
   await page.context().close();
   ok('Bologna (older format) still renders with its contents box');
 
-  page = await open('city-guide.html?city=rotterdam');
-  await page.waitForSelector('.coming-soon-badge');
-  assert.ok((await page.textContent('#guide')).includes(guides.cityPresenceText(cohort, 'eur')));
-  await page.context().close();
-  ok('Rotterdam: "Coming soon" page, with who studies there');
+  // ----- Every other guide in the full format: same layout as Oslo -----
+  for (const guide of guides.CITY_GUIDES.filter((g) => g.file && g.id !== 'oslo')) {
+    if (!guides.parseGuide(fs.readFileSync(path.join(ROOT, guide.file), 'utf8')).structured) continue;
+    const city = cohort.universities[guide.university].city;
+    page = await open(`city-guide.html?city=${guide.id}`, { viewport: { width: 375, height: 800 } });
+    await page.waitForSelector('.guide-section');
+    const titles = await page.$$eval('.guide-section h2', (all) => all.map((h) => h.textContent.trim()));
+    assert.deepStrictEqual(titles, guides.GUIDE_SECTIONS.map((t, i) => `${i + 1}. ${t}`));
+    assert.ok((await page.textContent('#at-a-glance-body .guide-glance')).includes(guides.cityPresenceText(cohort, guide.university)));
+    await page.evaluate(() => document.querySelectorAll('.guide-fold').forEach((b) => b.click()));
+    assert.ok(await sideways(page) <= 0, `${city} scrolls sideways at 375px`);
+    for (const href of await page.$$eval('#guide a[href^="#"]', (all) => [...new Set(all.map((a) => a.getAttribute('href')))])) {
+      assert.ok(await page.$(href), `${city}: missing anchor ${href}`);
+    }
+    await page.context().close();
+    ok(`${city}: 16 sections, tracks from tracks.json, working anchors, no sideways scrolling at 375px`);
+  }
+
+  const planned = guides.CITY_GUIDES.find((g) => !g.file);
+  if (planned) {
+    page = await open(`city-guide.html?city=${planned.id}`);
+    await page.waitForSelector('.coming-soon-badge');
+    assert.ok((await page.textContent('#guide')).includes(guides.cityPresenceText(cohort, planned.university)));
+    await page.context().close();
+    ok(`${cohort.universities[planned.university].city}: "Coming soon" page, with who studies there`);
+  }
 
   // ----- Homepage cards and search -----
   page = await open('index.html');
