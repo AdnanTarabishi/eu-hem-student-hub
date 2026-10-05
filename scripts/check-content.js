@@ -543,9 +543,86 @@ function checkDirectory() {
 
   // Sheet and Drive folder IDs are long random strings; they must only ever be Script Properties
   const idLike = /docs\.google\.com\/spreadsheets\/d\/|drive\.google\.com\/drive\/folders\/|\b1[A-Za-z0-9_-]{32,43}\b/;
-  for (const file of [C, "join.html", "join.js", G, "integrations/directory-apps-script/README.md"]) {
+  for (const file of [C, "join.html", "join.js", "directory-options.js", G, "integrations/directory-apps-script/README.md"]) {
     const text = read(file);
     if (text && idLike.test(text)) error(file, "contains what looks like a Google Sheet or Drive folder ID. IDs belong only in the Apps Script's Script Properties, never in the repository");
+  }
+
+  // Production needs a real way to reach us: a mailto link on the Contact page
+  if (endpoint && !/href="mailto:[^"@]+@[^"]+"/.test(contact)) {
+    error("contact.html", "the form is switched on but the Contact page has no email (mailto) link");
+  }
+
+  // Onboarding v2 accepts any email domain: nothing may still say only @studio.unibo.it is allowed
+  if (/allowedEmailDomains/.test(configText + (read("join.js") || ""))) {
+    error(C, "allowedEmailDomains is from onboarding v1; the domain restriction was removed (docs/student-directory.md)");
+  }
+  if (/an @studio\.unibo\.it address|only @studio\.unibo\.it/i.test(privacy)) {
+    error("privacy.html", "still says registration needs an @studio.unibo.it address; onboarding v2 accepts any email");
+  }
+
+  // The backend must have every column onboarding v2 writes, after the 41 columns of v1
+  const headers = (code.match(/const HEADERS = Object\.freeze\(\[([\s\S]*?)\]\);/) || [])[1] || "";
+  const listed = [...headers.matchAll(/'((?:[^'\\]|\\.)*)'|"([^"]*)"/g)].map((m) => m[1] ?? m[2]);
+  const v2 = ["User Type", "Directory Eligible", "EU-HEM Cohort", "Home Institution", "Home Programme", "Programme Role",
+    "Courses / Areas Involved", "Shared Courses", "Feature Interests", "Feature Suggestion", "Role Verification Status", "Role Verified At",
+    "Rejected At", "Last Reconfirmed At", "Participation Ends"];
+  if (listed[0] !== "Submission ID" || listed[40] !== "Confirm Email Sent") error(G, "the first 41 columns (onboarding v1) must keep their order");
+  for (const h of v2) if (!listed.includes(h)) error(G, `HEADERS is missing the column "${h}"`);
+
+  // The form's choices and privacy rules must be exactly the backend's (the backend enforces them)
+  const options = read("directory-options.js");
+  if (options === null) return error("directory-options.js", "is missing (the form's choices)");
+  let backend, frontend;
+  try {
+    const box = {};
+    require("vm").runInNewContext(`${code}\n;this.__options = OPTIONS; this.__rules = VIS_RULES; this.__retention = RETENTION;`, box);
+    backend = { OPTIONS: box.__options, VIS_RULES: box.__rules, RETENTION: box.__retention };
+    const page = { window: {} };
+    require("vm").runInNewContext(options, page);
+    frontend = page.window.EUHEM_DIRECTORY_OPTIONS;
+  } catch (e) {
+    return error(G, `could not compare the form's options with the backend: ${e.message}`);
+  }
+  const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+  for (const key of Object.keys(backend.OPTIONS)) {
+    if (!same(backend.OPTIONS[key], frontend.OPTIONS[key])) error("directory-options.js", `OPTIONS.${key} differs from ${G}`);
+  }
+  if (!same(backend.VIS_RULES, frontend.VIS_RULES)) error("directory-options.js", `VIS_RULES differ from ${G}: the form and the server would apply different privacy limits`);
+  for (const [profile, rules] of Object.entries(backend.VIS_RULES)) {
+    if (rules.email.includes("public")) error(G, `VIS_RULES.${profile}: the email can never be public`);
+    for (const kind of ["photo", "linkedin"]) {
+      if (profile !== "public" && rules[kind].includes("public")) error(G, `VIS_RULES.${profile}.${kind}: only a public profile may have public details`);
+    }
+  }
+  for (const id of ["current_student", "alumni"]) if (backend.OPTIONS.directoryEligible[id] !== true) error(G, `${id} must be directory eligible`);
+  for (const id of ["shared_course_student", "faculty_staff"]) if (backend.OPTIONS.directoryEligible[id] !== false) error(G, `${id} must not be directory eligible`);
+  for (const id of Object.values(frontend.FIELD_GROUPS || []).flatMap((g) => g.ids)) {
+    if (!backend.OPTIONS.academicFields[id]) error("directory-options.js", `FIELD_GROUPS lists an unknown academic field "${id}"`);
+  }
+
+  // Retention periods: RETENTION in Code.gs is the source; the privacy page and the docs table must agree
+  const retention = backend.RETENTION || {};
+  const shownOnPage = [...privacy.matchAll(/<span data-retention="(\w+)">\s*([\d-]+)/g)];
+  if (!shownOnPage.length) error("privacy.html", "shows no retention periods (data-retention spans)");
+  for (const [, key, value] of shownOnPage) {
+    if (!(key in retention)) error("privacy.html", `data-retention="${key}" is not a key of RETENTION in ${G}`);
+    else if (String(retention[key]) !== value) error("privacy.html", `retention "${key}" says ${value}, but RETENTION.${key} in ${G} is ${retention[key]}`);
+  }
+  const docs = read("docs/student-directory.md") || "";
+  for (const key of Object.keys(retention)) {
+    const row = docs.match(new RegExp("\\|\\s*`" + key + "`\\s*\\|\\s*([^|]+?)\\s*\\|"));
+    if (!row) error("docs/student-directory.md", `the retention table has no row for "${key}"`);
+    else if (row[1] !== String(retention[key])) error("docs/student-directory.md", `retention "${key}" says ${row[1]}, but RETENTION.${key} in ${G} is ${retention[key]}`);
+  }
+
+  // Current track names: content/tracks.json is the source for the whole site
+  const tracksFile = JSON.parse(read("content/tracks.json") || "{}");
+  const cohort = (tracksFile.cohorts || []).at(-1);
+  for (const track of (cohort && cohort.tracks) || []) {
+    if (backend.OPTIONS.currentTracks[track.id] !== track.name) {
+      error(G, `OPTIONS.currentTracks.${track.id} should be "${track.name}" as in content/tracks.json`);
+    }
   }
 }
 

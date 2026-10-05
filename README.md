@@ -96,7 +96,8 @@ It currently uses fictional demo data. Before using real data:
   consenting students and only the 4 directory columns, never the raw form responses (emails, timestamps).
 - Never commit real student data to this repository. `private-data/` and `*.private.csv` are git-ignored.
 
-Students join through **join.html** ("Join the Directory"), which sends to a private Google Apps Script
+Current students, alumni, students from shared courses and staff register through **join.html** ("Join the
+Directory", onboarding v2; only current students and alumni can be in the Directory), which sends to a private Google Apps Script
 backend. It stays switched off until `endpoint` is set in `directory-config.js`. See
 [docs/student-directory.md](docs/student-directory.md) for how it works, the go-live checklist and the tests
 (`npm install` once, then `npm test`).
