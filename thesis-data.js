@@ -11,13 +11,18 @@ const THESIS_SORTS = { newest: "Newest cohort first", oldest: "Oldest cohort fir
 const THESIS_FILTERS = ["cohort", "track", "university", "theme", "currentTrack", "method"];
 const THESIS_BROWSE_TABS = ["interest", "currentTrack", "legacy", "university"];
 
-// The archive, its settings, the Student Hub enrichment and the current tracks (one definition)
-async function loadThesisFiles(read) {
+// Downloads the archive first, then the classification (so they do not share the bandwidth on slow
+// connections), and returns two promises, so the page can show the archive before the classification:
+// { source: Promise<{ archive, config }>, classification: Promise<{ enrichment, tracks }> }
+function loadThesisFiles(read) {
   const get = async (url) => JSON.parse(read ? await read(url) : await (await fetch(url)).text());
-  const [archive, config, enrichment, tracks] = await Promise.all([
-    get(THESIS_ARCHIVE_URL), get(THESIS_CONFIG_URL), get("content/thesis-enrichment.json"), get("content/tracks.json"),
-  ]);
-  return { archive, config, enrichment, tracks };
+  const source = Promise.all([get(THESIS_ARCHIVE_URL), get(THESIS_CONFIG_URL)])
+    .then(([archive, config]) => ({ archive, config }));
+  const classification = source
+    .then(() => Promise.all([get("content/thesis-enrichment.json"), get("content/tracks.json")]))
+    .then(([enrichment, tracks]) => ({ enrichment, tracks }));
+  classification.catch(() => {}); // reported when awaited, not as an unhandled error
+  return { source, classification };
 }
 
 // ----- Text -----

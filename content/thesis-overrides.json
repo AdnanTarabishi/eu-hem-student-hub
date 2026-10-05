@@ -1,1 +1,10 @@
-{}
+{
+  "t-ffc9f2d8": { "titleDisplay": "Emicizumab Prophylaxis vs. FVIII Prophylaxis in Patients with Severe Hemophilia A in the Netherlands - A Cost-Effectiveness Analysis", "reason": "ALL CAPS in the source; normal capitalisation, acronyms kept" },
+  "t-ac2b46ae": { "titleDisplay": "Barriers and Opportunities for Small Medium Enterprises When Approaching the Dutch MedTech Market", "reason": "ALL CAPS in the source; normal capitalisation" },
+  "t-4de35a2f": { "titleDisplay": "Reducing Barriers to Access Capital for Female Health Entrepreneurs in Kenya with (Financial) Products and Services - A Mixed Methods Approach", "reason": "ALL CAPS in the source; normal capitalisation" },
+  "t-e8e2066d": { "titleDisplay": "The Impact of Air Pollution on Cognitive Performance: A Case of Children in Pakistan", "reason": "ALL CAPS in the source; normal capitalisation" },
+  "t-dd6d3abb": { "titleDisplay": "User Acceptance of the Electronic Patient Record in Germany", "reason": "ALL CAPS in the source; normal capitalisation" },
+  "t-2f0b14c0": { "titleDisplay": "Chronic Pain Care During the COVID-19 Pandemic in the Netherlands Exploring the Subjective Experience of Patients and Care Providers Through Expert Interviews", "reason": "ALL CAPS in the source; normal capitalisation, acronyms kept (wording and punctuation unchanged)" },
+  "t-bd25c92d": { "hidden": true, "reason": "note-like title naming a company (decision: hide)" },
+  "t-0edde4d7": { "titleDisplay": "The Effectiveness and Cost-Effectiveness of a Dutch Multi-Factored Lifestyle Intervention in Managing Type 2 Diabetes compared with Standard Care.", "reason": "an Excel code in the source removed the hyphen" }
+}

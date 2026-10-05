@@ -90,9 +90,9 @@ function showInExplorer(changes) {
 
 // ----- Intro, notice, statistics -----
 
-function renderIntro() {
+// Needs only the archive and its settings, so it is drawn before the classification arrives
+function renderIntro(records) {
   const { texts } = thesis.config;
-  const records = thesis.records;
   const cohorts = cohortsNewestFirst(records);
   const section = document.getElementById("thesis-intro");
   const h1 = createElement("h1", null, texts.title);
@@ -797,8 +797,12 @@ function allowedValues() {
 async function initThesisPage() {
   const status = document.getElementById("thesis-status");
   try {
-    const { archive, config, enrichment, tracks } = await loadThesisFiles();
+    const files = loadThesisFiles();
+    const { archive, config } = await files.source;
     thesis.config = config;
+    thesis.counts = archiveCounts(archive.records);
+    renderIntro(archive.records);
+    const { enrichment, tracks } = await files.classification;
     thesis.enrichment = enrichment;
     thesis.cohort = tracksCohort(tracks);
     thesis.themes = topicThemes(enrichment, thesis.cohort);
@@ -818,16 +822,17 @@ async function initThesisPage() {
         currentTracks: relevance.map((r) => r.trackId),
       };
     });
-    thesis.counts = archiveCounts(archive.records);
     thesis.state = stateFromParams(new URLSearchParams(window.location.search), archive.records, allowedValues());
-    renderIntro();
     renderBrowse();
-    renderExamples();
-    renderNotes();
     document.getElementById("thesis-explorer").hidden = false;
     syncControls();
     renderResults();
     status.remove();
+    // Let the browser show the top of the page before drawing the sections further down
+    // (smaller pieces of work keep the page responsive on slow phones)
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    renderExamples();
+    renderNotes();
 
     // Search as you type (the address is updated quietly, without filling the Back history)
     let timer = null;
