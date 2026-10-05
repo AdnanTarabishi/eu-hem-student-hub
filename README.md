@@ -96,6 +96,11 @@ It currently uses fictional demo data. Before using real data:
   consenting students and only the 4 directory columns, never the raw form responses (emails, timestamps).
 - Never commit real student data to this repository. `private-data/` and `*.private.csv` are git-ignored.
 
+Students join through **join.html** ("Join the Directory"), which sends to a private Google Apps Script
+backend. It stays switched off until `endpoint` is set in `directory-config.js`. See
+[docs/student-directory.md](docs/student-directory.md) for how it works, the go-live checklist and the tests
+(`npm install` once, then `npm test`).
+
 ## Tracks page
 Everything on `tracks.html` comes from **one file**, `content/tracks.json` (format and how to add next
 year's cohort: [docs/tracks-format.md](docs/tracks-format.md)). Facts come from the official *EU-HEM tracks
@@ -110,8 +115,8 @@ as such. `check-content.js` validates the file, including sanity checks on key f
 Full guide: [docs/thesis-import.md](docs/thesis-import.md). The spreadsheet itself is not committed.
 
 ## Privacy and contact pages
-`privacy.html` is a **draft** written from what the code does; review it before relying on it.
-`contact.html` has a placeholder where the contact method goes.
+`privacy.html` was written from what the code does and approved on 5 October 2026. Keep it in sync when the code changes.
+`contact.html` and the "Who is responsible" section of `privacy.html` have a placeholder for the Student Hub email.
 
 ## Adding a city guide
 City guides are Markdown files shown by one template page, `city-guide.html`.

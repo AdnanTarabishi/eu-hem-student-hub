@@ -10,8 +10,9 @@
 // responses (which include emails and timestamps).
 const DATA_SOURCE_URL = "data/sample-students.csv";
 
-// Google Form for joining the directory. Leave empty until the form exists.
-const JOIN_FORM_URL = "";
+// Where "Join the directory" leads: the sign-up page on this site (join.html), or an outside form
+// address. Leave empty to show "form coming soon".
+const JOIN_FORM_URL = "join.html";
 
 // Column headers in the CSV. Only these columns are ever shown; any others are ignored.
 const COLUMNS = {
@@ -218,8 +219,11 @@ function setUpJoinButton() {
   const button = document.getElementById("join-button");
   if (JOIN_FORM_URL) {
     button.href = JOIN_FORM_URL;
-    button.target = "_blank";
-    button.rel = "noopener";
+    // Only an outside address opens in a new tab
+    if (/^https?:/.test(JOIN_FORM_URL)) {
+      button.target = "_blank";
+      button.rel = "noopener";
+    }
   } else {
     button.textContent = "Join the directory (form coming soon)";
     button.removeAttribute("href");

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy (draft) – EU-HEM Student Hub</title>
+  <title>Privacy – EU-HEM Student Hub</title>
   <meta name="description" content="How the EU-HEM Student Hub handles data: what is loaded, what stays on your device, and who to ask.">
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=3cc7002a">
@@ -28,11 +28,10 @@
 
   <main class="container">
     <article class="card text-page">
-      <!-- DRAFT: written from what the code does on 3 October 2026. Review before publishing. -->
-      <p class="draft-badge">Draft: not yet reviewed</p>
       <h1>Privacy</h1>
       <p class="text-page-lead">The short version: there are no accounts, no tracking and no analytics.
-        Your study plan and progress stay on your own device.</p>
+        Your study plan and progress stay on your own device. The only personal information we collect is what
+        you choose to send through the <a href="#student-directory">Student Directory form</a>.</p>
 
       <h2>What stays on your device</h2>
       <p>Some choices are saved in your browser's own storage (called <em>localStorage</em>), on your device only.
@@ -56,6 +55,8 @@
         <li><strong>Notes and the City Guide</strong> use two small libraries (for text and formulas) from
           cdnjs (Cloudflare), which sees that request.</li>
         <li><strong>Fonts</strong> are stored on this site, so no font service is contacted.</li>
+        <li><strong>Student Directory form:</strong> only if you choose to join and press Submit, your answers
+          are sent to Google (see <a href="#student-directory">Student Directory</a> below).</li>
         <li><strong>Links</strong> to Google Maps, Google Calendar, Outlook, Virtuale and other sites only
           contact those services when you click them.</li>
       </ul>
@@ -64,20 +65,114 @@
       <p>There are no accounts or logins. The site sets no cookies, and uses no analytics, advertising
         or tracking tools.</p>
 
-      <h2>Students directory</h2>
-      <p>The directory currently shows <strong>fictional demo profiles</strong>. Real profiles will only be
-        added with each student's consent, and phone numbers and personal emails will never be published.</p>
+      <!-- Approved by the maintainer on 5 October 2026. Written from join.js and integrations/directory-apps-script/Code.gs.
+           If this section changes meaning, change the consent version in BOTH directory-config.js and
+           Code.gs (see docs/student-directory.md). -->
+      <h2 id="student-directory">Student Directory</h2>
+      <p>The Students page currently shows <strong>fictional demo profiles</strong>. You can choose to send us
+        your own profile with the <a href="join.html">Join the Directory</a> form. Joining is voluntary. This
+        section explains what happens to what you send.</p>
+
+      <h3>What the form asks for</h3>
+      <ul>
+        <li><strong>Required (5):</strong> your full name, your university email (an @studio.unibo.it address),
+          the country you represent, your previous academic field and your EU-HEM track (or "Not decided yet").
+          You also choose who may see your profile, answer the statistics question below, and confirm that you
+          have read this information.</li>
+        <li><strong>Optional:</strong> a profile photo, an additional country or cultural background, your
+          previous degree and university, a short bio, professional and research interests, languages,
+          hobbies, what you can help with, what you would like to connect about, LinkedIn and Instagram.</li>
+        <li><strong>Not collected:</strong> phone numbers. The form does not ask for one.</li>
+        <li><strong>Added automatically:</strong> the date and time you submitted, a random submission number,
+          which version of this privacy information you agreed to, and whether you confirmed your email.</li>
+      </ul>
+      <p>A photo is made smaller in your own browser before it is sent. This also removes hidden data stored by
+        phone cameras, such as the location where it was taken.</p>
+
+      <h3>Your university email</h3>
+      <p>We use your university email to confirm that the profile is really yours. It is <strong>never shown
+        publicly</strong>. By default it is hidden from everyone. Under "Advanced privacy settings" you can
+        allow it to be shown to verified EU-HEM students only, once a secure login exists.</p>
+
+      <h3>The confirmation email</h3>
+      <p>After you submit, we send one email to your university address with a link. Opening it within 14 days
+        confirms the address is yours. If a submission is not confirmed within 14 days, we delete it by hand.
+        If you received such an email but did not fill in the form, simply ignore it.</p>
+
+      <h3>Where your information is stored</h3>
+      <p>Your answers are stored in a <strong>private Google Sheet</strong>, and your photo in a
+        <strong>private Google Drive folder</strong>. Both belong to the Student Hub's own Google account,
+        which also sends the confirmation email, and only the person responsible (see below) can open them.
+        Google stores and processes this data for us as part of its services. The form sends your answers
+        directly to a small Google program (Google Apps Script) that saves them there; the website itself never
+        stores or shows them. This is a student project, not a University of Bologna service.</p>
+      <p>Google may process data on servers outside the European Union, including in the United States. Such
+        transfers are covered by Google's data protection terms, which rely on the EU–US Data Privacy Framework
+        and the European Commission's standard contractual clauses.</p>
+
+      <h3>Why we are allowed to use your information</h3>
+      <p>We only use your information because you agree to it by submitting the form (your <strong>consent</strong>,
+        Article 6(1)(a) of the EU General Data Protection Regulation, GDPR). You can <strong>withdraw your consent
+        at any time</strong> by asking us to delete your profile. This does not affect anything done before you
+        asked.</p>
+
+      <h3>Who can see your profile: your three choices</h3>
+      <ul>
+        <li><strong>Public:</strong> after you confirm your email and we review your profile, only the fields
+          you set to Public may appear on the public Students page. Your email is never public.</li>
+        <li><strong>EU-HEM students only</strong> (recommended): your profile stays private for now. It may later
+          be shown only to verified EU-HEM students, once a secure login exists.</li>
+        <li><strong>Do not publish my profile yet:</strong> we keep your information, but your individual profile
+          is not displayed anywhere.</li>
+      </ul>
+      <p><strong>Today, no real profile is displayed anywhere</strong>, whatever you choose.
+        <strong>Nothing is published automatically:</strong> every profile is checked by a person first.</p>
+
+      <h3>Anonymous statistics</h3>
+      <p>The form asks whether your country, academic background and EU-HEM track may be counted in anonymous,
+        combined statistics about the cohort (for example, "students from 23 countries"). If you answer No, you are
+        left out. Your name, photo, email and individual profile are never part of these statistics. Any group with
+        <strong>fewer than 5 students is not shown separately</strong> (for example, it is merged into "Other"), so
+        that nobody can be recognised. No statistics have been published yet.</p>
+
+      <h3>Changing or deleting your profile</h3>
+      <p>To change or delete your profile at any time, <a href="contact.html">contact us</a> or reply to the
+        confirmation email. When you ask us to delete it, we delete your entry in the Sheet and your photo, and
+        empty the Drive bin. We delete all directory data <strong>at the latest when your cohort
+        graduates</strong> (30 September 2028 for the 2026–2028 cohort), unless you ask us to keep your profile
+        longer.</p>
+
+      <h3>Your rights</h3>
+      <p>Under the GDPR you can ask us to:</p>
+      <ul>
+        <li>show you the information we hold about you, and send you a copy of it;</li>
+        <li>correct anything that is wrong;</li>
+        <li>delete your information, or stop using it for a time;</li>
+        <li>stop using it altogether, by withdrawing your consent.</li>
+      </ul>
+      <p>Write to the email address under "Who is responsible" below. We answer within one month. If you think
+        we have not handled your information properly, you can also complain to the Italian data protection
+        authority, the <a href="https://www.garanteprivacy.it/" target="_blank" rel="noopener">Garante per la
+        protezione dei dati personali</a>, or to the authority in the EU country where you live.</p>
+
+      <h3>Protection against spam</h3>
+      <p>The form uses a hidden field that only automated programs fill in, and checks that the form was not
+        filled in impossibly fast. These checks use no cookies and no tracking.</p>
 
       <h2>The group photo</h2>
       <p>The homepage shows a group photo of the EU-HEM cohort. If you appear in it and would like it changed
         or removed (for example, blurred or replaced), please <a href="contact.html">contact us</a>
         and we will act on it promptly.</p>
 
-      <h2>Questions</h2>
-      <p>This is a volunteer student project. For any privacy question or request, see the
+      <h2 id="responsible">Who is responsible</h2>
+      <p>This is a volunteer student project. The person responsible for the information described on this page
+        (the "data controller" under the GDPR) is <strong>Adnan Tarabishi</strong>, an EU-HEM student.
+        For any privacy question or request, write to
+        <!-- CONTACT METHOD: the same dedicated Student Hub email as on contact.html, never a personal address. -->
+        <strong>[Placeholder: Student Hub email address]</strong>, or see the
         <a href="contact.html">Contact page</a>.</p>
 
-      <p class="text-page-updated">Last updated: [date, to fill in when the draft is approved].</p>
+      <p class="text-page-updated">Last updated: 5 October 2026.</p>
       <p><a href="index.html">← Back to the homepage</a></p>
     </article>
   </main>

@@ -1,0 +1,107 @@
+const { load } = require('./gas-mock');
+const assert = require('assert');
+const CODE = process.argv[2];
+let n = 0; const t = (name, fn) => { fn(); n++; console.log('  ok  ' + name); };
+const base = (over = {}) => Object.assign({
+  requestId: require('crypto').randomUUID(), elapsedMs: 9000, website: '', consentVersion: 'directory-v1-2026-10',
+  fullName: 'Test Student', universityEmail: 'Test.Student@studio.unibo.it', primaryCountry: 'Italy',
+  previousField: 'Medicine', euhemTrack: 'Population Health Management', profileVisibility: 'public',
+  analyticsConsent: 'yes', privacyAcknowledgement: 'yes' }, over);
+const fresh = (props = {}) => { const g = load(CODE, Object.assign({ SPREADSHEET_ID: 'sheet1', PHOTO_FOLDER_ID: 'folder1' }, props)); g.ctx.setup(); return g; };
+const JPEG = Buffer.concat([Buffer.from([0xff, 0xd8, 0xff, 0xe0]), Buffer.alloc(40, 1)]).toString('base64');
+
+t('setup creates all headers', () => { const g = fresh(); assert.strictEqual(g.grid[0].length, 41); });
+t('not configured without SPREADSHEET_ID', () => { const g = load(CODE, {}); assert.strictEqual(g.post(base()).code, 'NOT_CONFIGURED'); });
+t('minimal valid submission is saved as unconfirmed and emailed', () => {
+  const g = fresh(); const r = g.post(base());
+  assert.deepStrictEqual([r.ok, r.confirmation], [true, 'sent']);
+  const row = g.row(1);
+  assert.strictEqual(row['Status'], 'unconfirmed');
+  assert.strictEqual(row['University Email'], 'test.student@studio.unibo.it');
+  assert.strictEqual(row['Public Publish Eligible'], false);
+  assert.strictEqual(row['Confirm Email Sent'], 'yes');
+  assert.strictEqual(g.mails.length, 1); assert.strictEqual(g.mails[0].to, 'test.student@studio.unibo.it');
+});
+t('confirmation link moves status to pending, once', () => {
+  const g = fresh(); const b = base(); g.post(b);
+  const link = g.mails[0].body.match(/https:\S+/)[0]; const q = new URL(link).searchParams;
+  assert.ok(g.get({ id: q.get('id'), c: 'f'.repeat(64) }).includes('not valid'));
+  assert.strictEqual(g.row(1)['Status'], 'unconfirmed');
+  assert.ok(g.get({ id: q.get('id'), c: q.get('c') }).includes('Email confirmed'));
+  assert.strictEqual(g.row(1)['Status'], 'pending'); assert.strictEqual(g.row(1)['Confirm Token Hash'], '');
+  assert.ok(g.get({ id: q.get('id'), c: q.get('c') }).includes('Already confirmed'));
+});
+t('expired confirmation link is refused', () => {
+  const g = fresh(); g.post(base()); const q = new URL(g.mails[0].body.match(/https:\S+/)[0]).searchParams;
+  g.grid[1][g.grid[0].indexOf('Submitted At')] = new Date(Date.now() - 15 * 86400000);
+  assert.ok(g.get({ id: q.get('id'), c: q.get('c') }).includes('not valid'));
+});
+t('mail failure still saves and reports it', () => { const g = fresh({ __MAIL_FAILS: true }); const r = g.post(base());
+  assert.deepStrictEqual([r.ok, r.confirmation], [true, 'failed']); assert.strictEqual(g.row(1)['Confirm Email Sent'], 'failed'); });
+t('confirmation can be switched off', () => { const g = fresh({ REQUIRE_EMAIL_CONFIRMATION: 'false' }); const r = g.post(base());
+  assert.strictEqual(r.confirmation, 'not_required'); assert.strictEqual(g.row(1)['Status'], 'pending'); assert.strictEqual(g.mails.length, 0); });
+t('retry with the same requestId is not saved twice', () => { const g = fresh(); const b = base(); g.post(b); const r = g.post(b);
+  assert.strictEqual(r.ok, true); assert.strictEqual(g.grid.length, 2); assert.strictEqual(g.mails.length, 1); });
+t('duplicate email from another browser is refused', () => { const g = fresh(); g.post(base());
+  assert.strictEqual(g.post(base({ universityEmail: 'TEST.student@studio.unibo.it' })).code, 'DUPLICATE_EMAIL'); });
+t('non-university email is refused', () => { const g = fresh();
+  assert.strictEqual(g.post(base({ universityEmail: 'someone@gmail.com' })).code, 'EMAIL_DOMAIN');
+  assert.strictEqual(g.post(base({ universityEmail: 'a@studio.unibo.it.evil.com' })).code, 'EMAIL_DOMAIN'); });
+t('allowed domains are configurable', () => { const g = fresh({ ALLOWED_EMAIL_DOMAINS: 'studio.unibo.it, @uio.no' });
+  assert.strictEqual(g.post(base({ universityEmail: 'x@uio.no' })).ok, true); });
+t('"Other" academic field needs and keeps its text', () => { const g = fresh();
+  assert.strictEqual(g.post(base({ previousField: 'Other' })).code, 'REQUIRED_FIELD');
+  assert.strictEqual(g.post(base({ previousField: 'Other', previousFieldOther: 'Nursing' })).ok, true);
+  assert.strictEqual(g.row(1)['Previous Academic Field'], 'Other: Nursing');
+  assert.strictEqual(g.post(base({ universityEmail: 'b@studio.unibo.it', previousField: 'Astrology' })).code, 'INVALID_VALUE'); });
+t('honeypot, too-fast, bad consent, bad JSON are refused', () => { const g = fresh();
+  assert.strictEqual(g.post(base({ website: 'x' })).code, 'INVALID_REQUEST');
+  assert.strictEqual(g.post(base({ elapsedMs: 500 })).code, 'INVALID_REQUEST');
+  assert.strictEqual(g.post(base({ privacyAcknowledgement: '' })).code, 'CONSENT_REQUIRED');
+  assert.strictEqual(g.post(base({ consentVersion: 'old' })).code, 'CONSENT_VERSION');
+  assert.strictEqual(g.post('not json').code, 'INVALID_REQUEST');
+  assert.strictEqual(g.post(base({ requestId: '<script>' })).code, 'INVALID_REQUEST');
+  assert.strictEqual(g.grid.length, 1); });
+t('privacy clamp: cohort profile cannot have public fields; email never public', () => { const g = fresh();
+  g.post(base({ profileVisibility: 'cohort', linkedin: 'https://www.linkedin.com/in/x', linkedinVisibility: 'public', instagram: '@x', instagramVisibility: 'public', emailVisibility: 'cohort' }));
+  const r = g.row(1); assert.deepStrictEqual([r['LinkedIn Visibility'], r['Instagram Visibility'], r['University Email Visibility']], ['cohort', 'cohort', 'cohort']);
+  assert.strictEqual(g.post(base({ universityEmail: 'c@studio.unibo.it', emailVisibility: 'public' })).code, 'INVALID_VALUE'); });
+t('hidden profile forces everything hidden', () => { const g = fresh();
+  g.post(base({ profileVisibility: 'hidden', linkedin: 'https://linkedin.com/in/x', linkedinVisibility: 'public', emailVisibility: 'cohort' }));
+  const r = g.row(1); assert.deepStrictEqual([r['LinkedIn Visibility'], r['University Email Visibility']], ['hidden', 'hidden']); });
+t('visibility of an empty field is stored as hidden', () => { const g = fresh(); g.post(base({ linkedinVisibility: 'public', photoVisibility: 'public' }));
+  const r = g.row(1); assert.deepStrictEqual([r['LinkedIn Visibility'], r['Photo Visibility']], ['hidden', 'hidden']); });
+t('LinkedIn must be an https linkedin.com address', () => { const g = fresh();
+  for (const bad of ['http://www.linkedin.com/in/x', 'https://evil.com/linkedin.com', 'https://linkedin.com.evil.com/in/x', 'javascript:alert(1)'])
+    assert.strictEqual(g.post(base({ linkedin: bad })).code, 'INVALID_LINKEDIN', bad);
+  assert.strictEqual(g.post(base({ linkedin: 'https://it.linkedin.com/in/some-one-123/' })).ok, true); });
+t('Instagram is normalised to @handle', () => { const g = fresh();
+  g.post(base({ instagram: 'https://www.instagram.com/some.one_1/' })); assert.strictEqual(g.row(1)['Instagram'], "'@some.one_1");
+  assert.strictEqual(g.post(base({ universityEmail: 'd@studio.unibo.it', instagram: 'not a handle!' })).code, 'INVALID_INSTAGRAM'); });
+t('phone is dropped unless COLLECT_PHONE=true', () => { const g = fresh(); g.post(base({ phone: '+39 333 1234567', phoneVisibility: 'cohort' }));
+  assert.deepStrictEqual([g.row(1)['Phone / WhatsApp'], g.row(1)['Phone / WhatsApp Visibility']], ['', 'hidden']);
+  const h = fresh({ COLLECT_PHONE: 'true' }); h.post(base({ phone: '+39 333 1234567', phoneVisibility: 'cohort' }));
+  assert.deepStrictEqual([h.row(1)['Phone / WhatsApp'], h.row(1)['Phone / WhatsApp Visibility']], ["'+39 333 1234567", 'cohort']);
+  assert.strictEqual(h.post(base({ universityEmail: 'e@studio.unibo.it', phone: 'call me' })).code, 'INVALID_PHONE'); });
+t('formula injection is neutralised', () => { const g = fresh(); g.post(base({ fullName: '=HYPERLINK("http://x","y")', shortBio: '+1', hobbies: '@x', languages: '-1' }));
+  const raw = g.grid[1]; const h = g.grid[0];
+  for (const col of ['Full Name', 'Short Bio', 'Hobbies / Interests', 'Languages']) assert.ok(String(raw[h.indexOf(col)]).startsWith("'"), col); });
+t('control characters and line breaks are cleaned', () => { const g = fresh(); g.post(base({ fullName: 'Ana\u0000\n  Maria\t‮X' }));
+  assert.strictEqual(g.row(1)['Full Name'], 'Ana Maria X'); });
+t('over-long field is refused', () => { const g = fresh(); assert.strictEqual(g.post(base({ shortBio: 'x'.repeat(251) })).code, 'FIELD_TOO_LONG'); });
+t('valid photo is stored privately; fake or wrong-type photo refused', () => { const g = fresh();
+  assert.strictEqual(g.post(base({ photoBase64: JPEG, photoMimeType: 'image/jpeg', photoVisibility: 'public' })).ok, true);
+  assert.strictEqual(g.files.length, 1); assert.strictEqual(g.row(1)['Photo Visibility'], 'public'); assert.ok(g.row(1)['Photo Drive File ID']);
+  assert.strictEqual(g.post(base({ universityEmail: 'f@studio.unibo.it', photoBase64: Buffer.from('<html>not an image at all</html>').toString('base64'), photoMimeType: 'image/jpeg' })).code, 'INVALID_PHOTO');
+  assert.strictEqual(g.post(base({ universityEmail: 'f@studio.unibo.it', photoBase64: JPEG, photoMimeType: 'image/svg+xml' })).code, 'INVALID_PHOTO');
+  assert.strictEqual(g.post(base({ universityEmail: 'f@studio.unibo.it', photoBase64: JPEG, photoMimeType: 'image/png' })).code, 'INVALID_PHOTO');
+  assert.strictEqual(g.post(base({ universityEmail: 'f@studio.unibo.it', photoBase64: 'A'.repeat(3 * 1024 * 1024), photoMimeType: 'image/jpeg' })).code, 'PHOTO_TOO_LARGE');
+  assert.strictEqual(g.files.length, 1); });
+t('photo without a configured folder gives a clear message', () => { const g = fresh({ PHOTO_FOLDER_ID: '' });
+  assert.strictEqual(g.post(base({ photoBase64: JPEG, photoMimeType: 'image/jpeg' })).code, 'PHOTO_STORAGE_NOT_CONFIGURED'); assert.strictEqual(g.grid.length, 1); });
+t('hourly limit stops a flood', () => { const g = fresh(); let last;
+  for (let i = 0; i < 62; i++) last = g.post(base({ universityEmail: `s${i}@studio.unibo.it` }));
+  assert.strictEqual(last.code, 'BUSY'); assert.strictEqual(g.grid.length, 61); });
+t('unexpected errors do not leak details', () => { const g = fresh(); g.ctx.SpreadsheetApp.openById = () => { throw new Error('secret internal detail'); };
+  const r = g.post(base()); assert.strictEqual(r.ok, false); assert.ok(!JSON.stringify(r).includes('secret')); });
+console.log(n + ' backend checks passed');
