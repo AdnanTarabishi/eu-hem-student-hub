@@ -1055,6 +1055,55 @@ main {
   background: var(--color-warning-bg);
 }
 
+/* City photos: a grid on wide screens, a row to swipe through on phones */
+.guide-photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 4px 0 18px;
+}
+
+.guide-photos figure {
+  margin: 0;
+}
+
+.guide-photos img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-muted);
+}
+
+.guide-photos figcaption {
+  margin-top: 6px;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--color-muted);
+}
+
+@media (max-width: 860px) {
+  .guide-photos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .guide-photos {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 8px;
+  }
+
+  .guide-photos figure {
+    flex: 0 0 82%;
+    scroll-snap-align: start;
+  }
+}
+
 /* On phones, tables become one card per row, each value labelled with its column */
 @media (max-width: 600px) {
   .guide-cards-on-phone thead {

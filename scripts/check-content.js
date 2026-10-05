@@ -358,6 +358,7 @@ async function checkTracks() {
 // - every line with a price (NOK, EUR, €, kr and a number) has a source tag like [S12], every tag is listed in
 //   Sources, and every source has a title, an https address and a "checked" date
 // - tracks are never typed in a guide: guide.js takes them from tracks.json
+// - every photo is a local file with alt text and a caption crediting the photographer, licence and source
 // - the disclaimer and the "Report something outdated" link are in the template (guide.js)
 function checkCityGuides() {
   const G = "guide-data.js";
@@ -396,7 +397,7 @@ function checkCityGuides() {
     const text = fs.readFileSync(path.join(ROOT, guide.file), "utf8").replace(/\r\n/g, "\n");
     const parsed = guides.parseGuide(text);
     if (!parsed.structured) {
-      warn(where, "older format: no facts block and not yet the 16 sections (see docs/city-guides.md)");
+      error(where, "no facts block at the top (see docs/city-guides.md)");
       continue;
     }
 
@@ -431,6 +432,24 @@ function checkCityGuides() {
         if (!/non-EU/i.test(subheadings)) error(where, `section "${section.heading}" needs a "### Non-EU students" part`);
       }
     }
+
+    // Photos: a local file, a description for screen readers, and the credit the licence asks for
+    const figures = parsed.body.match(/<figure>[\s\S]*?<\/figure>/g) || [];
+    for (const figure of figures) {
+      const src = (figure.match(/<img[^>]*\ssrc="([^"]+)"/) || [])[1];
+      const alt = (figure.match(/<img[^>]*\salt="([^"]*)"/) || [])[1];
+      const caption = (figure.match(/<figcaption>([\s\S]*?)<\/figcaption>/) || [])[1] || "";
+      const at = `${where}: photo "${src || "?"}"`;
+      if (!src || !fs.existsSync(path.join(ROOT, src))) error(at, "the image file does not exist");
+      for (const file of [...figure.matchAll(/([\w./-]+\.(?:webp|jpg|jpeg|png))\s+\d+w/g)].map((m) => m[1])) {
+        if (!fs.existsSync(path.join(ROOT, file))) error(at, `srcset file "${file}" does not exist`);
+      }
+      if (!alt || !alt.trim()) error(at, "needs alt text describing the photo");
+      if (!/Photo: /.test(caption)) error(at, 'the caption needs "Photo: <photographer>"');
+      if (!/creativecommons\.org\/|[Pp]ublic domain/.test(caption)) error(at, "the caption needs the licence (with its link)");
+      if (!/<a href="https:\/\/[^"]+">/.test(caption)) error(at, "the caption needs a link to the photo's source page");
+    }
+    if (/<img/.test(parsed.body.replace(/<figure>[\s\S]*?<\/figure>/g, ""))) error(where, "every photo must be inside <figure> with a <figcaption> credit");
 
     // Prices need a source; sources must be listed and well formed
     const lines = text.split("\n");
