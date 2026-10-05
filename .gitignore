@@ -6,3 +6,6 @@ private-data/
 # Source spreadsheets (e.g. the thesis list): keep them outside the repository;
 # only the generated content/thesis-archive.json is published.
 *.xlsx
+
+# Dev-only tools installed by "npm install" (Playwright for the browser tests)
+node_modules/
