@@ -8,16 +8,16 @@
 // To add a city: write docs/content/<city>-guide.md and add one line here (see docs/city-guides.md).
 // `cover` is the picture on the city cards (index and homepage): one of the guide's own pictures,
 // given without "-640.webp", with its alt text and a short credit (the full credit is in the guide).
-// An AI-generated cover has the credit "AI-generated illustration", shown on the card.
+// An AI-generated cover (file name "ai-…") has no credit on the card; the guide labels it.
 const CITY_GUIDES = [
   { id: "bologna", university: "unibo", file: "docs/content/bologna-guide.md",
-    cover: { image: "assets/images/cities/bologna/ai-towers-sunset", alt: "AI-generated illustration of Bologna's rooftops and towers at sunset", credit: "AI-generated illustration" } },
+    cover: { image: "assets/images/cities/bologna/ai-towers-sunset", alt: "AI-generated illustration of Bologna's rooftops and towers at sunset" } },
   { id: "oslo", university: "uio", file: "docs/content/oslo-guide.md",
-    cover: { image: "assets/images/cities/oslo/ai-opera-sunset", alt: "AI-generated illustration of the Opera House on the fjord at sunset", credit: "AI-generated illustration" } },
+    cover: { image: "assets/images/cities/oslo/ai-opera-sunset", alt: "AI-generated illustration of the Opera House on the fjord at sunset" } },
   { id: "rotterdam", university: "eur", file: "docs/content/rotterdam-guide.md",
-    cover: { image: "assets/images/cities/rotterdam/ai-erasmus-bridge-sunset", alt: "AI-generated illustration of the Erasmus Bridge and skyline at sunset", credit: "AI-generated illustration" } },
+    cover: { image: "assets/images/cities/rotterdam/ai-erasmus-bridge-sunset", alt: "AI-generated illustration of the Erasmus Bridge and skyline at sunset" } },
   { id: "innsbruck", university: "mci", file: "docs/content/innsbruck-guide.md",
-    cover: { image: "assets/images/cities/innsbruck/ai-inn-river-sunset", alt: "AI-generated illustration of the Inn river and the mountains at sunset", credit: "AI-generated illustration" } },
+    cover: { image: "assets/images/cities/innsbruck/ai-inn-river-sunset", alt: "AI-generated illustration of the Inn river and the mountains at sunset" } },
 ];
 
 // Every guide has these sections, in this order, as "## 1. At a glance" … "## 16. Sources"
@@ -39,7 +39,21 @@ const GUIDE_FACTS = {
   "compare-budget": "Monthly budget",
   "compare-transport": "Transport pass",
   "compare-permit-non-eu": "Residence step for non-EU students",
+  "compare-registration": "Registration on arrival",
+  "compare-health-eu": "Health cover, EU/EEA students",
+  "compare-health-non-eu": "Health cover, non-EU students",
+  "compare-emergency": "Emergency numbers",
+  "compare-climate": "Climate",
+  "compare-age-limits": "Student offers with age limits",
 };
+
+// The comparison of the cities on the City Guide index: topics in groups, one column per city
+const GUIDE_COMPARE = [
+  { group: "Money", keys: ["compare-rent", "compare-budget", "compare-transport"] },
+  { group: "Paperwork", keys: ["compare-permit-non-eu", "compare-registration"] },
+  { group: "Health", keys: ["compare-health-eu", "compare-health-non-eu", "compare-emergency"] },
+  { group: "Daily life", keys: ["language", "compare-climate", "compare-age-limits"] },
+];
 const GUIDE_REQUIRED_FACTS = ["university", "last-checked", ...Object.keys(GUIDE_FACTS)];
 
 // "1. Before you move" -> "before-you-move"
@@ -121,16 +135,19 @@ function cityCoverPhoto(cover) {
   img.width = 640;
   img.height = 427;
   img.loading = "lazy";
-  const credit = document.createElement("span");
-  credit.className = "city-card-credit";
-  credit.textContent = cover.credit;
-  box.append(img, credit);
+  box.appendChild(img);
+  if (cover.credit) {
+    const credit = document.createElement("span");
+    credit.className = "city-card-credit";
+    credit.textContent = cover.credit;
+    box.appendChild(credit);
+  }
   return box;
 }
 
 if (typeof module !== "undefined") {
   module.exports = {
-    CITY_GUIDES, GUIDE_SECTIONS, GUIDE_FACTS, GUIDE_REQUIRED_FACTS, guideHeadingId, parseGuide,
+    CITY_GUIDES, GUIDE_SECTIONS, GUIDE_FACTS, GUIDE_REQUIRED_FACTS, GUIDE_COMPARE, guideHeadingId, parseGuide,
     guideSections, sourceTags, cityPresenceText, semesterTiming, trackCityTimeline,
   };
 }

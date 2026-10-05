@@ -9,6 +9,12 @@ compare-rent: WIST 2026 single rooms start at about €278–€445 a month depe
 compare-budget: About €1,250 a month (MCI rough estimate) [S3]
 compare-transport: €176.70 for a 6-month Innsbruck Semester Ticket from autumn 2026 if under 27; otherwise €71.80 for a monthly city pass [S24]
 compare-permit-non-eu: First check the 360-day EU student-mobility route if you hold a qualifying "Student" residence title from another EU member state; otherwise use the Austrian visa/residence-permit route [S17][S18][S19]
+compare-registration: Meldezettel within 3 days of moving in; EU/EEA registration certificate within 4 months [S15][S16]
+compare-health-eu: EHIC for necessary care; extra travel insurance recommended [S21]
+compare-health-non-eu: Depends on the route: travel insurance well over €30,000, or cover for all risks; ÖGK student insurance €78.84 a month [S17][S23][S19]
+compare-emergency: 112; 144 ambulance; 140 mountain rescue [S30][S31]
+compare-climate: About −1 °C in January, 19 °C in July [S32]
+compare-age-limits: Student semester tickets only under 27; Stadtrad U26 fee under 26 [S24][S27]
 ---
 # Innsbruck — City Guide for EU-HEM Students
 

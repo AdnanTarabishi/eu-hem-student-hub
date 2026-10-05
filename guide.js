@@ -125,37 +125,111 @@ function comparisonSection(cohort, compared) {
   const title = createElement("h2", null, "Compare the cities");
   title.id = "compare-title";
   section.appendChild(title);
-
-  const columns = ["compare-rent", "compare-budget", "compare-transport", "compare-permit-non-eu", "language"];
-  const table = createElement("table", "guide-cards-on-phone");
   const dates = [...new Set(compared.map((g) => g.facts["last-checked"]))].sort().map(checkedDate);
-  table.appendChild(createElement("caption", null, `Approximate, checked ${dates.join(", ")}`));
+  section.appendChild(createElement("p", "guide-compare-intro",
+    `Choose the cities to compare. Approximate, checked ${dates.join(", ")}; the small [S] tags open the source.`));
+
+  // The cities of the saved track (Semester 2 and 3), to select them in one tap and highlight them
+  const saved = loadMyTrack();
+  const track = saved && cohort ? trackById(cohort, saved.track) : null;
+  const myCities = track ? track.semesters.map((s) => CITY_GUIDES.find((g) => g.university === s.university)?.id).filter(Boolean) : [];
+
+  const picker = createElement("div", "compare-picker");
+  picker.setAttribute("role", "group");
+  picker.setAttribute("aria-label", "Cities to compare");
+  const chips = compared.map(({ guide }) => {
+    const chip = createElement("button", "compare-chip", cityName(cohort, guide));
+    chip.type = "button";
+    chip.dataset.city = guide.id;
+    if (myCities.includes(guide.id)) chip.classList.add("is-mine");
+    return chip;
+  });
+  let myButton = null;
+  if (myCities.length) {
+    myButton = createElement("button", "compare-chip compare-mine", `My cities (${track.abbr})`);
+    myButton.type = "button";
+    picker.appendChild(myButton);
+  }
+  picker.append(...chips);
+  section.appendChild(picker);
+
+  const table = createElement("table", "compare-table");
+  table.appendChild(createElement("caption", "visually-hidden", "Comparison of the EU-HEM cities"));
   const head = createElement("tr");
-  for (const label of ["City", ...columns.map((key) => GUIDE_FACTS[key])]) head.appendChild(createElement("th", null, label));
+  const corner = createElement("th", null, "Topic");
+  corner.scope = "col";
+  head.appendChild(corner);
+  for (const { guide } of compared) {
+    const th = createElement("th");
+    th.scope = "col";
+    th.dataset.city = guide.id;
+    const link = createElement("a", null, cityName(cohort, guide));
+    link.href = `city-guide.html?city=${guide.id}`;
+    th.appendChild(link);
+    if (cohort) th.appendChild(createElement("span", "compare-who", cityPresenceText(cohort, guide.university)));
+    if (myCities.includes(guide.id)) th.classList.add("is-mine");
+    head.appendChild(th);
+  }
   const thead = createElement("thead");
   thead.appendChild(head);
   table.appendChild(thead);
-  const tbody = createElement("tbody");
-  for (const { guide, facts } of compared) {
-    const row = createElement("tr");
-    const city = createElement("th");
-    city.scope = "row";
-    const link = createElement("a", null, cityName(cohort, guide));
-    link.href = `city-guide.html?city=${guide.id}`;
-    city.appendChild(link);
-    row.appendChild(city);
-    for (const key of columns) {
-      const cell = createElement("td");
-      cell.appendChild(textWithSources(facts[key] || "", `city-guide.html?city=${guide.id}`));
-      row.appendChild(cell);
+
+  for (const { group, keys } of GUIDE_COMPARE) {
+    const tbody = createElement("tbody");
+    const groupRow = createElement("tr", "compare-group");
+    const groupCell = createElement("th", null, group);
+    groupCell.scope = "colgroup";
+    groupCell.colSpan = compared.length + 1;
+    groupRow.appendChild(groupCell);
+    tbody.appendChild(groupRow);
+    for (const key of keys) {
+      // On phones the topic gets its own line above the values (see style.css), so cities have room
+      const topicRow = createElement("tr", "compare-topic");
+      const topic = createElement("th", null, GUIDE_FACTS[key]);
+      topic.colSpan = compared.length + 1;
+      topicRow.appendChild(topic);
+      tbody.appendChild(topicRow);
+      const row = createElement("tr");
+      const label = createElement("th", null, GUIDE_FACTS[key]);
+      label.scope = "row";
+      row.appendChild(label);
+      for (const { guide, facts } of compared) {
+        const cell = createElement("td");
+        cell.dataset.city = guide.id;
+        if (myCities.includes(guide.id)) cell.classList.add("is-mine");
+        cell.appendChild(textWithSources(facts[key] || "Not in this guide yet", `city-guide.html?city=${guide.id}`));
+        row.appendChild(cell);
+      }
+      tbody.appendChild(row);
     }
-    tbody.appendChild(row);
+    table.appendChild(tbody);
   }
-  table.appendChild(tbody);
-  labelTableCells(table);
-  const wrapper = createElement("div", "table-wrapper");
+  const wrapper = createElement("div", "table-wrapper compare-wrapper");
   wrapper.appendChild(table);
   section.appendChild(wrapper);
+
+  // Show only the chosen cities; at least one always stays chosen
+  const phone = window.matchMedia("(max-width: 600px)");
+  const show = (ids) => {
+    for (const chip of chips) chip.setAttribute("aria-pressed", String(ids.includes(chip.dataset.city)));
+    for (const cell of table.querySelectorAll("[data-city]")) cell.hidden = !ids.includes(cell.dataset.city);
+    // On phones the topic column is hidden, so the full-width lines span one column less
+    for (const cell of table.querySelectorAll(".compare-group th, .compare-topic th")) cell.colSpan = ids.length + (phone.matches ? 0 : 1);
+    if (myButton) myButton.setAttribute("aria-pressed", String(ids.length === myCities.length && myCities.every((id) => ids.includes(id))));
+  };
+  const chosen = () => chips.filter((c) => c.getAttribute("aria-pressed") === "true").map((c) => c.dataset.city);
+  for (const chip of chips) {
+    chip.addEventListener("click", () => {
+      const ids = chosen();
+      const next = ids.includes(chip.dataset.city) ? ids.filter((id) => id !== chip.dataset.city) : [...ids, chip.dataset.city];
+      if (next.length) show(compared.map((c) => c.guide.id).filter((id) => next.includes(id)));
+    });
+  }
+  if (myButton) myButton.addEventListener("click", () => show(myCities));
+  phone.addEventListener("change", () => show(chosen()));
+  // Phones start with two cities (yours, if a track is saved); wider screens with all of them
+  const all = compared.map((c) => c.guide.id);
+  show(window.matchMedia("(max-width: 700px)").matches ? (myCities.length ? myCities : all.slice(0, 2)) : all);
 
   const missing = CITY_GUIDES.filter((g) => !compared.some((c) => c.guide.id === g.id)).map((g) => cityName(cohort, g));
   if (missing.length) {

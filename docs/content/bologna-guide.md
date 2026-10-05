@@ -9,6 +9,12 @@ compare-rent: About €585 a month on average for a room (Immobiliare.it data, A
 compare-budget: No current official estimate. UniBo's living-costs page has no date and is out of date [S9]; rent alone averages about €585 [S8]
 compare-transport: €2.30 per 75-minute ticket; UniBo's annual student pass is €161 if under 27, €187 if 27 or older [S10][S12]
 compare-permit-non-eu: Study visa before you travel, then apply for the residence permit at the post office within 8 days of arrival [S2]
+compare-registration: Non-EU: residence permit within 8 days; EU: Anagrafe if staying over 3 months (details not verified) [S2]
+compare-health-eu: EHIC; you may pay a small contribution (ticket) [S3]
+compare-health-non-eu: SSN registration at least €700 per calendar year, or private insurance [S3]
+compare-emergency: 112; 118 ambulance [S4]
+compare-climate: About 3.5 °C in January, 25.5 °C in July [S18]
+compare-age-limits: UniBo bus pass €161 under 27, €187 from 27 [S10]
 ---
 # Bologna — City Guide for EU-HEM Students
 

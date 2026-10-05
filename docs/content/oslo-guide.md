@@ -9,6 +9,12 @@ compare-rent: NOK 4,510–8,333 a month for an SiO room with a shared kitchen (m
 compare-budget: About NOK 15,250 a month (UiO's estimate) [S27]
 compare-transport: NOK 393 per 30 days with the student discount (under 30 only); NOK 655 without [S16][S18]
 compare-permit-non-eu: Study permit from UDI before you travel, then a police appointment in Oslo [S2][S6]
+compare-registration: EU/EEA: register with the police within 3 months; non-EU: police appointment after arrival [S5][S6]
+compare-health-eu: EHIC or private insurance; travel insurance recommended [S8]
+compare-health-non-eu: Stays of 3–12 months can apply to NAV for voluntary National Insurance [S8]
+compare-emergency: 113 ambulance, 112 police, 110 fire [S39]
+compare-climate: About −2.3 °C in January, 17.7 °C in July [S36]
+compare-age-limits: Ruter and Vy student discounts only under 30; SiO housing 34 or younger [S16][S21][S12]
 ---
 # Oslo — City Guide for EU-HEM Students
 

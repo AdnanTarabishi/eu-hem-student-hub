@@ -9,6 +9,12 @@ compare-rent: About €700–€1,000 a month for furnished accommodation includ
 compare-budget: About €1,000–€1,800 a month excluding tuition and unexpected costs (EUR estimate) [S10]
 compare-transport: Pay as you go with OVpay; optional RET 20% and 40% local-fare discounts cost €8.20 and €29.70 a month [S22][S25][S44]
 compare-permit-non-eu: First ask EUR whether intra-EU student mobility applies; otherwise EUR handles the Dutch MVV/residence-permit route as recognised sponsor [S15][S16][S17]
+compare-registration: Municipality registration and BSN if staying over 4 months; RNI register for shorter stays [S11]
+compare-health-eu: EHIC; study-only students may not take Dutch basic insurance [S20]
+compare-health-non-eu: International student insurance; Dutch basic insurance only with a job or a paid internship at minimum wage [S20]
+compare-emergency: 112 for all emergencies [S39]
+compare-climate: About 4.0 °C in January, 18.2 °C in July [S38]
+compare-age-limits: Reserved housing (SSH, The Social Hub) 30 or younger; DUO travel product under 30 [S5][S6][S26]
 ---
 # Rotterdam — City Guide for EU-HEM Students
 

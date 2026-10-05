@@ -78,8 +78,9 @@ Most pictures are **real photos**, so students see what the city really looks li
 **AI-generated pictures** are allowed (decided on 5 October 2026, mainly for the cover), but always labelled:
 the file name starts with `ai-`, the figure is `<figure class="is-ai">` (this shows an "AI illustration"
 badge), the alt text starts with "AI-generated illustration", and the caption ends with
-"AI-generated illustration, not a photo; the other pictures here are real photos." An AI cover in
-`guide-data.js` has the credit "AI-generated illustration". Keep real photos in every gallery too.
+"AI-generated illustration, not a photo; the other pictures here are real photos." On the city cards an AI cover
+has no credit line (decided on 5 October 2026); its alt text still says it is an AI illustration.
+Keep real photos in every gallery too.
 1. Save the photo as WebP in two sizes, 640 and 1200 pixels wide, in `assets/images/cities/<city>/`
    (for example `piazza-maggiore-640.webp` and `piazza-maggiore-1200.webp`). Keep each under about 200 KB.
 2. In the guide, inside the `<div class="guide-photos">` at the top of "1. At a glance", copy one
@@ -91,7 +92,7 @@ badge), the alt text starts with "AI-generated illustration", and the caption en
 4. The **first** photo is shown large; pick the one that says the most about the city.
 5. The picture on the city cards (City Guide index and homepage) is the `cover` in `guide-data.js`:
    the image path without `-640.webp`, its alt text and a short credit like `Photo: Name, CC BY-SA 4.0`
-   (or "AI-generated illustration").
+   (an AI cover has no credit).
 
 ## How to add a new city
 1. Make sure the university is in `content/tracks.json` (its `guide` link must be
