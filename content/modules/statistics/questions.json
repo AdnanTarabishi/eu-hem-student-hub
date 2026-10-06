@@ -14,7 +14,7 @@
     ],
     "answer": "B",
     "explanation": "The sample is the group you actually observe. The population is all children in Bologna.",
-    "source": "Slides 8–13"
+    "source": "Class 5 · Original student practice (full lecture)"
   },
   {
     "id": "statistics.q.002",
@@ -31,7 +31,7 @@
     ],
     "answer": "A",
     "explanation": "The estimand is the target μ. The estimator is the rule, such as X̄ = ΣXᵢ/n. The estimate is the observed result, such as 28 kg.",
-    "source": "Slide 23"
+    "source": "Class 5 · Original student practice (full lecture)"
   },
   {
     "id": "statistics.q.003",
@@ -48,7 +48,7 @@
     ],
     "answer": "C",
     "explanation": "Each possible sample of a given size is equally likely. Any particular sample may still differ from the population.",
-    "source": "Slides 12–13"
+    "source": "Class 5 · Original student practice (full lecture)"
   },
   {
     "id": "statistics.q.004",
@@ -65,7 +65,7 @@
     ],
     "answer": "D",
     "explanation": "Random selection produces different sets of observations. The resulting chance variation is sampling error, even when measurement is accurate.",
-    "source": "Slides 14–17"
+    "source": "Class 5 · Original student practice (full lecture)"
   },
   {
     "id": "statistics.q.005",
@@ -82,7 +82,7 @@
     ],
     "answer": "B",
     "explanation": "Imagine repeatedly drawing a sample of fixed size and calculating its mean. The distribution of those means is the sampling distribution.",
-    "source": "Slides 24–27"
+    "source": "Class 5 · Original student practice (full lecture)"
   },
   {
     "id": "statistics.q.006",
@@ -99,7 +99,7 @@
     ],
     "answer": "A",
     "explanation": "The formula is fixed, but its inputs depend on the random sample. Once observed, the particular numerical mean is an estimate.",
-    "source": "Slides 23–25"
+    "source": "Class 5 · Original student practice (full lecture)"
   },
   {
     "id": "statistics.q.007",
@@ -116,7 +116,7 @@
     ],
     "answer": "C",
     "explanation": "Unbiasedness is a property across repeated samples. A single sample mean can be above or below μ.",
-    "source": "Slides 33–34"
+    "source": "Class 5 · Original student practice (full lecture)"
   },
   {
     "id": "statistics.q.008",
@@ -133,7 +133,7 @@
     ],
     "answer": "B",
     "explanation": "Consistency means convergence in probability to the parameter as n grows. It does not guarantee an exact answer at a particular sample size.",
-    "source": "Slides 36–38"
+    "source": "Class 5 · Original student practice (full lecture)"
   },
   {
     "id": "statistics.q.009",
@@ -150,7 +150,7 @@
     ],
     "answer": "D",
     "explanation": "SD describes individual observations; SE describes the sampling distribution of an estimator. Both use the original units (kg here), while variance uses kg².",
-    "source": "Slides 39–40"
+    "source": "Class 5 · Original student practice (full lecture)"
   },
   {
     "id": "statistics.q.010",
@@ -167,7 +167,7 @@
     ],
     "answer": "A",
     "explanation": "A mean of independent normal observations is normal for any n. The large-sample approximation is needed when the population itself is not normal.",
-    "source": "Slides 41–44"
+    "source": "Class 5 · Original student practice (full lecture)"
   },
   {
     "id": "statistics.q.011",
@@ -184,7 +184,7 @@
     ],
     "answer": "C",
     "explanation": "SE = σ/√n = 20/√100 = 20/10 = 2 kg.",
-    "source": "Slides 39–40"
+    "source": "Class 5 · Original student practice (full lecture)"
   },
   {
     "id": "statistics.q.012",
@@ -201,7 +201,7 @@
     ],
     "answer": "B",
     "explanation": "SE = 20/√400 = 20/20 = 1 kg. Quadrupling sample size halves standard error.",
-    "source": "Slides 39–40"
+    "source": "Class 5 · Original student practice (full lecture)"
   },
   {
     "id": "statistics.q.013",
@@ -218,7 +218,7 @@
     ],
     "answer": "D",
     "explanation": "Rearrange SE = σ/√n: n = (σ/SE)² = (20/0.5)² = 40² = 1,600.",
-    "source": "Application of slides 39–40"
+    "source": "Class 5 · Original student practice (full lecture)"
   },
   {
     "id": "statistics.q.014",
@@ -235,7 +235,7 @@
     ],
     "answer": "A",
     "explanation": "The weights total 379 kg. The population mean is 379/5 = 75.8 kg.",
-    "source": "Slides 19–21"
+    "source": "Class 5 · Original student practice (full lecture)"
   },
   {
     "id": "statistics.q.015",
@@ -252,7 +252,7 @@
     ],
     "answer": "C",
     "explanation": "The selected weights are 65, 75, 64, and 86. Their sum is 290, so the sample mean is 290/4 = 72.5 kg.",
-    "source": "Slides 19–21"
+    "source": "Class 5 · Original student practice (full lecture)"
   },
   {
     "id": "statistics.q.016",
@@ -269,7 +269,7 @@
     ],
     "answer": "B",
     "explanation": "The CLT gives an approximately normal sample mean here. E[X̄] = μ = 27.5 kg, and SE = 12.99/√100 = 1.299 kg.",
-    "source": "Slides 46–47"
+    "source": "Class 5 · Original student practice (full lecture)"
   },
   {
     "id": "statistics.q.017",
@@ -286,8 +286,7 @@
     ],
     "answer": "D",
     "explanation": "Supplementary practice: known population SD and a normal or approximately normal sampling distribution. SE = 20/10 = 2 kg. Margin = 1.96 × 2 = 3.92 kg. Interval = 70 ± 3.92 = [66.08, 73.92] kg.",
-    "source": "Supplementary · known-σ z interval",
-    "supplementary": true
+    "source": "Class 5 · Original student practice (full lecture)"
   },
   {
     "id": "statistics.q.018",
@@ -304,8 +303,7 @@
     ],
     "answer": "A",
     "explanation": "Supplementary practice: known population SD and a normal or approximately normal sampling distribution. The 95% refers to the long-run coverage of the interval-building procedure. It is not a statement about individual weights or a probability assigned to the fixed μ after observing an interval.",
-    "source": "Supplementary · confidence-interval interpretation",
-    "supplementary": true
+    "source": "Class 5 · Original student practice (full lecture)"
   },
   {
     "id": "statistics.q.019",
@@ -322,8 +320,7 @@
     ],
     "answer": "C",
     "explanation": "Supplementary practice: known population SD and a normal or approximately normal sampling distribution. SE = 20/20 = 1 kg. Interval = 70 ± 1.96 = [68.04, 71.96] kg. Its width is half the width for n = 100.",
-    "source": "Supplementary · known-σ z interval",
-    "supplementary": true
+    "source": "Class 5 · Original student practice (full lecture)"
   },
   {
     "id": "statistics.q.020",
@@ -340,7 +337,1706 @@
     ],
     "answer": "B",
     "explanation": "Supplementary practice: known population SD and a normal or approximately normal sampling distribution. SE stays at 2 kg. Margin = 2.576 × 2 = 5.152 kg. Interval = [64.848, 75.152], rounded to [64.85, 75.15] kg. The higher critical value makes it wider.",
-    "source": "Supplementary · known-σ z interval",
-    "supplementary": true
+    "source": "Class 5 · Original student practice (full lecture)"
+  },
+  {
+    "id": "statistics.q.class1-01",
+    "topic": "statistics.risk-uncertainty",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Risk",
+    "question": "In the distinction used in this course, what makes a situation “risk” rather than Knightian uncertainty?",
+    "options": [
+      "Its uncertainty can be described with probabilities",
+      "Its outcome is guaranteed",
+      "It involves a financial loss",
+      "Its probability is necessarily 0.5"
+    ],
+    "answer": "A",
+    "explanation": "Risk is quantified uncertainty. A risky event can be favourable or adverse, and it need not have probability 0.5.",
+    "source": "Class 1 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class1-02",
+    "topic": "statistics.risk-uncertainty",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Models",
+    "question": "You specify the disease prevalence and test sensitivity, then predict the fraction testing positive. What are you primarily doing?",
+    "options": [
+      "Conducting a census",
+      "Using a probabilistic model",
+      "Estimating an unknown prevalence from a sample",
+      "Proving that the test is perfect"
+    ],
+    "answer": "B",
+    "explanation": "The probability law is specified and used to derive expected results. Learning unknown parameters from data is statistical inference.",
+    "source": "Class 1 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class1-03",
+    "topic": "statistics.risk-uncertainty",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Population",
+    "question": "A study asks about waiting times for all eligible patients attending one clinic in 2026. What is the target population?",
+    "options": [
+      "Only patients answering the questionnaire",
+      "Every resident of Italy",
+      "All eligible patients attending that clinic in 2026",
+      "The average waiting time"
+    ],
+    "answer": "C",
+    "explanation": "The target population follows the study question’s setting and eligibility. The observed respondents are the sample.",
+    "source": "Class 1 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class1-04",
+    "topic": "statistics.risk-uncertainty",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Sample",
+    "question": "A researcher records 80 of a hospital’s 800 eligible patients. Which description is correct?",
+    "options": [
+      "The 80 patients are necessarily a census",
+      "The hospital’s mean age is the sample",
+      "The population contains only those 80 patients",
+      "The 80 recorded patients form a sample"
+    ],
+    "answer": "D",
+    "explanation": "A sample is an observed subset of the defined population. Observing all 800 would be a census.",
+    "source": "Class 1 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class1-05",
+    "topic": "statistics.risk-uncertainty",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Census",
+    "question": "Which operation is a census of a population of 60 clinics?",
+    "options": [
+      "Collecting the required data from all 60 clinics",
+      "Collecting data from 30 randomly chosen clinics",
+      "Repeatedly sampling five clinics",
+      "Calculating one clinic’s mean"
+    ],
+    "answer": "A",
+    "explanation": "A census observes every member of the target population. Random selection of a subset remains sampling.",
+    "source": "Class 1 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class1-06",
+    "topic": "statistics.risk-uncertainty",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Experiment",
+    "question": "In probability theory, an experiment must be:",
+    "options": [
+      "A randomised clinical trial",
+      "A procedure with an outcome represented in its sample space",
+      "A laboratory intervention",
+      "A census of all possible patients"
+    ],
+    "answer": "B",
+    "explanation": "A coin toss, a random draw or a clinical experiment can all be modelled as probability experiments.",
+    "source": "Class 1 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class1-07",
+    "topic": "statistics.risk-uncertainty",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Sample space",
+    "question": "What is the sample space for one ordinary six-sided die throw?",
+    "options": [
+      "{2,4,6}",
+      "{1}",
+      "{1,2,3,4,5,6}",
+      "{0,1}"
+    ],
+    "answer": "C",
+    "explanation": "The sample space includes all possible elementary outcomes, rather than one event such as an even result.",
+    "source": "Class 1 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class1-08",
+    "topic": "statistics.risk-uncertainty",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Events",
+    "question": "For one die throw, “the result is even” is:",
+    "options": [
+      "One elementary outcome",
+      "The entire sample space",
+      "An impossible event",
+      "An event containing three elementary outcomes"
+    ],
+    "answer": "D",
+    "explanation": "The event contains 2, 4 and 6. Each of those individual results is an elementary outcome.",
+    "source": "Class 1 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class1-09",
+    "topic": "statistics.risk-uncertainty",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Exclusivity",
+    "question": "Which pair is mutually exclusive for one die throw?",
+    "options": [
+      "The result equals 2; the result equals 5",
+      "The result is even; the result is at least 4",
+      "The result is at least 3; the result is at most 5",
+      "The result is even; the result equals 6"
+    ],
+    "answer": "A",
+    "explanation": "One throw cannot be both 2 and 5. Each other pair shares at least one possible result.",
+    "source": "Class 1 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class1-10",
+    "topic": "statistics.risk-uncertainty",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Exhaustiveness",
+    "question": "Which list is collectively exhaustive for one coin toss in the usual two-outcome model?",
+    "options": [
+      "Heads only",
+      "Heads and tails",
+      "Tails only",
+      "Heads and an even die result"
+    ],
+    "answer": "B",
+    "explanation": "Every possible coin result appears in the list. Exhaustiveness and mutual exclusivity are separate properties.",
+    "source": "Class 1 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class1-11",
+    "topic": "statistics.risk-uncertainty",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Axioms",
+    "question": "Which proposed value cannot be a probability?",
+    "options": [
+      "0",
+      "0.35",
+      "1.2",
+      "1"
+    ],
+    "answer": "C",
+    "explanation": "Probabilities lie between zero and one, inclusive. Density heights, studied later, obey different constraints.",
+    "source": "Class 1 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class1-12",
+    "topic": "statistics.risk-uncertainty",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Complement",
+    "question": "If P(A)=0.27, what is P(not A)?",
+    "options": [
+      "0.27",
+      "1.27",
+      "0.135",
+      "0.73"
+    ],
+    "answer": "D",
+    "explanation": "An event and its complement are disjoint and exhaust the sample space, so their probabilities sum to one.",
+    "source": "Class 1 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class1-13",
+    "topic": "statistics.risk-uncertainty",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Uniform law",
+    "question": "A fair die is thrown once. What is the probability of a value greater than 4?",
+    "options": [
+      "1/3",
+      "1/6",
+      "1/2",
+      "2/3"
+    ],
+    "answer": "A",
+    "explanation": "Two equally likely results, 5 and 6, satisfy the event, giving 2/6=1/3.",
+    "source": "Class 1 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class1-14",
+    "topic": "statistics.risk-uncertainty",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Union",
+    "question": "For a fair die, A={2,4,6} and B={3}. What is P(A ∪ B)?",
+    "options": [
+      "1/2",
+      "2/3",
+      "1/6",
+      "1/3"
+    ],
+    "answer": "B",
+    "explanation": "The events are disjoint. Their probabilities add to 3/6+1/6=4/6.",
+    "source": "Class 1 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class1-15",
+    "topic": "statistics.risk-uncertainty",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Intersection",
+    "question": "For a fair die, A={2,4,6} and B={3,4,5,6}. What is P(A ∩ B)?",
+    "options": [
+      "5/6",
+      "7/6",
+      "1/3",
+      "1/2"
+    ],
+    "answer": "C",
+    "explanation": "The shared results are 4 and 6, so the intersection has probability 2/6.",
+    "source": "Class 1 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class1-16",
+    "topic": "statistics.risk-uncertainty",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Overlap",
+    "question": "For the same events A={2,4,6} and B={3,4,5,6}, what is P(A ∪ B)?",
+    "options": [
+      "7/6",
+      "1/3",
+      "1/6",
+      "5/6"
+    ],
+    "answer": "D",
+    "explanation": "Subtract the overlap: 3/6+4/6−2/6=5/6. Adding without correction double-counts 4 and 6.",
+    "source": "Class 1 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class1-17",
+    "topic": "statistics.risk-uncertainty",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Repeated experiments",
+    "question": "P(even)=1/2 for a fair die means:",
+    "options": [
+      "The long-run proportion of even results tends to one half",
+      "Every next ten throws contain exactly five even results",
+      "The first throw must be odd",
+      "Even and odd results alternate"
+    ],
+    "answer": "A",
+    "explanation": "Probability is not a guarantee for a short sequence. Repeated experiments under the same model provide the frequentist interpretation.",
+    "source": "Class 1 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class1-18",
+    "topic": "statistics.risk-uncertainty",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Counting samples",
+    "question": "Ignoring order, how many different two-person samples can be selected without replacement from five people?",
+    "options": [
+      "25",
+      "10",
+      "20",
+      "5"
+    ],
+    "answer": "B",
+    "explanation": "The number of combinations is C(5,2)=5!/(2!3!)=10. Ordered draws would be counted differently.",
+    "source": "Class 1 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class1-19",
+    "topic": "statistics.risk-uncertainty",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Impossible event",
+    "question": "A population has one female and four males. In a four-person sample without replacement, what is the probability that all four are female?",
+    "options": [
+      "1/5",
+      "4/5",
+      "0",
+      "1"
+    ],
+    "answer": "C",
+    "explanation": "There are not four females to select, so the event is impossible.",
+    "source": "Class 1 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class1-20",
+    "topic": "statistics.risk-uncertainty",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Simple random sampling",
+    "question": "For a simple random sample of four people from a population of five, each of the five possible combinations has probability:",
+    "options": [
+      "1/4",
+      "4/5",
+      "1",
+      "1/5"
+    ],
+    "answer": "D",
+    "explanation": "Simple random sampling gives each fixed-size combination equal selection probability. The five probabilities sum to one.",
+    "source": "Class 1 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class2-01",
+    "topic": "statistics.probability",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Conditional probability",
+    "question": "For P(B)>0, which expression gives P(A | B)?",
+    "options": [
+      "P(A)/P(B)",
+      "P(A ∩ B)/P(B)",
+      "P(A ∪ B)/P(B)",
+      "P(B)/P(A ∩ B)"
+    ],
+    "answer": "B",
+    "explanation": "Restrict the denominator to the conditioning event B and retain the shared outcomes in the numerator.",
+    "source": "Class 2 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class2-02",
+    "topic": "statistics.probability",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Reversing the condition",
+    "question": "Which statement is always true?",
+    "options": [
+      "P(A | B)=P(B | A)",
+      "P(A ∩ B)=P(A)P(B)",
+      "P(A ∩ B)=P(B ∩ A)",
+      "P(A ∪ B)=P(A)+P(B)"
+    ],
+    "answer": "C",
+    "explanation": "Intersection is symmetric. Conditional symmetry, product factorisation and simple addition need further conditions.",
+    "source": "Class 2 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class2-03",
+    "topic": "statistics.probability",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Conditioning",
+    "question": "A fair die is thrown. Given that the result is at least 3, what is the probability it is even?",
+    "options": [
+      "2/3",
+      "1/3",
+      "5/6",
+      "1/2"
+    ],
+    "answer": "D",
+    "explanation": "The conditioning set is {3,4,5,6}; two of those four outcomes are even.",
+    "source": "Class 2 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class2-04",
+    "topic": "statistics.probability",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Independence",
+    "question": "If A and B are independent with probabilities 0.4 and 0.5, what is P(A ∩ B)?",
+    "options": [
+      "0.20",
+      "0.90",
+      "0.10",
+      "0.80"
+    ],
+    "answer": "A",
+    "explanation": "For independent events, the joint probability equals the product 0.4×0.5.",
+    "source": "Class 2 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class2-05",
+    "topic": "statistics.probability",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Exclusive vs independent",
+    "question": "Two mutually exclusive events both have positive probability. They are:",
+    "options": [
+      "Always independent",
+      "Dependent",
+      "Necessarily exhaustive",
+      "Impossible individually"
+    ],
+    "answer": "B",
+    "explanation": "Their intersection is zero, but the product of their positive probabilities is not zero, so independence fails.",
+    "source": "Class 2 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class2-06",
+    "topic": "statistics.probability",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Replacement",
+    "question": "An urn has five red and five white balls. After drawing a red ball without replacement, P(next red) equals:",
+    "options": [
+      "1/2",
+      "5/9",
+      "4/9",
+      "1/4"
+    ],
+    "answer": "C",
+    "explanation": "The first red ball is removed, leaving four red balls among nine. Replacement would restore probability 1/2.",
+    "source": "Class 2 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class2-07",
+    "topic": "statistics.probability",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Sensitivity",
+    "question": "Sensitivity is which probability?",
+    "options": [
+      "P(disease | test positive)",
+      "P(test negative | no disease)",
+      "P(no disease | test positive)",
+      "P(test positive | disease)"
+    ],
+    "answer": "D",
+    "explanation": "Sensitivity conditions on people with disease. Reversing the conditional gives positive predictive value instead.",
+    "source": "Class 2 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class2-08",
+    "topic": "statistics.probability",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Specificity",
+    "question": "A hypothetical test’s specificity is 0.90. Its false-positive rate among people without disease is:",
+    "options": [
+      "0.10",
+      "0.90",
+      "0.45",
+      "Not defined without prevalence"
+    ],
+    "answer": "A",
+    "explanation": "Specificity is P(T−|D−); its complement P(T+|D−) is 1−0.90=0.10. Predictive values additionally depend on prevalence.",
+    "source": "Class 2 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class2-09",
+    "topic": "statistics.probability",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Joint table",
+    "question": "For prevalence 20% and sensitivity 75%, what is P(disease and test positive)?",
+    "options": [
+      "0.75",
+      "0.15",
+      "0.20",
+      "0.95"
+    ],
+    "answer": "B",
+    "explanation": "Use P(D+∩T+)=P(T+|D+)P(D+)=0.75×0.20.",
+    "source": "Class 2 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class2-10",
+    "topic": "statistics.probability",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Predictive value",
+    "question": "At prevalence 20%, sensitivity 75% and specificity 90%, what is P(disease | test positive)?",
+    "options": [
+      "0.75",
+      "0.90",
+      "Approximately 0.652",
+      "0.20"
+    ],
+    "answer": "C",
+    "explanation": "True positives have probability 0.15; false positives 0.08. Divide 0.15 by the positive-row total 0.23.",
+    "source": "Class 2 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class2-11",
+    "topic": "statistics.probability",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Base rates",
+    "question": "Hold sensitivity and specificity fixed, with specificity below 100%. Reducing prevalence generally makes positive predictive value:",
+    "options": [
+      "Higher",
+      "Unchanged",
+      "Equal to sensitivity",
+      "Lower"
+    ],
+    "answer": "D",
+    "explanation": "Disease cases become rarer relative to false positives in the non-diseased group. The conditioning population of positive tests changes.",
+    "source": "Class 2 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class2-12",
+    "topic": "statistics.probability",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Measurement scales",
+    "question": "Which variable is nominal?",
+    "options": [
+      "Blood group",
+      "Disease severity labelled mild/moderate/severe",
+      "Weight in kg",
+      "Number of consultations"
+    ],
+    "answer": "A",
+    "explanation": "Blood-group categories have no natural order. Severity is ordinal; weight and counts are quantitative.",
+    "source": "Class 2 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class2-13",
+    "topic": "statistics.probability",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Interval scale",
+    "question": "Why is “30°C is twice as hot as 15°C” inappropriate?",
+    "options": [
+      "Temperature has no natural ordering",
+      "Celsius has no meaningful absolute zero for ratios",
+      "Celsius is a nominal category",
+      "Differences in Celsius are meaningless"
+    ],
+    "answer": "B",
+    "explanation": "Celsius is an interval scale: differences are meaningful but ratios depend on the arbitrary zero. The ratio changes on conversion to Fahrenheit.",
+    "source": "Class 2 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class2-14",
+    "topic": "statistics.probability",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Random variables",
+    "question": "Which is a discrete count variable?",
+    "options": [
+      "Exact body mass",
+      "Exact elapsed consultation time",
+      "Number of clinic visits in a month",
+      "Unrounded temperature"
+    ],
+    "answer": "C",
+    "explanation": "Visits take non-negative integer values. The other underlying quantities are modelled as continuous even if recorded with rounding.",
+    "source": "Class 2 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class2-15",
+    "topic": "statistics.probability",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "PMF",
+    "question": "Which set of probabilities can form a three-value PMF?",
+    "options": [
+      "0.2, 0.3, 0.6",
+      "−0.1, 0.4, 0.7",
+      "0.5, 0.5, 0.5",
+      "0.2, 0.3, 0.5"
+    ],
+    "answer": "D",
+    "explanation": "PMF masses must be non-negative and sum to one. Only 0.2+0.3+0.5 satisfies both requirements.",
+    "source": "Class 2 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class2-16",
+    "topic": "statistics.probability",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Expectation",
+    "question": "A discrete variable is 0 with probability 0.7 and 10 with probability 0.3. Its expectation is:",
+    "options": [
+      "3",
+      "5",
+      "10",
+      "0.3"
+    ],
+    "answer": "A",
+    "explanation": "The weighted mean is 0×0.7+10×0.3=3; a simple midpoint would ignore the probabilities.",
+    "source": "Class 2 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class2-17",
+    "topic": "statistics.probability",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Variance",
+    "question": "For a population random variable, variance is:",
+    "options": [
+      "The square root of its mean",
+      "The expected squared deviation from its mean",
+      "The largest value minus the smallest",
+      "The unweighted average absolute deviation"
+    ],
+    "answer": "B",
+    "explanation": "Var(X)=E[(X−μ)²]. SD is its square root and returns to the variable’s original units.",
+    "source": "Class 2 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class2-18",
+    "topic": "statistics.probability",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Bernoulli",
+    "question": "For Bernoulli(p) with p=0.2, the mean and variance are:",
+    "options": [
+      "0.2 and 0.2",
+      "0.8 and 0.16",
+      "0.2 and 0.16",
+      "1 and 0.2"
+    ],
+    "answer": "C",
+    "explanation": "E[X]=p=0.2 and Var(X)=p(1−p)=0.2×0.8=0.16.",
+    "source": "Class 2 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class2-19",
+    "topic": "statistics.probability",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Binomial",
+    "question": "For ten independent trials with a common success probability 0.3, the success count has mean and variance:",
+    "options": [
+      "0.3 and 0.21",
+      "3 and 3",
+      "10 and 0.3",
+      "3 and 2.1"
+    ],
+    "answer": "D",
+    "explanation": "For Binomial(n,p), mean np=3 and variance np(1−p)=2.1.",
+    "source": "Class 2 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class2-20",
+    "topic": "statistics.probability",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Binomial probability",
+    "question": "In three independent fair coin tosses, P(exactly two heads) is:",
+    "options": [
+      "3/8",
+      "1/8",
+      "1/2",
+      "2/3"
+    ],
+    "answer": "A",
+    "explanation": "There are three arrangements with two heads, each with probability (1/2)³=1/8. Their disjoint probabilities sum to 3/8.",
+    "source": "Class 2 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class3-01",
+    "topic": "statistics.random-variables",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "PDF",
+    "question": "For a continuous variable with a PDF, P(X=2) is:",
+    "options": [
+      "The height f(2)",
+      "The entire area left of 2",
+      "0",
+      "Always 1/2"
+    ],
+    "answer": "C",
+    "explanation": "A point has zero width and zero area under a continuous density, regardless of how high the curve is there.",
+    "source": "Class 3 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class3-02",
+    "topic": "statistics.random-variables",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Density",
+    "question": "A uniform PDF on [0,0.5] has density 2. Is this valid?",
+    "options": [
+      "No, density cannot exceed 1",
+      "No, probability is 2 at every point",
+      "Only if the variable is discrete",
+      "Yes, because total area is 2×0.5=1"
+    ],
+    "answer": "D",
+    "explanation": "Density is not a point probability. It may exceed one; its integral across the support must equal one.",
+    "source": "Class 3 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class3-03",
+    "topic": "statistics.random-variables",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "CDF",
+    "question": "F(x) for a continuous distribution represents:",
+    "options": [
+      "The probability at or below x",
+      "The density at x",
+      "The area under the CDF before x",
+      "The probability of exactly x"
+    ],
+    "answer": "A",
+    "explanation": "A CDF’s vertical value at x gives P(X≤x). A PDF’s vertical value is density instead.",
+    "source": "Class 3 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class3-04",
+    "topic": "statistics.random-variables",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Interval probability",
+    "question": "If F(8)=0.85 and F(3)=0.25 for a continuous variable, P(3<X<8) is:",
+    "options": [
+      "1.10",
+      "0.60",
+      "0.25",
+      "0.85"
+    ],
+    "answer": "B",
+    "explanation": "Subtract the cumulative probabilities: 0.85−0.25=0.60.",
+    "source": "Class 3 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class3-05",
+    "topic": "statistics.random-variables",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Uniform probability",
+    "question": "For Uniform(5,50), P(20<X<35) is:",
+    "options": [
+      "15",
+      "1/45",
+      "1/3",
+      "2/3"
+    ],
+    "answer": "C",
+    "explanation": "The requested width is 15 and the support width is 45, giving 15/45.",
+    "source": "Class 3 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class3-06",
+    "topic": "statistics.random-variables",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Uniform moments",
+    "question": "Uniform(5,50) has mean and variance:",
+    "options": [
+      "27.5 and 12.99",
+      "22.5 and 168.75",
+      "55 and 45",
+      "27.5 and 168.75"
+    ],
+    "answer": "D",
+    "explanation": "Mean=(5+50)/2=27.5; variance=(50−5)²/12=168.75. The value 12.99 is approximately the SD.",
+    "source": "Class 3 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class3-07",
+    "topic": "statistics.random-variables",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Normal notation",
+    "question": "In X~N(10,4), where the course uses mean–variance notation, the SD is:",
+    "options": [
+      "2",
+      "4",
+      "16",
+      "10"
+    ],
+    "answer": "A",
+    "explanation": "The second parameter is σ²=4, so σ=√4=2. Read notation before entering a calculator’s SD field.",
+    "source": "Class 3 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class3-08",
+    "topic": "statistics.random-variables",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Normal location",
+    "question": "Increasing a normal distribution’s mean while holding its SD fixed:",
+    "options": [
+      "Widens the curve",
+      "Shifts the curve without changing its spread",
+      "Increases its total area",
+      "Makes it right-skewed"
+    ],
+    "answer": "B",
+    "explanation": "The mean controls location; SD controls spread. The normal family remains symmetric with area one.",
+    "source": "Class 3 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class3-09",
+    "topic": "statistics.random-variables",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Standardisation",
+    "question": "For a normal variable with μ=90 and σ=9, the z-score of 105 is:",
+    "options": [
+      "15",
+      "Approximately 0.185",
+      "Approximately 1.667",
+      "Approximately −1.667"
+    ],
+    "answer": "C",
+    "explanation": "z=(105−90)/9=15/9. Divide by SD, not variance.",
+    "source": "Class 3 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class3-10",
+    "topic": "statistics.random-variables",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Upper tail",
+    "question": "For Z~N(0,1), P(Z>1.96) is approximately:",
+    "options": [
+      "0.95",
+      "0.975",
+      "0.05",
+      "0.025"
+    ],
+    "answer": "D",
+    "explanation": "The central probability between ±1.96 is about 0.95, leaving 0.025 in each tail.",
+    "source": "Class 3 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class3-11",
+    "topic": "statistics.random-variables",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Central interval",
+    "question": "For Z~N(0,1), P(−1.96<Z<1.96) is approximately:",
+    "options": [
+      "0.95",
+      "0.05",
+      "0.975",
+      "0.50"
+    ],
+    "answer": "A",
+    "explanation": "The interval removes two tails of approximately 0.025 each.",
+    "source": "Class 3 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class3-12",
+    "topic": "statistics.random-variables",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Normal symmetry",
+    "question": "For a normal variable with mean μ, P(X<μ) equals:",
+    "options": [
+      "0",
+      "1/2",
+      "1",
+      "The density at μ"
+    ],
+    "answer": "B",
+    "explanation": "Symmetry and continuity place half of the area on either side of the mean.",
+    "source": "Class 3 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class3-13",
+    "topic": "statistics.random-variables",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Probability calculation",
+    "question": "Which expression correctly calculates P(l<X<u) for a normal variable?",
+    "options": [
+      "Φ((u−μ)/σ)+Φ((l−μ)/σ)",
+      "f(u)−f(l)",
+      "Φ((u−μ)/σ)−Φ((l−μ)/σ)",
+      "1−Φ((u−μ)/σ)"
+    ],
+    "answer": "C",
+    "explanation": "Standardise both endpoints and subtract their CDF values. Subtracting density heights does not calculate area.",
+    "source": "Class 3 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class3-14",
+    "topic": "statistics.random-variables",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Landmarks",
+    "question": "For any normal distribution, approximately 68.27% of individual observations lie:",
+    "options": [
+      "Within one variance of the mean",
+      "Below the mean",
+      "Within one standard error of the mean",
+      "Within one SD of the mean"
+    ],
+    "answer": "D",
+    "explanation": "The standard-normal probability between −1 and +1 is about 0.6827. Here the distribution concerns individuals, not sample means.",
+    "source": "Class 3 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class3-15",
+    "topic": "statistics.random-variables",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Skewness",
+    "question": "A right-skewed distribution has:",
+    "options": [
+      "A relatively long right tail",
+      "A relatively long left tail",
+      "An obligatory mean of zero",
+      "A symmetric bell shape"
+    ],
+    "answer": "A",
+    "explanation": "Right/positive skew describes the direction of the extended tail, not the location containing most observations.",
+    "source": "Class 3 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class3-16",
+    "topic": "statistics.random-variables",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Transformation",
+    "question": "If E[X]=10 and Y=5+2X, then E[Y] is:",
+    "options": [
+      "20",
+      "25",
+      "15",
+      "50"
+    ],
+    "answer": "B",
+    "explanation": "Linearity gives E[Y]=5+2E[X]=25; normality is not required.",
+    "source": "Class 3 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class3-17",
+    "topic": "statistics.random-variables",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Conditional expectation",
+    "question": "Two independent fair dice have values Y₁ and Y₂. What is E[Y₁+Y₂ | Y₂=3]?",
+    "options": [
+      "7",
+      "3.5",
+      "6.5",
+      "3"
+    ],
+    "answer": "C",
+    "explanation": "The first die retains expectation 3.5 while the known second value contributes 3, giving 6.5.",
+    "source": "Class 3 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class3-18",
+    "topic": "statistics.random-variables",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Independence",
+    "question": "For independent discrete variables, the joint PMF satisfies:",
+    "options": [
+      "p(x,y)=pX(x)+pY(y)",
+      "X and Y can never have the same value",
+      "Their means must be equal",
+      "p(x,y)=pX(x)pY(y) for all x,y"
+    ],
+    "answer": "D",
+    "explanation": "Independence is a factorisation property of the entire joint distribution, not equality of means or absence of matching values.",
+    "source": "Class 3 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class3-19",
+    "topic": "statistics.random-variables",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Approximation",
+    "question": "Which Binomial(n,p) meets the course rule np≥5 and n(1−p)≥5 for a normal approximation?",
+    "options": [
+      "n=40, p=0.5",
+      "n=10, p=0.1",
+      "n=20, p=0.95",
+      "n=4, p=0.5"
+    ],
+    "answer": "A",
+    "explanation": "For n=40,p=0.5, both counts are 20. Each other choice has fewer than five expected successes or failures.",
+    "source": "Class 3 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class3-20",
+    "topic": "statistics.random-variables",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Uniform shape",
+    "question": "For a continuous uniform distribution on [a,b], which statement is correct?",
+    "options": [
+      "Every point has probability 1/(b−a)",
+      "All points in the interior have the same density",
+      "Its PDF increases from 0 to 1",
+      "Only its mean can occur"
+    ],
+    "answer": "B",
+    "explanation": "The PDF is constant; any exact point has probability zero. The CDF, rather than the PDF, rises across the support.",
+    "source": "Class 3 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class4-01",
+    "topic": "statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Randomisation",
+    "question": "Random sampling and random allocation differ because:",
+    "options": [
+      "They are identical procedures",
+      "Allocation guarantees a representative national sample",
+      "Sampling guarantees a causal treatment comparison",
+      "Sampling selects units; allocation assigns treatments"
+    ],
+    "answer": "D",
+    "explanation": "Selection relates to whom the sample represents; allocation relates to comparability of treatment groups.",
+    "source": "Class 4 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class4-02",
+    "topic": "statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "RCT",
+    "question": "Which study is a randomised controlled trial?",
+    "options": [
+      "Recruit patients and randomly assign drug A or B",
+      "Survey patients once about the drugs they chose",
+      "Compare consultations before and after a policy change without random allocation",
+      "Select patients with and without disease and ask about past exposure"
+    ],
+    "answer": "A",
+    "explanation": "An RCT uses random allocation of interventions. The other descriptions are observational or non-randomised.",
+    "source": "Class 4 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class4-03",
+    "topic": "statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Cohort",
+    "question": "Researchers measure adults’ exposures and follow them for two years without assigning exposure. This is a:",
+    "options": [
+      "Case-control study",
+      "Cohort study",
+      "Cross-sectional study",
+      "Randomised trial"
+    ],
+    "answer": "B",
+    "explanation": "Following a defined group over time without randomising exposure is a cohort design.",
+    "source": "Class 4 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class4-04",
+    "topic": "statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Case-control",
+    "question": "Researchers select patients with disease and controls without disease, then examine previous exposures. This is a:",
+    "options": [
+      "Randomised controlled trial",
+      "Census",
+      "Case-control study",
+      "Cross-sectional prevalence survey"
+    ],
+    "answer": "C",
+    "explanation": "Selection begins with outcome status and looks back at exposure. Recall and selection issues require attention.",
+    "source": "Class 4 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class4-05",
+    "topic": "statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Cross-sectional",
+    "question": "A one-time survey measures current blood pressure and lifestyle in a sample. It is primarily:",
+    "options": [
+      "A randomised trial",
+      "A prospective cohort",
+      "A researcher-controlled before–after experiment",
+      "Cross-sectional"
+    ],
+    "answer": "D",
+    "explanation": "The variables are measured at one point or period. This alone does not establish the direction of causation.",
+    "source": "Class 4 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class4-06",
+    "topic": "statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Before–after",
+    "question": "Researchers introduce a prescribing policy and compare consultations before and after, without random allocation. Which statement is best?",
+    "options": [
+      "It is a non-randomised intervention study",
+      "It is an RCT because an intervention exists",
+      "It cannot have confounding",
+      "It automatically establishes causality"
+    ],
+    "answer": "A",
+    "explanation": "An active intervention can make the design experimental without randomisation. Time trends and other changes can still confound the comparison.",
+    "source": "Class 4 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class4-07",
+    "topic": "statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Confounding",
+    "question": "Consultations fall after a policy starts, but the after-period includes more school holidays. Why does this matter?",
+    "options": [
+      "Holidays prove that the policy has no effect",
+      "Holidays may explain part of the observed change",
+      "A larger sample automatically removes the issue",
+      "The comparison has become randomised"
+    ],
+    "answer": "B",
+    "explanation": "A factor that changes alongside the policy can create an alternative explanation. Its existence does not prove either a zero or a nonzero policy effect.",
+    "source": "Class 4 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class4-08",
+    "topic": "statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Balance",
+    "question": "Random allocation means baseline characteristics in the observed groups are:",
+    "options": [
+      "Guaranteed identical for every characteristic",
+      "Irrelevant to all analysis",
+      "Balanced in expectation, with possible chance differences",
+      "Necessarily representative of all countries"
+    ],
+    "answer": "C",
+    "explanation": "Randomisation is a probabilistic procedure, not a guarantee of perfectly matching finite groups.",
+    "source": "Class 4 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class4-09",
+    "topic": "statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "RCT limitations",
+    "question": "Which can compromise a randomised trial’s analysis?",
+    "options": [
+      "Randomisation makes every analysis exact",
+      "No trial can have missing observations",
+      "All clinical interventions can be blinded",
+      "Loss to follow-up and crossover"
+    ],
+    "answer": "D",
+    "explanation": "Missing outcomes and changes in received treatment can threaten conclusions. Random allocation does not solve all implementation problems.",
+    "source": "Class 4 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class4-10",
+    "topic": "statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Data preparation",
+    "question": "Before fitting an inferential model, a sensible first step is:",
+    "options": [
+      "Check missingness, data integrity and descriptive distributions",
+      "Ignore outliers and run regression immediately",
+      "Replace all missing values with zero",
+      "Assume every variable is normal"
+    ],
+    "answer": "A",
+    "explanation": "Data preparation and descriptive analysis reveal issues that can otherwise corrupt inference.",
+    "source": "Class 4 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class4-11",
+    "topic": "statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Categorical summary",
+    "question": "In 80 observed patients, 20 are coded 1 for a binary characteristic. Its relative frequency is:",
+    "options": [
+      "20",
+      "0.25",
+      "0.80",
+      "0.75"
+    ],
+    "answer": "B",
+    "explanation": "Relative frequency divides the count by the relevant denominator: 20/80=0.25.",
+    "source": "Class 4 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class4-12",
+    "topic": "statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Graph choice",
+    "question": "Which display is most suitable for the distribution of a quantitative blood-pressure variable?",
+    "options": [
+      "Pie chart of patient IDs",
+      "A scatterplot with only one axis",
+      "Histogram",
+      "A list of nominal category names"
+    ],
+    "answer": "C",
+    "explanation": "A histogram groups quantitative values into intervals and displays their counts, shares or density.",
+    "source": "Class 4 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class4-13",
+    "topic": "statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Scatterplot",
+    "question": "A scatterplot of age against blood pressure primarily displays:",
+    "options": [
+      "A causal effect without assumptions",
+      "A population PMF",
+      "The number of missing values only",
+      "The relationship between two quantitative variables"
+    ],
+    "answer": "D",
+    "explanation": "Paired values show association, trends and outliers. A visible association does not by itself identify causality.",
+    "source": "Class 4 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class4-14",
+    "topic": "statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Density histogram",
+    "question": "For unequal-width bins, a relative-frequency density histogram uses bar heights equal to:",
+    "options": [
+      "Relative frequency divided by bin width",
+      "Raw count only",
+      "Bin width multiplied by relative frequency",
+      "Cumulative frequency"
+    ],
+    "answer": "A",
+    "explanation": "The area of each bar equals its relative frequency. Wider intervals should not get misleadingly tall bars merely because they contain more range.",
+    "source": "Class 4 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class4-15",
+    "topic": "statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Sample median",
+    "question": "For the sorted sample 2,4,6,10, the median is:",
+    "options": [
+      "4",
+      "5",
+      "6",
+      "5.5"
+    ],
+    "answer": "B",
+    "explanation": "With an even number of observations, average the two middle values: (4+6)/2=5. The sample mean is 5.5.",
+    "source": "Class 4 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class4-16",
+    "topic": "statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Sample variance",
+    "question": "The sample 2,4,6 has sample variance:",
+    "options": [
+      "8/3",
+      "2",
+      "4",
+      "8"
+    ],
+    "answer": "C",
+    "explanation": "The mean is 4 and squared deviations sum to 8. Divide by n−1=2, giving s²=4; SD is 2.",
+    "source": "Class 4 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class4-17",
+    "topic": "statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Units",
+    "question": "If observations are measured in kg, sample variance and sample SD have units:",
+    "options": [
+      "kg and kg²",
+      "Both kg²",
+      "Neither has units",
+      "kg² and kg"
+    ],
+    "answer": "D",
+    "explanation": "Squaring deviations gives squared units. Taking the square root returns to original units.",
+    "source": "Class 4 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class4-18",
+    "topic": "statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Outliers",
+    "question": "Adding a very large value to a sample usually affects which location measure most strongly?",
+    "options": [
+      "The mean",
+      "The median necessarily changes more",
+      "The mode must become the largest value",
+      "All location measures are unchanged"
+    ],
+    "answer": "A",
+    "explanation": "The mean uses all magnitudes and is sensitive to extreme values. Median depends primarily on order.",
+    "source": "Class 4 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class4-19",
+    "topic": "statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Change convention",
+    "question": "Blood pressure is 150 before and 140 after. If change=after−before, change equals:",
+    "options": [
+      "+10 mm Hg",
+      "−10 mm Hg",
+      "−290 mm Hg",
+      "0 mm Hg"
+    ],
+    "answer": "B",
+    "explanation": "140−150=−10. A negative value indicates a decrease under this convention.",
+    "source": "Class 4 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class4-20",
+    "topic": "statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Comparing graphs",
+    "question": "To compare treatment-group histograms fairly, use:",
+    "options": [
+      "Different scales chosen to emphasise each group",
+      "Only the highest bin from each group",
+      "Common horizontal and vertical axis scales",
+      "A normal curve without looking at the observations"
+    ],
+    "answer": "C",
+    "explanation": "Common scales make location and frequency differences visually comparable. Graphs should be accompanied by numerical summaries.",
+    "source": "Class 4 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class6-01",
+    "topic": "statistics.inference",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Hypotheses",
+    "question": "Which is a suitable two-sided null/alternative pair for a population mean relative to 7?",
+    "options": [
+      "H₀: x̄=7; H₁: μ≠7",
+      "H₀: μ=7; H₁: μ≠7",
+      "H₀: μ≠7; H₁: x̄=7",
+      "H₀: p=0.05; H₁: p>0.05"
+    ],
+    "answer": "B",
+    "explanation": "The hypotheses concern the population parameter μ. The observed sample mean is evidence, not the parameter being tested.",
+    "source": "Class 6 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class6-02",
+    "topic": "statistics.inference",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Two-sided tests",
+    "question": "A two-sided test looks for departures from the null:",
+    "options": [
+      "Only above the null value",
+      "Only below the null value",
+      "In either direction",
+      "Only when the sample variance is zero"
+    ],
+    "answer": "C",
+    "explanation": "The alternative μ≠μ₀ includes both larger and smaller population means.",
+    "source": "Class 6 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class6-03",
+    "topic": "statistics.inference",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Known variance",
+    "question": "For independent normal observations and a known population SD, which one-mean statistic is appropriate?",
+    "options": [
+      "z=(x̄−μ₀)/σ²",
+      "t=(x̄−μ₀)/(σ/n)",
+      "z=(μ₀−x̄)/n",
+      "z=(x̄−μ₀)/(σ/√n)"
+    ],
+    "answer": "D",
+    "explanation": "The sample mean’s SD is σ/√n, and the standard normal is the reference when population SD is known.",
+    "source": "Class 6 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class6-04",
+    "topic": "statistics.inference",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Unknown variance",
+    "question": "For independent normal observations when population SD is unknown, use:",
+    "options": [
+      "t=(x̄−μ₀)/(s/√n), df=n−1",
+      "z=(x̄−μ₀)/s with no degrees of freedom",
+      "t=(x̄−μ₀)/(s/n), df=n",
+      "The population variance as though known"
+    ],
+    "answer": "A",
+    "explanation": "The sample SD estimates σ, and Student’s t accounts for that estimation under the normal-population assumption.",
+    "source": "Class 6 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class6-05",
+    "topic": "statistics.inference",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Degrees of freedom",
+    "question": "A one-sample t test with n=20 has how many degrees of freedom?",
+    "options": [
+      "20",
+      "19",
+      "21",
+      "40"
+    ],
+    "answer": "B",
+    "explanation": "For the one-sample t procedure, df=n−1=19.",
+    "source": "Class 6 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class6-06",
+    "topic": "statistics.inference",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Normality",
+    "question": "For an independent sample of size 12 from a markedly non-normal population, an exact normal-population t test is:",
+    "options": [
+      "Automatically exact because n<30",
+      "Equivalent to a census",
+      "Not justified by those assumptions alone",
+      "Guaranteed valid if p<0.05"
+    ],
+    "answer": "C",
+    "explanation": "The exact small-sample t reference requires a normal population. Larger-sample approximation and alternative robust methods require separate justification.",
+    "source": "Class 6 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class6-07",
+    "topic": "statistics.inference",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "T distribution",
+    "question": "Compared with a standard normal, a t distribution with few degrees of freedom has:",
+    "options": [
+      "No negative values",
+      "Variance zero",
+      "No dependence on degrees of freedom",
+      "Heavier tails"
+    ],
+    "answer": "D",
+    "explanation": "Heavier tails reflect uncertainty from estimating the population spread. The t distribution approaches normal as df increases.",
+    "source": "Class 6 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class6-08",
+    "topic": "statistics.inference",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Worked statistic",
+    "question": "For n=20, x̄=5, s=3 and μ₀=7, the one-sample t statistic is approximately:",
+    "options": [
+      "−2.981",
+      "−0.667",
+      "+2.981",
+      "−13.333"
+    ],
+    "answer": "A",
+    "explanation": "SE=3/√20≈0.6708. Dividing the difference −2 by this SE gives −2.981.",
+    "source": "Class 6 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class6-09",
+    "topic": "statistics.inference",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Critical values",
+    "question": "For df=19 at two-sided α=0.05, t observed=−2.981 and critical values ±2.093 imply:",
+    "options": [
+      "Do not reject because the statistic is negative",
+      "Reject H₀",
+      "Accept H₀ as proven",
+      "Change α after seeing the result"
+    ],
+    "answer": "B",
+    "explanation": "The statistic lies in the lower rejection tail: |−2.981|>2.093.",
+    "source": "Class 6 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class6-10",
+    "topic": "statistics.inference",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "P-value",
+    "question": "A two-sided p-value is:",
+    "options": [
+      "The probability that H₀ is true",
+      "The probability the observed effect is clinically important",
+      "The probability of evidence at least as extreme under H₀ and the model",
+      "The proportion of patients helped by treatment"
+    ],
+    "answer": "C",
+    "explanation": "A p-value conditions on the null model. It does not provide a posterior probability of a hypothesis.",
+    "source": "Class 6 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class6-11",
+    "topic": "statistics.inference",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Decision",
+    "question": "At a prespecified α=0.05, a p-value of 0.008 leads to:",
+    "options": [
+      "Proving H₁ with certainty",
+      "Not rejecting H₀",
+      "Concluding an 0.8% treatment effect",
+      "Rejecting H₀ at the 5% level"
+    ],
+    "answer": "D",
+    "explanation": "0.008<0.05, so reject under the rule. A binary decision is not certainty or an effect size.",
+    "source": "Class 6 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class6-12",
+    "topic": "statistics.inference",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Non-rejection",
+    "question": "A p-value of 0.30 at α=0.05 means:",
+    "options": [
+      "The data do not provide enough evidence to reject H₀ at that level",
+      "H₀ is proven true",
+      "The probability H₀ is true is 30%",
+      "The study has proven equivalence"
+    ],
+    "answer": "A",
+    "explanation": "Non-rejection leaves uncertainty. It can arise from a small effect, substantial variability or insufficient sample size.",
+    "source": "Class 6 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class6-13",
+    "topic": "statistics.inference",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Confidence interval",
+    "question": "A 95% one-mean t interval is [3.596,6.404]. For a matching two-sided test of μ=7 at 5%, the result is:",
+    "options": [
+      "Do not reject H₀",
+      "Reject H₀",
+      "The result cannot relate to the interval",
+      "Reject only if n exceeds 100"
+    ],
+    "answer": "B",
+    "explanation": "The hypothesised value 7 lies outside the matching 95% interval, so the two-sided test rejects.",
+    "source": "Class 6 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class6-14",
+    "topic": "statistics.inference",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Matching levels",
+    "question": "A two-sided test at α=0.10 corresponds to which confidence level?",
+    "options": [
+      "10%",
+      "95%",
+      "90%",
+      "99%"
+    ],
+    "answer": "C",
+    "explanation": "The matching confidence level is 100(1−α)%, giving 90%.",
+    "source": "Class 6 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class6-15",
+    "topic": "statistics.inference",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Significance threshold",
+    "question": "With all else fixed, reducing α from 0.05 to 0.01 makes rejecting H₀:",
+    "options": [
+      "Easier",
+      "Unchanged in every sample",
+      "Impossible",
+      "Harder"
+    ],
+    "answer": "D",
+    "explanation": "The rejection tails get smaller and critical values move farther from zero. More extreme evidence is required.",
+    "source": "Class 6 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class6-16",
+    "topic": "statistics.inference",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Type I error",
+    "question": "A Type I error occurs when you:",
+    "options": [
+      "Reject a true H₀",
+      "Do not reject a false H₀",
+      "Reject a false H₀",
+      "Do not reject a true H₀"
+    ],
+    "answer": "A",
+    "explanation": "Under the null and test assumptions, its probability is controlled by the chosen significance level.",
+    "source": "Class 6 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class6-17",
+    "topic": "statistics.inference",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Type II error",
+    "question": "A Type II error occurs when you:",
+    "options": [
+      "Reject a true H₀",
+      "Do not reject a false H₀",
+      "Reject a false H₀",
+      "Report a confidence interval"
+    ],
+    "answer": "B",
+    "explanation": "Its probability β is defined for a specified alternative effect and depends on sample size and variability.",
+    "source": "Class 6 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class6-18",
+    "topic": "statistics.inference",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Clinical importance",
+    "question": "A statistically significant 1 mm Hg difference in blood pressure must be:",
+    "options": [
+      "Clinically important because p<0.05",
+      "Proof of a causal effect in any design",
+      "Assessed separately for clinical importance",
+      "An effect of exactly 5%"
+    ],
+    "answer": "C",
+    "explanation": "Statistical significance concerns evidence relative to sampling uncertainty, not whether the magnitude matters for patients.",
+    "source": "Class 6 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class6-19",
+    "topic": "statistics.inference",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Reporting",
+    "question": "Which report best supports interpretation of a one-mean test?",
+    "options": [
+      "Only “significant”",
+      "Only the p-value rounded to zero",
+      "Only the largest observation",
+      "Estimate, CI, n, SD, test statistic, df and p-value"
+    ],
+    "answer": "D",
+    "explanation": "Report effect magnitude and uncertainty alongside the test details. Rounding a very small p-value to zero falsely implies impossibility under H₀.",
+    "source": "Class 6 · Original student practice"
+  },
+  {
+    "id": "statistics.q.class6-20",
+    "topic": "statistics.inference",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Direction",
+    "question": "A two-sided test rejects μ=7 with x̄=5. What should the interpretation include?",
+    "options": [
+      "Evidence favours a population mean below 7 under the assumptions",
+      "The population mean is certainly exactly 5",
+      "The test became one-sided after seeing the data",
+      "All individuals have values below 7"
+    ],
+    "answer": "A",
+    "explanation": "The estimate’s direction helps interpret the rejection. It does not change the prespecified two-sided test or identify the exact population mean.",
+    "source": "Class 6 · Original student practice"
   }
 ]

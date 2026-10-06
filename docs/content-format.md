@@ -186,10 +186,18 @@ The referenced JSON lives in that module's `lectures/` folder:
   HTML, so never place unreviewed visitor submissions, scripts, or event handlers in it.
 - Guide and configuration filenames must use lowercase letters, numbers and hyphens
   directly inside `lectures/`. Absolute URLs and `../` paths are rejected.
-- `activities` can be `[]`. Supported activities currently use the sampling lecture's
-  fixed examples: `sampling` (uniform weights from 5–50 kg), `tiny-population`
-  (65, 89, 75, 64, 86 kg), and `confidence-interval` (known-σ z calculator).
-  New types of experiment require a corresponding renderer in `lecture.js`.
+- `activities` can be `[]`. The original activities are `sampling` (uniform weights
+  from 5–50 kg), `tiny-population` (65, 89, 75, 64, 86 kg), and
+  `confidence-interval` (known-σ z calculator). `lecture-activities.js` adds
+  `event-builder`, `diagnostic-test`, `binomial`, `normal-distribution`,
+  `uniform-distribution`, `descriptive-statistics`, `study-design`, and `hypothesis-test`.
+  The last activity supports two-sided **one-mean** z/t tests only, displays the
+  matching confidence interval, and checks the course's small-sample normality condition.
+  New activity types must be registered in `notes-data.js` and implemented in a renderer.
+- A future session can be a topic with `status: "upcoming"` and a `virtualeUrl`
+  pointing to `https://virtuale.unibo.it/course/section.php?id=<number>`. It has no
+  notes or lecture field until covered. The Lectures tab labels these sessions
+  separately and supplies the official links; it creates no quiz for them.
 - Put the lecture's MCQs in the module's existing `questions.json`, with the same `topic`
   ID. The lecture filters those questions; they also appear in the course question bank.
   Optional `category`, `source`, and `supplementary: true` fields give the lecture quiz

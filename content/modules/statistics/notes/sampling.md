@@ -25,9 +25,9 @@ In Exercise 5.1, the five population weights are 65, 89, 75, 64, and 86 kg. Thei
 
 In Exercise 5.2, individual weights are uniformly distributed with mean **27.5 kg** and standard deviation approximately **12.99 kg**. For 100 independent observations, the expected sample mean remains 27.5 kg and its standard error is approximately **1.299 kg**. The sample mean is approximately normally distributed.
 
-## Confidence intervals: supplementary explanation
+## Confidence intervals: full Class 5 lecture
 
-The short lecture lists confidence intervals as an objective but does not develop their calculation. The interactive page’s interval activities and Questions 17–20 are supplementary practice.
+The full lecture develops the known-variance confidence interval from the sampling distribution. The calculator and Questions 17–20 practise this core material.
 
 If the observed mean is 70 kg, the population SD is known to be 20 kg, and the sample size is 100, SE = 2 kg. Assuming independent sampling and a normal or approximately normal sampling distribution, the 95% interval is **66.08–73.92 kg**.
 
@@ -37,4 +37,4 @@ The lecture uses n ≥ 30 as a normal-approximation rule of thumb. Strong skewne
 
 ## Official materials
 
-These are original, paraphrased study explanations based on Martin Forster’s Statistics for Healthcare, Class 5, University of Bologna, 1 October 2026. They may contain errors. The original slides remain on [Virtuale](https://virtuale.unibo.it); they are not uploaded to this site.
+These are original, paraphrased study explanations based on Martin Forster’s Statistics for Healthcare, Class 5, University of Bologna, 1 October 2026. They may contain errors. The original slides remain on [Virtuale](https://virtuale.unibo.it/course/view.php?id=84235); they are not uploaded to this site.

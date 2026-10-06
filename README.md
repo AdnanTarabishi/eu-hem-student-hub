@@ -69,8 +69,11 @@ so visitors get the new files at once (and installed apps show "Update available
 Study content (notes, flashcards, questions, concepts, resources) lives in `content/modules/`
 as JSON and Markdown files. Adding content never requires code changes.
 - **Interactive lectures:** the course's Lectures tab opens original study guides,
-  interactive activities and MCQ practice. The first page is Statistics for Healthcare,
-  Class 5 (sampling). `lecture.html?topic=statistics.sampling` uses a reusable template;
+  interactive activities and MCQ practice. Statistics for Healthcare covers
+  Classes 1–6, with 20 MCQs each, probability and
+  distribution explorers, descriptive summaries, sampling activities and a one-mean
+  z/t test calculator. Upcoming classes remain labelled separately with Virtuale links.
+  `lecture.html?topic=statistics.sampling` uses a reusable template;
   configuration and authoring instructions are in [docs/content-format.md](docs/content-format.md#interactive-lecture-pages).
   Quiz progress is saved on the student's device and included in Notes progress backups.
 - Format and examples: [docs/content-format.md](docs/content-format.md)

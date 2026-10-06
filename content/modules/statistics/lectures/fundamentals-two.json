@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "topic": "statistics.probability",
+  "classNumber": 2,
+  "date": "2026-09-16",
+  "updated": "2026-10-06",
+  "heroTitle": "Change the information.\nChange the probability.",
+  "intro": "Learn why a positive test is not a diagnosis, when events are independent, and how a discrete probability model turns outcomes into expectations.",
+  "guide": "lectures/fundamentals-two.html",
+  "activities": [
+    "diagnostic-test",
+    "binomial"
+  ],
+  "attribution": "Original student study explanations based on Martin Forster’s Statistics for Healthcare, Class 2, University of Bologna, academic year 2026/27. Worked examples are teaching examples. Always check the official materials on Virtuale."
+}

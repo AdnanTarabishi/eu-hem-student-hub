@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "topic": "statistics.inference",
+  "classNumber": 6,
+  "date": "2026-10-05",
+  "updated": "2026-10-06",
+  "heroTitle": "Ask a precise question.\nWeigh the evidence.",
+  "intro": "Connect a population hypothesis to a test statistic, a p-value and a confidence interval. Learn what a statistically significant result actually says.",
+  "guide": "lectures/hypothesis-testing.html",
+  "activities": [
+    "hypothesis-test"
+  ],
+  "attribution": "Original student study explanations based on Martin Forster’s Statistics for Healthcare, Class 6, University of Bologna, academic year 2026/27. Worked examples are teaching examples. Always check the official materials on Virtuale."
+}

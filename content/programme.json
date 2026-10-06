@@ -345,7 +345,7 @@
                   "teachingStart": "2026-09-14",
                   "teachingEnd": "2026-10-20",
                   "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518721",
-                  "virtualeUrl": "https://virtuale.unibo.it",
+                  "virtualeUrl": "https://virtuale.unibo.it/course/view.php?id=84235",
                   "description": "Probability and statistics for analysing health data, from describing samples to hypothesis tests, plus a first introduction to regression and causal inference. Workshops use Stata.",
                   "assessment": "Written exam at the end of the course. AI tools are not allowed.",
                   "textbooks": [

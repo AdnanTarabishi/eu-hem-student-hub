@@ -373,7 +373,7 @@ function renderExam(panel) {
 
 function renderLectures(panel) {
   panel.appendChild(createElement("h3", null, "Interactive lectures"));
-  panel.appendChild(createElement("p", "schedule-meta", "Original study explanations, interactive activities and practice questions. Official slides stay on Virtuale."));
+  panel.appendChild(createElement("p", "schedule-meta", "Original study explanations, interactive activities and practice questions. Official slides and assessed-work answers stay on Virtuale."));
   for (const module of page.course.modules) {
     const lectures = module.topics.filter((t) => t.lecture);
     if (!lectures.length) continue;
@@ -393,6 +393,26 @@ function renderLectures(panel) {
       list.appendChild(item);
     }
     panel.appendChild(list);
+    const upcoming = module.topics.filter(t => t.status === "upcoming");
+    if (upcoming.length) {
+      panel.appendChild(createElement("h4", "module-heading", "Upcoming classes · not taken yet"));
+      panel.appendChild(createElement("p", "schedule-meta", "Links supplied for the next sessions. Interactive guides and quizzes will be added after those classes are covered."));
+      const upcomingList = createElement("ul", "topic-list");
+      for (const topic of upcoming) {
+        const item = createElement("li", "topic-row");
+        const main = createElement("div", "topic-row-main");
+        main.appendChild(createElement("span", "topic-title", topic.title));
+        const link = createElement("a", "inline-link", "Open class on Virtuale ↗");
+        link.href = topic.virtualeUrl;
+        link.target = "_blank";
+        link.rel = "noopener";
+        main.appendChild(link);
+        item.appendChild(main);
+        item.appendChild(createElement("span", "schedule-meta", "Upcoming"));
+        upcomingList.appendChild(item);
+      }
+      panel.appendChild(upcomingList);
+    }
   }
 }
 
@@ -417,7 +437,7 @@ function renderTopics(panel, params) {
       main.appendChild(notes ? pageLink(topic.title, { tab: "topics", topic: topic.id }, "topic-title") : createElement("span", "topic-title", topic.title));
       const cards = page.course.flashcards.filter((c) => c.topic === topic.id).length;
       const questions = page.course.questions.filter((q) => q.topic === topic.id).length;
-      const meta = [notes ? `Notes · ${readingMinutes(notes)} min read` : "No notes yet"];
+      const meta = [notes ? `Notes · ${readingMinutes(notes)} min read` : topic.status === "upcoming" ? "Upcoming · not taken yet" : "No notes yet"];
       if (cards) meta.push(`${cards} flashcard${cards === 1 ? "" : "s"}`);
       if (questions) meta.push(`${questions} question${questions === 1 ? "" : "s"}`);
       main.appendChild(createElement("span", "schedule-meta", meta.join(" · ")));
@@ -427,6 +447,13 @@ function renderTopics(panel, params) {
         const lecture = createElement("a", "inline-link", "Interactive lecture →");
         lecture.href = lectureUrl(topic.id);
         main.appendChild(lecture);
+      }
+      if (topic.status === "upcoming" && topic.virtualeUrl) {
+        const link = createElement("a", "inline-link", "Open class on Virtuale ↗");
+        link.href = topic.virtualeUrl;
+        link.target = "_blank";
+        link.rel = "noopener";
+        main.appendChild(link);
       }
       if (notes && notes.meta.sample) side.appendChild(sampleTag());
       if (notes) {

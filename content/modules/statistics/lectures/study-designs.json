@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "topic": "statistics.descriptive",
+  "classNumber": 4,
+  "date": "2026-09-24",
+  "updated": "2026-10-06",
+  "heroTitle": "Know the design.\nRead the data.",
+  "intro": "Choose what a study can tell you before calculating. Then describe your sample with clear numbers, tables and graphs.",
+  "guide": "lectures/study-designs.html",
+  "activities": [
+    "descriptive-statistics",
+    "study-design"
+  ],
+  "attribution": "Original student study explanations based on Martin Forster’s Statistics for Healthcare, Class 4, University of Bologna, academic year 2026/27. Worked examples are teaching examples. Always check the official materials on Virtuale."
+}

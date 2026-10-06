@@ -1,0 +1,217 @@
+<!-- Original study explanations; official lecture files remain on Virtuale. -->
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">01 / Build understanding</p>
+    <h2>Why probability belongs in healthcare.</h2>
+  </div>
+  <p>
+    Disease, treatment outcomes and resource needs are uncertain. A model makes
+    our assumptions explicit.
+  </p>
+</div>
+<div class="grid2">
+  <article class="card">
+    <h3>Risk and uncertainty</h3>
+    <p>
+      In the distinction used in this course, risk is measurable uncertainty: we
+      can attach probabilities to possible outcomes. Knightian uncertainty
+      describes situations where those probabilities are not quantified.
+    </p>
+    <p>
+      A forecast of a 20% chance of an adverse outcome describes risk. Saying
+      that the possible consequences of a new technology are poorly understood
+      describes uncertainty. A number is useful only when its underlying
+      assumptions are credible.
+    </p>
+  </article>
+  <article class="card">
+    <h3>Probability and statistics</h3>
+    <p>
+      A probabilistic model uses a specified probability law to work out what
+      outcomes to expect. A statistical model uses observed data to learn about
+      an unknown population characteristic.
+    </p>
+    <p>
+      If a test’s properties and disease prevalence are known, probability helps
+      predict results. If they are unknown, we collect data and estimate them.
+      Statistical methods also describe, predict and support decisions; they do
+      not remove uncertainty.
+    </p>
+  </article>
+</div>
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">02 / Build understanding</p>
+    <h2>Who are you trying to understand?</h2>
+  </div>
+  <p>Define the target group before choosing whom to measure.</p>
+</div>
+<div class="grid2">
+  <button type="button" class="card concept" aria-expanded="false">
+    <h3>Population</h3>
+    <p>The complete group relevant to the study question.</p>
+    <span class="tap">Reveal example +</span
+    ><span class="reveal"
+      >For a study of an outpatient clinic, the population might be all eligible
+      adults attending that clinic during a defined year. It is not
+      automatically all adults in Italy.</span
+    ></button
+  ><button type="button" class="card concept" aria-expanded="false">
+    <h3>Sample and census</h3>
+    <p>
+      A sample observes a subset; a census observes all members of the target
+      population.
+    </p>
+    <span class="tap">Reveal example +</span
+    ><span class="reveal"
+      >Interviewing 120 of the clinic’s 2,000 eligible patients gives a sample.
+      Interviewing all 2,000 is a census. Sample size alone does not tell you
+      whether selection is representative.</span
+    >
+  </button>
+</div>
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">03 / Build understanding</p>
+    <h2>An experiment is a set of possibilities.</h2>
+  </div>
+  <p>
+    In probability theory, “experiment” includes a random draw or a die throw.
+    It need not be a clinical intervention.
+  </p>
+</div>
+<div class="grid2">
+  <article class="card">
+    <h3>Outcome, sample space, event</h3>
+    <p>
+      One run produces an outcome. The sample space S contains every possible
+      outcome. An event A is a subset of S.
+    </p>
+    <div class="formula">S = {1, 2, 3, 4, 5, 6}; A = {2, 4, 6}</div>
+    <p>
+      For one die throw, the outcome might be 4. “An even result” is an event
+      containing three outcomes. The event S always occurs; the empty event
+      never occurs.
+    </p>
+  </article>
+  <article class="card">
+    <h3>Exclusive and exhaustive</h3>
+    <p>
+      Distinct elementary outcomes cannot occur together in one run. A complete
+      sample space also guarantees that at least one listed outcome occurs.
+    </p>
+    <p>
+      For a single coin toss, heads and tails are mutually exclusive and
+      collectively exhaustive. “Heads” and “a coin result” overlap, because
+      every head is also a coin result.
+    </p>
+  </article>
+</div>
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">04 / Build understanding</p>
+    <h2>Three rules keep probabilities coherent.</h2>
+  </div>
+  <p>
+    Use the equally likely counting rule only when the model justifies equal
+    probabilities.
+  </p>
+</div>
+<div class="grid2">
+  <article class="card">
+    <h3>The axioms</h3>
+    <p>
+      A probability is never negative; the whole sample space has probability
+      one; probabilities of disjoint events add.
+    </p>
+    <div class="formula">P(A) ≥ 0; P(S) = 1</div>
+    <p>
+      These rules imply P(A) ≤ 1 and P(not A) = 1 − P(A). A probability of 1.2
+      is a signal that the model or calculation has gone wrong.
+    </p>
+  </article>
+  <article class="card">
+    <h3>The discrete uniform law</h3>
+    <p>
+      With N equally likely elementary outcomes, count how many belong to the
+      event.
+    </p>
+    <div class="formula">P(A) = |A| / N</div>
+    <p>
+      For a fair die, an even result has probability 3/6 = 1/2. A weighted die
+      still has six faces, but counting faces alone no longer gives the
+      probability.
+    </p>
+  </article>
+</div>
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">05 / Build understanding</p>
+    <h2>“Or” includes overlap. “And” keeps it.</h2>
+  </div>
+  <p>
+    Build your own two events in Explore and watch the selected outcomes change.
+  </p>
+</div>
+<div class="grid2">
+  <article class="card">
+    <h3>Union and intersection</h3>
+    <p>A ∪ B means A or B or both. A ∩ B means both events happen.</p>
+    <div class="formula">P(A ∪ B) = P(A) + P(B) − P(A ∩ B)</div>
+    <p>
+      For A = even and B = at least 3, their overlap is {4, 6}. The union is {2,
+      3, 4, 5, 6}, so its probability is 5/6. Adding 3/6 + 4/6 without
+      subtracting 2/6 counts the overlap twice.
+    </p>
+  </article>
+  <article class="card">
+    <h3>Long-run interpretation</h3>
+    <p>
+      Under a frequentist interpretation, a probability describes a limiting
+      relative frequency over repeated runs under the same conditions.
+    </p>
+    <p>
+      Probability 1/2 does not promise exactly five even results in the next ten
+      throws. Short sequences can vary substantially. The repeated-run
+      interpretation becomes central to sampling distributions and inference
+      later.
+    </p>
+  </article>
+</div>
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">06 / Build understanding</p>
+    <h2>Counting samples from a tiny population.</h2>
+  </div>
+  <p>Sampling without replacement and ignoring order produces combinations.</p>
+</div>
+<div class="grid2">
+  <article class="card">
+    <h3>Choose people, not sequences</h3>
+    <p>
+      There are 10 different two-person samples from five people, and five
+      four-person samples. Reversing the order of two selected people does not
+      create a new sample.
+    </p>
+    <div class="formula">N choose n = N! / [n!(N − n)!]</div>
+    <p>
+      For a simple random sample, each of these combinations has the same
+      selection probability. Selecting everybody creates one possible sample:
+      the census.
+    </p>
+  </article>
+  <article class="card">
+    <h3>Check the event before dividing</h3>
+    <p>
+      In a five-person population with one female and four males, a four-person
+      sample can contain only males in exactly one of its five possible
+      combinations.
+    </p>
+    <div class="formula">P(only males) = 1/5</div>
+    <p>
+      A four-person sample containing only females is impossible in this
+      population. Its probability is zero. Sampling error, independence and
+      replacement will be developed in the next classes.
+    </p>
+  </article>
+</div>

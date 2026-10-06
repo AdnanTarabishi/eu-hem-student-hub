@@ -419,8 +419,7 @@ async function startLecture() {
     $("lecture-attribution").textContent = config.attribution;
     $("lecture-course-link").textContent = found.course.info.name;
     $("lecture-course-link").href = courseUrl(found.course.id, {
-      tab: "topics",
-      topic: id,
+      tab: "lectures",
     });
     $("lecture-virtuale").href =
       found.module.info.virtualeUrl || data.programme.programme.virtualeUrl;
@@ -429,7 +428,9 @@ async function startLecture() {
     $("lecture-question-count").textContent =
       questions.length + " practice questions";
     $("lecture-activity-count").textContent =
-      config.activities.length + " interactive activities";
+      config.activities.length + " interactive " + (config.activities.length === 1 ? "activity" : "activities");
+    LectureActivities.init($("lecture-extra-activities"), config.activities);
+    renderLectureSequence(found.module, id);
     document
       .querySelector("[role=progressbar]")
       .setAttribute("aria-valuemax", questions.length);
@@ -523,3 +524,21 @@ $("mark-understood").addEventListener("click", () => {
   updateTopicStatus();
 });
 startLecture();
+
+function renderLectureSequence(module, currentId) {
+  const nav = $("lecture-sequence");
+  nav.textContent = "";
+  const overview = document.createElement("a");
+  overview.href = courseUrl(context.course.id, { tab: "lectures" });
+  overview.textContent = "All lectures";
+  nav.appendChild(overview);
+  module.topics.filter(t => t.lecture).forEach(topic => {
+    const link = document.createElement("a");
+    link.href = lectureUrl(topic.id);
+    link.textContent = topic.title.split(":")[0];
+    link.title = topic.title;
+    if (topic.id === currentId) link.setAttribute("aria-current", "page");
+    nav.appendChild(link);
+  });
+  nav.hidden = false;
+}

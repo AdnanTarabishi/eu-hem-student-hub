@@ -1,23 +1,27 @@
 [
   {
     "id": "statistics.risk-uncertainty",
-    "title": "Risk and uncertainty in health decisions"
+    "title": "Class 1: Fundamental concepts I: risk, samples and probability",
+    "notes": "notes/fundamentals-one.md",
+    "lecture": "lectures/fundamentals-one.json"
   },
   {
     "id": "statistics.probability",
-    "title": "Probability, populations and samples"
+    "title": "Class 2: Fundamental concepts II: conditional probability and discrete variables",
+    "notes": "notes/fundamentals-two.md",
+    "lecture": "lectures/fundamentals-two.json"
   },
   {
     "id": "statistics.random-variables",
-    "title": "Random variables, expected value and variance"
-  },
-  {
-    "id": "statistics.causal-inference",
-    "title": "Causal inference: experiments vs observational data"
+    "title": "Class 3: Fundamental concepts III: continuous variables and normal distributions",
+    "notes": "notes/fundamentals-three.md",
+    "lecture": "lectures/fundamentals-three.json"
   },
   {
     "id": "statistics.descriptive",
-    "title": "Describing data: numbers, tables and graphs"
+    "title": "Class 4: Study designs and descriptive statistics",
+    "notes": "notes/study-designs.md",
+    "lecture": "lectures/study-designs.json"
   },
   {
     "id": "statistics.sampling",
@@ -27,7 +31,13 @@
   },
   {
     "id": "statistics.inference",
-    "title": "Sampling distributions, confidence intervals and hypothesis tests"
+    "title": "Class 6: Hypothesis testing: one population mean",
+    "notes": "notes/hypothesis-testing.md",
+    "lecture": "lectures/hypothesis-testing.json"
+  },
+  {
+    "id": "statistics.causal-inference",
+    "title": "Causal inference: experiments vs observational data"
   },
   {
     "id": "statistics.regression",
@@ -36,5 +46,41 @@
   {
     "id": "statistics.software",
     "title": "Data analysis with Stata or Excel"
+  },
+  {
+    "id": "statistics.class-seven",
+    "title": "Class 7: Stata workshop 1",
+    "status": "upcoming",
+    "virtualeUrl": "https://virtuale.unibo.it/course/section.php?id=869189"
+  },
+  {
+    "id": "statistics.class-eight",
+    "title": "Class 8: Lecture",
+    "status": "upcoming",
+    "virtualeUrl": "https://virtuale.unibo.it/course/section.php?id=869190"
+  },
+  {
+    "id": "statistics.class-nine",
+    "title": "Class 9: Lecture",
+    "status": "upcoming",
+    "virtualeUrl": "https://virtuale.unibo.it/course/section.php?id=869191"
+  },
+  {
+    "id": "statistics.tutor-two",
+    "title": "Tutor Class 2",
+    "status": "upcoming",
+    "virtualeUrl": "https://virtuale.unibo.it/course/section.php?id=869192"
+  },
+  {
+    "id": "statistics.class-ten",
+    "title": "Class 10: Stata workshop 2",
+    "status": "upcoming",
+    "virtualeUrl": "https://virtuale.unibo.it/course/section.php?id=869193"
+  },
+  {
+    "id": "statistics.tutor-three",
+    "title": "Tutor Class 3",
+    "status": "upcoming",
+    "virtualeUrl": "https://virtuale.unibo.it/course/section.php?id=869194"
   }
 ]

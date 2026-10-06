@@ -1185,6 +1185,11 @@ async function main() {
         error(where, `topic names "fc", "q" and "r" are reserved`);
       }
       requireText(topic, "title", where);
+      if (topic.status !== undefined && topic.status !== "upcoming") error(where, 'Optional topic status must be "upcoming".');
+      if (topic.status === "upcoming") {
+        if (topic.lecture || topic.notes) error(where, "An upcoming topic must not present a completed lecture or notes.");
+        if (!/^https:\/\/virtuale\.unibo\.it\/course\/section\.php\?id=\d+$/.test(topic.virtualeUrl || "")) error(where, "An upcoming class needs a valid Virtuale section URL.");
+      }
       topicIds.add(topic.id);
     });
   }

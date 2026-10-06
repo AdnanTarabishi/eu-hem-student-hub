@@ -1185,6 +1185,87 @@ footer p {
   font-size: 12px;
   color: var(--muted);
 }
+.lecture-sequence {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 16px;
+  font-size: 12px;
+}
+.lecture-sequence a {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 7px 10px;
+  text-decoration: none;
+}
+.lecture-page .lecture-sequence a[aria-current="page"] {
+  background: #153d35;
+  color: #fffefa;
+}
+.extended-activity {
+  margin: 24px 0;
+}
+.activity-controls,
+.activity-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+.extended-activity input,
+.extended-activity select,
+.extended-activity textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--line);
+  background: var(--white);
+  color: var(--ink);
+  border-radius: 8px;
+  padding: 10px;
+  font: inherit;
+}
+.extended-activity textarea {
+  resize: vertical;
+}
+.activity-stats dt {
+  font-size: 12px;
+  color: var(--muted);
+}
+.activity-stats dd {
+  margin: 0;
+  font-size: 22px;
+  overflow-wrap: anywhere;
+}
+.activity-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  color: var(--ink);
+}
+.activity-presets,
+.event-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+.event-set {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  margin: 16px 0;
+  min-width: 0;
+}
+.lecture-page .event-buttons button[aria-pressed="true"] {
+  background: #153d35;
+  color: #fffefa;
+}
+.lecture-page .footer-mark { color: var(--muted); }
+.activity-output {
+  overflow-wrap: anywhere;
+}
+.activity-output .formula {
+  white-space: normal;
+}
 /* Keep the study page steady when quiz focus scrolls near the header threshold. */
 .lecture-page .site-header.is-compact .header-bar {
   min-height: var(--header-height);

@@ -1,0 +1,266 @@
+<!-- Original study explanations; official lecture files remain on Virtuale. -->
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">01 / Build understanding</p>
+    <h2>Put the hypothesis in the population.</h2>
+  </div>
+  <p>
+    Data are observed in a sample; the claim concerns the population from which
+    it was drawn.
+  </p>
+</div>
+<div class="grid2">
+  <article class="card">
+    <h3>Null and alternative</h3>
+    <p>
+      For a two-sided one-mean comparison, H₀ states a chosen population mean
+      and H₁ allows differences in either direction.
+    </p>
+    <div class="formula">H₀: μ = μ₀; H₁: μ ≠ μ₀</div>
+    <p>
+      For example, μ₀ = 7 is a fixed reference value. The observed sample mean x̄
+      is evidence used to test that claim, not the quantity appearing in the
+      null hypothesis.
+    </p>
+  </article>
+  <article class="card">
+    <h3>Significance level</h3>
+    <p>
+      Choose α before examining the results. The course commonly uses α = 0.05,
+      placing 0.025 in each tail of a two-sided reference distribution.
+    </p>
+    <p>
+      A smaller α requires more extreme evidence for rejection. “Do not reject”
+      means insufficient evidence against the null under the method and
+      assumptions; it does not prove equivalence or no effect.
+    </p>
+  </article>
+</div>
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">02 / Build understanding</p>
+    <h2>Measure distance in standard errors.</h2>
+  </div>
+  <p>
+    A difference of two units means something different when uncertainty is
+    large rather than small.
+  </p>
+</div>
+<div class="grid2">
+  <article class="card">
+    <h3>Known population SD</h3>
+    <p>
+      If σ is genuinely known and the sample mean has a normal or approximately
+      normal distribution, use a standard normal reference.
+    </p>
+    <div class="formula">z = (x̄ − μ₀) / (σ/√n)</div>
+    <p>
+      For independent normal observations the normal reference is exact.
+      Otherwise normal approximation depends on sample size and population
+      shape. The course’s n ≥ 30 convention is a rule of thumb, not a guarantee.
+    </p>
+  </article>
+  <article class="card">
+    <h3>Unknown population SD</h3>
+    <p>
+      Usually σ is unknown. Estimate it with s and account for the additional
+      uncertainty with Student’s t distribution.
+    </p>
+    <div class="formula">t = (x̄ − μ₀) / (s/√n); df = n − 1</div>
+    <p>
+      For independent observations from a normal population this one-sample t
+      test is exact, including at small n. At large n the approximation is often
+      useful. Small, markedly non-normal samples need methods outside this page.
+    </p>
+  </article>
+</div>
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">03 / Build understanding</p>
+    <h2>Student’s t has heavier tails.</h2>
+  </div>
+  <p>
+    Degrees of freedom distinguish one t reference distribution from another.
+  </p>
+</div>
+<div class="grid2">
+  <article class="card">
+    <h3>Why the reference changes</h3>
+    <p>
+      Estimating the population spread makes the denominator uncertain.
+      Student’s t allows more probability in the tails than the standard normal
+      distribution.
+    </p>
+    <p>
+      The smaller the degrees of freedom, the larger the 95% two-sided critical
+      value. As df grows, t approaches the standard normal. Replacing σ with s
+      while keeping a z critical value can understate uncertainty in a small
+      sample.
+    </p>
+  </article>
+  <article class="card">
+    <h3>Critical values</h3>
+    <p>
+      Reject when the absolute test statistic exceeds the matching two-sided
+      critical value.
+    </p>
+    <div class="formula">For df = 19 and α = 0.05: critical t ≈ 2.093</div>
+    <p>
+      The lab implements the lecture’s convention: reject for p &lt; α, do not
+      reject for p &gt; α, and describe exact equality as the boundary. Rounded
+      printed values should not decide a borderline case.
+    </p>
+  </article>
+</div>
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">04 / Build understanding</p>
+    <h2>A p-value is conditional on the null.</h2>
+  </div>
+  <p>
+    It is a probability about possible sample evidence, under an assumed
+    hypothesis.
+  </p>
+</div>
+<div class="grid2">
+  <button type="button" class="card concept" aria-expanded="false">
+    <h3>The question it answers</h3>
+    <p>
+      How often would evidence at least this extreme arise if H₀ and the model
+      assumptions held?
+    </p>
+    <span class="tap">Reveal example +</span
+    ><span class="reveal"
+      >For a two-sided test, include both tails beyond ±|t observed| (or ±|z
+      observed|). A p-value of 0.02 means such extreme evidence would occur with
+      probability 0.02 under the null model.</span
+    ></button
+  ><button type="button" class="card concept" aria-expanded="false">
+    <h3>The question it does not answer</h3>
+    <p>
+      It does not assign a probability that H₀ is true, that H₁ is true, or that
+      an effect is clinically important.
+    </p>
+    <span class="tap">Reveal example +</span
+    ><span class="reveal"
+      >A large p-value can occur when a real effect is small relative to
+      uncertainty. A small p-value can occur for a clinically unimportant
+      difference in a very precise study.</span
+    >
+  </button>
+</div>
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">05 / Build understanding</p>
+    <h2>Three routes to the same conclusion.</h2>
+  </div>
+  <p>
+    Use the same assumptions, reference distribution and significance level for
+    all three routes.
+  </p>
+</div>
+<div class="grid2">
+  <article class="card">
+    <h3>The worked one-mean example</h3>
+    <p>
+      A normal population yields an independent sample with n=20, x̄=5 and s=3.
+      Test H₀: μ=7 against μ≠7 at 5%.
+    </p>
+    <div class="formula">SE ≈ 0.671; t ≈ −2.981; df = 19</div>
+    <p>
+      The critical value is 2.093. The two-sided p-value is approximately
+      0.0077. The 95% t interval is approximately [3.596, 6.404], excluding 7.
+      All three approaches reject; the estimated mean lies below the null value.
+    </p>
+  </article>
+  <article class="card">
+    <h3>The matching confidence interval</h3>
+    <p>
+      A two-sided α-level t test corresponds to a 100(1−α)% t confidence
+      interval.
+    </p>
+    <div class="formula">x̄ ± t(df, 1−α/2) × s/√n</div>
+    <p>
+      A null value outside the interval is rejected by the matching test.
+      Repeatedly constructed intervals have the stated coverage; a particular
+      interval either contains the fixed parameter or does not. The lab displays
+      the statistic, p-value and interval side by side.
+    </p>
+  </article>
+</div>
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">06 / Build understanding</p>
+    <h2>Errors describe the decision and the truth.</h2>
+  </div>
+  <p>
+    These are repeated-testing properties, not retrospective probabilities that
+    your particular conclusion is wrong.
+  </p>
+</div>
+<div class="grid2">
+  <article class="card">
+    <h3>Type I error</h3>
+    <p>
+      Rejecting H₀ when it is true. Under the test assumptions, the chosen
+      significance level controls its probability.
+    </p>
+    <div class="formula">P(Type I error | H₀ true) = α</div>
+    <p>
+      This is analogous to concluding a treatment difference exists when the
+      null of no difference is true. It is not the probability that a rejected
+      hypothesis was actually true.
+    </p>
+  </article>
+  <article class="card">
+    <h3>Type II error</h3>
+    <p>
+      Not rejecting H₀ when it is false. Its probability β depends on a
+      specified alternative effect, the spread and the sample size.
+    </p>
+    <div class="formula">Power = 1 − β</div>
+    <p>
+      Power is supplementary terminology supporting the lecture’s Type II error
+      discussion. Reducing α with everything else fixed generally makes
+      rejection harder and can increase Type II error.
+    </p>
+  </article>
+</div>
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">07 / Build understanding</p>
+    <h2>Report enough to judge the result.</h2>
+  </div>
+  <p>
+    A binary decision leaves out the size and uncertainty of the estimated
+    effect.
+  </p>
+</div>
+<div class="grid2">
+  <article class="card">
+    <h3>A clear interpretation</h3>
+    <p>
+      Report the estimate, sample size, SD, test statistic, degrees of freedom
+      where relevant, exact p-value and confidence interval.
+    </p>
+    <p>
+      For the worked example: “The sample mean was 5 (n=20, SD=3). A two-sided
+      one-sample t test against 7 gave t(19)=−2.981, p≈0.0077; the 95% CI was
+      3.596–6.404. The data support a population mean below 7 under the
+      assumptions.”
+    </p>
+  </article>
+  <article class="card">
+    <h3>Know the current boundary</h3>
+    <p>
+      Statistical significance does not automatically imply a clinically
+      meaningful difference or a causal effect.
+    </p>
+    <p>
+      Two independent means and the full analysis of the ProFHER trial are
+      extended in Class 7. Regression and tests for proportions belong to later
+      classes. The upcoming links let you reach the official materials without
+      presenting those classes as completed.
+    </p>
+  </article>
+</div>

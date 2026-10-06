@@ -1,0 +1,224 @@
+<!-- Original study explanations; official lecture files remain on Virtuale. -->
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">01 / Build understanding</p>
+    <h2>Selection and treatment assignment are separate.</h2>
+  </div>
+  <p>
+    A representative sample and a valid causal comparison require different
+    kinds of reasoning.
+  </p>
+</div>
+<div class="grid2">
+  <article class="card">
+    <h3>Random sampling</h3>
+    <p>
+      Random sampling chooses units from the target population. In simple random
+      sampling, each possible sample of the stated size is equally likely.
+    </p>
+    <p>
+      This supports inference to the sampled population. Volunteers from one
+      clinic are not automatically representative of every patient. A large
+      sample can still be systematically selected.
+    </p>
+  </article>
+  <article class="card">
+    <h3>Random allocation</h3>
+    <p>
+      Random allocation assigns recruited participants to treatment groups. It
+      aims to make treatment assignment independent of their baseline
+      characteristics.
+    </p>
+    <p>
+      It balances measured and unmeasured characteristics in expectation and
+      supports causal comparison. Actual groups need not have identical age or
+      sex distributions. A trial can use random allocation without using random
+      sampling from the general population.
+    </p>
+  </article>
+</div>
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">02 / Build understanding</p>
+    <h2>Recognise how the data were obtained.</h2>
+  </div>
+  <p>
+    The study-design activity asks you to classify new scenarios and explains
+    the clues.
+  </p>
+</div>
+<div class="grid2">
+  <article class="card">
+    <h3>Observational designs</h3>
+    <p>
+      A cohort follows a defined group over time. A case-control study selects
+      people by disease status and examines previous exposure. A cross-sectional
+      study measures a group at one time.
+    </p>
+    <p>
+      Researchers observe rather than randomise the exposure. These designs can
+      be valuable when randomisation would be unethical or impractical.
+      Confounding, recall error and reverse causation need careful treatment.
+    </p>
+  </article>
+  <article class="card">
+    <h3>Before–after and randomised designs</h3>
+    <p>
+      A before–after study compares periods on either side of a change. If
+      researchers actively introduce the change it can be experimental, but it
+      is not an RCT unless allocation is randomised.
+    </p>
+    <p>
+      An unrelated time trend can explain a before–after difference. An RCT
+      compares randomly allocated interventions, but loss to follow-up,
+      crossover and difficulties with blinding can still compromise its
+      analysis.
+    </p>
+  </article>
+</div>
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">03 / Build understanding</p>
+    <h2>A design determines what a difference means.</h2>
+  </div>
+  <p>Association alone does not identify the effect of a treatment.</p>
+</div>
+<div class="grid2">
+  <article class="card">
+    <h3>ProFHER</h3>
+    <p>
+      The real study compared surgical and non-surgical management of displaced
+      proximal humeral fractures using random allocation.
+    </p>
+    <p>
+      Clinical outcomes included the Oxford Shoulder Score; economic evaluation
+      considered costs and quality-adjusted life years. The course later uses a
+      simulated teaching dataset. No patient-level clinical dataset has been
+      supplied for this page.
+    </p>
+  </article>
+  <article class="card">
+    <h3>Minor ailments</h3>
+    <p>
+      The before–after prescribing study introduced pharmacist access and
+      observed GP consultations before and after the change, without random
+      allocation.
+    </p>
+    <p>
+      School holidays and doctors’ availability could change at the same time as
+      the intervention. A reduction in consultations may reflect the
+      intervention, these other factors, or both. Regression and the detailed
+      Stata analysis belong to later classes.
+    </p>
+  </article>
+</div>
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">04 / Build understanding</p>
+    <h2>Describe before you test.</h2>
+  </div>
+  <p>Inspect values and missingness before interpreting a summary.</p>
+</div>
+<div class="grid2">
+  <article class="card">
+    <h3>Categorical data</h3>
+    <p>
+      Frequency tables count categories. Relative frequency divides each count
+      by the number of observed, eligible values. Bar charts display those
+      counts or proportions.
+    </p>
+    <div class="formula">Relative frequency = count / denominator</div>
+    <p>
+      A 0/1 indicator’s average is the proportion coded 1. State how missing
+      values were handled and whether the denominator is the whole sample or
+      only observations with recorded data.
+    </p>
+  </article>
+  <article class="card">
+    <h3>Quantitative data</h3>
+    <p>
+      Histograms group values into bins. Scatterplots display paired
+      quantitative values and help identify patterns, outliers and data errors.
+    </p>
+    <p>
+      Frequency histograms show counts; relative-frequency histograms show
+      shares; density histograms divide share by bin width so total area is one.
+      With unequal bin widths, areas rather than raw heights must represent the
+      shares.
+    </p>
+  </article>
+</div>
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">05 / Build understanding</p>
+    <h2>Location is more than one number.</h2>
+  </div>
+  <p>
+    The live summary activity lets you edit a small, explicitly synthetic
+    sample.
+  </p>
+</div>
+<div class="grid2">
+  <article class="card">
+    <h3>Mean, median and mode</h3>
+    <p>
+      The arithmetic mean uses every value. The median is the middle sorted
+      value, or the average of the two middle values. Modes are values with the
+      highest frequency.
+    </p>
+    <div class="formula">x̄ = Σxᵢ / n</div>
+    <p>
+      For the lecture’s illustrative sample 1,1,3,3,3,4,7,9,10,12,12, mean ≈
+      5.909, median = 4 and mode = 3. A very large additional observation can
+      shift the mean sharply while moving the median much less.
+    </p>
+  </article>
+  <article class="card">
+    <h3>Range, variance and SD</h3>
+    <p>
+      Range uses only the minimum and maximum. Sample variance averages squared
+      deviations using n−1; SD is its square root.
+    </p>
+    <div class="formula">s² = Σ(xᵢ−x̄)²/(n−1); s = √s²</div>
+    <p>
+      Keep sample statistics x̄, s² and s distinct from population parameters μ,
+      σ² and σ. Variance has squared units; SD and range have original units. A
+      single observation does not define a sample variance.
+    </p>
+  </article>
+</div>
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">06 / Build understanding</p>
+    <h2>Make comparisons interpretable.</h2>
+  </div>
+  <p>Shared axes and a clear change convention prevent misleading displays.</p>
+</div>
+<div class="grid2">
+  <article class="card">
+    <h3>Compare groups on the same scales</h3>
+    <p>
+      When comparing treatment histograms, use common horizontal and vertical
+      scales. Add numerical summaries so shape and average can be assessed
+      together.
+    </p>
+    <p>
+      Two differently scaled plots can make similar groups look different.
+      Baseline characteristics and distributions should be examined by treatment
+      group, even when allocation was randomised.
+    </p>
+  </article>
+  <article class="card">
+    <h3>Define the change</h3>
+    <p>
+      If change = after − before, a negative blood-pressure change means blood
+      pressure decreased.
+    </p>
+    <div class="formula">140 − 150 = −10 mm Hg</div>
+    <p>
+      If you instead define reduction = before − after, the sign reverses.
+      Descriptive differences do not by themselves establish statistical
+      significance, clinical importance or causality.
+    </p>
+  </article>
+</div>
