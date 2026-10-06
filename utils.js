@@ -133,3 +133,18 @@ function progressBar(percent, label) {
   bar.appendChild(fill);
   return bar;
 }
+
+// A course's icon. content/programme.json gives each course an emoji; on the page it is drawn as the
+// matching outline icon from icons.svg (one icon style for the whole site). Unknown emoji stay as they are.
+const COURSE_ICONS = {
+  "📈": "trending-up", "💼": "briefcase", "🩺": "stethoscope", "⚖️": "scale", "📊": "chart-column",
+  "🧮": "calculator", "🌍": "globe", "🌐": "network", "📘": "book",
+};
+
+function courseIcon(emoji, className) {
+  const box = createElement("span", className);
+  const id = COURSE_ICONS[emoji || "📘"];
+  if (id) box.innerHTML = `<svg class="icon" aria-hidden="true"><use href="icons.svg#${id}"></use></svg>`;
+  else box.textContent = emoji;
+  return box;
+}

@@ -183,3 +183,30 @@ function markSetupDone(step, value = true) {
 })();
 
 if (typeof module !== "undefined") module.exports = { eventIcs, mapUrl, icsText };
+
+// ----- Sections fade in gently as they scroll into view -----
+// Only sections that start below the screen are animated (nothing visible on arrival flickers).
+// Skipped when the device asks for reduced motion or the browser has no IntersectionObserver.
+function setUpReveal() {
+  if (!("IntersectionObserver" in window)) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const candidates = document.querySelectorAll(
+    "main .section, main .tracks-section, main .thesis-section, main .sx-insights, main .sx-cta, .home-stats-wrap ~ .section");
+  const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      entry.target.classList.add("is-visible");
+      observer.unobserve(entry.target);
+    }
+  }, { rootMargin: "0px 0px -8% 0px" });
+  for (const element of candidates) {
+    if (element.getBoundingClientRect().top < window.innerHeight) continue;
+    element.classList.add("reveal");
+    observer.observe(element);
+  }
+}
+
+if (typeof document !== "undefined") {
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", setUpReveal);
+  else setUpReveal();
+}

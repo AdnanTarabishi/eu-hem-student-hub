@@ -107,7 +107,7 @@ function courseCard(course, index, progress, today, myCodes) {
   card.style.setProperty("--course-color", courseColor(course, index));
 
   const head = createElement("div", "course-card-head");
-  head.appendChild(createElement("span", "course-icon", info.icon || "📘"));
+  head.appendChild(courseIcon(info.icon, "course-icon"));
   const titleBox = createElement("div", "course-card-titles");
   titleBox.appendChild(createElement("span", "course-card-title", info.name + (info.integrated ? " (I.C.)" : "")));
   const professors = [...new Set(info.modules.flatMap((m) => m.professors))];
@@ -252,7 +252,7 @@ function renderMyProgress() {
     row.href = courseUrl(course.id);
     row.style.setProperty("--course-color", courseColor(course, index));
     const name = createElement("div", "progress-row-name");
-    name.appendChild(createElement("span", "course-icon small", course.info.icon || "📘"));
+    name.appendChild(courseIcon(course.info.icon, "course-icon small"));
     name.appendChild(createElement("span", "course-card-title", course.info.name));
     row.appendChild(name);
     const topics = createElement("div", "progress-row-cell");

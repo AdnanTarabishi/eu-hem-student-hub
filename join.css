@@ -80,7 +80,7 @@
 .directory-join .form-step,
 .directory-join .success-card {
   border: 1px solid var(--color-border);
-  border-radius: 18px;
+  border-radius: var(--radius-lg);
   background: var(--color-card);
   box-shadow: var(--shadow-md);
 }
@@ -296,7 +296,7 @@
   margin-bottom: 26px;
   padding: 20px;
   border: 1px dashed var(--color-input-border);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   background: var(--color-surface-alt);
 }
 
@@ -970,4 +970,16 @@
   display: grid;
   margin-top: 0;
   color: var(--color-link);
+}
+
+/* Outline icons instead of emoji: the photo placeholder and the "check your email" icon */
+.directory-join #photoPlaceholder .icon {
+  width: 34px;
+  height: 34px;
+  color: var(--color-muted);
+}
+
+.directory-join .success-icon .icon {
+  width: 28px;
+  height: 28px;
 }

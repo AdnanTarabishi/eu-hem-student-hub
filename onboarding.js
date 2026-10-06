@@ -32,7 +32,7 @@ const SETUP_STEPS = [
   },
   {
     id: "theme", title: "Pick light or dark mode",
-    text: "Use the 🌙 / ☀️ button at the top of every page.",
+    text: "Use the moon / sun button at the top of every page.",
     action: { label: "Switch mode", click: ".theme-toggle" },
   },
 ];

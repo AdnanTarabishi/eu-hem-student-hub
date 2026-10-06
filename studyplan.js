@@ -73,7 +73,7 @@ function courseCard(course, group, input, selected) {
 
   const title = createElement("label", "plan-course-title");
   if (input && input.id) title.htmlFor = input.id;
-  title.appendChild(createElement("span", "course-icon small", course.icon || "📘"));
+  title.appendChild(courseIcon(course.icon, "course-icon small"));
   title.appendChild(createElement("span", null, `${course.name}${course.integrated ? " (I.C.)" : ""}`));
   body.appendChild(title);
 

@@ -166,7 +166,7 @@ function announcementCard(announcement, today, compact) {
   const meta = createElement("div", "announcement-meta");
   const categoryClass = CATEGORY_CLASSES[announcement.category] || "category-other";
   if (announcement.category) meta.appendChild(createElement("span", `category-badge ${categoryClass}`, announcement.category));
-  if (announcement.pinned) meta.appendChild(createElement("span", "pinned-badge", "📌 Pinned"));
+  if (announcement.pinned) meta.appendChild(createElement("span", "pinned-badge", "Pinned"));
   if (isNewAnnouncement(announcement, today)) meta.appendChild(createElement("span", "new-badge", "New"));
   if (announcement.date) {
     meta.appendChild(createElement("span", "announcement-date",

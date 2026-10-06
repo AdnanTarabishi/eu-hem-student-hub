@@ -97,6 +97,7 @@ function renderIntro(records) {
   const section = document.getElementById("thesis-intro");
   const h1 = createElement("h1", null, texts.title);
   h1.id = "thesis-title";
+  section.appendChild(createElement("p", "section-eyebrow", "Resources · Thesis archive"));
   section.appendChild(h1);
   section.appendChild(createElement("p", "thesis-tagline", fill(texts.tagline, { count: records.length })));
   section.appendChild(createElement("p", "thesis-intro-text", texts.intro));
