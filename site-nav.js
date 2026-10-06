@@ -35,6 +35,7 @@ const SITE_MENU = [
     label: "Community",
     items: [
       { key: "students", label: "Students & cohort map", href: "students.html", icon: "students", desc: "Meet the people behind EU-HEM" },
+      { key: "experiences", label: "Student Experiences", href: "experiences.html", icon: "notes", desc: "Advice from students and graduates" },
       { key: "join", label: "Join the Directory", href: "join.html", icon: "plus", desc: "Your profile, your privacy choices" },
       { key: "announcements", label: "Announcements", href: "announcements.html", icon: "announcements", desc: "News for the cohort" },
     ],
