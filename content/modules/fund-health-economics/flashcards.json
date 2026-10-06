@@ -18,27 +18,6 @@
     "back": "For example: health status, income, insurance coverage, time costs (travel and waiting), and information about one's own condition."
   },
   {
-    "id": "fund-health-economics.fc.004",
-    "topic": "fund-health-economics.moral-hazard",
-    "front": "What is moral hazard in health insurance?",
-    "back": "Insured people tend to use more care (or take less care to stay healthy) because insurance lowers the price they face.",
-    "sample": true
-  },
-  {
-    "id": "fund-health-economics.fc.005",
-    "topic": "fund-health-economics.moral-hazard",
-    "front": "What is a deductible?",
-    "back": "An amount the insured person pays out of pocket each year before the insurance starts paying.",
-    "sample": true
-  },
-  {
-    "id": "fund-health-economics.fc.006",
-    "topic": "fund-health-economics.moral-hazard",
-    "front": "Coinsurance vs copayment: what is the difference?",
-    "back": "Coinsurance is a percentage of the cost of care (e.g. 20%). A copayment is a fixed amount per service (e.g. 10 euros per visit).",
-    "sample": true
-  },
-  {
     "id": "fund-health-economics.fc.007",
     "topic": "fund-health-economics.session-1",
     "front": "What does health economics study?",
