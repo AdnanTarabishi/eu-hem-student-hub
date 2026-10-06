@@ -281,7 +281,10 @@ function citiesPanel(track) {
     card.appendChild(createElement("span", "journey-step-label", `Semester ${semester.number}${track.thesis.includes(semester.university) ? " · thesis possible" : ""}`));
     card.appendChild(createElement("strong", null, uni.city));
     card.appendChild(createElement("span", null, `${uni.name}, ${uni.country}`));
-    const guide = createElement("a", null, uni.city === "Bologna" ? "Read the City Guide →" : "City Guide (coming soon) →");
+    const university = createElement("a", null, "Explore the university →");
+    university.href = `university.html?id=${encodeURIComponent(semester.university)}&cohort=${encodeURIComponent(tracksPage.cohort.id)}`;
+    card.appendChild(university);
+    const guide = createElement("a", null, "Explore the City Guide →");
     guide.href = uni.guide;
     card.appendChild(guide);
     grid.appendChild(card);
@@ -868,7 +871,11 @@ function renderCities() {
     const card = createElement("article", "tracks-city-card");
     card.appendChild(createElement("span", "city-country", uni.country));
     card.appendChild(createElement("h3", null, uni.city));
-    card.appendChild(createElement("p", "tracks-city-uni", uni.name));
+    const universityName = createElement("p", "tracks-city-uni");
+    const universityLink = createElement("a", null, uni.name);
+    universityLink.href = `university.html?id=${encodeURIComponent(id)}&cohort=${encodeURIComponent(c.id)}`;
+    universityName.appendChild(universityLink);
+    card.appendChild(universityName);
     const list = createElement("ul", "city-presence");
     if (c.semester1.university === id) list.appendChild(createElement("li", null, "Semester 1: everyone"));
     const presence = cityPresence(c, id);
@@ -879,7 +886,7 @@ function renderCities() {
     const thesis = c.tracks.filter((t) => t.thesis.includes(id));
     if (thesis.length) list.appendChild(createElement("li", null, `Thesis possible: ${thesis.map((t) => t.abbr).join(", ")}`));
     card.appendChild(list);
-    const guide = createElement("a", null, id === "unibo" ? "Read the City Guide →" : "City Guide (coming soon) →");
+    const guide = createElement("a", null, "Explore the City Guide →");
     guide.href = uni.guide;
     card.appendChild(guide);
     grid.appendChild(card);
@@ -1108,7 +1115,7 @@ async function initTracksPage() {
   const status = document.getElementById("tracks-status");
   try {
     const file = await loadTracksFile();
-    tracksPage.cohort = tracksCohort(file);
+    tracksPage.cohort = tracksCohort(file, new URLSearchParams(window.location.search).get("cohort"));
     const media = window.matchMedia(NARROW_QUERY);
     tracksPage.narrow = media.matches;
     tracksPage.compareNarrow = window.matchMedia(COMPARE_QUERY).matches;
