@@ -235,8 +235,12 @@
       meta.append(
         el("span", null, `${cards} flashcards`),
         el("span", null, `${questions} questions`),
-        el("span", null, `${labs} interactive ${labs === 1 ? "tool" : "tools"}`),
       );
+      if (labs) {
+        meta.appendChild(
+          el("span", null, `${labs} interactive ${labs === 1 ? "tool" : "tools"}`),
+        );
+      }
       card.appendChild(meta);
 
       const actions = el("div", "hem-session-actions");
@@ -256,12 +260,12 @@
     return card;
   }
 
-  function heroGraphic() {
+  function heroGraphic(availableCount) {
     const visual = el("article", "hem-system-map");
     visual.innerHTML = `
       <div class="hem-map-head">
         <span class="hem-kicker">THE SYSTEM / ONE CONNECTED STORY</span>
-        <span class="hem-live">5 sessions live</span>
+        <span class="hem-live">${availableCount} sessions live</span>
       </div>
       <div class="hem-triad" aria-label="Patient, provider and payer are connected across the course">
         <div class="hem-node hem-patient"><span>PATIENT</span><small>Demand · health · disparities</small></div>
@@ -388,7 +392,7 @@
         ),
       );
     }
-    hero.append(copy, heroGraphic());
+    hero.append(copy, heroGraphic(summary.available));
     panel.appendChild(hero);
 
     const metrics = el("section", "hem-metrics");
