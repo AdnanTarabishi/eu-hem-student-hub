@@ -151,7 +151,8 @@ function renderChooseView() {
       let selected = false;
       if (group.kind === "required") {
         selected = true;
-        input = createElement("span", "plan-lock", "🔒");
+        input = createElement("span", "plan-lock");
+        input.appendChild(siteIcon("lock"));
         input.title = "Required: always part of the plan";
         input.setAttribute("aria-label", "Required course, always selected");
       } else {
@@ -338,10 +339,16 @@ function renderSummary() {
   planSummaryBox.appendChild(row);
   const checklist = createElement("div", "plan-checklist");
   for (const group of summary.groups) {
-    checklist.appendChild(createElement("span", group.satisfied ? "plan-check is-done" : "plan-check", `${group.satisfied ? "✓" : "○"} ${group.label}`));
+    const check = createElement("span", group.satisfied ? "plan-check is-done" : "plan-check");
+    check.append(group.satisfied ? siteIcon("check") : createElement("span", "plan-check-dot"), document.createTextNode(` ${group.label}`));
+    checklist.appendChild(check);
   }
   planSummaryBox.appendChild(checklist);
-  if (summary.complete) planSummaryBox.appendChild(createElement("p", "plan-complete", "✓ Study plan complete"));
+  if (summary.complete) {
+    const done = createElement("p", "plan-complete");
+    done.append(siteIcon("check"), document.createTextNode(" Study plan complete"));
+    planSummaryBox.appendChild(done);
+  }
 }
 
 function renderViews() {

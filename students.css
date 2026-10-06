@@ -729,7 +729,7 @@
   padding: 0 0.35rem;
   border-radius: var(--radius-pill);
   background: var(--track-accent);
-  color: #fff;
+  color: var(--white);
   font-size: 0.72rem;
 }
 .sx-card-bio {
@@ -1296,7 +1296,7 @@
 }
 
 .sx-cta h2 {
-  color: #fff;
+  color: var(--white);
 }
 
 .sx-cta p {
@@ -1304,7 +1304,7 @@
 }
 
 .sx-cta .button-secondary {
-  color: #fff;
+  color: var(--white);
   border-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -1338,7 +1338,7 @@
 /* Track code chip: darkened track colour, text that contrasts in both themes */
 .sx-track-code {
   background: color-mix(in srgb, var(--track-accent) 86%, #000);
-  color: #fff;
+  color: var(--white);
 }
 
 :root[data-theme="dark"] .sx-track-code {

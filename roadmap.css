@@ -303,7 +303,7 @@
 .roadmap-pill.is-released,
 .roadmap-pill.is-new { background: var(--success-bg); color: var(--success); }
 .roadmap-pill.is-improved { background: var(--info-bg); color: var(--pill-blue-text); }
-.roadmap-pill.is-milestone { background: var(--surface-navy); color: #fff; }
+.roadmap-pill.is-milestone { background: var(--surface-navy); color: var(--white); }
 
 .roadmap-pill.is-in-progress::before {
   content: "";
@@ -447,7 +447,7 @@
 
 .roadmap-card.is-now .roadmap-open,
 .roadmap-card.is-now .roadmap-card-title .roadmap-open:hover {
-  color: #fff;
+  color: var(--white);
 }
 
 .roadmap-card.is-now .roadmap-card-summary {
@@ -492,21 +492,21 @@
 
 .roadmap-card.is-now .roadmap-save {
   border-color: rgba(255, 255, 255, 0.45);
-  color: #fff;
+  color: var(--white);
 }
 
 .roadmap-card.is-now .roadmap-save[aria-pressed="true"] {
   border-color: #f6b79d;
   background: rgba(231, 132, 95, 0.18);
-  color: #fff;
+  color: var(--white);
 }
 
 .roadmap-card.is-now .roadmap-details-link {
-  color: #fff !important;
+  color: var(--white) !important;
 }
 
 .roadmap-card.is-now :focus-visible {
-  outline-color: #fff;
+  outline-color: var(--white);
 }
 
 /* Next: a vertical timeline of periods, cards beside each */
@@ -1088,15 +1088,15 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  color: #fff;
+  color: var(--white);
   font-size: 1.1rem;
 }
 
 .roadmap-release-badge {
   padding: 2px 10px;
   border-radius: var(--radius-pill);
-  background: var(--color-brand);
-  color: #fff;
+  background: var(--color-brand-action);
+  color: var(--color-on-brand);
   font-size: var(--fs-meta);
   font-weight: 700;
   letter-spacing: var(--tracking-eyebrow);
@@ -1104,7 +1104,7 @@
 }
 
 .roadmap-release-next { font-size: var(--fs-small) !important; }
-.roadmap-release-next strong { color: #fff; }
+.roadmap-release-next strong { color: var(--white); }
 
 .roadmap-release-note {
   flex-basis: 100%;
@@ -1221,7 +1221,7 @@
 /* The page header's paragraph colour must not reach the navy banner (light mode) */
 .roadmap-intro .roadmap-release p { color: rgba(255, 255, 255, 0.86) !important; }
 .roadmap-intro .roadmap-release .roadmap-release-stage,
-.roadmap-intro .roadmap-release strong { color: #fff !important; }
+.roadmap-intro .roadmap-release strong { color: var(--white) !important; }
 .roadmap-intro .roadmap-release .roadmap-release-note { color: rgba(255, 255, 255, 0.72) !important; }
 
 /* The team's estimate of the full plan (roadmap.json → vision.progressPercent) */

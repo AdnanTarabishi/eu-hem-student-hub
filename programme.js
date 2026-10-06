@@ -282,6 +282,7 @@ function myCoursesSwitch(programme, onChange) {
   box.checked = myCoursesOnly(programme);
   box.addEventListener("change", () => {
     setMyCoursesOnly(box.checked);
+    if (typeof toast === "function") toast(box.checked ? "Showing only your courses" : "Showing all courses");
     onChange();
   });
   label.appendChild(box);

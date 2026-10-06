@@ -84,6 +84,14 @@ function plural(count, singular, pluralWord = singular + "s") {
   return `${count} ${count === 1 ? singular : pluralWord}`;
 }
 
+// A save button's content: the star icon (filled look via .is-saved in CSS) and, unless icon-only, a word
+function saveContent(b, isSaved, withText = true) {
+  b.replaceChildren(siteIcon("star"));
+  if (withText) b.append(document.createTextNode(isSaved ? " Saved" : " Save"));
+  b.classList.toggle("is-saved", isSaved);
+  return b;
+}
+
 function button(text, className, onClick) {
   const b = el("button", className, text);
   b.type = "button";
@@ -454,7 +462,7 @@ function profileCard(p, saved) {
   const actions = el("div", "sx-card-actions");
   actions.append(button("View profile", "button button-quiet", (e) => openProfile(p.id, e.currentTarget)));
   const isSaved = saved.includes(p.id);
-  const save = button(isSaved ? "★ Saved" : "☆ Save", "sx-save", () => toggleSaved(p.id));
+  const save = saveContent(button("", "sx-save", () => toggleSaved(p.id)), isSaved);
   save.setAttribute("aria-pressed", String(isSaved));
   save.setAttribute("aria-label", `${isSaved ? "Unsave" : "Save"} ${p.name}`);
   actions.append(save);
@@ -486,7 +494,7 @@ function profileTable(items, saved) {
     };
     const actions = el("td", "sx-col-actions");
     const isSaved = saved.includes(p.id);
-    const save = button(isSaved ? "★" : "☆", "sx-save sx-save-icon", () => toggleSaved(p.id));
+    const save = saveContent(button("", "sx-save sx-save-icon", () => toggleSaved(p.id)), isSaved, false);
     save.setAttribute("aria-pressed", String(isSaved));
     save.setAttribute("aria-label", `${isSaved ? "Unsave" : "Save"} ${p.name}`);
     actions.append(save);
@@ -615,7 +623,7 @@ function renderDrawer() {
 
   const actions = el("div", "sx-drawer-actions");
   const isSaved = savedIds().includes(p.id);
-  const save = button(isSaved ? "★ Saved" : "☆ Save", "button button-quiet sx-save", () => toggleSaved(p.id));
+  const save = saveContent(button("", "button button-quiet sx-save", () => toggleSaved(p.id)), isSaved);
   save.setAttribute("aria-pressed", String(isSaved));
   actions.append(save, button("Copy profile link", "button button-quiet", copyProfileLink));
   if (p.linkedin) actions.append(linkedinAction(p));

@@ -143,6 +143,7 @@ function brandLockup(make) {
   toggle.type = "button";
   toggle.setAttribute("aria-expanded", "false");
   toggle.setAttribute("aria-controls", "site-nav");
+  toggle.setAttribute("aria-label", "Open menu"); // the word "Menu" is hidden on phones
   const toggleLabel = make("span", "menu-toggle-label", "Menu");
   toggle.appendChild(siteIcon("menu"));
   toggle.appendChild(toggleLabel);
@@ -267,6 +268,7 @@ function brandLockup(make) {
     document.body.classList.toggle("drawer-open", open);
     toggle.setAttribute("aria-expanded", String(open));
     toggleLabel.textContent = open ? "Close" : "Menu";
+    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
     if (open) {
       nav.setAttribute("role", "dialog");
       nav.setAttribute("aria-modal", "true");

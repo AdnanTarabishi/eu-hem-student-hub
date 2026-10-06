@@ -148,8 +148,8 @@
 
   /* Text */
   --text-primary: #20242a;
-  --text-secondary: #667085;
-  --text-muted: #8a94a6; /* #98A2B3 in the brief, darkened slightly to pass AA on ivory */
+  --text-secondary: #5d6679; /* AA (4.5:1) on white, ivory and tinted surfaces */
+  --text-muted: #636d80; /* AA (4.5:1) on white, ivory and tinted surfaces */
   --text-heading: var(--navy-900);
   --text-on-navy: #ffffff;
   --text-on-navy-muted: rgba(255, 255, 255, 0.72);
@@ -169,6 +169,7 @@
   --color-brand-action: #c0562f;               /* filled CTA buttons: #C75B3A darkened a touch for AA with white text */
   --color-brand-hover: var(--terracotta-700);
   --color-brand-soft: var(--terracotta-100);
+  --color-on-brand: #ffffff; /* text on terracotta fills */
   --color-brand-text: var(--terracotta-700);   /* terracotta as text (AA on white) */
   --color-info-soft: var(--blue-100);
 
@@ -284,6 +285,7 @@
     --color-brand-hover: #f09a7b;
     --color-brand-soft: #3a2621;
     --color-brand-text: #f0a184;
+    --color-on-brand: #1d1512;
     --color-info-soft: #1c2f47;
     --success: #6fc29b;
     --success-bg: #15302a;
@@ -328,6 +330,7 @@
     --pill-purple-bg: #2a2442;
     --pill-purple-text: #c6b4f2;
     --pill-amber-text: #f0c169;
+    --pill-orange-bg: #3a2621;
     --pill-orange-text: #f0a184;
     --pill-pink-bg: #3a2031;
     --pill-pink-text: #eda5d1;
@@ -361,6 +364,7 @@
   --color-brand-hover: #f09a7b;
   --color-brand-soft: #3a2621;
   --color-brand-text: #f0a184;
+  --color-on-brand: #1d1512;
   --color-info-soft: #1c2f47;
   --success: #6fc29b;
   --success-bg: #15302a;
@@ -405,6 +409,7 @@
   --pill-purple-bg: #2a2442;
   --pill-purple-text: #c6b4f2;
   --pill-amber-text: #f0c169;
+  --pill-orange-bg: #3a2621;
   --pill-orange-text: #f0a184;
   --pill-pink-bg: #3a2031;
   --pill-pink-text: #eda5d1;
@@ -655,7 +660,7 @@ main {
   height: 38px;
   border-radius: var(--radius-sm);
   background: var(--navy-900);
-  color: #fff;
+  color: var(--white);
   font-family: var(--font-heading);
   font-size: 1.05rem;
   font-weight: 700;
@@ -1196,14 +1201,14 @@ main {
 }
 
 .footer-brand-link {
-  color: #fff;
+  color: var(--white);
   text-decoration: none;
 }
 
 .footer-brand .brand-name,
 .footer-brand .brand-product,
 .footer-brand .brand-mark {
-  color: #fff;
+  color: var(--white);
 }
 
 .footer-brand p {
@@ -1231,7 +1236,7 @@ main {
   font-size: var(--fs-small);
   font-weight: 650;
   letter-spacing: 0;
-  color: #fff;
+  color: var(--white);
 }
 
 .footer-links ul,
@@ -1263,7 +1268,7 @@ main {
 .footer-links a:hover,
 .footer-brand-links a:hover,
 .footer-links button.footer-link:hover {
-  color: #fff;
+  color: var(--white);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -1302,8 +1307,8 @@ main {
 }
 
 .footer-bottom .footer-version:hover {
-  color: #fff;
-  border-color: #fff;
+  color: var(--white);
+  border-color: var(--white);
 }
 
 .footer-bottom .footer-signature {
@@ -1350,7 +1355,7 @@ main {
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
   background: var(--action-navy);
-  color: #fff;
+  color: var(--white);
   font: inherit;
   font-size: 0.95rem;
   font-weight: 600;
@@ -1379,15 +1384,11 @@ main {
 
 .button-primary {
   background: var(--color-brand-action);
-  color: #fff;
+  color: var(--color-on-brand);
 }
 
 .button-primary:hover {
   background: var(--color-brand-hover);
-}
-
-:root[data-theme="dark"] .button-primary {
-  color: #1d1512;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -1980,7 +1981,7 @@ button:hover .arrow,
   letter-spacing: var(--tracking-eyebrow);
   font-size: var(--fs-eyebrow);
   font-weight: 700;
-  color: var(--city-accent, var(--color-muted));
+  color: var(--color-muted);
 }
 
 .guide-city-card .city-status {
@@ -2321,7 +2322,7 @@ button:hover .arrow,
   inset: auto 0 0 0;
   padding: 30px 10px 8px;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.55) 60%, rgba(0, 0, 0, 0));
-  color: #fff;
+  color: var(--white);
   font-size: 0.72rem;
   line-height: 1.35;
 }
@@ -2331,7 +2332,7 @@ button:hover .arrow,
 }
 
 .guide-photos figcaption a {
-  color: #fff;
+  color: var(--white);
 }
 
 /* AI-generated pictures carry a visible badge (and say so in the caption and alt text) */
@@ -2344,7 +2345,7 @@ button:hover .arrow,
   padding: 2px 9px;
   border-radius: var(--radius-pill);
   background: rgba(0, 0, 0, 0.68);
-  color: #fff;
+  color: var(--white);
   font-size: 0.7rem;
   font-weight: 600;
 }
@@ -2401,7 +2402,7 @@ button:hover .arrow,
   padding: 1px 6px;
   border-radius: 4px;
   background: rgba(0, 0, 0, 0.6);
-  color: #fff;
+  color: var(--white);
   font-size: 0.62rem;
   font-weight: 500;
   letter-spacing: 0;
@@ -2786,13 +2787,13 @@ button:hover .arrow,
 /* Red bar at the top of every page when there is an active Urgent announcement */
 .urgent-banner {
   background: var(--color-urgent);
-  color: #ffffff;
+  color: var(--white);
   padding: 10px 0;
   font-size: 0.95rem;
 }
 
 .urgent-banner a {
-  color: #ffffff;
+  color: var(--white);
   font-weight: 600;
 }
 
@@ -2902,7 +2903,7 @@ button:hover .arrow,
 .category-academic { background: var(--pill-purple-bg); color: var(--pill-purple-text); }
 .category-student { background: var(--color-success-bg); color: var(--color-success-text); }
 .category-social { background: var(--pill-orange-bg); color: var(--pill-orange-text); }
-.category-urgent { background: var(--color-urgent); color: #ffffff; }
+.category-urgent { background: var(--color-urgent); color: var(--white); }
 .category-other { background: var(--color-surface-muted); color: var(--color-muted); }
 
 .pinned-badge {
@@ -2911,8 +2912,8 @@ button:hover .arrow,
 }
 
 .new-badge {
-  background: var(--color-brand);
-  color: #fff;
+  background: var(--color-brand-action);
+  color: var(--color-on-brand);
 }
 
 /* ===== Notes & Resources ===== */
@@ -3838,7 +3839,7 @@ mark {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   padding: 6px;
-  background: #ffffff; /* diagrams are drawn for a white background */
+  background: var(--white); /* diagrams are drawn for a white background */
   cursor: zoom-in;
   /* A real width (not "shrink to fit"), so the image inside has something to size against */
   display: block;
@@ -3867,7 +3868,7 @@ mark {
   padding: 16px;
   max-width: 95vw;
   max-height: 95vh;
-  background: #ffffff;
+  background: var(--white);
   color: #222222;
 }
 
@@ -4595,7 +4596,7 @@ mark {
   padding: 10px 16px;
   border-radius: var(--radius-pill);
   background: var(--navy-900);
-  color: #ffffff;
+  color: var(--white);
   font-size: 0.92rem;
   font-weight: 600;
   box-shadow: var(--shadow-lg);
@@ -4613,7 +4614,7 @@ mark {
   border: none;
   border-radius: var(--radius-pill);
   padding: 4px 12px;
-  background: #ffffff;
+  background: var(--white);
   color: var(--navy-900);
   font: inherit;
   font-weight: 700;
@@ -5248,7 +5249,7 @@ details > summary {
   padding: 1px 7px;
   border-radius: var(--radius-pill);
   background: var(--color-urgent);
-  color: #ffffff;
+  color: var(--white);
   font-size: 0.68rem;
   vertical-align: 2px;
 }
@@ -5571,7 +5572,7 @@ details > summary {
   margin: 0;
   font-size: 1.6rem;
   line-height: 1.2;
-  color: #fff;
+  color: var(--white);
 }
 
 .welcome-sub {
@@ -5627,7 +5628,7 @@ details > summary {
 .welcome-ring-label strong {
   font-family: var(--font-heading);
   font-size: 1.5rem;
-  color: #fff;
+  color: var(--white);
 }
 
 .welcome-ring-label span {
@@ -5653,14 +5654,14 @@ details > summary {
 }
 
 .welcome-next strong {
-  color: #fff;
+  color: var(--white);
   line-height: 1.3;
 }
 
 .welcome-next-button {
-  background: var(--color-brand-action, #a9472d) !important;
+  background: var(--color-brand-action) !important;
   border-color: transparent !important;
-  color: #fff !important;
+  color: var(--color-on-brand) !important;
 }
 
 .welcome-explore {
@@ -5675,7 +5676,7 @@ details > summary {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #fff;
+  color: var(--white);
   font-weight: 600;
   text-decoration: none;
 }
@@ -5692,7 +5693,7 @@ details > summary {
   color: rgba(255, 255, 255, 0.72);
 }
 
-.welcome-panel :focus-visible { outline-color: #fff; }
+.welcome-panel :focus-visible { outline-color: var(--white); }
 
 .welcome-hide {
   position: absolute;
@@ -5817,7 +5818,7 @@ details > summary {
   .welcome-hide {
     border-color: rgba(255, 255, 255, 0.4) !important;
     background: transparent !important;
-    color: #fff !important;
+    color: var(--white) !important;
   }
 }
 
@@ -5831,11 +5832,24 @@ details > summary {
   .welcome-ring-fill { transition: none; }
 }
 
+/* City labels: readable grey text, with a dot in the city's own colour (the colour is too light for small text) */
+.city-card .city-country::before,
+.guide-city-card .city-country::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: var(--city-accent, var(--color-brand));
+  vertical-align: 1px;
+}
+
 /* ===== Offline banner (pwa.js) ===== */
 .offline-banner {
   padding: 8px 16px;
   background: var(--navy-800);
-  color: #ffffff;
+  color: var(--white);
   font-size: 0.9rem;
   font-weight: 600;
   text-align: center;
@@ -5949,7 +5963,7 @@ main.home {
   isolation: isolate;
   overflow: hidden;
   background: var(--navy-900);
-  color: #fff;
+  color: var(--white);
 }
 
 .home-hero-media {
@@ -6008,7 +6022,7 @@ main.home {
   font-size: var(--fs-display);
   line-height: 1.04;
   letter-spacing: -0.02em;
-  color: #fff;
+  color: var(--white);
 }
 
 .hero-accent {
@@ -6036,18 +6050,18 @@ main.home {
 }
 
 .home-hero .button-primary {
-  color: #fff;
+  color: var(--white);
 }
 
 .hero-button-secondary {
   background: transparent;
-  color: #fff;
+  color: var(--white);
   border-color: rgba(255, 255, 255, 0.75);
 }
 
 .hero-button-secondary:hover {
   background: rgba(255, 255, 255, 0.12);
-  border-color: #fff;
+  border-color: var(--white);
 }
 
 .hero-note {
@@ -6066,7 +6080,7 @@ main.home {
   backdrop-filter: blur(4px);
   font-size: 1.15rem;
   line-height: 1.3;
-  color: #fff;
+  color: var(--white);
   text-align: right;
   transform: rotate(-4deg);
 }
@@ -6082,7 +6096,7 @@ main.home {
 }
 
 .home-hero :focus-visible {
-  outline-color: #fff;
+  outline-color: var(--white);
 }
 
 /* Returning students (a study plan is saved): a shorter hero */
@@ -6343,7 +6357,7 @@ main.home {
 
 .community-map-svg .city-dot {
   fill: var(--terracotta-600);
-  stroke: #fff;
+  stroke: var(--white);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
 }
@@ -6599,7 +6613,7 @@ main.home {
   font-weight: 700;
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
-  color: var(--city-accent);
+  color: var(--color-muted);
 }
 
 .city-card .city-card-photo + .city-country {
@@ -7074,7 +7088,7 @@ main.home {
   padding: 18px;
   border-radius: var(--radius-lg);
   background: var(--surface-navy);
-  color: #ffffff;
+  color: var(--white);
 }
 
 .journey-start strong {
@@ -7205,11 +7219,14 @@ main.home {
   font-weight: 600;
 }
 
+/* Readable heading text; the track keeps its colour as a bar on the left */
 .track-question {
   margin: 0;
+  padding-left: 10px;
+  border-left: 3px solid var(--track-accent, var(--color-link));
   font-family: var(--font-heading);
   font-size: 1.1rem;
-  color: var(--track-accent, var(--color-link));
+  color: var(--color-heading);
 }
 
 .tracks-callout-warning {
@@ -7733,7 +7750,7 @@ main.home {
   padding: 1px 8px;
   border-radius: var(--radius-pill);
   background: var(--brand-ink);
-  color: #ffffff;
+  color: var(--white);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.03em;
@@ -9579,7 +9596,7 @@ main > :is(.page-intro, .notes-hero, .tracks-hero, .thesis-intro, .sx-hero):firs
   font-family: var(--font-heading);
   font-size: var(--fs-h3);
   font-weight: 600;
-  color: #fff;
+  color: var(--white);
 }
 
 .roadmap-preview-label {
@@ -9604,7 +9621,7 @@ main > :is(.page-intro, .notes-hero, .tracks-hero, .thesis-intro, .sx-hero):firs
   margin-top: auto;
   padding-top: var(--space-3);
   font-weight: 600;
-  color: #fff;
+  color: var(--white);
 }
 
 .roadmap-preview-now:focus-visible {
@@ -9689,7 +9706,7 @@ main > :is(.page-intro, .notes-hero, .tracks-hero, .thesis-intro, .sx-hero):firs
   gap: 6px;
   margin-top: var(--space-3);
   font-size: var(--fs-small);
-  color: #fff;
+  color: var(--white);
 }
 
 
@@ -9797,6 +9814,8 @@ main > :is(.page-intro, .notes-hero, .tracks-hero, .thesis-intro, .sx-hero):firs
   font-size: var(--fs-small);
   color: var(--text-secondary);
 }
+/* A link inside a sentence is underlined, so it doesn't rely on colour alone */
+.dash-reminder a { text-decoration: underline; text-underline-offset: 2px; }
 .key-date.is-now { background: var(--surface-subtle); box-shadow: var(--shadow-xs); }
 
 /* ===== Academic Rules (academic-rules.html, content/academic-rules.json) ===== */
@@ -10151,7 +10170,7 @@ main > :is(.page-intro, .notes-hero, .tracks-hero, .thesis-intro, .sx-hero):firs
   gap: 8px;
 }
 
-.journey-year { color: var(--brand-terracotta); }
+.journey-year { color: var(--color-brand-text); }
 
 .journey-erasmus-table {
   width: 100%;
@@ -10227,3 +10246,114 @@ main > :is(.page-intro, .notes-hero, .tracks-hero, .thesis-intro, .sx-hero):firs
 
 #leave h3 { margin: 16px 0 8px; font-size: 1rem; }
 #leave h3:first-of-type { margin-top: 0; }
+
+/* ===== Interaction polish (shared by every page) ===== */
+/* Smooth scrolling to anchors, only once the user has clicked or tabbed into the page (:focus-within).
+   A link that opens a page at a section (page.html#section) still lands there at once.
+   Off for anyone who asks for reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html:focus-within { scroll-behavior: smooth; }
+}
+
+/* Switching light/dark: colours fade briefly instead of jumping */
+body,
+.site-header,
+.site-footer {
+  transition: background-color 180ms var(--ease), color 180ms var(--ease), border-color 180ms var(--ease);
+}
+
+/* A small press effect on buttons and chips */
+.button:active,
+.filter-chip:active,
+.header-button:active,
+.choice-option:active,
+.track-tab:active {
+  transform: translateY(1px);
+}
+
+/* Touch targets: at least 44px on phones and touch screens */
+@media (pointer: coarse), (max-width: 600px) {
+  .header-actions .header-button,
+  .header-actions .header-button:not(.menu-toggle),
+  .header-actions .theme-toggle {
+    min-width: 44px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .sx-link-button,
+  .ex-link-button {
+    min-width: 44px;
+  }
+
+  .filter-chip,
+  .track-tab,
+  .sx-link-button,
+  .ex-link-button,
+  .button-quiet,
+  .button-light,
+  .button-secondary {
+    min-height: 44px;
+  }
+
+  label:has(> input[type="checkbox"]),
+  label:has(> input[type="radio"]) {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* Saved students: the star and the word turn terracotta */
+.sx-save.is-saved {
+  color: var(--color-brand-text);
+  font-weight: 700;
+}
+
+.sx-save .icon {
+  width: 1.05em;
+  height: 1.05em;
+  vertical-align: -0.15em;
+}
+
+/* Study Plan: lock and check icons (instead of emoji) */
+.plan-lock .icon { width: 18px; height: 18px; color: var(--color-muted); }
+.plan-check .icon,
+.plan-complete .icon { width: 1em; height: 1em; vertical-align: -0.12em; color: var(--success); }
+.plan-check-dot {
+  display: inline-block;
+  width: 0.7em;
+  height: 0.7em;
+  border: 2px solid var(--color-muted);
+  border-radius: 50%;
+  vertical-align: -0.05em;
+}
+
+/* ===== Readable line length: text blocks stop at about 75 characters ===== */
+/* Only text (paragraphs and text list items), never cards or grids */
+.rules-item,
+.rules-links,
+.rules-note,
+.rules-disclaimer,
+.announcement-message,
+.key-date-body p,
+.journey-erasmus-intro,
+.roadmap-note,
+.roadmap-card-summary,
+.plan-group-note,
+.thesis-notice-main,
+.course-note,
+.sx-hint,
+.uni-section-intro,
+.uni-visual-note,
+.page-intro p,
+#guide p,
+#guide li,
+.thesis-page main p,
+.universities-page main p,
+.universities-page main li {
+  max-width: 75ch;
+}
+
+/* Error and empty states: a control row that was never filled (data failed to load) stays out of sight */
+.segmented:empty { display: none; }

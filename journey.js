@@ -76,6 +76,7 @@ function renderTrackPicker() {
     input.addEventListener("change", () => {
       journey.trackId = option.value || null;
       saveMyTrack(journey.cohort.id, journey.trackId);
+      if (typeof toast === "function") toast(journey.trackId ? `Saved on this device: ${trackById(journey.cohort, journey.trackId).abbr}` : "Track cleared on this device");
       renderTimeline();
       renderErasmusRows();
     });

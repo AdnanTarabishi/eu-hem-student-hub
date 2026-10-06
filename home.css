@@ -52,21 +52,21 @@
 /* Buttons / links */
 .eh-home .eh-button { display: inline-flex; justify-content: center; align-items: center; gap: 10px; min-height: 46px; padding: 11px 20px; border: 1px solid transparent; border-radius: 9px; font: 600 13px/1.3 var(--eh-sans); transition: background 160ms, border-color 160ms, box-shadow 160ms; }
 .eh-home .eh-button .eh-icon { width: 17px; height: 17px; }
-.eh-home .eh-button-brand { color: #fff; background: var(--eh-brand-action); }
-.eh-home .eh-button-brand:hover { color: #fff; background: var(--eh-brand-hover); box-shadow: 0 4px 12px rgb(116 41 17 / .15); }
-.eh-home .eh-button-glass { color: #fff; border-color: #bac9dc; background: rgb(15 43 91 / .3); }
-.eh-home .eh-button-glass:hover { color: #fff; background: rgb(255 255 255 / .12); }
+.eh-home .eh-button-brand { color: var(--white); background: var(--eh-brand-action); }
+.eh-home .eh-button-brand:hover { color: var(--white); background: var(--eh-brand-hover); box-shadow: 0 4px 12px rgb(116 41 17 / .15); }
+.eh-home .eh-button-glass { color: var(--white); border-color: #bac9dc; background: rgb(15 43 91 / .3); }
+.eh-home .eh-button-glass:hover { color: var(--white); background: rgb(255 255 255 / .12); }
 .eh-home .eh-button-outline { background: transparent; border-color: var(--eh-navy); color: var(--eh-navy); }
 .eh-home .eh-button-outline:hover { background: var(--eh-soft); }
 .eh-home .eh-text-link { display: inline-flex; align-items: center; gap: 10px; color: var(--eh-blue); font-weight: 600; font-size: 13px; }
 .eh-home .eh-text-link .eh-icon { width: 17px; height: 17px; transition: transform 180ms; }
 .eh-home .eh-text-link:hover .eh-icon { transform: translateX(3px); }
 /* Hero: real cohort image, not a rasterized UI mockup. */
-.eh-home .eh-hero { margin-top: 22px; border-radius: 24px; overflow: hidden; position: relative; background: #0f2b5b; min-height: 532px; color: #fff; padding: 0; }
+.eh-home .eh-hero { margin-top: 22px; border-radius: 24px; overflow: hidden; position: relative; background: #0f2b5b; min-height: 532px; color: var(--white); padding: 0; }
 .eh-home .eh-hero-copy { position: relative; z-index: 2; padding: 45px 0 57px 50px; width: 46%; }
 .eh-home .eh-hero-badge { display: flex; align-items: center; gap: 8px; color: #d6e2f2; font-size: 10px; font-weight: 600; letter-spacing: .17em; }
 .eh-home .eh-hero-badge > span { width: 6px; height: 6px; border-radius: 50%; background: #eca181; }
-.eh-home .eh-hero h1 { color: #fff; font: 500 clamp(42px, 4.3vw, 61px)/1.05 var(--eh-serif); letter-spacing: -.04em; margin: 22px 0 20px; }
+.eh-home .eh-hero h1 { color: var(--white); font: 500 clamp(42px, 4.3vw, 61px)/1.05 var(--eh-serif); letter-spacing: -.04em; margin: 22px 0 20px; }
 .eh-home .eh-hero h1 em { color: #efa68a; font-weight: 400; }
 .eh-home .eh-hero-lead { color: #e2eaf5; font-size: 15px; line-height: 1.7; max-width: 380px; }
 .eh-home .eh-hero-actions { display: flex; gap: 11px; margin-top: 26px; flex-wrap: wrap; }
@@ -75,7 +75,7 @@
 .eh-home .eh-hero-media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg,#0f2b5b 0%,rgb(15 43 91 / .9) 3%,rgb(15 43 91 / .28) 18%,transparent 38%),linear-gradient(0deg,rgb(10 25 48 / .3),transparent 35%); pointer-events: none; }
 .eh-home .eh-hero-media picture, .eh-home .eh-hero-media img { width: 100%; height: 100%; display: block; }
 .eh-home .eh-hero-media img { object-fit: cover; object-position: 54% 74%; }
-.eh-home .eh-photo-caption { position: absolute; right: 26px; bottom: 63px; z-index: 3; display: flex; align-items: center; gap: 7px; color: #fff; background: rgb(9 29 58 / .86); padding: 9px 12px; border: 1px solid rgb(255 255 255 / .22); border-radius: 8px; font-size: 11px; }
+.eh-home .eh-photo-caption { position: absolute; right: 26px; bottom: 63px; z-index: 3; display: flex; align-items: center; gap: 7px; color: var(--white); background: rgb(9 29 58 / .86); padding: 9px 12px; border: 1px solid rgb(255 255 255 / .22); border-radius: 8px; font-size: 11px; }
 .eh-home .eh-photo-caption .eh-icon { width: 15px; height: 15px; }
 .eh-home .eh-photo-caption span { color: #d6e2ef; border-left: 1px solid rgb(255 255 255 / .25); padding-left: 9px; }
 /* Cohort numbers */
@@ -135,7 +135,7 @@
 .eh-home .dash-stat strong { display: block; color: var(--eh-navy); font-size: 20px; }
 .eh-home .dash-stat span { font-size: 10px; color: var(--eh-muted); }
 .eh-home .dash-plan-cfu { color: var(--eh-navy); font-size: 13px; margin-top: 8px; }
-.eh-home .eh-widget .button { padding: 10px 14px; min-height: 42px; display: inline-flex; border-radius: 8px; margin-top: 12px; color: #fff; background: #1f5fae; font-size: 12px; }
+.eh-home .eh-widget .button { padding: 10px 14px; min-height: 42px; display: inline-flex; border-radius: 8px; margin-top: 12px; color: var(--white); background: #1f5fae; font-size: 12px; }
 .eh-home .eh-widget-body:empty { min-height: 190px; background: linear-gradient(var(--eh-soft),var(--eh-soft)) 24px 24px / 70% 14px no-repeat,linear-gradient(var(--eh-soft),var(--eh-soft)) 24px 55px / 85% 12px no-repeat; }
 .eh-home .eh-welcome-slot:empty { display: none; }
 .eh-home .eh-welcome-slot { margin-top: 18px; }
@@ -151,10 +151,10 @@
 .eh-home .eh-resource > p { color: var(--eh-muted); font-size: 13px; line-height: 1.75; flex: 1; }
 .eh-home .eh-resource > a { margin-top: 24px; }
 .eh-home .eh-resource-tracks { background: #0f2b5b; border-color: #0f2b5b; }
-.eh-home .eh-resource-tracks h3 { color: #fff; }
+.eh-home .eh-resource-tracks h3 { color: var(--white); }
 .eh-home .eh-resource-tracks p, .eh-home .eh-resource-tracks .eh-eyebrow, .eh-home .eh-resource-tracks .eh-text-link { color: #dce8f7; }
 .eh-home .eh-resource-tracks .eh-resource-top .eh-icon { color: #efa68a; }
-.eh-home .eh-resource-tracks a:focus-visible { outline-color: #fff; }
+.eh-home .eh-resource-tracks a:focus-visible { outline-color: var(--white); }
 /* Community */
 .eh-home .eh-community { padding-bottom: 66px; }
 .eh-home .eh-community-grid { display: grid; grid-template-columns: .92fr 1.08fr; gap: 26px; align-items: stretch; }
@@ -359,7 +359,7 @@
 
 /* Hero buttons keep white text (the generic link colour must not win) */
 .eh-home main .eh-hero .eh-button,
-.eh-home main .eh-join-banner .eh-button-brand { color: #fff; }
+.eh-home main .eh-join-banner .eh-button-brand { color: var(--white); }
 .eh-home .eh-hero-badge { text-transform: uppercase; }
 .eh-home .eh-eyebrow { text-transform: uppercase; }
 
@@ -401,7 +401,7 @@
 }
 
 /* Focus rings on the navy hero are white */
-.eh-home .eh-hero :where(a, button):focus-visible { outline-color: #fff; }
+.eh-home .eh-hero :where(a, button):focus-visible { outline-color: var(--white); }
 
 @media print {
   .eh-home .site-header, .eh-home .site-footer, .eh-home .eh-quick, .eh-home .eh-carousel-controls, .eh-home .eh-join-banner { display: none !important; }
