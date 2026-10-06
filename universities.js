@@ -674,13 +674,45 @@ function renderCards(parent) {
     renderPhotoCredit(parent, university, profile);
   }
 
+function renderVisualTour(parent) {
+    const container = section(parent, "visual-tour", "See the universities, not just their names",
+      "A visual introduction to the four partner institutions and their university environments. Captions distinguish campus, heritage and city context from confirmed EU-HEM teaching locations.");
+    container.classList.add("uni-visual-tour");
+    const grid = el("div", "uni-visual-grid");
+    for (const university of state.file.universities) {
+      const photos = [university.image, ...items(university.gallery)].filter((media) => media && D.imageUrl(media.src)).slice(0, 2);
+      photos.forEach((media, index) => {
+        let tile;
+        tile = button(media.label || `${university.name} photograph`, () => openPhotoDialog(university, media, tile), true);
+        tile.classList.add("uni-visual-tile");
+        tile.dataset.university = university.id;
+        const image = el("img");
+        image.src = D.imageUrl(media.src);
+        image.alt = media.alt || "";
+        image.loading = "lazy";
+        image.decoding = "async";
+        if (media.objectPosition) image.style.objectPosition = media.objectPosition;
+        const meta = el("span", "uni-visual-meta");
+        meta.append(
+          el("span", "uni-visual-kicker", `${university.city} · ${university.country}`),
+          el("strong", null, media.label || (index ? "Another view" : university.name)),
+          el("small", null, index ? "University photo" : "Main guide image")
+        );
+        tile.append(image, meta);
+        grid.appendChild(tile);
+      });
+    }
+    container.appendChild(grid);
+    paragraph(container, "Open any image for its caption, photographer/source and licence. Teaching rooms can change, so the timetable remains the source for where your class actually meets.", null, null, "uni-visual-note");
+  }
+
 function renderDirectory() {
     document.title = "Universities – EU-HEM Student Hub";
     breadcrumb();
     const hero = el("section", "uni-hero uni-directory-hero"); hero.setAttribute("aria-labelledby", "uni-title");
     const intro = el("div", "uni-hero-copy"); intro.appendChild(el("p", "uni-eyebrow", "THE EU-HEM UNIVERSITY GUIDE"));
     const title = el("h1", null, "Four universities."); title.id = "uni-title"; title.appendChild(el("span", null, "One European journey.")); intro.appendChild(title);
-    paragraph(intro, "Get to know your next campus. Discover its academic community, find the services you need and make the most of every semester.", null, null, "uni-hero-intro");
+    paragraph(intro, "Move through four distinct academic environments across Europe. Explore each university visually, understand where it sits in your track, and find the services you will actually use.", null, null, "uni-hero-intro");
     const actions = el("div", "uni-actions"); const start = localLink("Explore the universities", "#universities", "button"); start.appendChild(productIcon("arrow"));
     actions.append(start, localLink("Compare two universities", "#compare", "button button-quiet")); intro.appendChild(actions);
     const trust = el("p", "uni-hero-trust"); trust.append(productIcon("shield"), document.createTextNode("Student-built · Source-linked · Made for EU-HEM")); intro.appendChild(trust);
@@ -696,9 +728,10 @@ function renderDirectory() {
       const item = el("div"); item.append(el("strong", null, number), el("span", null, label)); proof.appendChild(item);
     }
     const note = el("p", null, "Your university, beyond the timetable."); proof.appendChild(note); app.appendChild(proof);
+    renderVisualTour(app);
     renderContext();
     const jump = el("nav", "uni-directory-nav"); jump.setAttribute("aria-label", "Explore university resources");
-    for (const [id, title, icon] of [["universities","University guides","academic"],["journey","Your study route","pin"],["service-finder","Service finder","search"],["compare","Compare","compare"]]) {
+    for (const [id, title, icon] of [["visual-tour","Photo tour","campus"],["universities","University guides","academic"],["journey","Your study route","pin"],["service-finder","Service finder","search"],["compare","Compare","compare"]]) {
       const a = localLink(title, "#"+id); a.prepend(productIcon(icon)); jump.appendChild(a);
     }
     app.appendChild(jump);
