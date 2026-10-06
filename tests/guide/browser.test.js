@@ -92,9 +92,23 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
   await page.waitForSelector('.guide-section');
   const headings = await page.$$eval('.guide-section h2', (all) => all.map((h) => h.textContent.trim()));
   assert.deepStrictEqual(headings, guides.GUIDE_SECTIONS.map((t, i) => `${i + 1}. ${t}`));
-  assert.strictEqual(await page.isHidden('#student-tips'), true);
-  assert.strictEqual(await page.$('.guide-jump a[href="#student-tips"]'), null);
-  ok('Oslo: all 16 sections in order; empty "Student tips" hidden and left out of the contents');
+  assert.strictEqual(await page.isHidden('#student-tips'), false);
+  assert.notStrictEqual(await page.$('.guide-jump a[href="#student-tips"]'), null);
+  ok('Oslo: all 16 sections in order; "Student tips" (now filled in) shown and in the contents');
+  // An empty "Student tips" section stays hidden: serve the Oslo guide with that section emptied
+  // (a separate context without the service worker, so the request can be intercepted)
+  const emptied = await browser.newContext({ serviceWorkers: 'block' });
+  await emptied.route(/oslo-guide\.md/, async (route) => {
+    const text = fs.readFileSync(path.join(ROOT, 'docs/content/oslo-guide.md'), 'utf8').replace(/\r\n/g, '\n');
+    await route.fulfill({ contentType: 'text/markdown', body: text.replace(/(## 15\. Student tips\n)[\s\S]*?(\n## 16\.)/, '$1$2') });
+  });
+  const emptiedPage = await emptied.newPage();
+  await emptiedPage.goto(page.url());
+  await emptiedPage.waitForSelector('.guide-section');
+  assert.strictEqual(await emptiedPage.isHidden('#student-tips'), true);
+  assert.strictEqual(await emptiedPage.$('.guide-jump a[href="#student-tips"]'), null);
+  await emptied.close();
+  ok('an empty "Student tips" section is hidden and left out of the contents');
   const notice = await page.textContent('.guide-notice');
   assert.ok(notice.includes('This is a student-made summary, not legal advice. Rules change. The official pages linked here are authoritative.'));
   assert.ok(notice.includes('Follow those first.') && notice.includes('Last checked: 5 October 2026.'));

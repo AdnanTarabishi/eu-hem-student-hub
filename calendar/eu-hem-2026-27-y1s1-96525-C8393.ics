@@ -4,7 +4,8 @@ PRODID:-//EU-HEM Student Hub//Calendar//EN
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
 X-WR-CALNAME:EU-HEM my courses 2026/27 (96525-C8393)
-X-WR-CALDESC:Unofficial. Classes and exams from the official UniBo pages.
+X-WR-CALDESC:Unofficial. Classes and exams from the official UniBo pages; e
+ xam periods and deadlines from the EU-HEM handbook.
 X-WR-TIMEZONE:Europe/Rome
 REFRESH-INTERVAL;VALUE=DURATION:PT6H
 X-PUBLISHED-TTL:PT6H
@@ -25,6 +26,43 @@ DTSTART:19701025T030000
 RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
 END:STANDARD
 END:VTIMEZONE
+BEGIN:VEVENT
+UID:key-exams-term-1@eu-hem-student-hub
+DTSTAMP:20260101T000000Z
+DTSTART;VALUE=DATE:20261026
+DTEND;VALUE=DATE:20261108
+SUMMARY:Exams\, first term
+DESCRIPTION:Source: EU-HEM Student Handbook. Dates can change\; check the o
+ fficial pages.
+END:VEVENT
+BEGIN:VEVENT
+UID:key-exams-term-2@eu-hem-student-hub
+DTSTAMP:20260101T000000Z
+DTSTART;VALUE=DATE:20261217
+DTEND;VALUE=DATE:20261224
+SUMMARY:Exams\, second term
+DESCRIPTION:Source: EU-HEM Student Handbook. Dates can change\; check the o
+ fficial pages.
+END:VEVENT
+BEGIN:VEVENT
+UID:key-resits-winter@eu-hem-student-hub
+DTSTAMP:20260101T000000Z
+DTSTART;VALUE=DATE:20270107
+DTEND;VALUE=DATE:20270207
+SUMMARY:Re-sit exams
+DESCRIPTION:There is one more re-sit session in September.\nSource: EU-HEM 
+ Student Handbook. Dates can change\; check the official pages.
+END:VEVENT
+BEGIN:VEVENT
+UID:key-reenrolment-deadline@eu-hem-student-hub
+DTSTAMP:20260101T000000Z
+DTSTART;VALUE=DATE:20270801
+DTEND;VALUE=DATE:20270802
+SUMMARY:Re-enrolment deadline
+DESCRIPTION:Register in Studielink and pay the fee. The payment deadline ma
+ y change.\nSource: EU-HEM Student Handbook. Dates can change\; check the o
+ fficial pages.
+END:VEVENT
 BEGIN:VEVENT
 UID:class-2026-000-380198-I-74948-2026-09-14T11-00-00@eu-hem-student-hub
 DTSTAMP:20260101T000000Z

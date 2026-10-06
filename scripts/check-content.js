@@ -493,8 +493,9 @@ function checkCityGuides() {
         return;
       }
       for (const tag of guides.sourceTags(line)) used.add(tag);
-      if (/\b(NOK|EUR|kr)\b|€/.test(line) && /\d/.test(line) && !guides.sourceTags(line).length) {
-        error(at, `a price without a source tag like [S12]: "${line.trim().slice(0, 70)}"`);
+      const markers = checkSourceMarkers(line, at);
+      if (/\b(NOK|EUR|kr)\b|€/.test(line) && /\d/.test(line) && !guides.sourceTags(line).length && !markers) {
+        error(at, `a price without a source tag like [S12] or {tip:source-id}: "${line.trim().slice(0, 70)}"`);
       }
       const track = trackNames.find((name) => new RegExp(`(^|[^\\w&])${name.replace("&", "\\&")}([^\\w&]|$)`).test(line));
       if (track && !line.startsWith("<!--")) {
@@ -694,6 +695,246 @@ function checkStudents() {
   for (const file of ["students.css", "students-config.js", "students-data.js", "countries.js", "assets/map/world-countries.svg"]) {
     if (!sw.includes(`"${file}"`)) error("sw.js", `SITE_FILES is missing "${file}"`);
   }
+}
+
+// ----- Sources (content/sources.json, docs/sources.md) -----
+// Every fact taken from a document points to a source id. The registry must be complete, and every
+// "source" in the files below (at any depth) and every {official:id} / {tip:id} marker in a city guide
+// must name a listed id of the right kind.
+const SOURCES_FILE = "content/sources.json";
+const SOURCED_FILES = ["content/programme.json", "content/academic-rules.json", "content/programme-events.json", "content/people.json"];
+const SOURCE_MARKER = /\{(official|tip):([a-z0-9-]+)\}/g;
+let sourceRegistry = null; // id -> { kind, ... }, filled by checkSources()
+
+function checkSources() {
+  const file = JSON.parse(fs.readFileSync(path.join(ROOT, SOURCES_FILE), "utf8"));
+  const today = new Date().toISOString().slice(0, 10);
+  sourceRegistry = new Map();
+  for (const type of file.priority || []) {
+    if (!file.types?.[type]) error(SOURCES_FILE, `priority lists "${type}", which is not in "types"`);
+  }
+  for (const [type, info] of Object.entries(file.types || {})) {
+    if (!["official", "tip"].includes(info.kind)) error(SOURCES_FILE, `type "${type}": kind must be "official" or "tip"`);
+    if (!info.label) error(SOURCES_FILE, `type "${type}" has no label`);
+  }
+  for (const [i, source] of (file.sources || []).entries()) {
+    const where = `${SOURCES_FILE} source ${source.id || `#${i + 1}`}`;
+    if (!ID_PATTERN.test(source.id || "")) { error(where, "needs an id like \"esn-bologna-guide-2026\""); continue; }
+    if (sourceRegistry.has(source.id)) error(where, "id is used twice");
+    const type = file.types?.[source.type];
+    if (!type) error(where, `type "${source.type}" is not in "types"`);
+    requireText(source, "title", where);
+    if (!DATE_PATTERN.test(source.lastChecked || "") || source.lastChecked > today) error(where, "lastChecked must be a past date YYYY-MM-DD");
+    if (source.link) checkUrl(source.link.url, "link.url", where);
+    sourceRegistry.set(source.id, { ...source, kind: type?.kind });
+  }
+
+  for (const relative of SOURCED_FILES) {
+    const visit = (value, at) => {
+      if (Array.isArray(value)) return value.forEach((item, i) => visit(item, `${at}[${i}]`));
+      if (!value || typeof value !== "object") return;
+      for (const [key, inner] of Object.entries(value)) {
+        if (key === "source" && !sourceRegistry.has(inner)) {
+          error(relative, `${at}.source "${inner}" is not an id in ${SOURCES_FILE}`);
+        } else visit(inner, `${at}.${key}`);
+      }
+    };
+    visit(JSON.parse(fs.readFileSync(path.join(ROOT, relative), "utf8")), "");
+  }
+}
+
+// Academic Rules page (content/academic-rules.json, academic-rules.js). Every "source" is already
+// checked by checkSources(); here: universities exist in tracks.json, official links point to sources
+// that have a link, and every answer of the re-sit guide leads to an outcome.
+function checkAcademicRules() {
+  const F = "content/academic-rules.json";
+  if (!fs.existsSync(path.join(ROOT, F))) return;
+  const rules = JSON.parse(fs.readFileSync(path.join(ROOT, F), "utf8"));
+  const page = require("../academic-rules.js");
+  const tracksFile = JSON.parse(fs.readFileSync(path.join(ROOT, "content/tracks.json"), "utf8"));
+  const universities = Object.keys(tracksFile.cohorts[tracksFile.cohorts.length - 1].universities);
+  const hasText = (items, where) => (items || []).forEach((item, i) => requireText(item, "text", `${where}[${i}]`));
+
+  for (const id of page.UNIVERSITY_ORDER) {
+    if (!universities.includes(id)) error("academic-rules.js", `university "${id}" is not in content/tracks.json`);
+    if (!rules.universities[id]) error(F, `universities: "${id}" is missing`);
+    if (!rules.integrity.universities[id]) error(F, `integrity.universities: "${id}" is missing`);
+    if (!rules.grading.scales.some((s) => s.university === id)) error(F, `grading: no scale for "${id}"`);
+  }
+  for (const [id, university] of Object.entries(rules.universities)) {
+    if (!universities.includes(id)) error(F, `universities: "${id}" is not in content/tracks.json`);
+    for (const [topic, items] of Object.entries(university)) if (topic !== "links") hasText(items, `universities.${id}.${topic}`);
+  }
+  const checkLinks = (ids, where) => (ids || []).forEach((id) => {
+    if (!sourceRegistry.has(id)) error(F, `${where}: "${id}" is not an id in ${SOURCES_FILE}`);
+    else if (!sourceRegistry.get(id).link) error(F, `${where}: source "${id}" has no link to show`);
+  });
+  for (const [id, university] of Object.entries(rules.universities)) checkLinks(university.links, `universities.${id}.links`);
+  checkLinks(rules.integrity.links, "integrity.links");
+  hasText(rules.joint, "joint");
+  hasText(rules.integrity.joint, "integrity.joint");
+  for (const topic of rules.more) {
+    if (!ID_PATTERN.test(topic.id || "")) error(F, `more: "${topic.id}" needs an id like "extra-courses"`);
+    hasText(topic.items, `more.${topic.id}`);
+  }
+
+  // Try every combination of answers: each complete one must have an outcome with rules in it
+  const guide = rules.resitGuide;
+  const optionsOf = (q) => (q.options === "universities" ? page.UNIVERSITY_ORDER : q.options.map((o) => o.value));
+  const walk = (answers) => {
+    const open = page.visibleQuestions(guide, answers).find((q) => !answers[q.id]);
+    if (open) return optionsOf(open).forEach((value) => walk({ ...answers, [open.id]: value }));
+    const outcome = page.resitOutcome(rules, answers);
+    if (!outcome) error(F, `re-sit guide: no outcome for ${JSON.stringify(answers)} (expected "${page.resitOutcomeKey(guide, answers)}" in outcomes)`);
+    else if (!outcome.items.length) error(F, `re-sit guide: outcome "${outcome.key}" has no items`);
+  };
+  walk({});
+}
+
+// Programme Journey (content/programme-events.json, journey.js). Sources are checked by checkSources();
+// here: the cohort, tracks and universities exist in tracks.json, semesters 1-4 are all there, fees
+// are only listed per cohort, and every stage resolves to a place for every track.
+function checkProgrammeEvents() {
+  const F = "content/programme-events.json";
+  if (!fs.existsSync(path.join(ROOT, F))) return;
+  const events = JSON.parse(fs.readFileSync(path.join(ROOT, F), "utf8"));
+  const journeyPage = require("../journey.js");
+  const guides = require("../guide-data.js");
+  const tracksFile = JSON.parse(fs.readFileSync(path.join(ROOT, "content/tracks.json"), "utf8"));
+  const cohort = tracksFile.cohorts.find((c) => c.id === events.cohort);
+  if (!cohort) return error(F, `cohort "${events.cohort}" is not in content/tracks.json`);
+  const trackIds = cohort.tracks.map((t) => t.id);
+
+  const seen = new Set();
+  for (const stage of events.stages) {
+    const where = `${F} stage ${stage.id}`;
+    if (!ID_PATTERN.test(stage.id || "") || seen.has(stage.id)) error(where, "needs a unique id like \"semester-2\"");
+    seen.add(stage.id);
+    requireText(stage, "title", where);
+    if (!stage.semester && !(stage.when && stage.when.label && DATE_PATTERN.test(stage.when.ends || ""))) {
+      error(where, "needs \"semester\" (1-4) or \"when\": { label, ends: YYYY-MM-DD }");
+    }
+    if (!(stage.items || []).length) error(where, "has no items");
+  }
+  for (const n of [1, 2, 3, 4]) if (!events.stages.some((s) => s.semester === n)) error(F, `no stage for semester ${n}`);
+  for (const track of [null, ...cohort.tracks]) {
+    for (const stop of journeyPage.journeyStops(events, cohort, track, "2026-10-06", guides.semesterTiming)) {
+      if (stop.semester && !stop.place) error(F, `stage ${stop.id}: no place for track ${track ? track.id : "(none)"}`);
+    }
+  }
+  for (const entry of events.jointDegree.titles) {
+    if (!cohort.universities[entry.university]) error(F, `jointDegree: university "${entry.university}" is not in content/tracks.json`);
+  }
+  const grantTracks = events.erasmus.byTrack.map((entry) => entry.track);
+  for (const id of grantTracks) if (!trackIds.includes(id)) error(F, `erasmus: track "${id}" is not in content/tracks.json`);
+  for (const id of trackIds) if (!grantTracks.includes(id)) error(F, `erasmus: track "${id}" is missing`);
+  for (const [cohortId, fee] of Object.entries(events.fees.byCohort)) {
+    if (!tracksFile.cohorts.some((c) => c.id === cohortId)) error(F, `fees: cohort "${cohortId}" is not in content/tracks.json`);
+    for (const field of ["programmeCountries", "partnerCountries"]) {
+      if (!Number.isInteger(fee[field]) || fee[field] <= 0) error(F, `fees ${cohortId}: ${field} must be a whole number of euros`);
+    }
+    if (!fee.source) error(F, `fees ${cohortId}: needs a source`);
+  }
+  for (const [part, block] of Object.entries({ cohortNumbers: events.cohortNumbers, history: events.history, jointDegree: events.jointDegree, erasmus: events.erasmus })) {
+    if (!block.source) error(F, `${part}: needs a source`);
+  }
+}
+
+// Privacy for the handbook pages: only these role mailboxes may appear (never a person's own address),
+// and no Google Sheets/Docs links (the student reps' housing reviews are private). Changing this list is
+// a decision for the site owner, so it lives here and not in the content files.
+const ROLE_MAILBOXES = ["didatticasociale.euhem@unibo.it", "euhem@eshpm.eur.nl", "eu-hem@mci.edu", "garante@unibo.it"];
+const HANDBOOK_FILES = ["content/sources.json", "content/academic-rules.json", "content/programme-events.json", "content/people.json"];
+
+function checkHandbookPrivacy() {
+  const { emailsIn } = require("../support.js");
+  for (const relative of HANDBOOK_FILES) {
+    if (!fs.existsSync(path.join(ROOT, relative))) continue;
+    const text = fs.readFileSync(path.join(ROOT, relative), "utf8");
+    for (const email of new Set(emailsIn(JSON.parse(text)))) {
+      if (!ROLE_MAILBOXES.includes(email)) error(relative, `"${email}" is not an approved role mailbox (scripts/check-content.js ROLE_MAILBOXES); link to the official page instead`);
+    }
+    if (/docs\.google\.com|drive\.google\.com/.test(text)) error(relative, "contains a Google Docs/Sheets/Drive link; private documents must not be published");
+  }
+}
+
+// Support & Contacts (content/people.json, support.js): every university has a coordinator, safety and
+// wellbeing contacts; every answer of the contact guide leads to an outcome with someone to contact.
+function checkPeople() {
+  const F = "content/people.json";
+  if (!fs.existsSync(path.join(ROOT, F))) return;
+  const people = JSON.parse(fs.readFileSync(path.join(ROOT, F), "utf8"));
+  const page = require("../support.js");
+  const tracksFile = JSON.parse(fs.readFileSync(path.join(ROOT, "content/tracks.json"), "utf8"));
+  const universities = Object.keys(tracksFile.cohorts[tracksFile.cohorts.length - 1].universities);
+  for (const id of page.SUPPORT_UNIVERSITIES) {
+    const university = people.universities[id];
+    if (!universities.includes(id)) error("support.js", `university "${id}" is not in content/tracks.json`);
+    if (!university) { error(F, `universities: "${id}" is missing`); continue; }
+    const coordinator = university.coordinator || {};
+    if (!coordinator.role) error(F, `${id}: the coordinator needs a role`);
+    if (!coordinator.email && !sourceRegistry.get(coordinator.source)?.link) error(F, `${id}: the coordinator needs a role mailbox or a source with an official link`);
+    for (const kind of ["safety", "wellbeing"]) if (!(university[kind] || []).length) error(F, `${id}: "${kind}" has no contacts`);
+  }
+  if (!sourceRegistry.get(people.staffPage)?.link) error(F, `staffPage "${people.staffPage}" must be a source with a link`);
+  for (const list of ["leave", "withdrawal", "software", "community"]) {
+    (people[list] || []).forEach((item, i) => {
+      requireText(item, "text", `${F} ${list}[${i}]`);
+      if (item.link) checkUrl(item.link.url, "link.url", `${F} ${list}[${i}]`);
+    });
+  }
+
+  const guide = people.contactGuide;
+  const optionsOf = (q) => (q.options === "universities" ? page.SUPPORT_UNIVERSITIES : q.options.map((o) => o.value));
+  const walk = (answers) => {
+    const open = page.visibleSupportQuestions(guide, answers).find((q) => !answers[q.id]);
+    if (open) return optionsOf(open).forEach((value) => walk({ ...answers, [open.id]: value }));
+    const outcome = page.supportOutcome(people, answers);
+    if (!outcome) return error(F, `contact guide: no outcome for ${JSON.stringify(answers)}`);
+    if (!outcome.items.length) error(F, `contact guide: outcome "${outcome.key}" has no items`);
+    if (!outcome.contacts.length && !outcome.page) error(F, `contact guide: outcome "${outcome.key}" names no contact and no page`);
+    if (outcome.contacts.some((c) => !c.university || !(c.coordinator || (c.items || []).length))) {
+      error(F, `contact guide: outcome "${outcome.key}" for ${JSON.stringify(answers)} has an empty contact (is the university question shown?)`);
+    }
+    if (outcome.page && !/^(#[a-z0-9-]+|[a-z-]+\.html(#[a-z0-9-]+)?)$/.test(outcome.page.href)) error(F, `contact guide: "${outcome.page.href}" is not a site page link`);
+    if (outcome.page && /\.html/.test(outcome.page.href) && !fs.existsSync(path.join(ROOT, outcome.page.href.split("#")[0]))) {
+      error(F, `contact guide: page "${outcome.page.href}" does not exist`);
+    }
+  };
+  walk({});
+}
+
+// Key dates of each cohort (calendar page, homepage, calendar files): see programme.js
+function checkKeyDates() {
+  const programme = JSON.parse(fs.readFileSync(path.join(ROOT, "content/programme.json"), "utf8"));
+  for (const cohort of programme.cohorts) {
+    const seen = new Set();
+    for (const [i, keyDate] of (cohort.keyDates || []).entries()) {
+      const where = `content/programme.json cohort ${cohort.id} keyDates ${keyDate.id || `#${i + 1}`}`;
+      if (!ID_PATTERN.test(keyDate.id || "")) error(where, "needs an id like \"exams-term-1\"");
+      if (seen.has(keyDate.id)) error(where, "id is used twice");
+      seen.add(keyDate.id);
+      if (!programmeRules.KEY_DATE_KINDS.includes(keyDate.kind)) error(where, `kind must be one of ${programmeRules.KEY_DATE_KINDS.join(", ")}`);
+      requireText(keyDate, "label", where);
+      if (!keyDate.source) error(where, "needs a source (an id from content/sources.json)");
+      const valid = (value) => /^\d{4}-\d{2}(-\d{2})?$/.test(value || "") && !isNaN(Date.parse(value));
+      if (!valid(keyDate.start) || !valid(keyDate.end)) { error(where, "start and end must be YYYY-MM-DD, or YYYY-MM if only the month is known"); continue; }
+      if (keyDate.start.length !== keyDate.end.length) error(where, "start and end must both be days or both be months");
+      if (keyDate.end < keyDate.start) error(where, "ends before it starts");
+      if (keyDate.start.length === 7 && !keyDate.approximate) error(where, "a month-only date must have \"approximate\": true");
+    }
+  }
+}
+
+// The {official:id} / {tip:id} markers of one guide line; problems are reported at "at"
+function checkSourceMarkers(line, at) {
+  const found = [...line.matchAll(SOURCE_MARKER)];
+  for (const [marker, kind, id] of found) {
+    const source = sourceRegistry?.get(id);
+    if (!source) error(at, `${marker}: "${id}" is not an id in ${SOURCES_FILE}`);
+    else if (source.kind !== kind) error(at, `${marker}: "${id}" is a${source.kind === "official" ? "n official source" : " student tip"}, write {${source.kind}:${id}}`);
+  }
+  return found.length;
 }
 
 // Roadmap & Updates: one set of rules in roadmap-data.js (docs/roadmap.md)
@@ -921,6 +1162,12 @@ async function main() {
   checkRoadmap();
 
   // --- City guides (docs/content/<city>-guide.md) ---
+  checkSources(); // before the guides: they use its ids
+  checkKeyDates();
+  checkAcademicRules();
+  checkProgrammeEvents();
+  checkPeople();
+  checkHandbookPrivacy();
   checkCityGuides();
 
   // --- topics (first, so everything else can link to them) ---

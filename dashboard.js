@@ -23,6 +23,13 @@ function todayPlan(sessions, today) {
   return { mode: "next-day", dateKey, sessions: future.filter((s) => s.dateKey === dateKey) };
 }
 
+// "Exam period: 26 Oct – 7 Nov 2026" (or "Exam period now: …") from the cohort's key dates; null if none is left
+function examPeriodText(cohort, today) {
+  const period = nextKeyDate(cohort, "exams", today);
+  if (!period) return null;
+  return `${period.start <= today ? "Exam period now" : "Next exam period"}: ${formatKeyDateRange(period)}`;
+}
+
 function greeting(hour) {
   if (hour < 5) return "Good night";
   if (hour < 12) return "Good morning";
@@ -91,6 +98,18 @@ function renderExam(exams) {
   if (upcoming.length > 1) box.appendChild(createElement("p", "schedule-meta", `+ ${upcoming.length - 1} more upcoming`));
 }
 
+// The plan on this site is only for you. The official one is filled in on Studenti Online (programme.json)
+function officialPlanReminder() {
+  const official = currentCohort(dash.programme).studyPlanSubmission;
+  const note = createElement("p", "dash-reminder", "Reminder: the official study plan is on ");
+  const link = createElement("a", null, "Studenti Online");
+  link.href = official.url;
+  link.target = "_blank";
+  link.rel = "noopener";
+  note.append(link, `. ${official.deadlineNote}`);
+  return note;
+}
+
 async function renderPlan() {
   const box = document.getElementById("dash-plan");
   box.innerHTML = "";
@@ -101,6 +120,7 @@ async function renderPlan() {
     const link = createElement("a", "button", "Plan my semester");
     link.href = "studyplan.html";
     box.appendChild(link);
+    box.appendChild(officialPlanReminder());
     return;
   }
   const summary = planSummary(term, plan.choices);
@@ -119,6 +139,7 @@ async function renderPlan() {
     stats.appendChild(stat);
   }
   box.appendChild(stats);
+  box.appendChild(officialPlanReminder());
 
   // Flashcards due in my courses (spaced repetition, from Notes & Resources)
   try {
@@ -171,6 +192,13 @@ async function initDashboard() {
     else document.getElementById("dash-today").replaceChildren(createElement("p", "dash-empty", "The timetable couldn't be loaded from UniBo right now."));
     if (exams.status === "fulfilled") renderExam(matchExamsToTerm(exams.value, term).filter((e) => isMine(e.codes)));
     else document.getElementById("dash-exam").replaceChildren(createElement("p", "dash-empty", "Exam dates couldn't be loaded from UniBo right now."));
+    // From programme.json, so it shows even when UniBo can't be reached
+    const period = examPeriodText(cohort, todayKey());
+    if (period) {
+      const link = createElement("a", "dash-period", period);
+      link.href = "calendar.html#key-dates";
+      document.getElementById("dash-exam").prepend(link);
+    }
     if (dash.mine) {
       for (const id of ["dash-today-title", "dash-exam-title"]) {
         document.getElementById(id).appendChild(createElement("span", "dash-mine", "my courses"));
@@ -184,4 +212,4 @@ async function initDashboard() {
 
 if (typeof document !== "undefined" && document.getElementById("dash-today")) initDashboard();
 
-if (typeof module !== "undefined") module.exports = { todayPlan, greeting };
+if (typeof module !== "undefined") module.exports = { todayPlan, greeting, examPeriodText };

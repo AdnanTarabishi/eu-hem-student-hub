@@ -70,6 +70,37 @@ document.getElementById("calendar-copy").addEventListener("click", async () => {
 
 setUpCalendarLinks();
 
+// "Key dates this year": every key date of the cohort, past ones greyed out, each with its source label
+const KEY_DATE_KIND_LABELS = { classes: "Classes", exams: "Exams", deadline: "Deadline", event: "Event" };
+
+async function showKeyDates() {
+  const list = document.getElementById("key-dates-list");
+  try {
+    const [programme, sources] = await Promise.all([getProgramme(), loadSources()]);
+    const today = todayKey();
+    for (const keyDate of keyDates(currentCohort(programme))) {
+      const past = keyDateLastDay(keyDate) < today;
+      const now = !past && keyDate.start <= today;
+      const item = createElement("li", `key-date is-${keyDate.kind}${past ? " is-past" : now ? " is-now" : ""}`);
+      const when = createElement("p", "key-date-when", (keyDate.approximate ? "About " : "") + formatKeyDateRange(keyDate));
+      const body = createElement("div", "key-date-body");
+      const title = createElement("p", "key-date-title");
+      title.appendChild(createElement("span", "key-date-kind", KEY_DATE_KIND_LABELS[keyDate.kind]));
+      title.appendChild(document.createTextNode(keyDate.label + (past ? " (done)" : now ? " (now)" : "")));
+      body.appendChild(title);
+      if (keyDate.note) body.appendChild(createElement("p", "schedule-meta", keyDate.note));
+      body.appendChild(sourceLabel(keyDate.source, sources));
+      item.append(when, body);
+      list.appendChild(item);
+    }
+  } catch (error) {
+    console.error("Could not show the key dates:", error);
+    list.replaceWith(createElement("p", "schedule-meta", "Sorry, the key dates are not available right now."));
+  }
+}
+
+showKeyDates();
+
 // Subscribing ticks "Subscribe to your calendar" in the home page setup checklist
 for (const id of ["calendar-google", "calendar-apple", "calendar-outlook", "calendar-copy"]) {
   document.getElementById(id).addEventListener("click", () => {

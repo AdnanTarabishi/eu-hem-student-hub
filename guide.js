@@ -271,6 +271,7 @@ function renderStructuredGuide(guide, parsed, cohort) {
   buildJumpMenu(sections.filter((s) => !s.hidden));
   makeSectionsFold(sections);
   linkSources();
+  labelSourceMarkers(); // {official:id} / {tip:id} -> "Official · …" / "Student tip · …" labels
   for (const table of guideArticle.querySelectorAll("table")) {
     table.classList.add("guide-cards-on-phone");
     labelTableCells(table);
@@ -416,6 +417,26 @@ function linkSources() {
   const nodes = [];
   while (walker.nextNode()) if (/\[S\d+\]/.test(walker.currentNode.textContent)) nodes.push(walker.currentNode);
   for (const node of nodes) node.replaceWith(textWithSources(node.textContent));
+}
+
+// {official:euhem-handbook-2026} or {tip:student-reps-2026} in a guide -> the source label from
+// content/sources.json (utils.js → sourceLabel). Unknown ids still show a neutral label.
+const SOURCE_MARKER = /\{(?:official|tip):([a-z0-9-]+)\}/;
+
+async function labelSourceMarkers() {
+  const walker = document.createTreeWalker(guideArticle, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  while (walker.nextNode()) if (SOURCE_MARKER.test(walker.currentNode.textContent)) nodes.push(walker.currentNode);
+  if (!nodes.length) return;
+  const sources = await loadSources();
+  for (const node of nodes) {
+    const fragment = document.createDocumentFragment();
+    for (const part of node.textContent.split(/(\{(?:official|tip):[a-z0-9-]+\})/)) {
+      const match = part.match(SOURCE_MARKER);
+      fragment.appendChild(match ? sourceLabel(match[1], sources) : document.createTextNode(part));
+    }
+    node.replaceWith(fragment);
+  }
 }
 
 // Opens the folded section that holds the address's #target (a contents link or a source tag)

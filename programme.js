@@ -292,10 +292,50 @@ function myCoursesSwitch(programme, onChange) {
   return label;
 }
 
+// ----- Key dates (terms, exam periods, deadlines) -----
+// A cohort's "keyDates" in programme.json: { id, kind, label, start, end, approximate?, note?, source }.
+// start/end are "YYYY-MM-DD", or "YYYY-MM" when only the month is known (then "approximate": true).
+
+const KEY_DATE_KINDS = ["classes", "exams", "deadline", "event"];
+const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+function keyDates(cohort) {
+  return [...(cohort.keyDates || [])].sort((a, b) => a.start.localeCompare(b.start));
+}
+
+// The last day a key date covers: "2027-02" -> "2027-02-31" (good enough for comparing with a day)
+function keyDateLastDay(keyDate) {
+  return keyDate.end.length === 7 ? `${keyDate.end}-31` : keyDate.end;
+}
+
+// The next key date of a kind that has not ended yet ("today" is "YYYY-MM-DD"), or null
+function nextKeyDate(cohort, kind, today) {
+  return keyDates(cohort).find((d) => d.kind === kind && keyDateLastDay(d) >= today) || null;
+}
+
+// "26 Oct – 7 Nov 2026", "17–23 Dec 2026", "1 Aug 2027", "Jan – Feb 2027", "May 2027"
+function formatKeyDateRange(keyDate) {
+  const part = (key) => {
+    const [y, m, d] = key.split("-").map(Number);
+    return { y, m: MONTH_NAMES[m - 1], d };
+  };
+  const a = part(keyDate.start);
+  const b = part(keyDate.end);
+  const sameYear = a.y === b.y;
+  if (!a.d) { // month only
+    if (keyDate.start === keyDate.end) return `${a.m} ${a.y}`;
+    return sameYear ? `${a.m} – ${b.m} ${b.y}` : `${a.m} ${a.y} – ${b.m} ${b.y}`;
+  }
+  if (keyDate.start === keyDate.end) return `${a.d} ${a.m} ${a.y}`;
+  if (sameYear && a.m === b.m) return `${a.d}–${b.d} ${b.m} ${b.y}`;
+  return sameYear ? `${a.d} ${a.m} – ${b.d} ${b.m} ${b.y}` : `${a.d} ${a.m} ${a.y} – ${b.d} ${b.m} ${b.y}`;
+}
+
 if (typeof module !== "undefined") {
   module.exports = {
     loadProgramme, currentCohort, currentTerm, allTermCourses, programmeIndex, groupOfCourse, courseCycles, courseDates,
     courseByCode, emptyChoices, sanitizeChoices, applyChoice, selectedCourseCodes, groupSatisfied, planSummary,
     allPlanCombinations, subsets, planKey, COURSE_STATUSES,
+    KEY_DATE_KINDS, keyDates, keyDateLastDay, nextKeyDate, formatKeyDateRange,
   };
 }

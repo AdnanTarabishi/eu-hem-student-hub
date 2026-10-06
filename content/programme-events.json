@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "cohort": "2026-2028",
+  "lastChecked": "2026-10-06",
+  "note": "Programme Journey page (journey.html). Our own summary of the EU-HEM Student Handbook and the Welcome Days 2026 slides; every item names its source (content/sources.json). Cities per track come from content/tracks.json, not from here.",
+  "intro": "Two years, three universities, one joint degree. Here is the path from your first week in Bologna to graduation.",
+
+  "stages": [
+    {
+      "id": "semester-1", "semester": 1, "title": "Semester 1: Bologna, all together", "ects": 30,
+      "items": [
+        { "text": "Everyone starts at the University of Bologna with four compulsory courses: economics and management, the right to health, quantitative methods (two levels to choose from) and health systems or international law.", "source": "euhem-handbook-2026" },
+        { "text": "The Welcome Days introduce the four tracks. You choose your track at the end of September.", "source": "euhem-handbook-2026" },
+        { "text": "Each track takes at most 35 students, and the Consortium Board decides the final allocation. Once you submit your choice, you cannot change it.", "source": "euhem-handbook-2026" }
+      ]
+    },
+    {
+      "id": "semester-2", "semester": 2, "title": "Semester 2: your track's first university", "ects": 30,
+      "items": [
+        { "text": "Specialisation courses of your track, usually four to six courses of 5 to 10 ECTS each.", "source": "euhem-handbook-2026" }
+      ]
+    },
+    {
+      "id": "summer-school", "title": "Summer School in Austria", "when": { "label": "June/July 2027", "ends": "2027-07-31" },
+      "items": [
+        { "text": "One week, right after the second semester. Coaching on your thesis proposal and on personal skills.", "source": "euhem-handbook-2026" },
+        { "text": "Attendance is strongly recommended; only valid reasons such as illness are accepted. Details come at the start of semester 2, and questions go to the MCI coordinator.", "source": "euhem-handbook-2026" }
+      ]
+    },
+    {
+      "id": "semester-3", "semester": 3, "title": "Semester 3: your track's second university", "ects": 30,
+      "items": [
+        { "text": "More specialisation courses of your track. You receive the Thesis Guidelines in the summer before.", "source": "euhem-handbook-2026" },
+        { "text": "You can join the MCI Mentoring Programme, which connects you with EU-HEM alumni for career advice. Registration details come at the start of semester 3.", "source": "euhem-handbook-2026" }
+      ]
+    },
+    {
+      "id": "semester-4", "semester": 4, "title": "Semester 4: master's thesis", "ects": 30,
+      "items": [
+        { "text": "The whole semester is for your thesis. Its topic is linked to your track, and you write it at one of your track's universities.", "source": "euhem-handbook-2026" },
+        { "text": "You may combine it with a research assignment in a company or organisation to collect data.", "source": "euhem-handbook-2026" },
+        { "text": "The Career Event helps with CVs, LinkedIn, job applications and interviews, and is a chance to meet your cohort again.", "source": "euhem-handbook-2026" }
+      ]
+    },
+    {
+      "id": "graduation", "title": "Graduation", "when": { "label": "autumn 2028", "ends": "2028-12-31" },
+      "items": [
+        { "text": "Each cohort has one graduation ceremony, in the autumn after the second year, where you receive your diploma and diploma supplement. Guests are welcome, up to a limit given in the invitation.", "source": "euhem-handbook-2026" },
+        { "text": "If you finish later and miss the ceremony, you can collect your diploma at Erasmus University Rotterdam or have it posted.", "source": "euhem-handbook-2026" }
+      ]
+    }
+  ],
+
+  "jointDegree": {
+    "intro": "EU-HEM is a joint degree: one diploma with full legal value in all four countries, signed by all four universities. It lists four titles:",
+    "titles": [
+      { "university": "unibo", "title": "Laurea Magistrale in Health Economics and Management" },
+      { "university": "eur", "title": "Master of Science in Health Economics and Management" },
+      { "university": "uio", "title": "Master of Philosophy in Health Economics and Management" },
+      { "university": "mci", "title": "Master of Arts in Business" }
+    ],
+    "items": [
+      { "text": "A joint diploma supplement explains the programme, your courses and the different grading systems.", "source": "euhem-handbook-2026" },
+      { "text": "All EU-HEM students are enrolled at Erasmus University Rotterdam, even though everyone starts in Bologna.", "source": "euhem-handbook-2026" }
+    ],
+    "source": "euhem-handbook-2026"
+  },
+
+  "cohortNumbers": {
+    "title": "Cohort 12 in numbers",
+    "cohortLabel": "2026–2028",
+    "figures": [
+      { "value": "104", "label": "students" },
+      { "value": "24", "label": "nationalities" },
+      { "value": "94", "label": "from the EEA or Switzerland" },
+      { "value": "10", "label": "from outside the EEA" }
+    ],
+    "source": "welcome-days-2026"
+  },
+
+  "history": {
+    "title": "How EU-HEM grew",
+    "events": [
+      { "year": 2009, "text": "First meetings between the partner universities." },
+      { "year": 2010, "text": "Student exchange begins (an Erasmus semester)." },
+      { "year": 2012, "text": "Double and multiple degrees, with six tracks." },
+      { "year": 2015, "text": "Joint degree, after accreditation in Norway (2012), Austria (2014), the Netherlands and Italy (2015)." },
+      { "year": 2018, "text": "Erasmus Mundus programme." },
+      { "year": 2021, "text": "A joint first semester in Bologna and a revised curriculum with four tracks." },
+      { "year": 2025, "text": "First alumni event, with 160 graduates." }
+    ],
+    "source": "welcome-days-2026"
+  },
+
+  "erasmus": {
+    "title": "Erasmus+ mobility grant",
+    "intro": "The grant helps with travel and living costs, usually in semesters 3 and 4. The university that pays it (your home university for the grant) depends on your track:",
+    "byTrack": [
+      { "track": "ep", "text": "MCI" },
+      { "track": "eeh", "text": "University of Bologna or University of Oslo, depending on where you defend your thesis" },
+      { "track": "mhi", "text": "Erasmus University Rotterdam" },
+      { "track": "phm", "text": "University of Oslo" }
+    ],
+    "caveat": "In some cases, students are spread across the partner universities to balance the number of nominations at each one.",
+    "items": [
+      { "text": "The grant is not guaranteed. You should be able to pay for your studies without it.", "source": "euhem-handbook-2026" },
+      { "text": "The amount depends on things like living costs at home and abroad, the number of applicants and the distance. Each university sets its own rules.", "source": "euhem-handbook-2026" },
+      { "text": "You must live in the country in the semester you receive it. In semester 4 you are enrolled at your thesis supervisor's university, so you can only apply if you will live in that country.", "source": "euhem-handbook-2026" },
+      { "text": "A grant paid by UiO means paying the UiO semester fee (about €80) in those semesters.", "source": "euhem-handbook-2026" },
+      { "text": "At UniBo you apply through AlmaRM, from about early January to early February, and accept the grant on the platform within a few days if selected.", "source": "euhem-handbook-2026" }
+    ],
+    "source": "euhem-handbook-2026"
+  },
+
+  "fees": {
+    "title": "Participation fee",
+    "byCohort": {
+      "2026-2028": {
+        "academicYear": "2026/27",
+        "programmeCountries": 4000,
+        "partnerCountries": 9000,
+        "note": "Enrolment and re-enrolment for year 2 go through Studielink and are finished only once the fee is paid.",
+        "source": "euhem-handbook-2026"
+      }
+    },
+    "missing": "We only list fees from official documents for a cohort. Check the official EU-HEM website for other years."
+  }
+}

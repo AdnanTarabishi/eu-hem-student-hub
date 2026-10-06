@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 1,
+  "note": "Every fact taken from a document points to one of these ids. The documents themselves are not published here (they are not public); 'link' is the official page to send students to. Format and labels: docs/sources.md",
+  "priority": ["official-handbook", "official-university-page", "official-letter", "student-reps", "esn-guide"],
+  "priorityNote": "When sources disagree: cohort-specific official document > official university page > EU-HEM website > student representatives > ESN. A live official web page is checked first for prices and course codes, because documents go out of date.",
+  "types": {
+    "official-handbook": { "label": "Official", "kind": "official" },
+    "official-university-page": { "label": "Official", "kind": "official" },
+    "official-letter": { "label": "Official", "kind": "official" },
+    "student-reps": { "label": "Student tip", "kind": "tip" },
+    "esn-guide": { "label": "Student tip", "kind": "tip" }
+  },
+  "sources": [
+    {
+      "id": "euhem-handbook-2026",
+      "title": "EU-HEM Student Handbook",
+      "shortTitle": "EU-HEM Handbook",
+      "type": "official-handbook",
+      "cohort": "2026-2028",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "EU-HEM course website (University of Bologna)", "url": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement" }
+    },
+    {
+      "id": "unibo-welcome-letter-2026",
+      "title": "University of Bologna welcome letter, 12 May 2026",
+      "shortTitle": "UniBo welcome letter",
+      "type": "official-letter",
+      "cohort": "2026-2028",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "EU-HEM course website (University of Bologna)", "url": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement" }
+    },
+    {
+      "id": "welcome-days-2026",
+      "title": "EU-HEM Welcome Days 2026, Day 1 presentation",
+      "shortTitle": "Welcome Days 2026",
+      "type": "official-handbook",
+      "cohort": "2026-2028",
+      "lastChecked": "2026-10-06"
+    },
+    {
+      "id": "student-reps-2026",
+      "title": "Student Assistance Programme presentation by the EU-HEM student representatives, 2026",
+      "shortTitle": "EU-HEM student reps",
+      "type": "student-reps",
+      "cohort": "2026-2028",
+      "lastChecked": "2026-10-06"
+    },
+    {
+      "id": "esn-bologna-guide-2026",
+      "title": "ESN Bologna Survival Guide 2026/27",
+      "shortTitle": "ESN Bologna",
+      "type": "esn-guide",
+      "cohort": "2026-2027",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "ESN Bologna", "url": "https://esnbologna.org" }
+    },
+    {
+      "id": "unibo-exam-dates",
+      "title": "EU-HEM exam dates, University of Bologna course website",
+      "shortTitle": "UniBo exam dates",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UniBo: EU-HEM exam dates and AlmaEsami", "url": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates" }
+    },
+    {
+      "id": "unibo-genai-students",
+      "title": "University of Bologna: use cases of generative AI in preparing student work to be assessed",
+      "shortTitle": "UniBo AI policy",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UniBo: generative AI in student work", "url": "https://www.unibo.it/en/university/statute-standards-strategies-and-reports/artificial-intelligence/use-cases-of-generative-artificial-intelligence-in-preparing-student-work-to-be-assessed" }
+    },
+    {
+      "id": "uio-grades",
+      "title": "University of Oslo: grading and grading scales",
+      "shortTitle": "UiO grading",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UiO: grading and grading scales", "url": "https://www.uio.no/english/studies/examinations/grades/" }
+    },
+    {
+      "id": "uio-med-regulations",
+      "title": "University of Oslo, Faculty of Medicine: rules and regulations for master studies",
+      "shortTitle": "UiO master rules",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UiO Faculty of Medicine: rules for master studies", "url": "https://www.med.uio.no/english/studies/about/regulations/master/index.html" }
+    },
+    {
+      "id": "uio-cheating",
+      "title": "University of Oslo: cheating",
+      "shortTitle": "UiO cheating rules",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UiO: what counts as cheating", "url": "https://www.uio.no/english/studies/examinations/cheating/" }
+    },
+    {
+      "id": "uio-med-ai",
+      "title": "University of Oslo, Faculty of Medicine: use of generative AI in examinations and assignments",
+      "shortTitle": "UiO AI rules",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UiO Faculty of Medicine: AI in exams and assignments", "url": "https://www.med.uio.no/english/studies/resources/ai-in-examinations-assignments-med/" }
+    },
+    {
+      "id": "mci-exam-regulations-2026",
+      "title": "MCI Study & Examination Regulations, updated version October 2026",
+      "shortTitle": "MCI exam regulations",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "MCI: Study & Examination Regulations (PDF)", "url": "https://www.mci.edu/en/download/category/14-kollegium-en?download=115%3Aexamination-regulations" }
+    },
+    {
+      "id": "eur-genai",
+      "title": "Erasmus University Rotterdam: generative AI usage guidelines",
+      "shortTitle": "EUR AI guidelines",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "EUR: generative AI guidelines", "url": "https://www.eur.nl/en/about-university/policy-and-regulations/regulations-and-guidelines/ai-usage-guidelines" }
+    },
+    {
+      "id": "eur-special-provisions",
+      "title": "Erasmus University Rotterdam: requesting provisions for students with a disability",
+      "shortTitle": "EUR special provisions",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "EUR: request special provisions", "url": "https://eur.nl/en/education/practical-matters/advice-counselling/studying-functional-impairment/request-extra-facilities" }
+    },
+    {
+      "id": "eur-hem-contact",
+      "title": "Erasmus University Rotterdam: contact the EU-HEM study programme",
+      "shortTitle": "EUR EU-HEM contact",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "Official EU-HEM contact page (EUR)", "url": "https://www.eur.nl/en/eshpm/master/european-master-health-economics-and-management/contact" }
+    },
+    {
+      "id": "uio-hem-contact",
+      "title": "University of Oslo: contact page of the European Master in Health Economics and Management",
+      "shortTitle": "UiO EU-HEM contact",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UiO: EU-HEM contact page", "url": "https://www.uio.no/english/studies/programmes/hem-master/contact/" }
+    },
+    {
+      "id": "unibo-ombudsman",
+      "title": "University of Bologna: Student Ombudsman",
+      "shortTitle": "UniBo Ombudsman",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UniBo: Student Ombudsman", "url": "https://www.unibo.it/en/university/organisation/university-governing-bodies/student-ombudsman" }
+    },
+    {
+      "id": "unibo-sap",
+      "title": "University of Bologna: the Psychological Support Service (SAP)",
+      "shortTitle": "UniBo SAP",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UniBo: Psychological Support Service", "url": "https://www.unibo.it/en/services-and-opportunities/health-and-assistance/the-psychological-support-service-sap" }
+    },
+    {
+      "id": "unibo-office365",
+      "title": "University of Bologna: Microsoft Office 365 for students",
+      "shortTitle": "UniBo Office 365",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UniBo: free Microsoft 365", "url": "https://www.unibo.it/en/services-and-opportunities/studying-and-beyond/discounts-for-computer-tablet-and-software-1/microsoft-office-365-1" }
+    },
+    {
+      "id": "uio-student-ombud",
+      "title": "University of Oslo: the Student Ombud",
+      "shortTitle": "UiO Student Ombud",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UiO: Student Ombud", "url": "https://www.uio.no/english/about/organisation/student-ombudsperson/help/" }
+    },
+    {
+      "id": "uio-speak-up",
+      "title": "University of Oslo: Speak up! (reporting channels)",
+      "shortTitle": "UiO Speak up",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UiO: Speak up!", "url": "https://www.uio.no/english/about/hse/speak-up/index.html" }
+    },
+    {
+      "id": "uio-health",
+      "title": "University of Oslo: health services and counselling",
+      "shortTitle": "UiO health and counselling",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UiO: health services and counselling (SiO)", "url": "https://www.uio.no/english/student-life/services/health/" }
+    },
+    {
+      "id": "mci-mental-health",
+      "title": "MCI: Mental Health @ MCI",
+      "shortTitle": "MCI mental health",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "MCI: Mental Health @ MCI", "url": "https://www.mci4me.at/en/services/student-support/mental-health" }
+    },
+    {
+      "id": "mci-code-of-conduct",
+      "title": "MCI: Code of Conduct",
+      "shortTitle": "MCI Code of Conduct",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "MCI: Code of Conduct and contact points", "url": "https://www.mci.edu/en/university/the-mci/diversity/code-of-conduct" }
+    },
+    {
+      "id": "eur-safe",
+      "title": "Erasmus University Rotterdam: Safe@EUR",
+      "shortTitle": "Safe@EUR",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "EUR: Safe@EUR", "url": "https://www.eur.nl/en/services/safeeur" }
+    },
+    {
+      "id": "eur-eshpm-social-safety",
+      "title": "Erasmus School of Health Policy & Management: social safety",
+      "shortTitle": "ESHPM social safety",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "ESHPM: social safety and student support", "url": "https://www.eur.nl/en/eshpm/about/social-safety" }
+    }
+  ]
+}

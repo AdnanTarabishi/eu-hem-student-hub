@@ -24,6 +24,18 @@
         "deadlineNote": "There is no deadline, but you must fill in your study plan before you can register for exams on AlmaEsami.",
         "deadlineSource": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/study-plan-eu-hem"
       },
+      "keyDates": [
+        { "id": "classes-term-1", "kind": "classes", "label": "Classes, first term", "start": "2026-09-14", "end": "2026-10-24", "note": "The programme officially starts on 14 September. The optional crash courses (no attendance required) start one week earlier, on 7 September.", "source": "euhem-handbook-2026" },
+        { "id": "exams-term-1", "kind": "exams", "label": "Exams, first term", "start": "2026-10-26", "end": "2026-11-07", "source": "euhem-handbook-2026" },
+        { "id": "classes-term-2", "kind": "classes", "label": "Classes, second term", "start": "2026-11-09", "end": "2026-12-16", "source": "euhem-handbook-2026" },
+        { "id": "exams-term-2", "kind": "exams", "label": "Exams, second term", "start": "2026-12-17", "end": "2026-12-23", "source": "euhem-handbook-2026" },
+        { "id": "resits-winter", "kind": "exams", "label": "Re-sit exams", "start": "2027-01-07", "end": "2027-02-06", "note": "There is one more re-sit session in September.", "source": "euhem-handbook-2026" },
+        { "id": "erasmus-almarm", "kind": "deadline", "label": "Erasmus+ applications on AlmaRM", "start": "2027-01", "end": "2027-02", "approximate": true, "note": "Opens around the first days of January and closes by the first days of February. Check the exact dates on the UniBo Erasmus+ page.", "source": "euhem-handbook-2026" },
+        { "id": "reenrolment-email", "kind": "event", "label": "Re-enrolment email for year 2 arrives", "start": "2027-05", "end": "2027-05", "approximate": true, "source": "euhem-handbook-2026" },
+        { "id": "summer-school", "kind": "event", "label": "Summer School in Austria (one week)", "start": "2027-06", "end": "2027-07", "approximate": true, "note": "Right after the second semester. Attendance is strongly recommended.", "source": "euhem-handbook-2026" },
+        { "id": "thesis-guidelines", "kind": "event", "label": "Thesis Guidelines sent to you", "start": "2027-06", "end": "2027-08", "approximate": true, "note": "In the summer before the second year.", "source": "euhem-handbook-2026" },
+        { "id": "reenrolment-deadline", "kind": "deadline", "label": "Re-enrolment deadline", "start": "2027-08-01", "end": "2027-08-01", "note": "Register in Studielink and pay the fee. The payment deadline may change.", "source": "euhem-handbook-2026" }
+      ],
       "terms": [
         {
           "id": "y1-s1",
@@ -55,6 +67,10 @@
               "min": 0,
               "max": 2,
               "countsTowardRequired": false,
+              "note": {
+                "text": "Crash courses are optional refreshers. They show 3 CFU on the UniBo course page, but they do not count towards the 120 credits of the degree.",
+                "source": "euhem-handbook-2026"
+              },
               "courses": [
                 "B1076",
                 "97484"

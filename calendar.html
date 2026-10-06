@@ -6,7 +6,7 @@
   <title>Calendar – EU-HEM Student Hub</title>
   <meta name="description" content="Subscribe to EU-HEM classes and exams in Google, Apple or Outlook Calendar.">
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=b9162737">
+  <link rel="stylesheet" href="style.css?v=bc7ec835">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -23,7 +23,7 @@
       <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
       <!-- site-nav.js builds the menu here (defined once for all pages) -->
       <nav class="site-nav" id="site-nav" data-current="calendar" aria-label="Main menu"></nav>
-      <script src="site-nav.js?v=d17eb375"></script>
+      <script src="site-nav.js?v=fded69c3"></script>
     </div>
   </header>
 
@@ -53,6 +53,14 @@
           <button id="calendar-copy" type="button" class="button">Copy link</button>
         </div>
       </div>
+    </section>
+
+    <section class="card" id="key-dates" aria-labelledby="key-dates-title">
+      <h2 id="key-dates-title">Key dates this year</h2>
+      <p class="schedule-meta">Exam periods, re-sits and deadlines for your cohort. Dates marked "about" are known only
+        to the month. Exact-day dates are also in the calendar above.</p>
+      <!-- calendar.js fills this list from "keyDates" in content/programme.json -->
+      <ol id="key-dates-list" class="key-dates"></ol>
     </section>
 
     <section class="card">
@@ -90,14 +98,14 @@
     </div>
   </footer>
 
-  <script defer src="utils.js?v=ba40a359"></script>
+  <script defer src="utils.js?v=3f08bd92"></script>
   <script defer src="ui.js?v=6d55e433"></script>
-  <script defer src="search.js?v=8af84713"></script>
+  <script defer src="search.js?v=0beae815"></script>
   <script defer src="pwa.js?v=c9212bf8"></script>
   <script defer src="announcements.js?v=3ecd40f0"></script>
-  <script defer src="programme.js?v=bc6eeb23"></script>
+  <script defer src="programme.js?v=32849b3a"></script>
   <script defer src="unibo-data.js?v=7939f2b4"></script>
-  <script defer src="calendar.js?v=34fd0de4"></script>
+  <script defer src="calendar.js?v=70af6548"></script>
 
 </body>
 </html>

@@ -18,6 +18,8 @@ const SITE_MENU = [
       { key: "timetable", label: "Timetable", href: "timetable.html", icon: "timetable", desc: "Classes and rooms, live from UniBo" },
       { key: "exams", label: "Exams", href: "exams.html", icon: "exams", desc: "Dates and registration windows" },
       { key: "calendar", label: "Calendar", href: "calendar.html", icon: "calendar", desc: "Subscribe on your phone" },
+      { key: "academic-rules", label: "Academic Rules", href: "academic-rules.html", icon: "scale", desc: "Re-sits, grades, plagiarism and AI" },
+      { key: "journey", label: "Programme Journey", href: "journey.html", icon: "graduation", desc: "Your two years, degree, grants, fees" },
     ],
   },
   {
@@ -33,6 +35,7 @@ const SITE_MENU = [
   {
     label: "About",
     items: [
+      { key: "support", label: "Support & Contacts", href: "support.html", icon: "phone", desc: "Who to ask, wellbeing, leave" },
       { key: "roadmap", label: "Roadmap & Updates", href: "roadmap.html", icon: "route", desc: "What is new and what is next" },
       { key: "about", label: "About the Hub", href: "index.html#about", icon: "info", desc: "Student-run, free and unofficial" },
       { key: "privacy", label: "Privacy", href: "privacy.html", icon: "lock", desc: "What stays on your device" },

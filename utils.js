@@ -148,3 +148,39 @@ function courseIcon(emoji, className) {
   else box.textContent = emoji;
   return box;
 }
+
+// ----- Source labels: "Official · EU-HEM Handbook · verified 6 Oct 2026" or "Student tip · ESN Bologna" -----
+// Every fact taken from a document points to a source id in content/sources.json (docs/sources.md).
+let sourcesPromise = null;
+
+// Loads content/sources.json once per page: { "euhem-handbook-2026": { ...source, kind, typeLabel } }
+function loadSources() {
+  if (!sourcesPromise) {
+    sourcesPromise = fetch("content/sources.json")
+      .then((response) => (response.ok ? response.json() : { sources: [], types: {} }))
+      .then((data) => Object.fromEntries((data.sources || []).map((source) => {
+        const type = (data.types || {})[source.type] || { label: "Source", kind: "tip" };
+        return [source.id, { ...source, kind: type.kind, typeLabel: type.label }];
+      })))
+      .catch(() => ({}));
+  }
+  return sourcesPromise;
+}
+
+// The label element for one source id (sources = the result of loadSources())
+function sourceLabel(sourceId, sources) {
+  const source = sources[sourceId];
+  const label = createElement("span", `source-badge is-${source ? source.kind : "tip"}`);
+  if (!source) {
+    label.textContent = "Source not listed";
+    return label;
+  }
+  const parts = [source.typeLabel, source.shortTitle || source.title];
+  if (source.kind === "official" && source.lastChecked) {
+    const [y, m, d] = source.lastChecked.split("-").map(Number);
+    parts.push(`verified ${d} ${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][m - 1]} ${y}`);
+  }
+  label.textContent = parts.join(" · ");
+  label.title = source.title + (source.cohort ? `, cohort ${source.cohort}` : "");
+  return label;
+}
