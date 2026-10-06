@@ -135,6 +135,11 @@
   }
 
   function startExam(kind) {
+    const existing = readState().active;
+    if (existing && !existing.submitted) {
+      const replace = root.confirm("Starting a new attempt will replace your current in-progress exam. Continue?");
+      if (!replace) return;
+    }
     const selected = buildSet(kind);
     if (!selected.length) return;
     const now = Date.now();
@@ -287,7 +292,7 @@
         <div class="hem-official-item"><span>Conditions</span><strong>Closed book</strong></div>
         <div class="hem-official-item"><span>Question types</span><strong>Open · T/F · MCQ</strong></div>
       </div>
-      <p>The available course material does not specify the exact number or weighting of each question type. The Student Hub mock composition below is therefore practice design, not an official blueprint.</p>
+      <p>The available course material does not specify the exact number or weighting of each question type. The Student Hub mock composition below is therefore practice design, not an official blueprint. Sessions 6–8 are not included until their official lecture materials are available.</p>
     `;
     hero.append(copy, official);
     shell.appendChild(hero);
@@ -297,7 +302,7 @@
       const remaining = state.active.deadline - Date.now();
       resume.innerHTML = `
         <div><strong>Exam in progress.</strong><br>
-        ${state.active.kind === "full" ? "90-minute full mock" : "20-minute quick drill"} ·
+        ${state.active.kind === "full" ? "90-minute mock · Sessions 1–5" : "20-minute quick drill"} ·
         ${currentQuestions(state.active).filter((q) => isAnswered(q, state.active.answers[q.id])).length} of ${state.active.questionIds.length} answered ·
         ${timeText(remaining)} remaining.</div>
       `;
@@ -312,9 +317,9 @@
 
     const full = el("article", "hem-exam-mode is-primary");
     full.innerHTML = `
-      <p class="hem-kicker">FULL MOCK / 90 MINUTES</p>
-      <h2>Mixed exam simulation</h2>
-      <p>Balanced across Sessions 1–5. Answers stay hidden until submission. Objective questions are scored automatically; open questions are reviewed against model answers afterwards.</p>
+      <p class="hem-kicker">90-MINUTE MOCK / CURRENT CONTENT</p>
+      <h2>Full-length timing, current-content coverage</h2>
+      <p>Balanced across the five sessions currently published in the Student Hub. Answers stay hidden until submission. Objective questions are scored automatically; open questions are reviewed against model answers afterwards.</p>
       <div class="hem-mode-spec">
         <span>15 MCQs</span><span>10 True / False</span><span>3 open questions</span><span>Sessions 1–5</span>
       </div>
@@ -406,7 +411,7 @@
     const toolbar = el("div", "hem-exam-toolbar");
     const title = el("div", "hem-exam-toolbar-title");
     title.innerHTML = `
-      <strong>${active.kind === "full" ? "90-minute full mock" : "20-minute quick drill"}</strong>
+      <strong>${active.kind === "full" ? "90-minute mock · Sessions 1–5" : "20-minute quick drill"}</strong>
       <span>${answered} of ${questions.length} answered · objective answers stay hidden until submission</span>
     `;
     const clock = el("div", "hem-exam-clock");
