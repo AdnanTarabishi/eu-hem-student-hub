@@ -142,6 +142,29 @@ ok("no standalone-preview leftovers: one menu script, no demo dashboard text, no
     ok("saved study plan: compact hero and the plan card shows CFU progress (dashboard.js)");
     await page.context().close();
 
+    // --- Welcome panel (onboarding.js): progress ring, next step, step cards, Hide, complete state ---
+    page = await open("index.html", { storage: { "euhem-onboarding-v1": JSON.stringify({ done: { search: true, theme: true } }) } });
+    await page.locator("#welcome .welcome-ring").waitFor();
+    assert.strictEqual(await page.getAttribute("#welcome .welcome-ring", "aria-valuenow"), "2");
+    assert.match(await page.textContent("#welcome .welcome-ring-label"), /2\/5\s*40%/);
+    assert.match(await page.textContent("#welcome .welcome-next"), /Next up\s*Choose your study plan/);
+    assert.strictEqual(await page.locator("#welcome .setup-step").count(), 5);
+    assert.strictEqual(await page.locator("#welcome .setup-step.is-done").count(), 2);
+    assert.strictEqual(await page.locator("#welcome .setup-step.is-next").count(), 1);
+    assert.match(await page.textContent("#welcome .setup-step.is-next"), /Step 1.*Choose your study plan/s);
+    assert.match(await page.textContent("#welcome .welcome-privacy"), /Saved on this device only/);
+    await page.click("#welcome .welcome-hide");
+    assert.strictEqual(await page.locator("#welcome").count(), 0, "Hide removes the panel");
+    await page.context().close();
+    page = await open("index.html#welcome", { storage: { "euhem-onboarding-v1": JSON.stringify({ done: { plan: true, calendar: true, install: "skipped", search: true, theme: true } }) } });
+    await page.locator("#welcome.is-complete").waitFor();
+    assert.match(await page.textContent("#welcome h2"), /You're all set/);
+    assert.deepStrictEqual(await page.$$eval("#welcome .welcome-explore a", (all) => all.map((a) => a.getAttribute("href"))),
+      ["academic-rules.html", "journey.html", "city-guide.html"]);
+    assert.match(await page.textContent("#welcome .setup-step.is-skipped"), /Skipped/);
+    await page.context().close();
+    ok("welcome panel: progress ring, next step highlighted, done and skipped steps, Hide, and the complete state with links");
+
     // --- Theme: theme.js keeps the choice ---
     page = await open();
     await page.click(".header-actions .theme-toggle");
