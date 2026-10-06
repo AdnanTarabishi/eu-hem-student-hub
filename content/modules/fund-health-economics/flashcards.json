@@ -3,8 +3,7 @@
     "id": "fund-health-economics.fc.001",
     "topic": "fund-health-economics.health-capital",
     "front": "Why is the demand for health care called a 'derived demand'?",
-    "back": "Because what people really want is health. Health care is demanded mainly as a means to produce health.",
-    "sample": true
+    "back": "Because what people really want is health. Health care is demanded mainly as a means to produce health."
   },
   {
     "id": "fund-health-economics.fc.002",
@@ -248,5 +247,143 @@
     "topic": "fund-health-economics.demand",
     "front": "What policy concern does Session 2 raise about cost-sharing?",
     "back": "Higher cost-sharing can reduce healthcare use without necessarily distinguishing between high-value and low-value care."
+  },
+  {
+    "id": "fund-health-economics.fc.042",
+    "topic": "fund-health-economics.health-capital",
+    "front": "Why does the Grossman model treat health as a form of capital?",
+    "back": "Because current health is a stock shaped by past and present choices that provides services now and in future periods rather than disappearing immediately."
+  },
+  {
+    "id": "fund-health-economics.fc.043",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What does it mean to say health is a prerequisite for other activities?",
+    "back": "Poor health reduces productive time and can limit work, home production and even the ability to enjoy consumption."
+  },
+  {
+    "id": "fund-health-economics.fc.044",
+    "topic": "fund-health-economics.health-capital",
+    "front": "How do individuals produce health in the Grossman framework?",
+    "back": "By combining their own time devoted to health-producing activities with purchased healthcare inputs, subject to constraints."
+  },
+  {
+    "id": "fund-health-economics.fc.045",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What is an unhealthy behaviour in the Session 3 framework?",
+    "back": "A choice that sacrifices future health in exchange for another goal or short-term benefit."
+  },
+  {
+    "id": "fund-health-economics.fc.046",
+    "topic": "fund-health-economics.health-capital",
+    "front": "Does the Grossman model assume people fully control their health?",
+    "back": "No. Choices matter, but genetics, environment and chance also affect health."
+  },
+  {
+    "id": "fund-health-economics.fc.047",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What does forward-looking behaviour mean in the Grossman model?",
+    "back": "Individuals consider future as well as current costs and benefits when making health-related choices."
+  },
+  {
+    "id": "fund-health-economics.fc.048",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What three roles does health play in the Grossman model?",
+    "back": "Health is a stock of capital, a consumption good that provides utility, and an input into production through healthy or productive time."
+  },
+  {
+    "id": "fund-health-economics.fc.049",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What is the home good Z?",
+    "back": "Everything other than health that contributes to utility and is produced using time and market goods."
+  },
+  {
+    "id": "fund-health-economics.fc.050",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What is the free-lunch zone of the Grossman PPF?",
+    "back": "A low-health region where an improvement in health releases enough sick time that both health and production of the home good can rise together."
+  },
+  {
+    "id": "fund-health-economics.fc.051",
+    "topic": "fund-health-economics.health-capital",
+    "front": "Why does the Grossman PPF eventually slope downward?",
+    "back": "At higher health levels, extra health investment yields smaller reductions in sick time, so improving health requires resources that could otherwise produce the home good."
+  },
+  {
+    "id": "fund-health-economics.fc.052",
+    "topic": "fund-health-economics.health-capital",
+    "front": "Where is the usual optimum when a person values both health H and home goods Z?",
+    "back": "On the downward-sloping trade-off part of the PPF, where the highest attainable indifference curve is tangent to the frontier."
+  },
+  {
+    "id": "fund-health-economics.fc.053",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What changes in the pure-investment version of the model?",
+    "back": "Direct utility from health is ignored; health is valuable because it creates productive time that can be used for work and other activities."
+  },
+  {
+    "id": "fund-health-economics.fc.054",
+    "topic": "fund-health-economics.health-capital",
+    "front": "How does the health stock evolve over time?",
+    "back": "Next-period health equals surviving current health plus gross health investment: H_t = (1 − δ_t)H_{t−1} + I_{t−1}."
+  },
+  {
+    "id": "fund-health-economics.fc.055",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What is the difference between gross and net investment in health?",
+    "back": "Gross investment is the chosen addition to health stock. Net investment is gross investment minus depreciation of the inherited health stock."
+  },
+  {
+    "id": "fund-health-economics.fc.056",
+    "topic": "fund-health-economics.health-capital",
+    "front": "When does health stock decline from one period to the next?",
+    "back": "When gross health investment is smaller than depreciation, so I_{t−1} < δ_t H_{t−1}."
+  },
+  {
+    "id": "fund-health-economics.fc.057",
+    "topic": "fund-health-economics.health-capital",
+    "front": "Which variables are stocks and which are flows in Session 3?",
+    "back": "Health capital H is a stock. Gross investment and the flow of healthy days are flows."
+  },
+  {
+    "id": "fund-health-economics.fc.058",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What does the MEC curve represent?",
+    "back": "The marginal efficiency of health capital: the return to an additional unit of health capital in terms of lifetime productive value or utility."
+  },
+  {
+    "id": "fund-health-economics.fc.059",
+    "topic": "fund-health-economics.health-capital",
+    "front": "Why is the MEC higher when health is low?",
+    "back": "At low health, small health improvements can release substantial productive time, so the return to additional health capital is high."
+  },
+  {
+    "id": "fund-health-economics.fc.060",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What determines the user cost of health capital in the pure-investment model?",
+    "back": "The opportunity cost of funds plus health depreciation, summarized in the lecture as r + δ."
+  },
+  {
+    "id": "fund-health-economics.fc.061",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What is the Grossman prediction for health and healthcare as people age?",
+    "back": "Optimal health falls as depreciation rises; the effect on healthcare demand is ambiguous because people desire less health but need more care to maintain any given stock."
+  },
+  {
+    "id": "fund-health-economics.fc.062",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What is the Grossman prediction when wages rise?",
+    "back": "The return to healthy time rises, shifting the MEC to the right; optimal health and healthcare demand rise in the lecture's comparative statics."
+  },
+  {
+    "id": "fund-health-economics.fc.063",
+    "topic": "fund-health-economics.health-capital",
+    "front": "How does education affect health and healthcare demand in the lecture?",
+    "back": "Education improves the efficiency of producing health, increasing optimal health; healthcare demand is ambiguous because more health is desired but less care may be needed to produce each unit."
+  },
+  {
+    "id": "fund-health-economics.fc.064",
+    "topic": "fund-health-economics.health-capital",
+    "front": "How does a lower medical-care price affect equilibrium in the lecture?",
+    "back": "It lowers the cost of producing health, increasing optimal health and raising healthcare demand."
   }
 ]
