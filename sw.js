@@ -8,7 +8,7 @@
 //   "Update available · Reload", and old saved copies are deleted.
 // Nothing personal is stored here: only public site files and public data.
 
-const VERSION = "ed538bc9";
+const VERSION = "universities-polish-20261006";
 const SITE_CACHE = `site-${VERSION}`;
 const DATA_CACHE = "data"; // kept across versions, so offline data survives an update
 
@@ -27,6 +27,10 @@ const SITE_FILES = [
   "style.css", "experiences.css", "experiences-data.js", "experiences.js", "lecture.css", "lecture.js", "lecture-activities.js", "icons.svg", "manifest.webmanifest",
   "fonts/inter-latin.woff2", "fonts/inter-latin-ext.woff2", "fonts/source-serif-4-latin-600.woff2",
   "img/app-icon.svg", "img/app-icon-192.png", "img/favicon-32.png", "img/apple-touch-icon.png",
+  "img/universities/mci-campus-600.webp",
+  "img/universities/eur-campus-600.webp",
+  "img/universities/uio-campus-600.webp",
+  "img/universities/unibo-campus-600.webp",
   "assets/images/cities/bologna/archiginnasio-anatomical-theatre-640.webp", "assets/images/cities/bologna/archiginnasio-anatomical-theatre-1200.webp", "assets/images/cities/oslo/blindern-campus-640.webp", "assets/images/cities/oslo/blindern-campus-1200.webp", "assets/images/cities/rotterdam/campus-woudestein-640.webp", "assets/images/cities/rotterdam/campus-woudestein-1200.webp", "assets/images/cities/innsbruck/valley-view-640.webp", "assets/images/cities/innsbruck/valley-view-1200.webp",
   "theme.js", "home.js", "site-nav.js", "utils.js", "ui.js", "search.js", "pwa.js", "announcements.js",
   "programme.js", "unibo-data.js", "dashboard.js", "onboarding.js", "studyplan.js",
