@@ -1,10 +1,40 @@
 [
-  {"id": "statistics.risk-uncertainty", "title": "Risk and uncertainty in health decisions"},
-  {"id": "statistics.probability", "title": "Probability, populations and samples"},
-  {"id": "statistics.random-variables", "title": "Random variables, expected value and variance"},
-  {"id": "statistics.causal-inference", "title": "Causal inference: experiments vs observational data"},
-  {"id": "statistics.descriptive", "title": "Describing data: numbers, tables and graphs"},
-  {"id": "statistics.inference", "title": "Sampling distributions, confidence intervals and hypothesis tests"},
-  {"id": "statistics.regression", "title": "Simple and multiple regression"},
-  {"id": "statistics.software", "title": "Data analysis with Stata or Excel"}
+  {
+    "id": "statistics.risk-uncertainty",
+    "title": "Risk and uncertainty in health decisions"
+  },
+  {
+    "id": "statistics.probability",
+    "title": "Probability, populations and samples"
+  },
+  {
+    "id": "statistics.random-variables",
+    "title": "Random variables, expected value and variance"
+  },
+  {
+    "id": "statistics.causal-inference",
+    "title": "Causal inference: experiments vs observational data"
+  },
+  {
+    "id": "statistics.descriptive",
+    "title": "Describing data: numbers, tables and graphs"
+  },
+  {
+    "id": "statistics.sampling",
+    "title": "Class 5: Sampling, sampling error and confidence intervals",
+    "notes": "notes/sampling.md",
+    "lecture": "lectures/sampling.json"
+  },
+  {
+    "id": "statistics.inference",
+    "title": "Sampling distributions, confidence intervals and hypothesis tests"
+  },
+  {
+    "id": "statistics.regression",
+    "title": "Simple and multiple regression"
+  },
+  {
+    "id": "statistics.software",
+    "title": "Data analysis with Stata or Excel"
+  }
 ]

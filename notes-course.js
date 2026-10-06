@@ -16,6 +16,7 @@ const TABS = [
   { key: "overview", label: "Overview" },
   { key: "schedule", label: "Schedule" },
   { key: "exam", label: "Exam" },
+  { key: "lectures", label: "Lectures" },
   { key: "topics", label: "Topics" },
   { key: "concepts", label: "Key Concepts" },
   { key: "practice", label: "Practice" },
@@ -89,6 +90,7 @@ function availableTabs() {
     overview: true,
     schedule: loading || courseSessions().length > 0,
     exam: loading || courseExams().length > 0,
+    lectures: c.topics.some((t) => t.lecture),
     topics: Object.keys(page.notesByTopic).length > 0,
     concepts: conceptsForCourse(c, page.data.concepts).length > 0,
     practice: c.flashcards.length + c.questions.length > 0,
@@ -183,6 +185,7 @@ function renderPage() {
   if (tab === "overview") renderOverview(panel);
   if (tab === "schedule") renderSchedule(panel, params);
   if (tab === "exam") renderExam(panel);
+  if (tab === "lectures") renderLectures(panel);
   if (tab === "topics") renderTopics(panel, params);
   if (tab === "concepts") renderConcepts(panel);
   if (tab === "practice") renderPractice(panel, { course: page.course, params, topicTitle, topicLink, navigate });
@@ -368,6 +371,31 @@ function renderExam(panel) {
 
 // ----- Topics -----
 
+function renderLectures(panel) {
+  panel.appendChild(createElement("h3", null, "Interactive lectures"));
+  panel.appendChild(createElement("p", "schedule-meta", "Original study explanations, interactive activities and practice questions. Official slides stay on Virtuale."));
+  for (const module of page.course.modules) {
+    const lectures = module.topics.filter((t) => t.lecture);
+    if (!lectures.length) continue;
+    if (page.course.modules.length > 1) panel.appendChild(createElement("h4", "module-heading", module.info.name));
+    const list = createElement("ol", "topic-list");
+    for (const topic of lectures) {
+      const item = createElement("li", "topic-row");
+      const main = createElement("div", "topic-row-main");
+      const link = createElement("a", "topic-title", topic.title);
+      link.href = lectureUrl(topic.id);
+      main.appendChild(link);
+      const count = module.questions.filter((q) => q.topic === topic.id && q.type === "mcq").length;
+      main.appendChild(createElement("span", "schedule-meta", `Study guide · Interactive activities${count ? ` · ${count} MCQs` : ""}`));
+      item.appendChild(main);
+      const status = getTopicStatus(loadProgress(), topic.id);
+      item.appendChild(createElement("span", `topic-status status-${status || "none"}`, `${STATUS_ICONS[status]} ${STATUS_LABELS[status]}`));
+      list.appendChild(item);
+    }
+    panel.appendChild(list);
+  }
+}
+
 function renderTopics(panel, params) {
   if (params.topic) {
     renderTopicReader(panel, params.topic);
@@ -395,6 +423,11 @@ function renderTopics(panel, params) {
       main.appendChild(createElement("span", "schedule-meta", meta.join(" · ")));
       item.appendChild(main);
       const side = createElement("div", "topic-row-side");
+      if (topic.lecture) {
+        const lecture = createElement("a", "inline-link", "Interactive lecture →");
+        lecture.href = lectureUrl(topic.id);
+        main.appendChild(lecture);
+      }
       if (notes && notes.meta.sample) side.appendChild(sampleTag());
       if (notes) {
         const status = getTopicStatus(progress, topic.id);
@@ -536,6 +569,12 @@ function renderTopicReader(panel, topicId) {
   if (notes.meta.sample) metaLine.appendChild(sampleTag());
   notice.appendChild(metaLine);
   main.appendChild(notice);
+
+  if (topic.lecture) {
+    const lecture = createElement("a", "button", "Open interactive lecture: notes, activities & MCQs →");
+    lecture.href = lectureUrl(topic.id);
+    main.appendChild(lecture);
+  }
 
   if (notes.review) {
     const review = createElement("div", "review-box");

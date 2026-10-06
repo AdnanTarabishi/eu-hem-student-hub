@@ -115,6 +115,32 @@ async function loadNotes(moduleData, topic, read = fetchText) {
   return { meta, ...splitReview(body) };
 }
 
+// Lecture files stay inside the module folder. Reject absolute URLs and traversal.
+function isLecturePath(file, extension) {
+  return typeof file === "string" && new RegExp(`^lectures/[a-z0-9]+(-[a-z0-9]+)*\\.${extension}$`).test(file);
+}
+
+const LECTURE_ACTIVITIES = ["sampling", "tiny-population", "confidence-interval"];
+
+async function loadLecture(moduleData, topic, read = fetchText) {
+  if (!isLecturePath(topic.lecture, "json")) throw new Error("Lecture configuration must be a JSON file in the module's lectures folder.");
+  const config = await readJson(read, moduleData.folder + topic.lecture, null);
+  if (!config) return null;
+  if (config.schemaVersion !== 1 || config.topic !== topic.id) throw new Error("Lecture schema or topic ID does not match.");
+  if (!isLecturePath(config.guide, "html")) throw new Error("Lecture guide must be an HTML file in the module's lectures folder.");
+  if (!Array.isArray(config.activities) || config.activities.some((a) => !LECTURE_ACTIVITIES.includes(a)) || new Set(config.activities).size !== config.activities.length) {
+    throw new Error("Lecture activities must be a list of unique supported activity names.");
+  }
+  for (const field of ["intro", "attribution"]) {
+    if (typeof config[field] !== "string" || !config[field].trim()) throw new Error(`Lecture needs ${field}.`);
+  }
+  return config;
+}
+
+function lectureUrl(topicId) {
+  return "lecture.html?" + new URLSearchParams({ topic: topicId }).toString();
+}
+
 // Loads settings, the programme, every course with its modules' content, and the shared concepts.
 // Each course also gets combined lists of all its modules' topics, flashcards, questions, resources.
 async function loadAll(read = fetchText) {
@@ -183,7 +209,10 @@ function itemUrl(itemId, data) {
   }
   const courseId = courseIdOf(itemId, data);
   if (type === "course") return courseUrl(courseId);
-  if (type === "topic") return courseUrl(courseId, { tab: "topics", topic: itemId });
+  if (type === "topic") {
+    const found = data && topicById(itemId, data);
+    return found && found.topic.lecture ? lectureUrl(itemId) : courseUrl(courseId, { tab: "topics", topic: itemId });
+  }
   if (type === "flashcard") return courseUrl(courseId, { tab: "practice", card: itemId });
   if (type === "question") return courseUrl(courseId, { tab: "practice", question: itemId }) + "#" + itemId;
   return courseUrl(courseId, { tab: "resources" }) + "#" + itemId;
@@ -412,6 +441,7 @@ if (typeof module !== "undefined") {
   module.exports = {
     CONTENT_ROOT, QUESTION_TYPES, DIFFICULTIES, RESOURCE_TYPES,
     readJson, parseFrontMatter, splitReview, reviewPoints, loadModuleContent, loadNotes, loadAll,
+    isLecturePath, LECTURE_ACTIVITIES, loadLecture, lectureUrl,
     moduleIdOf, courseIdOf, itemTypeOf, teachingStatus,
   };
 }

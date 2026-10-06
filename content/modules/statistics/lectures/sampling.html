@@ -1,0 +1,228 @@
+<!-- Original study explanations. The lecture PDF is not reproduced here. -->
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">01 / Find your bearings</p>
+    <h2>From people to parameters.</h2>
+  </div>
+  <p>
+    We usually cannot measure everyone. A random sample lets us estimate what we
+    want to know.
+  </p>
+</div>
+<div class="flow">
+  <div class="flow-step">
+    <span>Population</span><strong>All children in a city</strong>
+  </div>
+  <span class="flow-arrow" aria-hidden="true">→</span>
+  <div class="flow-step">
+    <span>Random sample</span><strong>100 children</strong>
+  </div>
+  <span class="flow-arrow" aria-hidden="true">→</span>
+  <div class="flow-step">
+    <span>Estimate</span><strong>Average: 28 kg</strong>
+  </div>
+</div>
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">02 / Three easily confused words</p>
+    <h2>The target, the rule, the result.</h2>
+  </div>
+  <p>Tap a card to reveal the healthcare example.</p>
+</div>
+<div class="grid3">
+  <button type="button" class="card concept" aria-expanded="false">
+    <span class="badge">μ</span>
+    <h3>Estimand</h3>
+    <p>The population quantity you want to know.</p>
+    <span class="tap">Reveal example +</span
+    ><span class="reveal"
+      >The true average weight of all children in the city, μ. It is the target,
+      usually unknown.</span
+    >
+  </button>
+  <button type="button" class="card concept" aria-expanded="false">
+    <span class="badge">x̄</span>
+    <h3>Estimator</h3>
+    <p>The rule you use to estimate that quantity.</p>
+    <span class="tap">Reveal example +</span
+    ><span class="reveal"
+      >Add the weights in your sample and divide by the number of children: x̄ =
+      Σxᵢ / n.</span
+    >
+  </button>
+  <button type="button" class="card concept" aria-expanded="false">
+    <span class="badge">28</span>
+    <h3>Estimate</h3>
+    <p>The actual value calculated from your sample.</p>
+    <span class="tap">Reveal example +</span
+    ><span class="reveal"
+      >Your measured sample has an average weight of 28 kg. That number is the
+      estimate.</span
+    >
+  </button>
+</div>
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">03 / Make the distinction</p>
+    <h2>Individuals vary. Averages vary too.</h2>
+  </div>
+  <p>
+    A different random sample usually gives a different answer. That variation
+    is part of sampling.
+  </p>
+</div>
+<div class="grid2">
+  <article class="card">
+    <span class="badge">σ</span>
+    <h3>Standard deviation</h3>
+    <p>
+      Describes the spread of <strong>individual observations</strong> in the
+      population. Some children weigh much more or less than others.
+    </p>
+    <div class="formula">σ = 12.99 kg</div>
+    <p>
+      Measuring more children does not, by itself, change the population’s
+      spread.
+    </p>
+    <span class="reference">LECTURE · SLIDES 39–40</span>
+  </article>
+  <article class="card">
+    <span class="badge">SE</span>
+    <h3>Standard error</h3>
+    <p>
+      Describes the spread of
+      <strong>sample means across repeated samples</strong>. It tells you about
+      the precision of your estimator.
+    </p>
+    <div class="formula">SE(X̄) = σ / √n</div>
+    <p>
+      With n = 100, SE = 12.99 / 10 = <strong>1.299 kg</strong>. Both SD and SE
+      use kg, not kg².
+    </p>
+    <span class="reference"
+      >ASSUMPTION · INDEPENDENT, IDENTICALLY DISTRIBUTED DRAWS</span
+    >
+  </article>
+</div>
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">04 / The theory you need</p>
+    <h2>Why the sample mean works.</h2>
+  </div>
+</div>
+<div class="grid2">
+  <article class="card details-stack">
+    <details open>
+      <summary>Unbiased: centered on the right target</summary>
+      <p>
+        E[X̄] = μ. Across repeated random samples, the average sample mean equals
+        the population mean. A particular sample can still miss the target.
+      </p>
+    </details>
+    <details>
+      <summary>Consistent: more data brings greater precision</summary>
+      <p>
+        As sample size increases, the sample mean converges in probability to μ
+        under the lecture’s i.i.d., finite-variance assumptions. Unbiasedness
+        and consistency are different properties.
+      </p>
+    </details>
+    <details>
+      <summary>Sampling error is different from selection bias</summary>
+      <p>
+        Sampling error is chance variation from observing only a sample.
+        Selection bias systematically favors some people. A larger sample does
+        not fix a biased selection process.
+      </p>
+    </details>
+  </article>
+  <article class="card">
+    <h3>When does the normal distribution enter?</h3>
+    <p>
+      If the population is normal, the sample mean is normal for any n, under
+      independent sampling.
+    </p>
+    <p>
+      For i.i.d. observations with finite variance, the central limit theorem
+      makes the standardized sample mean approximately normal as n grows.
+    </p>
+    <div class="note">
+      The lecture uses n ≥ 30 as a rule of thumb. Strong skewness or extreme
+      tails can require a larger sample; 30 is not a universal guarantee.
+    </div>
+    <p class="reference" style="margin: 16px 0 0">LECTURE · SLIDES 41–44</p>
+  </article>
+</div>
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">05 / Put the numbers together</p>
+    <h2>Two examples from your lecture.</h2>
+  </div>
+</div>
+<div class="grid2">
+  <article class="card">
+    <span class="pill">EXERCISE 5.1</span>
+    <h3 style="margin-top: 18px">A tiny population, many possible samples.</h3>
+    <p>Five people weigh 65, 89, 75, 64, and 86 kg.</p>
+    <div class="formula small-formula">μ = 379 / 5 = 75.8 kg</div>
+    <p>
+      For samples of four, the five possible means are 78.5, 72.5, 76, 78.75,
+      and 73.25 kg. Their average is <strong>75.8 kg</strong>: an illustration
+      of unbiasedness.
+    </p>
+    <p>
+      Sampling without replacement from this tiny population needs a
+      finite-population correction for the standard error. The lab shows the
+      exact distribution instead.
+    </p>
+  </article>
+  <article class="card">
+    <span class="pill">EXERCISE 5.2</span>
+    <h3 style="margin-top: 18px">
+      Individual weights are uniform. Means are approximately normal.
+    </h3>
+    <p>
+      Population mean = 27.5 kg; variance = 168.75 kg²; standard deviation ≈
+      12.99 kg. Take n = 100 independent observations.
+    </p>
+    <div class="formula small-formula">
+      E[X̄] = 27.5 kg<br />SE(X̄) ≈ 1.299 kg
+    </div>
+    <p>
+      The sample mean is approximately normal even though individual weights are
+      uniform. Try changing n in the sampling lab.
+    </p>
+  </article>
+</div>
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">06 / Extend the idea</p>
+    <h2>A range for the unknown mean.</h2>
+  </div>
+  <span class="pill">SUPPLEMENTARY · CONFIDENCE INTERVALS</span>
+</div>
+<article class="card">
+  <p>
+    The short lecture lists confidence intervals as a learning objective but
+    does not develop the calculation. This supplementary explanation connects
+    them to standard error.
+  </p>
+  <div class="formula">95% CI = x̄ ± 1.96 × σ / √n</div>
+  <p>
+    Use this z interval when the population standard deviation is known and the
+    sampling distribution is normal or approximately normal. For an observed
+    mean of 70 kg, σ = 20 kg, and n = 100, the interval is
+    <strong>66.08 to 73.92 kg</strong>.
+  </p>
+  <div class="note">
+    <strong>Interpret it carefully.</strong> In repeated sampling, about 95% of
+    intervals made by this method contain the fixed population mean. This is not
+    a range containing 95% of individual weights, or a 95% probability assigned
+    to μ after this particular interval is observed.
+  </div>
+  <p class="small muted" style="margin: 18px 0 0">
+    If population SD is unknown, the usual normal-population method uses sample
+    SD and a t critical value instead. That calculation is outside this page’s
+    known-σ calculator.
+  </p>
+</article>
