@@ -112,8 +112,12 @@ function adviceBox(group) {
   if (group.advice) {
     details.appendChild(createElement("p", null, group.advice));
   } else {
-    details.appendChild(createElement("p", "placeholder-text",
-      "✍ PLACEHOLDER: advice to be written by students who took these courses. Nothing here yet."));
+    // No advice yet: say so plainly and invite students who took these courses to share it
+    const empty = createElement("p", "plan-advice-empty", "No student advice yet. Took one of these courses? ");
+    const share = createElement("a", null, "Share a tip");
+    share.href = "contact.html";
+    empty.appendChild(share);
+    details.appendChild(empty);
   }
   const links = createElement("p", "schedule-meta", "Official course pages: ");
   group.courses.forEach((code, i) => {
@@ -390,7 +394,7 @@ async function initStudyPlan() {
       deadline.appendChild(createElement("strong", null, "none."));
       if (submission.deadlineNote) deadline.appendChild(document.createTextNode(` ${submission.deadlineNote.replace(/^There is no deadline, but y/, "Y")} `));
       if (submission.deadlineSource) deadline.appendChild(externalLink("Source ↗", submission.deadlineSource));
-    } else deadline.appendChild(createElement("strong", "placeholder-text", "⚠ PLACEHOLDER: deadline to be added"));
+    } else deadline.appendChild(createElement("strong", null, "not announced yet."));
 
     const source = document.getElementById("plan-source");
     source.textContent = `Rules for cohort ${cohort.label}. Last checked: ${formatDay(cohort.lastChecked, { day: "numeric", month: "short", year: "numeric" })}. `;

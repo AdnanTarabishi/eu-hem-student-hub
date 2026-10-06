@@ -4201,9 +4201,9 @@ mark {
   font-size: 1.05rem;
 }
 
-.placeholder-text {
-  color: var(--color-danger-text);
-  font-style: italic;
+/* Study plan: a course group without student advice yet (empty state) */
+.plan-advice-empty {
+  color: var(--text-secondary);
 }
 
 #plan-views {

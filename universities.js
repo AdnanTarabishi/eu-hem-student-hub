@@ -180,7 +180,7 @@
         photo.loading = "lazy";
         photo.decoding = "async";
         const label = el("span", "uni-gallery-label", media.label || "Another view");
-        thumb.append(photo, label);
+        thumb.replaceChildren(photo, label); // the photo and its label only (the name is in aria-label)
         strip.appendChild(thumb);
       }
       figure.appendChild(strip);

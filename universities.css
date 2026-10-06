@@ -620,8 +620,8 @@
 .universities-page .uni-gallery-thumb::after { content: ""; position: absolute; inset: 42% 0 0; background: linear-gradient(to bottom,transparent,rgba(5,18,34,.78)); pointer-events: none; }
 .universities-page .uni-gallery-thumb:hover img { transform: scale(1.035); filter: saturate(1.04); }
 .universities-page .uni-gallery-label { position: absolute; z-index: 1; left: 12px; right: 12px; bottom: 10px; font-size: .71rem; font-weight: 700; line-height: 1.35; text-shadow: 0 1px 4px rgba(0,0,0,.4); }
-.universities-page .uni-profile-photo > figcaption { padding-right: 96px; }
-.universities-page .uni-photo-expand { bottom: 150px; }
+/* Gallery thumbs: a fixed landscape shape, photo edge to edge (no button padding) */
+.universities-page .uni-profile-photo .uni-gallery-thumb { aspect-ratio: 16 / 10; padding: 0; }
 .universities-page .uni-photo-credit-item { padding: 15px 0; border-top: 1px solid var(--color-border); }
 .universities-page .uni-photo-credit-item:first-of-type { border-top: 0; padding-top: 0; }
 .universities-page .uni-photo-credit-item h4 { margin: 0 0 8px; font-size: .82rem; color: var(--color-text); }
@@ -630,12 +630,10 @@
   .universities-page .uni-proof-strip { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .universities-page .uni-proof-strip > p { grid-column: 1 / -1; max-width: none; }
   .universities-page .uni-profile-thumbs { grid-template-columns: 1fr; }
-  .universities-page .uni-photo-expand { bottom: 148px; }
 }
 @media (max-width: 560px) {
   .universities-page .uni-gallery-thumb, .universities-page .uni-gallery-thumb img { min-height: 104px; }
-  .universities-page .uni-profile-photo > figcaption { padding-right: 0; }
-  .universities-page .uni-photo-expand { position: static; width: 100%; margin-top: 10px; }
+  .universities-page .uni-profile-photo .uni-photo-expand { position: static; width: 100%; margin-top: 10px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .universities-page .uni-card, .universities-page .uni-card-image img, .universities-page .uni-gallery-thumb img { transition: none !important; }
