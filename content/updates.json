@@ -5,12 +5,12 @@
   "items": [
     {
       "id": "academic-rules-journey-support",
-      "date": null,
+      "date": "2026-10-06",
       "title": "Academic rules, your programme journey and support contacts",
       "summary": "Three new pages, based on the EU-HEM handbook and official university pages: re-sits and grades, your two years step by step, and who to contact for help.",
       "category": "learning",
       "type": "new",
-      "status": "draft",
+      "status": "published",
       "highlights": [
         "Re-sit guide and grading scales for all four universities.",
         "Your track's cities, the four degree titles, Erasmus+ grants and fees.",
@@ -31,7 +31,24 @@
           "url": "support.html"
         }
       ],
-      "evidence": null
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37485468977",
+        "deployedAt": "2026-10-06T17:12:58+02:00",
+        "commits": [
+          {
+            "sha": "6b16fb60b333d8cab28242d7785db056ef8fc181",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/6b16fb60b333d8cab28242d7785db056ef8fc181"
+          },
+          {
+            "sha": "ae4eeca3435ac5aba2935201c1dbfae54328d8c9",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/ae4eeca3435ac5aba2935201c1dbfae54328d8c9"
+          },
+          {
+            "sha": "7d104ec72e391da1c03fb412fa1a0a779fd23781",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/7d104ec72e391da1c03fb412fa1a0a779fd23781"
+          }
+        ]
+      }
     },
     {
       "id": "roadmap-and-updates",
