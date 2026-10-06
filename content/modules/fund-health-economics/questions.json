@@ -880,5 +880,299 @@
     "question": "Why can education raise health while having an ambiguous effect on healthcare use?",
     "answer": "Education makes health production more efficient, so the return to producing health rises and optimal health increases. But greater efficiency can mean less healthcare is needed to produce a given amount of health, while the higher desired health level can increase input demand. These effects can offset each other.",
     "explanation": "The question tests the distinction between the demand for health and the derived demand for healthcare."
+  },
+  {
+    "id": "fund-health-economics.q.067",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Causal direction",
+    "question": "Which structure represents direct causality in the Session 4 framework?",
+    "options": [
+      "SES → health",
+      "Health → SES",
+      "Time preference → SES and health",
+      "Health and SES are unrelated"
+    ],
+    "answer": "A",
+    "explanation": "Direct-causality hypotheses ask whether socioeconomic conditions themselves cause health differences."
+  },
+  {
+    "id": "fund-health-economics.q.068",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Causal direction",
+    "question": "Which structure best represents reverse causality?",
+    "options": [
+      "Education → health production",
+      "Health → productive time → income/SES",
+      "Income inequality → social cohesion",
+      "Time preference → education and health"
+    ],
+    "answer": "B",
+    "explanation": "The productive-time hypothesis is the lecture's reverse-causality mechanism: health shocks can lower earnings and socioeconomic position."
+  },
+  {
+    "id": "fund-health-economics.q.069",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Efficient producer",
+    "question": "Under the efficient producer hypothesis, why might education raise optimal health?",
+    "options": [
+      "Education raises the biological depreciation rate",
+      "Education makes health production more efficient",
+      "Education removes all health risks",
+      "Education guarantees free healthcare"
+    ],
+    "answer": "B",
+    "explanation": "The lecture links education to a lower marginal cost or greater efficiency of producing health, which raises the desired health stock."
+  },
+  {
+    "id": "fund-health-economics.q.070",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Efficient producer",
+    "question": "Which lecture mechanism best fits the efficient producer hypothesis?",
+    "options": [
+      "Better adherence to a demanding self-management regimen among more-educated patients",
+      "A famine occurring before birth",
+      "A sudden retirement after a heart attack",
+      "A lottery prize increasing cash income"
+    ],
+    "answer": "A",
+    "explanation": "The lecture uses self-management and treatment adherence as mechanisms through which education can improve health production."
+  },
+  {
+    "id": "fund-health-economics.q.071",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Thrifty phenotype",
+    "question": "Why does Session 4 use the Dutch famine as a natural experiment?",
+    "options": [
+      "It randomly assigned university education",
+      "It created an early-life nutritional shock without deliberately exposing fetuses for research",
+      "It measured only adult income",
+      "It eliminated all selection concerns with certainty"
+    ],
+    "answer": "B",
+    "explanation": "The famine created naturally occurring exposure groups. The lecture presents this as a way to study early-life deprivation when deliberate randomization would be unethical."
+  },
+  {
+    "id": "fund-health-economics.q.072",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Direct income",
+    "question": "Which statement best matches the lecture's treatment of the direct-income hypothesis?",
+    "options": [
+      "Adult income clearly causes better health in all settings",
+      "Income never matters for health",
+      "Evidence for a causal adult income effect in developed-country samples is weak or mixed, while parental income appears protective for child health",
+      "Only income inequality matters"
+    ],
+    "answer": "C",
+    "explanation": "The slides distinguish limited adult causal evidence from a stronger protective association of family income with child health."
+  },
+  {
+    "id": "fund-health-economics.q.073",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Allostatic load",
+    "question": "How is chronic stress mapped into the Grossman model in Session 4?",
+    "options": [
+      "As a lower wage",
+      "As a higher health-capital depreciation rate δ",
+      "As a lower price of medical care",
+      "As a higher discount factor"
+    ],
+    "answer": "B",
+    "explanation": "The allostatic-load discussion connects prolonged stress with faster biological ageing and therefore a higher depreciation rate."
+  },
+  {
+    "id": "fund-health-economics.q.074",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Whitehall",
+    "question": "Why is the Whitehall study useful in the lecture's discussion of rank and stress?",
+    "options": [
+      "All civil servants had identical income",
+      "It compares relatively similar workers within a shared employment environment and universal NHS access",
+      "It was a randomized trial of stress",
+      "It studies only children"
+    ],
+    "answer": "B",
+    "explanation": "The lecture emphasizes the shared civil-service setting and NHS access while morbidity and mortality still varied by employment grade."
+  },
+  {
+    "id": "fund-health-economics.q.075",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Income inequality",
+    "question": "Which statement best reflects the lecture's conclusion about the income-inequality hypothesis?",
+    "options": [
+      "The causal pathway is fully established",
+      "Inequality is unrelated to any health measure",
+      "Associations and mechanisms are discussed, but the causal link remains unclear",
+      "Average income never matters"
+    ],
+    "answer": "C",
+    "explanation": "The slides present proposed social-cohesion, stress and political mechanisms but explicitly note the lack of a clear causal understanding."
+  },
+  {
+    "id": "fund-health-economics.q.076",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Productive time",
+    "question": "A serious illness causes a worker to retire early and lose earnings. Which hypothesis does this most directly illustrate?",
+    "options": [
+      "Efficient producer",
+      "Thrifty phenotype",
+      "Productive time",
+      "Fuchs hypothesis"
+    ],
+    "answer": "C",
+    "explanation": "The productive-time hypothesis runs from health to SES through lost work capacity, earnings and labour-force participation."
+  },
+  {
+    "id": "fund-health-economics.q.077",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Fuchs hypothesis",
+    "question": "In the Fuchs hypothesis, why might education and health be positively associated even without one directly causing the other?",
+    "options": [
+      "A common preference for future benefits can increase investment in both",
+      "Health insurance fully determines both",
+      "Higher depreciation raises both",
+      "Income inequality mechanically raises education"
+    ],
+    "answer": "A",
+    "explanation": "Time preference is the common third factor: people more willing to delay gratification may invest more in education and health."
+  },
+  {
+    "id": "fund-health-economics.q.078",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Policy",
+    "question": "Why would the same observed income–health gradient support different policies under different causal theories?",
+    "options": [
+      "Because all policies have identical effects",
+      "Because a gradient alone does not identify whether income causes health, health causes income, or a third factor causes both",
+      "Because causality never matters",
+      "Because only healthcare access can explain disparities"
+    ],
+    "answer": "B",
+    "explanation": "Session 4 repeatedly separates correlation from causal mechanism; policy should target the mechanism actually producing the disparity."
+  },
+  {
+    "id": "fund-health-economics.q.079",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "true-false",
+    "difficulty": "easy",
+    "question": "A socioeconomic health gradient by itself proves that low socioeconomic status causes poor health.",
+    "answer": false,
+    "explanation": "False. The lecture explicitly considers direct causality, reverse causality and third factors."
+  },
+  {
+    "id": "fund-health-economics.q.080",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "The efficient producer hypothesis predicts that better education can improve the efficiency of producing health.",
+    "answer": true,
+    "explanation": "True. This is the central mechanism of the hypothesis in the lecture."
+  },
+  {
+    "id": "fund-health-economics.q.081",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "The thrifty phenotype evidence in Session 4 depends on deliberately randomizing pregnant women to famine exposure.",
+    "answer": false,
+    "explanation": "False. Such randomization would be unethical; the lecture uses natural experiments."
+  },
+  {
+    "id": "fund-health-economics.q.082",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "The productive-time hypothesis is a reverse-causality explanation of socioeconomic health disparities.",
+    "answer": true,
+    "explanation": "True. It proposes that poor health lowers earnings and socioeconomic position."
+  },
+  {
+    "id": "fund-health-economics.q.083",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "Session 4 concludes that income redistribution alone clearly solves adult health disparities in the short run.",
+    "answer": false,
+    "explanation": "False. The final takeaways state that adult income has no clear causal impact in the evidence reviewed and that short-run redistribution alone does not solve the problem."
+  },
+  {
+    "id": "fund-health-economics.q.084",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "Explain why causal direction matters when interpreting a socioeconomic health gradient.",
+    "answer": "The same correlation can arise because socioeconomic status affects health, health affects socioeconomic status, or another factor affects both. Each mechanism implies a different policy target, so the gradient alone is insufficient for choosing an intervention.",
+    "explanation": "A strong answer should name at least two of the three causal structures and connect them to policy."
+  },
+  {
+    "id": "fund-health-economics.q.085",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "How does the efficient producer hypothesis connect education to health in Grossman-model terms?",
+    "answer": "Education can make the production of health more efficient, effectively lowering the cost of generating health from inputs or increasing the return to health investment. The individual therefore chooses a higher optimal health stock.",
+    "explanation": "The key is production efficiency, not simply higher income from education."
+  },
+  {
+    "id": "fund-health-economics.q.086",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "Why are early-life natural experiments important for the thrifty phenotype hypothesis?",
+    "answer": "The hypothesis concerns fetal and early-childhood conditions, but researchers cannot ethically assign harmful deprivation. Natural shocks such as famines can create exposure groups that help isolate the long-run consequences of early-life conditions.",
+    "explanation": "Do not claim a natural experiment automatically removes every source of bias; the lecture presents it as a strategy to reduce selection problems."
+  },
+  {
+    "id": "fund-health-economics.q.087",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Compare the direct-income and productive-time hypotheses.",
+    "answer": "The direct-income hypothesis runs from SES to health: greater resources expand the possibilities for producing health. The productive-time hypothesis runs from health to SES: illness reduces productive time, earnings and labour-force participation. The same income–health association can therefore reflect opposite causal directions.",
+    "explanation": "This question tests whether the student can distinguish direct from reverse causality."
   }
 ]
