@@ -9709,13 +9709,13 @@ main > :is(.page-intro, .notes-hero, .tracks-hero, .thesis-intro, .sx-hero):firs
   color: var(--text-heading);
 }
 
-.resit-options {
+.choice-options {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-.resit-option {
+.choice-option {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -9726,20 +9726,20 @@ main > :is(.page-intro, .notes-hero, .tracks-hero, .thesis-intro, .sx-hero):firs
   cursor: pointer;
 }
 
-.resit-option:hover { border-color: var(--action-navy); }
+.choice-option:hover { border-color: var(--action-navy); }
 
-.resit-option:has(input:checked) {
+.choice-option:has(input:checked) {
   border-color: var(--action-navy);
   background: var(--info-bg);
   font-weight: 600;
 }
 
-.resit-option:has(input:focus-visible) {
+.choice-option:has(input:focus-visible) {
   outline: 3px solid var(--color-focus);
   outline-offset: 2px;
 }
 
-.resit-option input { accent-color: var(--action-navy); margin: 0; }
+.choice-option input { accent-color: var(--action-navy); margin: 0; }
 
 .resit-result {
   margin-top: 8px;
@@ -9778,3 +9778,178 @@ main > :is(.page-intro, .notes-hero, .tracks-hero, .thesis-intro, .sx-hero):firs
 }
 
 .rules-disclaimer { margin-top: 24px; }
+
+/* ===== Programme Journey (journey.html, content/programme-events.json) ===== */
+.journey-track-picker {
+  margin: 0 0 20px;
+  padding: 0;
+  border: 0;
+}
+
+.journey-track-picker legend {
+  margin-bottom: 8px;
+  font-weight: 700;
+  color: var(--text-heading);
+}
+
+.journey-track-note { margin: 8px 0 0; }
+
+/* Vertical timeline: a line with a dot per stage */
+.journey-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 28px;
+  position: relative;
+}
+
+.journey-timeline::before {
+  content: "";
+  position: absolute;
+  left: 9px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--border-default);
+}
+
+.journey-stop {
+  position: relative;
+  padding: 0 0 24px;
+}
+
+.journey-stop::before {
+  content: "";
+  position: absolute;
+  left: -25px;
+  top: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--action-navy);
+  background: var(--surface-card);
+}
+
+.journey-stop.is-done::before { background: var(--action-navy); }
+.journey-stop.is-done { opacity: 0.75; }
+
+.journey-stop.is-current::before {
+  background: var(--brand-terracotta);
+  border-color: var(--brand-terracotta);
+  box-shadow: 0 0 0 4px var(--pill-orange-bg);
+}
+
+.journey-stop-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+}
+
+.journey-stop-head h3 { margin: 0; font-size: 1.05rem; }
+.journey-stop-meta { margin: 0; font-size: var(--fs-small); color: var(--text-muted); }
+
+.journey-here,
+.journey-done,
+.journey-mine {
+  padding: 1px 8px;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-meta);
+  font-weight: 700;
+}
+
+.journey-here { background: var(--pill-orange-bg); color: var(--pill-orange-text); }
+.journey-done { background: var(--success-bg); color: var(--success); }
+.journey-mine { margin-left: 8px; background: var(--info-bg); color: var(--pill-blue-text); }
+
+.journey-place { margin: 6px 0 8px; }
+.journey-place.is-unknown { color: var(--text-muted); font-style: italic; }
+
+/* Joint degree: the four titles */
+.journey-titles {
+  list-style: none;
+  margin: 12px 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  gap: 10px;
+}
+
+.journey-titles li {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--surface-subtle);
+}
+
+.journey-titles span { font-size: var(--fs-small); color: var(--text-muted); }
+.journey-titles + .source-badge { margin-bottom: 12px; }
+
+/* Numbers and fees: big figures */
+.journey-pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.journey-pair > .card { margin: 0; }
+
+.journey-figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+  margin: 0 0 12px;
+}
+
+.journey-figure {
+  display: flex;
+  flex-direction: column-reverse;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: var(--surface-subtle);
+}
+
+.journey-figure dd {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--text-heading);
+}
+
+.journey-figure dt { font-size: var(--fs-small); color: var(--text-secondary); }
+
+.journey-history {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.journey-history li {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  gap: 8px;
+}
+
+.journey-year { color: var(--brand-terracotta); }
+
+.journey-erasmus-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.journey-erasmus-table th,
+.journey-erasmus-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  text-align: left;
+  vertical-align: top;
+}
+
+.journey-erasmus-table tr.is-mine { background: var(--info-bg); }
+#numbers .journey-figures,
+.journey-fees .journey-figures { grid-template-columns: repeat(2, minmax(0, 1fr)); }

@@ -152,9 +152,9 @@ function renderGuideQuestions() {
   visibleQuestions(guide, rulesPage.answers).forEach((question, index) => {
     const fieldset = createElement("fieldset", "resit-question");
     fieldset.appendChild(createElement("legend", null, `${index + 1}. ${question.text}`));
-    const options = createElement("div", "resit-options");
+    const options = createElement("div", "choice-options");
     for (const option of questionOptions(question)) {
-      const label = createElement("label", "resit-option");
+      const label = createElement("label", "choice-option");
       const input = createElement("input");
       input.type = "radio";
       input.name = `resit-${question.id}`;

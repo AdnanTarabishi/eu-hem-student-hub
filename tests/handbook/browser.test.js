@@ -159,6 +159,48 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
     ok("site search finds a rule and links to its university");
     await page.context().close();
 
+    // --- Programme Journey ---
+    page = await open("journey.html");
+    await page.locator(".journey-stop").first().waitFor();
+    assert.strictEqual(await page.locator(".journey-stop").count(), 6);
+    assert.strictEqual(await page.locator(".journey-stop[aria-current='step'] h3").textContent(), "Semester 1: Bologna, all together");
+    assert.match(await page.locator("#stage-semester-2 .journey-place").textContent(), /Depends on your track/);
+    assert.strictEqual(await page.locator("input[name='journey-track'][value='']").isChecked(), true);
+    // Choose a track with the keyboard: the timeline shows its cities, the choice is saved like on the Tracks page
+    await page.locator("input[name='journey-track'][value='eeh']").focus();
+    await page.keyboard.press("Space");
+    assert.match(await page.locator("#stage-semester-2 .journey-place").textContent(), /Rotterdam \(Erasmus University Rotterdam\)/);
+    assert.match(await page.locator("#stage-semester-3 .journey-place").textContent(), /Oslo/);
+    assert.match(await page.locator(".journey-erasmus-table tr.is-mine").textContent(), /EEH.*your track.*Bologna or University of Oslo/s);
+    const saved = await page.evaluate(() => JSON.parse(localStorage.getItem("euhem-track-v1")));
+    assert.deepStrictEqual(saved, { cohort: "2026-2028", track: "eeh" });
+    ok("journey: 6 stages, You are here, track choice by keyboard shows its cities and grant row, saved like on Tracks");
+
+    await page.goto(base + "tracks.html");
+    await page.goto(base + "journey.html");
+    await page.locator(".journey-stop").first().waitFor();
+    assert.strictEqual(await page.locator("input[name='journey-track'][value='eeh']").isChecked(), true);
+    ok("journey: the saved track is remembered on the next visit");
+
+    assert.deepStrictEqual(await page.locator(".journey-titles strong").allTextContents(), [
+      "Laurea Magistrale in Health Economics and Management", "Master of Science in Health Economics and Management",
+      "Master of Philosophy in Health Economics and Management", "Master of Arts in Business"]);
+    const figures = await page.locator("#numbers .journey-figure").allTextContents();
+    assert.ok(figures.some((f) => /104/.test(f) && /students/.test(f)) && figures.some((f) => /24/.test(f) && /nationalities/.test(f)), figures.join("|"));
+    assert.match(await page.locator("#numbers .source-badge").textContent(), /Welcome Days 2026/);
+    assert.deepStrictEqual(await page.locator(".journey-year").allTextContents(), ["2009", "2010", "2012", "2015", "2018", "2021", "2025"]);
+    assert.match(await page.locator("#fees").textContent(), /€4,000.*€9,000/s);
+    assert.match(await page.locator("#fees").textContent(), /2026\/27/);
+    assert.match(await page.locator(".journey-erasmus-caveat").textContent(), /balance/);
+    ok("journey: four titles, cohort numbers (Welcome Days), history, fees for 2026-2028, Erasmus+ caveat");
+    await page.context().close();
+
+    page = await open("journey.html", { viewport: { width: 320, height: 800 }, scheme: "dark" });
+    await page.locator(".journey-stop").first().waitFor();
+    await noSideways(page);
+    ok("journey on a 320 px phone in dark mode: no sideways scrolling");
+    await page.context().close();
+
     assert.deepStrictEqual(errors, [], "page errors");
     ok("no page errors");
   } finally {

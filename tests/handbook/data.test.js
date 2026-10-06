@@ -102,4 +102,43 @@ t("academic rules: grading scales for all four universities, with the pass marks
   assert.match(rules.grading.note, /not a conversion/);
 });
 
+// ----- Programme Journey -----
+const events = read("content/programme-events.json");
+const J = require(path.join(ROOT, "journey.js"));
+const { semesterTiming } = require(path.join(ROOT, "guide-data.js"));
+const tracksCohort = read("content/tracks.json").cohorts.find((c) => c.id === events.cohort);
+const trackOf = (id) => tracksCohort.tracks.find((tr) => tr.id === id);
+const stops = (trackId, today) => J.journeyStops(events, tracksCohort, trackId ? trackOf(trackId) : null, today, semesterTiming);
+const place = (list, id) => list.find((s) => s.id === id).place.text;
+
+t("journey: cities come from the saved track (E&P: Oslo then Bologna)", () => {
+  const list = stops("ep", "2026-10-06");
+  assert.strictEqual(place(list, "semester-1"), "Bologna (University of Bologna)");
+  assert.strictEqual(place(list, "semester-2"), "Oslo (University of Oslo)");
+  assert.strictEqual(place(list, "semester-3"), "Bologna (University of Bologna)");
+  assert.match(place(list, "semester-4"), / or /);
+  assert.strictEqual(place(stops(null, "2026-10-06"), "semester-2"), "Depends on your track");
+});
+
+t("journey: timing labels and which stage is current", () => {
+  const list = stops("phm", "2026-10-06");
+  assert.deepStrictEqual(list.map((s) => s.whenLabel), ["autumn 2026", "spring 2027", "June/July 2027", "autumn 2027", "spring 2028", "autumn 2028"]);
+  assert.deepStrictEqual(list.map((s) => s.status), ["current", "later", "later", "later", "later", "later"]);
+  assert.deepStrictEqual(stops("phm", "2027-03-01").map((s) => s.status).slice(0, 3), ["done", "current", "later"]);
+  assert.ok(stops("phm", "2029-01-01").every((s) => s.status === "done"));
+});
+
+t("journey: facts from the brief (104 students, 24 nationalities, fees, four titles, history years)", () => {
+  const figures = Object.fromEntries(events.cohortNumbers.figures.map((f) => [f.label, f.value]));
+  assert.strictEqual(figures.students, "104");
+  assert.strictEqual(figures.nationalities, "24");
+  assert.strictEqual(events.cohortNumbers.source, "welcome-days-2026");
+  assert.deepStrictEqual(Object.keys(events.fees.byCohort), ["2026-2028"]);
+  assert.strictEqual(J.euros(events.fees.byCohort["2026-2028"].programmeCountries), "€4,000");
+  assert.strictEqual(J.euros(events.fees.byCohort["2026-2028"].partnerCountries), "€9,000");
+  assert.strictEqual(events.jointDegree.titles.length, 4);
+  assert.deepStrictEqual(events.history.events.map((e) => e.year), [2009, 2010, 2012, 2015, 2018, 2021, 2025]);
+  assert.match(events.erasmus.caveat, /balance/);
+});
+
 console.log(`${n} handbook data checks passed`);

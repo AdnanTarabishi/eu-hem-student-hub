@@ -19,6 +19,7 @@ const SITE_MENU = [
       { key: "exams", label: "Exams", href: "exams.html", icon: "exams", desc: "Dates and registration windows" },
       { key: "calendar", label: "Calendar", href: "calendar.html", icon: "calendar", desc: "Subscribe on your phone" },
       { key: "academic-rules", label: "Academic Rules", href: "academic-rules.html", icon: "scale", desc: "Re-sits, grades, plagiarism and AI" },
+      { key: "journey", label: "Programme Journey", href: "journey.html", icon: "graduation", desc: "Your two years, degree, grants, fees" },
     ],
   },
   {

@@ -14,7 +14,7 @@
   const GROUPS = [
     ["page", "Pages"], ["course", "Courses"], ["topic", "Notes"], ["concept", "Key concepts"],
     ["flashcard", "Flashcards"], ["question", "Questions"], ["resource", "Resources"],
-    ["announcement", "Announcements"], ["guide", "City Guide"], ["rules", "Academic rules"],
+    ["announcement", "Announcements"], ["guide", "City Guide"], ["rules", "Programme and rules"],
     ["update", "Released updates"], ["roadmap", "Roadmap plans (not available yet)"],
   ];
 
@@ -130,6 +130,22 @@
       }
     } catch (error) {
       console.error("Search: academic rules", error);
+    }
+    // Programme Journey: each stage and each part of the page
+    try {
+      const response = await fetch("content/programme-events.json");
+      if (response.ok) {
+        const events = await response.json();
+        const texts = (items) => (items || []).map((item) => item.text).join(" ");
+        const page = "journey.html";
+        for (const stage of events.stages) add("rules", stage.title, `${page}#stage-${stage.id}`, texts(stage.items), "Programme Journey");
+        add("rules", "Joint degree: one diploma, four titles", `${page}#degree`, `diploma ${events.jointDegree.titles.map((t) => t.title).join(" ")} ${texts(events.jointDegree.items)}`, "Programme Journey");
+        add("rules", events.erasmus.title, `${page}#erasmus`, `grant scholarship money ${events.erasmus.intro} ${texts(events.erasmus.items)}`, "Programme Journey");
+        add("rules", "Participation fee", `${page}#fees`, "tuition fee cost pay Studielink", "Programme Journey");
+        add("rules", events.history.title, `${page}#history`, events.history.events.map((e) => `${e.year} ${e.text}`).join(" "), "Programme Journey");
+      }
+    } catch (error) {
+      console.error("Search: programme journey", error);
     }
     return list;
   }

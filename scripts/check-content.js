@@ -702,7 +702,7 @@ function checkStudents() {
 // "source" in the files below (at any depth) and every {official:id} / {tip:id} marker in a city guide
 // must name a listed id of the right kind.
 const SOURCES_FILE = "content/sources.json";
-const SOURCED_FILES = ["content/programme.json", "content/academic-rules.json"];
+const SOURCED_FILES = ["content/programme.json", "content/academic-rules.json", "content/programme-events.json"];
 const SOURCE_MARKER = /\{(official|tip):([a-z0-9-]+)\}/g;
 let sourceRegistry = null; // id -> { kind, ... }, filled by checkSources()
 
@@ -789,6 +789,55 @@ function checkAcademicRules() {
     else if (!outcome.items.length) error(F, `re-sit guide: outcome "${outcome.key}" has no items`);
   };
   walk({});
+}
+
+// Programme Journey (content/programme-events.json, journey.js). Sources are checked by checkSources();
+// here: the cohort, tracks and universities exist in tracks.json, semesters 1-4 are all there, fees
+// are only listed per cohort, and every stage resolves to a place for every track.
+function checkProgrammeEvents() {
+  const F = "content/programme-events.json";
+  if (!fs.existsSync(path.join(ROOT, F))) return;
+  const events = JSON.parse(fs.readFileSync(path.join(ROOT, F), "utf8"));
+  const journeyPage = require("../journey.js");
+  const guides = require("../guide-data.js");
+  const tracksFile = JSON.parse(fs.readFileSync(path.join(ROOT, "content/tracks.json"), "utf8"));
+  const cohort = tracksFile.cohorts.find((c) => c.id === events.cohort);
+  if (!cohort) return error(F, `cohort "${events.cohort}" is not in content/tracks.json`);
+  const trackIds = cohort.tracks.map((t) => t.id);
+
+  const seen = new Set();
+  for (const stage of events.stages) {
+    const where = `${F} stage ${stage.id}`;
+    if (!ID_PATTERN.test(stage.id || "") || seen.has(stage.id)) error(where, "needs a unique id like \"semester-2\"");
+    seen.add(stage.id);
+    requireText(stage, "title", where);
+    if (!stage.semester && !(stage.when && stage.when.label && DATE_PATTERN.test(stage.when.ends || ""))) {
+      error(where, "needs \"semester\" (1-4) or \"when\": { label, ends: YYYY-MM-DD }");
+    }
+    if (!(stage.items || []).length) error(where, "has no items");
+  }
+  for (const n of [1, 2, 3, 4]) if (!events.stages.some((s) => s.semester === n)) error(F, `no stage for semester ${n}`);
+  for (const track of [null, ...cohort.tracks]) {
+    for (const stop of journeyPage.journeyStops(events, cohort, track, "2026-10-06", guides.semesterTiming)) {
+      if (stop.semester && !stop.place) error(F, `stage ${stop.id}: no place for track ${track ? track.id : "(none)"}`);
+    }
+  }
+  for (const entry of events.jointDegree.titles) {
+    if (!cohort.universities[entry.university]) error(F, `jointDegree: university "${entry.university}" is not in content/tracks.json`);
+  }
+  const grantTracks = events.erasmus.byTrack.map((entry) => entry.track);
+  for (const id of grantTracks) if (!trackIds.includes(id)) error(F, `erasmus: track "${id}" is not in content/tracks.json`);
+  for (const id of trackIds) if (!grantTracks.includes(id)) error(F, `erasmus: track "${id}" is missing`);
+  for (const [cohortId, fee] of Object.entries(events.fees.byCohort)) {
+    if (!tracksFile.cohorts.some((c) => c.id === cohortId)) error(F, `fees: cohort "${cohortId}" is not in content/tracks.json`);
+    for (const field of ["programmeCountries", "partnerCountries"]) {
+      if (!Number.isInteger(fee[field]) || fee[field] <= 0) error(F, `fees ${cohortId}: ${field} must be a whole number of euros`);
+    }
+    if (!fee.source) error(F, `fees ${cohortId}: needs a source`);
+  }
+  for (const [part, block] of Object.entries({ cohortNumbers: events.cohortNumbers, history: events.history, jointDegree: events.jointDegree, erasmus: events.erasmus })) {
+    if (!block.source) error(F, `${part}: needs a source`);
+  }
 }
 
 // Key dates of each cohort (calendar page, homepage, calendar files): see programme.js
@@ -1052,6 +1101,7 @@ async function main() {
   checkSources(); // before the guides: they use its ids
   checkKeyDates();
   checkAcademicRules();
+  checkProgrammeEvents();
   checkCityGuides();
 
   // --- topics (first, so everything else can link to them) ---
