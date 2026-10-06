@@ -385,5 +385,125 @@
     "topic": "fund-health-economics.health-capital",
     "front": "How does a lower medical-care price affect equilibrium in the lecture?",
     "back": "It lowers the cost of producing health, increasing optimal health and raising healthcare demand."
+  },
+  {
+    "id": "fund-health-economics.fc.065",
+    "topic": "fund-health-economics.disparities",
+    "front": "What is a health disparity in Session 4?",
+    "back": "A difference in health — such as incidence, prevalence, mortality or burden of disease — between specific populations."
+  },
+  {
+    "id": "fund-health-economics.fc.066",
+    "topic": "fund-health-economics.disparities",
+    "front": "What three broad causal directions does Session 4 consider?",
+    "back": "Direct causality from SES to health, reverse causality from health to SES, and third factors that influence both."
+  },
+  {
+    "id": "fund-health-economics.fc.067",
+    "topic": "fund-health-economics.disparities",
+    "front": "Why does causal direction matter for policy?",
+    "back": "Because the appropriate response depends on whether low SES causes poor health, poor health causes low SES, or a third factor generates both."
+  },
+  {
+    "id": "fund-health-economics.fc.068",
+    "topic": "fund-health-economics.disparities",
+    "front": "What is the efficient producer hypothesis?",
+    "back": "More-educated people are more efficient at producing health from available inputs, so the marginal cost of health investment is lower and optimal health can be higher."
+  },
+  {
+    "id": "fund-health-economics.fc.069",
+    "topic": "fund-health-economics.disparities",
+    "front": "Which mechanisms in the lecture may connect education to better health production?",
+    "back": "Prevention and risky behaviour, use of information, access to innovation, adherence and self-management."
+  },
+  {
+    "id": "fund-health-economics.fc.070",
+    "topic": "fund-health-economics.disparities",
+    "front": "What is the thrifty phenotype hypothesis?",
+    "back": "Early nutritional deprivation can produce lasting biological adaptations that may become harmful later when scarcity ends, contributing to adult disease."
+  },
+  {
+    "id": "fund-health-economics.fc.071",
+    "topic": "fund-health-economics.disparities",
+    "front": "Why are natural experiments useful for studying early-life health shocks?",
+    "back": "Randomly depriving fetuses or children would be unethical, so natural shocks can create treatment-like and comparison groups without deliberate assignment."
+  },
+  {
+    "id": "fund-health-economics.fc.072",
+    "topic": "fund-health-economics.disparities",
+    "front": "What role does the Dutch famine play in Session 4?",
+    "back": "It is presented as a natural experiment linking in-utero famine exposure with higher adult diabetes and obesity among those exposed."
+  },
+  {
+    "id": "fund-health-economics.fc.073",
+    "topic": "fund-health-economics.disparities",
+    "front": "What is the direct income hypothesis?",
+    "back": "Higher income may improve health because richer individuals have more financial resources and therefore an expanded feasible set for producing health."
+  },
+  {
+    "id": "fund-health-economics.fc.074",
+    "topic": "fund-health-economics.disparities",
+    "front": "What distinction does the lecture make between adults and children in the direct-income evidence?",
+    "back": "Causal evidence for income improving adult health in developed-country samples is weak or mixed, while parental income appears more protective for child health."
+  },
+  {
+    "id": "fund-health-economics.fc.075",
+    "topic": "fund-health-economics.disparities",
+    "front": "What is the allostatic load hypothesis?",
+    "back": "Repeated or prolonged stress can damage health and can be represented in the Grossman model as a higher rate of health-capital depreciation."
+  },
+  {
+    "id": "fund-health-economics.fc.076",
+    "topic": "fund-health-economics.disparities",
+    "front": "What is the main Whitehall pattern emphasized in the lecture?",
+    "back": "Lower-grade British civil servants had higher morbidity and mortality and reported more stressful work and home environments."
+  },
+  {
+    "id": "fund-health-economics.fc.077",
+    "topic": "fund-health-economics.disparities",
+    "front": "What is the income inequality hypothesis?",
+    "back": "Community health may worsen as income becomes more unequally distributed, potentially through social cohesion, stress or political mechanisms."
+  },
+  {
+    "id": "fund-health-economics.fc.078",
+    "topic": "fund-health-economics.disparities",
+    "front": "How does the lecture treat the causal evidence on income inequality?",
+    "back": "It presents associations and proposed mechanisms but stresses that the causal link remains unclear."
+  },
+  {
+    "id": "fund-health-economics.fc.079",
+    "topic": "fund-health-economics.disparities",
+    "front": "What is the productive time hypothesis?",
+    "back": "Poor health can reduce productive time, earnings and labour-force participation, causing lower socioeconomic status rather than only resulting from it."
+  },
+  {
+    "id": "fund-health-economics.fc.080",
+    "topic": "fund-health-economics.disparities",
+    "front": "How can childhood health affect adult SES under the productive-time hypothesis?",
+    "back": "Poor early health can reduce survival, educational attainment and later earnings, creating long-run socioeconomic consequences."
+  },
+  {
+    "id": "fund-health-economics.fc.081",
+    "topic": "fund-health-economics.disparities",
+    "front": "What is the Fuchs hypothesis?",
+    "back": "Time preference is a third factor: people more willing to delay gratification may invest more in both education and health, producing a positive SES–health association."
+  },
+  {
+    "id": "fund-health-economics.fc.082",
+    "topic": "fund-health-economics.disparities",
+    "front": "What does a high discount factor mean in the lecture's Fuchs discussion?",
+    "back": "Greater willingness to value future benefits and delay gratification."
+  },
+  {
+    "id": "fund-health-economics.fc.083",
+    "topic": "fund-health-economics.disparities",
+    "front": "What does Session 4 conclude about a single universal explanation for health disparities?",
+    "back": "No single theory explains all disparities; the lecture presents evidence supporting several mechanisms."
+  },
+  {
+    "id": "fund-health-economics.fc.084",
+    "topic": "fund-health-economics.disparities",
+    "front": "What long-run policy emphasis appears in the lecture's final takeaways?",
+    "back": "Supporting families with children and investing in education may address long-run health and socioeconomic disparities."
   }
 ]
