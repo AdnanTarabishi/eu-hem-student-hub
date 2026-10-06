@@ -696,6 +696,47 @@ function checkStudents() {
   }
 }
 
+// Roadmap & Updates: one set of rules in roadmap-data.js (docs/roadmap.md)
+function checkRoadmap() {
+  const read = (file) => (fs.existsSync(path.join(ROOT, file)) ? fs.readFileSync(path.join(ROOT, file), "utf8") : null);
+  const roadmapText = read("content/roadmap.json");
+  const updatesText = read("content/updates.json");
+  if (roadmapText === null && updatesText === null) return;
+  let roadmap, updates;
+  try {
+    roadmap = JSON.parse(roadmapText);
+    updates = JSON.parse(updatesText);
+  } catch (e) {
+    return error("content/roadmap.json or updates.json", `is not valid JSON: ${e.message}`);
+  }
+  const R = require(path.join(ROOT, "roadmap-data.js"));
+  const today = R.dateInRome(new Date().toISOString());
+  const problems = R.validate(roadmap, updates, {
+    today,
+    pageExists: (file) => fs.existsSync(path.join(ROOT, file)),
+  });
+  for (const problem of problems) error(problem.startsWith("updates") ? "content/updates.json" : "content/roadmap.json", problem);
+
+  // Category icons must exist in the icon sprite
+  const sprite = read("icons.svg") || "";
+  for (const c of roadmap.categories || []) {
+    if (c.icon && !sprite.includes(`id="${c.icon}"`)) error("content/roadmap.json", `category "${c.id}": icon "${c.icon}" is not in icons.svg`);
+  }
+  // Each Next item that has passed its end month is probably out of date (a reminder, not an error)
+  const month = today.slice(0, 7);
+  for (const item of roadmap.items || []) {
+    if (item.lane === "next" && item.target && item.target.end < month) {
+      warn("content/roadmap.json", `"${item.id}" was expected by ${item.target.label}: move it, re-date it or publish it as an update`);
+    }
+  }
+  const sw = read("sw.js") || "";
+  for (const file of ["roadmap.html", "roadmap.css", "roadmap.js", "roadmap-data.js"]) {
+    if (!sw.includes(`"${file}"`)) error("sw.js", `SITE_FILES is missing "${file}"`);
+  }
+  const drafts = (updates.items || []).filter((i) => i.status === "draft").map((i) => i.id);
+  if (drafts.length) warn("content/updates.json", `draft (hidden until published): ${drafts.join(", ")}`);
+}
+
 function checkThesis() {
   const files = ["thesis-archive.json", "thesis-config.json", "thesis-overrides.json"].map((f) => path.join(ROOT, "content", f));
   if (!files.every((f) => fs.existsSync(f))) {
@@ -877,6 +918,7 @@ async function main() {
   // --- Join the Directory (form settings, backend, contact) ---
   checkDirectory();
   checkStudents();
+  checkRoadmap();
 
   // --- City guides (docs/content/<city>-guide.md) ---
   checkCityGuides();

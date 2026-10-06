@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roadmap &amp; Updates – EU-HEM Student Hub</title>
+  <meta name="description" content="What the EU-HEM Student Hub team is working on now, what comes next, bigger ideas for later, and every major release so far.">
+  <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css?v=00b3b5a1">
+  <link rel="stylesheet" href="roadmap.css?v=4dd36443">
+  <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="img/app-icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <script src="theme.js?v=d51d4769"></script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <p class="site-title"><a href="index.html">EU-HEM Student Hub</a></p>
+      <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
+      <!-- site-nav.js builds the menu here (defined once for all pages) -->
+      <nav class="site-nav" id="site-nav" data-current="roadmap" aria-label="Main menu"></nav>
+      <script src="site-nav.js?v=d17eb375"></script>
+    </div>
+  </header>
+
+  <!-- Roadmap & Updates. Content: content/roadmap.json and content/updates.json (format: docs/roadmap.md).
+       Data rules: roadmap-data.js. Page code: roadmap.js. -->
+  <main class="container roadmap-page" id="roadmap-main">
+
+    <section class="page-intro roadmap-intro">
+      <div>
+        <p class="section-eyebrow">About · Roadmap &amp; Updates</p>
+        <h1><svg class="icon" aria-hidden="true"><use href="icons.svg#route"></use></svg> Roadmap &amp; Updates</h1>
+        <p>What the Student Hub team is working on now, what is likely to come next, bigger ideas for later, and
+          everything released so far.</p>
+        <p class="roadmap-reviewed" id="roadmap-reviewed"></p>
+      </div>
+      <!-- Four shortcuts with live counts (roadmap.js) -->
+      <ul class="roadmap-overview" id="roadmap-overview" aria-label="At a glance"></ul>
+    </section>
+
+    <div class="roadmap-tabs" role="tablist" aria-label="Roadmap and Updates sections">
+      <button type="button" role="tab" id="tab-roadmap" aria-controls="panel-roadmap" aria-selected="true">Roadmap</button>
+      <button type="button" role="tab" id="tab-updates" aria-controls="panel-updates" aria-selected="false" tabindex="-1">Updates</button>
+      <button type="button" role="tab" id="tab-journey" aria-controls="panel-journey" aria-selected="false" tabindex="-1">Our journey</button>
+    </div>
+
+    <!-- Search and filters (shared by Roadmap and Updates; hidden on Our journey) -->
+    <div class="roadmap-toolbar" id="roadmap-toolbar">
+      <label class="search-pill roadmap-search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+        <input id="roadmap-search" type="search" autocomplete="off" placeholder="Search plans and updates…" aria-label="Search plans and updates">
+      </label>
+      <div class="roadmap-filter-row">
+        <div class="roadmap-chips" id="roadmap-stage" role="group" aria-label="Stage"></div>
+        <div class="roadmap-chips" id="roadmap-type" role="group" aria-label="Type of update" hidden></div>
+        <div class="roadmap-chips" id="roadmap-category" role="group" aria-label="Category"></div>
+        <button type="button" class="filter-chip roadmap-saved-toggle" id="roadmap-saved-only" aria-pressed="false"></button>
+      </div>
+      <div class="roadmap-result-row">
+        <p class="roadmap-count" id="roadmap-count" aria-live="polite"></p>
+        <button type="button" class="link-arrow roadmap-clear" id="roadmap-clear" hidden>Clear filters</button>
+      </div>
+    </div>
+
+    <section id="panel-roadmap" class="roadmap-panel" role="tabpanel" aria-labelledby="tab-roadmap" tabindex="-1">
+      <p class="roadmap-status" id="roadmap-status">Loading the roadmap…</p>
+      <div id="roadmap-board"></div>
+      <p class="roadmap-note" id="roadmap-planning-note"></p>
+    </section>
+
+    <section id="panel-updates" class="roadmap-panel" role="tabpanel" aria-labelledby="tab-updates" tabindex="-1" hidden>
+      <p class="roadmap-status" id="updates-status">Loading updates…</p>
+      <div id="updates-list"></div>
+      <p class="roadmap-note" id="updates-date-basis"></p>
+    </section>
+
+    <section id="panel-journey" class="roadmap-panel" role="tabpanel" aria-labelledby="tab-journey" tabindex="-1" hidden>
+      <h2 class="section-title roadmap-journey-title">How the Student Hub grew</h2>
+      <ol class="journey-timeline" id="journey-list"></ol>
+    </section>
+
+    <!-- Details of one plan or update: a native dialog (Escape closes it, focus stays inside while open) -->
+    <dialog class="roadmap-drawer" id="roadmap-drawer" aria-labelledby="roadmap-drawer-title">
+      <div class="roadmap-drawer-inner" id="roadmap-drawer-body"></div>
+    </dialog>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>EU-HEM Student Hub &middot; Unofficial student project</p>
+    </div>
+  </footer>
+
+  <script defer src="utils.js?v=ba40a359"></script>
+  <script defer src="ui.js?v=6d55e433"></script>
+  <script defer src="search.js?v=8af84713"></script>
+  <script defer src="pwa.js?v=c9212bf8"></script>
+  <script defer src="announcements.js?v=3ecd40f0"></script>
+  <script defer src="roadmap-data.js?v=963a2b58"></script>
+  <script defer src="roadmap.js?v=b649d411"></script>
+
+</body>
+</html>

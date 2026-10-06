@@ -30,7 +30,15 @@ const SITE_MENU = [
   },
   { key: "thesis", label: "Thesis", href: "thesis.html", icon: "library" },
   { key: "city-guide", label: "Life", href: "city-guide.html", icon: "guide" },
-  { key: "contact", label: "Contact", href: "contact.html", icon: "mail" },
+  {
+    label: "About",
+    items: [
+      { key: "roadmap", label: "Roadmap & Updates", href: "roadmap.html", icon: "route", desc: "What is new and what is next" },
+      { key: "about", label: "About the Hub", href: "index.html#about", icon: "info", desc: "Student-run, free and unofficial" },
+      { key: "privacy", label: "Privacy", href: "privacy.html", icon: "lock", desc: "What stays on your device" },
+      { key: "contact", label: "Contact", href: "contact.html", icon: "mail", desc: "Questions, corrections and ideas" },
+    ],
+  },
 ];
 
 // An icon from icons.svg: <svg class="icon"><use href="icons.svg#name"></use></svg>
@@ -340,7 +348,7 @@ function brandLockup(make) {
     const list = make("ul");
     const all = SITE_MENU.flatMap((entry) => entry.items || [entry]);
     for (const item of all) list.appendChild(footerLink(item.label === "Life" ? "City Guide" : item.label, item.href));
-    for (const [label, href] of [["Getting started", "index.html#welcome"], ["Privacy", "privacy.html"],
+    for (const [label, href] of [["Getting started", "index.html#welcome"],
       ["GitHub", "https://github.com/AdnanTarabishi/eu-hem-student-hub"]]) list.appendChild(footerLink(label, href));
     const install = make("li", "footer-install");
     install.hidden = true; // shown by pwa.js where the browser can install the app

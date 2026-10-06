@@ -1,0 +1,493 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-10-06",
+  "dateBasis": "Each date is the day (Rome time) the change first went live through a successful site deployment. Only important student-facing releases are listed.",
+  "items": [
+    {
+      "id": "roadmap-and-updates",
+      "date": null,
+      "title": "Roadmap & Updates",
+      "summary": "See what the Student Hub team is working on now, what comes next, bigger ideas for later and every major release so far.",
+      "category": "platform",
+      "type": "new",
+      "status": "draft",
+      "highlights": [
+        "Now, Next and Later at a glance, with estimated periods for planned work.",
+        "Open any plan or release for details, and share a direct link to it.",
+        "Save plans you care about on this device, then show only those.",
+        "The current focus and the latest releases also appear on the homepage."
+      ],
+      "links": [
+        {
+          "label": "Explore Roadmap & Updates",
+          "url": "roadmap.html"
+        }
+      ],
+      "evidence": null
+    },
+    {
+      "id": "students-explorer",
+      "date": "2026-10-06",
+      "title": "Students explorer (demo)",
+      "summary": "Explore the EU-HEM community on a map, as profile cards or a list, with filters and profile details. It shows fictional demo profiles until real students join.",
+      "category": "community",
+      "type": "new",
+      "status": "published",
+      "highlights": [
+        "An interactive map of the countries students represent.",
+        "Search and filters for cohort, country, track and academic background.",
+        "Profile details, direct links and saved profiles on your device.",
+        "Built privacy-first: hidden and members-only profiles never reach the page."
+      ],
+      "links": [
+        {
+          "label": "Explore the Students page",
+          "url": "students.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37385340119",
+        "deployedAt": "2026-10-06T00:54:30+02:00",
+        "commits": [
+          {
+            "sha": "c93622014f7fd67d5b43a8ea33490ab9c8cda9a8",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/c93622014f7fd67d5b43a8ea33490ab9c8cda9a8"
+          }
+        ]
+      }
+    },
+    {
+      "id": "new-design",
+      "date": "2026-10-06",
+      "title": "A new look across the Hub",
+      "summary": "A complete redesign: a clearer homepage, simpler navigation, consistent page headers and a refreshed dark mode on every page.",
+      "category": "platform",
+      "type": "improved",
+      "status": "published",
+      "highlights": [
+        "A new homepage with your week, quick access to the main tools and the cities of the programme.",
+        "Simpler navigation on computers and a full menu drawer on phones.",
+        "One colour system for the four tracks, used on every page.",
+        "Better contrast, keyboard focus and dark mode throughout."
+      ],
+      "links": [
+        {
+          "label": "Go to the homepage",
+          "url": "index.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37413969703",
+        "deployedAt": "2026-10-06T06:30:06+02:00",
+        "commits": [
+          {
+            "sha": "ad6e574fccb9c82d83c2c9006ed9ccff03729ac1",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/ad6e574fccb9c82d83c2c9006ed9ccff03729ac1"
+          },
+          {
+            "sha": "0e466b606f63e6c937c46e4b6f8ba8e32fc5a3d9",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/0e466b606f63e6c937c46e4b6f8ba8e32fc5a3d9"
+          },
+          {
+            "sha": "2367205cbc2905440092661fdd6c61eedeab62e7",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/2367205cbc2905440092661fdd6c61eedeab62e7"
+          },
+          {
+            "sha": "12f84486f7afa35ab2e3f0f2edf3c4cb8c6a0315",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/12f84486f7afa35ab2e3f0f2edf3c4cb8c6a0315"
+          }
+        ]
+      }
+    },
+    {
+      "id": "city-guides",
+      "date": "2026-10-05",
+      "title": "City guides for all four destinations",
+      "summary": "Expanded Bologna, Oslo, Rotterdam and Innsbruck guides with practical sections, sources, image galleries and side-by-side city comparison.",
+      "category": "life",
+      "type": "improved",
+      "status": "published",
+      "highlights": [
+        "Full guides now cover Bologna, Oslo, Rotterdam and Innsbruck.",
+        "Consistent practical sections and source links help students prepare for each destination.",
+        "City comparisons and image galleries add ways to explore differences between destinations."
+      ],
+      "links": [
+        {
+          "label": "Explore all city guides",
+          "url": "city-guide.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37358155068",
+        "deployedAt": "2026-10-05T20:44:23+02:00",
+        "commits": [
+          {
+            "sha": "f5660a9f2ff5afa811c38fa969aa0270eb61c0b9",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/f5660a9f2ff5afa811c38fa969aa0270eb61c0b9"
+          },
+          {
+            "sha": "34fd99fbf424b1701f2cb60ac8fad4fa5ce37ed6",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/34fd99fbf424b1701f2cb60ac8fad4fa5ce37ed6"
+          },
+          {
+            "sha": "a1cd78a4f283047457b6cea1d41c83ed778be3af",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/a1cd78a4f283047457b6cea1d41c83ed778be3af"
+          },
+          {
+            "sha": "7d06de558fba392258f14688b2907e308f77b40d",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/7d06de558fba392258f14688b2907e308f77b40d"
+          },
+          {
+            "sha": "a069b1091e81be246ddaf8a19296c03c63467c14",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/a069b1091e81be246ddaf8a19296c03c63467c14"
+          },
+          {
+            "sha": "594c59cf8861f8c5546be637eb519f350f071bb3",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/594c59cf8861f8c5546be637eb519f350f071bb3"
+          }
+        ]
+      }
+    },
+    {
+      "id": "thesis-discovery",
+      "date": "2026-10-05",
+      "title": "Discover thesis topics by interest",
+      "summary": "Explore themes, methods and possible relevance to current tracks, with related past topics. The added classifications are Student Hub interpretations.",
+      "category": "learning",
+      "type": "improved",
+      "status": "published",
+      "highlights": [
+        "New discovery views organise past topics by interest and possible relevance to current tracks.",
+        "Theme and method filters help narrow a search, with related topics for further exploration.",
+        "Student Hub classifications are presented separately from the original thesis titles."
+      ],
+      "links": [
+        {
+          "label": "Discover thesis ideas",
+          "url": "thesis.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37247957796",
+        "deployedAt": "2026-10-05T02:33:35+02:00",
+        "commits": [
+          {
+            "sha": "4b0aedb48c5d96518bd488e0a700e75efab8c683",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/4b0aedb48c5d96518bd488e0a700e75efab8c683"
+          },
+          {
+            "sha": "88ae68ad4286d4a7ec93ca3b71991637ad29ee00",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/88ae68ad4286d4a7ec93ca3b71991637ad29ee00"
+          }
+        ]
+      }
+    },
+    {
+      "id": "thesis-explorer",
+      "date": "2026-10-04",
+      "title": "Past Thesis Explorer introduced",
+      "summary": "Search past thesis titles by cohort, legacy specialisation and university to find topic ideas.",
+      "category": "learning",
+      "type": "new",
+      "status": "published",
+      "highlights": [
+        "Past thesis titles can be searched and filtered by cohort, legacy specialisation and university.",
+        "The archive is intended to inspire topic ideas; it is not a collection of full thesis texts."
+      ],
+      "links": [
+        {
+          "label": "Explore past thesis topics",
+          "url": "thesis.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37223856471",
+        "deployedAt": "2026-10-04T20:17:48+02:00",
+        "commits": [
+          {
+            "sha": "7cb852a7df47bdbb7f274e862129aedc006b5e8d",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/7cb852a7df47bdbb7f274e862129aedc006b5e8d"
+          }
+        ]
+      }
+    },
+    {
+      "id": "tracks",
+      "date": "2026-10-04",
+      "title": "Explore & compare EU-HEM tracks",
+      "summary": "Browse the four specialisations, compare courses and mobility paths, save My track and try an informal student-made track quiz.",
+      "category": "learning",
+      "type": "new",
+      "status": "published",
+      "highlights": [
+        "The four current specialisations can be explored by courses, mobility and study themes.",
+        "Comparisons and My track help students organise their own choices.",
+        "The track quiz is an informal student-created reflection tool."
+      ],
+      "links": [
+        {
+          "label": "Explore the tracks",
+          "url": "tracks.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37220932022",
+        "deployedAt": "2026-10-04T19:33:52+02:00",
+        "commits": [
+          {
+            "sha": "c436b5cea983e7ed91f93fac00c4e37db594f135",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/c436b5cea983e7ed91f93fac00c4e37db594f135"
+          },
+          {
+            "sha": "19e13ec8dd10d035937a023373a384f5d0908b01",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/19e13ec8dd10d035937a023373a384f5d0908b01"
+          },
+          {
+            "sha": "ee0d9b7ed80cd83201d57df5f069bac479e5492f",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/ee0d9b7ed80cd83201d57df5f069bac479e5492f"
+          }
+        ]
+      }
+    },
+    {
+      "id": "home-dashboard",
+      "date": "2026-10-03",
+      "title": "A clearer home dashboard",
+      "summary": "See this week’s classes, the next exam and your study plan from the homepage, with dedicated Timetable, Exams and Calendar pages.",
+      "category": "platform",
+      "type": "improved",
+      "status": "published",
+      "highlights": [
+        "A This Week area brings classes, the next exam, study progress and announcements together.",
+        "Dedicated timetable, exam and calendar pages make these tasks easier to reach.",
+        "The homepage and shared navigation received a consistent visual design."
+      ],
+      "links": [
+        {
+          "label": "Visit the homepage",
+          "url": "index.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37147785158",
+        "deployedAt": "2026-10-03T21:25:04+02:00",
+        "commits": [
+          {
+            "sha": "dbe333cae8d6639d2dd2d321aa079ba578328156",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/dbe333cae8d6639d2dd2d321aa079ba578328156"
+          },
+          {
+            "sha": "f53eb4540572845b5977b50e55615eb647c504f2",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/f53eb4540572845b5977b50e55615eb647c504f2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "search-offline",
+      "date": "2026-10-03",
+      "title": "Search, dark mode & offline access",
+      "summary": "Search across the Hub, switch themes and install the site on supported devices. Previously cached pages and information can be opened offline.",
+      "category": "platform",
+      "type": "new",
+      "status": "published",
+      "highlights": [
+        "Site search brings relevant pages and study resources into one place.",
+        "Students can choose a light or dark theme.",
+        "Installation is available on supported browsers; offline use relies on previously saved copies."
+      ],
+      "links": [
+        {
+          "label": "Open the Hub",
+          "url": "index.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37144770499",
+        "deployedAt": "2026-10-03T20:35:57+02:00",
+        "commits": [
+          {
+            "sha": "539ae9973b62babbe02b29a3d9d34f233b0c7696",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/539ae9973b62babbe02b29a3d9d34f233b0c7696"
+          },
+          {
+            "sha": "df334ceb676accc0af29121ec669f8ef24dacf46",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/df334ceb676accc0af29121ec669f8ef24dacf46"
+          },
+          {
+            "sha": "e23eac7877ca908ee1467c63d3e8b76295199ad7",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/e23eac7877ca908ee1467c63d3e8b76295199ad7"
+          }
+        ]
+      }
+    },
+    {
+      "id": "notes-practice",
+      "date": "2026-10-03",
+      "title": "Notes & practice tools",
+      "summary": "Added course resource pages, a shared glossary, flashcards, quizzes and browser-saved study progress. Fundamentals in Health Economics is the pilot content area.",
+      "category": "learning",
+      "type": "new",
+      "status": "published",
+      "highlights": [
+        "Course pages organised notes, key concepts, practice and useful resources.",
+        "The Fundamentals in Health Economics pilot introduced example learning content.",
+        "Flashcards, quizzes and progress tools save personal study activity in the current browser."
+      ],
+      "links": [
+        {
+          "label": "Explore Notes & Resources",
+          "url": "notes.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37138341114",
+        "deployedAt": "2026-10-03T18:51:02+02:00",
+        "commits": [
+          {
+            "sha": "ac2763f25feb15c6a3c1a8c7f26f816d4523f3ea",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/ac2763f25feb15c6a3c1a8c7f26f816d4523f3ea"
+          },
+          {
+            "sha": "e0ab134ba3c9bf39d36f32abeb087725645cbb1c",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/e0ab134ba3c9bf39d36f32abeb087725645cbb1c"
+          }
+        ]
+      }
+    },
+    {
+      "id": "personal-study-plan",
+      "date": "2026-10-03",
+      "title": "Personal study plan & calendars",
+      "summary": "Plan course choices, track progress and subscribe to a calendar for your selected study plan. Choices are saved on this device.",
+      "category": "learning",
+      "type": "new",
+      "status": "published",
+      "highlights": [
+        "Course choices, credits and progress can be reviewed together in a personal plan.",
+        "Plan-specific calendars help students follow the courses they selected.",
+        "The plan is saved in the current browser and does not submit university registration."
+      ],
+      "links": [
+        {
+          "label": "Build a study plan",
+          "url": "studyplan.html"
+        },
+        {
+          "label": "Choose a calendar",
+          "url": "calendar.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37138341114",
+        "deployedAt": "2026-10-03T18:51:02+02:00",
+        "commits": [
+          {
+            "sha": "fa281410f66335aefa2bfddbcb2ed815649b3434",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/fa281410f66335aefa2bfddbcb2ed815649b3434"
+          },
+          {
+            "sha": "0a5bd7860ba1b29cb79c034d0cc93eb28e728b02",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/0a5bd7860ba1b29cb79c034d0cc93eb28e728b02"
+          }
+        ]
+      }
+    },
+    {
+      "id": "student-life-community",
+      "date": "2026-10-01",
+      "title": "Bologna guide, announcements & directory preview",
+      "summary": "Added a Bologna city guide and an announcement feed, alongside a searchable student directory preview with fictional profiles.",
+      "category": "community",
+      "type": "new",
+      "status": "published",
+      "highlights": [
+        "The first Bologna guide brought practical city information into the Hub.",
+        "An announcements section and feed were introduced.",
+        "The student directory was published as a searchable preview with fictional profiles."
+      ],
+      "links": [
+        {
+          "label": "Read the Bologna guide",
+          "url": "city-guide.html?city=bologna"
+        },
+        {
+          "label": "View announcements",
+          "url": "announcements.html"
+        },
+        {
+          "label": "Explore the directory preview",
+          "url": "students.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/36824914521",
+        "deployedAt": "2026-10-01T08:28:42+02:00",
+        "commits": [
+          {
+            "sha": "40342cc3d77363a3627a5f4c0ef848e411da4bbf",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/40342cc3d77363a3627a5f4c0ef848e411da4bbf"
+          },
+          {
+            "sha": "983c817bb0f57c684669feec4233c6e8f4d74499",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/983c817bb0f57c684669feec4233c6e8f4d74499"
+          },
+          {
+            "sha": "846a5a0d23943de150cf3310403d98240a4c4c4d",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/846a5a0d23943de150cf3310403d98240a4c4c4d"
+          }
+        ]
+      }
+    },
+    {
+      "id": "first-academic-hub",
+      "date": "2026-10-01",
+      "title": "First academic hub",
+      "summary": "Added the homepage, first-year timetable, exam dates and calendar subscription links.",
+      "category": "learning",
+      "type": "new",
+      "status": "published",
+      "highlights": [
+        "First-year classes and exam information were brought together with links to their university sources.",
+        "Calendar subscription links were added for Google, Apple and Outlook."
+      ],
+      "links": [
+        {
+          "label": "View timetable",
+          "url": "timetable.html"
+        },
+        {
+          "label": "View exams",
+          "url": "exams.html"
+        },
+        {
+          "label": "Open calendar help",
+          "url": "calendar.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/36817485314",
+        "deployedAt": "2026-10-01T06:57:59+02:00",
+        "commits": [
+          {
+            "sha": "d27e3d4d576f2f0cd7939feca83edb2da17de857",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/d27e3d4d576f2f0cd7939feca83edb2da17de857"
+          },
+          {
+            "sha": "766ccf3142d96a64f53f83361203c1dda89aefb5",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/766ccf3142d96a64f53f83361203c1dda89aefb5"
+          },
+          {
+            "sha": "5ff3930918c5ac2435b95ffc2a85451e0a7fd8ab",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/5ff3930918c5ac2435b95ffc2a85451e0a7fd8ab"
+          },
+          {
+            "sha": "b406cc7e6fc4cc78b2d37ca1c58d19f62fa38346",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/b406cc7e6fc4cc78b2d37ca1c58d19f62fa38346"
+          }
+        ]
+      }
+    }
+  ]
+}

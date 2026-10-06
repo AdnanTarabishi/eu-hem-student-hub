@@ -10,7 +10,7 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
   '.webmanifest': 'application/manifest+json', '.csv': 'text/csv', '.ics': 'text/calendar' };
 const PAGES = ['index.html', 'studyplan.html', 'tracks.html', 'timetable.html', 'exams.html', 'calendar.html', 'notes.html',
   'thesis.html', 'city-guide.html', 'city-guide.html?city=bologna', 'announcements.html', 'students.html', 'join.html',
-  'privacy.html', 'contact.html'];
+  'privacy.html', 'contact.html', 'roadmap.html', 'roadmap.html#update-new-design'];
 
 (async () => {
   const site = http.createServer((req, res) => {
@@ -40,7 +40,7 @@ const PAGES = ['index.html', 'studyplan.html', 'tracks.html', 'timetable.html', 
   assert.strictEqual(await page.textContent('.site-title .brand-product'), 'Student Hub');
   assert.strictEqual(await page.getAttribute('.site-title a', 'aria-label'), 'EU-HEM Student Hub, home');
   assert.deepStrictEqual(await page.$$eval('.menu > .menu-item > :first-child', (all) => all.map((e) => e.textContent.trim())),
-    ['Home', 'Students', 'Tracks', 'Academics', 'Resources', 'Thesis', 'Life', 'Contact']);
+    ['Home', 'Students', 'Tracks', 'Academics', 'Resources', 'Thesis', 'Life', 'About']);
   assert.strictEqual(await page.getAttribute('.menu > .menu-item > a[href="tracks.html"]', 'aria-current'), 'page');
   assert.ok(await page.isVisible('.header-cta'));
   assert.strictEqual(await page.isVisible('.menu-toggle'), false);

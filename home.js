@@ -295,7 +295,58 @@ async function fillCommunityPeople() {
   }
 }
 
+// ----- "What's new, and what's next": the current focus and the three latest releases -----
+// From the same files as roadmap.html (content/roadmap.json, content/updates.json) and the same rules
+// (roadmap-data.js): drafts never appear, and the current focus is labelled as work in progress.
+async function fillRoadmapPreview() {
+  const box = document.getElementById("roadmap-preview");
+  if (!box || typeof EUHEM_ROADMAP === "undefined") return;
+  const R = EUHEM_ROADMAP;
+  const load = async (url) => {
+    try {
+      const response = await fetch(url, { cache: "no-cache" });
+      return response.ok ? await response.json() : null;
+    } catch {
+      return null;
+    }
+  };
+  const [roadmap, updates] = await Promise.all([load("content/roadmap.json"), load("content/updates.json")]);
+  const now = roadmap && R.readRoadmap(roadmap).items.find((item) => item.lane === "now");
+  const latest = updates ? R.publishedUpdates(updates).slice(0, 3) : [];
+  if (!now && !latest.length) {
+    box.closest("section").hidden = true; // nothing to show: no broken box on the homepage
+    return;
+  }
+  box.replaceChildren();
+  if (now) {
+    const card = createElement("a", "roadmap-preview-now");
+    card.href = `roadmap.html#feature-${now.id}`;
+    const label = createElement("span", "roadmap-preview-label");
+    label.append(createElement("span", "roadmap-preview-dot"), document.createTextNode(`Now · ${R.ROADMAP_STATUS[now.status]}`));
+    card.append(label, createElement("strong", null, now.title), createElement("span", null, now.summary),
+      createElement("span", "roadmap-preview-more", "See what is planned next →"));
+    box.appendChild(card);
+  }
+  if (latest.length) {
+    const panel = createElement("div", "roadmap-preview-latest");
+    panel.appendChild(createElement("h3", null, "Latest releases"));
+    const list = createElement("ol");
+    for (const item of latest) {
+      const li = createElement("li");
+      const date = createElement("time", null, R.dayLabel(item.date));
+      date.dateTime = item.date;
+      const link = createElement("a", null, item.title);
+      link.href = `roadmap.html#update-${item.id}`;
+      li.append(date, createElement("span", `roadmap-preview-type is-${item.type}`, R.UPDATE_TYPES[item.type]), link);
+      list.appendChild(li);
+    }
+    panel.appendChild(list);
+    box.appendChild(panel);
+  }
+}
+
 if (typeof document !== "undefined") {
+  document.addEventListener("DOMContentLoaded", fillRoadmapPreview);
   document.addEventListener("DOMContentLoaded", fillHomeSettings);
   document.addEventListener("DOMContentLoaded", fillCommunityMap);
   document.addEventListener("DOMContentLoaded", fillCommunityPeople);

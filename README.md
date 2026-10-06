@@ -15,6 +15,7 @@ A free, volunteer website for students of the EU-HEM master's program (European 
 - One page per course: Overview, Schedule, Exam, Topics, Key Concepts, Practice, Resources
 - Notes & Resources: student-made notes, flashcards, practice questions and a shared glossary (pilot: Fundamentals in Health Economics)
 - City guides for Bologna, Oslo, Rotterdam and Innsbruck (permits, housing, healthcare, transport, study places and more)
+- **Roadmap & Updates** (`roadmap.html`): what the team is working on now, what comes next, ideas for later and every major release, from `content/roadmap.json` and `content/updates.json` ([docs/roadmap.md](docs/roadmap.md))
 - **Students explorer** (`students.html`): community map, profile cards and list, filters and privacy-aware statistics, currently a **demo with 40 fictional people** (`data/demo-students.json`)
 - Useful links, including Virtuale for official course materials
 - **Search the whole site** with the 🔍 button, Ctrl+K (⌘K on Mac) or `/`

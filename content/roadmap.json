@@ -1,0 +1,400 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-10-06",
+  "planningNote": "Dates are estimates, not promises: several Next items may progress together, and their order can change with student feedback. Later ideas have no dates yet.",
+  "categories": [
+    { "id": "platform", "label": "Platform", "icon": "home" },
+    { "id": "learning", "label": "Learning", "icon": "notes" },
+    { "id": "community", "label": "Community", "icon": "students" },
+    { "id": "life", "label": "Student life", "icon": "guide" },
+    { "id": "career", "label": "Careers", "icon": "briefcase" }
+  ],
+  "lanes": [
+    { "id": "now", "title": "Now", "description": "What the Student Hub team is working on right now." },
+    { "id": "next", "title": "Next", "description": "Planned work, grouped by the period we expect to deliver it." },
+    { "id": "later", "title": "Later", "description": "Larger ideas we are exploring. No dates yet." }
+  ],
+  "items": [
+    {
+      "id": "student-beta-preparation",
+      "title": "Student beta preparation",
+      "summary": "Preparing the first cohort beta: checking the main student journeys and making feedback easy to share.",
+      "category": "platform",
+      "lane": "now",
+      "status": "in-progress",
+      "target": { "start": "2026-10", "end": "2026-10", "label": "October 2026" },
+      "why": "Help students try the Hub with confidence and shape what improves next.",
+      "details": [
+        "Review the timetable, exams, study plan and essential links on phones and computers.",
+        "Keep example content clearly labelled and explain where personal choices are saved.",
+        "Invite the first cohort to explore the beta and report anything confusing or missing."
+      ],
+      "dependencies": ["Final checks of the main student journeys and a working feedback route."],
+      "links": [{ "label": "Share beta feedback", "url": "contact.html" }]
+    },
+    {
+      "id": "beta-feedback-improvements",
+      "title": "Beta feedback & essential improvements",
+      "summary": "Use the first student feedback to fix confusing steps and improve the sections people use most.",
+      "category": "platform",
+      "lane": "next",
+      "status": "planned",
+      "target": { "start": "2026-10", "end": "2026-10", "label": "October 2026" },
+      "why": "Spend development time on the problems students meet in real use.",
+      "details": [
+        "Collect short comments about finding classes, choosing courses and reaching useful resources.",
+        "Group repeated problems, then release a focused set of high-priority improvements.",
+        "Explain the main changes in Updates, so students can see how their feedback helped."
+      ],
+      "dependencies": ["Feedback from the first student beta."],
+      "links": [{ "label": "Send feedback", "url": "contact.html" }]
+    },
+    {
+      "id": "student-accounts-cohort-profiles",
+      "title": "Cohort-only accounts & profiles",
+      "summary": "Sign-in for verified EU-HEM students, a private cohort space and real student profiles, with clear choices about who can see each profile.",
+      "category": "community",
+      "lane": "next",
+      "status": "planned",
+      "target": { "start": "2026-10", "end": "2026-10", "label": "October 2026" },
+      "why": "Make it easier to connect with classmates while you stay in control of what you share.",
+      "details": [
+        "Offer public, cohort-only and unpublished profile choices, as described on the privacy page.",
+        "Check EU-HEM membership before showing anything cohort-only, with controls to edit or remove a profile.",
+        "Replace the current fictional directory preview only when registration and privacy controls are ready."
+      ],
+      "dependencies": ["A working registration service, verified access and reviewed profile-sharing controls."],
+      "links": [
+        { "label": "See the current directory preview", "url": "students.html" },
+        { "label": "Read the privacy page", "url": "privacy.html" }
+      ]
+    },
+    {
+      "id": "domain-admin-dashboard",
+      "title": "Custom domain & admin dashboard",
+      "summary": "Give the Hub its own web address and an editor dashboard, so approved editors can keep content up to date.",
+      "category": "platform",
+      "lane": "next",
+      "status": "planned",
+      "target": { "start": "2026-10", "end": "2026-10", "label": "October 2026" },
+      "why": "Keep important information easier to find, correct and maintain as the Hub grows.",
+      "details": [
+        "Move to a dedicated domain while keeping existing shared links working.",
+        "Provide a dashboard for announcements, updates, useful resources and content corrections.",
+        "Give editors clear responsibilities and a review step before major changes are published."
+      ],
+      "dependencies": ["A domain decision and suitable access controls for editors."],
+      "links": []
+    },
+    {
+      "id": "student-stories-experiences",
+      "title": "Student experiences",
+      "summary": "Honest experiences from second-year students and alumni about courses, choosing a university, moving cities and life during EU-HEM.",
+      "category": "community",
+      "lane": "next",
+      "status": "planned",
+      "target": { "start": "2026-10", "end": "2026-11", "label": "October–November 2026" },
+      "why": "Learn from the experiences students wish they had heard before choosing their path.",
+      "details": [
+        "Start with links to useful student stories already published by partner universities.",
+        "Collect structured experiences from current second-year students and alumni, and let students submit their own through the Hub.",
+        "Ask about academics, choosing a university, city life, housing, costs, mobility, social life, challenges, advice, what they would do differently and career impact.",
+        "Review every contribution with its author before publication, including their choices about name, photo and contact details.",
+        "Later: browse and filter experiences by university, track, cohort and topic."
+      ],
+      "dependencies": ["Willing contributors, a short questionnaire and a simple editorial review."],
+      "links": [{ "label": "Offer your experience", "url": "contact.html" }]
+    },
+    {
+      "id": "partner-university-guides",
+      "title": "Partner university guides",
+      "summary": "A consistent introduction to each partner university: its EU-HEM setting, campus, libraries and student services.",
+      "category": "life",
+      "lane": "next",
+      "status": "planned",
+      "target": { "start": "2026-10", "end": "2026-11", "label": "October–November 2026" },
+      "why": "Help students understand their study destinations and find the right university services.",
+      "details": [
+        "Introduce the school, campus, libraries, study spaces and student services at each university.",
+        "Connect each university to the existing track and city guides.",
+        "Use official sources, and show the year and provider for any ranking mentioned."
+      ],
+      "dependencies": ["Source checks and one guide format for all four universities."],
+      "links": [
+        { "label": "Explore the tracks", "url": "tracks.html" },
+        { "label": "Explore the city guides", "url": "city-guide.html" }
+      ]
+    },
+    {
+      "id": "expanded-notes-interactive-lessons",
+      "title": "More notes, summaries & interactive lessons",
+      "summary": "A major content expansion: student-made notes, summaries, worked examples and interactive lessons for more courses.",
+      "category": "learning",
+      "lane": "next",
+      "status": "planned",
+      "target": { "start": "2026-10", "end": "2026-11", "label": "October–November 2026" },
+      "why": "Give students more ways to understand difficult topics and revise at their own pace.",
+      "details": [
+        "Extend coverage beyond the Fundamentals in Health Economics pilot, starting with the topics students request.",
+        "Add summaries, worked examples, diagrams and short interactive lessons, including interactive walk-throughs of lectures where that helps.",
+        "Keep official lectures and course materials on Virtuale, and link to them."
+      ],
+      "dependencies": ["Student contributors, topic priorities and content review."],
+      "links": [{ "label": "Explore Notes & Resources", "url": "notes.html" }]
+    },
+    {
+      "id": "expanded-practice-bank",
+      "title": "More quizzes, flashcards & question banks",
+      "summary": "Build on the existing practice tools with more student-made revision content for every course.",
+      "category": "learning",
+      "lane": "next",
+      "status": "planned",
+      "target": { "start": "2026-10", "end": "2026-11", "label": "October–November 2026" },
+      "why": "Help students check their understanding and practise the topics that need another look.",
+      "details": [
+        "Expand flashcard sets and question banks, organised by course and topic.",
+        "Add explanations for answers and short quizzes linked to learning goals.",
+        "Offer a simple way to report an unclear question or suggest a correction."
+      ],
+      "dependencies": ["Reviewed questions and explanations for each topic added."],
+      "links": [{ "label": "Try the existing practice tools", "url": "notes.html" }]
+    },
+    {
+      "id": "beyond-euhem-opportunities",
+      "title": "Beyond EU-HEM: careers & opportunities",
+      "summary": "A new section for jobs, internships, research opportunities, career preparation and further study.",
+      "category": "career",
+      "lane": "next",
+      "status": "planned",
+      "target": { "start": "2026-11", "end": "2026-12", "label": "November–December 2026" },
+      "why": "Help students discover possible next steps and reach the original opportunity details.",
+      "details": [
+        "Organise jobs, internships and research opportunities by type, location and area of interest.",
+        "Add career preparation resources, and further study and PhD opportunities where useful.",
+        "Show the source, deadline, eligibility and the date each listing was last checked; archive expired ones."
+      ],
+      "dependencies": ["Reliable opportunity sources and a regular review routine."],
+      "links": [{ "label": "Suggest an opportunity source", "url": "contact.html" }]
+    },
+    {
+      "id": "group-trips-adventures",
+      "title": "Group trips & adventures",
+      "summary": "Explore new countries together through shared day trips, weekend adventures and student-organised activities.",
+      "category": "life",
+      "lane": "later",
+      "status": "exploring",
+      "target": null,
+      "why": "Create shared experiences and make it easy for new students to join in.",
+      "details": [
+        "Share a proposed destination, activity, date and approximate budget.",
+        "Gather interest and agree a simple plan with the organiser.",
+        "Link each trip to useful transport and local information."
+      ],
+      "dependencies": ["Student organisers and clear choices about sharing who takes part."],
+      "links": []
+    },
+    {
+      "id": "student-digital-toolkit",
+      "title": "Student Digital Toolkit",
+      "summary": "A curated guide to digital tools for studying, AI-assisted learning, research, writing, statistics and everyday student life.",
+      "category": "learning",
+      "lane": "later",
+      "status": "exploring",
+      "target": null,
+      "why": "Help students choose a good tool for the task in front of them.",
+      "details": [
+        "Browse tools by task: learning, AI, research, writing, presentations, statistics, languages, careers, budgeting or travel.",
+        "Explain what each tool is best for, its limits, and any checked free plan or student offer, with a review date.",
+        "Start small and grow through student suggestions."
+      ],
+      "dependencies": ["Time to keep plans, offers and links current."],
+      "links": []
+    },
+    {
+      "id": "mobility-checklists",
+      "title": "Personal mobility checklists",
+      "summary": "Turn each move between EU-HEM cities into clear steps before departure and after arrival.",
+      "category": "life",
+      "lane": "later",
+      "status": "exploring",
+      "target": null,
+      "why": "Keep track of practical tasks during a busy move.",
+      "details": [
+        "Choose a destination and keep a personal checklist for housing, travel and arrival.",
+        "Link each administrative step to official guidance, with the date it was checked.",
+        "Mark progress on your own device."
+      ],
+      "dependencies": ["Reviewed destination guidance that is kept current."],
+      "links": [{ "label": "Explore the city guides", "url": "city-guide.html" }]
+    },
+    {
+      "id": "budget-shared-expenses",
+      "title": "Budgeting & shared expenses",
+      "summary": "A simple way to plan a student budget and keep track of shared costs.",
+      "category": "life",
+      "lane": "later",
+      "status": "exploring",
+      "target": null,
+      "why": "Understand your spending and make group costs easier to settle.",
+      "details": [
+        "Plan a monthly budget with your own categories.",
+        "Track shared trip or flat expenses and who has already paid.",
+        "Keep any cost examples dated and separate from personal entries."
+      ],
+      "dependencies": ["Student feedback on the simplest useful version."],
+      "links": []
+    },
+    {
+      "id": "cross-device-revision-workspace",
+      "title": "Revision workspace across devices",
+      "summary": "Sync study lists, revision progress and saved topics between your phone and computer.",
+      "category": "learning",
+      "lane": "later",
+      "status": "exploring",
+      "target": null,
+      "why": "Continue where you left off, whichever device you use.",
+      "details": [
+        "Build on today's study list and progress tools, which stay on one device.",
+        "Let students choose what to sync, with export and delete controls.",
+        "Keep revision working when the connection drops."
+      ],
+      "dependencies": ["Student accounts and reliable controls for personal study data."],
+      "links": [{ "label": "Explore today's revision tools", "url": "notes.html" }]
+    },
+    {
+      "id": "group-project-workspace",
+      "title": "Group project workspace",
+      "summary": "Tasks, milestones and useful links for a student project, in one shared place.",
+      "category": "community",
+      "lane": "later",
+      "status": "exploring",
+      "target": null,
+      "why": "Make it easier for classmates to share responsibilities and follow progress.",
+      "details": [
+        "Create a small project space with members, tasks and deadlines.",
+        "Link shared documents and the relevant course resources.",
+        "See the next tasks at a glance."
+      ],
+      "dependencies": ["Verified group membership and a simple collaboration model."],
+      "links": []
+    },
+    {
+      "id": "research-reading-workbench",
+      "title": "Research reading & reference workspace",
+      "summary": "A place to organise papers, reading notes and sources for a research question.",
+      "category": "learning",
+      "lane": "later",
+      "status": "exploring",
+      "target": null,
+      "why": "Keep the reasoning behind a literature review easy to find and revisit.",
+      "details": [
+        "Save citation details and links to the original publications.",
+        "Record questions, methods, findings and limitations in one reading template.",
+        "Organise references by topic and export notes."
+      ],
+      "dependencies": ["A focused workflow that works with existing reference managers."],
+      "links": [{ "label": "Explore past thesis topics", "url": "thesis.html" }]
+    },
+    {
+      "id": "thesis-planning-companion",
+      "title": "Thesis planning companion",
+      "summary": "Plan your thesis semester: topic ideas, supervisor meetings, milestones and deadlines in one personal timeline.",
+      "category": "learning",
+      "lane": "later",
+      "status": "exploring",
+      "target": null,
+      "why": "The thesis is the biggest piece of independent work in EU-HEM; a clear plan makes it calmer.",
+      "details": [
+        "Start from the Past Thesis Explorer and save topic ideas to compare.",
+        "Keep a personal timeline of milestones and notes from supervisor meetings.",
+        "Link to official deadlines and rules, which stay authoritative."
+      ],
+      "dependencies": ["Confirmed thesis timelines for each track and student feedback."],
+      "links": [{ "label": "Explore past thesis topics", "url": "thesis.html" }]
+    },
+    {
+      "id": "career-application-tracker",
+      "title": "Career application tracker",
+      "summary": "A personal overview of the opportunities you apply to, with deadlines and next steps.",
+      "category": "career",
+      "lane": "later",
+      "status": "exploring",
+      "target": null,
+      "why": "Reduce the effort of following several applications at once.",
+      "details": [
+        "Save an opportunity with its source, deadline and application status.",
+        "Track next actions, interviews and follow-ups.",
+        "Link to CV, cover-letter and interview resources."
+      ],
+      "dependencies": ["The Beyond EU-HEM section and private storage for personal notes."],
+      "links": []
+    },
+    {
+      "id": "methods-health-economics-labs",
+      "title": "Methods & health economics practice labs",
+      "summary": "Interactive exercises that connect quantitative methods and health economics to practical examples.",
+      "category": "learning",
+      "lane": "later",
+      "status": "exploring",
+      "target": null,
+      "why": "Understand abstract ideas by changing assumptions and watching the results change.",
+      "details": [
+        "Start with focused activities such as sampling, confidence intervals or cost-effectiveness calculations.",
+        "Use worked solutions, transparent assumptions and clearly labelled example data.",
+        "Build labs around the topics students ask for, and review them before publication."
+      ],
+      "dependencies": ["Reviewed learning goals, example data and worked solutions."],
+      "links": []
+    },
+    {
+      "id": "alumni-mentoring-skills-exchange",
+      "title": "Alumni mentoring & skills exchange",
+      "summary": "Connect students and alumni who want to share experience, answer questions or exchange skills.",
+      "category": "community",
+      "lane": "later",
+      "status": "exploring",
+      "target": null,
+      "why": "Find someone who can help with a specific study, mobility or career question.",
+      "details": [
+        "Volunteers describe the topics or skills they are happy to help with.",
+        "Explore matching for short conversations, peer learning or mentoring.",
+        "Participants control their contact details and availability."
+      ],
+      "dependencies": ["Volunteers, verified profiles and clear contact preferences."],
+      "links": []
+    }
+  ],
+  "milestones": [
+    {
+      "id": "development-begins",
+      "date": "2026-10-01",
+      "title": "First code",
+      "summary": "The first homepage and project structure were written, laying the foundations of the Student Hub.",
+      "status": "completed",
+      "source": { "label": "See the first commit", "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/d27e3d4d576f2f0cd7939feca83edb2da17de857" }
+    },
+    {
+      "id": "first-version-online",
+      "date": "2026-10-01",
+      "title": "The first version goes online",
+      "summary": "The first homepage and live timetable were published on the web.",
+      "status": "completed",
+      "source": { "label": "See the first successful deployment", "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/36813569140" }
+    },
+    {
+      "id": "students-explorer-new-design",
+      "date": "2026-10-06",
+      "title": "A new look and the Students explorer",
+      "summary": "The Students explorer (with fictional demo profiles) and a complete redesign of the Hub went live.",
+      "status": "completed",
+      "source": { "label": "See the deployment", "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37413969703" }
+    },
+    {
+      "id": "first-cohort-beta",
+      "date": "2026-10-06",
+      "title": "First cohort beta",
+      "summary": "EU-HEM students are invited to explore the beta. Their feedback will decide the next improvements.",
+      "status": "planned"
+    }
+  ]
+}
