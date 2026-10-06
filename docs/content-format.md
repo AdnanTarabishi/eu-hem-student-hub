@@ -370,3 +370,7 @@ sample items, when real content replaces them.
 
 ### Current Health Economics Session 4 interactive activities
 `causal-directions`, `disparity-theories`, `stress-depreciation`, and `policy-mechanism` are rendered by `lecture-activities.js`.
+
+
+### Current Health Economics Session 5 interactive activities
+`agency-map`, `pid-forces`, `physician-payment`, and `practice-variation` are rendered by `lecture-activities.js`.
