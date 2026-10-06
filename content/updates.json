@@ -4,6 +4,36 @@
   "dateBasis": "Each date is the day (Rome time) the change first went live through a successful site deployment. Only important student-facing releases are listed.",
   "items": [
     {
+      "id": "academic-rules-journey-support",
+      "date": null,
+      "title": "Academic rules, your programme journey and support contacts",
+      "summary": "Three new pages, based on the EU-HEM handbook and official university pages: re-sits and grades, your two years step by step, and who to contact for help.",
+      "category": "learning",
+      "type": "new",
+      "status": "draft",
+      "highlights": [
+        "Re-sit guide and grading scales for all four universities.",
+        "Your track's cities, the four degree titles, Erasmus+ grants and fees.",
+        "Who should I contact? Wellbeing and safety support at each university.",
+        "Key exam periods and deadlines in the calendar, with Official and Student tip labels."
+      ],
+      "links": [
+        {
+          "label": "Academic Rules",
+          "url": "academic-rules.html"
+        },
+        {
+          "label": "Programme Journey",
+          "url": "journey.html"
+        },
+        {
+          "label": "Support & Contacts",
+          "url": "support.html"
+        }
+      ],
+      "evidence": null
+    },
+    {
       "id": "roadmap-and-updates",
       "date": "2026-10-06",
       "title": "Roadmap & Updates",
