@@ -15,32 +15,6 @@
     "explanation": "% change in quantity = elasticity × % change in price = -0.2 × 10% = -2%. Visits fall by about 2%. Demand is inelastic, but not zero."
   },
   {
-    "id": "fund-health-economics.q.002",
-    "topic": "fund-health-economics.moral-hazard",
-    "type": "mcq",
-    "difficulty": "medium",
-    "question": "Which of these is a form of demand-side cost-sharing?",
-    "options": [
-      "Capitation payments to family doctors",
-      "A copayment for each doctor visit",
-      "A fixed yearly budget for a hospital",
-      "Paying hospitals per diagnosis (DRGs)"
-    ],
-    "answer": "B",
-    "explanation": "Demand-side cost-sharing makes patients pay part of the cost when they use care, for example a copayment. The other options change how providers are paid, so they are supply-side tools.",
-    "sample": true
-  },
-  {
-    "id": "fund-health-economics.q.003",
-    "topic": "fund-health-economics.moral-hazard",
-    "type": "true-false",
-    "difficulty": "easy",
-    "question": "Moral hazard means that insured people tend to use more care because insurance lowers the price they pay when they use it.",
-    "answer": true,
-    "explanation": "True. Insurance lowers the out-of-pocket price at the point of use, so people use more care than they would if they paid the full price.",
-    "sample": true
-  },
-  {
     "id": "fund-health-economics.q.004",
     "topic": "fund-health-economics.demand",
     "type": "true-false",
@@ -48,16 +22,6 @@
     "question": "The demand for health care is perfectly inelastic: price has no effect on how much care people use.",
     "answer": false,
     "explanation": "False. Studies such as the RAND Health Insurance Experiment found that people use less care when they pay more. Demand is inelastic (it reacts only a little), but not perfectly inelastic."
-  },
-  {
-    "id": "fund-health-economics.q.005",
-    "topic": "fund-health-economics.moral-hazard",
-    "type": "short-answer",
-    "difficulty": "hard",
-    "question": "Explain why full insurance can cause a welfare loss through moral hazard.",
-    "answer": "With full insurance the price at the point of use is zero, so people use care until its extra benefit to them is zero. The extra units used beyond the point where benefit equals cost are worth less than they cost to produce.",
-    "explanation": "Draw the demand curve and the marginal cost line. Without insurance, people stop where benefit = cost. With a zero price they move further along the demand curve. The triangle between marginal cost and demand for those extra units is the welfare loss (deadweight loss).",
-    "sample": true
   },
   {
     "id": "fund-health-economics.q.006",
