@@ -559,13 +559,13 @@
             intercept = 100 + shift,
             quantity = Math.max(0, intercept - price);
           const x = (q) => 55 + (q / 120) * 520,
-            y = (p) => 225 - (p / 110) * 185,
+            y = (p) => 225 - (p / 120) * 185,
             qMax = Math.max(0, intercept);
           out.innerHTML =
             '<div class="formula">Quantity demanded = ' + number(quantity, 0) + '</div>' +
             '<svg class="activity-chart" viewBox="0 0 640 280" role="img" aria-label="Stylised linear demand curve with the selected price and quantity marked.">' +
             '<path d="M55 25V225H610" fill="none" stroke="currentColor"/>' +
-            '<path d="M' + x(0) + ' ' + y(Math.min(intercept,110)) + ' L' + x(Math.min(qMax,120)) + ' ' + y(0) + '" fill="none" stroke="#628473" stroke-width="4"/>' +
+            '<path d="M' + x(0) + ' ' + y(intercept) + ' L' + x(Math.min(qMax,120)) + ' ' + y(0) + '" fill="none" stroke="#628473" stroke-width="4"/>' +
             '<path d="M55 ' + y(price) + 'H' + x(quantity) + 'V225" fill="none" stroke="#cc6f4f" stroke-width="2" stroke-dasharray="5 5"/>' +
             '<circle cx="' + x(quantity) + '" cy="' + y(price) + '" r="7" fill="#cc6f4f"/>' +
             '<text x="58" y="16" fill="currentColor" font-size="12">Price</text><text x="555" y="250" fill="currentColor" font-size="12">Quantity</text>' +
