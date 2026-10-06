@@ -1,0 +1,346 @@
+[
+  {
+    "id": "statistics.q.001",
+    "topic": "statistics.sampling",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Population & sample",
+    "question": "You measure 100 children to estimate the average weight of all children in Bologna. What is the sample?",
+    "options": [
+      "All children in Bologna",
+      "The 100 children measured",
+      "Their average weight",
+      "All children in Italy"
+    ],
+    "answer": "B",
+    "explanation": "The sample is the group you actually observe. The population is all children in Bologna.",
+    "source": "Slides 8–13"
+  },
+  {
+    "id": "statistics.q.002",
+    "topic": "statistics.sampling",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "The three terms",
+    "question": "Which correctly matches estimand, estimator, and estimate?",
+    "options": [
+      "Estimand: population parameter; estimator: calculation rule; estimate: calculated value",
+      "Estimand: sample; estimator: population; estimate: formula",
+      "Estimand: calculated value; estimator: population parameter; estimate: rule",
+      "All three mean the same thing"
+    ],
+    "answer": "A",
+    "explanation": "The estimand is the target μ. The estimator is the rule, such as X̄ = ΣXᵢ/n. The estimate is the observed result, such as 28 kg.",
+    "source": "Slide 23"
+  },
+  {
+    "id": "statistics.q.003",
+    "topic": "statistics.sampling",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Random sampling",
+    "question": "In simple random sampling without replacement, which statement is true?",
+    "options": [
+      "Every sample perfectly represents the population",
+      "Only individuals near the population mean can be selected",
+      "Every possible sample of the specified size has the same probability of selection",
+      "Sampling error is eliminated"
+    ],
+    "answer": "C",
+    "explanation": "Each possible sample of a given size is equally likely. Any particular sample may still differ from the population.",
+    "source": "Slides 12–13"
+  },
+  {
+    "id": "statistics.q.004",
+    "topic": "statistics.sampling",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Sampling error",
+    "question": "Why can two random samples from the same population produce different means?",
+    "options": [
+      "One sample must contain measurement mistakes",
+      "The population mean changes whenever we sample",
+      "Random sampling always introduces bias",
+      "Different individuals can be selected by chance"
+    ],
+    "answer": "D",
+    "explanation": "Random selection produces different sets of observations. The resulting chance variation is sampling error, even when measurement is accurate.",
+    "source": "Slides 14–17"
+  },
+  {
+    "id": "statistics.q.005",
+    "topic": "statistics.sampling",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Sampling distributions",
+    "question": "The sampling distribution of the mean describes…",
+    "options": [
+      "The weights of individuals in one sample",
+      "Sample means across repeated samples of the same size",
+      "Population means across different countries",
+      "Measurement errors in a weighing scale"
+    ],
+    "answer": "B",
+    "explanation": "Imagine repeatedly drawing a sample of fixed size and calculating its mean. The distribution of those means is the sampling distribution.",
+    "source": "Slides 24–27"
+  },
+  {
+    "id": "statistics.q.006",
+    "topic": "statistics.sampling",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Random variables",
+    "question": "Why is the sample mean a random variable before the sample is observed?",
+    "options": [
+      "Its value depends on which observations are selected",
+      "The formula changes between samples",
+      "The population mean is always random",
+      "Sample means cannot be calculated exactly"
+    ],
+    "answer": "A",
+    "explanation": "The formula is fixed, but its inputs depend on the random sample. Once observed, the particular numerical mean is an estimate.",
+    "source": "Slides 23–25"
+  },
+  {
+    "id": "statistics.q.007",
+    "topic": "statistics.sampling",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Unbiasedness",
+    "question": "An unbiased estimator satisfies E[X̄] = μ. What does this mean?",
+    "options": [
+      "Every sample mean equals the population mean",
+      "Sampling error is zero",
+      "Across repeated samples, the average sample mean equals the population mean",
+      "The sample mean always underestimates the population mean"
+    ],
+    "answer": "C",
+    "explanation": "Unbiasedness is a property across repeated samples. A single sample mean can be above or below μ.",
+    "source": "Slides 33–34"
+  },
+  {
+    "id": "statistics.q.008",
+    "topic": "statistics.sampling",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Consistency",
+    "question": "A consistent estimator…",
+    "options": [
+      "Gives the same answer for every sample",
+      "Is increasingly likely to be close to the population parameter as sample size grows",
+      "Must equal the parameter when n = 30",
+      "Must be unbiased at every sample size"
+    ],
+    "answer": "B",
+    "explanation": "Consistency means convergence in probability to the parameter as n grows. It does not guarantee an exact answer at a particular sample size.",
+    "source": "Slides 36–38"
+  },
+  {
+    "id": "statistics.q.009",
+    "topic": "statistics.sampling",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "SD versus SE",
+    "question": "Which statement about standard deviation and standard error is correct?",
+    "options": [
+      "Both describe variation between individuals",
+      "Standard error is always measured in squared units",
+      "Standard deviation measures the precision of the sample mean",
+      "Standard deviation describes individual variation; standard error describes variation between sample means"
+    ],
+    "answer": "D",
+    "explanation": "SD describes individual observations; SE describes the sampling distribution of an estimator. Both use the original units (kg here), while variance uses kg².",
+    "source": "Slides 39–40"
+  },
+  {
+    "id": "statistics.q.010",
+    "topic": "statistics.sampling",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "The normal distribution",
+    "question": "For independent observations from a normally distributed population, the sample mean is…",
+    "options": [
+      "Normally distributed for any sample size",
+      "Normally distributed only when n ≥ 30",
+      "Uniformly distributed",
+      "Always equal to the population mean"
+    ],
+    "answer": "A",
+    "explanation": "A mean of independent normal observations is normal for any n. The large-sample approximation is needed when the population itself is not normal.",
+    "source": "Slides 41–44"
+  },
+  {
+    "id": "statistics.q.011",
+    "topic": "statistics.sampling",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Calculate standard error",
+    "question": "Population standard deviation is 20 kg and n = 100 independent observations. What is the standard error?",
+    "options": [
+      "20 kg",
+      "0.2 kg",
+      "2 kg",
+      "200 kg"
+    ],
+    "answer": "C",
+    "explanation": "SE = σ/√n = 20/√100 = 20/10 = 2 kg.",
+    "source": "Slides 39–40"
+  },
+  {
+    "id": "statistics.q.012",
+    "topic": "statistics.sampling",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Increase the sample size",
+    "question": "Keeping population standard deviation at 20 kg, increase n to 400. What is the standard error?",
+    "options": [
+      "4 kg",
+      "1 kg",
+      "0.5 kg",
+      "2 kg"
+    ],
+    "answer": "B",
+    "explanation": "SE = 20/√400 = 20/20 = 1 kg. Quadrupling sample size halves standard error.",
+    "source": "Slides 39–40"
+  },
+  {
+    "id": "statistics.q.013",
+    "topic": "statistics.sampling",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Choose a sample size",
+    "question": "With population standard deviation of 20 kg, what sample size gives a standard error of 0.5 kg?",
+    "options": [
+      "40",
+      "400",
+      "800",
+      "1,600"
+    ],
+    "answer": "D",
+    "explanation": "Rearrange SE = σ/√n: n = (σ/SE)² = (20/0.5)² = 40² = 1,600.",
+    "source": "Application of slides 39–40"
+  },
+  {
+    "id": "statistics.q.014",
+    "topic": "statistics.sampling",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Exercise 5.1",
+    "question": "A population contains weights of 65, 89, 75, 64, and 86 kg. What is its mean?",
+    "options": [
+      "75.8 kg",
+      "75 kg",
+      "76.8 kg",
+      "79 kg"
+    ],
+    "answer": "A",
+    "explanation": "The weights total 379 kg. The population mean is 379/5 = 75.8 kg.",
+    "source": "Slides 19–21"
+  },
+  {
+    "id": "statistics.q.015",
+    "topic": "statistics.sampling",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Exercise 5.1",
+    "question": "From that population, select everyone except the person weighing 89 kg. What is the sample mean?",
+    "options": [
+      "75.8 kg",
+      "78.5 kg",
+      "72.5 kg",
+      "76 kg"
+    ],
+    "answer": "C",
+    "explanation": "The selected weights are 65, 75, 64, and 86. Their sum is 290, so the sample mean is 290/4 = 72.5 kg.",
+    "source": "Slides 19–21"
+  },
+  {
+    "id": "statistics.q.016",
+    "topic": "statistics.sampling",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Exercise 5.2",
+    "question": "Weights are uniform with μ = 27.5 kg and σ = 12.99 kg. For n = 100 independent observations, which describes the sample mean?",
+    "options": [
+      "Uniform; expected value 27.5 kg; standard error 12.99 kg",
+      "Approximately normal; expected value 27.5 kg; standard error 1.299 kg",
+      "Approximately normal; expected value 2.75 kg; standard error 1.299 kg",
+      "Approximately normal; expected value 27.5 kg; standard error 0.1299 kg"
+    ],
+    "answer": "B",
+    "explanation": "The CLT gives an approximately normal sample mean here. E[X̄] = μ = 27.5 kg, and SE = 12.99/√100 = 1.299 kg.",
+    "source": "Slides 46–47"
+  },
+  {
+    "id": "statistics.q.017",
+    "topic": "statistics.sampling",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "95% confidence interval",
+    "question": "Assume independent sampling and a normal or approximately normal sampling distribution. Observed mean is 70 kg, population SD is 20 kg, and n = 100. What is the 95% confidence interval? Use 1.96.",
+    "options": [
+      "50–90 kg",
+      "68–72 kg",
+      "69.61–70.39 kg",
+      "66.08–73.92 kg"
+    ],
+    "answer": "D",
+    "explanation": "Supplementary practice: known population SD and a normal or approximately normal sampling distribution. SE = 20/10 = 2 kg. Margin = 1.96 × 2 = 3.92 kg. Interval = 70 ± 3.92 = [66.08, 73.92] kg.",
+    "source": "Supplementary · known-σ z interval",
+    "supplementary": true
+  },
+  {
+    "id": "statistics.q.018",
+    "topic": "statistics.sampling",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Interpret confidence",
+    "question": "What does 95% confidence mean?",
+    "options": [
+      "Across repeated samples, about 95% of intervals made by this method contain the true population mean",
+      "95% of individual weights fall inside the interval",
+      "The sample mean equals the population mean 95% of the time",
+      "95% of the sample observations are accurate"
+    ],
+    "answer": "A",
+    "explanation": "Supplementary practice: known population SD and a normal or approximately normal sampling distribution. The 95% refers to the long-run coverage of the interval-building procedure. It is not a statement about individual weights or a probability assigned to the fixed μ after observing an interval.",
+    "source": "Supplementary · confidence-interval interpretation",
+    "supplementary": true
+  },
+  {
+    "id": "statistics.q.019",
+    "topic": "statistics.sampling",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Compare precision",
+    "question": "Assume independent sampling and a normal or approximately normal sampling distribution. Observed mean stays at 70 kg and population SD at 20 kg, but n increases to 400. What is the 95% confidence interval?",
+    "options": [
+      "66.08–73.92 kg",
+      "69.02–70.98 kg",
+      "68.04–71.96 kg",
+      "62.16–77.84 kg"
+    ],
+    "answer": "C",
+    "explanation": "Supplementary practice: known population SD and a normal or approximately normal sampling distribution. SE = 20/20 = 1 kg. Interval = 70 ± 1.96 = [68.04, 71.96] kg. Its width is half the width for n = 100.",
+    "source": "Supplementary · known-σ z interval",
+    "supplementary": true
+  },
+  {
+    "id": "statistics.q.020",
+    "topic": "statistics.sampling",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "99% confidence interval",
+    "question": "Assume independent sampling and a normal or approximately normal sampling distribution. For mean 70 kg, population SD 20 kg, and n = 100, use 2.576 for a 99% confidence interval. Which answer is correct?",
+    "options": [
+      "66.08–73.92 kg; unchanged",
+      "64.85–75.15 kg; wider because greater confidence requires a larger margin",
+      "68.04–71.96 kg; narrower because confidence is higher",
+      "50–90 kg; wider because the standard error increases"
+    ],
+    "answer": "B",
+    "explanation": "Supplementary practice: known population SD and a normal or approximately normal sampling distribution. SE stays at 2 kg. Margin = 2.576 × 2 = 5.152 kg. Interval = [64.848, 75.152], rounded to [64.85, 75.15] kg. The higher critical value makes it wider.",
+    "source": "Supplementary · known-σ z interval",
+    "supplementary": true
+  }
+]

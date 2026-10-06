@@ -66,6 +66,7 @@ function renderHeroStats() {
   const sum = (list) => landingData.courses.reduce((total, course) => total + list(course), 0);
   const stats = [
     [landingData.courses.length, "course", "courses"],
+    [sum((c) => c.topics.filter((t) => t.lecture).length), "interactive lecture", "interactive lectures"],
     [sum((c) => c.topics.filter((t) => t.notes).length), "note", "notes"],
     [sum((c) => c.flashcards.length), "flashcard", "flashcards"],
     [sum((c) => c.questions.length), "question", "questions"],
@@ -83,6 +84,7 @@ function renderHeroStats() {
 
 function courseCounts(course) {
   return {
+    lectures: course.topics.filter((t) => t.lecture).length,
     notes: course.topics.filter((t) => t.notes).length,
     flashcards: course.flashcards.length,
     questions: course.questions.length,
@@ -137,6 +139,7 @@ function courseCard(course, index, progress, today, myCodes) {
 
   if (total) {
     const parts = [
+      plural(counts.lectures, "interactive lecture"),
       plural(counts.notes, "note"), plural(counts.flashcards, "flashcard"), plural(counts.questions, "question"),
       plural(counts.concepts, "concept"), plural(counts.resources, "resource"),
     ].filter((text) => !text.startsWith("0 "));

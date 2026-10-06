@@ -1192,6 +1192,22 @@ async function main() {
   // --- notes, practice items, resources ---
   for (const course of modules) {
     for (const topic of course.topics) {
+      if (topic.lecture) {
+        try {
+          const lecture = await data.loadLecture(course, topic, readFromDisk);
+          if (!lecture) {
+            error(`${course.folder}topics.json`, `lecture "${topic.lecture}" was not found`);
+          } else {
+            const file = course.folder + topic.lecture;
+            if (!await readFromDisk(course.folder + lecture.guide)) error(file, `guide "${lecture.guide}" was not found or is empty`);
+            checkDate(lecture.date, "date", file);
+            checkDate(lecture.updated, "updated", file);
+            if (lecture.classNumber !== undefined && (!Number.isInteger(lecture.classNumber) || lecture.classNumber < 1)) error(file, `"classNumber" must be a positive whole number`);
+          }
+        } catch (problem) {
+          error(`${course.folder}topics.json (${topic.id})`, problem.message);
+        }
+      }
       if (!topic.notes) continue;
       const file = `${course.folder}${topic.notes}`;
       const notes = await data.loadNotes(course, topic, readFromDisk);

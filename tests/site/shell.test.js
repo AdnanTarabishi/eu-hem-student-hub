@@ -10,7 +10,7 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
   '.webmanifest': 'application/manifest+json', '.csv': 'text/csv', '.ics': 'text/calendar' };
 const PAGES = ['index.html', 'studyplan.html', 'tracks.html', 'timetable.html', 'exams.html', 'calendar.html', 'notes.html',
   'thesis.html', 'city-guide.html', 'city-guide.html?city=bologna', 'announcements.html', 'students.html', 'join.html',
-  'privacy.html', 'contact.html', 'roadmap.html', 'roadmap.html#update-new-design', 'academic-rules.html', 'journey.html', 'support.html'];
+  'privacy.html', 'contact.html', 'roadmap.html', 'roadmap.html#update-new-design', 'academic-rules.html', 'journey.html', 'support.html', 'lecture.html?topic=statistics.sampling'];
 
 (async () => {
   const site = http.createServer((req, res) => {

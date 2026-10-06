@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Interactive student study notes, experiments and multiple-choice practice for EU-HEM lectures."
+    />
+    <meta name="theme-color" content="#153d35" />
+    <title>Interactive lecture · EU-HEM Student Hub</title>
+    <link rel="stylesheet" href="style.css?v=709b9303" />
+    <link rel="stylesheet" href="lecture.css?v=8cd67d1d" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png" />
+    <script src="theme.js?v=d51d4769"></script>
+  </head>
+  <body class="lecture-page">
+    <a class="skip-link" href="#main">Skip to study content</a>
+    <header class="site-header">
+      <div class="container">
+        <p class="site-title"><a href="index.html">EU-HEM Student Hub</a></p>
+        <p class="site-tagline">
+          Unofficial, student-run resources for the EU-HEM master's program
+        </p>
+        <nav
+          class="site-nav"
+          id="site-nav"
+          data-current="notes"
+          aria-label="Main menu"
+        ></nav>
+        <script src="site-nav.js?v=6f76a7a0"></script>
+      </div>
+    </header>
+    <main class="wrap" id="main" tabindex="-1">
+      <p class="lecture-breadcrumbs">
+        <a href="notes.html">← Notes & Resources</a
+        ><span aria-hidden="true"> / </span
+        ><a id="lecture-course-link" href="notes.html">Course notes</a>
+      </p>
+      <p id="lecture-status" class="card" role="status">Loading lecture…</p>
+      <noscript
+        ><p class="card">
+          JavaScript is needed for interactive lectures. You can still follow
+          the course links from <a href="notes.html">Notes & Resources</a>.
+        </p></noscript
+      >
+      <div id="lecture-content" hidden>
+        <div class="lecture-toolbar">
+          <span class="eyebrow" id="lecture-module-label"></span>
+          <nav class="nav" aria-label="Study sections">
+            <button type="button" data-view="learn" aria-current="page">
+              01 &nbsp; Learn</button
+            ><button type="button" data-view="explore">02 &nbsp; Explore</button
+            ><button type="button" data-view="practice">
+              03 &nbsp; Practice
+            </button>
+          </nav>
+        </div>
+        <section id="learn" aria-label="Lecture study guide">
+          <div class="hero">
+            <div>
+              <span class="pill"
+                ><span class="dot"></span> <span id="lecture-class-label"></span
+              ></span>
+              <p id="lecture-topic-label" class="eyebrow"></p>
+              <h1 id="lecture-title"></h1>
+              <p id="lecture-intro" class="lead"></p>
+              <div class="hero-actions">
+                <button class="btn" type="button" data-view="explore">
+                  Explore the lab <span aria-hidden="true">↗</span></button
+                ><button
+                  class="btn secondary"
+                  type="button"
+                  data-view="practice"
+                >
+                  Take the quiz <span aria-hidden="true">→</span>
+                </button>
+              </div>
+              <div class="hero-meta">
+                <span id="lecture-question-count"></span
+                ><span id="lecture-activity-count"></span
+                ><span>Saved for offline use after your first visit</span>
+              </div>
+            </div>
+            <div class="visual" data-activity="sampling">
+              <p class="eyebrow">The big idea</p>
+              <div class="visual-title">
+                More observations. Less uncertainty.
+              </div>
+              <svg
+                viewBox="0 0 440 235"
+                role="img"
+                aria-labelledby="hero-chart-title hero-chart-desc"
+              >
+                <title id="hero-chart-title">
+                  Two sampling distributions with the same mean
+                </title>
+                <desc id="hero-chart-desc">
+                  Illustrative curves: a larger sample has a narrower
+                  distribution of sample means, centered on the same population
+                  mean.
+                </desc>
+                <defs>
+                  <linearGradient id="wide-fill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#c1d5ac" stop-opacity=".3" />
+                    <stop offset="1" stop-color="#c1d5ac" stop-opacity="0" />
+                  </linearGradient>
+                  <linearGradient id="narrow-fill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#e9a47c" stop-opacity=".65" />
+                    <stop offset="1" stop-color="#e9a47c" stop-opacity=".08" />
+                  </linearGradient>
+                </defs>
+                <g stroke="#ffffff12">
+                  <path d="M20 55H420M20 105H420M20 155H420" />
+                </g>
+                <path
+                  d="M20 193 C85 193 110 139 160 120 C200 104 240 104 280 120 C330 139 355 193 420 193 L20 193Z"
+                  fill="url(#wide-fill)"
+                  stroke="#c1d5ac"
+                  stroke-width="2"
+                />
+                <path
+                  d="M90 193 C153 193 159 177 181 108 C192 71 203 31 220 31 C237 31 248 71 259 108 C281 177 287 193 350 193 L90 193Z"
+                  fill="url(#narrow-fill)"
+                  stroke="#e9a47c"
+                  stroke-width="2"
+                />
+                <path
+                  d="M220 25V195"
+                  stroke="#eee9d7"
+                  stroke-dasharray="3 5"
+                  opacity=".5"
+                />
+                <path d="M20 195H420" stroke="#ffffff45" />
+                <text
+                  x="220"
+                  y="221"
+                  text-anchor="middle"
+                  fill="#dbe6d4"
+                  font-family="Georgia,serif"
+                  font-size="15"
+                >
+                  μ · same population mean
+                </text>
+                <text
+                  x="276"
+                  y="62"
+                  fill="#e9b798"
+                  font-family="system-ui,sans-serif"
+                  font-size="11"
+                >
+                  larger sample
+                </text>
+                <text
+                  x="40"
+                  y="140"
+                  fill="#c1d5ac"
+                  font-family="system-ui,sans-serif"
+                  font-size="11"
+                >
+                  smaller sample
+                </text>
+              </svg>
+              <div class="legend">
+                <span>Wider distribution</span
+                ><span>Narrower distribution</span>
+              </div>
+              <div class="visual-note">
+                The mean stays centered. The spread of sample means shrinks as
+                the sample grows. Illustration, not measured data.
+              </div>
+            </div>
+          </div>
+
+          <div class="lecture-study-actions">
+            <span id="lecture-status-label" class="small muted"></span
+            ><button
+              type="button"
+              id="mark-read"
+              class="btn secondary small-btn"
+            >
+              Mark as read</button
+            ><button
+              type="button"
+              id="mark-understood"
+              class="btn secondary small-btn"
+            >
+              Mark as understood</button
+            ><a id="lecture-save" class="small" href="notes.html?tab=study-list"
+              >My Study List</a
+            >
+          </div>
+          <div class="note lecture-notice">
+            <span id="lecture-attribution"></span>
+            <a
+              id="lecture-virtuale"
+              href="https://virtuale.unibo.it"
+              target="_blank"
+              rel="noopener"
+              >Open official materials on Virtuale ↗</a
+            >
+          </div>
+          <div id="lecture-guide"></div>
+          <div class="cta">
+            <div>
+              <h2>Ready to put it into practice?</h2>
+              <p>Try the activities, then check your understanding.</p>
+            </div>
+            <button class="btn" type="button" data-view="practice">
+              Take the quiz →
+            </button>
+          </div>
+        </section>
+        <section
+          id="explore"
+          aria-label="Interactive lecture activities"
+          hidden
+        >
+          <div class="page-head">
+            <p class="eyebrow">02 / Explore</p>
+            <h1>A lab for your intuition.</h1>
+            <p>
+              Try a small population, simulate repeated samples, and build a
+              confidence interval. Change one thing at a time and notice what
+              happens.
+            </p>
+          </div>
+          <div data-activity="sampling">
+            <article class="card">
+              <div class="lab-heading">
+                <h3>Watch a sampling distribution form</h3>
+                <span class="pill">EXERCISE 5.2</span>
+              </div>
+              <p>
+                Each bar counts sample means from a uniform population between 5
+                and 50 kg. This gives μ = 27.5 kg and σ ≈ 12.99 kg, matching the
+                lecture’s population parameters.
+              </p>
+              <div class="lab-controls">
+                <div>
+                  <label class="control-label" for="sample-size"
+                    >Observations in each sample:
+                    <strong id="sample-size-value">100</strong></label
+                  ><input
+                    id="sample-size"
+                    type="range"
+                    min="0"
+                    max="6"
+                    value="5"
+                    step="1"
+                    aria-valuetext="100 observations per sample"
+                  />
+                  <div class="range-labels">
+                    <span>1</span><span>2</span><span>5</span><span>10</span
+                    ><span>30</span><span>100</span><span>400</span>
+                  </div>
+                </div>
+                <button class="btn" type="button" id="resample">
+                  Draw 1,000 new samples <span aria-hidden="true">↻</span>
+                </button>
+              </div>
+              <div class="stat-row" aria-live="polite">
+                <div class="stat">
+                  <span>POPULATION MEAN</span
+                  ><strong>27.5 <small class="small">kg</small></strong>
+                </div>
+                <div class="stat">
+                  <span>THEORETICAL STANDARD ERROR</span
+                  ><strong id="theory-se">1.299 kg</strong>
+                </div>
+                <div class="stat">
+                  <span>AVERAGE OF SIMULATED MEANS</span
+                  ><strong id="sim-mean">—</strong>
+                </div>
+              </div>
+              <div class="chart-box">
+                <svg
+                  id="sampling-chart"
+                  class="chart"
+                  viewBox="0 0 900 265"
+                  role="img"
+                  aria-labelledby="sampling-title sampling-description"
+                >
+                  <title id="sampling-title">
+                    Histogram of simulated sample means
+                  </title>
+                  <desc id="sampling-description">
+                    1,000 samples of 100 observations each.
+                  </desc>
+                  <g id="sampling-drawing"></g>
+                </svg>
+              </div>
+              <div class="chart-caption">
+                <span
+                  >Dashed line: population mean · Horizontal axis: sample mean
+                  in kg</span
+                ><span>1,000 independent samples · Fixed horizontal scale</span>
+              </div>
+              <p class="small muted" style="margin: 18px 0 0">
+                At n = 1, means follow the uniform population distribution. With
+                larger n, they gather around μ. These are simulations, so
+                results vary slightly with each draw.
+              </p>
+            </article>
+          </div>
+          <div data-activity="tiny-population">
+            <div class="section-intro">
+              <div>
+                <p class="eyebrow">Exact, not simulated</p>
+                <h2>Five people. Every possible sample.</h2>
+              </div>
+            </div>
+            <article class="card">
+              <div class="grid2">
+                <div>
+                  <h3>Exercise 5.1, without replacement</h3>
+                  <p>
+                    Population: 65, 89, 75, 64, 86 kg. Every sample of a given
+                    size is equally likely. Here we enumerate all combinations,
+                    ignoring order.
+                  </p>
+                  <div class="control">
+                    <label for="tiny-size">People in each sample</label
+                    ><select id="tiny-size">
+                      <option value="1">1 person</option>
+                      <option value="2">2 people</option>
+                      <option value="4" selected>4 people</option>
+                      <option value="5">5 people (a census)</option>
+                    </select>
+                  </div>
+                  <div
+                    class="formula small-formula"
+                    id="tiny-summary"
+                    aria-live="polite"
+                  ></div>
+                  <p class="small">
+                    Notice: the expected sample mean stays at 75.8 kg. The
+                    spread decreases, reaching zero when everyone is measured.
+                  </p>
+                </div>
+                <div class="table-scroll">
+                  <table>
+                    <caption class="visually-hidden">
+                      All equally likely samples and their means
+                    </caption>
+                    <thead>
+                      <tr>
+                        <th scope="col">Sample weights (kg)</th>
+                        <th scope="col">Mean (kg)</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tiny-table"></tbody>
+                  </table>
+                </div>
+              </div>
+            </article>
+          </div>
+          <div data-activity="confidence-interval">
+            <div class="section-intro">
+              <div>
+                <p class="eyebrow">From precision to an interval</p>
+                <h2>Build your confidence interval.</h2>
+              </div>
+              <span class="pill">SUPPLEMENTARY</span>
+            </div>
+            <article class="card">
+              <p>
+                Use the known-σ z interval for an independent random sample with
+                a normal or approximately normal sampling distribution. This
+                calculator does not determine whether those assumptions hold.
+              </p>
+              <div class="calc-inputs">
+                <div class="control">
+                  <label for="ci-mean">Observed mean (kg)</label
+                  ><input
+                    id="ci-mean"
+                    type="number"
+                    value="70"
+                    step="any"
+                    required
+                  />
+                </div>
+                <div class="control">
+                  <label for="ci-sigma">Population SD (kg)</label
+                  ><input
+                    id="ci-sigma"
+                    type="number"
+                    value="20"
+                    min="0.000001"
+                    step="any"
+                    required
+                  />
+                </div>
+                <div class="control">
+                  <label for="ci-n">Sample size</label
+                  ><input
+                    id="ci-n"
+                    type="number"
+                    value="100"
+                    min="1"
+                    max="1000000000"
+                    step="1"
+                    required
+                  />
+                </div>
+                <div class="control">
+                  <label for="ci-level">Confidence level</label
+                  ><select id="ci-level">
+                    <option value="90">90%</option>
+                    <option value="95" selected>95%</option>
+                    <option value="99">99%</option>
+                  </select>
+                </div>
+              </div>
+              <p id="ci-error" class="ci-error" role="alert" hidden></p>
+              <div id="ci-output" aria-live="polite">
+                <div class="ci-results">
+                  <div class="ci-main">
+                    <span id="ci-result-label">95% confidence interval</span
+                    ><strong id="ci-bounds">66.08 – 73.92 kg</strong>
+                  </div>
+                  <div class="stat">
+                    <span>STANDARD ERROR</span
+                    ><strong id="ci-se">2.00 kg</strong>
+                  </div>
+                  <div class="stat">
+                    <span>MARGIN OF ERROR</span
+                    ><strong id="ci-margin">3.92 kg</strong>
+                  </div>
+                </div>
+                <div class="chart-box">
+                  <svg
+                    id="ci-chart"
+                    class="chart"
+                    viewBox="0 0 900 130"
+                    role="img"
+                    aria-labelledby="ci-title ci-description"
+                  >
+                    <title id="ci-title">
+                      Confidence interval around the observed mean
+                    </title>
+                    <desc id="ci-description"></desc>
+                    <g id="ci-drawing"></g>
+                  </svg>
+                </div>
+                <p
+                  id="ci-equation"
+                  class="small muted"
+                  style="margin: 16px 0 0"
+                ></p>
+              </div>
+              <div class="note" style="margin-top: 20px">
+                Try changing n from 100 to 400: the margin of error halves. Then
+                switch from 95% to 99%: greater confidence produces a wider
+                interval.
+              </div>
+            </article>
+          </div>
+          <div class="cta">
+            <div>
+              <h2>Ready to check your understanding?</h2>
+              <p>20 questions, with an explanation after every answer.</p>
+            </div>
+            <button class="btn" type="button" data-view="practice">
+              Start practicing <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </section>
+        <section
+          id="practice"
+          aria-label="Multiple-choice practice quiz"
+          hidden
+        >
+          <div class="page-head">
+            <p class="eyebrow">03 / Practice</p>
+            <h1>Turn understanding into confidence.</h1>
+            <p>
+              Choose one answer, check your reasoning, and keep going. You can
+              skip a question and return to it. Progress is saved only in this
+              browser.
+            </p>
+          </div>
+          <div class="quiz-layout">
+            <aside class="card quiz-side">
+              <p class="eyebrow">Your progress</p>
+              <h3 id="quiz-progress-text">Loading questions…</h3>
+              <div
+                class="progress-track"
+                role="progressbar"
+                aria-label="Questions checked"
+                aria-valuemin="0"
+                aria-valuemax="0"
+                aria-valuenow="0"
+              >
+                <div
+                  id="quiz-progress-fill"
+                  class="progress-fill"
+                  style="width: 0%"
+                ></div>
+              </div>
+              <p id="quiz-score" class="muted">
+                Take your time. You’re here to learn.
+              </p>
+              <div
+                id="question-map"
+                class="question-map"
+                aria-label="Jump to a question"
+              ></div>
+              <p class="small muted">
+                Green = correct · Peach = incorrect<br />Outline = current
+                question
+              </p>
+              <button class="btn small-btn" type="button" id="finish-quiz">
+                Finish & review</button
+              ><button
+                class="btn secondary small-btn"
+                type="button"
+                id="restart-quiz"
+              >
+                Reset practice
+              </button>
+              <p id="storage-note" class="muted" style="margin-top: 18px">
+                Your answers stay on this device and are included in your Notes
+                progress backup.
+              </p>
+            </aside>
+            <article class="card quiz-card" id="quiz-card"></article>
+          </div>
+        </section>
+      </div>
+    </main>
+    <footer>
+      <div class="wrap">
+        <p>
+          <span id="lecture-offline-status" role="status"></span><br />
+          EU-HEM Student Hub · Original student study explanations. Always check
+          the official course materials. Progress is saved only in your browser;
+          no account or analytics.
+        </p>
+        <div class="footer-mark">Keep asking good questions. ↗</div>
+      </div>
+    </footer>
+    <script defer src="utils.js?v=3f08bd92"></script>
+    <script defer src="ui.js?v=6d55e433"></script>
+    <script defer src="programme.js?v=32849b3a"></script>
+    <script defer src="notes-data.js?v=4f1fd32a"></script>
+    <script defer src="notes-progress.js?v=0d4b3307"></script>
+    <script defer src="pwa.js?v=c9212bf8"></script>
+    <script defer src="lecture.js?v=1a6c9666"></script>
+  </body>
+</html>

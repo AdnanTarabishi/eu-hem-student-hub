@@ -149,6 +149,67 @@ down; to rename, change `title`; to remove, delete the line (and check nothing e
 ```
 `notes` is optional: the path of the topic's notes file, relative to the module folder.
 
+## Interactive lecture pages
+
+Use `lecture.html?topic=<topic-id>` for a reusable Learn / Explore / Practice page.
+In `topics.json`, add the optional `lecture` field alongside the regular notes:
+
+```json
+{
+  "id": "statistics.sampling",
+  "title": "Class 5: Sampling, sampling error and confidence intervals",
+  "notes": "notes/sampling.md",
+  "lecture": "lectures/sampling.json"
+}
+```
+
+The referenced JSON lives in that module's `lectures/` folder:
+
+```json
+{
+  "schemaVersion": 1,
+  "topic": "statistics.sampling",
+  "classNumber": 5,
+  "date": "2026-10-01",
+  "updated": "2026-10-06",
+  "heroTitle": "Small samples.\nBig questions.",
+  "intro": "An original introduction to the lecture's ideas.",
+  "guide": "lectures/sampling.html",
+  "activities": ["sampling", "tiny-population", "confidence-interval"],
+  "attribution": "Identify the lecture and clearly label supplementary explanations."
+}
+```
+
+- `guide` is a reviewed HTML fragment containing **original study explanations**, not copied
+  slides. Use semantic headings, paragraphs, tables, and buttons with the classes in
+  `lecture.css`; the sampling guide is a working example. Content is trusted repository
+  HTML, so never place unreviewed visitor submissions, scripts, or event handlers in it.
+- Guide and configuration filenames must use lowercase letters, numbers and hyphens
+  directly inside `lectures/`. Absolute URLs and `../` paths are rejected.
+- `activities` can be `[]`. Supported activities currently use the sampling lecture's
+  fixed examples: `sampling` (uniform weights from 5–50 kg), `tiny-population`
+  (65, 89, 75, 64, 86 kg), and `confidence-interval` (known-σ z calculator).
+  New types of experiment require a corresponding renderer in `lecture.js`.
+- Put the lecture's MCQs in the module's existing `questions.json`, with the same `topic`
+  ID. The lecture filters those questions; they also appear in the course question bank.
+  Optional `category`, `source`, and `supplementary: true` fields give the lecture quiz
+  short labels, attribution, and a supplementary-material notice. State necessary
+  assumptions in the question itself so it also makes sense in the course question bank.
+- Provide regular Markdown notes with a 5-minute review for search, topic progress,
+  and the standard reader. The full interactive guide remains a separate HTML fragment.
+- Courses with a lecture gain a **Lectures** tab. Search results and saved topics open
+  the interactive page; the standard reader keeps a link to it.
+- Lecture answers are stored inside `euhem-progress-v1.lectures`, so Notes progress
+  backups, restoration, and reset include them. Checked answers stay locked until that
+  lecture is reset. A changed question, option order, or answer key resets only that
+  lecture's saved quiz state. Explanations can be updated without clearing answers.
+- Offline use requires one connected visit to that lecture first. The service worker
+  stores its guide, configuration, and module data. There are no external dependencies
+  on the lecture page itself.
+
+After adding content, run `node scripts/build-content-index.js`, then
+`node scripts/stamp-versions.js` and `node scripts/check-content.js`.
+
 ## Notes: notes/<name>.md
 
 A Markdown file. It starts with **front matter** (a small header between `---` lines),
