@@ -37,14 +37,36 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
     let page = await open("city-guide.html?city=bologna");
     await page.locator(".source-badge").first().waitFor({ state: "attached" });
     const badges = await page.$$eval(".source-badge", (els) => els.map((e) => [e.textContent, e.className]));
-    assert.ok(badges.length >= 2, "two labels");
-    assert.ok(badges.every(([text, cls]) => text === "Student tip · EU-HEM student reps" && cls.includes("is-tip")), JSON.stringify(badges));
+    const count = (text) => badges.filter(([t]) => t.startsWith(text)).length;
+    assert.ok(count("Student tip · EU-HEM student reps") >= 3, JSON.stringify(badges));
+    assert.ok(count("Student tip · ESN Bologna") >= 4, JSON.stringify(badges));
+    assert.ok(count("Official · EU-HEM Handbook · verified") >= 5, JSON.stringify(badges));
+    assert.ok(badges.every(([text, cls]) => cls.includes(text.startsWith("Official") ? "is-official" : "is-tip")), "label colour matches its kind");
+    assert.strictEqual(count("Source not listed"), 0);
     assert.ok(!(await page.evaluate(() => /\{(official|tip):/.test(document.body.textContent))), "a raw marker is left");
     const text = await page.evaluate(() => document.body.textContent);
     assert.ok(text.replace(/\s+/g, " ").includes("€161 for master's students like EU-HEM, at any age"), "bus pass");
     assert.ok(!text.includes("€161 / €187"), "old bus pass text");
-    ok("Bologna guide: student-tip labels, no raw markers, bus pass €161 at any age");
+    const flat = text.replace(/\s+/g, " ");
+    for (const fact of ["Via Marco Polo 60", "Via Larga 35", "Via Zamboni 62/b", "Via Montebello 6", "Carta Smeraldo", "RideMovi", "€23.30",
+      "Palazzo Paleotti", "Le Serre dei Giardini Margherita", "Papaya", "W. Bigiavi", "AlmaWiFi", "myUniBo", "outside the SEPA area"]) {
+      assert.ok(flat.includes(fact), `missing: ${fact}`);
+    }
+    assert.ok(flat.includes("recommended by earlier EU-HEM students"), "restaurants labelled");
+    assert.doesNotMatch(flat, /\bbest (pizza|views|milk)|very good pizza/i, "no rankings");
+    ok("Bologna guide: official and student-tip labels, handbook additions, restaurants as earlier students' suggestions");
     await page.context().close();
+
+    // --- Other cities: student tips added where the guide lacked them ---
+    for (const [city, fact] of [["oslo", "ankerstudentbolig.no"], ["innsbruck", "Hofer"], ["rotterdam", "kamernet.nl"]]) {
+      page = await open(`city-guide.html?city=${city}`);
+      await page.locator(".source-badge").first().waitFor({ state: "attached" });
+      const cityText = (await page.evaluate(() => document.body.textContent)).replace(/\s+/g, " ");
+      assert.ok(cityText.includes(fact), `${city}: ${fact}`);
+      assert.ok(await page.locator(".source-badge.is-tip", { hasText: "EU-HEM student reps" }).count() >= 4, `${city}: tip labels`);
+      await page.context().close();
+    }
+    ok("Oslo, Innsbruck and Rotterdam guides: student tips with labels");
 
     // --- Study plan: crash courses note with an Official label ---
     page = await open("studyplan.html");

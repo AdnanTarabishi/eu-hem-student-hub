@@ -59,7 +59,7 @@
           { "value": "practical", "label": "Study plan, registration or other study questions" },
           { "value": "enrolment", "label": "Enrolment, re-enrolment or the fee" },
           { "value": "track", "label": "My track's courses" },
-          { "value": "complaint", "label": "A complaint or special request" },
+          { "value": "complaint", "label": "A complaint, request or the quality of the programme" },
           { "value": "safety", "label": "Harassment, discrimination or feeling unsafe" },
           { "value": "wellbeing", "label": "Stress, mental health or personal problems" },
           { "value": "provisions", "label": "Support for an impairment or learning disability" },
@@ -99,13 +99,14 @@
         "items": [
           { "text": "Each track has two track coordinators, one at each of its universities. They handle questions about the track's courses. Your local coordinator can put you in touch.", "source": "euhem-handbook-2026" }
         ],
-        "page": { "label": "Your track on the Tracks page", "href": "tracks.html" }
+        "page": { "label": "Your track and its official programme pages", "href": "tracks.html" }
       },
       "complaint": {
         "title": "Start with your local coordinator",
         "items": [
           { "text": "Your local coordinator can help directly, send you to a colleague, or suggest writing to the International Programme Coordinator, who can bring it to the Consortium Board.", "source": "euhem-handbook-2026" },
-          { "text": "You can also go to your track's student representative, who can raise it with the coordinators or the board for you. Complaints about a course or exam follow that university's own rules.", "source": "euhem-handbook-2026" }
+          { "text": "You can also go to your track's student representative, who can raise it with the coordinators or the board for you. Complaints about a course or exam follow that university's own rules.", "source": "euhem-handbook-2026" },
+          { "text": "Ideas about the quality of the programme: the Joint Quality Enhancement Committee (JQEC) monitors EU-HEM's quality and advises the Consortium Board, using data such as the course and semester surveys. Filling in the surveys, or telling your student representative, is how your view reaches it.", "source": "euhem-handbook-2026" }
         ],
         "contact": "coordinator",
         "page": { "label": "How each university handles grade complaints", "href": "academic-rules.html#universities" }

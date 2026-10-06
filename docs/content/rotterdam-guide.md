@@ -352,6 +352,14 @@ For urgent medical care outside GP hours that is not life-threatening, use **Hui
 <!-- For tips from EU-HEM students who lived in Rotterdam. This section stays hidden until it has content.
      Write each tip as a bullet. Do not add personal contact details. -->
 
+Tips from earlier EU-HEM students (their 2026 welcome presentation). Personal experience, not official advice {tip:student-reps-2026}.
+
+- **Housing:** SSH has rooms for international students aged 30 or younger: register and book in time. Students paid about **€600–900 a month**. Websites: sshxl.nl, kamernet.nl, housinganywhere.com and The Student Hotel {tip:student-reps-2026}.
+- **Where to live:** Kralingen (between campus and the centre), Crooswijk, the Centre, Noord and West. The South is often cheaper but far from campus {tip:student-reps-2026}.
+- **Supermarkets by price:** cheaper: Lidl, Aldi, Dirk and the Blaak market (Tuesday and Saturday); middle: Jumbo and Plus; pricier: Albert Heijn, Spar (on campus) and Ekoplaza {tip:student-reps-2026}.
+- **Study places:** the university, the city library and some coffee places {tip:student-reps-2026}.
+- **Before you leave:** don't forget to de-register from the municipality ([rotterdam.nl](https://www.rotterdam.nl/en/deregistration-from-the-netherlands)) {tip:student-reps-2026}.
+
 ## 16. Sources
 
 - [S1] Erasmus University Rotterdam: EU-HEM Facts & Figures — https://www.eur.nl/en/master/european-master-health-economics-and-management/facts-figures — checked 2026-10-05

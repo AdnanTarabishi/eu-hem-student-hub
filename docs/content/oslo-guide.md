@@ -197,6 +197,14 @@ On top of this: the semester fee (NOK 690 to SiO, plus small fees) [S40]. Transp
 <!-- For tips from EU-HEM students who lived in Oslo. This section stays hidden until it has content.
      Write each tip as a bullet. Do not add personal contact details. -->
 
+Tips from earlier EU-HEM students (their 2026 welcome presentation). Personal experience, not official advice {tip:student-reps-2026}.
+
+- **Housing:** the students all found a room through SiO. Second options: ankerstudentbolig.no, and finn.no for private rentals. They paid about **NOK 6,500–8,000 a month** (about €550–730) {tip:student-reps-2026}.
+- **Where to live:** SiO Vestgrensa is close to the university, a gym and the metro; Sogn and Kringsjå are closer to nature, with more international students; Majorstuen, Grünerløkka and Stensberggata are closer to the city and still not far from campus {tip:student-reps-2026}.
+- **Supermarkets by price:** pricier: Coop Mega and Helgø Meny; middle: Coop Prix, Extra, Obs and Joker; cheaper: REMA 1000 and KIWI. There are Asian and Mediterranean shops in Grønland. Most supermarkets are closed on Sundays {tip:student-reps-2026}.
+- **Study places:** the Deichman public library and Georg Sverdrups hus on campus {tip:student-reps-2026}.
+- **Doctor:** see a GP during working hours; the Legevakt is for problems that are not severe but cannot wait; call 113 in an emergency {tip:student-reps-2026}.
+
 ## 16. Sources
 
 - [S1] University of Oslo: EU-HEM programme structure — https://www.uio.no/english/studies/programmes/hem-master/structure/ — checked 2026-10-05

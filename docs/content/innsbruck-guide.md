@@ -387,6 +387,14 @@ Because Innsbruck students often hike, ski or cycle in the mountains, **140** is
 <!-- For tips from EU-HEM students who lived in Innsbruck. This section stays hidden until it has content.
      Write each tip as a bullet. Do not add personal contact details. -->
 
+Tips from earlier EU-HEM students (their 2026 welcome presentation). Personal experience, not official advice {tip:student-reps-2026}.
+
+- **Housing:** shared flats are common, and there are student residences too. Apply **at least 4 months before** you arrive and watch the sign-up deadlines (for example OeAD's): Innsbruck can be the hardest city to find a room in. Students paid about **€350–600 a month** {tip:student-reps-2026}.
+- **Housing websites:** oeadstudenthousing.at, akademikerhilfe.at, studentenhaus.info, wohnen.oehweb.at, the WG-Gesucht app and the Facebook group "WG & Wohnung Innsbruck gesucht" {tip:student-reps-2026}.
+- **Registration:** register at the Rathaus Galerien on the town square with the *Meldezettel* signed by your landlord, within 3 days, and de-register before you leave Innsbruck {tip:student-reps-2026}.
+- **Supermarkets by price:** pricier: Billa; middle: MPREIS, Spar and Lidl; cheaper: Hofer. Almost all shops are closed on Sundays. Coupon stickers and the Spar and Billa apps save money, and so does Too Good To Go {tip:student-reps-2026}.
+- **Study places:** the rooftop at MCI I, the SOWI library behind MCI, and the University of Innsbruck's main library (Hauptbibliothek) {tip:student-reps-2026}.
+
 ## 16. Sources
 
 - [S1] MCI: European Health Economics & Management master's programme — https://www.mci.edu/en/study/master/european-health-economics-management — checked 2026-10-05
