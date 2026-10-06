@@ -87,8 +87,8 @@ Change `progressPercent` (a whole number, 0–100) when you review the roadmap; 
 5. Run `node scripts/check-content.js`, commit `content/updates.json`, and merge again. The page, the
    homepage and search show the update automatically.
 
-The Roadmap & Updates launch itself (`roadmap-and-updates`) is a draft until this page is deployed; publish
-it with step 4 after the merge.
+The Roadmap & Updates launch itself (`roadmap-and-updates`) was published this way on 6 October 2026,
+with the deployment that first put the page online.
 
 ## Saved plans
 

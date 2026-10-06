@@ -5,12 +5,12 @@
   "items": [
     {
       "id": "roadmap-and-updates",
-      "date": null,
+      "date": "2026-10-06",
       "title": "Roadmap & Updates",
       "summary": "See what the Student Hub team is working on now, what comes next, bigger ideas for later and every major release so far.",
       "category": "platform",
       "type": "new",
-      "status": "draft",
+      "status": "published",
       "highlights": [
         "Now, Next and Later at a glance, with estimated periods for planned work.",
         "Open any plan or release for details, and share a direct link to it.",
@@ -23,7 +23,20 @@
           "url": "roadmap.html"
         }
       ],
-      "evidence": null
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37420032453",
+        "deployedAt": "2026-10-06T07:44:47+02:00",
+        "commits": [
+          {
+            "sha": "dedc32cef177e0ce3a98b5379bec1cc85cd664dc",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/dedc32cef177e0ce3a98b5379bec1cc85cd664dc"
+          },
+          {
+            "sha": "ae28281c166e5c38bba1f749e87b9bf097a589a5",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/ae28281c166e5c38bba1f749e87b9bf097a589a5"
+          }
+        ]
+      }
     },
     {
       "id": "students-explorer",
