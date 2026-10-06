@@ -701,6 +701,135 @@
         });
       },
     },
+    "health-stock": {
+      title: "Follow the health stock through one period",
+      intro:
+        "Use the Grossman stock equation. Change inherited health, depreciation and gross investment. The numbers are stylised teaching units, not clinical measurements.",
+      build(node) {
+        node.innerHTML =
+          '<div class="activity-controls">' +
+          input("health-prev","Inherited health H(t−1)",80,'min="0" max="200" step="1"') +
+          input("health-delta","Depreciation δ (%)",10,'min="0" max="100" step="1"') +
+          input("health-invest","Gross investment I(t−1)",12,'min="0" max="200" step="1"') +
+          '</div>' + output("healthstock");
+        reactive(node, "healthstock", (out) => {
+          const h=read("health-prev",0,200),
+            delta=read("health-delta",0,100)/100,
+            invest=read("health-invest",0,200),
+            deterioration=delta*h,
+            surviving=(1-delta)*h,
+            next=surviving+invest,
+            net=invest-deterioration;
+          const direction = Math.abs(net) < 1e-9 ? "maintained" : net > 0 ? "rises" : "falls";
+          out.innerHTML =
+            '<div class="formula">Hₜ = (1 − δ)Hₜ₋₁ + Iₜ₋₁ = ' + number(next,2) + '</div>' +
+            '<dl class="activity-stats"><div><dt>Inherited stock</dt><dd>'+number(h,2)+'</dd></div><div><dt>Deterioration δH</dt><dd>'+number(deterioration,2)+'</dd></div><div><dt>Surviving stock</dt><dd>'+number(surviving,2)+'</dd></div><div><dt>Gross investment</dt><dd>'+number(invest,2)+'</dd></div><div><dt>Net investment</dt><dd>'+number(net,2)+'</dd></div><div><dt>Result</dt><dd>Health '+direction+'</dd></div></dl>' +
+            '<p>Gross investment is the chosen inflow. Net investment subtracts deterioration. It can be negative even though gross investment is not.</p>';
+        });
+      },
+    },
+    "grossman-ppf": {
+      title: "Explore the Grossman PPF",
+      intro:
+        "A stylised frontier with a rising free-lunch region and a falling trade-off region. Move along it to see why the frontier is not a standard straight trade-off.",
+      build(node) {
+        node.innerHTML =
+          '<div class="control"><label for="ppf-health">Chosen health position: <strong id="ppf-health-value">60</strong></label><input id="ppf-health" type="range" min="5" max="95" value="60" step="1"><div class="range-labels"><span>Low H</span><span>Peak Z</span><span>High H</span></div></div>' +
+          output("ppf");
+        reactive(node, "ppf", (out) => {
+          const h=read("ppf-health",5,95);
+          node.querySelector("#ppf-health-value").textContent=number(h,0);
+          const z=(x)=>Math.max(0,20+1.7*x-0.015*x*x);
+          const peak=1.7/(2*0.015);
+          const zone=h<peak ? "Free-lunch zone" : "Trade-off zone";
+          let path="";
+          for(let x=5;x<=95;x+=2){
+            const px=55+(x-5)/90*520,
+              py=225-(z(x)/70)*180;
+            path+=(x===5?"M":"L")+px+" "+py+" ";
+          }
+          const px=55+(h-5)/90*520,
+            py=225-(z(h)/70)*180,
+            peakX=55+(peak-5)/90*520,
+            peakY=225-(z(peak)/70)*180;
+          out.innerHTML =
+            '<div class="formula">'+zone+'</div>' +
+            '<svg class="activity-chart" viewBox="0 0 640 280" role="img" aria-label="Stylised Grossman production possibility frontier showing an upward free-lunch section and a downward trade-off section.">' +
+            '<path d="M55 25V225H610" fill="none" stroke="currentColor"/>' +
+            '<path d="'+path+'" fill="none" stroke="#628473" stroke-width="4"/>' +
+            '<path d="M'+peakX+' 35V225" stroke="#a2b199" stroke-dasharray="4 4"/>' +
+            '<circle cx="'+px+'" cy="'+py+'" r="7" fill="#cc6f4f"/>' +
+            '<text x="57" y="17" fill="currentColor" font-size="12">Home good Z</text><text x="535" y="250" fill="currentColor" font-size="12">Health H</text>' +
+            '<text x="'+(peakX+7)+'" y="'+(peakY-8)+'" fill="currentColor" font-size="11">maximum Z</text></svg>' +
+            (h<peak
+              ? '<p>At this low-health position, a health improvement can release enough sick time to increase both H and Z. Moving toward the peak does not require sacrificing Z.</p>'
+              : '<p>Beyond the peak, extra health yields smaller time gains. Increasing H now uses resources that could have produced Z, so the frontier slopes downward.</p>') +
+            '<p class="small">This curve is an original teaching illustration of the lecture logic. Its coordinates are not data and do not reproduce the official figure.</p>';
+        });
+      },
+    },
+    "mec-equilibrium": {
+      title: "Find the Grossman health-capital equilibrium",
+      intro:
+        "A stylised MEC curve meets a user-cost line r + δ. Change depreciation, the alternative return and a productivity shifter to see how optimal H responds.",
+      build(node) {
+        node.innerHTML =
+          '<div class="activity-controls">' +
+          input("mec-r","Alternative return r (%)",5,'min="0" max="30" step="1"') +
+          input("mec-delta","Depreciation δ (%)",10,'min="0" max="40" step="1"') +
+          '<div class="control"><label for="mec-shift">MEC productivity / value shifter</label><input id="mec-shift" type="range" min="70" max="140" value="100" step="5"><div class="range-labels"><span>lower</span><span>baseline</span><span>higher</span></div></div>' +
+          '</div>' + output("mec");
+        reactive(node, "mec", (out) => {
+          const r=read("mec-r",0,30),
+            delta=read("mec-delta",0,40),
+            shift=read("mec-shift",70,140)/100,
+            cost=r+delta,
+            intercept=40*shift,
+            slope=0.3,
+            hStar=Math.max(0,Math.min(100,(intercept-cost)/slope)),
+            x=(h)=>55+h/100*520,
+            y=(ret)=>225-ret/60*185;
+          const yCost=y(cost);
+          out.innerHTML =
+            '<div class="formula">Stylised H* = '+number(hStar,1)+' · user cost r + δ = '+number(cost,1)+'%</div>' +
+            '<svg class="activity-chart" viewBox="0 0 640 280" role="img" aria-label="Stylised marginal efficiency of health capital curve and horizontal user-cost line.">' +
+            '<path d="M55 25V225H610" fill="none" stroke="currentColor"/>' +
+            '<path d="M55 '+y(intercept)+' L575 '+y(Math.max(0,intercept-slope*100))+'" fill="none" stroke="#628473" stroke-width="4"/>' +
+            '<path d="M55 '+yCost+'H575" fill="none" stroke="#cc6f4f" stroke-width="3"/>' +
+            '<path d="M'+x(hStar)+' '+yCost+'V225" stroke="#a2b199" stroke-dasharray="4 4"/>' +
+            '<circle cx="'+x(hStar)+'" cy="'+yCost+'" r="7" fill="#153d35"/>' +
+            '<text x="58" y="17" fill="currentColor" font-size="12">Return / cost</text><text x="535" y="250" fill="currentColor" font-size="12">Health H</text>' +
+            '<text x="65" y="'+(yCost-8)+'" fill="#cc6f4f" font-size="11">r + δ</text><text x="400" y="'+(y(intercept-slope*65)-10)+'" fill="#628473" font-size="11">MEC</text></svg>' +
+            '<p>Higher depreciation raises the user cost and moves the equilibrium left. A stronger return to healthy time or greater production efficiency can shift the MEC outward and move H* right.</p>' +
+            '<p class="small">The numerical curve is deliberately stylised. Use it for direction and intuition, not as an empirical calibration.</p>';
+        });
+      },
+    },
+    "grossman-drivers": {
+      title: "Health or healthcare? Compare the directions.",
+      intro:
+        "Select one comparative-static change. Session 3 distinguishes the predicted effect on optimal health from the effect on the healthcare input used to produce it.",
+      build(node) {
+        const drivers = {
+          age:["Age / depreciation rises","Optimal health falls","Healthcare demand is ambiguous","Faster depreciation raises the cost of holding health capital. Desired H falls, but more healthcare may be needed to maintain any given H."],
+          wage:["Wage rises","Optimal health rises","Healthcare demand rises","Healthy productive time becomes more valuable, shifting the MEC outward in the lecture."],
+          education:["Education rises","Optimal health rises","Healthcare demand is ambiguous","Education makes health production more efficient: desired H rises, while fewer healthcare inputs may be needed per unit of health."],
+          price:["Medical-care price falls","Optimal health rises","Healthcare demand rises","Cheaper healthcare lowers the cost of producing health, so the lecture predicts more health and more healthcare."]
+        };
+        node.innerHTML =
+          '<div class="activity-presets">'+
+          Object.entries(drivers).map(([id,v])=>'<button type="button" class="btn secondary" data-grossman-driver="'+id+'">'+escape(v[0])+'</button>').join("")+
+          '</div><div id="grossman-driver-output" class="activity-output" aria-live="polite"></div>';
+        const show=(id)=>{
+          const v=drivers[id];
+          node.querySelectorAll("[data-grossman-driver]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.grossmanDriver===id)));
+          node.querySelector("#grossman-driver-output").innerHTML =
+            '<div class="grid2"><article class="card"><span class="eyebrow">Demand for health</span><h3>'+escape(v[1])+'</h3></article><article class="card"><span class="eyebrow">Demand for healthcare</span><h3>'+escape(v[2])+'</h3></article></div><p>'+escape(v[3])+'</p>';
+        };
+        node.querySelectorAll("[data-grossman-driver]").forEach(b=>b.addEventListener("click",()=>show(b.dataset.grossmanDriver)));
+        show("age");
+      },
+    },
   };
   root.LectureActivities = {
     init(container, activityIds) {

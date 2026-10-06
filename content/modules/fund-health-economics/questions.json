@@ -66,8 +66,7 @@
     "difficulty": "medium",
     "question": "Why do economists say the demand for health care is a 'derived demand'?",
     "answer": "People value health itself. Health care is demanded because it helps produce health, so its demand is derived from the demand for health.",
-    "explanation": "This idea comes from the Grossman model, where health is a stock (health capital) and health care is one of the inputs people use to maintain or improve it.",
-    "sample": true
+    "explanation": "This idea comes from the Grossman model, where health is a stock (health capital) and health care is one of the inputs people use to maintain or improve it."
   },
   {
     "id": "fund-health-economics.q.007",
@@ -587,5 +586,299 @@
     "question": "Why can a policy that lowers the monetary price of healthcare still ration access through waiting time?",
     "answer": "When money prices are reduced, demand can rise. If capacity does not expand enough, queues and waiting can become the effective rationing mechanism. Because people value time differently, waiting can also have distributional consequences.",
     "explanation": "This applies the lecture's time-price discussion to publicly financed care."
+  },
+  {
+    "id": "fund-health-economics.q.046",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Health capital",
+    "question": "Which statement best captures why health is treated as capital in Session 3?",
+    "options": [
+      "It is purchased only in hospitals",
+      "It is a stock influenced by past and present choices that provides services over time",
+      "It is identical to current healthcare spending",
+      "It can always be changed instantly without constraints"
+    ],
+    "answer": "B",
+    "explanation": "The lecture treats health as a stock that persists and produces services over time, which is the capital-good idea."
+  },
+  {
+    "id": "fund-health-economics.q.047",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Derived demand",
+    "question": "Why is healthcare demand described as a derived demand in the Grossman framework?",
+    "options": [
+      "Because healthcare is always supplied by government",
+      "Because people value healthcare only through its price",
+      "Because healthcare is used as an input to produce health",
+      "Because healthcare demand is statistically estimated"
+    ],
+    "answer": "C",
+    "explanation": "The lecture says people demand healthcare as one of the inputs used to produce health."
+  },
+  {
+    "id": "fund-health-economics.q.048",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Control of health",
+    "question": "Which statement is most consistent with Session 3?",
+    "options": [
+      "Individuals completely determine their health",
+      "Health is entirely random",
+      "Choices influence health, but genetics, environment and chance also matter",
+      "Only medical care can affect health"
+    ],
+    "answer": "C",
+    "explanation": "The lecture explicitly combines individual choices with genetics, environment and chance."
+  },
+  {
+    "id": "fund-health-economics.q.049",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Grossman roles",
+    "question": "Which is NOT one of the three roles assigned to health in the Grossman model?",
+    "options": [
+      "A stock of capital",
+      "A consumption good",
+      "An input into production",
+      "A financial insurance contract"
+    ],
+    "answer": "D",
+    "explanation": "The three roles are capital, consumption and production input."
+  },
+  {
+    "id": "fund-health-economics.q.050",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "PPF",
+    "question": "Why can health and the home good rise together in the low-health 'free-lunch zone'?",
+    "options": [
+      "There is no scarcity at low health",
+      "Small health improvements can release enough sick time to more than offset the resources used to improve health",
+      "Home goods require no time",
+      "Medical care is free"
+    ],
+    "answer": "B",
+    "explanation": "At very low health, improving health can create a large increase in productive time, allowing more health and more home production together."
+  },
+  {
+    "id": "fund-health-economics.q.051",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "PPF",
+    "question": "Where would a person who values both health and home goods normally choose in the single-period Grossman model?",
+    "options": [
+      "At the minimum-health point",
+      "On the upward-sloping free-lunch part of the PPF",
+      "On the downward-sloping trade-off portion at a tangency with an indifference curve",
+      "At maximum health regardless of home goods"
+    ],
+    "answer": "C",
+    "explanation": "With both goods valued, the optimum lies where the best attainable indifference curve is tangent to the downward-sloping trade-off portion."
+  },
+  {
+    "id": "fund-health-economics.q.052",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Health stock",
+    "question": "If inherited health is 80, depreciation is 10%, and gross investment is 12, what is next-period health according to H_t = (1−δ)H_{t−1}+I_{t−1}?",
+    "options": [
+      "72",
+      "80",
+      "84",
+      "92"
+    ],
+    "answer": "C",
+    "explanation": "Surviving health is 0.90 × 80 = 72. Add gross investment 12 to get 84."
+  },
+  {
+    "id": "fund-health-economics.q.053",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Net investment",
+    "question": "Health stock falls during a period when:",
+    "options": [
+      "Gross investment exceeds depreciation",
+      "Gross investment equals depreciation exactly",
+      "Gross investment is less than depreciation of inherited health",
+      "The wage rate rises"
+    ],
+    "answer": "C",
+    "explanation": "Net health investment equals gross investment minus depreciation. If it is negative, the stock falls."
+  },
+  {
+    "id": "fund-health-economics.q.054",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "MEC",
+    "question": "In the pure-investment model, the optimal health stock is reached where the marginal efficiency of health capital is compared with:",
+    "options": [
+      "Only the money price of a doctor visit",
+      "The opportunity cost of funds plus depreciation",
+      "Only the wage rate",
+      "Only the individual's utility from health"
+    ],
+    "answer": "B",
+    "explanation": "The lecture summarizes the relevant cost of holding health capital as the opportunity cost r plus depreciation δ."
+  },
+  {
+    "id": "fund-health-economics.q.055",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Age",
+    "question": "According to the Session 3 comparative statics, what happens as ageing raises the depreciation rate of health capital?",
+    "options": [
+      "Optimal health rises",
+      "Optimal health falls",
+      "Healthcare demand must fall",
+      "Education becomes irrelevant"
+    ],
+    "answer": "B",
+    "explanation": "A higher depreciation rate raises the cost of maintaining health capital and lowers the optimal stock."
+  },
+  {
+    "id": "fund-health-economics.q.056",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Wage",
+    "question": "Why does a higher wage increase optimal health in the pure-investment version of the lecture?",
+    "options": [
+      "It lowers depreciation directly",
+      "It raises the return to healthy productive time, shifting the MEC to the right",
+      "It makes health a pure consumption good",
+      "It removes the time constraint"
+    ],
+    "answer": "B",
+    "explanation": "Healthy time becomes more valuable when the wage is higher, increasing the return to health capital."
+  },
+  {
+    "id": "fund-health-economics.q.057",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Education",
+    "question": "Why is the effect of education on healthcare demand ambiguous in Session 3 even though education raises optimal health?",
+    "options": [
+      "Education has no effect on health production",
+      "Education raises desired health but also makes health production more efficient, so less healthcare may be needed per unit of health",
+      "Education only changes insurance",
+      "Healthcare demand is fixed"
+    ],
+    "answer": "B",
+    "explanation": "The lecture distinguishes demand for health from demand for healthcare: education raises desired health and production efficiency, creating opposing effects on healthcare use."
+  },
+  {
+    "id": "fund-health-economics.q.058",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "true-false",
+    "difficulty": "easy",
+    "question": "The Grossman model treats health as both a consumption good and an investment asset.",
+    "answer": true,
+    "explanation": "True. Health contributes to utility and also creates productive time, in addition to being modeled as a stock."
+  },
+  {
+    "id": "fund-health-economics.q.059",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "In Session 3, individuals can influence health but cannot fully determine it.",
+    "answer": true,
+    "explanation": "True. Genetics, environment and chance remain outside full individual control."
+  },
+  {
+    "id": "fund-health-economics.q.060",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "Gross health investment can be negative in the health-stock equation.",
+    "answer": false,
+    "explanation": "False. The lecture states that gross investment cannot be negative, while net investment can be negative if depreciation exceeds gross investment."
+  },
+  {
+    "id": "fund-health-economics.q.061",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "As health improves, the marginal return to additional health capital is assumed to remain constant.",
+    "answer": false,
+    "explanation": "False. The lecture's MEC falls with health: returns to additional health capital are high when health is low and diminish as health improves."
+  },
+  {
+    "id": "fund-health-economics.q.062",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "true-false",
+    "difficulty": "hard",
+    "question": "Because optimal health declines with age in the Grossman model, healthcare demand must also decline with age.",
+    "answer": false,
+    "explanation": "False. The lecture says the effect of age on healthcare demand is ambiguous because greater depreciation makes it harder to maintain any given health stock."
+  },
+  {
+    "id": "fund-health-economics.q.063",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "Explain the difference between health as a stock and healthy days as a flow.",
+    "answer": "Health capital is a stock carried from one period to the next. It produces a flow of health services, represented in the lecture by healthy or illness-free days during a period.",
+    "explanation": "A strong answer should distinguish a persistent state from the services produced by that state over time."
+  },
+  {
+    "id": "fund-health-economics.q.064",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "Why does the Grossman PPF contain a free-lunch zone at low levels of health?",
+    "answer": "At very low health, a small investment can reduce sick time by more than the time or resources required to make the health improvement. The person therefore gains both health and productive time that can be used to produce home goods.",
+    "explanation": "The key is the large productive-time return to early health improvements at low health."
+  },
+  {
+    "id": "fund-health-economics.q.065",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "Use the health-stock equation to explain what depreciation does.",
+    "answer": "Depreciation removes part of inherited health stock each period. In H_t = (1−δ_t)H_{t−1}+I_{t−1}, a larger δ leaves less inherited health surviving into the next period, so more gross investment is required to maintain the same stock.",
+    "explanation": "This is the lecture's lake/evaporation intuition expressed in the model."
+  },
+  {
+    "id": "fund-health-economics.q.066",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Why can education raise health while having an ambiguous effect on healthcare use?",
+    "answer": "Education makes health production more efficient, so the return to producing health rises and optimal health increases. But greater efficiency can mean less healthcare is needed to produce a given amount of health, while the higher desired health level can increase input demand. These effects can offset each other.",
+    "explanation": "The question tests the distinction between the demand for health and the derived demand for healthcare."
   }
 ]

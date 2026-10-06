@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "topic": "fund-health-economics.health-capital",
+  "updated": "2026-10-06",
+  "heroTitle": "Health is a stock.\nChoices move it.",
+  "intro": "Move from healthcare use to the Grossman model: health as capital, productive time, investment and depreciation, the MEC, and why age, wages, education and medical prices change equilibrium.",
+  "guide": "lectures/session-3.html",
+  "activities": ["health-stock", "grossman-ppf", "mec-equilibrium", "grossman-drivers"],
+  "attribution": "Independent student-written study guide based on Daniele Fabbri’s Fundamentals in Health Economics, Session 3: Health Capital and the Demand for Health, University of Bologna. Official slides and textbook answer keys are not reproduced. Always check Virtuale for the official materials."
+}

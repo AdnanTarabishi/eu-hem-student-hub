@@ -36,5 +36,14 @@
     "date": "2026-10-06",
     "topic": "fund-health-economics.demand",
     "description": "Official University of Bologna course materials. Sign in with your UniBo account."
+  },
+  {
+    "id": "fund-health-economics.r.005",
+    "title": "Official Session 3 materials on Virtuale",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/course/view.php?id=80559",
+    "date": "2026-10-06",
+    "topic": "fund-health-economics.health-capital",
+    "description": "Official University of Bologna materials for Fundamentals in Health Economics. Sign in with your UniBo account."
   }
 ]

@@ -120,7 +120,7 @@ function isLecturePath(file, extension) {
   return typeof file === "string" && new RegExp(`^lectures/[a-z0-9]+(-[a-z0-9]+)*\\.${extension}$`).test(file);
 }
 
-const LECTURE_ACTIVITIES = ["sampling", "tiny-population", "confidence-interval", "event-builder", "diagnostic-test", "binomial", "normal-distribution", "uniform-distribution", "descriptive-statistics", "study-design", "hypothesis-test", "demand-curve", "consumer-surplus", "arc-elasticity", "full-price", "cost-sharing"];
+const LECTURE_ACTIVITIES = ["sampling","tiny-population","confidence-interval","event-builder","diagnostic-test","binomial","normal-distribution","uniform-distribution","descriptive-statistics","study-design","hypothesis-test","demand-curve","consumer-surplus","arc-elasticity","full-price","cost-sharing","health-stock","grossman-ppf","mec-equilibrium","grossman-drivers"];
 
 async function loadLecture(moduleData, topic, read = fetchText) {
   if (!isLecturePath(topic.lecture, "json")) throw new Error("Lecture configuration must be a JSON file in the module's lectures folder.");
