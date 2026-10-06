@@ -366,3 +366,7 @@ sample items, when real content replaces them.
 
 ### Current Health Economics interactive activities
 `demand-curve`, `consumer-surplus`, `arc-elasticity`, `full-price`, and `cost-sharing` are rendered by `lecture-activities.js`.
+
+
+### Current Health Economics Session 4 interactive activities
+`causal-directions`, `disparity-theories`, `stress-depreciation`, and `policy-mechanism` are rendered by `lecture-activities.js`.
