@@ -1,6 +1,6 @@
 // ===== Site-wide search (Ctrl+K) =====
 // One search window for the whole site: pages, courses and modules, notes, flashcards,
-// questions, concepts, resources, announcements, City Guide sections, released updates and roadmap plans.
+// questions, concepts, resources, announcements, universities, City Guide sections, released updates and roadmap plans.
 // Open it with the 🔍 button, Ctrl+K (⌘K on Mac) or "/". Arrow keys move, Enter opens, Esc closes.
 // The search data is loaded only the first time the window opens, so pages stay fast.
 
@@ -14,7 +14,7 @@
   const GROUPS = [
     ["page", "Pages"], ["course", "Courses"], ["topic", "Notes"], ["concept", "Key concepts"],
     ["flashcard", "Flashcards"], ["question", "Questions"], ["resource", "Resources"],
-    ["announcement", "Announcements"], ["guide", "City Guide"], ["rules", "Programme and rules"],
+    ["announcement", "Announcements"], ["university", "Universities"], ["guide", "City Guide"], ["rules", "Programme and rules"],
     ["update", "Released updates"], ["roadmap", "Roadmap plans (not available yet)"],
   ];
 
@@ -76,6 +76,37 @@
       }
     } catch (error) {
       console.error("Search: announcements", error);
+    }
+
+    // Partner universities and practical university services.
+    try {
+      const response = await fetch("content/universities.json");
+      if (!response.ok) throw new Error(`University guide unavailable (${response.status})`);
+      const data = await response.json();
+      for (const university of data.universities || []) {
+        const url = `university.html?id=${encodeURIComponent(university.id)}`;
+        const context = `${university.name} · ${university.city}, ${university.country}`;
+        add("university", university.name, url,
+          [university.shortName, university.localName, university.tagline, university.summary].filter(Boolean).join(" "), context);
+        const groups = [
+          ["student-services", [...(university.quickLinks || []), ...(university.services || []), ...(university.resources || [])]],
+          ["study-playbook", university.playbook || []],
+          ["contacts", university.contacts || []],
+          ["research-careers", [...(university.research || []), ...(university.careers || [])]],
+          ["campus", university.campus?.places || []],
+          ["student-life", university.studentLife || []],
+        ];
+        for (const [anchor, items] of groups) {
+          for (const item of items) {
+            const title = item.title || item.label || item.name;
+            if (!title) continue;
+            add("university", title, `${url}#${anchor}`,
+              item.text || item.description || "", context);
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Search: universities", error);
     }
 
     // City Guide sections, for every city with a guide (list in guide-data.js)
@@ -204,7 +235,7 @@
     results = search(query);
     active = 0;
     if (!query.trim()) {
-      status.textContent = "Type to search pages, courses, notes, flashcards, announcements, the City Guide and the roadmap.";
+      status.textContent = "Type to search pages, courses, notes, flashcards, announcements, universities, the City Guide and the roadmap.";
       return;
     }
     status.textContent = results.length ? `${results.length} result${results.length === 1 ? "" : "s"}` : `No results for “${query}”`;
