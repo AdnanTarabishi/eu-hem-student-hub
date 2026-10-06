@@ -8,12 +8,12 @@
 //   "Update available · Reload", and old saved copies are deleted.
 // Nothing personal is stored here: only public site files and public data.
 
-const VERSION = "934f13fb";
+const VERSION = "80bdbca2";
 const SITE_CACHE = `site-${VERSION}`;
 const DATA_CACHE = "data"; // kept across versions, so offline data survives an update
 
 const SITE_FILES = [
-  "quant-methods.css", "quant-methods.js",
+  "quant-methods.css", "quant-methods.js", "health-econ-management.css", "health-econ-management.js",
   "statistics.html", "statistics.css", "statistics.js", "statistics-study.js", "statistics-calculations.js",
   "./", "index.html", "home.css", "studyplan.html", "timetable.html", "exams.html", "calendar.html",
   "notes.html", "course.html", "lecture.html", "create.html", "city-guide.html", "announcements.html", "students.html",

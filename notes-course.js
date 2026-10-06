@@ -112,6 +112,9 @@ function moduleOfTopic(topicId) {
 
 function renderHeader(tab, tabs) {
   if (page.course.id === "quant-methods" && window.QuantMethods) return QuantMethods.header({ pageLink }, tab, tabs);
+  if (page.course.id === "fund-health-econ-management" && window.HealthEconManagement) {
+    return HealthEconManagement.header({ pageLink, course: page.course }, tab, tabs);
+  }
   const info = page.course.info;
   const term = page.data.term;
   const header = createElement("section", "card course-header");
@@ -183,7 +186,23 @@ function renderPage() {
 
   const panel = createElement("section", "card course-panel");
   coursePage.appendChild(panel);
-  const custom = page.course.id === "quant-methods" && window.QuantMethods && QuantMethods.render(panel, tab, {course:page.course,pageLink,planStatusBox});
+  const custom =
+    (page.course.id === "quant-methods" &&
+      window.QuantMethods &&
+      QuantMethods.render(panel, tab, {
+        course: page.course,
+        data: page.data,
+        pageLink,
+        planStatusBox,
+      })) ||
+    (page.course.id === "fund-health-econ-management" &&
+      window.HealthEconManagement &&
+      HealthEconManagement.render(panel, tab, {
+        course: page.course,
+        data: page.data,
+        pageLink,
+        planStatusBox,
+      }));
   if (tab === "overview" && !custom) renderOverview(panel);
   if (tab === "schedule") renderSchedule(panel, params);
   if (tab === "exam") renderExam(panel);
@@ -785,7 +804,15 @@ async function initCoursePage() {
     }
 
     document.title = `${page.course.info.name} – EU-HEM Student Hub`;
-    if (page.course.id === "quant-methods" && window.QuantMethods) await QuantMethods.prepare(page.course.modules.find(m=>m.id==="statistics"),read);
+    if (page.course.id === "quant-methods" && window.QuantMethods) {
+      await QuantMethods.prepare(page.course.modules.find((m) => m.id === "statistics"), read);
+    }
+    if (page.course.id === "fund-health-econ-management" && window.HealthEconManagement) {
+      await HealthEconManagement.prepare(
+        page.course.modules.find((m) => m.id === "fund-health-economics"),
+        read,
+      );
+    }
     renderPage();
     if (page.course.id === "quant-methods" && window.QuantMethods) QuantMethods.cacheFiles(publicFiles);
     window.addEventListener("popstate", renderPage);

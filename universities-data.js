@@ -3,7 +3,7 @@
 (function universityDataModule(root) {
   "use strict";
 
-  const CONTENT_URL = "content/universities.json";
+  const CONTENT_URL = "content/universities.json?v=real-campus-20261006";
   const CHECKLIST_PREFIX = "euhem-university-checklist-v1";
   const asArray = (value) => Array.isArray(value) ? value : [];
 
