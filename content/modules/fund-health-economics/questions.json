@@ -12,8 +12,7 @@
       "Not change at all"
     ],
     "answer": "B",
-    "explanation": "% change in quantity = elasticity × % change in price = -0.2 × 10% = -2%. Visits fall by about 2%. Demand is inelastic, but not zero.",
-    "sample": true
+    "explanation": "% change in quantity = elasticity × % change in price = -0.2 × 10% = -2%. Visits fall by about 2%. Demand is inelastic, but not zero."
   },
   {
     "id": "fund-health-economics.q.002",
@@ -48,8 +47,7 @@
     "difficulty": "medium",
     "question": "The demand for health care is perfectly inelastic: price has no effect on how much care people use.",
     "answer": false,
-    "explanation": "False. Studies such as the RAND Health Insurance Experiment found that people use less care when they pay more. Demand is inelastic (it reacts only a little), but not perfectly inelastic.",
-    "sample": true
+    "explanation": "False. Studies such as the RAND Health Insurance Experiment found that people use less care when they pay more. Demand is inelastic (it reacts only a little), but not perfectly inelastic."
   },
   {
     "id": "fund-health-economics.q.005",
@@ -63,13 +61,12 @@
   },
   {
     "id": "fund-health-economics.q.006",
-    "topic": "fund-health-economics.demand",
+    "topic": "fund-health-economics.health-capital",
     "type": "short-answer",
     "difficulty": "medium",
     "question": "Why do economists say the demand for health care is a 'derived demand'?",
     "answer": "People value health itself. Health care is demanded because it helps produce health, so its demand is derived from the demand for health.",
-    "explanation": "This idea comes from the Grossman model, where health is a stock (health capital) and health care is one of the inputs people use to maintain or improve it.",
-    "sample": true
+    "explanation": "This idea comes from the Grossman model, where health is a stock (health capital) and health care is one of the inputs people use to maintain or improve it."
   },
   {
     "id": "fund-health-economics.q.007",
@@ -321,5 +318,1155 @@
     "question": "A policy improves access for a disadvantaged group but requires additional resources and may reduce activity elsewhere in the health system. Which two broad economic criteria should be discussed?",
     "answer": "Equity and efficiency. Equity asks whether the new distribution of access is fairer; efficiency asks how the policy changes total resource use, health gains and opportunity costs.",
     "explanation": "The point is not to assume that equity and efficiency always conflict, but to analyse both explicitly."
+  },
+  {
+    "id": "fund-health-economics.q.026",
+    "topic": "fund-health-economics.demand",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Demand curve",
+    "source": "EU-HEM Hub original practice · Session 2",
+    "question": "The money price of a physician visit falls while income, health status and other determinants stay unchanged. What happens in a standard demand diagram?",
+    "options": [
+      "The demand curve shifts right",
+      "There is movement along the existing demand curve to a higher quantity",
+      "The demand curve becomes vertical",
+      "Demand must become more elastic"
+    ],
+    "answer": "B",
+    "explanation": "A change in the good's own price produces movement along the existing demand curve. A shift requires a change in another determinant."
+  },
+  {
+    "id": "fund-health-economics.q.027",
+    "topic": "fund-health-economics.demand",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Demand shifts",
+    "source": "EU-HEM Hub original practice · Session 2",
+    "question": "Suppose hospital care and physician visits are substitutes. If the price of hospital care rises, what does the Session 2 framework predict for demand for physician visits?",
+    "options": [
+      "It shifts left",
+      "It shifts right",
+      "It does not change",
+      "It becomes perfectly inelastic"
+    ],
+    "answer": "B",
+    "explanation": "When the price of a substitute rises, demand for the other service can shift to the right."
+  },
+  {
+    "id": "fund-health-economics.q.028",
+    "topic": "fund-health-economics.demand",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Consumer surplus",
+    "source": "EU-HEM Hub original practice · Session 2",
+    "question": "A patient would be willing to pay €80 for a service but pays €50. What is the consumer surplus?",
+    "options": [
+      "€30",
+      "€50",
+      "€80",
+      "€130"
+    ],
+    "answer": "A",
+    "explanation": "Consumer surplus equals willingness to pay minus the price actually paid: €80 − €50 = €30."
+  },
+  {
+    "id": "fund-health-economics.q.029",
+    "topic": "fund-health-economics.demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Empirical identification",
+    "source": "EU-HEM Hub original practice · Session 2",
+    "question": "Why can a survey comparing healthcare use with observed out-of-pocket prices give a misleading estimate of the demand curve?",
+    "options": [
+      "Prices are always identical",
+      "Sicker people may choose more generous insurance and therefore face lower out-of-pocket prices",
+      "Healthcare use cannot be measured",
+      "Randomization always occurs naturally"
+    ],
+    "answer": "B",
+    "explanation": "Insurance choice and health risk can be related. If health status is not fully observed, a demand shift due to sickness can be mistaken for movement caused by price."
+  },
+  {
+    "id": "fund-health-economics.q.030",
+    "topic": "fund-health-economics.demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Randomized experiments",
+    "source": "EU-HEM Hub original practice · Session 2",
+    "question": "What is the main identification advantage of random assignment in a healthcare-demand experiment?",
+    "options": [
+      "It guarantees every participant receives treatment",
+      "It makes treatment and control groups comparable on average before the assigned condition",
+      "It removes all measurement error",
+      "It proves every result applies to every country"
+    ],
+    "answer": "B",
+    "explanation": "Random assignment is used so that systematic differences between groups are not driving the observed utilization difference."
+  },
+  {
+    "id": "fund-health-economics.q.031",
+    "topic": "fund-health-economics.demand",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "RAND and Oregon",
+    "source": "EU-HEM Hub original practice · Session 2",
+    "question": "Which broad conclusion from RAND and Oregon is emphasized in Session 2?",
+    "options": [
+      "Healthcare use never responds to price",
+      "Healthcare demand is downward sloping",
+      "Only inpatient care responds to price",
+      "Insurance has no effect on utilization"
+    ],
+    "answer": "B",
+    "explanation": "The lecture uses the experiments to support the conclusion that higher prices faced by patients reduce healthcare use."
+  },
+  {
+    "id": "fund-health-economics.q.032",
+    "topic": "fund-health-economics.demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Elasticity",
+    "source": "EU-HEM Hub original practice · Session 2",
+    "question": "If the absolute value of the price elasticity of demand is 0.2, demand is best described as:",
+    "options": [
+      "Elastic",
+      "Unit elastic",
+      "Inelastic",
+      "Perfectly elastic"
+    ],
+    "answer": "C",
+    "explanation": "An absolute elasticity below 1 is inelastic: quantity responds proportionally less than price."
+  },
+  {
+    "id": "fund-health-economics.q.033",
+    "topic": "fund-health-economics.demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Arc elasticity",
+    "source": "EU-HEM Hub original practice · Session 2",
+    "question": "Why does arc elasticity use midpoint averages of price and quantity?",
+    "options": [
+      "To make the measure unit-free and less dependent on which endpoint is treated as the base",
+      "To force elasticity to equal one",
+      "To remove the need for two observations",
+      "To convert price into consumer surplus"
+    ],
+    "answer": "A",
+    "explanation": "The midpoint method expresses changes relative to average price and average quantity, giving a symmetric unit-free comparison between two points."
+  },
+  {
+    "id": "fund-health-economics.q.034",
+    "topic": "fund-health-economics.demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Time costs",
+    "source": "EU-HEM Hub original practice · Session 2",
+    "question": "A clinic visit has a €40 fee, €5 transport cost and €15 worth of time cost. What is the full price in the Session 2 framework?",
+    "options": [
+      "€40",
+      "€45",
+      "€55",
+      "€60"
+    ],
+    "answer": "D",
+    "explanation": "Full price includes the monetary fee plus other monetary and time costs: 40 + 5 + 15 = €60."
+  },
+  {
+    "id": "fund-health-economics.q.035",
+    "topic": "fund-health-economics.demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Insurance",
+    "source": "EU-HEM Hub original practice · Session 2",
+    "question": "Which arrangement makes the patient pay a percentage of the healthcare bill?",
+    "options": [
+      "Fixed indemnity",
+      "Coinsurance",
+      "Copayment",
+      "Deductible only"
+    ],
+    "answer": "B",
+    "explanation": "Coinsurance leaves a specified fraction of the bill with the patient; the insurer pays the remaining fraction."
+  },
+  {
+    "id": "fund-health-economics.q.036",
+    "topic": "fund-health-economics.demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Insurance",
+    "source": "EU-HEM Hub original practice · Session 2",
+    "question": "Which arrangement requires the patient to pay an amount toward medical bills before insurance reimbursement begins?",
+    "options": [
+      "Deductible",
+      "Fixed indemnity",
+      "Capitation",
+      "Salary"
+    ],
+    "answer": "A",
+    "explanation": "A deductible must be paid before insurance begins reimbursing covered spending under the simplified contract."
+  },
+  {
+    "id": "fund-health-economics.q.037",
+    "topic": "fund-health-economics.demand",
+    "type": "true-false",
+    "difficulty": "easy",
+    "question": "A change in the price of healthcare, holding other determinants fixed, is represented as movement along a demand curve.",
+    "answer": true,
+    "explanation": "True. A shift occurs when another determinant of demand changes."
+  },
+  {
+    "id": "fund-health-economics.q.038",
+    "topic": "fund-health-economics.demand",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "If healthcare demand is inelastic, price has no effect on utilization.",
+    "answer": false,
+    "explanation": "False. Inelastic means the proportional quantity response is smaller than the proportional price change, not that the response is zero."
+  },
+  {
+    "id": "fund-health-economics.q.039",
+    "topic": "fund-health-economics.demand",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "Random assignment helps separate a price or insurance effect from pre-existing differences between study groups.",
+    "answer": true,
+    "explanation": "True. That is the core empirical reason randomized experiments are useful in this lecture."
+  },
+  {
+    "id": "fund-health-economics.q.040",
+    "topic": "fund-health-economics.demand",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "Insurance can reduce a patient's monetary price while leaving travel and waiting time costs unchanged.",
+    "answer": true,
+    "explanation": "True. Session 2 uses this to explain why time costs can become relatively more important under generous insurance."
+  },
+  {
+    "id": "fund-health-economics.q.041",
+    "topic": "fund-health-economics.demand",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "Cost-sharing necessarily reduces only low-value care and leaves effective care unchanged.",
+    "answer": false,
+    "explanation": "False. The lecture stresses that higher patient prices can reduce use without reliably distinguishing care by clinical value."
+  },
+  {
+    "id": "fund-health-economics.q.042",
+    "topic": "fund-health-economics.demand",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "Explain the difference between a movement along a demand curve and a shift of the demand curve.",
+    "answer": "A change in the service's own price changes quantity demanded along the existing curve. A change in another determinant, such as income, health status or the price of a substitute or complement, changes demand at each price and shifts the curve.",
+    "explanation": "A good answer should identify own price as the slope/movement mechanism and other determinants as shift mechanisms."
+  },
+  {
+    "id": "fund-health-economics.q.043",
+    "topic": "fund-health-economics.demand",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "Why can insurance selection create bias when estimating healthcare demand from observational data?",
+    "answer": "People with greater expected healthcare needs may choose more complete insurance and therefore face lower out-of-pocket prices. If those underlying health differences are not fully observed, high use may be attributed incorrectly to low prices rather than to greater need.",
+    "explanation": "The lecture describes this as confusing a shift effect with a slope effect."
+  },
+  {
+    "id": "fund-health-economics.q.044",
+    "topic": "fund-health-economics.demand",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "What is meant by the full price of a healthcare visit?",
+    "answer": "The full price includes the monetary price paid for care plus associated costs such as transport and the opportunity cost of time spent travelling, waiting and receiving care.",
+    "explanation": "The exact components depend on the setting, but the key idea is that price is broader than the clinic bill."
+  },
+  {
+    "id": "fund-health-economics.q.045",
+    "topic": "fund-health-economics.demand",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Why can a policy that lowers the monetary price of healthcare still ration access through waiting time?",
+    "answer": "When money prices are reduced, demand can rise. If capacity does not expand enough, queues and waiting can become the effective rationing mechanism. Because people value time differently, waiting can also have distributional consequences.",
+    "explanation": "This applies the lecture's time-price discussion to publicly financed care."
+  },
+  {
+    "id": "fund-health-economics.q.046",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Health capital",
+    "question": "Which statement best captures why health is treated as capital in Session 3?",
+    "options": [
+      "It is purchased only in hospitals",
+      "It is a stock influenced by past and present choices that provides services over time",
+      "It is identical to current healthcare spending",
+      "It can always be changed instantly without constraints"
+    ],
+    "answer": "B",
+    "explanation": "The lecture treats health as a stock that persists and produces services over time, which is the capital-good idea."
+  },
+  {
+    "id": "fund-health-economics.q.047",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Derived demand",
+    "question": "Why is healthcare demand described as a derived demand in the Grossman framework?",
+    "options": [
+      "Because healthcare is always supplied by government",
+      "Because people value healthcare only through its price",
+      "Because healthcare is used as an input to produce health",
+      "Because healthcare demand is statistically estimated"
+    ],
+    "answer": "C",
+    "explanation": "The lecture says people demand healthcare as one of the inputs used to produce health."
+  },
+  {
+    "id": "fund-health-economics.q.048",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Control of health",
+    "question": "Which statement is most consistent with Session 3?",
+    "options": [
+      "Individuals completely determine their health",
+      "Health is entirely random",
+      "Choices influence health, but genetics, environment and chance also matter",
+      "Only medical care can affect health"
+    ],
+    "answer": "C",
+    "explanation": "The lecture explicitly combines individual choices with genetics, environment and chance."
+  },
+  {
+    "id": "fund-health-economics.q.049",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Grossman roles",
+    "question": "Which is NOT one of the three roles assigned to health in the Grossman model?",
+    "options": [
+      "A stock of capital",
+      "A consumption good",
+      "An input into production",
+      "A financial insurance contract"
+    ],
+    "answer": "D",
+    "explanation": "The three roles are capital, consumption and production input."
+  },
+  {
+    "id": "fund-health-economics.q.050",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "PPF",
+    "question": "Why can health and the home good rise together in the low-health 'free-lunch zone'?",
+    "options": [
+      "There is no scarcity at low health",
+      "Small health improvements can release enough sick time to more than offset the resources used to improve health",
+      "Home goods require no time",
+      "Medical care is free"
+    ],
+    "answer": "B",
+    "explanation": "At very low health, improving health can create a large increase in productive time, allowing more health and more home production together."
+  },
+  {
+    "id": "fund-health-economics.q.051",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "PPF",
+    "question": "Where would a person who values both health and home goods normally choose in the single-period Grossman model?",
+    "options": [
+      "At the minimum-health point",
+      "On the upward-sloping free-lunch part of the PPF",
+      "On the downward-sloping trade-off portion at a tangency with an indifference curve",
+      "At maximum health regardless of home goods"
+    ],
+    "answer": "C",
+    "explanation": "With both goods valued, the optimum lies where the best attainable indifference curve is tangent to the downward-sloping trade-off portion."
+  },
+  {
+    "id": "fund-health-economics.q.052",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Health stock",
+    "question": "If inherited health is 80, depreciation is 10%, and gross investment is 12, what is next-period health according to H_t = (1−δ)H_{t−1}+I_{t−1}?",
+    "options": [
+      "72",
+      "80",
+      "84",
+      "92"
+    ],
+    "answer": "C",
+    "explanation": "Surviving health is 0.90 × 80 = 72. Add gross investment 12 to get 84."
+  },
+  {
+    "id": "fund-health-economics.q.053",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Net investment",
+    "question": "Health stock falls during a period when:",
+    "options": [
+      "Gross investment exceeds depreciation",
+      "Gross investment equals depreciation exactly",
+      "Gross investment is less than depreciation of inherited health",
+      "The wage rate rises"
+    ],
+    "answer": "C",
+    "explanation": "Net health investment equals gross investment minus depreciation. If it is negative, the stock falls."
+  },
+  {
+    "id": "fund-health-economics.q.054",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "MEC",
+    "question": "In the pure-investment model, the optimal health stock is reached where the marginal efficiency of health capital is compared with:",
+    "options": [
+      "Only the money price of a doctor visit",
+      "The opportunity cost of funds plus depreciation",
+      "Only the wage rate",
+      "Only the individual's utility from health"
+    ],
+    "answer": "B",
+    "explanation": "The lecture summarizes the relevant cost of holding health capital as the opportunity cost r plus depreciation δ."
+  },
+  {
+    "id": "fund-health-economics.q.055",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Age",
+    "question": "According to the Session 3 comparative statics, what happens as ageing raises the depreciation rate of health capital?",
+    "options": [
+      "Optimal health rises",
+      "Optimal health falls",
+      "Healthcare demand must fall",
+      "Education becomes irrelevant"
+    ],
+    "answer": "B",
+    "explanation": "A higher depreciation rate raises the cost of maintaining health capital and lowers the optimal stock."
+  },
+  {
+    "id": "fund-health-economics.q.056",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Wage",
+    "question": "Why does a higher wage increase optimal health in the pure-investment version of the lecture?",
+    "options": [
+      "It lowers depreciation directly",
+      "It raises the return to healthy productive time, shifting the MEC to the right",
+      "It makes health a pure consumption good",
+      "It removes the time constraint"
+    ],
+    "answer": "B",
+    "explanation": "Healthy time becomes more valuable when the wage is higher, increasing the return to health capital."
+  },
+  {
+    "id": "fund-health-economics.q.057",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Education",
+    "question": "Why is the effect of education on healthcare demand ambiguous in Session 3 even though education raises optimal health?",
+    "options": [
+      "Education has no effect on health production",
+      "Education raises desired health but also makes health production more efficient, so less healthcare may be needed per unit of health",
+      "Education only changes insurance",
+      "Healthcare demand is fixed"
+    ],
+    "answer": "B",
+    "explanation": "The lecture distinguishes demand for health from demand for healthcare: education raises desired health and production efficiency, creating opposing effects on healthcare use."
+  },
+  {
+    "id": "fund-health-economics.q.058",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "true-false",
+    "difficulty": "easy",
+    "question": "The Grossman model treats health as both a consumption good and an investment asset.",
+    "answer": true,
+    "explanation": "True. Health contributes to utility and also creates productive time, in addition to being modeled as a stock."
+  },
+  {
+    "id": "fund-health-economics.q.059",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "In Session 3, individuals can influence health but cannot fully determine it.",
+    "answer": true,
+    "explanation": "True. Genetics, environment and chance remain outside full individual control."
+  },
+  {
+    "id": "fund-health-economics.q.060",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "Gross health investment can be negative in the health-stock equation.",
+    "answer": false,
+    "explanation": "False. The lecture states that gross investment cannot be negative, while net investment can be negative if depreciation exceeds gross investment."
+  },
+  {
+    "id": "fund-health-economics.q.061",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "As health improves, the marginal return to additional health capital is assumed to remain constant.",
+    "answer": false,
+    "explanation": "False. The lecture's MEC falls with health: returns to additional health capital are high when health is low and diminish as health improves."
+  },
+  {
+    "id": "fund-health-economics.q.062",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "true-false",
+    "difficulty": "hard",
+    "question": "Because optimal health declines with age in the Grossman model, healthcare demand must also decline with age.",
+    "answer": false,
+    "explanation": "False. The lecture says the effect of age on healthcare demand is ambiguous because greater depreciation makes it harder to maintain any given health stock."
+  },
+  {
+    "id": "fund-health-economics.q.063",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "Explain the difference between health as a stock and healthy days as a flow.",
+    "answer": "Health capital is a stock carried from one period to the next. It produces a flow of health services, represented in the lecture by healthy or illness-free days during a period.",
+    "explanation": "A strong answer should distinguish a persistent state from the services produced by that state over time."
+  },
+  {
+    "id": "fund-health-economics.q.064",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "Why does the Grossman PPF contain a free-lunch zone at low levels of health?",
+    "answer": "At very low health, a small investment can reduce sick time by more than the time or resources required to make the health improvement. The person therefore gains both health and productive time that can be used to produce home goods.",
+    "explanation": "The key is the large productive-time return to early health improvements at low health."
+  },
+  {
+    "id": "fund-health-economics.q.065",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "Use the health-stock equation to explain what depreciation does.",
+    "answer": "Depreciation removes part of inherited health stock each period. In H_t = (1−δ_t)H_{t−1}+I_{t−1}, a larger δ leaves less inherited health surviving into the next period, so more gross investment is required to maintain the same stock.",
+    "explanation": "This is the lecture's lake/evaporation intuition expressed in the model."
+  },
+  {
+    "id": "fund-health-economics.q.066",
+    "topic": "fund-health-economics.health-capital",
+    "source": "EU-HEM Hub original practice · Session 3",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Why can education raise health while having an ambiguous effect on healthcare use?",
+    "answer": "Education makes health production more efficient, so the return to producing health rises and optimal health increases. But greater efficiency can mean less healthcare is needed to produce a given amount of health, while the higher desired health level can increase input demand. These effects can offset each other.",
+    "explanation": "The question tests the distinction between the demand for health and the derived demand for healthcare."
+  },
+  {
+    "id": "fund-health-economics.q.067",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Causal direction",
+    "question": "Which structure represents direct causality in the Session 4 framework?",
+    "options": [
+      "SES → health",
+      "Health → SES",
+      "Time preference → SES and health",
+      "Health and SES are unrelated"
+    ],
+    "answer": "A",
+    "explanation": "Direct-causality hypotheses ask whether socioeconomic conditions themselves cause health differences."
+  },
+  {
+    "id": "fund-health-economics.q.068",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Causal direction",
+    "question": "Which structure best represents reverse causality?",
+    "options": [
+      "Education → health production",
+      "Health → productive time → income/SES",
+      "Income inequality → social cohesion",
+      "Time preference → education and health"
+    ],
+    "answer": "B",
+    "explanation": "The productive-time hypothesis is the lecture's reverse-causality mechanism: health shocks can lower earnings and socioeconomic position."
+  },
+  {
+    "id": "fund-health-economics.q.069",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Efficient producer",
+    "question": "Under the efficient producer hypothesis, why might education raise optimal health?",
+    "options": [
+      "Education raises the biological depreciation rate",
+      "Education makes health production more efficient",
+      "Education removes all health risks",
+      "Education guarantees free healthcare"
+    ],
+    "answer": "B",
+    "explanation": "The lecture links education to a lower marginal cost or greater efficiency of producing health, which raises the desired health stock."
+  },
+  {
+    "id": "fund-health-economics.q.070",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Efficient producer",
+    "question": "Which lecture mechanism best fits the efficient producer hypothesis?",
+    "options": [
+      "Better adherence to a demanding self-management regimen among more-educated patients",
+      "A famine occurring before birth",
+      "A sudden retirement after a heart attack",
+      "A lottery prize increasing cash income"
+    ],
+    "answer": "A",
+    "explanation": "The lecture uses self-management and treatment adherence as mechanisms through which education can improve health production."
+  },
+  {
+    "id": "fund-health-economics.q.071",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Thrifty phenotype",
+    "question": "Why does Session 4 use the Dutch famine as a natural experiment?",
+    "options": [
+      "It randomly assigned university education",
+      "It created an early-life nutritional shock without deliberately exposing fetuses for research",
+      "It measured only adult income",
+      "It eliminated all selection concerns with certainty"
+    ],
+    "answer": "B",
+    "explanation": "The famine created naturally occurring exposure groups. The lecture presents this as a way to study early-life deprivation when deliberate randomization would be unethical."
+  },
+  {
+    "id": "fund-health-economics.q.072",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Direct income",
+    "question": "Which statement best matches the lecture's treatment of the direct-income hypothesis?",
+    "options": [
+      "Adult income clearly causes better health in all settings",
+      "Income never matters for health",
+      "Evidence for a causal adult income effect in developed-country samples is weak or mixed, while parental income appears protective for child health",
+      "Only income inequality matters"
+    ],
+    "answer": "C",
+    "explanation": "The slides distinguish limited adult causal evidence from a stronger protective association of family income with child health."
+  },
+  {
+    "id": "fund-health-economics.q.073",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Allostatic load",
+    "question": "How is chronic stress mapped into the Grossman model in Session 4?",
+    "options": [
+      "As a lower wage",
+      "As a higher health-capital depreciation rate δ",
+      "As a lower price of medical care",
+      "As a higher discount factor"
+    ],
+    "answer": "B",
+    "explanation": "The allostatic-load discussion connects prolonged stress with faster biological ageing and therefore a higher depreciation rate."
+  },
+  {
+    "id": "fund-health-economics.q.074",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Whitehall",
+    "question": "Why is the Whitehall study useful in the lecture's discussion of rank and stress?",
+    "options": [
+      "All civil servants had identical income",
+      "It compares relatively similar workers within a shared employment environment and universal NHS access",
+      "It was a randomized trial of stress",
+      "It studies only children"
+    ],
+    "answer": "B",
+    "explanation": "The lecture emphasizes the shared civil-service setting and NHS access while morbidity and mortality still varied by employment grade."
+  },
+  {
+    "id": "fund-health-economics.q.075",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Income inequality",
+    "question": "Which statement best reflects the lecture's conclusion about the income-inequality hypothesis?",
+    "options": [
+      "The causal pathway is fully established",
+      "Inequality is unrelated to any health measure",
+      "Associations and mechanisms are discussed, but the causal link remains unclear",
+      "Average income never matters"
+    ],
+    "answer": "C",
+    "explanation": "The slides present proposed social-cohesion, stress and political mechanisms but explicitly note the lack of a clear causal understanding."
+  },
+  {
+    "id": "fund-health-economics.q.076",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Productive time",
+    "question": "A serious illness causes a worker to retire early and lose earnings. Which hypothesis does this most directly illustrate?",
+    "options": [
+      "Efficient producer",
+      "Thrifty phenotype",
+      "Productive time",
+      "Fuchs hypothesis"
+    ],
+    "answer": "C",
+    "explanation": "The productive-time hypothesis runs from health to SES through lost work capacity, earnings and labour-force participation."
+  },
+  {
+    "id": "fund-health-economics.q.077",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Fuchs hypothesis",
+    "question": "In the Fuchs hypothesis, why might education and health be positively associated even without one directly causing the other?",
+    "options": [
+      "A common preference for future benefits can increase investment in both",
+      "Health insurance fully determines both",
+      "Higher depreciation raises both",
+      "Income inequality mechanically raises education"
+    ],
+    "answer": "A",
+    "explanation": "Time preference is the common third factor: people more willing to delay gratification may invest more in education and health."
+  },
+  {
+    "id": "fund-health-economics.q.078",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Policy",
+    "question": "Why would the same observed income–health gradient support different policies under different causal theories?",
+    "options": [
+      "Because all policies have identical effects",
+      "Because a gradient alone does not identify whether income causes health, health causes income, or a third factor causes both",
+      "Because causality never matters",
+      "Because only healthcare access can explain disparities"
+    ],
+    "answer": "B",
+    "explanation": "Session 4 repeatedly separates correlation from causal mechanism; policy should target the mechanism actually producing the disparity."
+  },
+  {
+    "id": "fund-health-economics.q.079",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "true-false",
+    "difficulty": "easy",
+    "question": "A socioeconomic health gradient by itself proves that low socioeconomic status causes poor health.",
+    "answer": false,
+    "explanation": "False. The lecture explicitly considers direct causality, reverse causality and third factors."
+  },
+  {
+    "id": "fund-health-economics.q.080",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "The efficient producer hypothesis predicts that better education can improve the efficiency of producing health.",
+    "answer": true,
+    "explanation": "True. This is the central mechanism of the hypothesis in the lecture."
+  },
+  {
+    "id": "fund-health-economics.q.081",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "The thrifty phenotype evidence in Session 4 depends on deliberately randomizing pregnant women to famine exposure.",
+    "answer": false,
+    "explanation": "False. Such randomization would be unethical; the lecture uses natural experiments."
+  },
+  {
+    "id": "fund-health-economics.q.082",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "The productive-time hypothesis is a reverse-causality explanation of socioeconomic health disparities.",
+    "answer": true,
+    "explanation": "True. It proposes that poor health lowers earnings and socioeconomic position."
+  },
+  {
+    "id": "fund-health-economics.q.083",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "Session 4 concludes that income redistribution alone clearly solves adult health disparities in the short run.",
+    "answer": false,
+    "explanation": "False. The final takeaways state that adult income has no clear causal impact in the evidence reviewed and that short-run redistribution alone does not solve the problem."
+  },
+  {
+    "id": "fund-health-economics.q.084",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "Explain why causal direction matters when interpreting a socioeconomic health gradient.",
+    "answer": "The same correlation can arise because socioeconomic status affects health, health affects socioeconomic status, or another factor affects both. Each mechanism implies a different policy target, so the gradient alone is insufficient for choosing an intervention.",
+    "explanation": "A strong answer should name at least two of the three causal structures and connect them to policy."
+  },
+  {
+    "id": "fund-health-economics.q.085",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "How does the efficient producer hypothesis connect education to health in Grossman-model terms?",
+    "answer": "Education can make the production of health more efficient, effectively lowering the cost of generating health from inputs or increasing the return to health investment. The individual therefore chooses a higher optimal health stock.",
+    "explanation": "The key is production efficiency, not simply higher income from education."
+  },
+  {
+    "id": "fund-health-economics.q.086",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "Why are early-life natural experiments important for the thrifty phenotype hypothesis?",
+    "answer": "The hypothesis concerns fetal and early-childhood conditions, but researchers cannot ethically assign harmful deprivation. Natural shocks such as famines can create exposure groups that help isolate the long-run consequences of early-life conditions.",
+    "explanation": "Do not claim a natural experiment automatically removes every source of bias; the lecture presents it as a strategy to reduce selection problems."
+  },
+  {
+    "id": "fund-health-economics.q.087",
+    "topic": "fund-health-economics.disparities",
+    "source": "EU-HEM Hub original practice · Session 4",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Compare the direct-income and productive-time hypotheses.",
+    "answer": "The direct-income hypothesis runs from SES to health: greater resources expand the possibilities for producing health. The productive-time hypothesis runs from health to SES: illness reduces productive time, earnings and labour-force participation. The same income–health association can therefore reflect opposite causal directions.",
+    "explanation": "This question tests whether the student can distinguish direct from reverse causality."
+  },
+  {
+    "id": "fund-health-economics.q.088",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Agency",
+    "question": "In the physician–patient principal–agent relationship, who is the agent?",
+    "options": [
+      "The patient",
+      "The physician",
+      "The insurer only",
+      "The hospital regulator"
+    ],
+    "answer": "B",
+    "explanation": "The patient is the principal and the physician acts as the better-informed agent."
+  },
+  {
+    "id": "fund-health-economics.q.089",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Agency",
+    "question": "What creates the central agency problem in Session 5?",
+    "options": [
+      "Perfect information and zero switching costs",
+      "The physician has an information advantage and may not be perfectly loyal to the patient's interest",
+      "Patients always set physician fees",
+      "Physicians cannot influence treatment choices"
+    ],
+    "answer": "B",
+    "explanation": "Information asymmetry gives the physician influence, while self-interest or imperfect knowledge can make agency imperfect."
+  },
+  {
+    "id": "fund-health-economics.q.090",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "PID definition",
+    "question": "Which example best fits the lecture's definition of physician-induced demand?",
+    "options": [
+      "A physician explains why smoking cessation would improve health",
+      "A physician encourages extra care that the physician believes is not in the patient's best interest",
+      "A patient requests a second opinion",
+      "A necessary treatment is provided after informed consent"
+    ],
+    "answer": "B",
+    "explanation": "PID is undue physician influence on demand against the physician's own interpretation of the patient's best interest."
+  },
+  {
+    "id": "fund-health-economics.q.091",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Benchmark model",
+    "question": "Which combination best describes the physician in the benchmark PID model?",
+    "options": [
+      "Likes income and leisure, dislikes inducement",
+      "Likes inducement for its own sake",
+      "Cares only about patient health and never income",
+      "Faces no trade-offs"
+    ],
+    "answer": "A",
+    "explanation": "The lecture's benchmark physician values net income and leisure but has disutility from inducing demand."
+  },
+  {
+    "id": "fund-health-economics.q.092",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Income vs substitution",
+    "question": "A lower profit rate makes inducement less financially attractive. Which effect is this?",
+    "options": [
+      "Income effect",
+      "Substitution effect",
+      "Practice-style effect",
+      "Selection effect"
+    ],
+    "answer": "B",
+    "explanation": "The substitution effect pushes toward less inducement because the marginal financial return to inducement has fallen."
+  },
+  {
+    "id": "fund-health-economics.q.093",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Income vs substitution",
+    "question": "A lower profit rate reduces physician income, making extra inducement more attractive as a way to restore income. Which effect is this?",
+    "options": [
+      "Income effect",
+      "Substitution effect",
+      "Demand-side moral hazard",
+      "Price dispersion"
+    ],
+    "answer": "A",
+    "explanation": "The income effect can push inducement upward after an income loss."
+  },
+  {
+    "id": "fund-health-economics.q.094",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "McGuire–Pauly",
+    "question": "In the McGuire–Pauly synthesis, when can a lower profit rate increase quantity supplied through inducement?",
+    "options": [
+      "Only when the substitution effect dominates",
+      "When the income effect dominates the substitution effect",
+      "Whenever professional ethics are stronger",
+      "Never"
+    ],
+    "answer": "B",
+    "explanation": "The lecture states that if the income effect dominates, lower profitability can lead to more inducement and quantity."
+  },
+  {
+    "id": "fund-health-economics.q.095",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Evidence",
+    "question": "What limitation of empirical PID tests is emphasized in Session 5?",
+    "options": [
+      "They cannot observe any physician behaviour",
+      "They may show whether inducement changes after an income shock but not the absolute baseline level of inducement",
+      "They prove all physicians induce equally",
+      "They measure only patient preferences"
+    ],
+    "answer": "B",
+    "explanation": "The lecture notes that response tests are silent about how much inducement existed before the shock."
+  },
+  {
+    "id": "fund-health-economics.q.096",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Payment methods",
+    "question": "Which of the following is listed as a pure physician payment method?",
+    "options": [
+      "Fee-for-service",
+      "Capitation with FFS carve-outs",
+      "Case rate only",
+      "Risk adjustment"
+    ],
+    "answer": "A",
+    "explanation": "Session 5 lists fee-for-service, capitation and salary as pure methods; carve-outs and case rates are listed under blended methods."
+  },
+  {
+    "id": "fund-health-economics.q.097",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Payment methods",
+    "question": "Which payment method gives a direct payment for each service delivered?",
+    "options": [
+      "Fee-for-service",
+      "Pure capitation",
+      "Salary",
+      "None of the above"
+    ],
+    "answer": "A",
+    "explanation": "Fee-for-service links payment directly to activity, making it a relatively high-powered volume incentive."
+  },
+  {
+    "id": "fund-health-economics.q.098",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Practice variation",
+    "question": "Which statement best reflects the small-area variation literature as presented in Session 5?",
+    "options": [
+      "Demand characteristics explain all geographic variation",
+      "Supply variables matter, demand variables also matter, but substantial variation remains unexplained",
+      "Regional treatment rates are now almost identical",
+      "Variation proves every physician is financially motivated"
+    ],
+    "answer": "B",
+    "explanation": "The slides present supply and demand factors as significant but insufficient to explain the full variation."
+  },
+  {
+    "id": "fund-health-economics.q.099",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Practice style",
+    "question": "What does the practice-style hypothesis emphasize as a source of geographic treatment variation?",
+    "options": [
+      "Only patient income",
+      "Uneven diffusion of medical information and physician uncertainty",
+      "Perfectly uniform medical knowledge",
+      "Only insurance deductibles"
+    ],
+    "answer": "B",
+    "explanation": "The lecture links practice styles to incomplete knowledge and uneven diffusion of information about medical technologies."
+  },
+  {
+    "id": "fund-health-economics.q.100",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "true-false",
+    "difficulty": "easy",
+    "question": "Physician agency is relevant because the physician can possess more information about diagnosis and treatment than the patient.",
+    "answer": true,
+    "explanation": "True. Information asymmetry is central to the principal–agent relationship."
+  },
+  {
+    "id": "fund-health-economics.q.101",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "In Session 5, every attempt by a physician to influence patient demand counts as physician-induced demand.",
+    "answer": false,
+    "explanation": "False. The lecture distinguishes due influence that supports the patient's interest from undue influence that defines PID."
+  },
+  {
+    "id": "fund-health-economics.q.102",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "A lower physician profit rate has only one predicted effect on inducement in the McGuire–Pauly synthesis.",
+    "answer": false,
+    "explanation": "False. It creates offsetting substitution and income effects."
+  },
+  {
+    "id": "fund-health-economics.q.103",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "The lecture presents evidence on physician-induced demand as completely one-sided and conclusive.",
+    "answer": false,
+    "explanation": "False. The evidence section is explicitly described as mixed."
+  },
+  {
+    "id": "fund-health-economics.q.104",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "Session 5 presents small-area variation as fully explained by measurable demand and supply characteristics.",
+    "answer": false,
+    "explanation": "False. A substantial share remains unexplained in the cited SAV literature."
+  },
+  {
+    "id": "fund-health-economics.q.105",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "Explain why information asymmetry makes the physician a special kind of agent for the patient.",
+    "answer": "The patient hires the physician both to advise on what care is needed and often to provide that care. Because the physician has better clinical information, the physician can influence the patient's demand, creating scope for both helpful guidance and conflicts of interest.",
+    "explanation": "A strong answer connects information advantage to the physician's ability to shape demand."
+  },
+  {
+    "id": "fund-health-economics.q.106",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "Explain the two offsetting effects of a lower profit rate on physician inducement.",
+    "answer": "The substitution effect makes inducement less attractive because each induced unit yields less profit, pushing inducement down. The income effect arises because lower profitability reduces income, which can make inducement more attractive as a way to restore income. The net response depends on which effect is stronger.",
+    "explanation": "This is the central McGuire–Pauly synthesis in the lecture."
+  },
+  {
+    "id": "fund-health-economics.q.107",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Why can small-area variation exist even when physicians follow scientific evidence and clinical guidelines?",
+    "answer": "The lecture describes a broad grey area of clinical discretion where evidence is incomplete, benefits are patient-specific and clearly appropriate or inappropriate cases are limited. Different physician beliefs and practice styles can therefore generate different procedure rates without necessarily violating guidelines.",
+    "explanation": "The answer should link clinical uncertainty, discretion and uneven information to practice variation."
+  },
+  {
+    "id": "fund-health-economics.q.108",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Why does physician-induced demand complicate welfare analysis using ordinary patient demand curves?",
+    "answer": "If physicians can shift patient demand, the observed demand curve may not represent independent patient willingness to pay. The quantity demanded can partly reflect provider influence, so using that curve directly as a welfare measure becomes questionable.",
+    "explanation": "This follows the lecture's public-policy discussion about whether demand curves remain meaningful under strong PID."
   }
 ]

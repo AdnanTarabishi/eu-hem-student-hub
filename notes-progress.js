@@ -14,7 +14,7 @@ const CARD_GRADES = ["again", "hard", "good", "easy"];
 const MAX_INTERVAL_DAYS = 365;
 
 function emptyProgress() {
-  return { version: 1, topics: {}, cards: {}, quizzes: {}, lectures: {}, activity: [] };
+  return { version: 1, topics: {}, cards: {}, quizzes: {}, lectures: {}, statistics: {}, activity: [] };
 }
 
 // Reads progress and repairs anything unexpected, so a damaged entry never breaks the page
@@ -22,7 +22,7 @@ function loadProgress() {
   const stored = readStorage(PROGRESS_KEY, null);
   const progress = emptyProgress();
   if (!stored || typeof stored !== "object") return progress;
-  for (const key of ["topics", "cards", "quizzes", "lectures"]) {
+  for (const key of ["topics", "cards", "quizzes", "lectures", "statistics"]) {
     if (stored[key] && typeof stored[key] === "object") progress[key] = stored[key];
   }
   if (Array.isArray(stored.activity)) progress.activity = stored.activity.filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d));

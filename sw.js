@@ -2,28 +2,36 @@
 // A small script the browser runs in the background (registered by pwa.js).
 // - Site files (pages, styles, scripts, icons, fonts) are saved when the app is installed,
 //   then served from the saved copy and refreshed in the background ("stale while revalidate").
-// - Data (timetable, exam dates, programme, notes, announcements, calendars, the city guide, roadmap)
+// - Data (timetable, exam dates, programme, notes, announcements, calendars, city and university guides, roadmap)
 //   is always fetched fresh; the last saved copy is used only when there is no internet.
 // - When the site is updated, VERSION changes: the new worker waits, pwa.js shows
 //   "Update available · Reload", and old saved copies are deleted.
 // Nothing personal is stored here: only public site files and public data.
 
-const VERSION = "442e7511";
+const VERSION = "934f13fb";
 const SITE_CACHE = `site-${VERSION}`;
 const DATA_CACHE = "data"; // kept across versions, so offline data survives an update
 
 const SITE_FILES = [
+  "quant-methods.css", "quant-methods.js",
+  "statistics.html", "statistics.css", "statistics.js", "statistics-study.js", "statistics-calculations.js",
   "./", "index.html", "home.css", "studyplan.html", "timetable.html", "exams.html", "calendar.html",
   "notes.html", "course.html", "lecture.html", "create.html", "city-guide.html", "announcements.html", "students.html",
-  "privacy.html", "contact.html", "tracks.html", "thesis.html", "join.html",
+  "privacy.html", "contact.html", "tracks.html", "thesis.html", "join.html", "experiences.html",
+  "universities.html", "university.html", "universities.css", "universities-data.js", "universities.js",
   "join.css", "directory-config.js", "directory-options.js", "join.js",
   "students.css", "students-config.js", "students-data.js", "countries.js", "assets/map/world-countries.svg",
   "roadmap.html", "roadmap.css", "roadmap.js", "roadmap-data.js",
   "academic-rules.html", "academic-rules.js", "journey.html", "journey.js",
   "support.html", "support.js",
-  "style.css", "lecture.css", "lecture.js", "lecture-activities.js", "icons.svg", "manifest.webmanifest",
+  "style.css", "experiences.css", "experiences-data.js", "experiences.js", "lecture.css", "lecture.js", "lecture-activities.js", "icons.svg", "manifest.webmanifest",
   "fonts/inter-latin.woff2", "fonts/inter-latin-ext.woff2", "fonts/source-serif-4-latin-600.woff2",
   "img/app-icon.svg", "img/app-icon-192.png", "img/favicon-32.png", "img/apple-touch-icon.png",
+  "img/universities/mci-campus-600.webp",
+  "img/universities/eur-campus-600.webp",
+  "img/universities/uio-campus-600.webp",
+  "img/universities/unibo-campus-600.webp",
+  "assets/images/cities/bologna/archiginnasio-anatomical-theatre-640.webp", "assets/images/cities/bologna/archiginnasio-anatomical-theatre-1200.webp", "assets/images/cities/oslo/blindern-campus-640.webp", "assets/images/cities/oslo/blindern-campus-1200.webp", "assets/images/cities/rotterdam/campus-woudestein-640.webp", "assets/images/cities/rotterdam/campus-woudestein-1200.webp", "assets/images/cities/innsbruck/valley-view-640.webp", "assets/images/cities/innsbruck/valley-view-1200.webp",
   "theme.js", "home.js", "site-nav.js", "utils.js", "ui.js", "search.js", "pwa.js", "announcements.js",
   "programme.js", "unibo-data.js", "dashboard.js", "onboarding.js", "studyplan.js",
   "timetable.js", "exams.js", "calendar.js", "guide.js", "students.js",

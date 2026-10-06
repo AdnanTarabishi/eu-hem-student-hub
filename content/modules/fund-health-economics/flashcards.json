@@ -1,24 +1,21 @@
 [
   {
     "id": "fund-health-economics.fc.001",
-    "topic": "fund-health-economics.demand",
+    "topic": "fund-health-economics.health-capital",
     "front": "Why is the demand for health care called a 'derived demand'?",
-    "back": "Because what people really want is health. Health care is demanded mainly as a means to produce health.",
-    "sample": true
+    "back": "Because what people really want is health. Health care is demanded mainly as a means to produce health."
   },
   {
     "id": "fund-health-economics.fc.002",
     "topic": "fund-health-economics.demand",
     "front": "What does a price elasticity of demand of -0.2 mean?",
-    "back": "Elasticity $\\varepsilon = \\frac{\\%\\Delta Q}{\\%\\Delta P} = -0.2$: a 10% rise in price lowers the quantity demanded by about 2%. Demand is inelastic: it reacts only a little to price.",
-    "sample": true
+    "back": "Elasticity $\\varepsilon = \\frac{\\%\\Delta Q}{\\%\\Delta P} = -0.2$: a 10% rise in price lowers the quantity demanded by about 2%. Demand is inelastic: it reacts only a little to price."
   },
   {
     "id": "fund-health-economics.fc.003",
     "topic": "fund-health-economics.demand",
     "front": "Name three non-price factors that affect the demand for health care.",
-    "back": "For example: health status, income, insurance coverage, time costs (travel and waiting), and information about one's own condition.",
-    "sample": true
+    "back": "For example: health status, income, insurance coverage, time costs (travel and waiting), and information about one's own condition."
   },
   {
     "id": "fund-health-economics.fc.004",
@@ -130,5 +127,515 @@
     "topic": "fund-health-economics.session-1",
     "front": "Name the four economic features emphasized when asking why healthcare is different.",
     "back": "Information asymmetry, uncertainty, externalities and equity concerns."
+  },
+  {
+    "id": "fund-health-economics.fc.022",
+    "topic": "fund-health-economics.demand",
+    "front": "What does a demand curve show?",
+    "back": "The quantity consumers are willing and able to buy at each price, holding other determinants constant."
+  },
+  {
+    "id": "fund-health-economics.fc.023",
+    "topic": "fund-health-economics.demand",
+    "front": "Movement along a demand curve vs a shift: what is the difference?",
+    "back": "A price change causes movement along a given demand curve. A change in another determinant, such as income, health status or the price of a related service, can shift the curve."
+  },
+  {
+    "id": "fund-health-economics.fc.024",
+    "topic": "fund-health-economics.demand",
+    "front": "What is willingness to pay (WTP)?",
+    "back": "The maximum amount a buyer is willing to pay for a good or service; it measures how much the buyer values it."
+  },
+  {
+    "id": "fund-health-economics.fc.025",
+    "topic": "fund-health-economics.demand",
+    "front": "What is consumer surplus?",
+    "back": "Willingness to pay minus the amount actually paid."
+  },
+  {
+    "id": "fund-health-economics.fc.026",
+    "topic": "fund-health-economics.demand",
+    "front": "What is a marginal consumer?",
+    "back": "The active buyer with the lowest willingness to pay at the market price; the marginal consumer receives zero consumer surplus."
+  },
+  {
+    "id": "fund-health-economics.fc.027",
+    "topic": "fund-health-economics.demand",
+    "front": "Name four determinants of how price-sensitive demand may be.",
+    "back": "Share of income spent on the good, availability of substitutes, necessity versus luxury, and the time horizon such as urgent versus elective care."
+  },
+  {
+    "id": "fund-health-economics.fc.028",
+    "topic": "fund-health-economics.demand",
+    "front": "How can worsening health status affect healthcare demand?",
+    "back": "People may demand more healthcare at every price; the lecture also illustrates demand becoming steeper when people are sicker."
+  },
+  {
+    "id": "fund-health-economics.fc.029",
+    "topic": "fund-health-economics.demand",
+    "front": "Why can observational estimates of healthcare demand be biased?",
+    "back": "People choose insurance partly according to health risk, so out-of-pocket prices are not randomly assigned. Unobserved health differences can be mistaken for a price effect."
+  },
+  {
+    "id": "fund-health-economics.fc.030",
+    "topic": "fund-health-economics.demand",
+    "front": "Why are randomized experiments useful for estimating healthcare demand?",
+    "back": "Random assignment creates groups that are statistically comparable, making differences in use easier to attribute to the assigned price or insurance condition."
+  },
+  {
+    "id": "fund-health-economics.fc.031",
+    "topic": "fund-health-economics.demand",
+    "front": "What are the two major randomized experiments emphasized in Session 2?",
+    "back": "The RAND Health Insurance Experiment and the Oregon Medicaid Experiment."
+  },
+  {
+    "id": "fund-health-economics.fc.032",
+    "topic": "fund-health-economics.demand",
+    "front": "What broad result do RAND and Oregon support about healthcare demand?",
+    "back": "Healthcare demand is downward sloping: when the price patients face is higher, use tends to be lower."
+  },
+  {
+    "id": "fund-health-economics.fc.033",
+    "topic": "fund-health-economics.demand",
+    "front": "Is healthcare demand perfectly inelastic?",
+    "back": "No. The lecture presents healthcare demand as inelastic overall, but still responsive to price."
+  },
+  {
+    "id": "fund-health-economics.fc.034",
+    "topic": "fund-health-economics.demand",
+    "front": "What is arc elasticity?",
+    "back": "A unit-free measure of responsiveness calculated between two price-quantity points using midpoint percentage changes."
+  },
+  {
+    "id": "fund-health-economics.fc.035",
+    "topic": "fund-health-economics.demand",
+    "front": "What is the full price of a healthcare visit?",
+    "back": "The monetary price plus other costs such as travel expenses and the opportunity cost of time spent travelling, waiting and receiving care."
+  },
+  {
+    "id": "fund-health-economics.fc.036",
+    "topic": "fund-health-economics.demand",
+    "front": "Why can time costs matter more when insurance is generous?",
+    "back": "Insurance can reduce the monetary price paid by the patient, while waiting and travel time remain. Time costs therefore become a larger share of the full price."
+  },
+  {
+    "id": "fund-health-economics.fc.037",
+    "topic": "fund-health-economics.demand",
+    "front": "What is a fixed indemnity?",
+    "back": "A fixed amount paid by the insurer for a particular covered service, leaving the patient responsible for the remaining price."
+  },
+  {
+    "id": "fund-health-economics.fc.038",
+    "topic": "fund-health-economics.demand",
+    "front": "What is coinsurance?",
+    "back": "The fraction of the healthcare bill that remains payable by the patient; the insurer pays the rest."
+  },
+  {
+    "id": "fund-health-economics.fc.039",
+    "topic": "fund-health-economics.demand",
+    "front": "What is a copayment?",
+    "back": "A fixed amount the patient pays for each unit of healthcare use, such as a fixed amount per visit."
+  },
+  {
+    "id": "fund-health-economics.fc.040",
+    "topic": "fund-health-economics.demand",
+    "front": "What is a deductible?",
+    "back": "An amount the patient must pay toward medical bills before insurance reimbursement begins."
+  },
+  {
+    "id": "fund-health-economics.fc.041",
+    "topic": "fund-health-economics.demand",
+    "front": "What policy concern does Session 2 raise about cost-sharing?",
+    "back": "Higher cost-sharing can reduce healthcare use without necessarily distinguishing between high-value and low-value care."
+  },
+  {
+    "id": "fund-health-economics.fc.042",
+    "topic": "fund-health-economics.health-capital",
+    "front": "Why does the Grossman model treat health as a form of capital?",
+    "back": "Because current health is a stock shaped by past and present choices that provides services now and in future periods rather than disappearing immediately."
+  },
+  {
+    "id": "fund-health-economics.fc.043",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What does it mean to say health is a prerequisite for other activities?",
+    "back": "Poor health reduces productive time and can limit work, home production and even the ability to enjoy consumption."
+  },
+  {
+    "id": "fund-health-economics.fc.044",
+    "topic": "fund-health-economics.health-capital",
+    "front": "How do individuals produce health in the Grossman framework?",
+    "back": "By combining their own time devoted to health-producing activities with purchased healthcare inputs, subject to constraints."
+  },
+  {
+    "id": "fund-health-economics.fc.045",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What is an unhealthy behaviour in the Session 3 framework?",
+    "back": "A choice that sacrifices future health in exchange for another goal or short-term benefit."
+  },
+  {
+    "id": "fund-health-economics.fc.046",
+    "topic": "fund-health-economics.health-capital",
+    "front": "Does the Grossman model assume people fully control their health?",
+    "back": "No. Choices matter, but genetics, environment and chance also affect health."
+  },
+  {
+    "id": "fund-health-economics.fc.047",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What does forward-looking behaviour mean in the Grossman model?",
+    "back": "Individuals consider future as well as current costs and benefits when making health-related choices."
+  },
+  {
+    "id": "fund-health-economics.fc.048",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What three roles does health play in the Grossman model?",
+    "back": "Health is a stock of capital, a consumption good that provides utility, and an input into production through healthy or productive time."
+  },
+  {
+    "id": "fund-health-economics.fc.049",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What is the home good Z?",
+    "back": "Everything other than health that contributes to utility and is produced using time and market goods."
+  },
+  {
+    "id": "fund-health-economics.fc.050",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What is the free-lunch zone of the Grossman PPF?",
+    "back": "A low-health region where an improvement in health releases enough sick time that both health and production of the home good can rise together."
+  },
+  {
+    "id": "fund-health-economics.fc.051",
+    "topic": "fund-health-economics.health-capital",
+    "front": "Why does the Grossman PPF eventually slope downward?",
+    "back": "At higher health levels, extra health investment yields smaller reductions in sick time, so improving health requires resources that could otherwise produce the home good."
+  },
+  {
+    "id": "fund-health-economics.fc.052",
+    "topic": "fund-health-economics.health-capital",
+    "front": "Where is the usual optimum when a person values both health H and home goods Z?",
+    "back": "On the downward-sloping trade-off part of the PPF, where the highest attainable indifference curve is tangent to the frontier."
+  },
+  {
+    "id": "fund-health-economics.fc.053",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What changes in the pure-investment version of the model?",
+    "back": "Direct utility from health is ignored; health is valuable because it creates productive time that can be used for work and other activities."
+  },
+  {
+    "id": "fund-health-economics.fc.054",
+    "topic": "fund-health-economics.health-capital",
+    "front": "How does the health stock evolve over time?",
+    "back": "Next-period health equals surviving current health plus gross health investment: H_t = (1 − δ_t)H_{t−1} + I_{t−1}."
+  },
+  {
+    "id": "fund-health-economics.fc.055",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What is the difference between gross and net investment in health?",
+    "back": "Gross investment is the chosen addition to health stock. Net investment is gross investment minus depreciation of the inherited health stock."
+  },
+  {
+    "id": "fund-health-economics.fc.056",
+    "topic": "fund-health-economics.health-capital",
+    "front": "When does health stock decline from one period to the next?",
+    "back": "When gross health investment is smaller than depreciation, so I_{t−1} < δ_t H_{t−1}."
+  },
+  {
+    "id": "fund-health-economics.fc.057",
+    "topic": "fund-health-economics.health-capital",
+    "front": "Which variables are stocks and which are flows in Session 3?",
+    "back": "Health capital H is a stock. Gross investment and the flow of healthy days are flows."
+  },
+  {
+    "id": "fund-health-economics.fc.058",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What does the MEC curve represent?",
+    "back": "The marginal efficiency of health capital: the return to an additional unit of health capital in terms of lifetime productive value or utility."
+  },
+  {
+    "id": "fund-health-economics.fc.059",
+    "topic": "fund-health-economics.health-capital",
+    "front": "Why is the MEC higher when health is low?",
+    "back": "At low health, small health improvements can release substantial productive time, so the return to additional health capital is high."
+  },
+  {
+    "id": "fund-health-economics.fc.060",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What determines the user cost of health capital in the pure-investment model?",
+    "back": "The opportunity cost of funds plus health depreciation, summarized in the lecture as r + δ."
+  },
+  {
+    "id": "fund-health-economics.fc.061",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What is the Grossman prediction for health and healthcare as people age?",
+    "back": "Optimal health falls as depreciation rises; the effect on healthcare demand is ambiguous because people desire less health but need more care to maintain any given stock."
+  },
+  {
+    "id": "fund-health-economics.fc.062",
+    "topic": "fund-health-economics.health-capital",
+    "front": "What is the Grossman prediction when wages rise?",
+    "back": "The return to healthy time rises, shifting the MEC to the right; optimal health and healthcare demand rise in the lecture's comparative statics."
+  },
+  {
+    "id": "fund-health-economics.fc.063",
+    "topic": "fund-health-economics.health-capital",
+    "front": "How does education affect health and healthcare demand in the lecture?",
+    "back": "Education improves the efficiency of producing health, increasing optimal health; healthcare demand is ambiguous because more health is desired but less care may be needed to produce each unit."
+  },
+  {
+    "id": "fund-health-economics.fc.064",
+    "topic": "fund-health-economics.health-capital",
+    "front": "How does a lower medical-care price affect equilibrium in the lecture?",
+    "back": "It lowers the cost of producing health, increasing optimal health and raising healthcare demand."
+  },
+  {
+    "id": "fund-health-economics.fc.065",
+    "topic": "fund-health-economics.disparities",
+    "front": "What is a health disparity in Session 4?",
+    "back": "A difference in health — such as incidence, prevalence, mortality or burden of disease — between specific populations."
+  },
+  {
+    "id": "fund-health-economics.fc.066",
+    "topic": "fund-health-economics.disparities",
+    "front": "What three broad causal directions does Session 4 consider?",
+    "back": "Direct causality from SES to health, reverse causality from health to SES, and third factors that influence both."
+  },
+  {
+    "id": "fund-health-economics.fc.067",
+    "topic": "fund-health-economics.disparities",
+    "front": "Why does causal direction matter for policy?",
+    "back": "Because the appropriate response depends on whether low SES causes poor health, poor health causes low SES, or a third factor generates both."
+  },
+  {
+    "id": "fund-health-economics.fc.068",
+    "topic": "fund-health-economics.disparities",
+    "front": "What is the efficient producer hypothesis?",
+    "back": "More-educated people are more efficient at producing health from available inputs, so the marginal cost of health investment is lower and optimal health can be higher."
+  },
+  {
+    "id": "fund-health-economics.fc.069",
+    "topic": "fund-health-economics.disparities",
+    "front": "Which mechanisms in the lecture may connect education to better health production?",
+    "back": "Prevention and risky behaviour, use of information, access to innovation, adherence and self-management."
+  },
+  {
+    "id": "fund-health-economics.fc.070",
+    "topic": "fund-health-economics.disparities",
+    "front": "What is the thrifty phenotype hypothesis?",
+    "back": "Early nutritional deprivation can produce lasting biological adaptations that may become harmful later when scarcity ends, contributing to adult disease."
+  },
+  {
+    "id": "fund-health-economics.fc.071",
+    "topic": "fund-health-economics.disparities",
+    "front": "Why are natural experiments useful for studying early-life health shocks?",
+    "back": "Randomly depriving fetuses or children would be unethical, so natural shocks can create treatment-like and comparison groups without deliberate assignment."
+  },
+  {
+    "id": "fund-health-economics.fc.072",
+    "topic": "fund-health-economics.disparities",
+    "front": "What role does the Dutch famine play in Session 4?",
+    "back": "It is presented as a natural experiment linking in-utero famine exposure with higher adult diabetes and obesity among those exposed."
+  },
+  {
+    "id": "fund-health-economics.fc.073",
+    "topic": "fund-health-economics.disparities",
+    "front": "What is the direct income hypothesis?",
+    "back": "Higher income may improve health because richer individuals have more financial resources and therefore an expanded feasible set for producing health."
+  },
+  {
+    "id": "fund-health-economics.fc.074",
+    "topic": "fund-health-economics.disparities",
+    "front": "What distinction does the lecture make between adults and children in the direct-income evidence?",
+    "back": "Causal evidence for income improving adult health in developed-country samples is weak or mixed, while parental income appears more protective for child health."
+  },
+  {
+    "id": "fund-health-economics.fc.075",
+    "topic": "fund-health-economics.disparities",
+    "front": "What is the allostatic load hypothesis?",
+    "back": "Repeated or prolonged stress can damage health and can be represented in the Grossman model as a higher rate of health-capital depreciation."
+  },
+  {
+    "id": "fund-health-economics.fc.076",
+    "topic": "fund-health-economics.disparities",
+    "front": "What is the main Whitehall pattern emphasized in the lecture?",
+    "back": "Lower-grade British civil servants had higher morbidity and mortality and reported more stressful work and home environments."
+  },
+  {
+    "id": "fund-health-economics.fc.077",
+    "topic": "fund-health-economics.disparities",
+    "front": "What is the income inequality hypothesis?",
+    "back": "Community health may worsen as income becomes more unequally distributed, potentially through social cohesion, stress or political mechanisms."
+  },
+  {
+    "id": "fund-health-economics.fc.078",
+    "topic": "fund-health-economics.disparities",
+    "front": "How does the lecture treat the causal evidence on income inequality?",
+    "back": "It presents associations and proposed mechanisms but stresses that the causal link remains unclear."
+  },
+  {
+    "id": "fund-health-economics.fc.079",
+    "topic": "fund-health-economics.disparities",
+    "front": "What is the productive time hypothesis?",
+    "back": "Poor health can reduce productive time, earnings and labour-force participation, causing lower socioeconomic status rather than only resulting from it."
+  },
+  {
+    "id": "fund-health-economics.fc.080",
+    "topic": "fund-health-economics.disparities",
+    "front": "How can childhood health affect adult SES under the productive-time hypothesis?",
+    "back": "Poor early health can reduce survival, educational attainment and later earnings, creating long-run socioeconomic consequences."
+  },
+  {
+    "id": "fund-health-economics.fc.081",
+    "topic": "fund-health-economics.disparities",
+    "front": "What is the Fuchs hypothesis?",
+    "back": "Time preference is a third factor: people more willing to delay gratification may invest more in both education and health, producing a positive SES–health association."
+  },
+  {
+    "id": "fund-health-economics.fc.082",
+    "topic": "fund-health-economics.disparities",
+    "front": "What does a high discount factor mean in the lecture's Fuchs discussion?",
+    "back": "Greater willingness to value future benefits and delay gratification."
+  },
+  {
+    "id": "fund-health-economics.fc.083",
+    "topic": "fund-health-economics.disparities",
+    "front": "What does Session 4 conclude about a single universal explanation for health disparities?",
+    "back": "No single theory explains all disparities; the lecture presents evidence supporting several mechanisms."
+  },
+  {
+    "id": "fund-health-economics.fc.084",
+    "topic": "fund-health-economics.disparities",
+    "front": "What long-run policy emphasis appears in the lecture's final takeaways?",
+    "back": "Supporting families with children and investing in education may address long-run health and socioeconomic disparities."
+  },
+  {
+    "id": "fund-health-economics.fc.085",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "Why can standard competitive-market models struggle to describe physician markets?",
+    "back": "Patients face costly search and imperfect information, physicians can have market power, prices can vary, and empirical responses of fees and quantities may not fit simple competitive predictions."
+  },
+  {
+    "id": "fund-health-economics.fc.086",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "Who is the principal and who is the agent in the physician–patient relationship?",
+    "back": "The patient is the principal and the physician is the agent hired to advise and provide care."
+  },
+  {
+    "id": "fund-health-economics.fc.087",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "Why does physician agency arise?",
+    "back": "The physician is better informed than the patient and may influence both the information the patient receives and the care demanded."
+  },
+  {
+    "id": "fund-health-economics.fc.088",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What is physician-induced demand (PID) in Session 5?",
+    "back": "Physician influence on a patient's demand for care that goes against the physician's own interpretation of the patient's best interest."
+  },
+  {
+    "id": "fund-health-economics.fc.089",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What is the difference between due and undue influence in the lecture?",
+    "back": "Influence can support the patient's interest, such as encouraging smoking cessation; PID refers to undue influence on demand."
+  },
+  {
+    "id": "fund-health-economics.fc.090",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "Why do economists model supplier-induced demand?",
+    "back": "To explain observed physician-market behaviour and to understand how physicians may respond to financial incentives and pricing rules."
+  },
+  {
+    "id": "fund-health-economics.fc.091",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What does the benchmark model assume physicians value?",
+    "back": "Net income and leisure positively, while disliking inducement of patient demand."
+  },
+  {
+    "id": "fund-health-economics.fc.092",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "Why can a non-zero level of inducement arise in the benchmark model?",
+    "back": "Inducement can increase income, but it creates disutility; the physician balances the two at the margin."
+  },
+  {
+    "id": "fund-health-economics.fc.093",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What is the substitution effect when the profit rate from services falls?",
+    "back": "Inducement becomes less profitable, creating an incentive to induce less."
+  },
+  {
+    "id": "fund-health-economics.fc.094",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What is the income effect when the profit rate falls?",
+    "back": "Lower income can make additional inducement more attractive as a way to restore income."
+  },
+  {
+    "id": "fund-health-economics.fc.095",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What determines the direction of inducement after a lower profit rate in the McGuire–Pauly synthesis?",
+    "back": "The relative strength of the substitution and income effects."
+  },
+  {
+    "id": "fund-health-economics.fc.096",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What happens if the income effect dominates the substitution effect?",
+    "back": "A lower profit rate can increase inducement and therefore quantity."
+  },
+  {
+    "id": "fund-health-economics.fc.097",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What role does professional ethics play in PID models?",
+    "back": "Stronger aversion to inducing care makes inducement more costly to the physician and can limit the response to financial incentives."
+  },
+  {
+    "id": "fund-health-economics.fc.098",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What does Session 5 say about empirical evidence on PID?",
+    "back": "The evidence is mixed, but the lecture presents a broad consensus that inducement is not literally zero."
+  },
+  {
+    "id": "fund-health-economics.fc.099",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "Why do PID tests not tell us the absolute original level of inducement?",
+    "back": "They often test how behaviour changes after an income or fee shock, not how much inducement already existed before the change."
+  },
+  {
+    "id": "fund-health-economics.fc.100",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "Which pure payment methods are listed in Session 5?",
+    "back": "Fee-for-service, capitation and salary."
+  },
+  {
+    "id": "fund-health-economics.fc.101",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "Which blended payment methods are listed in Session 5?",
+    "back": "Capitation with fee-for-service carve-outs and case rates."
+  },
+  {
+    "id": "fund-health-economics.fc.102",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What is the main incentive difference between fee-for-service and capitation in the lecture's policy discussion?",
+    "back": "Fee-for-service is a higher-powered activity incentive, while capitation is lower-powered with respect to the number of services delivered."
+  },
+  {
+    "id": "fund-health-economics.fc.103",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What is small-area variation (SAV)?",
+    "back": "Substantial geographic variation in treatment or procedure rates across nearby populations that cannot be fully explained by measured demand or supply characteristics."
+  },
+  {
+    "id": "fund-health-economics.fc.104",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What does the practice-style hypothesis propose?",
+    "back": "Physicians develop different practice styles because knowledge about diagnosis and treatment is incomplete and medical information diffuses unevenly."
+  },
+  {
+    "id": "fund-health-economics.fc.105",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What is the 'grey area of medicine' in Session 5?",
+    "back": "Clinical decisions where evidence and guidelines leave room for discretion, with clear appropriate and inappropriate cases forming only small tails."
+  },
+  {
+    "id": "fund-health-economics.fc.106",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What do the SAV conclusions imply about physicians as agents?",
+    "back": "Physicians may be imperfect agents not only because of self-interest but also because they can be incompletely informed."
   }
 ]

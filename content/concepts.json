@@ -4,9 +4,8 @@
     "term": "Derived demand",
     "explanation": "A demand for something that is wanted for what it produces, not for itself. Health care is wanted because it helps produce health.",
     "topics": [
-      "fund-health-economics.demand"
-    ],
-    "sample": true
+      "fund-health-economics.health-capital"
+    ]
   },
   {
     "id": "concept.price-elasticity",
@@ -14,8 +13,7 @@
     "explanation": "How strongly the quantity demanded reacts to a change in price: the % change in quantity divided by the % change in price.",
     "topics": [
       "fund-health-economics.demand"
-    ],
-    "sample": true
+    ]
   },
   {
     "id": "concept.moral-hazard",
@@ -138,6 +136,345 @@
     "explanation": "A framework linking the three central actors in healthcare: patient, provider and insurer/government.",
     "topics": [
       "fund-health-economics.session-1"
+    ]
+  },
+  {
+    "id": "concept.demand-curve",
+    "term": "Demand curve",
+    "explanation": "A relationship showing how much of a good or service consumers are willing and able to buy at each price, holding other determinants constant.",
+    "topics": [
+      "fund-health-economics.demand"
+    ]
+  },
+  {
+    "id": "concept.willingness-to-pay",
+    "term": "Willingness to pay",
+    "explanation": "The maximum amount a buyer is willing to pay for a good or service, used as a measure of how much the buyer values it.",
+    "topics": [
+      "fund-health-economics.demand"
+    ]
+  },
+  {
+    "id": "concept.consumer-surplus",
+    "term": "Consumer surplus",
+    "explanation": "The buyer's willingness to pay minus the amount actually paid.",
+    "topics": [
+      "fund-health-economics.demand"
+    ]
+  },
+  {
+    "id": "concept.arc-elasticity",
+    "term": "Arc elasticity",
+    "explanation": "A midpoint-based elasticity measure between two price-quantity points, useful for comparing responsiveness without depending on the units used.",
+    "topics": [
+      "fund-health-economics.demand"
+    ]
+  },
+  {
+    "id": "concept.randomized-experiment",
+    "term": "Randomized experiment",
+    "explanation": "A study that randomly assigns participants to different conditions so the groups are comparable on average before treatment.",
+    "topics": [
+      "fund-health-economics.demand"
+    ]
+  },
+  {
+    "id": "concept.full-price",
+    "term": "Full price",
+    "explanation": "The monetary price of care plus other costs borne by the patient, including travel costs and the opportunity cost of time.",
+    "topics": [
+      "fund-health-economics.demand"
+    ]
+  },
+  {
+    "id": "concept.fixed-indemnity",
+    "term": "Fixed indemnity",
+    "explanation": "An insurance payment that contributes a fixed amount for a covered service, leaving the patient responsible for the remaining price.",
+    "topics": [
+      "fund-health-economics.demand"
+    ]
+  },
+  {
+    "id": "concept.coinsurance",
+    "term": "Coinsurance",
+    "explanation": "The fraction of the healthcare bill paid by the patient, with the insurer paying the rest.",
+    "topics": [
+      "fund-health-economics.demand",
+      "fund-health-economics.moral-hazard"
+    ]
+  },
+  {
+    "id": "concept.copayment",
+    "term": "Copayment",
+    "explanation": "A fixed amount paid by the patient each time a covered healthcare service is used.",
+    "topics": [
+      "fund-health-economics.demand",
+      "fund-health-economics.moral-hazard"
+    ]
+  },
+  {
+    "id": "concept.deductible",
+    "term": "Deductible",
+    "explanation": "An amount the patient pays toward medical bills before insurance reimbursement begins.",
+    "topics": [
+      "fund-health-economics.demand",
+      "fund-health-economics.moral-hazard"
+    ]
+  },
+  {
+    "id": "concept.health-capital",
+    "term": "Health capital",
+    "explanation": "A stock representing an individual's level of health or functioning that persists over time and produces a flow of healthy or productive time.",
+    "topics": [
+      "fund-health-economics.health-capital"
+    ]
+  },
+  {
+    "id": "concept.home-good",
+    "term": "Home good (Z)",
+    "explanation": "Everything other than health that contributes to utility in the Grossman framework and is produced using time and market goods.",
+    "topics": [
+      "fund-health-economics.health-capital"
+    ]
+  },
+  {
+    "id": "concept.free-lunch-zone",
+    "term": "Free-lunch zone",
+    "explanation": "The low-health part of the Grossman production possibility frontier where better health releases enough sick time that health and home production can increase together.",
+    "topics": [
+      "fund-health-economics.health-capital"
+    ]
+  },
+  {
+    "id": "concept.gross-health-investment",
+    "term": "Gross health investment",
+    "explanation": "The chosen addition to health capital during a period, denoted I in the health-stock equation.",
+    "topics": [
+      "fund-health-economics.health-capital"
+    ]
+  },
+  {
+    "id": "concept.health-depreciation",
+    "term": "Health depreciation",
+    "explanation": "The deterioration of inherited health capital during a period, represented by the depreciation rate δ.",
+    "topics": [
+      "fund-health-economics.health-capital"
+    ]
+  },
+  {
+    "id": "concept.net-health-investment",
+    "term": "Net health investment",
+    "explanation": "Gross health investment minus depreciation. It can be negative even though gross investment itself cannot be negative.",
+    "topics": [
+      "fund-health-economics.health-capital"
+    ]
+  },
+  {
+    "id": "concept.mec-health",
+    "term": "Marginal efficiency of health capital",
+    "explanation": "The return to an additional unit of health capital; in the lecture the MEC is high at low health and declines as health improves.",
+    "topics": [
+      "fund-health-economics.health-capital"
+    ]
+  },
+  {
+    "id": "concept.productive-time",
+    "term": "Productive time",
+    "explanation": "Healthy time available for work, home production and health-producing activities after time lost to illness.",
+    "topics": [
+      "fund-health-economics.health-capital"
+    ]
+  },
+  {
+    "id": "concept.pure-investment-health",
+    "term": "Pure-investment view of health",
+    "explanation": "A Grossman-model case where health is valued only for the productive time it generates, not for direct utility from being healthy.",
+    "topics": [
+      "fund-health-economics.health-capital"
+    ]
+  },
+  {
+    "id": "concept.healthcare-vs-health-demand",
+    "term": "Demand for health vs demand for healthcare",
+    "explanation": "Health is the desired stock or outcome; healthcare is one input used to produce it. Comparative statics can therefore affect the two demands differently.",
+    "topics": [
+      "fund-health-economics.health-capital"
+    ]
+  },
+  {
+    "id": "concept.health-disparity",
+    "term": "Health disparity",
+    "explanation": "A difference in health — including incidence, prevalence, mortality or burden of disease — between specific populations.",
+    "topics": [
+      "fund-health-economics.disparities"
+    ]
+  },
+  {
+    "id": "concept.ses-health-gradient",
+    "term": "Socioeconomic health gradient",
+    "explanation": "A systematic relationship in which health differs across socioeconomic position such as education, income or occupational rank.",
+    "topics": [
+      "fund-health-economics.disparities"
+    ]
+  },
+  {
+    "id": "concept.efficient-producer",
+    "term": "Efficient producer hypothesis",
+    "explanation": "The idea that education can improve the efficiency with which people turn time, information and healthcare inputs into health.",
+    "topics": [
+      "fund-health-economics.disparities"
+    ]
+  },
+  {
+    "id": "concept.thrifty-phenotype",
+    "term": "Thrifty phenotype hypothesis",
+    "explanation": "The idea that nutritional deprivation in utero or early life can create lasting biological adaptations that increase later disease risk when the environment changes.",
+    "topics": [
+      "fund-health-economics.disparities"
+    ]
+  },
+  {
+    "id": "concept.natural-experiment",
+    "term": "Natural experiment",
+    "explanation": "A naturally occurring event or policy shock that creates comparison groups and can help study causal effects when deliberate randomization is impossible or unethical.",
+    "topics": [
+      "fund-health-economics.disparities"
+    ]
+  },
+  {
+    "id": "concept.direct-income-hypothesis",
+    "term": "Direct income hypothesis",
+    "explanation": "The hypothesis that higher income improves health by expanding the resources available for health production.",
+    "topics": [
+      "fund-health-economics.disparities"
+    ]
+  },
+  {
+    "id": "concept.allostatic-load",
+    "term": "Allostatic load",
+    "explanation": "Cumulative physiological wear from prolonged or repeated stress; Session 4 links it to a higher depreciation rate of health capital.",
+    "topics": [
+      "fund-health-economics.disparities"
+    ]
+  },
+  {
+    "id": "concept.income-inequality-hypothesis",
+    "term": "Income inequality hypothesis",
+    "explanation": "The hypothesis that community health worsens as income becomes more unequally distributed, potentially through stress, social cohesion or political mechanisms.",
+    "topics": [
+      "fund-health-economics.disparities"
+    ]
+  },
+  {
+    "id": "concept.productive-time-hypothesis",
+    "term": "Productive time hypothesis",
+    "explanation": "A reverse-causality theory in which poor health reduces productive time, earnings and labour-force participation, thereby lowering socioeconomic status.",
+    "topics": [
+      "fund-health-economics.disparities"
+    ]
+  },
+  {
+    "id": "concept.fuchs-hypothesis",
+    "term": "Fuchs hypothesis",
+    "explanation": "A third-factor explanation in which time preference influences both investment in education and investment in health.",
+    "topics": [
+      "fund-health-economics.disparities"
+    ]
+  },
+  {
+    "id": "concept.time-preference",
+    "term": "Time preference",
+    "explanation": "How strongly a person values present benefits relative to future benefits; greater willingness to delay gratification can encourage long-term investment.",
+    "topics": [
+      "fund-health-economics.disparities"
+    ]
+  },
+  {
+    "id": "concept.physician-agency",
+    "term": "Physician agency",
+    "explanation": "The principal–agent relationship in which the patient relies on a better-informed physician for advice and care.",
+    "topics": [
+      "fund-health-economics.physician-agency"
+    ]
+  },
+  {
+    "id": "concept.physician-induced-demand",
+    "term": "Physician-induced demand",
+    "explanation": "Physician influence on patient demand for care that conflicts with the physician's own interpretation of the patient's best interest.",
+    "topics": [
+      "fund-health-economics.physician-agency"
+    ]
+  },
+  {
+    "id": "concept.income-effect-pid",
+    "term": "Income effect in PID",
+    "explanation": "The tendency for a fall in physician income to make additional inducement more attractive as a way to restore income.",
+    "topics": [
+      "fund-health-economics.physician-agency"
+    ]
+  },
+  {
+    "id": "concept.substitution-effect-pid",
+    "term": "Substitution effect in PID",
+    "explanation": "The tendency for a lower profit rate to make inducement less financially attractive, pushing the physician away from inducement.",
+    "topics": [
+      "fund-health-economics.physician-agency"
+    ]
+  },
+  {
+    "id": "concept.fee-for-service",
+    "term": "Fee-for-service",
+    "explanation": "A payment method that pays the provider for each service delivered.",
+    "topics": [
+      "fund-health-economics.physician-agency"
+    ]
+  },
+  {
+    "id": "concept.capitation",
+    "term": "Capitation",
+    "explanation": "A payment method that pays a fixed amount per enrolled patient over a period rather than paying separately for every service.",
+    "topics": [
+      "fund-health-economics.physician-agency"
+    ]
+  },
+  {
+    "id": "concept.salary-physician",
+    "term": "Salary",
+    "explanation": "A physician payment method based primarily on fixed remuneration rather than service volume.",
+    "topics": [
+      "fund-health-economics.physician-agency"
+    ]
+  },
+  {
+    "id": "concept.blended-payment",
+    "term": "Blended payment",
+    "explanation": "A physician payment arrangement combining features of more than one payment method, such as capitation with fee-for-service carve-outs.",
+    "topics": [
+      "fund-health-economics.physician-agency"
+    ]
+  },
+  {
+    "id": "concept.small-area-variation",
+    "term": "Small-area variation",
+    "explanation": "Geographic variation in healthcare treatment or procedure rates across relatively small areas that is not fully explained by measured population needs.",
+    "topics": [
+      "fund-health-economics.physician-agency"
+    ]
+  },
+  {
+    "id": "concept.practice-style",
+    "term": "Practice style",
+    "explanation": "A pattern of diagnostic and treatment choices shaped by physician beliefs, uncertainty and uneven diffusion of medical information.",
+    "topics": [
+      "fund-health-economics.physician-agency"
+    ]
+  },
+  {
+    "id": "concept.clinical-grey-area",
+    "term": "Clinical grey area",
+    "explanation": "A region of medical decision-making where evidence and guidance leave room for discretion and patient-specific judgement.",
+    "topics": [
+      "fund-health-economics.physician-agency"
     ]
   }
 ]

@@ -19,6 +19,7 @@ const SITE_MENU = [
       { key: "studyplan", label: "Study Plan", href: "studyplan.html", icon: "study-plan", desc: "Your courses and CFU" },
       { key: "calendar", label: "Calendar & key dates", href: "calendar.html", icon: "calendar", desc: "Subscribe on your phone" },
       { key: "tracks", label: "Tracks Explorer", href: "tracks.html", icon: "route", desc: "Compare the four specialisations" },
+      { key: "universities", label: "Universities", href: "universities.html", icon: "library", desc: "Our four partner universities" },
       { key: "academic-rules", label: "Academic Rules", href: "academic-rules.html", icon: "scale", desc: "Re-sits, grades, plagiarism and AI" },
       { key: "journey", label: "Programme Journey", href: "journey.html", icon: "graduation", desc: "Your two years, degree, grants, fees" },
     ],
@@ -35,6 +36,7 @@ const SITE_MENU = [
     label: "Community",
     items: [
       { key: "students", label: "Students & cohort map", href: "students.html", icon: "students", desc: "Meet the people behind EU-HEM" },
+      { key: "experiences", label: "Student Experiences", href: "experiences.html", icon: "notes", desc: "Advice from students and graduates" },
       { key: "join", label: "Join the Directory", href: "join.html", icon: "plus", desc: "Your profile, your privacy choices" },
       { key: "announcements", label: "Announcements", href: "announcements.html", icon: "announcements", desc: "News for the cohort" },
     ],

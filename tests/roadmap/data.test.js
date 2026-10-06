@@ -36,17 +36,14 @@ t("Next: four dated plans (Oct → Nov → Nov–Dec), the rest After launch", (
   assert.deepStrictEqual(ids("October 2026"), ["beta-feedback-improvements", "domain-admin-dashboard"]);
   assert.deepStrictEqual(ids("November 2026"), ["mobility-checklists"]);
   assert.deepStrictEqual(ids("November–December 2026"), ["student-accounts-cohort-profiles"]);
-  assert.deepStrictEqual(ids("After launch").sort(), ["beyond-euhem-opportunities", "expanded-notes-interactive-lessons",
-    "expanded-practice-bank", "partner-university-guides", "student-stories-experiences"]);
+  assert.deepStrictEqual(ids("After launch").sort(), ["beyond-euhem-opportunities", "expanded-notes-interactive-lessons", "expanded-practice-bank"]);
   assert.ok(roadmap.items.filter((i) => i.lane === "next" && i.target).length <= R.MAX_DATED_NEXT);
   const beyond = roadmap.items.find((i) => i.id === "beyond-euhem-opportunities");
   const text = JSON.stringify(beyond).toLowerCase();
   for (const word of ["jobs", "internships", "research", "career preparation", "phd"]) assert.ok(text.includes(word), word);
 });
-t("Student experiences describe sources, contributions, questions, review, privacy and later filtering", () => {
-  const text = JSON.stringify(roadmap.items.find((i) => i.id === "student-stories-experiences")).toLowerCase();
-  for (const word of ["partner universities", "second-year", "alumni", "submit", "housing", "costs", "career impact",
-    "what they would do differently", "review", "name, photo and contact", "filter"]) assert.ok(text.includes(word), word);
+t("shipped features are no longer listed as plans (Student Experiences, the Universities hub)", () => {
+  for (const id of ["student-stories-experiences", "partner-university-guides"]) assert.ok(!roadmap.items.some((i) => i.id === id), id);
 });
 t("Later: ideas without dates, including trips and the Student Digital Toolkit", () => {
   const later = roadmap.items.filter((i) => i.lane === "later");
@@ -112,7 +109,7 @@ t("versions: every release has one, by release day; the newest first for the fil
   assert.deepStrictEqual(Object.fromEntries(Object.entries(byDay).map(([d, v]) => [d, [...v]])),
     { "2026-10-06": ["v0.9"], "2026-10-05": ["v0.5"], "2026-10-04": ["v0.4"], "2026-10-03": ["v0.3"], "2026-10-01": ["v0.1"] });
   assert.deepStrictEqual(R.updateVersions(updates), ["v0.9", "v0.5", "v0.4", "v0.3", "v0.1"]);
-  const u = clone(updates); delete u.items[0].version; fails(roadmap, u, /needs a version/);
+  const u = clone(updates); delete u.items.find((i) => i.status === "published").version; fails(roadmap, u, /needs a version/);
 });
 t("milestones: the cohort beta is still planned (9 Oct), the public launch planned for 15 Oct", () => {
   const ms = Object.fromEntries(roadmap.milestones.map((m) => [m.id, [m.date, m.status]]));
@@ -163,7 +160,7 @@ t("ids are unique slugs; statuses fit their stage; Later has no dates; Next need
   const dated = clone(roadmap); dated.items.find((i) => i.lane === "later").target = { start: "2027-01", end: "2027-01", label: "Jan" }; fails(dated, updates, /no target/);
   const order = clone(roadmap); order.items[1].target.start = "2026-12"; fails(order, updates, /start ≤ end/);
   const threeNow = clone(roadmap); threeNow.items[2].lane = "now"; threeNow.items[2].status = "in-progress"; fails(threeNow, updates, /Now must have one or 2 items/);
-  const fiveDated = clone(roadmap); fiveDated.items.find((i) => i.id === "partner-university-guides").target = { start: "2026-11", end: "2026-11", label: "November 2026" };
+  const fiveDated = clone(roadmap); fiveDated.items.find((i) => i.id === "expanded-practice-bank").target = { start: "2026-11", end: "2026-11", label: "November 2026" };
   fails(fiveDated, updates, /at most 4 Next items may have a date/);
   const nowNoDate = clone(roadmap); nowNoDate.items[0].target = null; fails(nowNoDate, updates, /Now item needs a target/);
 });
@@ -190,9 +187,9 @@ t("search entries: plans lead with their status and say 'not available yet'; rel
   assert.ok(entries.every((e) => /^roadmap\.html#(feature|update)-[a-z0-9-]+$/.test(e.url)));
 });
 t("search matching is case- and accent-insensitive and needs every word", () => {
-  const item = roadmap.items.find((i) => i.id === "student-stories-experiences");
-  assert.ok(R.matchesQuery(item, "STUDENT expériences"));
-  assert.ok(!R.matchesQuery(item, "student zebra"));
+  const item = roadmap.items.find((i) => i.id === "mobility-checklists");
+  assert.ok(R.matchesQuery(item, "MOBILITY chécklists"));
+  assert.ok(!R.matchesQuery(item, "mobility zebra"));
 });
 
 /* ----- the helper script (on a copy; publishing needs GitHub and is not run here) ----- */

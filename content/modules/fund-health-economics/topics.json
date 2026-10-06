@@ -15,16 +15,27 @@
   },
   {
     "id": "fund-health-economics.demand",
-    "title": "Demand for health care",
-    "notes": "notes/demand.md"
+    "title": "Session 2: Healthcare Demand",
+    "notes": "notes/demand.md",
+    "lecture": "lectures/session-2.json"
   },
   {
     "id": "fund-health-economics.health-capital",
-    "title": "Health capital and health inequalities"
+    "title": "Session 3: Health Capital and the Demand for Health",
+    "notes": "notes/health-capital.md",
+    "lecture": "lectures/session-3.json"
+  },
+  {
+    "id": "fund-health-economics.disparities",
+    "title": "Session 4: Socio-economic Disparities in Health",
+    "notes": "notes/disparities.md",
+    "lecture": "lectures/session-4.json"
   },
   {
     "id": "fund-health-economics.physician-agency",
-    "title": "Physician agency and supplier-induced demand"
+    "title": "Session 5: Physician Agency",
+    "notes": "notes/physician-agency.md",
+    "lecture": "lectures/session-5.json"
   },
   {
     "id": "fund-health-economics.insurance-demand",

@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "topic": "fund-health-economics.physician-agency",
+  "updated": "2026-10-06",
+  "heroTitle": "More informed.\nNot always a perfect agent.",
+  "intro": "Study why physician markets differ from simple competitive markets, how physician-induced demand can arise, how income and substitution effects interact, and why payment incentives and practice styles matter.",
+  "guide": "lectures/session-5.html",
+  "activities": ["agency-map", "pid-forces", "physician-payment", "practice-variation"],
+  "attribution": "Independent student-written study guide based on Daniele Fabbri’s Fundamentals in Health Economics, Session 5: Physician Agency, University of Bologna. Official slides and assigned readings are not reproduced. Always check Virtuale for the official materials."
+}

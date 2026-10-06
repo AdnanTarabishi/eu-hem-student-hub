@@ -1,0 +1,510 @@
+{
+  "schemaVersion": 1,
+  "nodes": [
+    {
+      "id": "concept-1",
+      "title": "Probability foundations",
+      "description": "Define the population, sample space and events before assigning probabilities.",
+      "topic": "statistics.risk-uncertainty",
+      "section": 2,
+      "prerequisites": []
+    },
+    {
+      "id": "concept-2",
+      "title": "Conditional probability",
+      "description": "A condition changes the reference group. Bayes’ rule reverses a diagnostic question.",
+      "topic": "statistics.probability",
+      "section": 3,
+      "prerequisites": ["concept-1"]
+    },
+    {
+      "id": "concept-3",
+      "title": "Random variables & distributions",
+      "description": "A probability model describes possible values. Continuous probabilities are areas.",
+      "topic": "statistics.random-variables",
+      "section": 3,
+      "prerequisites": ["concept-2"]
+    },
+    {
+      "id": "concept-4",
+      "title": "Design & description",
+      "description": "Sampling and treatment assignment answer different questions. Describe location and spread.",
+      "topic": "statistics.descriptive",
+      "section": 1,
+      "prerequisites": ["concept-1"]
+    },
+    {
+      "id": "concept-5",
+      "title": "Sampling & confidence intervals",
+      "description": "A statistic varies between samples. Its standard error measures precision.",
+      "topic": "statistics.sampling",
+      "section": 3,
+      "prerequisites": ["concept-3", "concept-4"]
+    },
+    {
+      "id": "concept-6",
+      "title": "Hypothesis testing",
+      "description": "Compare a statistic to a null value using its sampling distribution and stated assumptions.",
+      "topic": "statistics.inference",
+      "section": 4,
+      "prerequisites": ["concept-5"]
+    }
+  ],
+  "formulas": [
+    {
+      "id": "union",
+      "title": "Union of events",
+      "expression": "P(A ∪ B) = P(A) + P(B) − P(A ∩ B)",
+      "purpose": "Find the probability of A or B, including their overlap.",
+      "assumptions": "A and B belong to the same probability model.",
+      "topic": "statistics.risk-uncertainty",
+      "section": 5
+    },
+    {
+      "id": "conditional",
+      "title": "Conditional probability",
+      "expression": "P(A | B) = P(A ∩ B) / P(B)",
+      "purpose": "Restrict attention to the group where B occurs.",
+      "assumptions": "P(B) must be greater than zero.",
+      "topic": "statistics.probability",
+      "section": 1
+    },
+    {
+      "id": "bayes",
+      "title": "Bayes and positive predictive value",
+      "expression": "PPV = sensitivity × prevalence / [sensitivity × prevalence + (1 − specificity) × (1 − prevalence)]",
+      "purpose": "Find the probability of disease given a positive test.",
+      "assumptions": "Use sensitivity, specificity and prevalence for the same target population.",
+      "topic": "statistics.probability",
+      "section": 3
+    },
+    {
+      "id": "binomial",
+      "title": "Binomial probability",
+      "expression": "P(X = k) = C(n,k) pᵏ (1 − p)ⁿ⁻ᵏ",
+      "purpose": "Count successes among n trials.",
+      "assumptions": "Fixed n, independent trials, two outcomes and the same p in every trial.",
+      "topic": "statistics.probability",
+      "section": 6
+    },
+    {
+      "id": "z",
+      "title": "Standardisation",
+      "expression": "z = (x − μ) / σ",
+      "purpose": "Locate a value in standard deviations from the mean.",
+      "assumptions": "σ > 0. Normal probabilities require a normal model for X.",
+      "topic": "statistics.random-variables",
+      "section": 3
+    },
+    {
+      "id": "normal-tail",
+      "title": "Normal tail",
+      "expression": "P(X > x) = 1 − Φ((x − μ) / σ)",
+      "purpose": "Convert a normal measurement to an upper-tail probability.",
+      "assumptions": "X follows the specified normal distribution.",
+      "topic": "statistics.random-variables",
+      "section": 4
+    },
+    {
+      "id": "uniform",
+      "title": "Uniform interval",
+      "expression": "P(c ≤ X ≤ d) = (d − c) / (b − a)",
+      "purpose": "Compute interval probability in a uniform distribution on [a,b].",
+      "assumptions": "a ≤ c ≤ d ≤ b and b > a.",
+      "topic": "statistics.random-variables",
+      "section": 2
+    },
+    {
+      "id": "variance",
+      "title": "Sample variance",
+      "expression": "s² = Σ(xᵢ − x̄)² / (n − 1)",
+      "purpose": "Describe squared spread around the sample mean.",
+      "assumptions": "n > 1; the unbiasedness interpretation uses an independent random sample.",
+      "topic": "statistics.descriptive",
+      "section": 5
+    },
+    {
+      "id": "se",
+      "title": "Standard error of a mean",
+      "expression": "SE(x̄) = σ / √n; estimated SE = s / √n",
+      "purpose": "Describe the spread of sample means, rather than individual observations.",
+      "assumptions": "Independent identically distributed observations with finite variance. Sampling without replacement may need a finite-population correction.",
+      "topic": "statistics.sampling",
+      "section": 3
+    },
+    {
+      "id": "ci-z",
+      "title": "Known-SD confidence interval",
+      "expression": "x̄ ± z(1 − α/2) × σ / √n",
+      "purpose": "Construct a two-sided confidence interval for a population mean.",
+      "assumptions": "Known σ, independent random sample and a normal or approximately normal sampling distribution.",
+      "topic": "statistics.sampling",
+      "section": 6
+    },
+    {
+      "id": "test-z",
+      "title": "Known-SD z test",
+      "expression": "z = (x̄ − μ₀) / (σ / √n)",
+      "purpose": "Measure distance from the null mean in standard errors.",
+      "assumptions": "Known σ, independent random sample and a normal or approximately normal sampling distribution.",
+      "topic": "statistics.inference",
+      "section": 2
+    },
+    {
+      "id": "test-t",
+      "title": "One-sample t test",
+      "expression": "t = (x̄ − μ₀) / (s / √n), df = n − 1",
+      "purpose": "Test a population mean when σ is unknown.",
+      "assumptions": "Independent random sample; normal population for exact small-sample t inference. Check outliers and skew.",
+      "topic": "statistics.inference",
+      "section": 3
+    },
+    {
+      "id": "ci-t",
+      "title": "Unknown-SD confidence interval",
+      "expression": "x̄ ± t(1 − α/2, n − 1) × s / √n",
+      "purpose": "Account for estimating σ when making an interval.",
+      "assumptions": "Same assumptions as the one-sample t test.",
+      "topic": "statistics.inference",
+      "section": 5
+    },
+    {
+      "id": "p-value",
+      "title": "Two-sided p-value",
+      "expression": "p = P(|T| ≥ |t observed| under H₀)",
+      "purpose": "Quantify the extremeness of the result under the null model.",
+      "assumptions": "Specify the test and model first. This is not P(H₀ is true).",
+      "topic": "statistics.inference",
+      "section": 4
+    }
+  ],
+  "calculations": [
+    {
+      "id": "union",
+      "title": "Combine overlapping events",
+      "kind": "union",
+      "topic": "statistics.risk-uncertainty",
+      "section": 5,
+      "hint": "Add the two event probabilities, then subtract the overlap once.",
+      "variants": [
+        {
+          "a": 0.4,
+          "b": 0.3,
+          "overlap": 0.1
+        },
+        {
+          "a": 0.65,
+          "b": 0.25,
+          "overlap": 0.15
+        }
+      ]
+    },
+    {
+      "id": "se",
+      "title": "Precision of a sample mean",
+      "kind": "se",
+      "topic": "statistics.sampling",
+      "section": 3,
+      "hint": "Divide the individual SD by the square root of the sample size.",
+      "variants": [
+        {
+          "sd": 20,
+          "n": 100
+        },
+        {
+          "sd": 12,
+          "n": 36
+        }
+      ]
+    },
+    {
+      "id": "ci",
+      "title": "A known-SD confidence interval",
+      "kind": "ci",
+      "topic": "statistics.sampling",
+      "section": 6,
+      "hint": "Calculate SE first. Multiply it by the 95% z critical value, then add and subtract the margin.",
+      "variants": [
+        {
+          "mean": 70,
+          "sd": 20,
+          "n": 100
+        },
+        {
+          "mean": 120,
+          "sd": 15,
+          "n": 25
+        }
+      ]
+    },
+    {
+      "id": "ppv",
+      "title": "A positive diagnostic test",
+      "kind": "ppv",
+      "topic": "statistics.probability",
+      "section": 3,
+      "hint": "Separate true positives from false positives. Divide true positives by all positive tests.",
+      "variants": [
+        {
+          "prevalence": 0.2,
+          "sensitivity": 0.75,
+          "specificity": 0.9
+        },
+        {
+          "prevalence": 0.1,
+          "sensitivity": 0.9,
+          "specificity": 0.95
+        }
+      ]
+    },
+    {
+      "id": "binomial",
+      "title": "Count successes",
+      "kind": "binomial",
+      "topic": "statistics.probability",
+      "section": 6,
+      "hint": "Use the binomial mass at k; check fixed n, independent trials and constant p.",
+      "variants": [
+        {
+          "n": 5,
+          "p": 0.2,
+          "k": 2
+        },
+        {
+          "n": 4,
+          "p": 0.5,
+          "k": 1
+        }
+      ]
+    },
+    {
+      "id": "normal",
+      "title": "An upper normal tail",
+      "kind": "normal",
+      "topic": "statistics.random-variables",
+      "section": 4,
+      "hint": "Standardise the boundary, then subtract the standard normal CDF from one.",
+      "variants": [
+        {
+          "mean": 100,
+          "sd": 15,
+          "x": 130
+        },
+        {
+          "mean": 70,
+          "sd": 10,
+          "x": 80
+        }
+      ]
+    },
+    {
+      "id": "variance",
+      "title": "Sample spread",
+      "kind": "variance",
+      "topic": "statistics.descriptive",
+      "section": 5,
+      "hint": "Find the sample mean, sum squared deviations and divide by n − 1.",
+      "variants": [
+        {
+          "values": [2, 4, 6]
+        },
+        {
+          "values": [1, 3, 5, 7]
+        }
+      ]
+    },
+    {
+      "id": "t-test",
+      "title": "An unknown-SD test",
+      "kind": "t",
+      "topic": "statistics.inference",
+      "section": 3,
+      "hint": "Use s/√n in the denominator and n − 1 degrees of freedom. Keep the sign of the difference.",
+      "variants": [
+        {
+          "mean": 5,
+          "nullMean": 7,
+          "sd": 3,
+          "n": 20
+        },
+        {
+          "mean": 12,
+          "nullMean": 10,
+          "sd": 4,
+          "n": 16
+        }
+      ]
+    },
+    {
+      "id": "z-test",
+      "title": "A known-SD test",
+      "kind": "z",
+      "topic": "statistics.inference",
+      "section": 2,
+      "hint": "Use the known population SD, not an estimated t distribution.",
+      "variants": [
+        {
+          "mean": 102,
+          "nullMean": 100,
+          "sd": 10,
+          "n": 100
+        },
+        {
+          "mean": 48,
+          "nullMean": 50,
+          "sd": 8,
+          "n": 64
+        }
+      ]
+    }
+  ],
+  "interpretations": [
+    {
+      "id": "population",
+      "title": "Name the target population",
+      "prompt": "A random sample of 100 children living in Bologna has an average weight of 28 kg. Define the population, sample, estimand and estimate. Explain one limit on generalisation.",
+      "model": "The population is all children living in Bologna, and the sample is the 100 selected children. The estimand is the population mean weight; 28 kg is the sample estimate. The sampling method and coverage matter for generalising to Bologna children. This sample does not automatically represent all children in Italy.",
+      "rubric": [
+        "Separates the population from the sample",
+        "Names the population mean as the estimand and 28 kg as the estimate",
+        "Limits generalisation to the intended population and sampling assumptions"
+      ],
+      "topic": "statistics.risk-uncertainty",
+      "section": 2
+    },
+    {
+      "id": "ppv",
+      "title": "Explain a positive result",
+      "prompt": "In a hypothetical population, prevalence is 20%, sensitivity 75% and specificity 90%. A positive test has PPV ≈ 65.2%. Explain this to a non-specialist.",
+      "model": "Among people with a positive result in this population, about 65 in 100 would have the condition. A positive test is not certain disease. This probability depends on the population prevalence, as well as the test sensitivity and specificity.",
+      "rubric": [
+        "Uses positive tests as the reference group",
+        "States approximately 65 in 100",
+        "Explains uncertainty and the role of prevalence"
+      ],
+      "topic": "statistics.probability",
+      "section": 3
+    },
+    {
+      "id": "normal",
+      "title": "Describe an extreme observation",
+      "prompt": "A normal model has mean 100 and SD 15. About 2.28% exceed 130. Explain what this statement does and does not say.",
+      "model": "Under this normal model, about 2.28 in 100 observations exceed 130. The statement describes an upper-tail probability for individual values. It relies on the normal model and does not by itself establish that 130 is a clinical threshold.",
+      "rubric": [
+        "Describes an upper tail for individual values",
+        "Includes the normal-model assumption",
+        "Avoids inventing a clinical conclusion"
+      ],
+      "topic": "statistics.random-variables",
+      "section": 4
+    },
+    {
+      "id": "design",
+      "title": "Interpret an observational difference",
+      "prompt": "An observational study finds lower average expenditure among insured people. Explain why this alone does not establish that insurance reduced expenditure.",
+      "model": "The groups may differ in health, income or other causes of expenditure. Without random assignment or a justified causal design, the observed association alone does not identify an insurance effect. Random sampling would help representativeness but would not remove confounding.",
+      "rubric": [
+        "Distinguishes association from causation",
+        "Gives a plausible confounder",
+        "Separates random sampling from random assignment"
+      ],
+      "topic": "statistics.descriptive",
+      "section": 3
+    },
+    {
+      "id": "ci",
+      "title": "Explain a 95% interval",
+      "prompt": "An independent random sample gives a 95% known-SD interval of 66.08 to 73.92 kg for a population mean. Interpret its confidence level.",
+      "model": "The interval estimates the population mean weight, not the range of individual weights. If the same sampling and interval method were repeated many times under its assumptions, about 95% of the resulting intervals would contain the fixed population mean.",
+      "rubric": [
+        "Targets the population mean",
+        "Uses repeated sampling to explain 95%",
+        "Avoids assigning a 95% probability to this fixed mean after observing the interval"
+      ],
+      "topic": "statistics.sampling",
+      "section": 6
+    },
+    {
+      "id": "p-value",
+      "title": "Explain a small p-value",
+      "prompt": "A two-sided one-sample t test of μ = 7 gives t = −2.981, df = 19 and p ≈ 0.0077. Interpret the p-value and decision at α = 0.05.",
+      "model": "If the null mean of 7 and the test assumptions hold, a statistic at least as far from zero as the observed statistic in either direction has probability about 0.0077. Since p is below 0.05, reject the null. This is evidence of a mean difference, not a probability that the null is true or a measure of clinical importance.",
+      "rubric": [
+        "Conditions probability on H₀ and assumptions",
+        "Includes both tails",
+        "Compares p with α and separates statistical from practical importance"
+      ],
+      "topic": "statistics.inference",
+      "section": 4
+    },
+    {
+      "id": "non-rejection",
+      "title": "Explain a non-significant result",
+      "prompt": "A correctly specified test yields p = 0.18 at α = 0.05. Write a suitable conclusion.",
+      "model": "Do not reject the null at the 5% level: the data provide insufficient evidence against it under this model. This does not prove equality or show that the effect is absent. The estimate and confidence interval help assess which effect sizes remain compatible with the data.",
+      "rubric": [
+        "Says do not reject rather than accept/prove",
+        "Connects the decision to α = 0.05",
+        "Mentions uncertainty or the interval"
+      ],
+      "topic": "statistics.inference",
+      "section": 6
+    }
+  ],
+  "stata": [
+    {
+      "id": "summary",
+      "workshop": 7,
+      "title": "Read a descriptive summary",
+      "command": "summarize outcome",
+      "output": "Variable | Obs   Mean   Std. dev.   Min   Max\n---------+-----------------------------------\noutcome  |  20      5           3     0    10",
+      "question": "What does the reported standard deviation of 3 describe?",
+      "options": [
+        "Spread of individual outcome values",
+        "Standard error of the sample mean",
+        "Probability that the mean equals 5",
+        "The 95% confidence interval width"
+      ],
+      "answer": 0,
+      "explanation": "The SD describes individual spread. The estimated standard error of the mean is 3/√20 ≈ 0.671, under independent sampling.",
+      "topic": "statistics.descriptive",
+      "section": 5
+    },
+    {
+      "id": "ttest",
+      "workshop": 7,
+      "title": "Read a one-sample t test",
+      "command": "ttest outcome == 7",
+      "output": "One-sample t test (synthetic teaching summary)\nObs = 20    Mean = 5    Std. err. = .6708204\n95% CI: 3.595957 to 6.404043\nt = -2.9814    degrees of freedom = 19\nHa: mean != 7    Pr(|T| > |t|) = 0.0077",
+      "question": "Which conclusion fits this two-sided test at the 5% level?",
+      "options": [
+        "Accept the null because t is negative",
+        "Reject μ = 7; report the estimate, uncertainty and assumptions",
+        "There is a 0.77% probability that μ = 7",
+        "The difference must be clinically important"
+      ],
+      "answer": 1,
+      "explanation": "The two-sided p-value is below 0.05 and the matching 95% interval excludes 7. Negative t shows that the estimate is below the null mean. Practical importance needs context.",
+      "topic": "statistics.inference",
+      "section": 7
+    },
+    {
+      "id": "regression",
+      "workshop": 10,
+      "title": "Preview a regression coefficient",
+      "command": "regress outcome exposure",
+      "output": "Synthetic coefficient excerpt; n = 50, residual df = 48\n          | Coef.   Std. err.   t     P>|t|    [95% conf. interval]\nexposure  |  .800      .200    4.00   0.0002       .3979    1.2021",
+      "question": "What does the exposure coefficient mean in this simple regression?",
+      "options": [
+        "An exposure increase of one unit is associated with an average outcome increase of 0.8 units",
+        "Exposure causes an outcome increase of exactly 0.8 for everyone",
+        "80% of patients improve",
+        "The standard error is the outcome SD"
+      ],
+      "answer": 0,
+      "explanation": "The slope is an average association per unit of exposure under the fitted model. A causal interpretation requires a justified design and assumptions. The coefficient standard error describes estimation uncertainty.",
+      "topic": "statistics.descriptive",
+      "section": 3
+    }
+  ]
+}

@@ -52,7 +52,7 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   /* ----- Overview and the three stages ----- */
   let page = await open();
   assert.deepStrictEqual(await page.$$eval(".roadmap-overview-item", (all) => all.map((b) => b.textContent.replace(/\s+/g, ""))),
-    ["2Now", "9Next", "10Later", "15Released"]);
+    ["2Now", "7Next", "10Later", "15Released"]);
   assert.match(await text(page, "#roadmap-reviewed"), /Last reviewed 6 October 2026/);
   assert.deepStrictEqual(await page.$$eval(".roadmap-card.is-now .roadmap-card-title", (all) => all.map((h) => h.textContent)),
     ["Exam Prep", "Student beta preparation"]);
@@ -91,19 +91,19 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
 
   /* ----- Filters and search ----- */
   await page.click('#roadmap-stage .filter-chip:has-text("Now")');
-  assert.match(await text(page, "#roadmap-count"), /Showing 2 of 21 plans/);
+  assert.match(await text(page, "#roadmap-count"), /Showing 2 of 19 plans/);
   assert.strictEqual(await page.evaluate(() => document.activeElement.textContent), "Now", "focus stays on the chip");
   await page.click('#roadmap-stage .filter-chip:has-text("Next")');
   await page.click('#roadmap-category .filter-chip:has-text("Learning")');
-  assert.match(await text(page, "#roadmap-count"), /Showing 2 of 21 plans/);
+  assert.match(await text(page, "#roadmap-count"), /Showing 2 of 19 plans/);
   await page.click("#roadmap-clear");
-  await page.fill("#roadmap-search", "EXPÉRIENCES second-year");
-  assert.match(await text(page, "#roadmap-count"), /Showing 1 of 21 plans/);
-  assert.match(await text(page, "#roadmap-board"), /Student experiences/);
+  await page.fill("#roadmap-search", "MOBILITY chécklists");
+  assert.match(await text(page, "#roadmap-count"), /Showing 1 of 19 plans/);
+  assert.match(await text(page, "#roadmap-board"), /Personal mobility checklists/);
   await page.fill("#roadmap-search", "zebra unicorn");
   assert.match(await text(page, ".empty-state"), /No plans match these filters/);
   await page.click('.empty-state button:has-text("Clear filters")');
-  assert.match(await text(page, "#roadmap-count"), /^21 plans$/);
+  assert.match(await text(page, "#roadmap-count"), /^19 plans$/);
   assert.strictEqual(await page.inputValue("#roadmap-search"), "");
   ok("stage + topic filters combine, accent-insensitive search, empty state with Clear filters");
 
@@ -152,21 +152,21 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
 
   /* ----- Details drawer, deep links, Back/Forward, copy link ----- */
   page = await open("roadmap.html#roadmap");
-  const opener = page.locator("#feature-student-stories-experiences .roadmap-details-link");
+  const opener = page.locator("#feature-expanded-practice-bank .roadmap-details-link");
   await opener.click();
   assert.strictEqual(await drawerOpen(page), true);
-  assert.strictEqual(await page.evaluate(() => location.hash), "#feature-student-stories-experiences");
-  assert.strictEqual(await text(page, "#roadmap-drawer-title"), "Student experiences");
+  assert.strictEqual(await page.evaluate(() => location.hash), "#feature-expanded-practice-bank");
+  assert.strictEqual(await text(page, "#roadmap-drawer-title"), "More quizzes, flashcards & question banks");
   assert.match(await text(page, "#roadmap-drawer"), /After launch: planned, no date yet.*Not available yet/);
   assert.strictEqual(await page.evaluate(() => document.activeElement.getAttribute("aria-label")), "Close details");
   for (let i = 0; i < 15; i++) await page.keyboard.press("Tab");
   assert.ok(await page.evaluate(() => document.getElementById("roadmap-drawer").contains(document.activeElement)), "focus stays in the drawer");
   await page.click('#roadmap-drawer button:has-text("Copy link")');
-  assert.match(await page.evaluate(() => navigator.clipboard.readText()), /roadmap\.html#feature-student-stories-experiences$/);
+  assert.match(await page.evaluate(() => navigator.clipboard.readText()), /roadmap\.html#feature-expanded-practice-bank$/);
   await page.keyboard.press("Escape");
   await page.waitForFunction(() => location.hash === "#roadmap");
   assert.strictEqual(await drawerOpen(page), false);
-  assert.strictEqual(await page.evaluate(() => document.activeElement.dataset.focusKey), "open-feature-student-stories-experiences-more");
+  assert.strictEqual(await page.evaluate(() => document.activeElement.dataset.focusKey), "open-feature-expanded-practice-bank-more");
   ok("drawer: opens from Details, own address, focus inside, copy link, Escape closes, focus and address return");
 
   await opener.click();
@@ -174,7 +174,7 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   await page.waitForFunction(() => !document.getElementById("roadmap-drawer").open);
   await page.goForward();
   await page.waitForFunction(() => document.getElementById("roadmap-drawer").open);
-  assert.strictEqual(await text(page, "#roadmap-drawer-title"), "Student experiences");
+  assert.strictEqual(await text(page, "#roadmap-drawer-title"), "More quizzes, flashcards & question banks");
   await page.click(".roadmap-drawer-close");
   ok("Back closes the drawer, Forward reopens it");
   await page.context().close();
@@ -252,10 +252,10 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
 
   await page.keyboard.press("Control+k");
   await page.waitForSelector(".search-dialog .search-input");
-  await page.fill(".search-dialog .search-input", "student experiences");
+  await page.fill(".search-dialog .search-input", "mobility checklists");
   await page.waitForSelector('.search-group-label:has-text("Roadmap plans (not available yet)")');
-  const plan = page.locator('.search-result[href="roadmap.html#feature-student-stories-experiences"]');
-  assert.match(await plan.textContent(), /Planned · After launch · not available yet/);
+  const plan = page.locator('.search-result[href="roadmap.html#feature-mobility-checklists"]');
+  assert.match(await plan.textContent(), /Planned · November 2026 · not available yet/);
   await page.fill(".search-dialog .search-input", "past thesis explorer");
   await page.waitForSelector('.search-group-label:has-text("Released updates")');
   assert.match(await page.locator('.search-result[href="roadmap.html#update-thesis-explorer"]').textContent(), /Released · 4 October 2026/);

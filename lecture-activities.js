@@ -543,6 +543,530 @@
         });
       },
     },
+    "demand-curve": {
+      title: "Move along it. Then shift it.",
+      intro:
+        "A stylised linear healthcare-demand curve. Change the patient price, then change a non-price demand factor. The numbers are teaching values, not empirical estimates.",
+      build(node) {
+        node.innerHTML =
+          '<div class="activity-controls">' +
+          '<div class="control"><label for="demand-price">Patient price (€)</label><input id="demand-price" type="range" min="0" max="100" value="50" step="1"><div class="range-labels"><span>0</span><span>50</span><span>100</span></div></div>' +
+          '<div class="control"><label for="demand-shift">Demand shift</label><select id="demand-shift"><option value="-15">Lower demand</option><option value="0" selected>Baseline</option><option value="15">Higher demand</option></select></div>' +
+          '</div>' + output("demand");
+        reactive(node, "demand", (out) => {
+          const price = read("demand-price", 0, 100),
+            shift = Number(node.querySelector("#demand-shift").value),
+            intercept = 100 + shift,
+            quantity = Math.max(0, intercept - price);
+          const x = (q) => 55 + (q / 120) * 520,
+            y = (p) => 225 - (p / 120) * 185,
+            qMax = Math.max(0, intercept);
+          out.innerHTML =
+            '<div class="formula">Quantity demanded = ' + number(quantity, 0) + '</div>' +
+            '<svg class="activity-chart" viewBox="0 0 640 280" role="img" aria-label="Stylised linear demand curve with the selected price and quantity marked.">' +
+            '<path d="M55 25V225H610" fill="none" stroke="currentColor"/>' +
+            '<path d="M' + x(0) + ' ' + y(intercept) + ' L' + x(Math.min(qMax,120)) + ' ' + y(0) + '" fill="none" stroke="#628473" stroke-width="4"/>' +
+            '<path d="M55 ' + y(price) + 'H' + x(quantity) + 'V225" fill="none" stroke="#cc6f4f" stroke-width="2" stroke-dasharray="5 5"/>' +
+            '<circle cx="' + x(quantity) + '" cy="' + y(price) + '" r="7" fill="#cc6f4f"/>' +
+            '<text x="58" y="16" fill="currentColor" font-size="12">Price</text><text x="555" y="250" fill="currentColor" font-size="12">Quantity</text>' +
+            '<text x="' + (x(quantity)+8) + '" y="' + (y(price)-8) + '" fill="currentColor" font-size="12">P=' + number(price,0) + ', Q=' + number(quantity,0) + '</text></svg>' +
+            '<p><strong>Own-price change:</strong> move the price slider. You move along the same curve.</p>' +
+            '<p><strong>Non-price change:</strong> change the demand-shift control. The whole curve moves because quantity demanded changes at every price.</p>';
+        });
+      },
+    },
+    "consumer-surplus": {
+      title: "Who buys, and how much surplus do they receive?",
+      intro:
+        "A hypothetical service with four buyers. Change the price and see who remains in the market. The willingness-to-pay values are invented for teaching.",
+      build(node) {
+        const buyers = [
+          ["Amina", 95],
+          ["Luca", 75],
+          ["Marta", 55],
+          ["Jonas", 35],
+        ];
+        node.innerHTML =
+          '<div class="control"><label for="surplus-price">Market price (€): <strong id="surplus-price-value">60</strong></label><input id="surplus-price" type="range" min="0" max="100" value="60" step="5"><div class="range-labels"><span>0</span><span>50</span><span>100</span></div></div>' +
+          output("surplus");
+        reactive(node, "surplus", (out) => {
+          const price = read("surplus-price", 0, 100);
+          node.querySelector("#surplus-price-value").textContent = number(price,0);
+          const active = buyers.filter(([,wtp]) => wtp >= price);
+          const total = active.reduce((s,[,wtp]) => s + wtp - price, 0);
+          out.innerHTML =
+            '<div class="formula">Total consumer surplus = €' + number(total,0) + '</div>' +
+            '<div class="table-scroll"><table><thead><tr><th>Buyer</th><th>WTP</th><th>Buys?</th><th>Surplus</th></tr></thead><tbody>' +
+            buyers.map(([name,wtp]) => '<tr><td>'+escape(name)+'</td><td>€'+wtp+'</td><td>'+(wtp>=price?'Yes':'No')+'</td><td>'+(wtp>=price?'€'+number(wtp-price,0):'—')+'</td></tr>').join("") +
+            '</tbody></table></div>' +
+            '<p>'+active.length+' of 4 buyers participate at this price. The marginal participating buyer is the one with the lowest WTP among those still buying; if WTP exactly equals price, that buyer receives zero surplus.</p>';
+        });
+      },
+    },
+    "arc-elasticity": {
+      title: "Calculate arc elasticity",
+      intro:
+        "Enter two price-quantity observations. The midpoint formula treats the two endpoints symmetrically and gives a unit-free measure of responsiveness.",
+      build(node) {
+        node.innerHTML =
+          '<div class="activity-controls">' +
+          input("arc-p1","Price P₁",20,'min="0.000001" step="any"') +
+          input("arc-q1","Quantity Q₁",12,'min="0.000001" step="any"') +
+          input("arc-p2","Price P₂",30,'min="0.000001" step="any"') +
+          input("arc-q2","Quantity Q₂",10,'min="0.000001" step="any"') +
+          '</div>' + output("arc");
+        reactive(node, "arc", (out) => {
+          const p1=read("arc-p1",1e-6,1e9), q1=read("arc-q1",1e-6,1e9),
+            p2=read("arc-p2",1e-6,1e9), q2=read("arc-q2",1e-6,1e9);
+          if (p1===p2) throw new Error("The two prices must differ to calculate price elasticity.");
+          const dq=(q2-q1)/((q1+q2)/2),
+            dp=(p2-p1)/((p1+p2)/2),
+            e=dq/dp,
+            magnitude=Math.abs(e),
+            label=magnitude<1-1e-10?"Inelastic":magnitude>1+1e-10?"Elastic":"Approximately unit elastic";
+          out.innerHTML =
+            '<div class="formula">Arc elasticity = ' + number(e,3) + '</div>' +
+            '<dl class="activity-stats"><div><dt>Midpoint %ΔQ</dt><dd>'+number(dq*100,2)+'%</dd></div><div><dt>Midpoint %ΔP</dt><dd>'+number(dp*100,2)+'%</dd></div><div><dt>|ε|</dt><dd>'+number(magnitude,3)+'</dd></div><div><dt>Classification</dt><dd>'+label+'</dd></div></dl>' +
+            '<p>For a standard downward-sloping demand relationship, price and quantity move in opposite directions, so elasticity is negative. Classification normally uses the absolute value.</p>';
+        });
+      },
+    },
+    "full-price": {
+      title: "Calculate the full price of a visit",
+      intro:
+        "The clinic bill is only one component. Add travel, waiting, treatment time and the opportunity cost of time.",
+      build(node) {
+        node.innerHTML =
+          '<div class="activity-controls">' +
+          input("full-money","Patient monetary price (€)",40,'min="0" step="any"') +
+          input("full-travel-cost","Travel / parking cost (€)",4,'min="0" step="any"') +
+          input("full-hourly","Value of time (€/hour)",12,'min="0" step="any"') +
+          input("full-oneway","Travel time each way (minutes)",15,'min="0" step="any"') +
+          input("full-wait","Waiting time (minutes)",25,'min="0" step="any"') +
+          input("full-visit","Time receiving care (minutes)",30,'min="0" step="any"') +
+          '</div>' + output("full");
+        reactive(node, "full", (out) => {
+          const money=read("full-money",0,1e7),
+            travelCost=read("full-travel-cost",0,1e7),
+            hourly=read("full-hourly",0,1e7),
+            oneWay=read("full-oneway",0,1440),
+            wait=read("full-wait",0,1440),
+            visit=read("full-visit",0,1440),
+            minutes=2*oneWay+wait+visit,
+            timeCost=hourly*minutes/60,
+            full=money+travelCost+timeCost;
+          out.innerHTML =
+            '<div class="formula">Full price = €' + number(full,2) + '</div>' +
+            '<dl class="activity-stats"><div><dt>Money price</dt><dd>€'+number(money,2)+'</dd></div><div><dt>Travel cost</dt><dd>€'+number(travelCost,2)+'</dd></div><div><dt>Total time</dt><dd>'+number(minutes,0)+' min</dd></div><div><dt>Time cost</dt><dd>€'+number(timeCost,2)+'</dd></div></dl>' +
+            '<p>If insurance lowers the money price but these other costs do not change, time and travel become a larger share of the patient’s full price.</p>';
+        });
+      },
+    },
+    "cost-sharing": {
+      title: "Compare what the patient pays",
+      intro:
+        "A simplified one-service comparison of four contract forms introduced in Session 2. It ignores annual caps, networks, exclusions and other real-world contract details.",
+      build(node) {
+        node.innerHTML =
+          '<div class="activity-controls">' +
+          input("share-price","Market price of service (€)",120,'min="0" step="any"') +
+          input("share-indemnity","Fixed indemnity paid by insurer (€)",50,'min="0" step="any"') +
+          input("share-rate","Coinsurance paid by patient (%)",20,'min="0" max="100" step="1"') +
+          input("share-copay","Copayment (€)",25,'min="0" step="any"') +
+          input("share-deductible","Deductible remaining before coverage (€)",80,'min="0" step="any"') +
+          '</div>' + output("share");
+        reactive(node, "share", (out) => {
+          const price=read("share-price",0,1e9),
+            indemnity=read("share-indemnity",0,1e9),
+            rate=read("share-rate",0,100)/100,
+            copay=read("share-copay",0,1e9),
+            deductible=read("share-deductible",0,1e9);
+          const vals=[
+            ["No insurance",price],
+            ["Fixed indemnity",Math.max(0,price-indemnity)],
+            ["Coinsurance",price*rate],
+            ["Copayment",Math.min(price,copay)],
+            ["Deductible remaining",Math.min(price,deductible)]
+          ];
+          out.innerHTML =
+            '<div class="table-scroll"><table><thead><tr><th>Arrangement</th><th>Patient pays now</th><th>What changes?</th></tr></thead><tbody>' +
+            vals.map(([name,v],i)=>'<tr><td>'+name+'</td><td>€'+number(v,2)+'</td><td>'+[
+              "Full service price",
+              "Market price minus a fixed insurer contribution",
+              "A percentage of the bill",
+              "A fixed amount per use, capped here at the service price",
+              "Up to the deductible amount still unmet"
+            ][i]+'</td></tr>').join("") +
+            '</tbody></table></div><p class="small">This is a teaching comparison for one service. A real deductible interacts with cumulative annual spending and later coverage; actual contracts can combine several forms of cost-sharing.</p>';
+        });
+      },
+    },
+    "health-stock": {
+      title: "Follow the health stock through one period",
+      intro:
+        "Use the Grossman stock equation. Change inherited health, depreciation and gross investment. The numbers are stylised teaching units, not clinical measurements.",
+      build(node) {
+        node.innerHTML =
+          '<div class="activity-controls">' +
+          input("health-prev","Inherited health H(t−1)",80,'min="0" max="200" step="1"') +
+          input("health-delta","Depreciation δ (%)",10,'min="0" max="100" step="1"') +
+          input("health-invest","Gross investment I(t−1)",12,'min="0" max="200" step="1"') +
+          '</div>' + output("healthstock");
+        reactive(node, "healthstock", (out) => {
+          const h=read("health-prev",0,200),
+            delta=read("health-delta",0,100)/100,
+            invest=read("health-invest",0,200),
+            deterioration=delta*h,
+            surviving=(1-delta)*h,
+            next=surviving+invest,
+            net=invest-deterioration;
+          const direction = Math.abs(net) < 1e-9 ? "maintained" : net > 0 ? "rises" : "falls";
+          out.innerHTML =
+            '<div class="formula">Hₜ = (1 − δ)Hₜ₋₁ + Iₜ₋₁ = ' + number(next,2) + '</div>' +
+            '<dl class="activity-stats"><div><dt>Inherited stock</dt><dd>'+number(h,2)+'</dd></div><div><dt>Deterioration δH</dt><dd>'+number(deterioration,2)+'</dd></div><div><dt>Surviving stock</dt><dd>'+number(surviving,2)+'</dd></div><div><dt>Gross investment</dt><dd>'+number(invest,2)+'</dd></div><div><dt>Net investment</dt><dd>'+number(net,2)+'</dd></div><div><dt>Result</dt><dd>Health '+direction+'</dd></div></dl>' +
+            '<p>Gross investment is the chosen inflow. Net investment subtracts deterioration. It can be negative even though gross investment is not.</p>';
+        });
+      },
+    },
+    "grossman-ppf": {
+      title: "Explore the Grossman PPF",
+      intro:
+        "A stylised frontier with a rising free-lunch region and a falling trade-off region. Move along it to see why the frontier is not a standard straight trade-off.",
+      build(node) {
+        node.innerHTML =
+          '<div class="control"><label for="ppf-health">Chosen health position: <strong id="ppf-health-value">60</strong></label><input id="ppf-health" type="range" min="5" max="95" value="60" step="1"><div class="range-labels"><span>Low H</span><span>Peak Z</span><span>High H</span></div></div>' +
+          output("ppf");
+        reactive(node, "ppf", (out) => {
+          const h=read("ppf-health",5,95);
+          node.querySelector("#ppf-health-value").textContent=number(h,0);
+          const z=(x)=>Math.max(0,20+1.7*x-0.015*x*x);
+          const peak=1.7/(2*0.015);
+          const zone=h<peak ? "Free-lunch zone" : "Trade-off zone";
+          let path="";
+          for(let x=5;x<=95;x+=2){
+            const px=55+(x-5)/90*520,
+              py=225-(z(x)/70)*180;
+            path+=(x===5?"M":"L")+px+" "+py+" ";
+          }
+          const px=55+(h-5)/90*520,
+            py=225-(z(h)/70)*180,
+            peakX=55+(peak-5)/90*520,
+            peakY=225-(z(peak)/70)*180;
+          out.innerHTML =
+            '<div class="formula">'+zone+'</div>' +
+            '<svg class="activity-chart" viewBox="0 0 640 280" role="img" aria-label="Stylised Grossman production possibility frontier showing an upward free-lunch section and a downward trade-off section.">' +
+            '<path d="M55 25V225H610" fill="none" stroke="currentColor"/>' +
+            '<path d="'+path+'" fill="none" stroke="#628473" stroke-width="4"/>' +
+            '<path d="M'+peakX+' 35V225" stroke="#a2b199" stroke-dasharray="4 4"/>' +
+            '<circle cx="'+px+'" cy="'+py+'" r="7" fill="#cc6f4f"/>' +
+            '<text x="57" y="17" fill="currentColor" font-size="12">Home good Z</text><text x="535" y="250" fill="currentColor" font-size="12">Health H</text>' +
+            '<text x="'+(peakX+7)+'" y="'+(peakY-8)+'" fill="currentColor" font-size="11">maximum Z</text></svg>' +
+            (h<peak
+              ? '<p>At this low-health position, a health improvement can release enough sick time to increase both H and Z. Moving toward the peak does not require sacrificing Z.</p>'
+              : '<p>Beyond the peak, extra health yields smaller time gains. Increasing H now uses resources that could have produced Z, so the frontier slopes downward.</p>') +
+            '<p class="small">This curve is an original teaching illustration of the lecture logic. Its coordinates are not data and do not reproduce the official figure.</p>';
+        });
+      },
+    },
+    "mec-equilibrium": {
+      title: "Find the Grossman health-capital equilibrium",
+      intro:
+        "A stylised MEC curve meets a user-cost line r + δ. Change depreciation, the alternative return and a productivity shifter to see how optimal H responds.",
+      build(node) {
+        node.innerHTML =
+          '<div class="activity-controls">' +
+          input("mec-r","Alternative return r (%)",5,'min="0" max="30" step="1"') +
+          input("mec-delta","Depreciation δ (%)",10,'min="0" max="40" step="1"') +
+          '<div class="control"><label for="mec-shift">MEC productivity / value shifter</label><input id="mec-shift" type="range" min="70" max="140" value="100" step="5"><div class="range-labels"><span>lower</span><span>baseline</span><span>higher</span></div></div>' +
+          '</div>' + output("mec");
+        reactive(node, "mec", (out) => {
+          const r=read("mec-r",0,30),
+            delta=read("mec-delta",0,40),
+            shift=read("mec-shift",70,140)/100,
+            cost=r+delta,
+            intercept=40*shift,
+            slope=0.3,
+            hStar=Math.max(0,Math.min(100,(intercept-cost)/slope)),
+            x=(h)=>55+h/100*520,
+            y=(ret)=>225-ret/60*185;
+          const yCost=y(cost);
+          out.innerHTML =
+            '<div class="formula">Stylised H* = '+number(hStar,1)+' · user cost r + δ = '+number(cost,1)+'%</div>' +
+            '<svg class="activity-chart" viewBox="0 0 640 280" role="img" aria-label="Stylised marginal efficiency of health capital curve and horizontal user-cost line.">' +
+            '<path d="M55 25V225H610" fill="none" stroke="currentColor"/>' +
+            '<path d="M55 '+y(intercept)+' L575 '+y(Math.max(0,intercept-slope*100))+'" fill="none" stroke="#628473" stroke-width="4"/>' +
+            '<path d="M55 '+yCost+'H575" fill="none" stroke="#cc6f4f" stroke-width="3"/>' +
+            '<path d="M'+x(hStar)+' '+yCost+'V225" stroke="#a2b199" stroke-dasharray="4 4"/>' +
+            '<circle cx="'+x(hStar)+'" cy="'+yCost+'" r="7" fill="#153d35"/>' +
+            '<text x="58" y="17" fill="currentColor" font-size="12">Return / cost</text><text x="535" y="250" fill="currentColor" font-size="12">Health H</text>' +
+            '<text x="65" y="'+(yCost-8)+'" fill="#cc6f4f" font-size="11">r + δ</text><text x="400" y="'+(y(intercept-slope*65)-10)+'" fill="#628473" font-size="11">MEC</text></svg>' +
+            '<p>Higher depreciation raises the user cost and moves the equilibrium left. A stronger return to healthy time or greater production efficiency can shift the MEC outward and move H* right.</p>' +
+            '<p class="small">The numerical curve is deliberately stylised. Use it for direction and intuition, not as an empirical calibration.</p>';
+        });
+      },
+    },
+    "grossman-drivers": {
+      title: "Health or healthcare? Compare the directions.",
+      intro:
+        "Select one comparative-static change. Session 3 distinguishes the predicted effect on optimal health from the effect on the healthcare input used to produce it.",
+      build(node) {
+        const drivers = {
+          age:["Age / depreciation rises","Optimal health falls","Healthcare demand is ambiguous","Faster depreciation raises the cost of holding health capital. Desired H falls, but more healthcare may be needed to maintain any given H."],
+          wage:["Wage rises","Optimal health rises","Healthcare demand rises","Healthy productive time becomes more valuable, shifting the MEC outward in the lecture."],
+          education:["Education rises","Optimal health rises","Healthcare demand is ambiguous","Education makes health production more efficient: desired H rises, while fewer healthcare inputs may be needed per unit of health."],
+          price:["Medical-care price falls","Optimal health rises","Healthcare demand rises","Cheaper healthcare lowers the cost of producing health, so the lecture predicts more health and more healthcare."]
+        };
+        node.innerHTML =
+          '<div class="activity-presets">'+
+          Object.entries(drivers).map(([id,v])=>'<button type="button" class="btn secondary" data-grossman-driver="'+id+'">'+escape(v[0])+'</button>').join("")+
+          '</div><div id="grossman-driver-output" class="activity-output" aria-live="polite"></div>';
+        const show=(id)=>{
+          const v=drivers[id];
+          node.querySelectorAll("[data-grossman-driver]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.grossmanDriver===id)));
+          node.querySelector("#grossman-driver-output").innerHTML =
+            '<div class="grid2"><article class="card"><span class="eyebrow">Demand for health</span><h3>'+escape(v[1])+'</h3></article><article class="card"><span class="eyebrow">Demand for healthcare</span><h3>'+escape(v[2])+'</h3></article></div><p>'+escape(v[3])+'</p>';
+        };
+        node.querySelectorAll("[data-grossman-driver]").forEach(b=>b.addEventListener("click",()=>show(b.dataset.grossmanDriver)));
+        show("age");
+      },
+    },
+    "causal-directions": {
+      title: "Same gradient, three causal stories",
+      intro:
+        "Choose a causal structure and follow the arrows. The goal is to separate an observed SES–health association from the mechanism that produced it.",
+      build(node) {
+        const stories = {
+          direct: {
+            label: "Direct causality",
+            path: ["Socioeconomic status", "Resources / skills / stress / access", "Health"],
+            note: "SES is upstream. Examples in the lecture include efficient production, early-life conditions, direct income, allostatic load and income inequality."
+          },
+          reverse: {
+            label: "Reverse causality",
+            path: ["Health", "Productive time / work capacity", "Income and SES"],
+            note: "Health is upstream. The productive-time hypothesis explains how illness can reduce earnings, wealth and labour-force participation."
+          },
+          third: {
+            label: "Third factor",
+            path: ["Time preference", "Education / SES", "Health investment"],
+            note: "A common factor can affect both sides. The Fuchs hypothesis uses willingness to delay gratification."
+          }
+        };
+        node.innerHTML =
+          '<div class="activity-presets">'+
+          Object.entries(stories).map(([id,s])=>'<button type="button" class="btn secondary" data-causal="'+id+'">'+escape(s.label)+'</button>').join("")+
+          '</div><div id="causal-output" class="activity-output" aria-live="polite"></div>';
+        const show=(id)=>{
+          const s=stories[id];
+          node.querySelectorAll("[data-causal]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.causal===id)));
+          node.querySelector("#causal-output").innerHTML =
+            '<div class="flow">'+s.path.map((x,i)=>'<div class="flow-step"><span>Step '+(i+1)+'</span><strong>'+escape(x)+'</strong></div>'+(i<s.path.length-1?'<span class="flow-arrow" aria-hidden="true">→</span>':'')).join("")+'</div>'+
+            '<p>'+escape(s.note)+'</p>';
+        };
+        node.querySelectorAll("[data-causal]").forEach(b=>b.addEventListener("click",()=>show(b.dataset.causal)));
+        show("direct");
+      }
+    },
+    "disparity-theories": {
+      title: "Compare the disparity hypotheses",
+      intro:
+        "Pick a hypothesis to see its causal direction, mechanism, evidence role and the kind of policy question it raises. Wording follows the lecture’s framework.",
+      build(node) {
+        const items = {
+          education:["Efficient producer","SES → Health","Education improves the efficiency of producing health.","Prevention, response to information, innovation and self-management are discussed in the lecture.","Could education, simpler treatment or more supportive care reduce the gradient?"],
+          early:["Thrifty phenotype","Early conditions → Adult health / SES","In-utero or early-childhood deprivation can create persistent biological effects.","Dutch famine and other historical shocks are used as natural experiments.","Could maternal/child support prevent long-run disparities?"],
+          income:["Direct income","Income → Health","More resources expand the feasible set for producing health.","Adult causal evidence is presented as weak or mixed; child income appears more protective.","Which populations and life stages actually respond to additional resources?"],
+          stress:["Allostatic load","Rank / stress → Health","Repeated stress can accelerate health-capital depreciation.","Whitehall is used to connect lower grade, stress and worse morbidity/mortality.","Would reducing chronic stress or improving control change health?"],
+          inequality:["Income inequality","Community inequality → Health","Unequal societies may affect cohesion, stress or political allocation.","The lecture presents associations and competing mechanisms but no settled causal link.","What mechanism would an inequality policy need to change?"],
+          productive:["Productive time","Health → SES","Illness reduces time and capacity for work, lowering earnings and wealth.","Health shocks predict retirement, reduced labour participation and lower earnings.","Could health protection or income replacement reduce SES consequences of illness?"],
+          fuchs:["Fuchs hypothesis","Time preference → SES + Health","Long-term orientation can encourage investment in both education and health.","Used as a third-factor explanation rather than a direct SES-to-health pathway.","Would changing resources alone leave the common preference mechanism untouched?"]
+        };
+        node.innerHTML =
+          '<div class="control"><label for="theory-select">Hypothesis</label><select id="theory-select">'+
+          Object.entries(items).map(([id,v])=>'<option value="'+id+'">'+escape(v[0])+'</option>').join("")+
+          '</select></div><div id="theory-output" class="activity-output" aria-live="polite"></div>';
+        const show=()=>{
+          const v=items[node.querySelector("#theory-select").value];
+          node.querySelector("#theory-output").innerHTML =
+            '<dl class="activity-stats"><div><dt>Direction</dt><dd>'+escape(v[1])+'</dd></div><div><dt>Mechanism</dt><dd>'+escape(v[2])+'</dd></div></dl>'+
+            '<p><strong>Evidence role in the lecture:</strong> '+escape(v[3])+'</p>'+
+            '<p><strong>Policy question:</strong> '+escape(v[4])+'</p>';
+        };
+        node.querySelector("#theory-select").addEventListener("change",show);
+        show();
+      }
+    },
+    "stress-depreciation": {
+      title: "Translate stress into Grossman depreciation",
+      intro:
+        "Session 4 maps prolonged stress to a higher depreciation rate of health capital. Use the Session 3 stock equation to see the mechanical implication. Numbers are stylised.",
+      build(node) {
+        node.innerHTML =
+          '<div class="activity-controls">'+
+          input("stress-health","Inherited health stock",80,'min="0" max="200" step="1"')+
+          input("stress-invest","Gross health investment",10,'min="0" max="200" step="1"')+
+          '<div class="control"><label for="stress-delta">Depreciation / stress load (%)</label><input id="stress-delta" type="range" min="2" max="30" value="8" step="1"><div class="range-labels"><span>lower δ</span><span>higher δ</span></div></div>'+
+          '</div>'+output("stress");
+        reactive(node,"stress",(out)=>{
+          const h=read("stress-health",0,200),
+            i=read("stress-invest",0,200),
+            d=read("stress-delta",2,30)/100,
+            loss=d*h,
+            next=(1-d)*h+i,
+            maintain=loss;
+          out.innerHTML =
+            '<div class="formula">Next-period health = '+number(next,2)+'</div>'+
+            '<dl class="activity-stats"><div><dt>Depreciation loss δH</dt><dd>'+number(loss,2)+'</dd></div><div><dt>Investment needed just to maintain H</dt><dd>'+number(maintain,2)+'</dd></div><div><dt>Chosen gross investment</dt><dd>'+number(i,2)+'</dd></div></dl>'+
+            '<p>As δ rises, more investment is required just to keep the same health stock. This is the mechanical Grossman link used in the lecture’s allostatic-load hypothesis.</p>'+
+            '<p class="small">This does not estimate the size of a real stress effect; the slider is only a teaching illustration of the model mechanism.</p>';
+        });
+      }
+    },
+    "policy-mechanism": {
+      title: "Match the intervention to the causal mechanism",
+      intro:
+        "Select a hypothetical intervention and ask which Session 4 mechanism it most directly targets. Several policies can affect more than one pathway; this activity focuses on the lecture’s primary logic.",
+      build(node) {
+        const cases=[
+          ["Simplify a demanding self-management treatment","Efficient producer","Reducing the skill burden can narrow an education-related gap in treatment effectiveness."],
+          ["Protect maternal and early-childhood nutrition","Thrifty phenotype","This targets early-life deprivation before long-run biological effects accumulate."],
+          ["Reduce chronic workplace stress and increase control","Allostatic load","This targets the stress pathway that the lecture maps to faster health depreciation."],
+          ["Prevent disabling illness and protect earnings during recovery","Productive time","This targets the reverse-causality pathway from poor health to lower SES."],
+          ["Provide cash to low-income adults","Direct income","This directly tests the resource pathway, although the lecture emphasizes mixed adult causal evidence."],
+          ["Invest in education over the life course","Efficient producer / long-run policy","The lecture’s final takeaways emphasize education as protective and potentially important for long-run disparities."]
+        ];
+        let index=0;
+        const render=()=>{
+          const c=cases[index];
+          node.innerHTML =
+            '<p class="eyebrow">Scenario '+(index+1)+' / '+cases.length+'</p>'+
+            '<h3>'+escape(c[0])+'</h3>'+
+            '<details><summary>Reveal the main Session 4 mechanism</summary><div class="note" style="margin-top:14px"><strong>'+escape(c[1])+'</strong><br>'+escape(c[2])+'</div></details>'+
+            '<button type="button" class="btn small-btn" id="policy-next">Next scenario →</button>';
+          node.querySelector("#policy-next").addEventListener("click",()=>{index=(index+1)%cases.length;render();});
+        };
+        render();
+      }
+    },
+    "agency-map": {
+      title: "Map the physician–patient agency problem",
+      intro:
+        "Select a scenario and identify whether the main issue is helpful influence, physician-induced demand, supply-side rationing, or uncertainty. These are teaching scenarios, not clinical guidance.",
+      build(node) {
+        const scenarios = [
+          {
+            text: "A physician explains the benefits of smoking cessation and encourages the patient to quit because the physician believes this is in the patient’s interest.",
+            label: "Due influence",
+            reason: "The physician influences demand, but in the direction the physician believes benefits the patient."
+          },
+          {
+            text: "A physician recommends an extra low-value service mainly to protect income, despite believing it is not in the patient’s best interest.",
+            label: "Physician-induced demand",
+            reason: "This matches the lecture’s definition of undue influence on demand."
+          },
+          {
+            text: "A physician withholds a necessary treatment despite believing the patient needs it.",
+            label: "Undue supply-side influence",
+            reason: "The lecture distinguishes withholding necessary care from PID because it acts through supply or rationing rather than demand."
+          },
+          {
+            text: "Two physicians choose different reasonable treatments because evidence is incomplete and medical information has diffused unevenly.",
+            label: "Practice-style / information problem",
+            reason: "The agency failure here is imperfect information or uncertainty rather than a pure financial inducement story."
+          }
+        ];
+        let index=0;
+        const render=()=>{
+          const s=scenarios[index];
+          node.innerHTML =
+            '<p class="eyebrow">Scenario '+(index+1)+' / '+scenarios.length+'</p>'+
+            '<p>'+escape(s.text)+'</p>'+
+            '<details><summary>Reveal the Session 5 interpretation</summary><div class="note" style="margin-top:14px"><strong>'+escape(s.label)+'</strong><br>'+escape(s.reason)+'</div></details>'+
+            '<button type="button" class="btn small-btn" id="agency-next">Next scenario →</button>';
+          node.querySelector("#agency-next").addEventListener("click",()=>{index=(index+1)%scenarios.length;render();});
+        };
+        render();
+      }
+    },
+    "pid-forces": {
+      title: "Income effect vs substitution effect",
+      intro:
+        "A stylised teaching model of the McGuire–Pauly intuition. Change the strength of the income and substitution effects after a lower profit rate. The index is not an empirical estimate.",
+      build(node) {
+        node.innerHTML =
+          '<div class="activity-controls">'+
+          '<div class="control"><label for="pid-income">Income-effect strength</label><input id="pid-income" type="range" min="0" max="100" value="60" step="1"><div class="range-labels"><span>weak</span><span>strong</span></div></div>'+
+          '<div class="control"><label for="pid-sub">Substitution-effect strength</label><input id="pid-sub" type="range" min="0" max="100" value="40" step="1"><div class="range-labels"><span>weak</span><span>strong</span></div></div>'+
+          '<div class="control"><label for="pid-ethics">Professional aversion to inducement</label><input id="pid-ethics" type="range" min="0" max="100" value="50" step="1"><div class="range-labels"><span>lower</span><span>higher</span></div></div>'+
+          '</div>'+output("pidforces");
+        reactive(node,"pidforces",(out)=>{
+          const income=read("pid-income",0,100),
+            sub=read("pid-sub",0,100),
+            ethics=read("pid-ethics",0,100),
+            raw=income-sub,
+            damp=1-0.006*ethics,
+            index=raw*damp,
+            direction=Math.abs(index)<5?"Little net change in inducement":index>0?"Inducement pressure rises":"Inducement pressure falls";
+          out.innerHTML =
+            '<div class="formula">'+escape(direction)+'</div>'+
+            '<dl class="activity-stats"><div><dt>Income effect</dt><dd>+'+number(income,0)+'</dd></div><div><dt>Substitution effect</dt><dd>−'+number(sub,0)+'</dd></div><div><dt>Ethics damping</dt><dd>'+number(ethics,0)+'</dd></div><div><dt>Stylised net index</dt><dd>'+number(index,1)+'</dd></div></dl>'+
+            '<p>If the income effect dominates, lower profitability can increase inducement; if the substitution effect dominates, inducement falls. Higher aversion to inducement dampens the response in this teaching illustration.</p>'+
+            '<p class="small">The numerical index is invented only to visualise opposing forces. It does not reproduce or estimate the professor’s benchmark model.</p>';
+        });
+      }
+    },
+    "physician-payment": {
+      title: "Compare physician payment incentives",
+      intro:
+        "Select a payment method to compare how directly extra service volume changes physician revenue. This is a qualitative incentive map, not a claim about actual quality or behaviour in every system.",
+      build(node) {
+        const methods = {
+          ffs:["Fee-for-service","High","Each additional billed service can generate additional payment.","Potential pressure toward higher activity when other motives and constraints do not offset it."],
+          cap:["Capitation","Low","Payment is primarily linked to enrolled patients rather than each additional service.","Weaker direct incentive for extra service volume; can create concern about too little care if other safeguards are weak."],
+          salary:["Salary","Low","Remuneration is relatively fixed with respect to service count.","Weak direct volume incentive; actual effort and quality depend on professional norms and organisational design."],
+          blend:["Blended payment","Intermediate / targeted","Combines payment components, such as capitation with FFS carve-outs or case rates.","Can strengthen incentives for selected activities while retaining lower-powered incentives elsewhere."]
+        };
+        node.innerHTML =
+          '<div class="control"><label for="payment-select">Payment method</label><select id="payment-select">'+
+          Object.entries(methods).map(([id,v])=>'<option value="'+id+'">'+escape(v[0])+'</option>').join("")+
+          '</select></div><div id="payment-output" class="activity-output" aria-live="polite"></div>';
+        const show=()=>{
+          const v=methods[node.querySelector("#payment-select").value];
+          node.querySelector("#payment-output").innerHTML =
+            '<dl class="activity-stats"><div><dt>Method</dt><dd>'+escape(v[0])+'</dd></div><div><dt>Direct volume incentive</dt><dd>'+escape(v[1])+'</dd></div></dl>'+
+            '<p><strong>Payment logic:</strong> '+escape(v[2])+'</p>'+
+            '<p><strong>Session 5 interpretation:</strong> '+escape(v[3])+'</p>';
+        };
+        node.querySelector("#payment-select").addEventListener("change",show);
+        show();
+      }
+    },
+    "practice-variation": {
+      title: "Why can treatment rates vary across places?",
+      intro:
+        "Build a stylised explanation of small-area variation. Adjust supply, patient demand and information diffusion. The unexplained share is deliberately illustrative.",
+      build(node) {
+        node.innerHTML =
+          '<div class="activity-controls">'+
+          '<div class="control"><label for="sav-supply">Supply influence</label><input id="sav-supply" type="range" min="0" max="100" value="55" step="1"><div class="range-labels"><span>lower</span><span>higher</span></div></div>'+
+          '<div class="control"><label for="sav-demand">Patient-demand influence</label><input id="sav-demand" type="range" min="0" max="100" value="30" step="1"><div class="range-labels"><span>lower</span><span>higher</span></div></div>'+
+          '<div class="control"><label for="sav-info">Uneven information / practice style</label><input id="sav-info" type="range" min="0" max="100" value="65" step="1"><div class="range-labels"><span>more uniform</span><span>more uneven</span></div></div>'+
+          '</div>'+output("sav");
+        reactive(node,"sav",(out)=>{
+          const supply=read("sav-supply",0,100),
+            demand=read("sav-demand",0,100),
+            info=read("sav-info",0,100),
+            total=supply+demand+info || 1,
+            ps=supply/total*100,
+            pd=demand/total*100,
+            pi=info/total*100;
+          out.innerHTML =
+            '<dl class="activity-stats"><div><dt>Supply share of selected influences</dt><dd>'+number(ps,1)+'%</dd></div><div><dt>Demand share</dt><dd>'+number(pd,1)+'%</dd></div><div><dt>Information / practice-style share</dt><dd>'+number(pi,1)+'%</dd></div></dl>'+
+            '<p>Session 5 reports that measured supply and demand characteristics both matter, yet substantial variation remains unexplained. The practice-style hypothesis adds physician uncertainty and uneven diffusion of information as another mechanism.</p>'+
+            '<p class="small">These percentages are normalised slider weights, not estimates from the small-area variation literature.</p>';
+        });
+      }
+    },
   };
   root.LectureActivities = {
     init(container, activityIds) {

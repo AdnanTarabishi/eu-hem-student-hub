@@ -229,60 +229,6 @@
       "links": []
     },
     {
-      "id": "student-stories-experiences",
-      "title": "Student experiences",
-      "summary": "Honest experiences from second-year students and alumni about courses, choosing a university, moving cities and life during EU-HEM.",
-      "category": "community",
-      "lane": "next",
-      "status": "planned",
-      "target": null,
-      "why": "Learn from the experiences students wish they had heard before choosing their path.",
-      "details": [
-        "Start with links to useful student stories already published by partner universities.",
-        "Collect structured experiences from current second-year students and alumni, and let students submit their own through the Hub.",
-        "Ask about academics, choosing a university, city life, housing, costs, mobility, social life, challenges, advice, what they would do differently and career impact.",
-        "Review every contribution with its author before publication, including their choices about name, photo and contact details.",
-        "Later: browse and filter experiences by university, track, cohort and topic."
-      ],
-      "dependencies": [
-        "Willing contributors, a short questionnaire and a simple editorial review."
-      ],
-      "links": [
-        {
-          "label": "Offer your experience",
-          "url": "contact.html"
-        }
-      ]
-    },
-    {
-      "id": "partner-university-guides",
-      "title": "Partner university guides",
-      "summary": "A consistent introduction to each partner university: its EU-HEM setting, campus, libraries and student services.",
-      "category": "life",
-      "lane": "next",
-      "status": "planned",
-      "target": null,
-      "why": "Help students understand their study destinations and find the right university services.",
-      "details": [
-        "Introduce the school, campus, libraries, study spaces and student services at each university.",
-        "Connect each university to the existing track and city guides.",
-        "Use official sources, and show the year and provider for any ranking mentioned."
-      ],
-      "dependencies": [
-        "Source checks and one guide format for all four universities."
-      ],
-      "links": [
-        {
-          "label": "Explore the tracks",
-          "url": "tracks.html"
-        },
-        {
-          "label": "Explore the city guides",
-          "url": "city-guide.html"
-        }
-      ]
-    },
-    {
       "id": "expanded-notes-interactive-lessons",
       "title": "More notes, summaries & interactive lessons",
       "summary": "A major content expansion: student-made notes, summaries, worked examples and interactive lessons for more courses.",

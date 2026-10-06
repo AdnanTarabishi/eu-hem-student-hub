@@ -4,6 +4,73 @@
   "dateBasis": "Each date is the day (Rome time) the change first went live through a successful site deployment. Only important student-facing releases are listed.",
   "items": [
     {
+      "id": "interactive-study-sessions",
+      "version": "v0.9",
+      "date": null,
+      "title": "Interactive study sessions",
+      "summary": "Fundamentals in Health Economics gets interactive study sessions 1–5, and Statistics gets a study centre with connected practice tools.",
+      "category": "learning",
+      "type": "new",
+      "status": "draft",
+      "highlights": [
+        "Sessions 1–5 with notes, practice questions, flashcards and activities.",
+        "A Statistics Study Centre with eight connected practice tools.",
+        "Quantitative Methods redesigned as one connected study workspace."
+      ],
+      "links": [
+        {
+          "label": "Open the Statistics Study Centre",
+          "url": "statistics.html"
+        },
+        {
+          "label": "Browse Notes & Resources",
+          "url": "notes.html"
+        }
+      ],
+      "evidence": null
+    },
+    {
+      "id": "universities-hub",
+      "version": "v0.9",
+      "date": null,
+      "title": "Universities hub",
+      "summary": "Explore the four EU-HEM partner universities: their role in the programme, campus services, research and verified university information.",
+      "category": "life",
+      "type": "new",
+      "status": "draft",
+      "highlights": [
+        "A guide page for each university, with links to the official sources."
+      ],
+      "links": [
+        {
+          "label": "Explore the universities",
+          "url": "universities.html"
+        }
+      ],
+      "evidence": null
+    },
+    {
+      "id": "student-experiences-section",
+      "version": "v0.9",
+      "date": null,
+      "title": "Student Experiences",
+      "summary": "Read what EU-HEM students and alumni say about study, tracks, mobility, housing, thesis work and careers, and draft your own experience to share later.",
+      "category": "community",
+      "type": "new",
+      "status": "draft",
+      "highlights": [
+        "Stories come from interviews published by the partner universities, each with its date and source.",
+        "Search by name, city, topic or advice."
+      ],
+      "links": [
+        {
+          "label": "Read student experiences",
+          "url": "experiences.html"
+        }
+      ],
+      "evidence": null
+    },
+    {
       "id": "homepage-and-menu",
       "version": "v0.9",
       "date": "2026-10-06",

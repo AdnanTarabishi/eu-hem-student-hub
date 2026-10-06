@@ -362,3 +362,15 @@ repository. Students can download a backup and restore it on another device from
 Any item can have `"sample": true` (in front matter: `sample: true`). It shows a grey
 "Sample" tag, and the course page shows a "Sample content" banner. Remove it, or delete the
 sample items, when real content replaces them.
+
+
+### Current Health Economics interactive activities
+`demand-curve`, `consumer-surplus`, `arc-elasticity`, `full-price`, and `cost-sharing` are rendered by `lecture-activities.js`.
+
+
+### Current Health Economics Session 4 interactive activities
+`causal-directions`, `disparity-theories`, `stress-depreciation`, and `policy-mechanism` are rendered by `lecture-activities.js`.
+
+
+### Current Health Economics Session 5 interactive activities
+`agency-map`, `pid-forces`, `physician-payment`, and `practice-variation` are rendered by `lecture-activities.js`.

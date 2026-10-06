@@ -75,12 +75,12 @@ ok("no standalone-preview leftovers: one menu script, no demo dashboard text, no
 
     assert.strictEqual(await page.locator("#city-cards .city-card").count(), 4);
     assert.strictEqual(await page.locator("#city-cards .city-card-photo img").count(), 4);
-    assert.strictEqual(await page.locator(".eh-resource").count(), 6);
-    for (const href of ["tracks.html", "notes.html", "thesis.html", "academic-rules.html", "journey.html", "support.html"]) {
+    assert.strictEqual(await page.locator(".eh-resource").count(), 7);
+    for (const href of ["tracks.html", "universities.html", "notes.html", "thesis.html", "academic-rules.html", "journey.html", "support.html"]) {
       assert.strictEqual(await page.locator(`.eh-resource a[href="${href}"]`).count(), 1, href);
     }
     assert.strictEqual(await page.locator("#roadmap-preview .roadmap-preview-latest li").count(), 3);
-    ok("city cards with the guide photos, six resource cards (incl. Academic Rules, Programme Journey, Support), roadmap preview");
+    ok("city cards with the guide photos, seven resource cards (incl. Universities, Academic Rules, Programme Journey, Support), roadmap preview");
 
     // --- Live data unavailable: honest messages, the exam period from programme.json still shows ---
     await page.locator("#dash-today .dash-empty").waitFor({ timeout: 30000 });
