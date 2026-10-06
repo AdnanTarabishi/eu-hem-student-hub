@@ -86,6 +86,10 @@ as JSON and Markdown files. Adding content never requires code changes.
 - Easiest way to write a flashcard, question, concept or resource: the form at `create.html`
 - Features: topic notes with formulas and diagrams, spaced-repetition flashcards, quizzes,
   progress tracking and search. Progress is saved only in each student's browser.
+- The Notes library has a personal study snapshot, filters for content and teaching period,
+  a saved-study-plan filter, course bookmarks and a remembered grid/list layout. Its styles
+  live in `notes-landing.css`; the existing shared data and progress formats are unchanged.
+- Check the library's interactions, responsive layouts and offline reload: `npm run test:notes`.
 - Check content before committing: `node scripts/check-content.js`
 
 ## Announcements
