@@ -5,7 +5,12 @@
     "type": "mcq",
     "difficulty": "easy",
     "question": "The price elasticity of demand for doctor visits is -0.2. If the price of a visit rises by 10%, the number of visits will:",
-    "options": ["Fall by about 20%", "Fall by about 2%", "Rise by about 2%", "Not change at all"],
+    "options": [
+      "Fall by about 20%",
+      "Fall by about 2%",
+      "Rise by about 2%",
+      "Not change at all"
+    ],
     "answer": "B",
     "explanation": "% change in quantity = elasticity × % change in price = -0.2 × 10% = -2%. Visits fall by about 2%. Demand is inelastic, but not zero.",
     "sample": true
@@ -16,7 +21,12 @@
     "type": "mcq",
     "difficulty": "medium",
     "question": "Which of these is a form of demand-side cost-sharing?",
-    "options": ["Capitation payments to family doctors", "A copayment for each doctor visit", "A fixed yearly budget for a hospital", "Paying hospitals per diagnosis (DRGs)"],
+    "options": [
+      "Capitation payments to family doctors",
+      "A copayment for each doctor visit",
+      "A fixed yearly budget for a hospital",
+      "Paying hospitals per diagnosis (DRGs)"
+    ],
     "answer": "B",
     "explanation": "Demand-side cost-sharing makes patients pay part of the cost when they use care, for example a copayment. The other options change how providers are paid, so they are supply-side tools.",
     "sample": true
@@ -60,5 +70,256 @@
     "answer": "People value health itself. Health care is demanded because it helps produce health, so its demand is derived from the demand for health.",
     "explanation": "This idea comes from the Grossman model, where health is a stock (health capital) and health care is one of the inputs people use to maintain or improve it.",
     "sample": true
+  },
+  {
+    "id": "fund-health-economics.q.007",
+    "topic": "fund-health-economics.session-1",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Core economic thinking",
+    "source": "EU-HEM Hub original practice · Session 1",
+    "question": "A regional government funds an emergency-department expansion instead of a prevention programme. The health benefits that could have been produced by the prevention programme are best described as:",
+    "options": [
+      "Consumer surplus",
+      "Opportunity cost",
+      "An externality",
+      "Adverse selection"
+    ],
+    "answer": "B",
+    "explanation": "Opportunity cost is the value of the best alternative given up. Choosing one programme means the resources cannot be used for the best forgone alternative."
+  },
+  {
+    "id": "fund-health-economics.q.008",
+    "topic": "fund-health-economics.session-1",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Healthcare expenditure",
+    "source": "EU-HEM Hub original practice · Session 1",
+    "question": "Which measure tells you how large healthcare spending is relative to the size of a country's economy?",
+    "options": [
+      "Healthcare expenditure per capita",
+      "Healthcare expenditure as a share of GDP",
+      "Population density",
+      "Life expectancy"
+    ],
+    "answer": "B",
+    "explanation": "HCE/GDP expresses healthcare expenditure as a share of total economic output. Per-capita expenditure instead relates spending to population."
+  },
+  {
+    "id": "fund-health-economics.q.009",
+    "topic": "fund-health-economics.session-1",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Why healthcare is different",
+    "source": "EU-HEM Hub original practice · Session 1",
+    "question": "A patient depends on a physician to identify the diagnosis and recommend treatment. Which feature of healthcare does this most directly illustrate?",
+    "options": [
+      "Information asymmetry",
+      "Perfect competition",
+      "Risk neutrality",
+      "Economies of scale"
+    ],
+    "answer": "A",
+    "explanation": "The physician usually has information and expertise that the patient does not, so the two sides do not enter the transaction with equal information."
+  },
+  {
+    "id": "fund-health-economics.q.010",
+    "topic": "fund-health-economics.session-1",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Uncertainty and insurance",
+    "source": "EU-HEM Hub original practice · Session 1",
+    "question": "Why does uncertainty help explain the prominent role of insurance in healthcare?",
+    "options": [
+      "Illness and medical costs are perfectly predictable",
+      "People face uncertain needs and potentially large future healthcare costs",
+      "Insurance removes all scarcity",
+      "Providers always charge the same price"
+    ],
+    "answer": "B",
+    "explanation": "The timing of illness, required treatment, cost and outcome may all be uncertain. Insurance helps pool and finance that financial risk."
+  },
+  {
+    "id": "fund-health-economics.q.011",
+    "topic": "fund-health-economics.session-1",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Externalities",
+    "source": "EU-HEM Hub original practice · Session 1",
+    "question": "A vaccination protects the vaccinated person and also reduces infection risk for other people. Which concept is especially relevant?",
+    "options": [
+      "Externality",
+      "Opportunity cost",
+      "Price discrimination",
+      "Supplier-induced demand"
+    ],
+    "answer": "A",
+    "explanation": "An externality exists when an action creates a cost or benefit for people other than the person making the decision."
+  },
+  {
+    "id": "fund-health-economics.q.012",
+    "topic": "fund-health-economics.session-1",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Efficiency and equity",
+    "source": "EU-HEM Hub original practice · Session 1",
+    "question": "Which question is primarily an equity question rather than an efficiency question?",
+    "options": [
+      "Can the same health output be produced with fewer resources?",
+      "Which intervention gives the largest extra health gain per additional euro?",
+      "How should access to essential treatment be distributed across income groups?",
+      "Can waste be reduced without making anyone worse off?"
+    ],
+    "answer": "C",
+    "explanation": "Equity is about fairness in distribution. The other options focus mainly on using resources efficiently."
+  },
+  {
+    "id": "fund-health-economics.q.013",
+    "topic": "fund-health-economics.session-1",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Government",
+    "source": "EU-HEM Hub original practice · Session 1",
+    "question": "A government directly owns and operates hospitals. Which role from Session 1 does this illustrate most directly?",
+    "options": [
+      "Provider",
+      "Patient",
+      "Consumer only",
+      "Research participant"
+    ],
+    "answer": "A",
+    "explanation": "The lecture distinguishes government roles as regulator, insurer and provider. Operating hospitals is the provider role."
+  },
+  {
+    "id": "fund-health-economics.q.014",
+    "topic": "fund-health-economics.session-1",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Medical-care triad",
+    "source": "EU-HEM Hub original practice · Session 1",
+    "question": "Which set contains the three actors in the medical-care triad used in the course?",
+    "options": [
+      "Patient, provider, insurer/government",
+      "Patient, university, employer",
+      "Provider, researcher, manufacturer",
+      "Government, court, university"
+    ],
+    "answer": "A",
+    "explanation": "The Session 1 framework organizes many later topics around interactions among patients, healthcare providers and insurers/government."
+  },
+  {
+    "id": "fund-health-economics.q.015",
+    "topic": "fund-health-economics.session-1",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Value of healthcare",
+    "source": "EU-HEM Hub original practice · Session 1",
+    "question": "Which statement best describes marginal productivity of healthcare expenditure?",
+    "options": [
+      "The average health outcome associated with all past spending",
+      "The extra health benefit associated with an additional unit of spending",
+      "The fairness of the healthcare financing system",
+      "The share of spending paid out of pocket"
+    ],
+    "answer": "B",
+    "explanation": "Marginal analysis focuses on the additional benefit from one more unit of resources, not the average benefit of the whole system."
+  },
+  {
+    "id": "fund-health-economics.q.016",
+    "topic": "fund-health-economics.session-1",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Health-system models",
+    "source": "EU-HEM Hub original practice · Session 1",
+    "question": "In the broad teaching framework used in Session 1, which model combines compulsory insurance, mainly private providers and substantial government regulation of prices?",
+    "options": [
+      "Beveridge",
+      "Bismarck",
+      "Cash-based",
+      "Pure out-of-pocket"
+    ],
+    "answer": "B",
+    "explanation": "The lecture uses Bismarck as the broad model with compulsory insurance, private providers and strong regulation. Real systems are more complex than these teaching categories."
+  },
+  {
+    "id": "fund-health-economics.q.017",
+    "topic": "fund-health-economics.session-1",
+    "type": "true-false",
+    "difficulty": "easy",
+    "question": "If health is extremely valuable, opportunity cost becomes irrelevant.",
+    "answer": false,
+    "explanation": "False. Producing health still uses scarce staff, time, equipment and money that could have been used for other valuable purposes."
+  },
+  {
+    "id": "fund-health-economics.q.018",
+    "topic": "fund-health-economics.session-1",
+    "type": "true-false",
+    "difficulty": "easy",
+    "question": "Higher healthcare expenditure necessarily produces proportionally larger health improvements.",
+    "answer": false,
+    "explanation": "False. Session 1 distinguishes spending from outcomes and introduces the idea that marginal productivity can decline."
+  },
+  {
+    "id": "fund-health-economics.q.019",
+    "topic": "fund-health-economics.session-1",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "Insurance can change behaviour because it changes the financial incentives faced by patients and providers.",
+    "answer": true,
+    "explanation": "True. The course introduces insurance not only as financial protection but also as an institution that changes incentives."
+  },
+  {
+    "id": "fund-health-economics.q.020",
+    "topic": "fund-health-economics.session-1",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "An allocation can be economically efficient and still raise equity concerns.",
+    "answer": true,
+    "explanation": "True. Efficiency and fairness are distinct criteria; an allocation can avoid waste yet distribute resources very unequally."
+  },
+  {
+    "id": "fund-health-economics.q.021",
+    "topic": "fund-health-economics.session-1",
+    "type": "true-false",
+    "difficulty": "easy",
+    "question": "Out-of-pocket payment means that the patient pays the provider directly rather than relying entirely on a third-party payer for that payment.",
+    "answer": true,
+    "explanation": "True. Out-of-pocket payment is direct payment by the patient at or around the point of care."
+  },
+  {
+    "id": "fund-health-economics.q.022",
+    "topic": "fund-health-economics.session-1",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "Why can health be described as 'priceless' while health economics still asks how resources should be allocated?",
+    "answer": "Health can be extremely valuable while the resources used to produce and protect it remain scarce. Choosing one health intervention uses staff, money and time that cannot simultaneously be used elsewhere, so trade-offs and opportunity costs remain unavoidable.",
+    "explanation": "A strong answer separates the value of health from the scarcity of the inputs used to produce health."
+  },
+  {
+    "id": "fund-health-economics.q.023",
+    "topic": "fund-health-economics.session-1",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "Explain why information asymmetry can make the healthcare market different from a normal retail transaction.",
+    "answer": "Patients often cannot independently diagnose themselves or evaluate the appropriate treatment. They rely on providers for both advice and care, so the provider has an information advantage and may influence the patient's choices.",
+    "explanation": "Connect the information gap to the later course topic of physician agency."
+  },
+  {
+    "id": "fund-health-economics.q.024",
+    "topic": "fund-health-economics.session-1",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "Why might health economists look at both healthcare expenditure per capita and healthcare expenditure as a percentage of GDP?",
+    "answer": "Per-capita expenditure shows the scale of healthcare resources relative to population, while HCE/GDP shows the priority or economic share devoted to healthcare. Countries with similar incomes can still devote different shares of their economies to care.",
+    "explanation": "The measures answer different questions, so neither replaces the other."
+  },
+  {
+    "id": "fund-health-economics.q.025",
+    "topic": "fund-health-economics.session-1",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "A policy improves access for a disadvantaged group but requires additional resources and may reduce activity elsewhere in the health system. Which two broad economic criteria should be discussed?",
+    "answer": "Equity and efficiency. Equity asks whether the new distribution of access is fairer; efficiency asks how the policy changes total resource use, health gains and opportunity costs.",
+    "explanation": "The point is not to assume that equity and efficiency always conflict, but to analyse both explicitly."
   }
 ]
