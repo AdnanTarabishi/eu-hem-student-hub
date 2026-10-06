@@ -14,7 +14,7 @@
   const GROUPS = [
     ["page", "Pages"], ["course", "Courses"], ["topic", "Notes"], ["concept", "Key concepts"],
     ["flashcard", "Flashcards"], ["question", "Questions"], ["resource", "Resources"],
-    ["announcement", "Announcements"], ["guide", "City Guide"], ["rules", "Programme and rules"],
+    ["announcement", "Announcements"], ["guide", "City Guide"], ["experience", "Student Experiences"], ["rules", "Programme and rules"],
     ["update", "Released updates"], ["roadmap", "Roadmap plans (not available yet)"],
   ];
 
@@ -41,6 +41,13 @@
       for (const item of entry.items || [entry]) add("page", item.label, item.href, "", entry.items ? entry.label : "");
     }
     add("page", "Create an item", "create.html", "write flashcard question concept resource contribute");
+    // Student Experiences: curated public university-source overviews only.
+    add("experience", "Learning by doing, with the mountains in view", "experiences.html?story=hanna-lichter#stories", "Hanna Lichter MCI Innsbruck Bologna Oslo study thesis track Management of Healthcare Institutions practical teaching");
+    add("experience", "From medicine to a broader view of healthcare", "experiences.html?story=skander-essafi#stories", "Skander Essafi MCI Bologna Innsbruck Rotterdam Population Health Management mobility study track thesis medicine");
+    add("experience", "Finding your footing between cities and classrooms", "experiences.html?story=elke-van-gorp#stories", "Elke van Gorp MCI Bologna Innsbruck Rotterdam housing mobility study thesis");
+    add("experience", "Taking an international degree into digital health", "experiences.html?story=susanne-cornelis-klitsie#stories", "Susanne Cornelis-Klitsie Erasmus Rotterdam Innsbruck digital health career study community alumni");
+    add("experience", "A wider perspective and a wider network", "experiences.html?story=remy-lesuis#stories", "Remy Lesuis Erasmus healthcare systems network conference internship study career community");
+    add("experience", "Seeing healthcare through other perspectives", "experiences.html?story=frank-bisselink#stories", "Frank Bisselink Erasmus multidisciplinary international study community career");
 
     // Notes & Resources and courses (reuses notes-data.js)
     try {
@@ -204,7 +211,7 @@
     results = search(query);
     active = 0;
     if (!query.trim()) {
-      status.textContent = "Type to search pages, courses, notes, flashcards, announcements, the City Guide and the roadmap.";
+      status.textContent = "Type to search pages, courses, notes, flashcards, announcements, the City Guide, student experiences and the roadmap.";
       return;
     }
     status.textContent = results.length ? `${results.length} result${results.length === 1 ? "" : "s"}` : `No results for “${query}”`;
