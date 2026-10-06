@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "note": "Every fact taken from a document points to one of these ids. The documents themselves are not published here (they are not public); 'link' is the official page to send students to. Format and labels: docs/sources.md",
+  "priority": ["official-handbook", "official-university-page", "official-letter", "student-reps", "esn-guide"],
+  "priorityNote": "When sources disagree: cohort-specific official document > official university page > EU-HEM website > student representatives > ESN. A live official web page is checked first for prices and course codes, because documents go out of date.",
+  "types": {
+    "official-handbook": { "label": "Official", "kind": "official" },
+    "official-university-page": { "label": "Official", "kind": "official" },
+    "official-letter": { "label": "Official", "kind": "official" },
+    "student-reps": { "label": "Student tip", "kind": "tip" },
+    "esn-guide": { "label": "Student tip", "kind": "tip" }
+  },
+  "sources": [
+    {
+      "id": "euhem-handbook-2026",
+      "title": "EU-HEM Student Handbook",
+      "shortTitle": "EU-HEM Handbook",
+      "type": "official-handbook",
+      "cohort": "2026-2028",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "EU-HEM course website (University of Bologna)", "url": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement" }
+    },
+    {
+      "id": "unibo-welcome-letter-2026",
+      "title": "University of Bologna welcome letter, 12 May 2026",
+      "shortTitle": "UniBo welcome letter",
+      "type": "official-letter",
+      "cohort": "2026-2028",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "EU-HEM course website (University of Bologna)", "url": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement" }
+    },
+    {
+      "id": "welcome-days-2026",
+      "title": "EU-HEM Welcome Days 2026, Day 1 presentation",
+      "shortTitle": "Welcome Days 2026",
+      "type": "official-handbook",
+      "cohort": "2026-2028",
+      "lastChecked": "2026-10-06"
+    },
+    {
+      "id": "student-reps-2026",
+      "title": "Student Assistance Programme presentation by the EU-HEM student representatives, 2026",
+      "shortTitle": "EU-HEM student reps",
+      "type": "student-reps",
+      "cohort": "2026-2028",
+      "lastChecked": "2026-10-06"
+    },
+    {
+      "id": "esn-bologna-guide-2026",
+      "title": "ESN Bologna Survival Guide 2026/27",
+      "shortTitle": "ESN Bologna",
+      "type": "esn-guide",
+      "cohort": "2026-2027",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "ESN Bologna", "url": "https://esnbologna.org" }
+    }
+  ]
+}

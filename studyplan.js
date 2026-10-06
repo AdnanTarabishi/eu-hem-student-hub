@@ -126,6 +126,13 @@ function adviceBox(group) {
   return details;
 }
 
+// A short note under a group heading, with its "Official · …" label (sources.json)
+function groupNote(note) {
+  const paragraph = createElement("p", "schedule-meta plan-group-note", `${note.text} `);
+  loadSources().then((sources) => paragraph.appendChild(sourceLabel(note.source, sources)));
+  return paragraph;
+}
+
 function renderChooseView() {
   const { term, plan } = planPage;
   for (const group of term.groups) {
@@ -135,6 +142,7 @@ function renderChooseView() {
     head.appendChild(createElement("h3", null, group.label));
     head.appendChild(createElement("span", "schedule-meta", groupRuleText(group)));
     section.appendChild(head);
+    if (group.note) section.appendChild(groupNote(group.note));
 
     const optionalFull = group.kind === "optional" && plan.choices[group.id].length >= (group.max ?? Infinity);
     for (const code of group.courses) {

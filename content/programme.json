@@ -55,6 +55,10 @@
               "min": 0,
               "max": 2,
               "countsTowardRequired": false,
+              "note": {
+                "text": "Crash courses are optional refreshers. They show 3 CFU on the UniBo course page, but they do not count towards the 120 credits of the degree.",
+                "source": "euhem-handbook-2026"
+              },
               "courses": [
                 "B1076",
                 "97484"

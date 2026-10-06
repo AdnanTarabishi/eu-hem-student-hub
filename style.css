@@ -9477,3 +9477,37 @@ main > :is(.page-intro, .notes-hero, .tracks-hero, .thesis-intro, .sx-hero):firs
   border-radius: inherit;
   background: #e7845f;
 }
+
+/* ----- Source labels (utils.js → sourceLabel): Official vs Student tip, always written out ----- */
+.source-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 100%;
+  padding: 1px 9px;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  line-height: 1.6;
+  vertical-align: middle;
+  overflow-wrap: anywhere;
+}
+
+.source-badge::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.source-badge.is-official {
+  background: var(--info-bg);
+  color: var(--pill-blue-text);
+}
+
+.source-badge.is-tip {
+  background: var(--warning-bg);
+  color: var(--warning);
+}

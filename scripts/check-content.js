@@ -493,8 +493,9 @@ function checkCityGuides() {
         return;
       }
       for (const tag of guides.sourceTags(line)) used.add(tag);
-      if (/\b(NOK|EUR|kr)\b|€/.test(line) && /\d/.test(line) && !guides.sourceTags(line).length) {
-        error(at, `a price without a source tag like [S12]: "${line.trim().slice(0, 70)}"`);
+      const markers = checkSourceMarkers(line, at);
+      if (/\b(NOK|EUR|kr)\b|€/.test(line) && /\d/.test(line) && !guides.sourceTags(line).length && !markers) {
+        error(at, `a price without a source tag like [S12] or {tip:source-id}: "${line.trim().slice(0, 70)}"`);
       }
       const track = trackNames.find((name) => new RegExp(`(^|[^\\w&])${name.replace("&", "\\&")}([^\\w&]|$)`).test(line));
       if (track && !line.startsWith("<!--")) {
@@ -694,6 +695,63 @@ function checkStudents() {
   for (const file of ["students.css", "students-config.js", "students-data.js", "countries.js", "assets/map/world-countries.svg"]) {
     if (!sw.includes(`"${file}"`)) error("sw.js", `SITE_FILES is missing "${file}"`);
   }
+}
+
+// ----- Sources (content/sources.json, docs/sources.md) -----
+// Every fact taken from a document points to a source id. The registry must be complete, and every
+// "source" in the files below (at any depth) and every {official:id} / {tip:id} marker in a city guide
+// must name a listed id of the right kind.
+const SOURCES_FILE = "content/sources.json";
+const SOURCED_FILES = ["content/programme.json"];
+const SOURCE_MARKER = /\{(official|tip):([a-z0-9-]+)\}/g;
+let sourceRegistry = null; // id -> { kind, ... }, filled by checkSources()
+
+function checkSources() {
+  const file = JSON.parse(fs.readFileSync(path.join(ROOT, SOURCES_FILE), "utf8"));
+  const today = new Date().toISOString().slice(0, 10);
+  sourceRegistry = new Map();
+  for (const type of file.priority || []) {
+    if (!file.types?.[type]) error(SOURCES_FILE, `priority lists "${type}", which is not in "types"`);
+  }
+  for (const [type, info] of Object.entries(file.types || {})) {
+    if (!["official", "tip"].includes(info.kind)) error(SOURCES_FILE, `type "${type}": kind must be "official" or "tip"`);
+    if (!info.label) error(SOURCES_FILE, `type "${type}" has no label`);
+  }
+  for (const [i, source] of (file.sources || []).entries()) {
+    const where = `${SOURCES_FILE} source ${source.id || `#${i + 1}`}`;
+    if (!ID_PATTERN.test(source.id || "")) { error(where, "needs an id like \"esn-bologna-guide-2026\""); continue; }
+    if (sourceRegistry.has(source.id)) error(where, "id is used twice");
+    const type = file.types?.[source.type];
+    if (!type) error(where, `type "${source.type}" is not in "types"`);
+    requireText(source, "title", where);
+    if (!DATE_PATTERN.test(source.lastChecked || "") || source.lastChecked > today) error(where, "lastChecked must be a past date YYYY-MM-DD");
+    if (source.link) checkUrl(source.link.url, "link.url", where);
+    sourceRegistry.set(source.id, { ...source, kind: type?.kind });
+  }
+
+  for (const relative of SOURCED_FILES) {
+    const visit = (value, at) => {
+      if (Array.isArray(value)) return value.forEach((item, i) => visit(item, `${at}[${i}]`));
+      if (!value || typeof value !== "object") return;
+      for (const [key, inner] of Object.entries(value)) {
+        if (key === "source" && !sourceRegistry.has(inner)) {
+          error(relative, `${at}.source "${inner}" is not an id in ${SOURCES_FILE}`);
+        } else visit(inner, `${at}.${key}`);
+      }
+    };
+    visit(JSON.parse(fs.readFileSync(path.join(ROOT, relative), "utf8")), "");
+  }
+}
+
+// The {official:id} / {tip:id} markers of one guide line; problems are reported at "at"
+function checkSourceMarkers(line, at) {
+  const found = [...line.matchAll(SOURCE_MARKER)];
+  for (const [marker, kind, id] of found) {
+    const source = sourceRegistry?.get(id);
+    if (!source) error(at, `${marker}: "${id}" is not an id in ${SOURCES_FILE}`);
+    else if (source.kind !== kind) error(at, `${marker}: "${id}" is a${source.kind === "official" ? "n official source" : " student tip"}, write {${source.kind}:${id}}`);
+  }
+  return found.length;
 }
 
 // Roadmap & Updates: one set of rules in roadmap-data.js (docs/roadmap.md)
@@ -921,6 +979,7 @@ async function main() {
   checkRoadmap();
 
   // --- City guides (docs/content/<city>-guide.md) ---
+  checkSources(); // before the guides: they use its ids
   checkCityGuides();
 
   // --- topics (first, so everything else can link to them) ---

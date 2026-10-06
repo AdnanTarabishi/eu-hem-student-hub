@@ -7,14 +7,14 @@ currency: EUR (euro)
 cost-vs-bologna: This is Bologna, the city the other guides compare with
 compare-rent: About €585 a month on average for a room (Immobiliare.it data, August 2026) [S8]
 compare-budget: No current official estimate. UniBo's living-costs page has no date and is out of date [S9]; rent alone averages about €585 [S8]
-compare-transport: €2.30 per 75-minute ticket; UniBo's annual student pass is €161 if under 27, €187 if 27 or older [S10][S12]
+compare-transport: €2.30 per 75-minute ticket; UniBo's annual student pass is €161 for master's students at any age [S10][S12]
 compare-permit-non-eu: Study visa before you travel, then apply for the residence permit at the post office within 8 days of arrival [S2]
 compare-registration: Non-EU: residence permit within 8 days; EU: Anagrafe if staying over 3 months (details not verified) [S2]
 compare-health-eu: EHIC; you may pay a small contribution (ticket) [S3]
 compare-health-non-eu: SSN registration at least €700 per calendar year, or private insurance [S3]
 compare-emergency: 112; 118 ambulance [S4]
 compare-climate: About 3.5 °C in January, 25.5 °C in July [S18]
-compare-age-limits: UniBo bus pass €161 under 27, €187 from 27 [S10]
+compare-age-limits: None for EU-HEM: the UniBo bus pass is €161 for master's students at any age (the €187 price from age 27 is for PhD and specialisation students) [S10]
 ---
 # Bologna — City Guide for EU-HEM Students
 
@@ -102,6 +102,7 @@ For students whose track brings them back to Bologna after Semester 2 abroad (se
 ## 5. Housing
 
 - **What it costs:** in August 2026 the average room in Bologna cost about **€585 a month**, 7.5% less than a year before (Immobiliare.it data reported by Il Giorno) [S8]. UniBo's own page still says €400 for a single room and €300 for a shared room, but it has no date and other prices on it are out of date [S9].
+- **What students pay:** the EU-HEM student representatives put the usual price at **€550–800 a month**. Sharing a room is common, and not every flat has a dishwasher. Outside the old city walls, San Donato, San Vitale and Mazzini are the closest areas to the university {tip:student-reps-2026}.
 - **ER.GO residences:** subsidised rooms through a yearly call, open to students enrolling in degree programmes [S7].
 - **SAIS:** free housing help for international students [S7].
 - **Vetrina Alloggi** (Accommodation Showcase): private rentals whose details UniBo and ER.GO check [S7].
@@ -114,7 +115,7 @@ For students whose track brings them back to Bologna after Semester 2 abroad (se
 ## 6. Getting around
 
 - **TPER** runs the buses. A single urban ticket costs **€2.30** and is valid **75 minutes** after validation; on board it costs **€2.50**. The 10-ride **City Pass** costs **€1.90 a ride** [S12]. You can also pay by tapping a contactless card on board [S12].
-- **UniBo annual bus pass:** **€161** for master's students **under 27**, **€187** for those **27 or older** [S10]. Buy it in **Studenti Online** until **15 December 2026**, while funds last, and collect it at the TPER ticket office, **Via Marconi 4** [S10].
+- **UniBo annual bus pass:** **€161** for master's students like EU-HEM, **at any age**. The higher €187 price from age 27 applies only to PhD, specialisation and university "Master" students [S10]. Older documents (and the handbook) mention €154; that was last year's price. Buy it in **Studenti Online** until **15 December 2026**, while funds last, and collect it at the TPER ticket office, **Via Marconi 4** [S10].
 - **Extra €100 discount:** UniBo runs a yearly call for students with an ISEE (Italian income indicator) up to €35,000. For 2026/27 the deadline was 24 September 2026 [S10]. Next cohorts: watch for it in September.
 - **Airport (Bologna Marconi):** the **Marconi Express** to Bologna Centrale takes about 7 minutes and costs **€12.80** one way [S13].
 - **Trains:** Bologna Centrale is a major rail hub (Trenitalia and Italo). UniBo students get the Trenitalia **Welfare PLUS** offer and discounted **Itabus** coach fares [S11].
@@ -132,10 +133,10 @@ For students whose track brings them back to Bologna after Semester 2 abroad (se
 
 | Item | Amount |
 |---|---|
-| Room (average, August 2026) | about **€585 a month** [S8] |
+| Room (average, August 2026) | about **€585 a month** [S8]; students report **€550–800** {tip:student-reps-2026} |
 | UniBo canteen, full meal | **€4.50–€6.00** (UniBo page, undated) [S9] |
 | Groceries for one week | about **€60** (UniBo page, undated) [S9] |
-| Bus | **€2.30** a ticket, or the UniBo annual pass **€161 / €187** [S10][S12] |
+| Bus | **€2.30** a ticket, or the UniBo annual pass **€161** [S10][S12] |
 | Residence permit (non-EU, once) | about **€116.46** [S2] |
 | SSN registration (non-EU) | at least **€700 a year** [S3] |
 
