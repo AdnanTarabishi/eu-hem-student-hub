@@ -1143,7 +1143,7 @@ async function main() {
     for (const field of ["contributeFormUrl", "reportErrorFormUrl"]) {
       const url = settings[field];
       if (url && !/^https:\/\//.test(url)) error("content/settings.json", `"${field}" must start with https://`);
-      if (!url) warn("content/settings.json", `"${field}" is empty, so the button shows "form coming soon"`);
+      if (!url) warn("content/settings.json", `"${field}" is empty, so the button opens the Contact page`);
     }
   }
 

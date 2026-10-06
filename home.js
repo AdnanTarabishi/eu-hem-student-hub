@@ -343,6 +343,7 @@ async function fillRoadmapPreview() {
     // Stage, releases shipped (counted from updates.json) and the season of the full Hub (roadmap.json)
     const parts = [
       plan.release && `${plan.release.stage} ${plan.release.version}`,
+      plan.vision && plan.vision.progressPercent !== null && `about ${plan.vision.progressPercent}% of the full plan built`,
       updates && R.releaseCount(updates).text,
       plan.vision && `full Hub: ${plan.vision.targetLabel}`,
     ].filter(Boolean);

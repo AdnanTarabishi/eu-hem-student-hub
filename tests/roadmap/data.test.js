@@ -84,13 +84,13 @@ t("every evidence commit exists in this repository's history", () => {
   }
 });
 
-t("progress: releases counted from updates.json, the full Hub in Spring 2027 (no percentage)", () => {
+t("progress: about 15% of the full plan (the team's estimate), releases counted from updates.json, the full Hub in Spring 2027", () => {
   const vision = R.readRoadmap(roadmap).vision;
   assert.strictEqual(vision.targetLabel, "Spring 2027");
-  assert.strictEqual(vision.progressPercent, undefined);
+  assert.strictEqual(vision.progressPercent, 15);
   assert.deepStrictEqual(R.releaseCount(updates), { count: 18, since: "2026-10-01", text: "18 releases shipped since 1 Oct 2026" });
   assert.strictEqual(R.releaseCount(withDraft).count, 18, "drafts are not counted");
-  const bad = clone(roadmap); bad.vision.progressPercent = 10; fails(bad, updates, /no longer used/);
+  const bad = clone(roadmap); bad.vision.progressPercent = 150; fails(bad, updates, /whole number from 0 to 100/);
   const bad2 = clone(roadmap); delete bad2.vision.targetLabel; fails(bad2, updates, /targetLabel/);
 });
 t("release: Beta v0.9, next v1.0 Public Launch on 15 Oct 2026 (a target), with what it contains", () => {
@@ -112,9 +112,9 @@ t("versions: every release has one, by release day; the newest first for the fil
   assert.deepStrictEqual(R.updateVersions(updates), ["v0.9", "v0.5", "v0.4", "v0.3", "v0.1"]);
   const u = clone(updates); delete u.items.find((i) => i.status === "published").version; fails(roadmap, u, /needs a version/);
 });
-t("milestones: the cohort beta is still planned (9 Oct), the public launch planned for 15 Oct", () => {
+t("milestones: the cohort beta is planned for today (6 Oct), the public launch planned for 15 Oct", () => {
   const ms = Object.fromEntries(roadmap.milestones.map((m) => [m.id, [m.date, m.status]]));
-  assert.deepStrictEqual(ms["first-cohort-beta"], ["2026-10-09", "planned"]);
+  assert.deepStrictEqual(ms["first-cohort-beta"], ["2026-10-06", "planned"]);
   assert.deepStrictEqual(ms["public-launch-v1"], ["2026-10-15", "planned"]);
 });
 t("known limitations, the domain move and the feedback link", () => {

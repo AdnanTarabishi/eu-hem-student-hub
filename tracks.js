@@ -493,7 +493,7 @@ function renderMyTrack(editing = false) {
     for (const semester of mine.semesters) {
       const uni = cityOf(semester.university);
       const li = createElement("li");
-      const a = createElement("a", null, `${uni.city} City Guide${uni.city === "Bologna" ? "" : " (coming soon)"} →`);
+      const a = createElement("a", null, `${uni.city} City Guide →`);
       a.href = uni.guide;
       li.appendChild(a);
       guides.appendChild(li);

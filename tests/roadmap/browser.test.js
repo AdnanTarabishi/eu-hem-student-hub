@@ -59,9 +59,10 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   assert.deepStrictEqual(await page.$$eval(".roadmap-window-label", (all) => all.map((h) => h.textContent)),
     ["October 2026", "November 2026", "November–December 2026", "After launch"]);
   assert.match(await text(page, ".roadmap-lane.is-next"), /Estimated periods, not promises/);
-  assert.strictEqual(await page.locator("#roadmap-vision [role=progressbar]").count(), 0, "no percentage bar");
+  assert.strictEqual(await page.getAttribute("#roadmap-vision [role=progressbar]", "aria-valuenow"), "15");
+  assert.match(await text(page, "#roadmap-vision"), /About 15% of the full plan built/);
   assert.match(await text(page, "#roadmap-vision"), /18 releases shipped since 1 Oct 2026.*Full Hub: Spring 2027/s);
-  ok("overview counts, two Now cards, Next by period with After launch, releases counted (no percentage), full Hub Spring 2027");
+  ok("overview counts, two Now cards, Next by period with After launch, about 15% of the full plan, releases counted, full Hub Spring 2027");
 
   // Release banner, What's in v1.0, the plan note, limitations, domain move, feedback
   assert.match(await text(page, "#roadmap-release"), /Beta\s*v0\.9.*Next: v1\.0 — Public Launch · target 15 October 2026.*target, not a promise/s);
@@ -246,8 +247,7 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   assert.strictEqual(await page.getAttribute(".roadmap-preview-now", "href"), "roadmap.html#feature-exam-prep");
   assert.deepStrictEqual(await page.$$eval(".roadmap-preview-latest a", (all) => all.map((a) => a.getAttribute("href"))),
     ["roadmap.html#update-interactive-study-sessions", "roadmap.html#update-universities-hub", "roadmap.html#update-student-experiences-section"]);
-  assert.strictEqual(await text(page, ".roadmap-preview-progress"), "Beta v0.9 · 18 releases shipped since 1 Oct 2026 · full Hub: Spring 2027");
-  assert.strictEqual(await page.locator(".roadmap-preview-bar").count(), 0, "no percentage bar");
+  assert.strictEqual(await text(page, ".roadmap-preview-progress"), "Beta v0.9 · about 15% of the full plan built · 18 releases shipped since 1 Oct 2026 · full Hub: Spring 2027");
   ok("homepage: current focus, stage, releases shipped and the three latest releases, from the same data");
 
   await page.keyboard.press("Control+k");

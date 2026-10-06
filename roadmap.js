@@ -226,9 +226,25 @@
     const shipped = R.releaseCount({ items: state.updates || [] });
     const head = el("div", "roadmap-vision-head");
     head.append(el("span", "roadmap-vision-title", vision.title), el("span", "roadmap-vision-count", shipped.text));
+    const parts = [head];
+    // The team's own estimate of the full plan (optional), as a small bar
+    if (vision.progressPercent !== null) {
+      const percent = vision.progressPercent;
+      const bar = el("div", "roadmap-vision-bar");
+      bar.setAttribute("role", "progressbar");
+      bar.setAttribute("aria-valuemin", "0");
+      bar.setAttribute("aria-valuemax", "100");
+      bar.setAttribute("aria-valuenow", String(percent));
+      bar.setAttribute("aria-label", `About ${percent}% of the full plan built (our estimate)`);
+      const fill = el("span", "roadmap-vision-fill");
+      fill.style.width = `${percent}%`;
+      bar.appendChild(fill);
+      parts.push(el("p", "roadmap-vision-percent", `About ${percent}% of the full plan built`), bar);
+    }
     const meta = el("p", "roadmap-vision-meta");
     meta.append(el("strong", null, `Full Hub: ${vision.targetLabel}`));
-    box.replaceChildren(head, meta, el("p", "roadmap-vision-note", vision.note));
+    parts.push(meta, el("p", "roadmap-vision-note", vision.note));
+    box.replaceChildren(...parts);
   }
 
   // Release stage (Beta · v0.9) and the next release with its target date

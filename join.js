@@ -15,6 +15,16 @@
   const STEP_COUNT = 3;
   const BIO_MAX = 350;
 
+  // While registration is switched off (no endpoint), say so before anyone starts filling in the form
+  if (!endpoint) {
+    const notice = document.createElement("p");
+    notice.className = "join-closed-notice";
+    notice.setAttribute("role", "status");
+    notice.innerHTML = "<strong>Registration is not open yet.</strong> You can look through the form, but it cannot be sent " +
+      "yet. Follow the <a href=\"announcements.html\">announcements</a> to hear when it opens.";
+    form.before(notice);
+  }
+
   const $ = (id) => document.getElementById(id);
   const steps = [...document.querySelectorAll(".form-step")];
   const stepLabels = [...document.querySelectorAll("[data-step-label]")];

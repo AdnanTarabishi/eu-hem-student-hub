@@ -1223,3 +1223,27 @@
 .roadmap-intro .roadmap-release .roadmap-release-stage,
 .roadmap-intro .roadmap-release strong { color: #fff !important; }
 .roadmap-intro .roadmap-release .roadmap-release-note { color: rgba(255, 255, 255, 0.72) !important; }
+
+/* The team's estimate of the full plan (roadmap.json → vision.progressPercent) */
+.roadmap-vision-percent {
+  margin: var(--space-3) 0 var(--space-1) !important;
+  font-size: var(--fs-small) !important;
+  font-weight: 600;
+  color: var(--color-heading);
+}
+
+.roadmap-vision-bar {
+  height: 8px;
+  margin-bottom: var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-muted);
+  overflow: hidden;
+}
+
+.roadmap-vision-fill {
+  display: block;
+  height: 100%;
+  min-width: 8px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--color-brand), var(--terracotta-700));
+}

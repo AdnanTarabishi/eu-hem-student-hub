@@ -39,8 +39,9 @@
   },
   "vision": {
     "title": "Towards the full Student Hub",
+    "progressPercent": 15,
     "targetLabel": "Spring 2027",
-    "note": "Progress is the number of releases shipped. Spring 2027 is the original plan for the full Hub, not a promise."
+    "note": "About 15% of the full plan is built: our own estimate. Releases are counted from the published updates. Spring 2027 is the original plan for the full Hub, not a promise."
   },
   "planningNote": "Dates are estimates, not promises: several Next items may progress together, and their order can change with student feedback. Items marked “After launch” and Later ideas have no dates yet.",
   "categories": [
@@ -570,7 +571,7 @@
     },
     {
       "id": "first-cohort-beta",
-      "date": "2026-10-09",
+      "date": "2026-10-06",
       "title": "First cohort beta",
       "summary": "EU-HEM students are invited to explore the beta. Their feedback will decide the next improvements.",
       "status": "planned"

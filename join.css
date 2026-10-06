@@ -983,3 +983,14 @@
   width: 28px;
   height: 28px;
 }
+
+/* Shown while registration is switched off (directory-config.js has no endpoint) */
+.join-closed-notice {
+  margin: 0 0 var(--space-4, 16px);
+  padding: 12px 16px;
+  border: 1px solid var(--warning, #b7791f);
+  border-left-width: 4px;
+  border-radius: var(--radius-md, 10px);
+  background: var(--warning-bg, #fff7e6);
+  color: var(--color-text);
+}

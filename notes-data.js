@@ -412,7 +412,7 @@ function searchSnippet(entry, query) {
 
 // ----- Small shared page helpers -----
 
-// A link button for a form setting. Empty link -> disabled "(form coming soon)" button.
+// A link button for a form setting. Empty link -> the Contact page, so the button always leads somewhere.
 function formButton(label, url, className = "button") {
   const button = createElement("a", className, label);
   if (url) {
@@ -420,9 +420,8 @@ function formButton(label, url, className = "button") {
     button.target = "_blank";
     button.rel = "noopener";
   } else {
-    button.textContent = `${label} (form coming soon)`;
-    button.setAttribute("aria-disabled", "true");
-    button.classList.add("is-disabled");
+    button.href = "contact.html";
+    button.title = "Send it through the Contact page";
   }
   return button;
 }

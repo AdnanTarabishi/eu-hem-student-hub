@@ -113,7 +113,11 @@ function validate(roadmap, updates, options = {}) {
       if (!vision || !isText(vision.title) || !isText(vision.note) || !isText(vision.targetLabel)) {
         error("roadmap.vision", "needs a title, a note and a targetLabel (e.g. \"Spring 2027\")");
       }
-      if (vision && vision.progressPercent !== undefined) error("roadmap.vision.progressPercent", "is no longer used: progress is counted from published updates");
+      // Optional: the team's own estimate of how much of the full plan is built (shown next to the release count)
+      if (vision && vision.progressPercent !== undefined &&
+        (!Number.isInteger(vision.progressPercent) || vision.progressPercent < 0 || vision.progressPercent > 100)) {
+        error("roadmap.vision.progressPercent", "must be a whole number from 0 to 100");
+      }
     }
     // Release stage and the next release (optional block)
     const release = roadmap.release;
@@ -253,7 +257,10 @@ function readRoadmap(data) {
   const items = (data.items || []).filter((item) => item && LANE_STATUSES[item.lane] && ROADMAP_STATUS[item.status] && isText(item.title))
     .map((item) => ({ ...item, links: (item.links || []).filter((l) => l && safeUrl(l.url)) }));
   const v = data.vision;
-  const vision = v && isText(v.title) && isText(v.targetLabel) ? { title: v.title, note: v.note, targetLabel: v.targetLabel } : null;
+  const vision = v && isText(v.title) && isText(v.targetLabel)
+    ? { title: v.title, note: v.note, targetLabel: v.targetLabel,
+      progressPercent: Number.isInteger(v.progressPercent) ? Math.min(100, Math.max(0, v.progressPercent)) : null }
+    : null;
   const r = data.release;
   const release = r && isText(r.stage) && VERSION_PATTERN.test(r.version || "") && r.next && isDate(r.next.targetDate)
     ? { stage: r.stage, version: r.version, note: r.note, next: { ...r.next, includes: (r.next.includes || []).filter((e) => e && isText(e.label)) } }
