@@ -1,6 +1,6 @@
 // ===== Site-wide search (Ctrl+K) =====
 // One search window for the whole site: pages, courses and modules, notes, flashcards,
-// questions, concepts, resources, announcements and City Guide sections.
+// questions, concepts, resources, announcements, City Guide sections, released updates and roadmap plans.
 // Open it with the 🔍 button, Ctrl+K (⌘K on Mac) or "/". Arrow keys move, Enter opens, Esc closes.
 // The search data is loaded only the first time the window opens, so pages stay fast.
 
@@ -15,6 +15,7 @@
     ["page", "Pages"], ["course", "Courses"], ["topic", "Notes"], ["concept", "Key concepts"],
     ["flashcard", "Flashcards"], ["question", "Questions"], ["resource", "Resources"],
     ["announcement", "Announcements"], ["guide", "City Guide"],
+    ["update", "Released updates"], ["roadmap", "Roadmap plans (not available yet)"],
   ];
 
   // Loads a script once (e.g. notes-data.js on pages that don't have it)
@@ -93,6 +94,20 @@
     } catch (error) {
       console.error("Search: guide", error);
     }
+    // Roadmap & Updates: published updates and roadmap plans (roadmap-data.js decides what is public).
+    // A plan's description always starts with its status, so it never looks like an available feature.
+    try {
+      await loadScript("roadmap-data.js");
+      const [roadmap, updates] = await Promise.all(["content/roadmap.json", "content/updates.json"].map(async (url) => {
+        const response = await fetch(url);
+        return response.ok ? response.json() : null;
+      }));
+      for (const entry of EUHEM_ROADMAP.searchEntries(roadmap, updates)) {
+        add(entry.type, entry.title, entry.url, entry.text, "", entry.meta);
+      }
+    } catch (error) {
+      console.error("Search: roadmap", error);
+    }
     return list;
   }
 
@@ -129,7 +144,7 @@
     results = search(query);
     active = 0;
     if (!query.trim()) {
-      status.textContent = "Type to search pages, courses, notes, flashcards, announcements and the City Guide.";
+      status.textContent = "Type to search pages, courses, notes, flashcards, announcements, the City Guide and the roadmap.";
       return;
     }
     status.textContent = results.length ? `${results.length} result${results.length === 1 ? "" : "s"}` : `No results for “${query}”`;

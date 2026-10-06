@@ -10,7 +10,7 @@
   <!-- Link to our stylesheet (controls colors, fonts, layout) -->
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/source-serif-4-latin-600.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=b0b6b3c7">
+  <link rel="stylesheet" href="style.css?v=b9162737">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -19,7 +19,7 @@
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <script src="theme.js?v=d51d4769"></script>
   <!-- Homepage settings (photo, cohort numbers) + starts the photo download early -->
-  <script src="home.js?v=9ab4a75a"></script>
+  <script src="home.js?v=7ffd20c2"></script>
 </head>
 <body class="home-page">
 
@@ -30,7 +30,7 @@
       <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
       <!-- site-nav.js builds the menu here (defined once for all pages) -->
       <nav class="site-nav" id="site-nav" data-current="home" aria-label="Main menu"></nav>
-      <script src="site-nav.js?v=773e0a34"></script>
+      <script src="site-nav.js?v=d17eb375"></script>
     </div>
   </header>
 
@@ -223,8 +223,24 @@
       </div>
     </section>
 
-    <!-- 7. Useful links (grouped) and about -->
-    <section class="section" aria-labelledby="links-title">
+    <!-- 7. Roadmap & Updates preview: current focus and the latest releases (home.js, from content/*.json) -->
+    <section class="section home-roadmap" id="home-roadmap" aria-labelledby="roadmap-preview-title">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-eyebrow">Roadmap &amp; updates</p>
+            <h2 id="roadmap-preview-title" class="section-title">What's new, and what's next</h2>
+          </div>
+          <a class="link-arrow" href="roadmap.html">See the full roadmap <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+        <div class="roadmap-preview" id="roadmap-preview">
+          <p class="placeholder">Loading the roadmap…</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Useful links (grouped) and about -->
+    <section class="section section-white" aria-labelledby="links-title">
       <div class="container home-links-grid">
         <div id="links">
           <p class="section-eyebrow">Useful links</p>
@@ -274,7 +290,7 @@
        utils.js comes first because the other two use its helpers. -->
   <script defer src="utils.js?v=ba40a359"></script>
   <script defer src="ui.js?v=6d55e433"></script>
-  <script defer src="search.js?v=5cf2db17"></script>
+  <script defer src="search.js?v=8af84713"></script>
   <script defer src="pwa.js?v=c9212bf8"></script>
   <script defer src="announcements.js?v=3ecd40f0"></script>
   <script defer src="programme.js?v=bc6eeb23"></script>
@@ -284,6 +300,7 @@
   <script defer src="dashboard.js?v=1d110f84"></script>
   <script defer src="onboarding.js?v=ae00e6f0"></script>
   <script defer src="tracks-data.js?v=629a5538"></script>
+  <script defer src="roadmap-data.js?v=108d4344"></script>
   <script defer src="students-data.js?v=0447923b"></script>
   <script defer src="guide-data.js?v=4c2fbe41"></script>
 
