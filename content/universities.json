@@ -822,7 +822,22 @@
         "monogram": "UB",
         "academicLabel": "Economics · DSE",
         "cardSummary": "A historic university setting, an economics foundation and a research community exploring health and public policy."
-      }
+      },
+      "gallery": [
+        {
+          "src": "img/universities/unibo-campus-960.webp",
+          "alt": "The brick courtyard of Palazzo Poggi in Bologna, with a central Hercules statue and a clock above its windows.",
+          "caption": "Palazzo Poggi courtyard, a historic University of Bologna setting. This is university heritage context, not an EU-HEM classroom.",
+          "label": "Palazzo Poggi courtyard",
+          "credit": "Phyrexian / Wikimedia Commons",
+          "author": "Phyrexian",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bologna_-_Palazzo_Poggi_3399.jpg",
+          "usageNote": "Historic university context; check the timetable for the actual EU-HEM teaching location.",
+          "changes": "Resized and recompressed to WebP; no creative scene changes."
+        }
+      ]
     },
     {
       "id": "uio",
@@ -1603,7 +1618,22 @@
         "monogram": "UiO",
         "academicLabel": "Medicine · HELED",
         "cardSummary": "Economics, policy and management connected with health services in a medical-faculty environment."
-      }
+      },
+      "gallery": [
+        {
+          "src": "img/universities/uio-campus-960.webp",
+          "alt": "The classical columned facade of Domus Media at the University of Oslo, facing Universitetsplassen.",
+          "caption": "Domus Media at the University of Oslo’s historic city-centre campus. It is not presented as the HELED or EU-HEM teaching location.",
+          "label": "Historic University Square",
+          "credit": "Ryan Hodnett / Wikimedia Commons",
+          "author": "Ryan Hodnett",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Domus_media_-_Universitetet_i_Oslo_(University_of_Oslo)_-_Oslo,_Norway_2021-03-25.jpg",
+          "usageNote": "Historic university context; EU-HEM teaching locations vary by course.",
+          "changes": "Resized and recompressed to WebP; no creative scene changes."
+        }
+      ]
     },
     {
       "id": "eur",
@@ -2547,7 +2577,22 @@
         "monogram": "EUR",
         "academicLabel": "Health policy · ESHPM",
         "cardSummary": "Health economics and policy across disciplines, with campus life and research at Woudestein."
-      }
+      },
+      "gallery": [
+        {
+          "src": "img/universities/eur-campus-960.webp",
+          "alt": "University buildings and red-leaved trees reflected in the pond on Erasmus University Rotterdam’s Woudestein campus.",
+          "caption": "Woudestein campus, Erasmus University Rotterdam. A general campus view; the foreground building is not labelled as ESHPM.",
+          "label": "Woudestein campus",
+          "credit": "Rotterdam School of Management, Erasmus University / Wikimedia Commons",
+          "author": "Rotterdam School of Management, Erasmus University",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Rotterdam_School_of_Management_Erasmus_University_Campus_spring.jpg",
+          "usageNote": "General campus context; do not infer the exact EU-HEM teaching building from the photograph.",
+          "changes": "Resized and recompressed to WebP; no creative scene changes."
+        }
+      ]
     },
     {
       "id": "mci",
@@ -3354,7 +3399,22 @@
         "monogram": "MCI",
         "academicLabel": "Health & management",
         "cardSummary": "Applied teaching, social and health innovation, and an entrepreneurial academic community in Innsbruck."
-      }
+      },
+      "gallery": [
+        {
+          "src": "img/universities/mci-campus-960.webp",
+          "alt": "The glass facade of Management Center Innsbruck, with its name visible above a lawn and paved square.",
+          "caption": "MCI at Universitätsstraße in Innsbruck. This photograph depicts MCI | The Entrepreneurial School.",
+          "label": "MCI at Universitätsstraße",
+          "credit": "-wuppertaler / Wikimedia Commons",
+          "author": "-wuppertaler",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:AUT_Innsbruck,_Management_Center_Innsbruck_004.jpg",
+          "usageNote": "MCI | The Entrepreneurial School is distinct from the University of Innsbruck.",
+          "changes": "Resized and recompressed to WebP; no creative scene changes."
+        }
+      ]
     }
   ],
   "release": {
