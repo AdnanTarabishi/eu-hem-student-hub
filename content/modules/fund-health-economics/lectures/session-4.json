@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "topic": "fund-health-economics.disparities",
+  "updated": "2026-10-06",
+  "heroTitle": "Same gradient.\nDifferent causal stories.",
+  "intro": "Use Session 4 to move from correlation to mechanisms: education and health production, early-life shocks, income, stress and rank, inequality, reverse causality and time preference.",
+  "guide": "lectures/session-4.html",
+  "activities": ["causal-directions", "disparity-theories", "stress-depreciation", "policy-mechanism"],
+  "attribution": "Independent student-written study guide based on Daniele Fabbri’s Fundamentals in Health Economics, Session 4: Socio-economic Disparities in Health, University of Bologna. Official slides and textbook answer keys are not reproduced. Always check Virtuale for the official materials."
+}
