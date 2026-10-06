@@ -7,6 +7,7 @@
   <meta name="description" content="Student-made notes, flashcards and practice questions for EU-HEM courses.">
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=b540d8a2">
+  <link rel="stylesheet" href="notes-landing.css?v=24de2069">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -19,7 +20,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer">
   <script src="theme.js?v=d51d4769"></script>
 </head>
-<body>
+<body class="notes-page">
 
   <header class="site-header">
     <div class="container">
@@ -31,38 +32,59 @@
     </div>
   </header>
 
-  <main class="container">
-    <!-- Hero: title, totals, search, contribute -->
-    <section class="notes-hero">
-      <div class="notes-heading">
-        <div>
-          <p class="section-eyebrow">Resources</p>
-          <h2>Notes &amp; Resources</h2>
-          <p class="notes-hero-text">
-            Student-made notes, flashcards and practice questions for 1st-year courses.
-            Official lectures and slides stay on <a href="https://virtuale.unibo.it" target="_blank" rel="noopener">Virtuale</a>.
-          </p>
+  <main class="container notes-workspace">
+    <section class="notes-welcome" aria-labelledby="notes-title">
+      <div class="notes-welcome-copy">
+        <p class="section-eyebrow"><span class="notes-eyebrow-dot" aria-hidden="true"></span> Your study space · Year 1</p>
+        <h1 id="notes-title">Notes &amp;<br><em>Resources.</em></h1>
+        <p class="notes-welcome-lead">Understand the concepts.<br>Put them into practice.</p>
+        <p class="notes-welcome-description">Your shared library for health economics, management and quantitative methods. Built by students, for the way we study.</p>
+        <div class="notes-welcome-actions">
+          <a class="button notes-primary" href="#study-library">Explore the library <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+          <a class="notes-text-link" href="create.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#plus"></use></svg> Create an item</a>
         </div>
-        <!-- notes-landing.js sets the link from content/settings.json -->
-        <span id="contribute-slot"></span>
       </div>
-
-      <!-- notes-landing.js fills in the totals -->
-      <div id="hero-stats" class="hero-stats" aria-label="Content totals"></div>
-
-      <label class="search-pill notes-search">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
-        <input id="notes-search" type="search" placeholder="Search notes, concepts, flashcards, questions…" aria-label="Search notes and resources">
-        <kbd class="search-key" title="Press / to search">/</kbd>
-      </label>
+      <aside id="study-focus" class="notes-focus" aria-label="Your study snapshot" aria-busy="true">
+        <p class="section-eyebrow">A little progress, every day</p>
+        <h2>Your next study session</h2>
+        <p class="notes-focus-loading" role="status">Loading your study snapshot…</p>
+      </aside>
     </section>
 
-    <!-- Search results replace the tabs while you type -->
-    <section id="search-results" class="card" hidden></section>
+    <div id="hero-stats" class="notes-library-stats" aria-label="Explore available study content"></div>
 
-    <div id="landing-tabs" class="track-tabs page-tabs" role="tablist" aria-label="Sections"></div>
-    <p id="landing-status" class="placeholder">Loading courses…</p>
-    <div id="landing-content"></div>
+    <section class="notes-discovery" aria-label="Search the library">
+      <div class="notes-search-row">
+        <label class="search-pill notes-search" for="notes-search">
+          <svg class="icon" aria-hidden="true"><use href="icons.svg#search"></use></svg>
+          <input id="notes-search" type="search" placeholder="Find a topic, a concept, a question…" autocomplete="off" aria-label="Search notes and resources" aria-controls="search-results">
+          <kbd class="search-key" title="Press / to search">/</kbd>
+        </label>
+        <button id="notes-search-clear" class="button button-secondary" type="button" hidden>Clear search</button>
+      </div>
+      <div class="notes-search-hints"><span>Try a topic</span><button type="button" data-search="health economics">Health economics</button><button type="button" data-search="probability">Probability</button><button type="button" data-search="demand">Demand</button></div>
+    </section>
+
+    <section id="search-results" class="card notes-search-results" aria-label="Search results" aria-busy="false" hidden></section>
+    <p id="search-announcement" class="sr-only" role="status" aria-live="polite"></p>
+
+    <section id="study-library" class="notes-library" aria-labelledby="library-title">
+      <div class="notes-library-heading">
+        <div><p class="section-eyebrow">The library</p><h2 id="library-title">Make it your study session.</h2></div>
+        <p>Learn. Recall. Practise. Repeat.</p>
+      </div>
+      <div id="landing-tabs" class="track-tabs page-tabs" role="tablist" aria-label="Library sections"></div>
+      <p id="landing-status" class="placeholder" role="status">Loading courses…</p>
+      <div id="landing-content" role="tabpanel" tabindex="0"></div>
+      <noscript><p class="card">Enable JavaScript to explore the library. You can also visit <a href="https://virtuale.unibo.it" target="_blank" rel="noopener">Virtuale for official course materials</a>.</p></noscript>
+    </section>
+
+    <section class="notes-contribution" aria-labelledby="contribution-title">
+      <span class="notes-contribution-icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#library"></use></svg></span>
+      <div><p class="section-eyebrow">Better together</p><h2 id="contribution-title">Your notes could make someone’s day.</h2><p>Share a summary, a flashcard or a useful resource with the cohort.</p></div>
+      <span id="contribute-slot"><a class="button button-secondary" href="contact.html">Share a resource</a></span>
+    </section>
+    <p class="notes-source-note"><svg class="icon" aria-hidden="true"><use href="icons.svg#info"></use></svg><span>Student-made resources may contain errors. Find official lectures and slides on <a href="https://virtuale.unibo.it" target="_blank" rel="noopener">Virtuale <svg class="icon" aria-hidden="true"><use href="icons.svg#external"></use></svg></a>.</span></p>
   </main>
 
   <footer class="site-footer">
@@ -86,7 +108,7 @@
   <script defer src="notes-data.js?v=b8aef29b"></script>
   <script defer src="notes-progress.js?v=23382d79"></script>
   <script defer src="notes-render.js?v=26042e83"></script>
-  <script defer src="notes-landing.js?v=74877420"></script>
+  <script defer src="notes-landing.js?v=ba8b4fff"></script>
 
 </body>
 </html>
