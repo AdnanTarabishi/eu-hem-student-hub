@@ -4,7 +4,7 @@
     "term": "Derived demand",
     "explanation": "A demand for something that is wanted for what it produces, not for itself. Health care is wanted because it helps produce health.",
     "topics": [
-      "fund-health-economics.demand"
+      "fund-health-economics.health-capital"
     ],
     "sample": true
   },
@@ -14,8 +14,7 @@
     "explanation": "How strongly the quantity demanded reacts to a change in price: the % change in quantity divided by the % change in price.",
     "topics": [
       "fund-health-economics.demand"
-    ],
-    "sample": true
+    ]
   },
   {
     "id": "concept.moral-hazard",
@@ -138,6 +137,89 @@
     "explanation": "A framework linking the three central actors in healthcare: patient, provider and insurer/government.",
     "topics": [
       "fund-health-economics.session-1"
+    ]
+  },
+  {
+    "id": "concept.demand-curve",
+    "term": "Demand curve",
+    "explanation": "A relationship showing how much of a good or service consumers are willing and able to buy at each price, holding other determinants constant.",
+    "topics": [
+      "fund-health-economics.demand"
+    ]
+  },
+  {
+    "id": "concept.willingness-to-pay",
+    "term": "Willingness to pay",
+    "explanation": "The maximum amount a buyer is willing to pay for a good or service, used as a measure of how much the buyer values it.",
+    "topics": [
+      "fund-health-economics.demand"
+    ]
+  },
+  {
+    "id": "concept.consumer-surplus",
+    "term": "Consumer surplus",
+    "explanation": "The buyer's willingness to pay minus the amount actually paid.",
+    "topics": [
+      "fund-health-economics.demand"
+    ]
+  },
+  {
+    "id": "concept.arc-elasticity",
+    "term": "Arc elasticity",
+    "explanation": "A midpoint-based elasticity measure between two price-quantity points, useful for comparing responsiveness without depending on the units used.",
+    "topics": [
+      "fund-health-economics.demand"
+    ]
+  },
+  {
+    "id": "concept.randomized-experiment",
+    "term": "Randomized experiment",
+    "explanation": "A study that randomly assigns participants to different conditions so the groups are comparable on average before treatment.",
+    "topics": [
+      "fund-health-economics.demand"
+    ]
+  },
+  {
+    "id": "concept.full-price",
+    "term": "Full price",
+    "explanation": "The monetary price of care plus other costs borne by the patient, including travel costs and the opportunity cost of time.",
+    "topics": [
+      "fund-health-economics.demand"
+    ]
+  },
+  {
+    "id": "concept.fixed-indemnity",
+    "term": "Fixed indemnity",
+    "explanation": "An insurance payment that contributes a fixed amount for a covered service, leaving the patient responsible for the remaining price.",
+    "topics": [
+      "fund-health-economics.demand"
+    ]
+  },
+  {
+    "id": "concept.coinsurance",
+    "term": "Coinsurance",
+    "explanation": "The fraction of the healthcare bill paid by the patient, with the insurer paying the rest.",
+    "topics": [
+      "fund-health-economics.demand",
+      "fund-health-economics.moral-hazard"
+    ]
+  },
+  {
+    "id": "concept.copayment",
+    "term": "Copayment",
+    "explanation": "A fixed amount paid by the patient each time a covered healthcare service is used.",
+    "topics": [
+      "fund-health-economics.demand",
+      "fund-health-economics.moral-hazard"
+    ]
+  },
+  {
+    "id": "concept.deductible",
+    "term": "Deductible",
+    "explanation": "An amount the patient pays toward medical bills before insurance reimbursement begins.",
+    "topics": [
+      "fund-health-economics.demand",
+      "fund-health-economics.moral-hazard"
     ]
   }
 ]
