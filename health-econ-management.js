@@ -140,6 +140,7 @@
       ["overview", "Course hub", `course.html?course=${COURSE_ID}`],
       ["lectures", "Sessions", `course.html?course=${COURSE_ID}&tab=lectures`],
       ["practice", "Practice", `course.html?course=${COURSE_ID}&tab=practice`],
+      ["exam", "Exam centre", "fhem-exam.html"],
       ["resources", "Resources", `course.html?course=${COURSE_ID}&tab=resources`],
     ];
     for (const [key, label, href] of items) {
@@ -213,7 +214,7 @@
   function sessionCard(session, module, compact = false) {
     const card = el(
       "article",
-      `hem-session-card${compact ? " hem-session-compact" : ""}${session.status === "upcoming" ? " is-upcoming" : ""}`,
+      `hem-session-card hem-stage-${session.stage}${compact ? " hem-session-compact" : ""}${session.status === "upcoming" ? " is-upcoming" : ""}`,
     );
     card.dataset.session = String(session.number);
 
@@ -367,6 +368,11 @@
       <h1>Understand the system.<br><em>Then learn to manage it.</em></h1>
       <p class="hem-lead">Fundamental in Health Economics and Management (I.C.)</p>
       <p>One course, two connected modules. Start with the economics of health, healthcare demand, inequality and provider behaviour; then move into healthcare management in Cycle 2.</p>
+      <div class="hem-hero-chips">
+        <span>Current module · Health Economics</span>
+        <span>${summary.available}/8 sessions live</span>
+        <a href="fhem-exam.html">90-minute mock ready →</a>
+      </div>
     `;
     const actions = el("div", "hem-actions");
     if (next?.topic) {
@@ -381,6 +387,7 @@
     actions.append(
       ctx.pageLink("View all sessions", { tab: "lectures" }, "hem-button hem-secondary"),
       ctx.pageLink("Practice", { tab: "practice" }, "hem-button hem-secondary"),
+      link("Exam centre", "fhem-exam.html", "hem-button hem-secondary"),
     );
     copy.appendChild(actions);
     if (next) {
@@ -467,6 +474,7 @@
       toolCard("02 / RECALL", "Flashcards", "Review definitions, mechanisms and model intuition across the available sessions.", `course.html?course=${COURSE_ID}&tab=practice#flashcards`, String(flashcardCount)),
       toolCard("03 / APPLY", "Question bank", "Work through MCQs, true/false and short-answer practice written for this Student Hub.", `course.html?course=${COURSE_ID}&tab=practice#question-bank`, String(questionCount)),
       toolCard("04 / CONNECT", "Key concepts", "Jump across linked ideas such as information asymmetry, health capital, causality and physician agency.", `course.html?course=${COURSE_ID}&tab=concepts`, String(conceptCount)),
+      toolCard("05 / SIMULATE", "Exam centre", "Run a 90-minute mixed mock or a 20-minute objective drill using the current Sessions 1–5 question bank.", "fhem-exam.html", "90 min"),
     );
     tools.appendChild(toolGrid);
     panel.appendChild(tools);
