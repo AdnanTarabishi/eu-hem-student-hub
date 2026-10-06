@@ -208,6 +208,32 @@
       return li;
     }));
     if (state.roadmap) $("roadmap-reviewed").textContent = `Last reviewed ${R.dayLabel(state.roadmap.updatedAt)}`;
+    renderVision();
+  }
+
+  // Overall progress towards the full vision, with the original finish date
+  function renderVision() {
+    const box = $("roadmap-vision");
+    const vision = state.roadmap && state.roadmap.vision;
+    box.hidden = !vision;
+    if (!vision) return;
+    const percent = vision.progressPercent;
+    const days = R.daysUntil(R.dateInRome(new Date().toISOString()), vision.targetDate);
+    const head = el("div", "roadmap-vision-head");
+    head.append(el("span", "roadmap-vision-title", vision.title), el("span", "roadmap-vision-percent", `${percent}%`));
+    const bar = el("div", "roadmap-vision-bar");
+    bar.setAttribute("role", "progressbar");
+    bar.setAttribute("aria-valuemin", "0");
+    bar.setAttribute("aria-valuemax", "100");
+    bar.setAttribute("aria-valuenow", String(percent));
+    bar.setAttribute("aria-label", `${vision.title}: ${percent}% complete`);
+    const fill = el("span", "roadmap-vision-fill");
+    fill.style.width = `${percent}%`;
+    bar.appendChild(fill);
+    const when = days > 0 ? `${days} ${days === 1 ? "day" : "days"} to go` : days === 0 ? "today" : "date passed";
+    const meta = el("p", "roadmap-vision-meta");
+    meta.append(el("strong", null, `Planned finish: ${R.dayLabel(vision.targetDate)}`), document.createTextNode(` · ${when}`));
+    box.replaceChildren(head, bar, meta, el("p", "roadmap-vision-note", vision.note));
   }
 
   // ----- Roadmap tab -----

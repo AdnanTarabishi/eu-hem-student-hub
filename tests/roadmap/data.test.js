@@ -74,6 +74,14 @@ t("every evidence commit exists in this repository's history", () => {
   }
 });
 
+t("overall progress: 10% of the full vision, planned finish 3 March 2027", () => {
+  const vision = R.readRoadmap(roadmap).vision;
+  assert.deepStrictEqual([vision.progressPercent, vision.targetDate], [10, "2027-03-03"]);
+  assert.strictEqual(R.daysUntil("2026-10-06", "2027-03-03"), 148);
+  const bad = clone(roadmap); bad.vision.progressPercent = 150; fails(bad, updates, /whole number from 0 to 100/);
+  const bad2 = clone(roadmap); bad2.vision.targetDate = "2027-02-30"; fails(bad2, updates, /real YYYY-MM-DD date/);
+});
+
 /* ----- the rules ----- */
 t("drafts must not carry a date or evidence; published needs both", () => {
   const u = clone(updates);

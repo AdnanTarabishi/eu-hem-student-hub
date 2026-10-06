@@ -1,6 +1,12 @@
 {
   "schemaVersion": 1,
   "updatedAt": "2026-10-06",
+  "vision": {
+    "title": "Progress towards the full Student Hub",
+    "progressPercent": 10,
+    "targetDate": "2027-03-03",
+    "note": "Our own estimate of how much of the complete Student Hub vision is built. The finish date is the original plan, not a promise."
+  },
   "planningNote": "Dates are estimates, not promises: several Next items may progress together, and their order can change with student feedback. Later ideas have no dates yet.",
   "categories": [
     { "id": "platform", "label": "Platform", "icon": "home" },

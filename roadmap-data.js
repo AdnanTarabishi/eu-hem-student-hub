@@ -103,6 +103,14 @@ function validate(roadmap, updates, options = {}) {
     if (!isDate(roadmap.updatedAt)) error("roadmap.updatedAt", "must be a real YYYY-MM-DD date");
     else if (today && roadmap.updatedAt > today) error("roadmap.updatedAt", "cannot be in the future");
     if (!isText(roadmap.planningNote)) error("roadmap.planningNote", "is required");
+    // Overall progress towards the full vision (optional block)
+    const vision = roadmap.vision;
+    if (vision !== undefined) {
+      if (!vision || !isText(vision.title) || !isText(vision.note)) error("roadmap.vision", "needs a title and a note");
+      else if (!Number.isInteger(vision.progressPercent) || vision.progressPercent < 0 || vision.progressPercent > 100) {
+        error("roadmap.vision.progressPercent", "must be a whole number from 0 to 100");
+      } else if (!isDate(vision.targetDate)) error("roadmap.vision.targetDate", "must be a real YYYY-MM-DD date");
+    }
     const categories = Array.isArray(roadmap.categories) ? roadmap.categories : [];
     uniqueIds(categories, "roadmap.categories");
     categories.forEach((c, i) => { if (!isText(c.label)) error(`roadmap.categories[${i}]`, "needs a label"); });
@@ -201,8 +209,13 @@ function readRoadmap(data) {
   const categories = (data.categories || []).filter((c) => c && ID_PATTERN.test(c.id));
   const items = (data.items || []).filter((item) => item && LANE_STATUSES[item.lane] && ROADMAP_STATUS[item.status] && isText(item.title))
     .map((item) => ({ ...item, links: (item.links || []).filter((l) => l && safeUrl(l.url)) }));
+  const v = data.vision;
+  const vision = v && Number.isInteger(v.progressPercent) && isDate(v.targetDate)
+    ? { title: v.title, note: v.note, progressPercent: Math.min(100, Math.max(0, v.progressPercent)), targetDate: v.targetDate }
+    : null;
   return {
     updatedAt: data.updatedAt,
+    vision,
     planningNote: data.planningNote,
     categories,
     lanes: data.lanes || [],
@@ -230,6 +243,12 @@ function groupNext(items) {
     groups.get(key).items.push(item);
   }
   return [...groups.values()].sort((a, b) => (a.key === "undecided") - (b.key === "undecided") || a.key.localeCompare(b.key));
+}
+
+// Whole days from "today" (YYYY-MM-DD) to a target date; negative when it has passed
+function daysUntil(today, target) {
+  const toUtc = (value) => { const [y, m, d] = value.split("-").map(Number); return Date.UTC(y, m - 1, d); };
+  return Math.round((toUtc(target) - toUtc(today)) / 86400000);
 }
 
 function simplify(text) {
@@ -274,7 +293,7 @@ function searchEntries(roadmap, updates) {
 
 const EUHEM_ROADMAP = {
   ROADMAP_STATUS, RELEASED_LABEL, LANE_STATUSES, UPDATE_TYPES, MONTHS, ID_PATTERN, SHA_PATTERN, REPOSITORY,
-  isDate, isMonth, dayLabel, dateInRome, safeUrl, isRunUrl, validate, readRoadmap, publishedUpdates, groupNext,
+  isDate, isMonth, dayLabel, dateInRome, daysUntil, safeUrl, isRunUrl, validate, readRoadmap, publishedUpdates, groupNext,
   matchesQuery, searchEntries, simplify,
 };
 if (typeof module !== "undefined") module.exports = EUHEM_ROADMAP;

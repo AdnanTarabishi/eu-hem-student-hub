@@ -311,7 +311,8 @@ async function fillRoadmapPreview() {
     }
   };
   const [roadmap, updates] = await Promise.all([load("content/roadmap.json"), load("content/updates.json")]);
-  const now = roadmap && R.readRoadmap(roadmap).items.find((item) => item.lane === "now");
+  const plan = roadmap && R.readRoadmap(roadmap);
+  const now = plan && plan.items.find((item) => item.lane === "now");
   const latest = updates ? R.publishedUpdates(updates).slice(0, 3) : [];
   if (!now && !latest.length) {
     box.closest("section").hidden = true; // nothing to show: no broken box on the homepage
@@ -323,8 +324,24 @@ async function fillRoadmapPreview() {
     card.href = `roadmap.html#feature-${now.id}`;
     const label = createElement("span", "roadmap-preview-label");
     label.append(createElement("span", "roadmap-preview-dot"), document.createTextNode(`Now · ${R.ROADMAP_STATUS[now.status]}`));
-    card.append(label, createElement("strong", null, now.title), createElement("span", null, now.summary),
-      createElement("span", "roadmap-preview-more", "See what is planned next →"));
+    card.append(label, createElement("strong", null, now.title), createElement("span", null, now.summary));
+    // Overall progress towards the full vision (roadmap.json → vision)
+    if (plan.vision) {
+      const progress = createElement("span", "roadmap-preview-progress");
+      const bar = createElement("span", "roadmap-preview-bar");
+      bar.setAttribute("role", "progressbar");
+      bar.setAttribute("aria-valuemin", "0");
+      bar.setAttribute("aria-valuemax", "100");
+      bar.setAttribute("aria-valuenow", String(plan.vision.progressPercent));
+      bar.setAttribute("aria-label", `${plan.vision.title}: ${plan.vision.progressPercent}% complete`);
+      const fill = createElement("span");
+      fill.style.width = `${plan.vision.progressPercent}%`;
+      bar.appendChild(fill);
+      progress.append(createElement("span", null,
+        `${plan.vision.progressPercent}% of the full Hub built · planned finish ${R.dayLabel(plan.vision.targetDate)}`), bar);
+      card.appendChild(progress);
+    }
+    card.appendChild(createElement("span", "roadmap-preview-more", "See what is planned next →"));
     box.appendChild(card);
   }
   if (latest.length) {

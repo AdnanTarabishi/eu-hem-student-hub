@@ -9452,3 +9452,28 @@ main > :is(.page-intro, .notes-hero, .tracks-hero, .thesis-intro, .sx-hero):firs
     padding: var(--space-6);
   }
 }
+
+.roadmap-preview-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: var(--space-3);
+  font-size: var(--fs-small);
+  color: #fff;
+}
+
+.roadmap-preview-bar {
+  display: block;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.16);
+  overflow: hidden;
+}
+
+.roadmap-preview-bar span {
+  display: block;
+  height: 100%;
+  min-width: 8px;
+  border-radius: inherit;
+  background: #e7845f;
+}

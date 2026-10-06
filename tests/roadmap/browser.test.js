@@ -51,7 +51,9 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   assert.deepStrictEqual(await page.$$eval(".roadmap-window-label", (all) => all.map((h) => h.textContent)),
     ["October 2026", "October–November 2026", "November–December 2026"]);
   assert.match(await text(page, ".roadmap-lane.is-next"), /Estimated periods, not promises/);
-  ok("overview counts, one prominent Now card, Next grouped by estimated period");
+  assert.strictEqual(await page.getAttribute("#roadmap-vision [role=progressbar]", "aria-valuenow"), "10");
+  assert.match(await text(page, "#roadmap-vision"), /10%.*Planned finish: 3 March 2027 · \d+ days to go/);
+  ok("overview counts, one prominent Now card, Next grouped by estimated period, overall progress 10% with the planned finish");
 
   assert.strictEqual(await page.locator(".roadmap-card.is-later").count(), 6);
   assert.strictEqual(await page.getAttribute(".roadmap-later-toggle", "aria-expanded"), "false");
@@ -205,6 +207,8 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   assert.strictEqual(await page.getAttribute(".roadmap-preview-now", "href"), "roadmap.html#feature-student-beta-preparation");
   assert.deepStrictEqual(await page.$$eval(".roadmap-preview-latest a", (all) => all.map((a) => a.getAttribute("href"))),
     ["roadmap.html#update-new-design", "roadmap.html#update-students-explorer", "roadmap.html#update-city-guides"]);
+  assert.match(await text(page, ".roadmap-preview-progress"), /10% of the full Hub built · planned finish 3 March 2027/);
+  assert.strictEqual(await page.getAttribute(".roadmap-preview-bar", "aria-valuenow"), "10");
   ok("homepage: current focus and the three latest releases, from the same data");
 
   await page.keyboard.press("Control+k");

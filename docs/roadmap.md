@@ -28,6 +28,22 @@ and the site search finds plans and releases. All of them read the same two file
 
 ## Editing `content/roadmap.json`
 
+**Overall progress.** The `vision` block at the top sets the progress bar shown on the Roadmap page and
+the homepage:
+
+```json
+"vision": {
+  "title": "Progress towards the full Student Hub",
+  "progressPercent": 10,
+  "targetDate": "2027-03-03",
+  "note": "Our own estimate of how much of the complete Student Hub vision is built. The finish date is the original plan, not a promise."
+}
+```
+
+Change `progressPercent` (a whole number, 0–100) when you review the roadmap; the days left to
+`targetDate` are counted automatically. It is an estimate set by the team, and the page says so.
+
+
 ```jsonc
 {
   "id": "student-stories-experiences",          // stable: used in links (roadmap.html#feature-<id>)
