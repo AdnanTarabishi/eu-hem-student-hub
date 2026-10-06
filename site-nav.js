@@ -35,6 +35,7 @@ const SITE_MENU = [
   {
     label: "About",
     items: [
+      { key: "support", label: "Support & Contacts", href: "support.html", icon: "phone", desc: "Who to ask, wellbeing, leave" },
       { key: "roadmap", label: "Roadmap & Updates", href: "roadmap.html", icon: "route", desc: "What is new and what is next" },
       { key: "about", label: "About the Hub", href: "index.html#about", icon: "info", desc: "Student-run, free and unofficial" },
       { key: "privacy", label: "Privacy", href: "privacy.html", icon: "lock", desc: "What stays on your device" },

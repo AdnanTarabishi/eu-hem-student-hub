@@ -141,4 +141,54 @@ t("journey: facts from the brief (104 students, 24 nationalities, fees, four tit
   assert.match(events.erasmus.caveat, /balance/);
 });
 
+// ----- Support & Contacts -----
+const people = read("content/people.json");
+global.parseGuide = require(path.join(ROOT, "guide-data.js")).parseGuide;
+const S = require(path.join(ROOT, "support.js"));
+
+t("support: only the approved role mailboxes appear in the handbook content", () => {
+  const allowed = ["didatticasociale.euhem@unibo.it", "euhem@eshpm.eur.nl", "eu-hem@mci.edu", "garante@unibo.it"];
+  for (const file of ["content/sources.json", "content/academic-rules.json", "content/programme-events.json", "content/people.json"]) {
+    for (const email of S.emailsIn(read(file))) assert.ok(allowed.includes(email), `${file}: ${email}`);
+  }
+  assert.deepStrictEqual(S.emailsIn({ a: "Write to Someone.Else@uni.example or x@y.org" }), ["someone.else@uni.example", "x@y.org"]);
+});
+
+t("support: no personal titles (Prof., Dr., Mr., Ms.) or Google Sheets links in the handbook content", () => {
+  for (const file of ["content/academic-rules.json", "content/programme-events.json", "content/people.json"]) {
+    const text = fs.readFileSync(path.join(ROOT, file), "utf8");
+    assert.doesNotMatch(text, /\b(Prof|Dr|Mr|Ms|Mrs)\.\s+[A-Z]/, file);
+    assert.doesNotMatch(text, /docs\.google\.com|drive\.google\.com/, file);
+  }
+});
+
+t("support: the contact guide asks the university only when it matters", () => {
+  const ids = (answers) => S.visibleSupportQuestions(people.contactGuide, answers).map((q) => q.id);
+  assert.deepStrictEqual(ids({}), ["topic"]);
+  assert.deepStrictEqual(ids({ topic: "enrolment" }), ["topic"]);
+  assert.deepStrictEqual(ids({ topic: "wellbeing" }), ["topic", "university"]);
+  assert.strictEqual(S.supportOutcome(people, { topic: "wellbeing" }), null);
+});
+
+t("support: outcomes point to the right people", () => {
+  const enrol = S.supportOutcome(people, { topic: "enrolment" });
+  assert.strictEqual(enrol.contacts[0].coordinator.email, "euhem@eshpm.eur.nl");
+  const practical = S.supportOutcome(people, { topic: "practical", university: "mci" });
+  assert.strictEqual(practical.contacts[0].coordinator.email, "eu-hem@mci.edu");
+  const oslo = S.supportOutcome(people, { topic: "practical", university: "uio" });
+  assert.strictEqual(oslo.contacts[0].coordinator.email, undefined, "Oslo: official page, no mailbox");
+  assert.strictEqual(oslo.contacts[0].coordinator.source, "uio-hem-contact");
+  const safety = S.supportOutcome(people, { topic: "safety", university: "eur" });
+  assert.ok(safety.emergency);
+  assert.ok(safety.contacts[0].items.some((i) => i.source === "eur-safe"));
+  const sad = S.supportOutcome(people, { topic: "wellbeing", university: "unibo" });
+  assert.ok(sad.contacts[0].items.some((i) => i.source === "unibo-sap"));
+  assert.strictEqual(S.supportOutcome(people, { topic: "provisions" }).page.href, "academic-rules.html#special-provisions");
+});
+
+t("support: emergency numbers come from the City Guides", () => {
+  const text = fs.readFileSync(path.join(ROOT, "docs/content/oslo-guide.md"), "utf8");
+  assert.strictEqual(S.emergencyText(text), "113 ambulance, 112 police, 110 fire");
+});
+
 console.log(`${n} handbook data checks passed`);

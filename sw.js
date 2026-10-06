@@ -8,7 +8,7 @@
 //   "Update available · Reload", and old saved copies are deleted.
 // Nothing personal is stored here: only public site files and public data.
 
-const VERSION = "7f5c384f";
+const VERSION = "17f49f77";
 const SITE_CACHE = `site-${VERSION}`;
 const DATA_CACHE = "data"; // kept across versions, so offline data survives an update
 
@@ -20,6 +20,7 @@ const SITE_FILES = [
   "students.css", "students-config.js", "students-data.js", "countries.js", "assets/map/world-countries.svg",
   "roadmap.html", "roadmap.css", "roadmap.js", "roadmap-data.js",
   "academic-rules.html", "academic-rules.js", "journey.html", "journey.js",
+  "support.html", "support.js",
   "style.css", "icons.svg", "manifest.webmanifest",
   "fonts/inter-latin.woff2", "fonts/inter-latin-ext.woff2", "fonts/source-serif-4-latin-600.woff2",
   "img/app-icon.svg", "img/app-icon-192.png", "img/favicon-32.png", "img/apple-touch-icon.png",

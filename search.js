@@ -147,6 +147,27 @@
     } catch (error) {
       console.error("Search: programme journey", error);
     }
+    // Support & Contacts: the guide, each university's contacts, leave, software and community
+    try {
+      const response = await fetch("content/people.json");
+      if (response.ok) {
+        const people = await response.json();
+        const texts = (items) => (items || []).map((item) => `${item.text} ${item.email || ""}`).join(" ");
+        const page = "support.html";
+        add("rules", "Who should I contact?", `${page}#contact-guide`, `help question ask coordinator ${people.contactGuide.questions[0].options.map((o) => o.label).join(" ")}`, "Support & Contacts");
+        const tracks = await fetch("content/tracks.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
+        const names = tracks ? tracks.cohorts[tracks.cohorts.length - 1].universities : {};
+        for (const [id, university] of Object.entries(people.universities)) {
+          add("rules", `Contacts and support: ${names[id] ? names[id].city : id}`, `${page}#contacts-${id}`,
+            `coordinator email ombudsman psychologist counselling mental health wellbeing harassment ${university.coordinator.role} ${university.coordinator.email || ""} ${texts(university.safety)} ${texts(university.wellbeing)}`, "Support & Contacts");
+        }
+        add("rules", "Leave and withdrawal", `${page}#leave`, `break pause quit stop refund ${texts(people.leave)} ${texts(people.withdrawal)}`, "Support & Contacts");
+        add("rules", "Software for students", `${page}#software`, `Office Word Excel licence ${texts(people.software)}`, "Support & Contacts");
+        add("rules", "Community", `${page}#community`, `student representatives Instagram LinkedIn alumni ${texts(people.community)}`, "Support & Contacts");
+      }
+    } catch (error) {
+      console.error("Search: support", error);
+    }
     return list;
   }
 

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support & Contacts – EU-HEM Student Hub</title>
+  <meta name="description" content="Who to contact at the four EU-HEM universities: local coordinators, wellbeing and safety support, leave and withdrawal, software and the student community.">
+  <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css?v=bc7ec835">
+  <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="img/app-icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <script src="theme.js?v=d51d4769"></script>
+</head>
+<body class="support-page">
+
+  <header class="site-header">
+    <div class="container">
+      <p class="site-title"><a href="index.html">EU-HEM Student Hub</a></p>
+      <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
+      <!-- site-nav.js builds the menu here (defined once for all pages) -->
+      <nav class="site-nav" id="site-nav" data-current="support" aria-label="Main menu"></nav>
+      <script src="site-nav.js?v=fded69c3"></script>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="page-intro">
+      <div>
+        <p class="section-eyebrow">About</p>
+        <h1><svg class="icon" aria-hidden="true"><use href="icons.svg#phone"></use></svg> Support &amp; Contacts</h1>
+        <p id="support-intro">Who to ask, at every EU-HEM university.</p>
+      </div>
+    </section>
+
+    <!-- Emergency numbers: read from the City Guides (docs/content/<city>-guide.md), not typed here -->
+    <aside id="emergency" class="support-emergency" aria-labelledby="emergency-title" hidden>
+      <h2 id="emergency-title"><svg class="icon" aria-hidden="true"><use href="icons.svg#alert"></use></svg> In an emergency</h2>
+      <ul class="support-emergency-list"></ul>
+    </aside>
+
+    <nav class="rules-contents card" aria-label="On this page">
+      <a href="#contact-guide">Who should I contact?</a>
+      <a href="#universities">Contacts per university</a>
+      <a href="#leave">Leave and withdrawal</a>
+      <a href="#software">Software</a>
+      <a href="#community">Community</a>
+    </nav>
+
+    <!-- support.js fills every section from content/people.json (sources: content/sources.json) -->
+    <p id="support-status" class="placeholder" aria-live="polite">Loading contacts…</p>
+
+    <section id="contact-guide" class="card rules-section" aria-labelledby="guide-title" hidden>
+      <h2 id="guide-title">Who should I contact?</h2>
+      <p class="schedule-meta support-guide-intro"></p>
+      <div class="support-questions"></div>
+      <div class="support-outcome" aria-live="polite"></div>
+    </section>
+
+    <section id="universities" class="rules-section" aria-labelledby="universities-title" hidden>
+      <h2 id="universities-title">Contacts per university</h2>
+      <p class="schedule-meta support-privacy"></p>
+      <div class="rules-unis"></div>
+      <p class="rules-links support-staff-page"></p>
+    </section>
+
+    <section id="leave" class="card rules-section" aria-labelledby="leave-title" hidden>
+      <h2 id="leave-title">Leave and withdrawal</h2>
+      <h3>Taking a break (temporary leave)</h3>
+      <ul class="rules-list support-leave"></ul>
+      <h3>Leaving the programme (withdrawal)</h3>
+      <ul class="rules-list support-withdrawal"></ul>
+    </section>
+
+    <div class="journey-pair">
+      <section id="software" class="card rules-section" aria-labelledby="software-title" hidden>
+        <h2 id="software-title">Software for students</h2>
+        <ul class="rules-list"></ul>
+      </section>
+
+      <section id="community" class="card rules-section" aria-labelledby="community-title" hidden>
+        <h2 id="community-title">Community</h2>
+        <ul class="rules-list"></ul>
+      </section>
+    </div>
+
+    <p class="schedule-meta rules-disclaimer">A student-made summary, not an official contact list. Contacts change; the
+      official pages linked here are authoritative. This Hub is run by students: for questions about the Hub itself,
+      use the <a href="contact.html">Contact page</a>.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>EU-HEM Student Hub &middot; Unofficial student project</p>
+    </div>
+  </footer>
+
+  <script defer src="utils.js?v=3f08bd92"></script>
+  <script defer src="ui.js?v=6d55e433"></script>
+  <script defer src="search.js?v=0beae815"></script>
+  <script defer src="pwa.js?v=c9212bf8"></script>
+  <script defer src="announcements.js?v=3ecd40f0"></script>
+  <script defer src="tracks-data.js?v=629a5538"></script>
+  <script defer src="guide-data.js?v=4c2fbe41"></script>
+  <script defer src="support.js?v=8cc7b6d5"></script>
+
+</body>
+</html>

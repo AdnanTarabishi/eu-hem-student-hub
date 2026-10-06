@@ -1,0 +1,168 @@
+{
+  "schemaVersion": 1,
+  "lastChecked": "2026-10-06",
+  "note": "Support & Contacts page (support.html). Roles and role mailboxes only: no personal names or personal emails (the checker only allows the mailboxes in 'allowedEmails'). Every item names its source (content/sources.json).",
+  "intro": "Not sure who to ask? Start with the guide below. For most questions, the right person is the local coordinator of the university where you study this semester.",
+  "privacyNote": "We list role mailboxes and official pages only, never staff names or personal emails. The official contact pages have the full details.",
+  "allowedEmails": ["didatticasociale.euhem@unibo.it", "euhem@eshpm.eur.nl", "eu-hem@mci.edu", "garante@unibo.it"],
+  "staffPage": "eur-hem-contact",
+
+  "universities": {
+    "unibo": {
+      "coordinator": { "role": "EU-HEM local coordinators", "email": "didatticasociale.euhem@unibo.it", "source": "euhem-handbook-2026" },
+      "safety": [
+        { "text": "The Student Ombudsman is independent from the university and handles reports of abuse, unfair treatment or problems that affect your rights. You can stay anonymous.", "email": "garante@unibo.it", "source": "unibo-ombudsman" }
+      ],
+      "wellbeing": [
+        { "text": "The Psychological Support Service (SAP) is free for University of Bologna students. You send a request form and are contacted for an appointment.", "source": "unibo-sap" }
+      ]
+    },
+    "uio": {
+      "coordinator": { "role": "EU-HEM contact in Oslo (student information, registration, counselling)", "source": "uio-hem-contact" },
+      "safety": [
+        { "text": "The Student Ombud gives free, confidential advice on your rights, including harassment, discrimination and bullying, and can help with anonymous complaints.", "source": "uio-student-ombud" },
+        { "text": "Speak up! is UiO's channel to report problems with your learning environment.", "source": "uio-speak-up" }
+      ],
+      "wellbeing": [
+        { "text": "SiO, the student welfare organisation, offers counselling, individual guidance and self-help courses. Staff keep everything confidential.", "source": "uio-health" }
+      ]
+    },
+    "mci": {
+      "coordinator": { "role": "EU-HEM local coordinators", "email": "eu-hem@mci.edu", "source": "euhem-handbook-2026" },
+      "safety": [
+        { "text": "Your first contacts are the Student Support Officer and the local coordinator.", "source": "euhem-handbook-2026" },
+        { "text": "MCI's Code of Conduct lists further contact points, including the student union and a complaints committee.", "source": "mci-code-of-conduct" }
+      ],
+      "wellbeing": [
+        { "text": "Mental Health @ MCI offers confidential sessions in Innsbruck, online counselling and a helpline.", "source": "mci-mental-health" }
+      ]
+    },
+    "eur": {
+      "coordinator": { "role": "International programme coordinator, local coordinator and Education Service Centre", "email": "euhem@eshpm.eur.nl", "source": "euhem-handbook-2026" },
+      "safety": [
+        { "text": "Safe@EUR is the contact point for bullying, discrimination, intimidation or sexual harassment. You can contact them without giving your name.", "source": "eur-safe" },
+        { "text": "EUR also has confidential counsellors for students who face unwanted behaviour or unequal treatment.", "source": "eur-eshpm-social-safety" }
+      ],
+      "wellbeing": [
+        { "text": "Study advisors, student counsellors and university psychologists can help with study delays, personal problems and stress.", "source": "eur-eshpm-social-safety" }
+      ]
+    }
+  },
+
+  "contactGuide": {
+    "intro": "Pick what your question is about.",
+    "questions": [
+      {
+        "id": "topic", "text": "What is it about?",
+        "options": [
+          { "value": "course", "label": "A course, exam or grade" },
+          { "value": "practical", "label": "Study plan, registration or other study questions" },
+          { "value": "enrolment", "label": "Enrolment, re-enrolment or the fee" },
+          { "value": "track", "label": "My track's courses" },
+          { "value": "complaint", "label": "A complaint or special request" },
+          { "value": "safety", "label": "Harassment, discrimination or feeling unsafe" },
+          { "value": "wellbeing", "label": "Stress, mental health or personal problems" },
+          { "value": "provisions", "label": "Support for an impairment or learning disability" },
+          { "value": "leave", "label": "Taking a break or leaving the programme" }
+        ]
+      },
+      {
+        "id": "university", "text": "Which university is it about? Usually the one where you study this semester.", "options": "universities",
+        "showIf": { "topic": ["course", "practical", "complaint", "safety", "wellbeing", "leave"] }
+      }
+    ],
+    "outcomes": {
+      "course": {
+        "title": "Start with the lecturer",
+        "items": [
+          { "text": "Each university uses its own exam rules for its courses. Talk to the lecturer first; for anything they cannot solve, contact the local coordinator.", "source": "euhem-handbook-2026" }
+        ],
+        "contact": "coordinator",
+        "page": { "label": "Exams, re-sits and complaints at each university", "href": "academic-rules.html#universities" }
+      },
+      "practical": {
+        "title": "Ask your local coordinator",
+        "items": [
+          { "text": "For most questions, contact the local coordinator of the university where you study this semester. If it cannot be solved locally, the coordinators work it out together or take it to the Consortium Board.", "source": "euhem-handbook-2026" }
+        ],
+        "contact": "coordinator"
+      },
+      "enrolment": {
+        "title": "Ask the Education Service Centre in Rotterdam",
+        "items": [
+          { "text": "All EU-HEM students are enrolled at Erasmus University Rotterdam. Questions about enrolment, re-enrolment and paying the fee go to its Education Service Centre.", "source": "euhem-handbook-2026" }
+        ],
+        "contact": "eur"
+      },
+      "track": {
+        "title": "Ask your track coordinators",
+        "items": [
+          { "text": "Each track has two track coordinators, one at each of its universities. They handle questions about the track's courses. Your local coordinator can put you in touch.", "source": "euhem-handbook-2026" }
+        ],
+        "page": { "label": "Your track on the Tracks page", "href": "tracks.html" }
+      },
+      "complaint": {
+        "title": "Start with your local coordinator",
+        "items": [
+          { "text": "Your local coordinator can help directly, send you to a colleague, or suggest writing to the International Programme Coordinator, who can bring it to the Consortium Board.", "source": "euhem-handbook-2026" },
+          { "text": "You can also go to your track's student representative, who can raise it with the coordinators or the board for you. Complaints about a course or exam follow that university's own rules.", "source": "euhem-handbook-2026" }
+        ],
+        "contact": "coordinator",
+        "page": { "label": "How each university handles grade complaints", "href": "academic-rules.html#universities" }
+      },
+      "safety": {
+        "title": "You are not alone: these people can help",
+        "items": [
+          { "text": "You can report inappropriate behaviour to a staff member or a confidential counsellor at any EU-HEM university. All four are committed to keeping students safe.", "source": "euhem-handbook-2026" }
+        ],
+        "contact": "safety",
+        "emergency": true
+      },
+      "wellbeing": {
+        "title": "Support for your wellbeing",
+        "items": [
+          { "text": "Every EU-HEM university has support services for students. If problems affect your studies, you can also tell your local coordinator, who can put you in touch with the right people.", "source": "euhem-handbook-2026" }
+        ],
+        "contact": "wellbeing",
+        "emergency": true
+      },
+      "provisions": {
+        "title": "Apply through Erasmus University Rotterdam",
+        "items": [
+          { "text": "All EU-HEM students request special provisions through Erasmus University Rotterdam. Once approved, the partner universities are told.", "source": "euhem-handbook-2026" }
+        ],
+        "page": { "label": "How to apply (at least six weeks before exams)", "href": "academic-rules.html#special-provisions" }
+      },
+      "leave": {
+        "title": "Talk to your local coordinator first",
+        "items": [
+          { "text": "Discuss temporary leave or withdrawal with the local coordinator of the university where you study. They may know solutions you have not thought of.", "source": "euhem-handbook-2026" }
+        ],
+        "contact": "coordinator",
+        "page": { "label": "Rules for leave and withdrawal", "href": "#leave" }
+      }
+    }
+  },
+
+  "leave": [
+    { "text": "Temporary leave always covers one full academic year, never a single semester, and you can ask for it only once. The local coordinator explains how to send your request to the Consortium Board.", "source": "euhem-handbook-2026" },
+    { "text": "Your place is for your own cohort. After more than a year away, you have to apply to the programme again.", "source": "euhem-handbook-2026" }
+  ],
+  "withdrawal": [
+    { "text": "First talk to a study advisor or the local coordinator. If you still decide to leave, confirm it by email to the local coordinator, who tells you how to de-register.", "source": "euhem-handbook-2026" },
+    { "text": "You may get part of the fee back. EU/EEA students: a refund for each remaining month you paid for, counted from the first day of the month after you de-register (there is no refund if you de-register in June, July or August). For example, leaving on 23 October gives back 10/12 of the fee.", "source": "euhem-handbook-2026" },
+    { "text": "Non-EU students: the refund is counted per semester, using Erasmus University Rotterdam's semester dates.", "source": "euhem-handbook-2026" }
+  ],
+
+  "software": [
+    { "text": "Microsoft 365 is free for University of Bologna students while they are enrolled.", "source": "unibo-office365" },
+    { "text": "As an Erasmus University Rotterdam student, you can buy software cheaply on SURFspot. Log in with your ERNA account and choose Erasmus University Rotterdam.", "source": "euhem-handbook-2026", "link": { "label": "SURFspot", "url": "https://www.surfspot.nl/" } },
+    { "text": "STATA and SPSS licences are available on MyEUR (software licences), also with your ERNA account. If you lose your ERNA password, contact the EUR IT service desk.", "source": "euhem-handbook-2026" }
+  ],
+
+  "community": [
+    { "text": "Student representatives speak for your cohort: two are elected at the start of semester 1, then two per track at the end of it. They meet the board twice a year and pass on problems and ideas.", "source": "euhem-handbook-2026" },
+    { "text": "@euhemmasters is the students' own Instagram account, run by representatives from every track: social activities, stories from the four cities and practical tips.", "source": "student-reps-2026", "link": { "label": "@euhemmasters on Instagram", "url": "https://www.instagram.com/euhemmasters/" } },
+    { "text": "The private EU-HEM Alumni group on LinkedIn is run by the coordinators and shares jobs, internships and PhD positions. You can join it already as a student.", "source": "euhem-handbook-2026" }
+  ]
+}

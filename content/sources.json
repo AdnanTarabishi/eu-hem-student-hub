@@ -125,6 +125,102 @@
       "type": "official-university-page",
       "lastChecked": "2026-10-06",
       "link": { "label": "EUR: request special provisions", "url": "https://eur.nl/en/education/practical-matters/advice-counselling/studying-functional-impairment/request-extra-facilities" }
+    },
+    {
+      "id": "eur-hem-contact",
+      "title": "Erasmus University Rotterdam: contact the EU-HEM study programme",
+      "shortTitle": "EUR EU-HEM contact",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "Official EU-HEM contact page (EUR)", "url": "https://www.eur.nl/en/eshpm/master/european-master-health-economics-and-management/contact" }
+    },
+    {
+      "id": "uio-hem-contact",
+      "title": "University of Oslo: contact page of the European Master in Health Economics and Management",
+      "shortTitle": "UiO EU-HEM contact",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UiO: EU-HEM contact page", "url": "https://www.uio.no/english/studies/programmes/hem-master/contact/" }
+    },
+    {
+      "id": "unibo-ombudsman",
+      "title": "University of Bologna: Student Ombudsman",
+      "shortTitle": "UniBo Ombudsman",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UniBo: Student Ombudsman", "url": "https://www.unibo.it/en/university/organisation/university-governing-bodies/student-ombudsman" }
+    },
+    {
+      "id": "unibo-sap",
+      "title": "University of Bologna: the Psychological Support Service (SAP)",
+      "shortTitle": "UniBo SAP",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UniBo: Psychological Support Service", "url": "https://www.unibo.it/en/services-and-opportunities/health-and-assistance/the-psychological-support-service-sap" }
+    },
+    {
+      "id": "unibo-office365",
+      "title": "University of Bologna: Microsoft Office 365 for students",
+      "shortTitle": "UniBo Office 365",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UniBo: free Microsoft 365", "url": "https://www.unibo.it/en/services-and-opportunities/studying-and-beyond/discounts-for-computer-tablet-and-software-1/microsoft-office-365-1" }
+    },
+    {
+      "id": "uio-student-ombud",
+      "title": "University of Oslo: the Student Ombud",
+      "shortTitle": "UiO Student Ombud",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UiO: Student Ombud", "url": "https://www.uio.no/english/about/organisation/student-ombudsperson/help/" }
+    },
+    {
+      "id": "uio-speak-up",
+      "title": "University of Oslo: Speak up! (reporting channels)",
+      "shortTitle": "UiO Speak up",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UiO: Speak up!", "url": "https://www.uio.no/english/about/hse/speak-up/index.html" }
+    },
+    {
+      "id": "uio-health",
+      "title": "University of Oslo: health services and counselling",
+      "shortTitle": "UiO health and counselling",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UiO: health services and counselling (SiO)", "url": "https://www.uio.no/english/student-life/services/health/" }
+    },
+    {
+      "id": "mci-mental-health",
+      "title": "MCI: Mental Health @ MCI",
+      "shortTitle": "MCI mental health",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "MCI: Mental Health @ MCI", "url": "https://www.mci4me.at/en/services/student-support/mental-health" }
+    },
+    {
+      "id": "mci-code-of-conduct",
+      "title": "MCI: Code of Conduct",
+      "shortTitle": "MCI Code of Conduct",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "MCI: Code of Conduct and contact points", "url": "https://www.mci.edu/en/university/the-mci/diversity/code-of-conduct" }
+    },
+    {
+      "id": "eur-safe",
+      "title": "Erasmus University Rotterdam: Safe@EUR",
+      "shortTitle": "Safe@EUR",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "EUR: Safe@EUR", "url": "https://www.eur.nl/en/services/safeeur" }
+    },
+    {
+      "id": "eur-eshpm-social-safety",
+      "title": "Erasmus School of Health Policy & Management: social safety",
+      "shortTitle": "ESHPM social safety",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "ESHPM: social safety and student support", "url": "https://www.eur.nl/en/eshpm/about/social-safety" }
     }
   ]
 }

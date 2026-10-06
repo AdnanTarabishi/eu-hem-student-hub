@@ -702,7 +702,7 @@ function checkStudents() {
 // "source" in the files below (at any depth) and every {official:id} / {tip:id} marker in a city guide
 // must name a listed id of the right kind.
 const SOURCES_FILE = "content/sources.json";
-const SOURCED_FILES = ["content/programme.json", "content/academic-rules.json", "content/programme-events.json"];
+const SOURCED_FILES = ["content/programme.json", "content/academic-rules.json", "content/programme-events.json", "content/people.json"];
 const SOURCE_MARKER = /\{(official|tip):([a-z0-9-]+)\}/g;
 let sourceRegistry = null; // id -> { kind, ... }, filled by checkSources()
 
@@ -838,6 +838,70 @@ function checkProgrammeEvents() {
   for (const [part, block] of Object.entries({ cohortNumbers: events.cohortNumbers, history: events.history, jointDegree: events.jointDegree, erasmus: events.erasmus })) {
     if (!block.source) error(F, `${part}: needs a source`);
   }
+}
+
+// Privacy for the handbook pages: only these role mailboxes may appear (never a person's own address),
+// and no Google Sheets/Docs links (the student reps' housing reviews are private). Changing this list is
+// a decision for the site owner, so it lives here and not in the content files.
+const ROLE_MAILBOXES = ["didatticasociale.euhem@unibo.it", "euhem@eshpm.eur.nl", "eu-hem@mci.edu", "garante@unibo.it"];
+const HANDBOOK_FILES = ["content/sources.json", "content/academic-rules.json", "content/programme-events.json", "content/people.json"];
+
+function checkHandbookPrivacy() {
+  const { emailsIn } = require("../support.js");
+  for (const relative of HANDBOOK_FILES) {
+    if (!fs.existsSync(path.join(ROOT, relative))) continue;
+    const text = fs.readFileSync(path.join(ROOT, relative), "utf8");
+    for (const email of new Set(emailsIn(JSON.parse(text)))) {
+      if (!ROLE_MAILBOXES.includes(email)) error(relative, `"${email}" is not an approved role mailbox (scripts/check-content.js ROLE_MAILBOXES); link to the official page instead`);
+    }
+    if (/docs\.google\.com|drive\.google\.com/.test(text)) error(relative, "contains a Google Docs/Sheets/Drive link; private documents must not be published");
+  }
+}
+
+// Support & Contacts (content/people.json, support.js): every university has a coordinator, safety and
+// wellbeing contacts; every answer of the contact guide leads to an outcome with someone to contact.
+function checkPeople() {
+  const F = "content/people.json";
+  if (!fs.existsSync(path.join(ROOT, F))) return;
+  const people = JSON.parse(fs.readFileSync(path.join(ROOT, F), "utf8"));
+  const page = require("../support.js");
+  const tracksFile = JSON.parse(fs.readFileSync(path.join(ROOT, "content/tracks.json"), "utf8"));
+  const universities = Object.keys(tracksFile.cohorts[tracksFile.cohorts.length - 1].universities);
+  for (const id of page.SUPPORT_UNIVERSITIES) {
+    const university = people.universities[id];
+    if (!universities.includes(id)) error("support.js", `university "${id}" is not in content/tracks.json`);
+    if (!university) { error(F, `universities: "${id}" is missing`); continue; }
+    const coordinator = university.coordinator || {};
+    if (!coordinator.role) error(F, `${id}: the coordinator needs a role`);
+    if (!coordinator.email && !sourceRegistry.get(coordinator.source)?.link) error(F, `${id}: the coordinator needs a role mailbox or a source with an official link`);
+    for (const kind of ["safety", "wellbeing"]) if (!(university[kind] || []).length) error(F, `${id}: "${kind}" has no contacts`);
+  }
+  if (!sourceRegistry.get(people.staffPage)?.link) error(F, `staffPage "${people.staffPage}" must be a source with a link`);
+  for (const list of ["leave", "withdrawal", "software", "community"]) {
+    (people[list] || []).forEach((item, i) => {
+      requireText(item, "text", `${F} ${list}[${i}]`);
+      if (item.link) checkUrl(item.link.url, "link.url", `${F} ${list}[${i}]`);
+    });
+  }
+
+  const guide = people.contactGuide;
+  const optionsOf = (q) => (q.options === "universities" ? page.SUPPORT_UNIVERSITIES : q.options.map((o) => o.value));
+  const walk = (answers) => {
+    const open = page.visibleSupportQuestions(guide, answers).find((q) => !answers[q.id]);
+    if (open) return optionsOf(open).forEach((value) => walk({ ...answers, [open.id]: value }));
+    const outcome = page.supportOutcome(people, answers);
+    if (!outcome) return error(F, `contact guide: no outcome for ${JSON.stringify(answers)}`);
+    if (!outcome.items.length) error(F, `contact guide: outcome "${outcome.key}" has no items`);
+    if (!outcome.contacts.length && !outcome.page) error(F, `contact guide: outcome "${outcome.key}" names no contact and no page`);
+    if (outcome.contacts.some((c) => !c.university || !(c.coordinator || (c.items || []).length))) {
+      error(F, `contact guide: outcome "${outcome.key}" for ${JSON.stringify(answers)} has an empty contact (is the university question shown?)`);
+    }
+    if (outcome.page && !/^(#[a-z0-9-]+|[a-z-]+\.html(#[a-z0-9-]+)?)$/.test(outcome.page.href)) error(F, `contact guide: "${outcome.page.href}" is not a site page link`);
+    if (outcome.page && /\.html/.test(outcome.page.href) && !fs.existsSync(path.join(ROOT, outcome.page.href.split("#")[0]))) {
+      error(F, `contact guide: page "${outcome.page.href}" does not exist`);
+    }
+  };
+  walk({});
 }
 
 // Key dates of each cohort (calendar page, homepage, calendar files): see programme.js
@@ -1102,6 +1166,8 @@ async function main() {
   checkKeyDates();
   checkAcademicRules();
   checkProgrammeEvents();
+  checkPeople();
+  checkHandbookPrivacy();
   checkCityGuides();
 
   // --- topics (first, so everything else can link to them) ---

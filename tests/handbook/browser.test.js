@@ -201,6 +201,48 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
     ok("journey on a 320 px phone in dark mode: no sideways scrolling");
     await page.context().close();
 
+    // --- Support & Contacts ---
+    page = await open("support.html");
+    await page.locator("#contacts-unibo").waitFor();
+    await page.locator("#emergency:not([hidden]) li").first().waitFor();
+    assert.strictEqual(await page.locator("#emergency li").count(), 4);
+    assert.match(await page.locator("#emergency").textContent(), /Oslo: 113 ambulance, 112 police, 110 fire/);
+    assert.doesNotMatch(await page.locator("#emergency").textContent(), /\[S\d+\]/);
+    assert.strictEqual(await page.locator("#site-nav a[href='support.html'][aria-current='page']").count(), 1, "menu marks the page");
+    const mailboxes = await page.locator("a[href^='mailto:']").evaluateAll((els) => [...new Set(els.map((e) => e.getAttribute("href")))].sort());
+    assert.deepStrictEqual(mailboxes, ["mailto:didatticasociale.euhem@unibo.it", "mailto:eu-hem@mci.edu", "mailto:euhem@eshpm.eur.nl", "mailto:garante@unibo.it"]);
+    assert.strictEqual(await page.locator("#contacts-uio a[href^='mailto:']").count(), 0, "Oslo: no mailbox, official page only");
+    assert.strictEqual(await page.locator("#contacts-uio a[href='https://www.uio.no/english/studies/programmes/hem-master/contact/']").count(), 1);
+    assert.strictEqual(await page.locator(".support-staff-page a").getAttribute("href"), "https://www.eur.nl/en/eshpm/master/european-master-health-economics-and-management/contact");
+    assert.doesNotMatch(await page.locator("main").textContent(), /\b(Prof|Dr|Mr|Ms)\.\s+[A-Z]|docs\.google/);
+    ok("support: emergency numbers from the City Guides, role mailboxes only, Oslo and staff as official links");
+
+    // Contact guide with the keyboard: wellbeing -> asks the university -> SAP for Bologna
+    await page.locator("input[name='support-topic']").first().focus();
+    for (let i = 0; i < 6; i++) await page.keyboard.press("ArrowDown"); // 7th option: wellbeing
+    assert.strictEqual(await page.locator("input[name='support-topic']:checked").getAttribute("value"), "wellbeing");
+    assert.strictEqual(await page.locator(".support-result").count(), 0, "no outcome before the university is chosen");
+    await page.keyboard.press("Tab"); await page.keyboard.press("Space"); // first university: Bologna
+    const supportResult = page.locator(".support-outcome .support-result");
+    await supportResult.waitFor();
+    assert.strictEqual(await page.locator(".support-outcome").getAttribute("aria-live"), "polite");
+    assert.match(await supportResult.textContent(), /Psychological Support Service/);
+    assert.match(await supportResult.locator(".support-emergency-note").textContent(), /emergency number/);
+    await page.locator("input[name='support-topic'][value='enrolment']").check();
+    assert.strictEqual(await page.locator("input[name='support-university']").count(), 0, "university question hidden for enrolment");
+    assert.strictEqual(await supportResult.locator("a[href^='mailto:']").getAttribute("href"), "mailto:euhem@eshpm.eur.nl");
+    await page.locator("input[name='support-topic'][value='provisions']").check();
+    assert.strictEqual(await supportResult.locator(".support-page-link").getAttribute("href"), "academic-rules.html#special-provisions");
+    ok("support: contact guide by keyboard, university asked only when needed, live outcome with contacts");
+    await page.context().close();
+
+    page = await open("support.html", { viewport: { width: 320, height: 800 }, scheme: "dark" });
+    await page.locator("#contacts-unibo").waitFor();
+    await page.locator("#emergency:not([hidden])").waitFor();
+    await noSideways(page);
+    ok("support on a 320 px phone in dark mode: no sideways scrolling");
+    await page.context().close();
+
     assert.deepStrictEqual(errors, [], "page errors");
     ok("no page errors");
   } finally {
