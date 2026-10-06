@@ -28,6 +28,13 @@ window.EUHEM_EXPERIENCES = {
   stories: [
     {
       id: "hanna-lichter",
+      image: {
+        small: "assets/images/cities/innsbruck/ai-students-mountains-640.webp",
+        large: "assets/images/cities/innsbruck/ai-students-mountains-1200.webp",
+        alt: "Editorial illustration of students studying with the mountains of Innsbruck in the background.",
+        credit: "AI-generated editorial illustration for the Student Hub · not a photograph of Hanna Lichter",
+        kind: "illustration"
+      },
       kind: "external",
       featured: true,
       title: "Studying between classrooms and mountains",
@@ -52,6 +59,13 @@ window.EUHEM_EXPERIENCES = {
     },
     {
       id: "skander-essafi",
+      image: {
+        small: "assets/images/cities/rotterdam/ai-students-campus-640.webp",
+        large: "assets/images/cities/rotterdam/ai-students-campus-1200.webp",
+        alt: "Editorial illustration of international students on a modern European campus.",
+        credit: "AI-generated editorial illustration for the Student Hub · not a photograph of Skander Essafi",
+        kind: "illustration"
+      },
       kind: "external",
       featured: false,
       title: "From medicine to a broader view of healthcare",
@@ -76,6 +90,13 @@ window.EUHEM_EXPERIENCES = {
     },
     {
       id: "elke-van-gorp",
+      image: {
+        small: "assets/images/cities/innsbruck/ai-inn-river-sunset-640.webp",
+        large: "assets/images/cities/innsbruck/ai-inn-river-sunset-1200.webp",
+        alt: "Editorial illustration of Innsbruck and the Inn River at sunset.",
+        credit: "AI-generated editorial illustration for the Student Hub · not a photograph of Elke van Gorp",
+        kind: "illustration"
+      },
       kind: "external",
       featured: false,
       title: "Finding your footing between cities and classrooms",
@@ -100,6 +121,13 @@ window.EUHEM_EXPERIENCES = {
     },
     {
       id: "susanne-cornelis-klitsie",
+      image: {
+        small: "assets/images/cities/rotterdam/ai-erasmus-bridge-sunset-640.webp",
+        large: "assets/images/cities/rotterdam/ai-erasmus-bridge-sunset-1200.webp",
+        alt: "Editorial illustration of Rotterdam and the Erasmus Bridge at sunset.",
+        credit: "AI-generated editorial illustration for the Student Hub · not a photograph of Susanne Cornelis-Klitsie",
+        kind: "illustration"
+      },
       kind: "external",
       featured: false,
       title: "Taking an international degree into digital health",
@@ -124,6 +152,13 @@ window.EUHEM_EXPERIENCES = {
     },
     {
       id: "remy-lesuis",
+      image: {
+        small: "assets/images/cities/oslo/ai-students-university-640.webp",
+        large: "assets/images/cities/oslo/ai-students-university-1200.webp",
+        alt: "Editorial illustration of international students studying together at a European university.",
+        credit: "AI-generated editorial illustration for the Student Hub · not a photograph of Remy Lesuis",
+        kind: "illustration"
+      },
       kind: "external",
       featured: false,
       title: "A wider perspective and a wider network",
@@ -148,6 +183,13 @@ window.EUHEM_EXPERIENCES = {
     },
     {
       id: "frank-bisselink",
+      image: {
+        small: "assets/images/cities/bologna/ai-students-porticoes-640.webp",
+        large: "assets/images/cities/bologna/ai-students-porticoes-1200.webp",
+        alt: "Editorial illustration of an international student group in a European university city.",
+        credit: "AI-generated editorial illustration for the Student Hub · not a photograph of Frank Bisselink",
+        kind: "illustration"
+      },
       kind: "external",
       featured: false,
       title: "Seeing healthcare through other perspectives",
