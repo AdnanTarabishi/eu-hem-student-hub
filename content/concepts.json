@@ -5,8 +5,7 @@
     "explanation": "A demand for something that is wanted for what it produces, not for itself. Health care is wanted because it helps produce health.",
     "topics": [
       "fund-health-economics.health-capital"
-    ],
-    "sample": true
+    ]
   },
   {
     "id": "concept.price-elasticity",
@@ -220,6 +219,86 @@
     "topics": [
       "fund-health-economics.demand",
       "fund-health-economics.moral-hazard"
+    ]
+  },
+  {
+    "id": "concept.health-capital",
+    "term": "Health capital",
+    "explanation": "A stock representing an individual's level of health or functioning that persists over time and produces a flow of healthy or productive time.",
+    "topics": [
+      "fund-health-economics.health-capital"
+    ]
+  },
+  {
+    "id": "concept.home-good",
+    "term": "Home good (Z)",
+    "explanation": "Everything other than health that contributes to utility in the Grossman framework and is produced using time and market goods.",
+    "topics": [
+      "fund-health-economics.health-capital"
+    ]
+  },
+  {
+    "id": "concept.free-lunch-zone",
+    "term": "Free-lunch zone",
+    "explanation": "The low-health part of the Grossman production possibility frontier where better health releases enough sick time that health and home production can increase together.",
+    "topics": [
+      "fund-health-economics.health-capital"
+    ]
+  },
+  {
+    "id": "concept.gross-health-investment",
+    "term": "Gross health investment",
+    "explanation": "The chosen addition to health capital during a period, denoted I in the health-stock equation.",
+    "topics": [
+      "fund-health-economics.health-capital"
+    ]
+  },
+  {
+    "id": "concept.health-depreciation",
+    "term": "Health depreciation",
+    "explanation": "The deterioration of inherited health capital during a period, represented by the depreciation rate δ.",
+    "topics": [
+      "fund-health-economics.health-capital"
+    ]
+  },
+  {
+    "id": "concept.net-health-investment",
+    "term": "Net health investment",
+    "explanation": "Gross health investment minus depreciation. It can be negative even though gross investment itself cannot be negative.",
+    "topics": [
+      "fund-health-economics.health-capital"
+    ]
+  },
+  {
+    "id": "concept.mec-health",
+    "term": "Marginal efficiency of health capital",
+    "explanation": "The return to an additional unit of health capital; in the lecture the MEC is high at low health and declines as health improves.",
+    "topics": [
+      "fund-health-economics.health-capital"
+    ]
+  },
+  {
+    "id": "concept.productive-time",
+    "term": "Productive time",
+    "explanation": "Healthy time available for work, home production and health-producing activities after time lost to illness.",
+    "topics": [
+      "fund-health-economics.health-capital"
+    ]
+  },
+  {
+    "id": "concept.pure-investment-health",
+    "term": "Pure-investment view of health",
+    "explanation": "A Grossman-model case where health is valued only for the productive time it generates, not for direct utility from being healthy.",
+    "topics": [
+      "fund-health-economics.health-capital"
+    ]
+  },
+  {
+    "id": "concept.healthcare-vs-health-demand",
+    "term": "Demand for health vs demand for healthcare",
+    "explanation": "Health is the desired stock or outcome; healthcare is one input used to produce it. Comparative statics can therefore affect the two demands differently.",
+    "topics": [
+      "fund-health-economics.health-capital"
     ]
   }
 ]
