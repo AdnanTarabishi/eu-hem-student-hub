@@ -155,7 +155,11 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
 
     await page.goto(base + "academic-rules.html#grading");
     await page.locator(".rules-grades tbody tr").first().waitFor();
-    await page.waitForTimeout(300);
+    // Same page as before, so this is an in-page jump: it may glide (smooth scrolling), so wait for it to land
+    await page.waitForFunction(() => {
+      const top = document.getElementById("grading").getBoundingClientRect().top;
+      return top >= 0 && top < 300;
+    }, null, { timeout: 3000 }).catch(() => {});
     const top = await page.locator("#grading").evaluate((el) => el.getBoundingClientRect().top);
     assert.ok(top >= 0 && top < 300, `#grading not scrolled into view (top ${top})`);
     ok("academic rules: a link to #grading opens at that section");

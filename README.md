@@ -65,6 +65,12 @@ It adds `?v=…` fingerprints to the links in every page and updates the version
 so visitors get the new files at once (and installed apps show "Update available").
 `check-content.js` warns when you forgot.
 
+**Social preview** (the card shown when a link is shared on WhatsApp, LinkedIn …):
+every page has Open Graph tags pointing to `img/social-preview.png`.
+After adding a page, changing a title or description, or moving to a new domain
+(`siteUrl` in `content/settings.json`), run `node scripts/social-tags.js`.
+To change the picture, edit `scripts/social/template.html` and run `node scripts/make-social-image.js`.
+
 ## Notes & Resources
 Study content (notes, flashcards, questions, concepts, resources) lives in `content/modules/`
 as JSON and Markdown files. Adding content never requires code changes.

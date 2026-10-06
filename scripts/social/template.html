@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<!-- The social preview card (1200 x 630 px), the picture shown when a link to the site is shared.
+     Rendered to img/social-preview.png by: node scripts/make-social-image.js
+     Colours and fonts are the site's own (style.css tokens, fonts/). Edit the text here, then re-run. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  @font-face { font-family: "Inter"; src: url("../../fonts/inter-latin.woff2") format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: "Source Serif 4"; src: url("../../fonts/source-serif-4-latin-600.woff2") format("woff2"); font-weight: 600; }
+
+  :root {
+    --navy-900: #0f2b5b;
+    --navy-950: #091d3a;
+    --terracotta: #e78562;
+    --text-soft: #c9d3e3;
+    --white: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1200px; height: 630px; }
+  body {
+    position: relative;
+    overflow: hidden;
+    padding: 64px 72px;
+    color: var(--white);
+    font-family: "Inter", sans-serif;
+    /* Navy with a soft dot pattern, like the page headers on the site */
+    background:
+      radial-gradient(rgba(255, 255, 255, 0.07) 1.5px, transparent 1.6px) 0 0 / 22px 22px,
+      linear-gradient(135deg, var(--navy-900) 0%, var(--navy-950) 100%);
+  }
+
+  .brand { display: flex; align-items: center; gap: 18px; }
+  .brand-mark {
+    display: grid; place-items: center;
+    width: 76px; height: 76px; border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+  .brand-mark svg { width: 46px; height: 46px; }
+  .brand-name { font-family: "Source Serif 4", serif; font-weight: 600; font-size: 40px; line-height: 1; }
+  .brand-product { font-weight: 700; font-size: 24px; margin-top: 4px; color: var(--text-soft); }
+
+  h1 {
+    margin-top: 58px;
+    max-width: 900px;
+    font-family: "Source Serif 4", serif;
+    font-weight: 600;
+    font-size: 68px;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+  }
+  h1 span { color: var(--terracotta); }
+
+  .topics { margin-top: 26px; font-size: 26px; color: var(--text-soft); }
+
+  .footer {
+    position: absolute; left: 72px; right: 72px; bottom: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+    font-size: 22px; color: var(--text-soft);
+  }
+  .cities { display: flex; gap: 10px; }
+  .city {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 14px; border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    font-size: 19px; font-weight: 600; color: var(--white);
+  }
+  .city::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--dot); }
+
+  /* Terracotta accent bar, as in the app icon */
+  .accent { position: absolute; left: 0; top: 0; bottom: 0; width: 12px; background: var(--terracotta); }
+</style>
+</head>
+<body>
+  <div class="accent"></div>
+
+  <div class="brand">
+    <span class="brand-mark">
+      <!-- The graduation cap from icons.svg (same as the site header) -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/>
+        <path d="M22 10v6"/>
+        <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/>
+      </svg>
+    </span>
+    <span>
+      <span class="brand-name">EU-HEM</span>
+      <span class="brand-product" style="display:block">Student Hub</span>
+    </span>
+  </div>
+
+  <h1>Less searching.<br><span>More learning, living and connecting.</span></h1>
+  <p class="topics">Timetable · Exams · Study plan · Notes · City guides · Students</p>
+
+  <div class="footer">
+    <span>Unofficial · student-run · free</span>
+    <span class="cities">
+      <span class="city" style="--dot:#e78562">Bologna</span>
+      <span class="city" style="--dot:#7fb0d4">Oslo</span>
+      <span class="city" style="--dot:#8cbca4">Innsbruck</span>
+      <span class="city" style="--dot:#8fb3cf">Rotterdam</span>
+    </span>
+  </div>
+</body>
+</html>

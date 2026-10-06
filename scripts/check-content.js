@@ -1145,6 +1145,16 @@ async function main() {
       if (url && !/^https:\/\//.test(url)) error("content/settings.json", `"${field}" must start with https://`);
       if (!url) warn("content/settings.json", `"${field}" is empty, so the button opens the Contact page`);
     }
+    // siteUrl: the public address, used by the social preview tags (scripts/social-tags.js)
+    if (!/^https:\/\/.+\/$/.test(settings.siteUrl || "")) error("content/settings.json", `"siteUrl" must start with https:// and end with /`);
+    else {
+      const image = `<meta property="og:image" content="${settings.siteUrl}img/social-preview.png">`;
+      for (const page of fs.readdirSync(ROOT).filter((f) => f.endsWith(".html"))) {
+        if (!fs.readFileSync(path.join(ROOT, page), "utf8").includes(image)) {
+          error(page, "social preview tags are missing or use an old address: run node scripts/social-tags.js");
+        }
+      }
+    }
   }
 
   // --- programme.json (courses, modules, study plan rules) ---
