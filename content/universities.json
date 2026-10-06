@@ -694,40 +694,29 @@
         ]
       },
       "image": {
-        "alt": "Historic Anatomical Theatre of the Archiginnasio in Bologna",
-        "caption": "Historic University of Bologna heritage in the city. Check the timetable for your actual teaching location.",
-        "credit": "Phyrexian / Wikimedia Commons",
-        "author": "Phyrexian",
-        "authorUrl": "https://commons.wikimedia.org/wiki/User:Phyrexian",
-        "license": "CC BY-SA 4.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bologna_-_Palazzo_Poggi_3399.jpg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/7/72/Bologna_-_Palazzo_Poggi_3399.jpg",
-        "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/Bologna_-_Palazzo_Poggi_3399.jpg/1280px-Bologna_-_Palazzo_Poggi_3399.jpg",
-        "title": "Bologna - Palazzo Poggi 3399.jpg",
-        "photographDate": "2025-11-18",
-        "width": 1280,
-        "height": 912,
-        "bytes": 400505,
-        "objectPosition": "50% 42%",
-        "changes": "Source JPEG resized and converted to WebP for responsive delivery in v2; no creative alteration. CSS crops the display.",
-        "usageNote": "A historic university image, not a claim about the location of EU-HEM teaching.",
         "src": "assets/images/cities/bologna/archiginnasio-anatomical-theatre-1200.webp",
         "variants": [
           {
-            "src": "img/universities/unibo-480-v2.webp",
-            "width": 480
+            "src": "assets/images/cities/bologna/archiginnasio-anatomical-theatre-640.webp",
+            "width": 640
           },
           {
-            "src": "img/universities/unibo-960-v2.webp",
-            "width": 960
-          },
-          {
-            "src": "img/universities/unibo-1280-v2.webp",
-            "width": 1280
+            "src": "assets/images/cities/bologna/archiginnasio-anatomical-theatre-1200.webp",
+            "width": 1200
           }
         ],
-        "srcset": "assets/images/cities/bologna/archiginnasio-anatomical-theatre-640.webp 640w, assets/images/cities/bologna/archiginnasio-anatomical-theatre-1200.webp 1200w"
+        "alt": "The wooden anatomical theatre inside the Archiginnasio, with carved statues",
+        "caption": "The anatomical theatre in the Archiginnasio, the University of Bologna's historic seat. This is heritage context, not an EU-HEM classroom.",
+        "credit": "Palickap / Wikimedia Commons",
+        "author": "Palickap",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bologna,_Archiginnasio,_Teatro_anatomico_(2).jpg",
+        "usageNote": "Historic university heritage; check the timetable for the actual EU-HEM teaching room.",
+        "objectPosition": "50% 42%",
+        "width": 1200,
+        "height": 800,
+        "changes": "Existing repository image reused; CSS may crop the display."
       },
       "resources": [
         {
@@ -997,7 +986,8 @@
           "id": "canvas",
           "label": "Canvas",
           "url": "https://www.uio.no/english/services/it/education/canvas/",
-          "description": "Find course materials, assignments and course communication.",          "access": "Public guide; university login for courses",
+          "description": "Find course materials, assignments and course communication.",
+          "access": "Public guide; university login for courses",
           "sourceIds": [
             "uio-canvas"
           ],
@@ -1507,40 +1497,29 @@
         ]
       },
       "image": {
-        "alt": "University of Oslo Blindern campus",
-        "caption": "University of Oslo campus context. EU-HEM teaching locations may vary by course.",
-        "credit": "Ryan Hodnett / Wikimedia Commons",
-        "author": "Ryan Hodnett",
-        "authorUrl": "https://commons.wikimedia.org/wiki/User:Ryan_Hodnett",
-        "license": "CC BY-SA 4.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Domus_media_-_Universitetet_i_Oslo_(University_of_Oslo)_-_Oslo,_Norway_2021-03-25.jpg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/8/80/Domus_media_-_Universitetet_i_Oslo_%28University_of_Oslo%29_-_Oslo%2C_Norway_2021-03-25.jpg",
-        "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/80/Domus_media_-_Universitetet_i_Oslo_%28University_of_Oslo%29_-_Oslo%2C_Norway_2021-03-25.jpg/1280px-Domus_media_-_Universitetet_i_Oslo_%28University_of_Oslo%29_-_Oslo%2C_Norway_2021-03-25.jpg",
-        "title": "Domus media - Universitetet i Oslo (University of Oslo) - Oslo, Norway 2021-03-25.jpg",
-        "photographDate": "2021-03-25",
-        "width": 1280,
-        "height": 640,
-        "bytes": 244499,
-        "objectPosition": "50% 50%",
-        "changes": "Source JPEG resized and converted to WebP for responsive delivery in v2; no creative alteration. CSS crops the display.",
-        "usageNote": "Domus Media is the historic city-centre university building. It is not presented as the HELED or EU-HEM teaching location.",
         "src": "assets/images/cities/oslo/blindern-campus-1200.webp",
         "variants": [
           {
-            "src": "img/universities/uio-480-v2.webp",
-            "width": 480
+            "src": "assets/images/cities/oslo/blindern-campus-640.webp",
+            "width": 640
           },
           {
-            "src": "img/universities/uio-960-v2.webp",
-            "width": 960
-          },
-          {
-            "src": "img/universities/uio-1280-v2.webp",
-            "width": 1280
+            "src": "assets/images/cities/oslo/blindern-campus-1200.webp",
+            "width": 1200
           }
         ],
-        "srcset": "assets/images/cities/oslo/blindern-campus-640.webp 640w, assets/images/cities/oslo/blindern-campus-1200.webp 1200w"
+        "alt": "The open square in front of the Frederikke building on the Blindern campus",
+        "caption": "Blindern, the University of Oslo's main campus. EU-HEM teaching locations may vary by course.",
+        "credit": "Helge Høifødt / Wikimedia Commons",
+        "author": "Helge Høifødt",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Universitetet_i_Oslo_Blindern_plassen_foran_Frederikke.jpg",
+        "usageNote": "General UiO campus context; not presented as the specific EU-HEM classroom.",
+        "objectPosition": "50% 50%",
+        "width": 1200,
+        "height": 800,
+        "changes": "Existing repository image reused; CSS may crop the display."
       },
       "resources": [
         {
@@ -1996,7 +1975,8 @@
             "eur-alumni"
           ]
         },
-        {          "title": "Erasmus Centre for Entrepreneurship",
+        {
+          "title": "Erasmus Centre for Entrepreneurship",
           "text": "Students interested in health innovation or a venture can explore ECE’s entrepreneurship education, research and network. Ask the centre which activities match your stage and circumstances.",
           "url": "https://www.eur.nl/en/campus/locations/erasmus-centre-entrepreneurship",
           "sourceIds": [
@@ -2450,40 +2430,29 @@
         ]
       },
       "image": {
-        "alt": "Erasmus University Rotterdam Woudestein campus",
-        "caption": "Erasmus University Rotterdam, Woudestein campus.",
-        "credit": "Rotterdam School of Management, Erasmus University / Wikimedia Commons",
-        "author": "Rotterdam School of Management, Erasmus University (RSM erasmus)",
-        "authorUrl": "https://www.flickr.com/photos/48006730@N05/30579457766",
-        "license": "CC BY-SA 2.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Rotterdam_School_of_Management_Erasmus_University_Campus_spring.jpg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f4/Rotterdam_School_of_Management_Erasmus_University_Campus_spring.jpg",
-        "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f4/Rotterdam_School_of_Management_Erasmus_University_Campus_spring.jpg/1280px-Rotterdam_School_of_Management_Erasmus_University_Campus_spring.jpg",
-        "title": "Rotterdam School of Management Erasmus University Campus spring.jpg",
-        "dateNote": "Commons upload: 2017-07-10; image EXIF records 2016-10-27. The supplied caption makes no claim about the season.",
-        "width": 1280,
-        "height": 580,
-        "bytes": 204313,
-        "objectPosition": "50% 50%",
-        "changes": "Source JPEG resized and converted to WebP for responsive delivery in v2; no creative alteration. CSS crops the display.",
-        "usageNote": "A general Woudestein campus photograph; do not label the foreground building as ESHPM.",
         "src": "assets/images/cities/rotterdam/campus-woudestein-1200.webp",
         "variants": [
           {
-            "src": "img/universities/eur-480-v2.webp",
-            "width": 480
+            "src": "assets/images/cities/rotterdam/campus-woudestein-640.webp",
+            "width": 640
           },
           {
-            "src": "img/universities/eur-960-v2.webp",
-            "width": 960
-          },
-          {
-            "src": "img/universities/eur-1280-v2.webp",
-            "width": 1280
+            "src": "assets/images/cities/rotterdam/campus-woudestein-1200.webp",
+            "width": 1200
           }
         ],
-        "srcset": "assets/images/cities/rotterdam/campus-woudestein-640.webp 640w, assets/images/cities/rotterdam/campus-woudestein-1200.webp 1200w"
+        "alt": "A university building with colourful tile art along its front on Campus Woudestein",
+        "caption": "Campus Woudestein, Erasmus University Rotterdam. The photograph gives campus context and does not identify the foreground building as ESHPM.",
+        "credit": "Timelezz / Wikimedia Commons",
+        "author": "Timelezz",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tegelversiering_Karel_Appel_Woudestein.jpg",
+        "usageNote": "General Woudestein campus photograph; do not label the foreground building as ESHPM.",
+        "objectPosition": "50% 50%",
+        "width": 1200,
+        "height": 800,
+        "changes": "Existing repository image reused; CSS may crop the display."
       },
       "resources": [
         {
@@ -2995,7 +2964,8 @@
           "text": "Read the current examination guidance and ask which requirements apply to your EU-HEM modules.",
           "url": "https://www.mci4me.at/en/my-study-program/infos-academic-standards",
           "sourceIds": [
-            "mci-standards"          ]
+            "mci-standards"
+          ]
         },
         {
           "id": "welcome",
@@ -3267,40 +3237,29 @@
         "statusNote": "This guide does not include a verified result for MCI in these global tables. Institutional recognition is shown below."
       },
       "image": {
-        "alt": "Illustrative student scene in Innsbruck with the Alps",
-        "caption": "Illustrative Innsbruck student-life image. It is not a photograph of MCI or an EU-HEM teaching room.",
-        "credit": "-wuppertaler / Wikimedia Commons",
-        "author": "-wuppertaler",
-        "authorUrl": "https://commons.wikimedia.org/wiki/User:-wuppertaler",
-        "license": "CC BY-SA 4.0",
-        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
-        "sourceUrl": "https://commons.wikimedia.org/wiki/File:AUT_Innsbruck,_Management_Center_Innsbruck_004.jpg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5c/AUT_Innsbruck%2C_Management_Center_Innsbruck_004.jpg",
-        "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5c/AUT_Innsbruck%2C_Management_Center_Innsbruck_004.jpg/1280px-AUT_Innsbruck%2C_Management_Center_Innsbruck_004.jpg",
-        "title": "AUT Innsbruck, Management Center Innsbruck 004.jpg",
-        "photographDate": "2022-07-15",
-        "width": 1280,
-        "height": 960,
-        "bytes": 383418,
-        "objectPosition": "50% 43%",
-        "changes": "Source JPEG resized and converted to WebP for responsive delivery in v2; no creative alteration. CSS crops the display.",
-        "usageNote": "Photograph depicts MCI Management Center Innsbruck. Do not rename it University of Innsbruck or describe it as a new campus rendering.",
-        "src": "assets/images/cities/innsbruck/ai-students-mountains-1200.webp",
+        "src": "assets/images/cities/innsbruck/valley-view-1200.webp",
         "variants": [
           {
-            "src": "img/universities/mci-480-v2.webp",
-            "width": 480
+            "src": "assets/images/cities/innsbruck/valley-view-640.webp",
+            "width": 640
           },
           {
-            "src": "img/universities/mci-960-v2.webp",
-            "width": 960
-          },
-          {
-            "src": "img/universities/mci-1280-v2.webp",
-            "width": 1280
+            "src": "assets/images/cities/innsbruck/valley-view-1200.webp",
+            "width": 1200
           }
         ],
-        "srcset": "assets/images/cities/innsbruck/ai-students-mountains-640.webp 640w, assets/images/cities/innsbruck/ai-students-mountains-1200.webp 1200w"
+        "alt": "Innsbruck in the valley, seen from the forested mountainside",
+        "caption": "Innsbruck seen from the mountains above the city. This provides city context; it is not a photograph of MCI or an EU-HEM teaching room.",
+        "credit": "-wuppertaler / Wikimedia Commons",
+        "author": "-wuppertaler",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:AUT_Innsbruck,_Nordkette_005.jpg",
+        "usageNote": "City context only. MCI | The Entrepreneurial School is distinct from the University of Innsbruck.",
+        "objectPosition": "50% 43%",
+        "width": 1200,
+        "height": 800,
+        "changes": "Existing repository image reused; CSS may crop the display."
       },
       "resources": [
         {
