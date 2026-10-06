@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "course": "fund-health-econ-management",
+  "module": "fund-health-economics",
+  "stages": [
+    {
+      "id": "foundations",
+      "number": "01",
+      "title": "Foundations",
+      "description": "Why healthcare is economically unusual and how patients respond to prices, time costs and insurance."
+    },
+    {
+      "id": "health-behaviour",
+      "number": "02",
+      "title": "Health & behaviour",
+      "description": "Health capital, investment, socioeconomic gradients and the mechanisms behind disparities."
+    },
+    {
+      "id": "providers-insurance",
+      "number": "03",
+      "title": "Providers & insurance",
+      "description": "Physician agency and the insurance problems that complete the health-economics framework."
+    }
+  ],
+  "sessions": [
+    {
+      "number": 1,
+      "stage": "foundations",
+      "topic": "fund-health-economics.session-1",
+      "title": "Health Economics and the Healthcare Economy",
+      "shortTitle": "The Healthcare Economy",
+      "summary": "Why healthcare matters economically, why its markets are unusual, and how patients, providers and payers fit together.",
+      "keywords": [
+        "market failure",
+        "uncertainty",
+        "information asymmetry",
+        "equity",
+        "health systems"
+      ],
+      "status": "available"
+    },
+    {
+      "number": 2,
+      "stage": "foundations",
+      "topic": "fund-health-economics.demand",
+      "title": "Healthcare Demand",
+      "shortTitle": "Healthcare Demand",
+      "summary": "Demand curves, elasticity, RAND and Oregon, time costs, and how insurance changes the price patients face.",
+      "keywords": [
+        "demand",
+        "elasticity",
+        "RAND",
+        "Oregon",
+        "time price",
+        "cost sharing"
+      ],
+      "status": "available"
+    },
+    {
+      "number": 3,
+      "stage": "health-behaviour",
+      "topic": "fund-health-economics.health-capital",
+      "title": "Health Capital and the Demand for Health",
+      "shortTitle": "Health Capital",
+      "summary": "The Grossman model: health as capital, depreciation, productive time, the MEC and comparative statics.",
+      "keywords": [
+        "Grossman",
+        "health capital",
+        "depreciation",
+        "MEC",
+        "education",
+        "wage"
+      ],
+      "status": "available"
+    },
+    {
+      "number": 4,
+      "stage": "health-behaviour",
+      "topic": "fund-health-economics.disparities",
+      "title": "Socio-economic Disparities in Health",
+      "shortTitle": "Health Disparities",
+      "summary": "Direct causality, reverse causality and third-factor explanations for socioeconomic health gradients.",
+      "keywords": [
+        "education",
+        "income",
+        "stress",
+        "Whitehall",
+        "productive time",
+        "Fuchs"
+      ],
+      "status": "available"
+    },
+    {
+      "number": 5,
+      "stage": "providers-insurance",
+      "topic": "fund-health-economics.physician-agency",
+      "title": "Physician Agency",
+      "shortTitle": "Physician Agency",
+      "summary": "Principal–agent problems, physician-induced demand, payment incentives and small-area practice variation.",
+      "keywords": [
+        "agency",
+        "PID",
+        "fee for service",
+        "capitation",
+        "practice variation"
+      ],
+      "status": "available"
+    },
+    {
+      "number": 6,
+      "stage": "providers-insurance",
+      "topic": null,
+      "title": "Insurance 1: Demand for Healthcare Insurance",
+      "shortTitle": "Insurance I",
+      "summary": "Risk, demand and supply of insurance, full versus partial coverage, and fair versus unfair contracts.",
+      "keywords": [
+        "risk",
+        "insurance demand",
+        "full insurance",
+        "partial insurance"
+      ],
+      "status": "upcoming"
+    },
+    {
+      "number": 7,
+      "stage": "providers-insurance",
+      "topic": null,
+      "title": "Insurance 2: Adverse Selection & the Role of Government",
+      "shortTitle": "Insurance II",
+      "summary": "Adverse selection, plan competition, pooling and separating equilibria, renewability and public intervention.",
+      "keywords": [
+        "adverse selection",
+        "Rothschild Stiglitz",
+        "pooling",
+        "government"
+      ],
+      "status": "upcoming"
+    },
+    {
+      "number": 8,
+      "stage": "providers-insurance",
+      "topic": null,
+      "title": "Insurance 3: Moral Hazard",
+      "shortTitle": "Insurance III",
+      "summary": "Demand-side and supply-side cost sharing, moral hazard, value-based insurance and managed care.",
+      "keywords": [
+        "moral hazard",
+        "cost sharing",
+        "managed care",
+        "VBID"
+      ],
+      "status": "upcoming"
+    }
+  ]
+}
