@@ -702,7 +702,7 @@ function checkStudents() {
 // "source" in the files below (at any depth) and every {official:id} / {tip:id} marker in a city guide
 // must name a listed id of the right kind.
 const SOURCES_FILE = "content/sources.json";
-const SOURCED_FILES = ["content/programme.json"];
+const SOURCED_FILES = ["content/programme.json", "content/academic-rules.json"];
 const SOURCE_MARKER = /\{(official|tip):([a-z0-9-]+)\}/g;
 let sourceRegistry = null; // id -> { kind, ... }, filled by checkSources()
 
@@ -741,6 +741,54 @@ function checkSources() {
     };
     visit(JSON.parse(fs.readFileSync(path.join(ROOT, relative), "utf8")), "");
   }
+}
+
+// Academic Rules page (content/academic-rules.json, academic-rules.js). Every "source" is already
+// checked by checkSources(); here: universities exist in tracks.json, official links point to sources
+// that have a link, and every answer of the re-sit guide leads to an outcome.
+function checkAcademicRules() {
+  const F = "content/academic-rules.json";
+  if (!fs.existsSync(path.join(ROOT, F))) return;
+  const rules = JSON.parse(fs.readFileSync(path.join(ROOT, F), "utf8"));
+  const page = require("../academic-rules.js");
+  const tracksFile = JSON.parse(fs.readFileSync(path.join(ROOT, "content/tracks.json"), "utf8"));
+  const universities = Object.keys(tracksFile.cohorts[tracksFile.cohorts.length - 1].universities);
+  const hasText = (items, where) => (items || []).forEach((item, i) => requireText(item, "text", `${where}[${i}]`));
+
+  for (const id of page.UNIVERSITY_ORDER) {
+    if (!universities.includes(id)) error("academic-rules.js", `university "${id}" is not in content/tracks.json`);
+    if (!rules.universities[id]) error(F, `universities: "${id}" is missing`);
+    if (!rules.integrity.universities[id]) error(F, `integrity.universities: "${id}" is missing`);
+    if (!rules.grading.scales.some((s) => s.university === id)) error(F, `grading: no scale for "${id}"`);
+  }
+  for (const [id, university] of Object.entries(rules.universities)) {
+    if (!universities.includes(id)) error(F, `universities: "${id}" is not in content/tracks.json`);
+    for (const [topic, items] of Object.entries(university)) if (topic !== "links") hasText(items, `universities.${id}.${topic}`);
+  }
+  const checkLinks = (ids, where) => (ids || []).forEach((id) => {
+    if (!sourceRegistry.has(id)) error(F, `${where}: "${id}" is not an id in ${SOURCES_FILE}`);
+    else if (!sourceRegistry.get(id).link) error(F, `${where}: source "${id}" has no link to show`);
+  });
+  for (const [id, university] of Object.entries(rules.universities)) checkLinks(university.links, `universities.${id}.links`);
+  checkLinks(rules.integrity.links, "integrity.links");
+  hasText(rules.joint, "joint");
+  hasText(rules.integrity.joint, "integrity.joint");
+  for (const topic of rules.more) {
+    if (!ID_PATTERN.test(topic.id || "")) error(F, `more: "${topic.id}" needs an id like "extra-courses"`);
+    hasText(topic.items, `more.${topic.id}`);
+  }
+
+  // Try every combination of answers: each complete one must have an outcome with rules in it
+  const guide = rules.resitGuide;
+  const optionsOf = (q) => (q.options === "universities" ? page.UNIVERSITY_ORDER : q.options.map((o) => o.value));
+  const walk = (answers) => {
+    const open = page.visibleQuestions(guide, answers).find((q) => !answers[q.id]);
+    if (open) return optionsOf(open).forEach((value) => walk({ ...answers, [open.id]: value }));
+    const outcome = page.resitOutcome(rules, answers);
+    if (!outcome) error(F, `re-sit guide: no outcome for ${JSON.stringify(answers)} (expected "${page.resitOutcomeKey(guide, answers)}" in outcomes)`);
+    else if (!outcome.items.length) error(F, `re-sit guide: outcome "${outcome.key}" has no items`);
+  };
+  walk({});
 }
 
 // Key dates of each cohort (calendar page, homepage, calendar files): see programme.js
@@ -1003,6 +1051,7 @@ async function main() {
   // --- City guides (docs/content/<city>-guide.md) ---
   checkSources(); // before the guides: they use its ids
   checkKeyDates();
+  checkAcademicRules();
   checkCityGuides();
 
   // --- topics (first, so everything else can link to them) ---

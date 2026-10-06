@@ -18,6 +18,7 @@ const SITE_MENU = [
       { key: "timetable", label: "Timetable", href: "timetable.html", icon: "timetable", desc: "Classes and rooms, live from UniBo" },
       { key: "exams", label: "Exams", href: "exams.html", icon: "exams", desc: "Dates and registration windows" },
       { key: "calendar", label: "Calendar", href: "calendar.html", icon: "calendar", desc: "Subscribe on your phone" },
+      { key: "academic-rules", label: "Academic Rules", href: "academic-rules.html", icon: "scale", desc: "Re-sits, grades, plagiarism and AI" },
     ],
   },
   {

@@ -93,6 +93,72 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
     ok("homepage: next exam period (from programme.json, UniBo offline) and the Studenti Online reminder");
     await page.context().close();
 
+    // --- Academic Rules page ---
+    page = await open("academic-rules.html");
+    await page.locator("#joint .rules-item").first().waitFor();
+    assert.strictEqual(await page.locator("#rules-status").count(), 0, "loading message left");
+    assert.strictEqual(await page.locator("#site-nav a[href='academic-rules.html'][aria-current='page']").count(), 1, "menu marks the page");
+    assert.strictEqual(await page.locator(".rules-uni").count(), 4);
+    assert.deepStrictEqual(await page.locator(".rules-uni h3").evaluateAll((els) => els.map((e) => e.firstChild.textContent)),
+      ["University of Bologna", "University of Oslo", "MCI | The Entrepreneurial School", "Erasmus University Rotterdam"]);
+    const ruleCount = await page.locator(".rules-item").count();
+    assert.strictEqual(await page.locator(".rules-item .source-badge").count(), ruleCount, "every rule has a label");
+    assert.strictEqual(await page.locator(".rules-item .source-badge", { hasText: "Source not listed" }).count(), 0);
+    assert.strictEqual(await page.locator(".rules-grades tbody tr").count(), 4);
+    assert.match(await page.locator("#grading .rules-note").textContent(), /not a conversion/);
+    for (const href of await page.locator(".rules-links a").evaluateAll((els) => els.map((e) => e.href))) assert.match(href, /^https:\/\//);
+    ok("academic rules: shared rules, 4 universities, grading table, every rule labelled, official links");
+
+    // Re-sit guide with the keyboard only: Tab into a group, arrows choose, the outcome is announced
+    await page.locator("#resit-guide input[name='resit-university']").first().focus();
+    await page.keyboard.press("ArrowRight"); await page.keyboard.press("ArrowRight"); await page.keyboard.press("ArrowRight"); // -> EUR
+    assert.strictEqual(await page.locator("input[name='resit-university']:checked").getAttribute("value"), "eur");
+    await page.keyboard.press("Tab"); // into "what happened" (first option: failed)
+    await page.keyboard.press("Space");
+    assert.strictEqual(await page.locator("input[name='resit-attempt']:checked").getAttribute("value"), "failed");
+    assert.strictEqual(await page.locator(".resit-result").count(), 0, "no outcome before the last question");
+    await page.keyboard.press("Tab"); await page.keyboard.press("ArrowRight"); // "another EU-HEM university"
+    const result = page.locator(".resit-outcome .resit-result");
+    await result.waitFor();
+    assert.strictEqual(await page.locator(".resit-outcome").getAttribute("aria-live"), "polite");
+    assert.match(await result.locator("h3").textContent(), /Ask to re-sit where you are now/);
+    assert.match(await result.textContent(), /online proctoring/);
+    await page.locator("input[name='resit-attempt'][value='improve']").check();
+    assert.strictEqual(await page.locator("input[name='resit-location']").count(), 0, "location question hidden again");
+    assert.match(await result.textContent(), /higher grade counts/);
+    await page.locator(".resit-reset").click();
+    assert.strictEqual(await page.locator(".resit-result").count(), 0);
+    assert.strictEqual(await page.evaluate(() => document.activeElement.name), "resit-university");
+    ok("re-sit guide: keyboard only, location question only after a fail, live outcome, start again");
+
+    await page.goto(base + "academic-rules.html#grading");
+    await page.locator(".rules-grades tbody tr").first().waitFor();
+    await page.waitForTimeout(300);
+    const top = await page.locator("#grading").evaluate((el) => el.getBoundingClientRect().top);
+    assert.ok(top >= 0 && top < 300, `#grading not scrolled into view (top ${top})`);
+    ok("academic rules: a link to #grading opens at that section");
+    await page.context().close();
+
+    page = await open("academic-rules.html", { viewport: { width: 320, height: 800 }, scheme: "dark" });
+    await page.locator(".rules-grades tbody tr").first().waitFor();
+    await noSideways(page);
+    assert.strictEqual(await page.locator(".rules-grades thead").evaluate((el) => getComputedStyle(el).display), "none", "grades are cards on phones");
+    const cardBg = await page.locator(".rules-uni").first().evaluate((el) => getComputedStyle(el).backgroundColor);
+    assert.ok(!/rgb\(255, 255, 255\)/.test(cardBg), `light card in dark mode: ${cardBg}`);
+    ok("academic rules on a 320 px phone in dark mode: no sideways scrolling, grade cards, dark cards");
+    await page.context().close();
+
+    // Site search finds the rules
+    page = await open("index.html");
+    await page.locator("#dash-exam .dash-period").waitFor({ timeout: 30000 });
+    await page.keyboard.press("Control+k");
+    await page.keyboard.type("proctoring");
+    const hit = page.locator("a[href='academic-rules.html#uni-eur']");
+    await hit.waitFor({ timeout: 20000 });
+    assert.match(await hit.textContent(), /Erasmus University Rotterdam/);
+    ok("site search finds a rule and links to its university");
+    await page.context().close();
+
     assert.deepStrictEqual(errors, [], "page errors");
     ok("no page errors");
   } finally {

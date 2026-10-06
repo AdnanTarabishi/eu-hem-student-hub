@@ -66,4 +66,40 @@ t("month-only dates count until the end of their month", () => {
   assert.strictEqual(P.nextKeyDate(cohort, "deadline", "2027-03-01").id, "reenrolment-deadline");
 });
 
+// ----- Academic Rules: the re-sit guide -----
+const rules = read("content/academic-rules.json");
+const R = require(path.join(ROOT, "academic-rules.js"));
+const texts = (outcome) => [...outcome.items, ...outcome.universityItems].map((i) => i.text).join(" ");
+
+t("re-sit guide: the location question appears only after a failed exam", () => {
+  const ids = (answers) => R.visibleQuestions(rules.resitGuide, answers).map((q) => q.id);
+  assert.deepStrictEqual(ids({}), ["university", "attempt"]);
+  assert.deepStrictEqual(ids({ university: "eur", attempt: "improve" }), ["university", "attempt"]);
+  assert.deepStrictEqual(ids({ university: "eur", attempt: "failed" }), ["university", "attempt", "location"]);
+  assert.strictEqual(R.resitOutcome(rules, { university: "eur", attempt: "failed" }), null);
+});
+
+t("re-sit guide: failed an EUR exam, now elsewhere -> ask a month ahead, EUR only on campus or proctored", () => {
+  const outcome = R.resitOutcome(rules, { university: "eur", attempt: "failed", location: "other" });
+  assert.strictEqual(outcome.key, "failed-other");
+  assert.match(texts(outcome), /one month before/);
+  assert.match(texts(outcome), /online proctoring/);
+  assert.match(texts(outcome), /one re-sit per academic year/);
+});
+
+t("re-sit guide: improving a grade shows that university's own rule", () => {
+  assert.match(texts(R.resitOutcome(rules, { university: "unibo", attempt: "improve" })), /before the grade is registered/);
+  assert.match(texts(R.resitOutcome(rules, { university: "eur", attempt: "improve" })), /higher grade counts/);
+  assert.doesNotMatch(texts(R.resitOutcome(rules, { university: "unibo", attempt: "failed", location: "other" })), /proctoring/);
+});
+
+t("academic rules: grading scales for all four universities, with the pass marks from the brief", () => {
+  const pass = Object.fromEntries(rules.grading.scales.map((s) => [s.university, s.pass]));
+  assert.deepStrictEqual(Object.keys(pass).sort(), ["eur", "mci", "uio", "unibo"]);
+  assert.strictEqual(pass.unibo, "18");
+  assert.strictEqual(pass.uio, "E");
+  assert.strictEqual(pass.eur, "5.5");
+  assert.match(rules.grading.note, /not a conversion/);
+});
+
 console.log(`${n} handbook data checks passed`);

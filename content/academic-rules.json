@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 1,
+  "cohort": "2026-27",
+  "lastChecked": "2026-10-06",
+  "note": "Our own summary of the EU-HEM Student Handbook (cohort 2026-2028) and official university pages. Every item names its source (content/sources.json). Format: docs/sources.md",
+  "intro": "Each university uses its own exam rules for its own courses. This page sums them up side by side. It is a student-made summary: the official rules always win, and they can change during the year.",
+
+  "joint": [
+    { "text": "For every course, the exam rules of the university that teaches it apply. Only the thesis has shared EU-HEM rules: the Thesis Guidelines, which you receive in the summer before year 2.", "source": "euhem-handbook-2026" },
+    { "text": "Take the first exam. Re-sits at a partner university are meant for students who tried and did not pass. They are not a replacement for the first attempt, and they cannot be guaranteed.", "source": "euhem-handbook-2026" },
+    { "text": "How many re-sits you get, and whether you can re-sit an exam you already passed, depends on the university that teaches the course.", "source": "euhem-handbook-2026" },
+    { "text": "To improve a grade you already passed, you must re-sit at the university that teaches the course.", "source": "euhem-handbook-2026" },
+    { "text": "Re-sits can only be taken at one of the four EU-HEM universities. That university stays responsible for the exam, and its rules on supervision apply.", "source": "euhem-handbook-2026" }
+  ],
+
+  "grading": {
+    "note": "This table shows how each scale works. It is not a conversion: there is no official way to turn a grade from one university into a grade at another.",
+    "scales": [
+      { "university": "unibo", "scale": "18 to 30", "pass": "18", "best": "30 e lode (30 with honours)", "extra": "Your overall graduation grade at UniBo is on a 66 to 110 scale, based on your exam results and the defence of your thesis.", "source": "euhem-handbook-2026" },
+      { "university": "uio", "scale": "A to F", "pass": "E", "best": "A", "extra": "Some courses are graded pass/fail instead of A to F.", "source": "uio-grades" },
+      { "university": "mci", "scale": "1 to 5", "pass": "4 (60–69%)", "best": "1 (90–100%)", "extra": "5 is the only failing grade. Lower numbers are better.", "source": "euhem-handbook-2026" },
+      { "university": "eur", "scale": "1 to 10", "pass": "5.5", "best": "10", "extra": "A 9 is given rarely and a 10 almost never.", "source": "euhem-handbook-2026" }
+    ]
+  },
+
+  "universities": {
+    "unibo": {
+      "exams": [
+        { "text": "Register for every exam on AlmaEsami. Your courses appear there only after you fill in your study plan on Studenti Online, so do this before the exam session.", "source": "euhem-handbook-2026" },
+        { "text": "Attendance is not compulsory, but you are strongly advised to attend at least 70% of the classes.", "source": "euhem-handbook-2026" }
+      ],
+      "resits": [
+        { "text": "In the first semester you get one exam right after each course, plus two re-sits: one at the end of the semester and one in September.", "source": "euhem-handbook-2026" }
+      ],
+      "improve": [
+        { "text": "You can turn down a grade and sit the exam again. Tell the lecturer in time, before the grade is registered. Once it is registered on AlmaEsami, you cannot sit that exam again.", "source": "euhem-handbook-2026" },
+        { "text": "These rules may be updated: check with the UniBo coordinator.", "source": "euhem-handbook-2026" }
+      ],
+      "complaints": [
+        { "text": "Complaints about how the university treats you go to the Student Ombudsman (garante@unibo.it). You can stay anonymous.", "source": "euhem-handbook-2026" }
+      ],
+      "links": ["unibo-exam-dates"]
+    },
+    "uio": {
+      "exams": [
+        { "text": "Every semester, register in Studentweb for your classes and exams. Deadlines: 1 February and 1 September.", "source": "euhem-handbook-2026" }
+      ],
+      "resits": [
+        { "text": "The UiO Faculty of Medicine rules decide how many attempts you get. Read them before your first exam in Oslo.", "source": "uio-med-regulations" }
+      ],
+      "improve": [
+        { "text": "The handbook does not say whether you can re-sit a passed exam in Oslo. Check the Faculty of Medicine rules or ask the Oslo coordinator.", "source": "euhem-handbook-2026" }
+      ],
+      "complaints": [
+        { "text": "You can ask for an explanation of a grade: straight away after an oral exam, or within one week after a written grade is published.", "source": "euhem-handbook-2026" },
+        { "text": "You can appeal a grade within three weeks of its publication. Oral and practical exams cannot be appealed. Complaints about formal errors also have a three-week deadline.", "source": "euhem-handbook-2026" }
+      ],
+      "links": ["uio-med-regulations", "uio-grades"]
+    },
+    "mci": {
+      "exams": [
+        { "text": "MCI registers you for all courses. Electives are chosen in the month before the semester, first come, first served.", "source": "euhem-handbook-2026" },
+        { "text": "Attendance is compulsory. If you miss 25% or more of a course without a valid reason, you lose an exam attempt. If you are ill, apply to the student support officer and send a medical certificate.", "source": "euhem-handbook-2026" }
+      ],
+      "resits": [
+        { "text": "You can retake a failed exam twice. The third and last attempt is an oral exam in front of a committee.", "source": "mci-exam-regulations-2026" }
+      ],
+      "improve": [
+        { "text": "The handbook does not say whether you can re-sit a passed exam at MCI. Check the MCI regulations or ask the Innsbruck coordinator.", "source": "euhem-handbook-2026" }
+      ],
+      "complaints": [
+        { "text": "Start with the local coordinator, who can help or send you to the Head of Studies.", "source": "euhem-handbook-2026" }
+      ],
+      "links": ["mci-exam-regulations-2026"]
+    },
+    "eur": {
+      "exams": [
+        { "text": "The Education Service Centre registers you for all courses and workgroups. Exam and re-sit dates are on timetables.eur.nl.", "source": "euhem-handbook-2026" }
+      ],
+      "resits": [
+        { "text": "You get one re-sit per academic year. Email euhem@eshpm.eur.nl at least two weeks before the re-sit so they can register you.", "source": "euhem-handbook-2026" }
+      ],
+      "improve": [
+        { "text": "You may re-sit a written exam you already passed. The higher grade counts.", "source": "euhem-handbook-2026" }
+      ],
+      "awayResit": [
+        { "text": "A re-sit of an EUR course can only be taken on campus in Rotterdam or by online proctoring (an exam from home, watched online). Online proctoring must be approved by the Examination Board, and is possible for at most one year after the normal two years.", "source": "euhem-handbook-2026" }
+      ],
+      "complaints": [
+        { "text": "Try to solve a problem with the lecturer first, and go to the exam review session. If that does not work, you can complain to the Examination Board. Its decisions can be appealed to the Board of Appeal for Examinations (CBE).", "source": "euhem-handbook-2026" }
+      ],
+      "links": []
+    }
+  },
+
+  "resitGuide": {
+    "intro": "Answer three quick questions to see which re-sit rules apply to you.",
+    "questions": [
+      { "id": "university", "text": "Which university teaches the course?", "options": "universities" },
+      {
+        "id": "attempt", "text": "What happened at the first exam?",
+        "options": [
+          { "value": "failed", "label": "I took it and did not pass" },
+          { "value": "improve", "label": "I passed, but want a better grade" },
+          { "value": "skipped", "label": "I did not take it" }
+        ]
+      },
+      {
+        "id": "location", "text": "Where will you be studying when the re-sit takes place?", "showIf": { "attempt": "failed" },
+        "options": [
+          { "value": "same", "label": "At the university that teaches the course" },
+          { "value": "other", "label": "At another EU-HEM university" }
+        ]
+      }
+    ],
+    "outcomes": {
+      "skipped": {
+        "title": "Take the first exam whenever you can",
+        "items": [
+          { "text": "You are expected to take the first exam. Re-sits at a partner university are for students who tried and did not pass, and they cannot be guaranteed.", "source": "euhem-handbook-2026" }
+        ],
+        "addUniversity": "resits"
+      },
+      "improve": {
+        "title": "Improving a passed grade",
+        "items": [
+          { "text": "You can only do this at the university that teaches the course, and only if its rules allow it.", "source": "euhem-handbook-2026" }
+        ],
+        "addUniversity": "improve"
+      },
+      "failed-same": {
+        "title": "Re-sit where the course is taught",
+        "items": [
+          { "text": "You are still at the university that teaches the course, so you must take the re-sit there.", "source": "euhem-handbook-2026" }
+        ],
+        "addUniversity": "resits"
+      },
+      "failed-other": {
+        "title": "Ask to re-sit where you are now",
+        "items": [
+          { "text": "Register for the re-sit following the rules of the university that teaches the course.", "source": "euhem-handbook-2026" },
+          { "text": "At least one month before the re-sit, email the local coordinator of that university and ask to take it at the university where you are studying now.", "source": "euhem-handbook-2026" },
+          { "text": "If it cannot be arranged, you will hear at least two weeks before the re-sit. If it can, you get the place and time at least three days before.", "source": "euhem-handbook-2026" },
+          { "text": "A written re-sit takes place at the same time as at the original university. Everyone will try to arrange it, but it is not guaranteed.", "source": "euhem-handbook-2026" }
+        ],
+        "addUniversity": "resits",
+        "addUniversityExtra": "awayResit"
+      }
+    }
+  },
+
+  "integrity": {
+    "joint": [
+      { "text": "Plagiarism can mean failing the course, and in serious cases losing your degree or being removed from the programme. The university that runs the course decides the procedure.", "source": "euhem-handbook-2026" },
+      { "text": "Papers and theses are checked with anti-plagiarism software. Always rephrase in your own words and cite your sources.", "source": "euhem-handbook-2026" },
+      { "text": "You are responsible for everything you submit. If you use AI tools, follow the rules of the university and of the course.", "source": "euhem-handbook-2026" }
+    ],
+    "universities": {
+      "unibo": [
+        { "text": "Generative AI may be used, but check with each teacher which uses are allowed, say when you used it, and be ready to explain the result.", "source": "unibo-genai-students" }
+      ],
+      "uio": [
+        { "text": "Describe how you used AI in an assignment and which tools. AI can support your learning but cannot replace your own work. Check every fact and reference it gives you.", "source": "uio-med-ai" },
+        { "text": "UiO checks submitted texts for copying with Inspera Originality.", "source": "uio-cheating" }
+      ],
+      "mci": [
+        { "text": "Generative AI is allowed unless the programme directors forbid it for an exam or thesis. If you use it, you must say so. Using it without permission can lead to a Fail.", "source": "mci-exam-regulations-2026" },
+        { "text": "A plagiarised paper is graded Fail, together with the whole course, and you get a written warning.", "source": "mci-exam-regulations-2026" }
+      ],
+      "eur": [
+        { "text": "Handing in AI-generated work as your own is fraud. Say whether and how you used AI, and ask your teacher what is allowed in each course.", "source": "eur-genai" }
+      ]
+    },
+    "links": ["unibo-genai-students", "uio-med-ai", "uio-cheating", "mci-exam-regulations-2026", "eur-genai"]
+  },
+
+  "more": [
+    {
+      "id": "internship", "title": "Internship (5 ECTS)",
+      "items": [
+        { "text": "You can do a 5-ECTS internship for work experience. It is not possible in Rotterdam or Innsbruck.", "source": "euhem-handbook-2026" },
+        { "text": "In Oslo the credits can count in the second or third semester. For Bologna, they may be recognised later by your third-semester university, under conditions. Talk to your local coordinator before you start.", "source": "euhem-handbook-2026" }
+      ]
+    },
+    {
+      "id": "research-assignment", "title": "Research assignment in semester 4",
+      "items": [
+        { "text": "Alongside your thesis, you can collect data for it inside a company or organisation. This gives no extra ECTS. Check first with your Track Committee or thesis supervisor that it fits your topic.", "source": "euhem-handbook-2026" }
+      ]
+    },
+    {
+      "id": "extra-courses", "title": "Extra courses",
+      "items": [
+        { "text": "In Oslo, Bologna and Rotterdam you can take extra courses, but they give no ECTS. They do not appear on your transcript or diploma supplement, only on that university's study progress overview.", "source": "euhem-handbook-2026" },
+        { "text": "They add to your workload, so they are only advised if your grades are excellent. At MCI it is harder: ask the local coordinator.", "source": "euhem-handbook-2026" }
+      ]
+    },
+    {
+      "id": "special-provisions", "title": "Special provisions (impairment or learning disability)",
+      "items": [
+        { "text": "If you have a temporary or chronic impairment or a learning disability, you can ask for special provisions. Every EU-HEM student applies through Erasmus University Rotterdam. Once approved, the partner universities are told.", "source": "euhem-handbook-2026" },
+        { "text": "Apply at least six weeks before your exams, through OSIRIS Case, with a (medical) statement. The Examination Board decides.", "source": "eur-special-provisions" }
+      ]
+    }
+  ]
+}

@@ -14,7 +14,7 @@
   const GROUPS = [
     ["page", "Pages"], ["course", "Courses"], ["topic", "Notes"], ["concept", "Key concepts"],
     ["flashcard", "Flashcards"], ["question", "Questions"], ["resource", "Resources"],
-    ["announcement", "Announcements"], ["guide", "City Guide"],
+    ["announcement", "Announcements"], ["guide", "City Guide"], ["rules", "Academic rules"],
     ["update", "Released updates"], ["roadmap", "Roadmap plans (not available yet)"],
   ];
 
@@ -107,6 +107,29 @@
       }
     } catch (error) {
       console.error("Search: roadmap", error);
+    }
+    // Academic Rules: one entry per section, per university and per extra topic
+    try {
+      const response = await fetch("content/academic-rules.json");
+      if (response.ok) {
+        const rules = await response.json();
+        const texts = (items) => (items || []).map((item) => item.text).join(" ");
+        const page = "academic-rules.html";
+        add("rules", "Shared exam and re-sit rules", `${page}#joint`, texts(rules.joint));
+        add("rules", "Re-sit guide", `${page}#resit-guide`, `resit retake exam again failed ${rules.resitGuide.intro}`);
+        add("rules", "Grading scales", `${page}#grading`, `grades marks pass ${rules.grading.note} ${rules.grading.scales.map((s) => `${s.scale} ${s.extra}`).join(" ")}`);
+        add("rules", "Plagiarism and AI", `${page}#integrity`, `ChatGPT artificial intelligence cheating fraud ${texts(rules.integrity.joint)} ${Object.values(rules.integrity.universities).map(texts).join(" ")}`);
+        const tracks = await fetch("content/tracks.json").then((r) => (r.ok ? r.json() : null)).catch(() => null);
+        const names = tracks ? tracks.cohorts[tracks.cohorts.length - 1].universities : {};
+        for (const [id, university] of Object.entries(rules.universities)) {
+          const name = names[id] ? `${names[id].name}, ${names[id].city}` : id;
+          add("rules", `Exams and re-sits: ${name}`, `${page}#uni-${id}`,
+            ["exams", "resits", "improve", "awayResit", "complaints"].map((topic) => texts(university[topic])).join(" "));
+        }
+        for (const topic of rules.more) add("rules", topic.title, `${page}#${topic.id}`, texts(topic.items));
+      }
+    } catch (error) {
+      console.error("Search: academic rules", error);
     }
     return list;
   }

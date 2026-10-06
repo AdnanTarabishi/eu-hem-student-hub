@@ -53,6 +53,78 @@
       "cohort": "2026-2027",
       "lastChecked": "2026-10-06",
       "link": { "label": "ESN Bologna", "url": "https://esnbologna.org" }
+    },
+    {
+      "id": "unibo-exam-dates",
+      "title": "EU-HEM exam dates, University of Bologna course website",
+      "shortTitle": "UniBo exam dates",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UniBo: EU-HEM exam dates and AlmaEsami", "url": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates" }
+    },
+    {
+      "id": "unibo-genai-students",
+      "title": "University of Bologna: use cases of generative AI in preparing student work to be assessed",
+      "shortTitle": "UniBo AI policy",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UniBo: generative AI in student work", "url": "https://www.unibo.it/en/university/statute-standards-strategies-and-reports/artificial-intelligence/use-cases-of-generative-artificial-intelligence-in-preparing-student-work-to-be-assessed" }
+    },
+    {
+      "id": "uio-grades",
+      "title": "University of Oslo: grading and grading scales",
+      "shortTitle": "UiO grading",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UiO: grading and grading scales", "url": "https://www.uio.no/english/studies/examinations/grades/" }
+    },
+    {
+      "id": "uio-med-regulations",
+      "title": "University of Oslo, Faculty of Medicine: rules and regulations for master studies",
+      "shortTitle": "UiO master rules",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UiO Faculty of Medicine: rules for master studies", "url": "https://www.med.uio.no/english/studies/about/regulations/master/index.html" }
+    },
+    {
+      "id": "uio-cheating",
+      "title": "University of Oslo: cheating",
+      "shortTitle": "UiO cheating rules",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UiO: what counts as cheating", "url": "https://www.uio.no/english/studies/examinations/cheating/" }
+    },
+    {
+      "id": "uio-med-ai",
+      "title": "University of Oslo, Faculty of Medicine: use of generative AI in examinations and assignments",
+      "shortTitle": "UiO AI rules",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "UiO Faculty of Medicine: AI in exams and assignments", "url": "https://www.med.uio.no/english/studies/resources/ai-in-examinations-assignments-med/" }
+    },
+    {
+      "id": "mci-exam-regulations-2026",
+      "title": "MCI Study & Examination Regulations, updated version October 2026",
+      "shortTitle": "MCI exam regulations",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "MCI: Study & Examination Regulations (PDF)", "url": "https://www.mci.edu/en/download/category/14-kollegium-en?download=115%3Aexamination-regulations" }
+    },
+    {
+      "id": "eur-genai",
+      "title": "Erasmus University Rotterdam: generative AI usage guidelines",
+      "shortTitle": "EUR AI guidelines",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "EUR: generative AI guidelines", "url": "https://www.eur.nl/en/about-university/policy-and-regulations/regulations-and-guidelines/ai-usage-guidelines" }
+    },
+    {
+      "id": "eur-special-provisions",
+      "title": "Erasmus University Rotterdam: requesting provisions for students with a disability",
+      "shortTitle": "EUR special provisions",
+      "type": "official-university-page",
+      "lastChecked": "2026-10-06",
+      "link": { "label": "EUR: request special provisions", "url": "https://eur.nl/en/education/practical-matters/advice-counselling/studying-functional-impairment/request-extra-facilities" }
     }
   ]
 }
