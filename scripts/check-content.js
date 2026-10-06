@@ -843,7 +843,8 @@ function checkProgrammeEvents() {
 // Privacy for the handbook pages: only these role mailboxes may appear (never a person's own address),
 // and no Google Sheets/Docs links (the student reps' housing reviews are private). Changing this list is
 // a decision for the site owner, so it lives here and not in the content files.
-const ROLE_MAILBOXES = ["didatticasociale.euhem@unibo.it", "euhem@eshpm.eur.nl", "eu-hem@mci.edu", "garante@unibo.it"];
+const ROLE_MAILBOXES = ["didatticasociale.euhem@unibo.it", "euhem@eshpm.eur.nl", "eu-hem@mci.edu", "garante@unibo.it",
+  "safe@eur.nl", "mentalhealth@mci.edu", "med-studieinfo@medisin.uio.no"]; // service mailboxes added 2026-10-06 at the owner's request
 const HANDBOOK_FILES = ["content/sources.json", "content/academic-rules.json", "content/programme-events.json", "content/people.json"];
 
 function checkHandbookPrivacy() {

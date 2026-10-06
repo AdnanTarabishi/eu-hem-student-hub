@@ -92,12 +92,14 @@ function coordinatorBlock(coordinator) {
     const mail = createElement("a", "support-mail", coordinator.email);
     mail.href = `mailto:${coordinator.email}`;
     box.appendChild(mail);
-  } else if (source && source.link) {
-    const a = createElement("a", null, source.link.label);
+  }
+  // An official web page as the source: link it too (after the mailbox, or on its own)
+  if (source && source.link && source.kind === "official" && coordinator.source !== "euhem-handbook-2026") {
+    const a = createElement("a", coordinator.email ? "support-official" : null, source.link.label);
     a.href = source.link.url;
     a.target = "_blank";
     a.rel = "noopener";
-    box.appendChild(a);
+    box.append(coordinator.email ? " · " : "", a);
   }
   box.append(" ", sourceLabel(coordinator.source, support.sources));
   return box;

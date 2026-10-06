@@ -4,7 +4,7 @@
   "note": "Support & Contacts page (support.html). Roles and role mailboxes only: no personal names or personal emails (the checker only allows the mailboxes in 'allowedEmails'). Every item names its source (content/sources.json).",
   "intro": "Not sure who to ask? Start with the guide below. For most questions, the right person is the local coordinator of the university where you study this semester.",
   "privacyNote": "We list role mailboxes and official pages only, never staff names or personal emails. The official contact pages have the full details.",
-  "allowedEmails": ["didatticasociale.euhem@unibo.it", "euhem@eshpm.eur.nl", "eu-hem@mci.edu", "garante@unibo.it"],
+  "allowedEmails": ["didatticasociale.euhem@unibo.it", "euhem@eshpm.eur.nl", "eu-hem@mci.edu", "garante@unibo.it", "safe@eur.nl", "mentalhealth@mci.edu", "med-studieinfo@medisin.uio.no"],
   "staffPage": "eur-hem-contact",
 
   "universities": {
@@ -18,7 +18,7 @@
       ]
     },
     "uio": {
-      "coordinator": { "role": "EU-HEM contact in Oslo (student information, registration, counselling)", "source": "uio-hem-contact" },
+      "coordinator": { "role": "MED Student Information (Faculty of Medicine): registration, counselling and other study questions", "email": "med-studieinfo@medisin.uio.no", "source": "uio-hem-contact" },
       "safety": [
         { "text": "The Student Ombud gives free, confidential advice on your rights, including harassment, discrimination and bullying, and can help with anonymous complaints.", "source": "uio-student-ombud" },
         { "text": "Speak up! is UiO's channel to report problems with your learning environment.", "source": "uio-speak-up" }
@@ -34,13 +34,13 @@
         { "text": "MCI's Code of Conduct lists further contact points, including the student union and a complaints committee.", "source": "mci-code-of-conduct" }
       ],
       "wellbeing": [
-        { "text": "Mental Health @ MCI offers confidential sessions in Innsbruck, online counselling and a helpline.", "source": "mci-mental-health" }
+        { "text": "Mental Health @ MCI offers confidential sessions in Innsbruck, online counselling and a helpline. Write to the team to arrange an appointment.", "email": "mentalhealth@mci.edu", "source": "mci-mental-health" }
       ]
     },
     "eur": {
       "coordinator": { "role": "International programme coordinator, local coordinator and Education Service Centre", "email": "euhem@eshpm.eur.nl", "source": "euhem-handbook-2026" },
       "safety": [
-        { "text": "Safe@EUR is the contact point for bullying, discrimination, intimidation or sexual harassment. You can contact them without giving your name.", "source": "eur-safe" },
+        { "text": "Safe@EUR is the contact point for bullying, discrimination, intimidation or sexual harassment. You can contact them without giving your name.", "email": "safe@eur.nl", "source": "eur-safe" },
         { "text": "EUR also has confidential counsellors for students who face unwanted behaviour or unequal treatment.", "source": "eur-eshpm-social-safety" }
       ],
       "wellbeing": [
