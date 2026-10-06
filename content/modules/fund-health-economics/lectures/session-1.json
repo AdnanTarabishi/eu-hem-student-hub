@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "topic": "fund-health-economics.session-1",
+  "classNumber": 1,
+  "date": "2026-09-16",
+  "updated": "2026-10-06",
+  "heroTitle": "Health economics.\nThe system behind the care.",
+  "intro": "Start with the map of the whole course: why healthcare matters economically, why its markets are unusual, and how patients, providers, insurers and governments fit together.",
+  "guide": "lectures/session-1.html",
+  "activities": [],
+  "attribution": "Independent student-written study guide based on Daniele Fabbri’s Fundamentals in Health Economics, Session 1, and the 2026/27 course outline. The official slides are not reproduced here. Always check Virtuale for the official materials."
+}
