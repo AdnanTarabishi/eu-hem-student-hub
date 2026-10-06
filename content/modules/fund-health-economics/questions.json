@@ -12,8 +12,7 @@
       "Not change at all"
     ],
     "answer": "B",
-    "explanation": "% change in quantity = elasticity × % change in price = -0.2 × 10% = -2%. Visits fall by about 2%. Demand is inelastic, but not zero.",
-    "sample": true
+    "explanation": "% change in quantity = elasticity × % change in price = -0.2 × 10% = -2%. Visits fall by about 2%. Demand is inelastic, but not zero."
   },
   {
     "id": "fund-health-economics.q.002",
@@ -48,8 +47,7 @@
     "difficulty": "medium",
     "question": "The demand for health care is perfectly inelastic: price has no effect on how much care people use.",
     "answer": false,
-    "explanation": "False. Studies such as the RAND Health Insurance Experiment found that people use less care when they pay more. Demand is inelastic (it reacts only a little), but not perfectly inelastic.",
-    "sample": true
+    "explanation": "False. Studies such as the RAND Health Insurance Experiment found that people use less care when they pay more. Demand is inelastic (it reacts only a little), but not perfectly inelastic."
   },
   {
     "id": "fund-health-economics.q.005",
@@ -63,7 +61,7 @@
   },
   {
     "id": "fund-health-economics.q.006",
-    "topic": "fund-health-economics.demand",
+    "topic": "fund-health-economics.health-capital",
     "type": "short-answer",
     "difficulty": "medium",
     "question": "Why do economists say the demand for health care is a 'derived demand'?",
@@ -321,5 +319,273 @@
     "question": "A policy improves access for a disadvantaged group but requires additional resources and may reduce activity elsewhere in the health system. Which two broad economic criteria should be discussed?",
     "answer": "Equity and efficiency. Equity asks whether the new distribution of access is fairer; efficiency asks how the policy changes total resource use, health gains and opportunity costs.",
     "explanation": "The point is not to assume that equity and efficiency always conflict, but to analyse both explicitly."
+  },
+  {
+    "id": "fund-health-economics.q.026",
+    "topic": "fund-health-economics.demand",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Demand curve",
+    "source": "EU-HEM Hub original practice · Session 2",
+    "question": "The money price of a physician visit falls while income, health status and other determinants stay unchanged. What happens in a standard demand diagram?",
+    "options": [
+      "The demand curve shifts right",
+      "There is movement along the existing demand curve to a higher quantity",
+      "The demand curve becomes vertical",
+      "Demand must become more elastic"
+    ],
+    "answer": "B",
+    "explanation": "A change in the good's own price produces movement along the existing demand curve. A shift requires a change in another determinant."
+  },
+  {
+    "id": "fund-health-economics.q.027",
+    "topic": "fund-health-economics.demand",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Demand shifts",
+    "source": "EU-HEM Hub original practice · Session 2",
+    "question": "Suppose hospital care and physician visits are substitutes. If the price of hospital care rises, what does the Session 2 framework predict for demand for physician visits?",
+    "options": [
+      "It shifts left",
+      "It shifts right",
+      "It does not change",
+      "It becomes perfectly inelastic"
+    ],
+    "answer": "B",
+    "explanation": "When the price of a substitute rises, demand for the other service can shift to the right."
+  },
+  {
+    "id": "fund-health-economics.q.028",
+    "topic": "fund-health-economics.demand",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Consumer surplus",
+    "source": "EU-HEM Hub original practice · Session 2",
+    "question": "A patient would be willing to pay €80 for a service but pays €50. What is the consumer surplus?",
+    "options": [
+      "€30",
+      "€50",
+      "€80",
+      "€130"
+    ],
+    "answer": "A",
+    "explanation": "Consumer surplus equals willingness to pay minus the price actually paid: €80 − €50 = €30."
+  },
+  {
+    "id": "fund-health-economics.q.029",
+    "topic": "fund-health-economics.demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Empirical identification",
+    "source": "EU-HEM Hub original practice · Session 2",
+    "question": "Why can a survey comparing healthcare use with observed out-of-pocket prices give a misleading estimate of the demand curve?",
+    "options": [
+      "Prices are always identical",
+      "Sicker people may choose more generous insurance and therefore face lower out-of-pocket prices",
+      "Healthcare use cannot be measured",
+      "Randomization always occurs naturally"
+    ],
+    "answer": "B",
+    "explanation": "Insurance choice and health risk can be related. If health status is not fully observed, a demand shift due to sickness can be mistaken for movement caused by price."
+  },
+  {
+    "id": "fund-health-economics.q.030",
+    "topic": "fund-health-economics.demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Randomized experiments",
+    "source": "EU-HEM Hub original practice · Session 2",
+    "question": "What is the main identification advantage of random assignment in a healthcare-demand experiment?",
+    "options": [
+      "It guarantees every participant receives treatment",
+      "It makes treatment and control groups comparable on average before the assigned condition",
+      "It removes all measurement error",
+      "It proves every result applies to every country"
+    ],
+    "answer": "B",
+    "explanation": "Random assignment is used so that systematic differences between groups are not driving the observed utilization difference."
+  },
+  {
+    "id": "fund-health-economics.q.031",
+    "topic": "fund-health-economics.demand",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "RAND and Oregon",
+    "source": "EU-HEM Hub original practice · Session 2",
+    "question": "Which broad conclusion from RAND and Oregon is emphasized in Session 2?",
+    "options": [
+      "Healthcare use never responds to price",
+      "Healthcare demand is downward sloping",
+      "Only inpatient care responds to price",
+      "Insurance has no effect on utilization"
+    ],
+    "answer": "B",
+    "explanation": "The lecture uses the experiments to support the conclusion that higher prices faced by patients reduce healthcare use."
+  },
+  {
+    "id": "fund-health-economics.q.032",
+    "topic": "fund-health-economics.demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Elasticity",
+    "source": "EU-HEM Hub original practice · Session 2",
+    "question": "If the absolute value of the price elasticity of demand is 0.2, demand is best described as:",
+    "options": [
+      "Elastic",
+      "Unit elastic",
+      "Inelastic",
+      "Perfectly elastic"
+    ],
+    "answer": "C",
+    "explanation": "An absolute elasticity below 1 is inelastic: quantity responds proportionally less than price."
+  },
+  {
+    "id": "fund-health-economics.q.033",
+    "topic": "fund-health-economics.demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Arc elasticity",
+    "source": "EU-HEM Hub original practice · Session 2",
+    "question": "Why does arc elasticity use midpoint averages of price and quantity?",
+    "options": [
+      "To make the measure unit-free and less dependent on which endpoint is treated as the base",
+      "To force elasticity to equal one",
+      "To remove the need for two observations",
+      "To convert price into consumer surplus"
+    ],
+    "answer": "A",
+    "explanation": "The midpoint method expresses changes relative to average price and average quantity, giving a symmetric unit-free comparison between two points."
+  },
+  {
+    "id": "fund-health-economics.q.034",
+    "topic": "fund-health-economics.demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Time costs",
+    "source": "EU-HEM Hub original practice · Session 2",
+    "question": "A clinic visit has a €40 fee, €5 transport cost and €15 worth of time cost. What is the full price in the Session 2 framework?",
+    "options": [
+      "€40",
+      "€45",
+      "€55",
+      "€60"
+    ],
+    "answer": "D",
+    "explanation": "Full price includes the monetary fee plus other monetary and time costs: 40 + 5 + 15 = €60."
+  },
+  {
+    "id": "fund-health-economics.q.035",
+    "topic": "fund-health-economics.demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Insurance",
+    "source": "EU-HEM Hub original practice · Session 2",
+    "question": "Which arrangement makes the patient pay a percentage of the healthcare bill?",
+    "options": [
+      "Fixed indemnity",
+      "Coinsurance",
+      "Copayment",
+      "Deductible only"
+    ],
+    "answer": "B",
+    "explanation": "Coinsurance leaves a specified fraction of the bill with the patient; the insurer pays the remaining fraction."
+  },
+  {
+    "id": "fund-health-economics.q.036",
+    "topic": "fund-health-economics.demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Insurance",
+    "source": "EU-HEM Hub original practice · Session 2",
+    "question": "Which arrangement requires the patient to pay an amount toward medical bills before insurance reimbursement begins?",
+    "options": [
+      "Deductible",
+      "Fixed indemnity",
+      "Capitation",
+      "Salary"
+    ],
+    "answer": "A",
+    "explanation": "A deductible must be paid before insurance begins reimbursing covered spending under the simplified contract."
+  },
+  {
+    "id": "fund-health-economics.q.037",
+    "topic": "fund-health-economics.demand",
+    "type": "true-false",
+    "difficulty": "easy",
+    "question": "A change in the price of healthcare, holding other determinants fixed, is represented as movement along a demand curve.",
+    "answer": true,
+    "explanation": "True. A shift occurs when another determinant of demand changes."
+  },
+  {
+    "id": "fund-health-economics.q.038",
+    "topic": "fund-health-economics.demand",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "If healthcare demand is inelastic, price has no effect on utilization.",
+    "answer": false,
+    "explanation": "False. Inelastic means the proportional quantity response is smaller than the proportional price change, not that the response is zero."
+  },
+  {
+    "id": "fund-health-economics.q.039",
+    "topic": "fund-health-economics.demand",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "Random assignment helps separate a price or insurance effect from pre-existing differences between study groups.",
+    "answer": true,
+    "explanation": "True. That is the core empirical reason randomized experiments are useful in this lecture."
+  },
+  {
+    "id": "fund-health-economics.q.040",
+    "topic": "fund-health-economics.demand",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "Insurance can reduce a patient's monetary price while leaving travel and waiting time costs unchanged.",
+    "answer": true,
+    "explanation": "True. Session 2 uses this to explain why time costs can become relatively more important under generous insurance."
+  },
+  {
+    "id": "fund-health-economics.q.041",
+    "topic": "fund-health-economics.demand",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "Cost-sharing necessarily reduces only low-value care and leaves effective care unchanged.",
+    "answer": false,
+    "explanation": "False. The lecture stresses that higher patient prices can reduce use without reliably distinguishing care by clinical value."
+  },
+  {
+    "id": "fund-health-economics.q.042",
+    "topic": "fund-health-economics.demand",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "Explain the difference between a movement along a demand curve and a shift of the demand curve.",
+    "answer": "A change in the service's own price changes quantity demanded along the existing curve. A change in another determinant, such as income, health status or the price of a substitute or complement, changes demand at each price and shifts the curve.",
+    "explanation": "A good answer should identify own price as the slope/movement mechanism and other determinants as shift mechanisms."
+  },
+  {
+    "id": "fund-health-economics.q.043",
+    "topic": "fund-health-economics.demand",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "Why can insurance selection create bias when estimating healthcare demand from observational data?",
+    "answer": "People with greater expected healthcare needs may choose more complete insurance and therefore face lower out-of-pocket prices. If those underlying health differences are not fully observed, high use may be attributed incorrectly to low prices rather than to greater need.",
+    "explanation": "The lecture describes this as confusing a shift effect with a slope effect."
+  },
+  {
+    "id": "fund-health-economics.q.044",
+    "topic": "fund-health-economics.demand",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "What is meant by the full price of a healthcare visit?",
+    "answer": "The full price includes the monetary price paid for care plus associated costs such as transport and the opportunity cost of time spent travelling, waiting and receiving care.",
+    "explanation": "The exact components depend on the setting, but the key idea is that price is broader than the clinic bill."
+  },
+  {
+    "id": "fund-health-economics.q.045",
+    "topic": "fund-health-economics.demand",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Why can a policy that lowers the monetary price of healthcare still ration access through waiting time?",
+    "answer": "When money prices are reduced, demand can rise. If capacity does not expand enough, queues and waiting can become the effective rationing mechanism. Because people value time differently, waiting can also have distributional consequences.",
+    "explanation": "This applies the lecture's time-price discussion to publicly financed care."
   }
 ]
