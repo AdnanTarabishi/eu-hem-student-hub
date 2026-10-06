@@ -310,7 +310,9 @@ function fillAtAGlance(section, guide, facts, cohort) {
     list.appendChild(value);
   };
   if (cohort) {
-    add("University", cohort.universities[guide.university].name);
+    const universityLink = createElement("a", null, cohort.universities[guide.university].name);
+    universityLink.href = `university.html?id=${encodeURIComponent(guide.university)}&cohort=${encodeURIComponent(cohort.id)}`;
+    add("University", universityLink);
     const presence = createElement("span");
     presence.append(cityPresenceText(cohort, guide.university), " (");
     const tracks = createElement("a", null, "see Tracks");
