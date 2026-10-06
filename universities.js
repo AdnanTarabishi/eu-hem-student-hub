@@ -153,13 +153,36 @@
       frame.appendChild(photo);
     }
     frame.appendChild(fallback);
-    if (!profile) frame.appendChild(el("span", "uni-image-location", `${university.city} · ${university.country}`));
-    if (!profile) return frame;
+    const gallery = items(university.gallery).filter((media) => D.imageUrl(media && media.src));
+    if (!profile) {
+      frame.appendChild(el("span", "uni-image-location", `${university.city} · ${university.country}`));
+      if (gallery.length) frame.appendChild(el("span", "uni-image-count", `${gallery.length + 1} photos`));
+      return frame;
+    }
     const figure = el("figure", "uni-profile-photo");
     figure.appendChild(frame);
     const caption = el("figcaption", null, image.caption || `${university.name}, ${university.city}.`);
-    caption.append(document.createTextNode(" "), localLink("Photo credit", "#photo-credits"));
+    caption.append(document.createTextNode(" "), localLink("Photo credits", "#photo-credits"));
     figure.appendChild(caption);
+    if (gallery.length) {
+      const strip = el("div", "uni-profile-thumbs");
+      strip.setAttribute("aria-label", `${university.name} photo gallery`);
+      for (const [index, media] of gallery.slice(0, 2).entries()) {
+        let thumb;
+        thumb = button(media.label || `View ${university.name} photo ${index + 2}`, () => openPhotoDialog(university, media, thumb), true);
+        thumb.classList.add("uni-gallery-thumb");
+        thumb.setAttribute("aria-label", media.label || `View another photograph of ${university.name}`);
+        const photo = el("img");
+        photo.src = D.imageUrl(media.src);
+        photo.alt = media.alt || "";
+        photo.loading = "lazy";
+        photo.decoding = "async";
+        const label = el("span", "uni-gallery-label", media.label || "Another view");
+        thumb.append(photo, label);
+        strip.appendChild(thumb);
+      }
+      figure.appendChild(strip);
+    }
     return figure;
   }
 
@@ -422,18 +445,33 @@
     fold.appendChild(localLink("Full track details →", trackUrl(state.trackId), "uni-text-link")); container.appendChild(fold);
   }
 
+  function openPhotoDialog(university, media, returnFocus) {
+    if (typeof HTMLDialogElement === "undefined" || !media || !D.imageUrl(media.src)) return;
+    const dialog = el("dialog", "uni-photo-dialog");
+    dialog.setAttribute("aria-labelledby", "uni-photo-dialog-title");
+    const title = el("h2", null, media.label || university.name);
+    title.id = "uni-photo-dialog-title";
+    const close = button("Close photograph", () => dialog.close(), true);
+    const image = el("img");
+    image.src = D.imageUrl(media.src);
+    image.alt = media.alt || media.caption || `${university.name} photograph`;
+    dialog.append(close, title, image);
+    paragraph(dialog, media.caption || `${university.name}, ${university.city}.`);
+    if (media.credit || media.license) paragraph(dialog, [media.credit, media.license].filter(Boolean).join(" · "));
+    if (D.externalUrl(media.sourceUrl)) dialog.appendChild(externalLink("Photo source and licence", media.sourceUrl));
+    dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
+    dialog.addEventListener("close", () => { dialog.remove(); if (returnFocus && typeof returnFocus.focus === "function") returnFocus.focus(); }, { once: true });
+    document.body.appendChild(dialog);
+    dialog.showModal();
+  }
+
   function enhancePhotograph(figure, university) {
     if (typeof HTMLDialogElement === "undefined") return;
-    const launch = button("View campus photo", () => {
-      const dialog = el("dialog", "uni-photo-dialog"); dialog.setAttribute("aria-labelledby", "uni-photo-dialog-title");
-      const title = el("h2", null, university.name); title.id = "uni-photo-dialog-title";
-      const close = button("Close photograph", () => dialog.close(), true);
-      const image = el("img"); image.src = D.imageUrl(university.image.src); image.alt = university.image.alt;
-      dialog.append(close, title, image); paragraph(dialog, university.image.caption); paragraph(dialog, `${university.image.credit} · ${university.image.license}`);
-      dialog.appendChild(externalLink("Photo source and licence", university.image.sourceUrl));
-      dialog.addEventListener("close", () => { dialog.remove(); launch.focus(); }, { once: true });
-      document.body.appendChild(dialog); dialog.showModal();
-    }, true); launch.classList.add("uni-photo-expand"); launch.prepend(productIcon("arrow")); figure.appendChild(launch);
+    let launch;
+    launch = button("View campus photo", () => openPhotoDialog(university, university.image, launch), true);
+    launch.classList.add("uni-photo-expand");
+    launch.prepend(productIcon("arrow"));
+    figure.appendChild(launch);
   }
 
 function renderCards(parent) {
@@ -596,25 +634,30 @@ function renderCards(parent) {
   }
 
   function renderPhotoCredit(parent, university, profile) {
-    const photo = university.image;
-    if (!photo) return;
+    const photos = [university.image, ...items(university.gallery)].filter(Boolean);
+    if (!photos.length) return;
     const box = el("div", "uni-photo-credit");
     box.id = profile ? "photo-credits" : `photo-credits-${university.id}`;
-    box.appendChild(el("h3", null, "Campus photograph"));
-    paragraph(box, photo.caption);
-    if (photo.title) paragraph(box, "Image: " + photo.title);
-    paragraph(box, photo.credit ? `Credit: ${photo.credit}` : "Photo credit not recorded.");
-    if (photo.license) {
-      const license = el("p", null, "Licence: ");
-      license.appendChild(D.externalUrl(photo.licenseUrl) ? externalLink(photo.license, photo.licenseUrl, "") : el("span", null, photo.license));
-      box.appendChild(license);
-    }
-    paragraph(box, `${photo.changes || ""}${photo.changes ? " " : ""}Cropped to fit the page layout.`);
-    if (photo.usageNote) paragraph(box, photo.usageNote);
-    const links = el("div", "uni-actions");
-    if (D.externalUrl(photo.sourceUrl)) links.appendChild(externalLink("Photo source", photo.sourceUrl));
-    if (D.externalUrl(photo.originalUrl) && photo.originalUrl !== photo.sourceUrl) links.appendChild(externalLink("Original image", photo.originalUrl));
-    box.appendChild(links);
+    box.appendChild(el("h3", null, photos.length > 1 ? "University photography" : "Campus photograph"));
+    photos.forEach((photo, index) => {
+      const item = el("div", "uni-photo-credit-item");
+      item.appendChild(el("h4", null, photo.label || (index ? `Photo ${index + 1}` : "Main photograph")));
+      paragraph(item, photo.caption);
+      if (photo.title) paragraph(item, "Image: " + photo.title);
+      paragraph(item, photo.credit ? `Credit: ${photo.credit}` : "Photo credit not recorded.");
+      if (photo.license) {
+        const license = el("p", null, "Licence: ");
+        license.appendChild(D.externalUrl(photo.licenseUrl) ? externalLink(photo.license, photo.licenseUrl, "") : el("span", null, photo.license));
+        item.appendChild(license);
+      }
+      paragraph(item, `${photo.changes || ""}${photo.changes ? " " : ""}Cropped to fit the page layout.`);
+      if (photo.usageNote) paragraph(item, photo.usageNote);
+      const links = el("div", "uni-actions");
+      if (D.externalUrl(photo.sourceUrl)) links.appendChild(externalLink("Photo source", photo.sourceUrl));
+      if (D.externalUrl(photo.originalUrl) && photo.originalUrl !== photo.sourceUrl) links.appendChild(externalLink("Original image", photo.originalUrl));
+      item.appendChild(links);
+      box.appendChild(item);
+    });
     parent.appendChild(box);
   }
 
@@ -648,7 +691,8 @@ function renderDirectory() {
     }
     hero.append(intro, mosaic); app.appendChild(hero);
     const proof = el("div", "uni-proof-strip"); const count = D.collectResources(state.file.universities).length;
-    for (const [number, label] of [[String(state.file.universities.length).padStart(2,"0"), "Partner institutions"], [String(new Set(state.file.universities.map(u => u.country)).size).padStart(2,"0"), "Countries to discover"], [String(count), "Official service links"]]) {
+    const photoCount = state.file.universities.reduce((total, university) => total + 1 + items(university.gallery).length, 0);
+    for (const [number, label] of [[String(state.file.universities.length).padStart(2,"0"), "Partner institutions"], [String(new Set(state.file.universities.map(u => u.country)).size).padStart(2,"0"), "Countries to discover"], [String(count), "Official service links"], [String(photoCount).padStart(2,"0"), "University photos"]]) {
       const item = el("div"); item.append(el("strong", null, number), el("span", null, label)); proof.appendChild(item);
     }
     const note = el("p", null, "Your university, beyond the timetable."); proof.appendChild(note); app.appendChild(proof);
