@@ -3,7 +3,7 @@
 (function universityDataModule(root) {
   "use strict";
 
-  const CONTENT_URL = "content/universities.json?v=real-campus-20261006";
+  const CONTENT_URL = "content/universities.json?v=real-campus-gallery-20261006";
   const CHECKLIST_PREFIX = "euhem-university-checklist-v1";
   const asArray = (value) => Array.isArray(value) ? value : [];
 
@@ -15,9 +15,16 @@
     } catch { return null; }
   }
 
-  // Campus photography is served with the site. Data cannot introduce a remote image.
+  // University photography is either local or served from Wikimedia Commons over HTTPS.
   function imageUrl(value) {
-    return typeof value === "string" && /^(?:img\/universities\/[a-zA-Z0-9._-]+|assets\/images\/cities\/[a-z0-9-]+\/[a-zA-Z0-9._-]+)\.(?:jpe?g|png|webp|avif)$/i.test(value) ? value : null;
+    if (typeof value !== "string") return null;
+    if (/^(?:img\/universities\/[a-zA-Z0-9._-]+|assets\/images\/cities\/[a-z0-9-]+\/[a-zA-Z0-9._-]+)\.(?:jpe?g|png|webp|avif)$/i.test(value)) return value;
+    try {
+      const url = new URL(value);
+      const safeWikimedia = url.protocol === "https:" && url.hostname === "upload.wikimedia.org"
+        && /\.(?:jpe?g|png|webp|avif)$/i.test(url.pathname);
+      return safeWikimedia ? url.href : null;
+    } catch { return null; }
   }
 
   function validateFile(file) {

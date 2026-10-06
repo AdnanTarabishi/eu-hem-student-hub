@@ -141,6 +141,7 @@
       const photo = el("img");
       const variants = items(image.variants).filter((v) => D.imageUrl(v.src) && Number.isInteger(v.width) && v.width > 0);
       photo.src = variants.length ? variants[variants.length - 1].src : src;
+      if (/^https:\/\//.test(photo.src)) photo.referrerPolicy = "no-referrer";
       if (variants.length) { photo.srcset = variants.map(v => `${v.src} ${v.width}w`).join(", "); photo.sizes = profile ? "(max-width: 700px) 100vw, 48vw" : "(max-width: 700px) 100vw, 45vw"; }
       photo.alt = image.alt || image.caption || `${university.name} campus`;
       photo.width = Number.isInteger(image.width) && image.width > 0 ? image.width : 1200;
@@ -174,6 +175,7 @@
         thumb.setAttribute("aria-label", media.label || `View another photograph of ${university.name}`);
         const photo = el("img");
         photo.src = D.imageUrl(media.src);
+        if (/^https:\/\//.test(photo.src)) photo.referrerPolicy = "no-referrer";
         photo.alt = media.alt || "";
         photo.loading = "lazy";
         photo.decoding = "async";
@@ -454,6 +456,7 @@
     const close = button("Close photograph", () => dialog.close(), true);
     const image = el("img");
     image.src = D.imageUrl(media.src);
+    if (/^https:\/\//.test(image.src)) image.referrerPolicy = "no-referrer";
     image.alt = media.alt || media.caption || `${university.name} photograph`;
     dialog.append(close, title, image);
     paragraph(dialog, media.caption || `${university.name}, ${university.city}.`);
@@ -688,6 +691,7 @@ function renderVisualTour(parent) {
         tile.dataset.university = university.id;
         const image = el("img");
         image.src = D.imageUrl(media.src);
+        if (/^https:\/\//.test(image.src)) image.referrerPolicy = "no-referrer";
         image.alt = media.alt || "";
         image.loading = "lazy";
         image.decoding = "async";
