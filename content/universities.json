@@ -1,0 +1,818 @@
+{
+  "schemaVersion": 1,
+  "reviewed": "2026-10-06",
+  "note": "Unofficial student guide. Academic requirements and services can change; official EU-HEM and partner-university information remains authoritative.",
+  "universities": [
+    {
+      "id": "unibo",
+      "name": "University of Bologna",
+      "shortName": "UniBo",
+      "localName": "Alma Mater Studiorum – Università di Bologna",
+      "city": "Bologna",
+      "country": "Italy",
+      "tagline": "Where the EU-HEM journey begins.",
+      "summary": "The common first semester brings the full cohort to Bologna. This guide connects the academic programme with the Department of Economics, the platforms you will actually use, research in health economics and the university services around your daily study life.",
+      "image": {
+        "src": "assets/images/cities/bologna/ai-towers-sunset-1200.webp",
+        "srcSmall": "assets/images/cities/bologna/ai-towers-sunset-640.webp",
+        "alt": "AI-generated illustration of Bologna rooftops and towers at sunset",
+        "caption": "Bologna — the common starting point for EU-HEM.",
+        "note": "Illustrative city image; not a teaching-location photograph."
+      },
+      "facts": [
+        [
+          "Founded",
+          "1088 · conventional foundation date"
+        ],
+        [
+          "EU-HEM academic home",
+          "Department of Economics · DSE"
+        ],
+        [
+          "EU-HEM teaching location",
+          "Bologna"
+        ],
+        [
+          "Teaching language",
+          "English"
+        ],
+        [
+          "Student administration",
+          "Studenti Online"
+        ]
+      ],
+      "quickLinks": [
+        [
+          "Studenti Online",
+          "Student administration, certificates and procedures.",
+          "https://studenti.unibo.it/",
+          "University login"
+        ],
+        [
+          "Virtuale",
+          "Course materials and learning activities.",
+          "https://virtuale.unibo.it/",
+          "University login"
+        ],
+        [
+          "AlmaEsami",
+          "Exam registration and exam-related services.",
+          "https://almaesami.unibo.it/",
+          "University login"
+        ],
+        [
+          "Official timetable",
+          "Current class dates and rooms.",
+          "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/timetable",
+          "Public"
+        ],
+        [
+          "Libraries & digital resources",
+          "Catalogues, databases and study-space guidance.",
+          "https://www.unibo.it/en/study/life-at-university-and-in-the-city/libraries-digital-resources-and-study-rooms/libraries-digital-resources-and-study-rooms",
+          "Mixed access"
+        ],
+        [
+          "myUniBo",
+          "Mobile access to exams, locations, grades and notifications.",
+          "https://www.unibo.it/en/university/university-of-bologna-app/myunibo-app",
+          "University login"
+        ]
+      ],
+      "services": [
+        [
+          "Libraries & study spaces",
+          "Use AlmaStart, electronic resources and bookable study spaces. Check each location’s current access and reservation rules.",
+          "https://www.unibo.it/en/study/life-at-university-and-in-the-city/libraries-digital-resources-and-study-rooms/libraries-digital-resources-and-study-rooms",
+          "library"
+        ],
+        [
+          "International student guidance",
+          "Arrival guidance and contacts for international student administration.",
+          "https://www.unibo.it/en/university/contacts-1/contacts-for-international-students",
+          "support"
+        ],
+        [
+          "Language Centre · CLA",
+          "Italian and other language courses plus self-study resources.",
+          "https://centri.unibo.it/cla/en/courses",
+          "support"
+        ],
+        [
+          "Psychological support · SAP",
+          "Counselling for enrolled students facing adjustment, emotional or relationship difficulties.",
+          "https://www.unibo.it/en/study/life-at-university-and-in-the-city/health-and-assistance/the-psychological-support-service-sap",
+          "support"
+        ],
+        [
+          "Career services",
+          "Guidance, employer meetings, opportunities and transferable-skills support.",
+          "https://www.unibo.it/en/study/towards-the-job-market/from-study-to-work-how-to-prepare",
+          "careers"
+        ],
+        [
+          "Wi-Fi & eduroam",
+          "Official ALMAWIFI and eduroam setup guidance.",
+          "https://www.unibo.it/en/study/life-at-university-and-in-the-city/discounts-for-computer-tablet-and-software-1/wi-fi-wireless-connection",
+          "digital"
+        ]
+      ],
+      "research": [
+        [
+          "BHEPPE · Health Economics & Policy Evaluation",
+          "Research on health behaviour, primary care, incentives, welfare systems and policy evaluation.",
+          "https://dse.unibo.it/en/research/research-areas/health-economics"
+        ],
+        [
+          "Health economics seminars",
+          "Follow current seminars and research events; participation and academic credit depend on the specific activity.",
+          "https://www.unibo.it/it/studiare/insegnamenti-competenze-trasversali-moocs/insegnamenti/insegnamento/2026/561919"
+        ]
+      ],
+      "careers": [
+        [
+          "Internships",
+          "Explore opportunities through the university internship system, then verify programme recognition before committing.",
+          "https://tirocini.unibo.it/"
+        ],
+        [
+          "Entrepreneurship & job-market preparation",
+          "Explore university initiatives, workshops and employer-facing opportunities.",
+          "https://www.unibo.it/en/study/towards-the-job-market/from-study-to-work-how-to-prepare"
+        ]
+      ],
+      "studentLife": [
+        [
+          "Associations, culture & sport",
+          "Browse recognised associations, cultural activities and CUSB sport.",
+          "https://www.unibo.it/en/university/organisation-and-campuses/university-services/sport-culture-and-leisure/sport-culture-and-leisure"
+        ]
+      ],
+      "rankings": [
+        [
+          "QS World University Rankings",
+          "2027",
+          "=123",
+          "University overall · worldwide",
+          "https://www.topuniversities.com/universities/alma-mater-studiorum-universita-di-bologna"
+        ],
+        [
+          "THE World University Rankings",
+          "2026",
+          "130",
+          "University overall · worldwide",
+          "https://www.timeshighereducation.com/world-university-rankings/university-bologna"
+        ],
+        [
+          "THE Business & Economics",
+          "2026",
+          "=76",
+          "University subject area · worldwide",
+          "https://www.timeshighereducation.com/world-university-rankings/university-bologna"
+        ]
+      ],
+      "checklist": [
+        "Confirm your timetable and first teaching location",
+        "Test Studenti Online, Virtuale and AlmaEsami",
+        "Connect to university Wi-Fi",
+        "Open the library catalogue and save a study-space option",
+        "Check your exam-registration workflow",
+        "Explore one university activity outside the cohort"
+      ],
+      "contacts": [
+        [
+          "Programme question",
+          "EU-HEM course website",
+          "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement"
+        ],
+        [
+          "International administration",
+          "Contacts for international students",
+          "https://www.unibo.it/en/university/contacts-1/contacts-for-international-students"
+        ],
+        [
+          "Library help",
+          "Libraries and digital resources",
+          "https://www.unibo.it/en/study/life-at-university-and-in-the-city/libraries-digital-resources-and-study-rooms/libraries-digital-resources-and-study-rooms"
+        ]
+      ],
+      "faq": [
+        [
+          "Where do I find official lecture material?",
+          "Use Virtuale for teaching material. This student hub should link to official material rather than re-upload it."
+        ],
+        [
+          "Where do I register for exams?",
+          "Use AlmaEsami and follow the programme’s current exam guidance."
+        ],
+        [
+          "Is Palazzo Poggi the EU-HEM teaching location?",
+          "No assumption should be made from a university photograph. Always use the official timetable for the actual room."
+        ],
+        [
+          "Can I book study spaces?",
+          "Yes, UniBo provides study-space information and booking routes; rules vary by location."
+        ]
+      ],
+      "official": "https://www.unibo.it/en",
+      "programme": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement",
+      "cityGuide": "city-guide.html?city=bologna"
+    },
+    {
+      "id": "uio",
+      "name": "University of Oslo",
+      "shortName": "UiO",
+      "localName": "Universitetet i Oslo",
+      "city": "Oslo",
+      "country": "Norway",
+      "tagline": "Health economics, management and policy in a research-intensive environment.",
+      "summary": "EU-HEM students in Oslo connect with the Faculty of Medicine and the Institute of Health and Society. The guide brings together course context, Canvas and Studentweb, libraries, research opportunities and the services most useful during your Oslo semester.",
+      "image": {
+        "src": "assets/images/cities/oslo/blindern-campus-1200.webp",
+        "srcSmall": "assets/images/cities/oslo/blindern-campus-640.webp",
+        "alt": "University of Oslo Blindern campus",
+        "caption": "Blindern campus, University of Oslo.",
+        "note": "University-wide campus image; use the timetable for your actual teaching location."
+      },
+      "facts": [
+        [
+          "Established",
+          "1811"
+        ],
+        [
+          "EU-HEM faculty",
+          "Faculty of Medicine"
+        ],
+        [
+          "Academic institute",
+          "Institute of Health and Society"
+        ],
+        [
+          "Learning platform",
+          "Canvas"
+        ],
+        [
+          "Student administration",
+          "Studentweb"
+        ]
+      ],
+      "quickLinks": [
+        [
+          "My Studies",
+          "Personal study overview and course information.",
+          "https://www.uio.no/english/studies/",
+          "University login for personal view"
+        ],
+        [
+          "Canvas",
+          "Learning platform for course material and activities.",
+          "https://uio.instructure.com/",
+          "University login"
+        ],
+        [
+          "Studentweb",
+          "Registration, exams and study administration.",
+          "https://studentweb.no/",
+          "University login"
+        ],
+        [
+          "Programme structure",
+          "Official EU-HEM structure at UiO.",
+          "https://www.uio.no/english/studies/programmes/hem-master/structure/",
+          "Public"
+        ],
+        [
+          "University Library",
+          "Collections, databases and study support.",
+          "https://www.ub.uio.no/english/",
+          "Mixed access"
+        ]
+      ],
+      "services": [
+        [
+          "University Library",
+          "Search literature, access databases and explore courses in academic writing and research skills.",
+          "https://www.ub.uio.no/english/",
+          "library"
+        ],
+        [
+          "IT help",
+          "Official IT support for accounts, systems and digital services.",
+          "https://www.uio.no/english/services/it/",
+          "digital"
+        ],
+        [
+          "International student support",
+          "Practical information and services for international students.",
+          "https://www.uio.no/english/studies/international-students/",
+          "support"
+        ],
+        [
+          "SiO student services",
+          "Housing, health, counselling, sport and student-life services for eligible students in Oslo.",
+          "https://www.sio.no/en",
+          "support"
+        ],
+        [
+          "Career services",
+          "Career guidance, events and resources for students.",
+          "https://www.uio.no/english/studies/career/",
+          "careers"
+        ]
+      ],
+      "research": [
+        [
+          "HELED",
+          "Health Economics, Policy and Management academic environment within the Institute of Health and Society.",
+          "https://www.med.uio.no/helsam/english/research/groups/heled/"
+        ],
+        [
+          "Institute of Health and Society",
+          "Explore research groups, projects and academic events across health systems and population health.",
+          "https://www.med.uio.no/helsam/english/research/"
+        ]
+      ],
+      "careers": [
+        [
+          "UiO Career",
+          "Career guidance, events and resources for planning internships and employment.",
+          "https://www.uio.no/english/studies/career/"
+        ]
+      ],
+      "studentLife": [
+        [
+          "Student associations & SiO",
+          "Explore student organisations, sport and social activities around Oslo.",
+          "https://www.uio.no/english/student-life/"
+        ]
+      ],
+      "rankings": [
+        [
+          "QS World University Rankings",
+          "2027",
+          "=131",
+          "University overall · worldwide",
+          "https://www.topuniversities.com/universities/university-oslo"
+        ],
+        [
+          "THE World University Rankings",
+          "2026",
+          "=113",
+          "University overall · worldwide",
+          "https://www.timeshighereducation.com/world-university-rankings/university-oslo"
+        ],
+        [
+          "THE Social Sciences",
+          "2026",
+          "55",
+          "University subject area · worldwide",
+          "https://www.timeshighereducation.com/world-university-rankings/university-oslo"
+        ]
+      ],
+      "checklist": [
+        "Read the current programme structure for your track",
+        "Test Canvas, Studentweb and My Studies",
+        "Confirm your first teaching location",
+        "Set up library access",
+        "Check SiO services relevant to you",
+        "Save the UiO IT-help route"
+      ],
+      "contacts": [
+        [
+          "Programme information",
+          "EU-HEM at UiO",
+          "https://www.uio.no/english/studies/programmes/hem-master/"
+        ],
+        [
+          "IT problem",
+          "UiO IT services",
+          "https://www.uio.no/english/services/it/"
+        ],
+        [
+          "Library question",
+          "University Library",
+          "https://www.ub.uio.no/english/"
+        ]
+      ],
+      "faq": [
+        [
+          "Is Blindern where every EU-HEM class takes place?",
+          "Do not infer the teaching location from the campus image. Use your current timetable and course information."
+        ],
+        [
+          "What is the difference between Canvas and Studentweb?",
+          "Canvas is the learning platform; Studentweb is used for study administration and exam-related processes."
+        ],
+        [
+          "Where can I get health or counselling support?",
+          "SiO provides student services including health and counselling for eligible students."
+        ],
+        [
+          "Where can I explore research groups?",
+          "Start with HELED and the Institute of Health and Society research pages."
+        ]
+      ],
+      "official": "https://www.uio.no/english/",
+      "programme": "https://www.uio.no/english/studies/programmes/hem-master/structure/",
+      "cityGuide": "city-guide.html?city=oslo"
+    },
+    {
+      "id": "eur",
+      "name": "Erasmus University Rotterdam",
+      "shortName": "EUR",
+      "localName": "Erasmus Universiteit Rotterdam",
+      "city": "Rotterdam",
+      "country": "Netherlands",
+      "tagline": "A strong health-policy and management environment on Woudestein campus.",
+      "summary": "At Erasmus University Rotterdam, EU-HEM connects with Erasmus School of Health Policy & Management (ESHPM). The guide combines programme context with the practical systems, research centres and campus services that matter during your Rotterdam semester.",
+      "image": {
+        "src": "assets/images/cities/rotterdam/campus-woudestein-1200.webp",
+        "srcSmall": "assets/images/cities/rotterdam/campus-woudestein-640.webp",
+        "alt": "Erasmus University Rotterdam Woudestein campus",
+        "caption": "Woudestein campus, Erasmus University Rotterdam.",
+        "note": "General campus photograph; not a claim that the pictured building is ESHPM."
+      },
+      "facts": [
+        [
+          "Origins",
+          "1913"
+        ],
+        [
+          "Present university formed",
+          "1973"
+        ],
+        [
+          "EU-HEM host",
+          "Erasmus School of Health Policy & Management · ESHPM"
+        ],
+        [
+          "Programme location",
+          "Campus Woudestein"
+        ],
+        [
+          "Teaching language",
+          "English"
+        ]
+      ],
+      "quickLinks": [
+        [
+          "MyEUR",
+          "Student portal and personalised university services.",
+          "https://my.eur.nl/",
+          "University login"
+        ],
+        [
+          "Canvas",
+          "Learning platform for courses and assignments.",
+          "https://canvas.eur.nl/",
+          "University login"
+        ],
+        [
+          "Osiris",
+          "Study administration and registration.",
+          "https://sis.eur.nl/",
+          "University login"
+        ],
+        [
+          "University Library",
+          "Library services, databases and study support.",
+          "https://www.eur.nl/en/library",
+          "Mixed access"
+        ],
+        [
+          "EU-HEM during your study",
+          "Official programme information at EUR.",
+          "https://www.eur.nl/en/master/european-master-health-economics-and-management/during-your-study",
+          "Public"
+        ]
+      ],
+      "services": [
+        [
+          "University Library",
+          "Databases, literature support and study-space information.",
+          "https://www.eur.nl/en/library",
+          "library"
+        ],
+        [
+          "IT & digital services",
+          "University guidance for accounts, Wi-Fi and digital tools.",
+          "https://www.eur.nl/en/education/practical-matters/it-facilities",
+          "digital"
+        ],
+        [
+          "International student information",
+          "Arrival and practical information for international students.",
+          "https://www.eur.nl/en/education/practical-matters/international-students",
+          "support"
+        ],
+        [
+          "Student wellbeing",
+          "Wellbeing services, guidance and student support.",
+          "https://www.eur.nl/en/education/practical-matters/student-wellbeing",
+          "support"
+        ],
+        [
+          "Career services",
+          "Career development, vacancies, events and coaching.",
+          "https://www.eur.nl/en/education/practical-matters/career-services",
+          "careers"
+        ]
+      ],
+      "research": [
+        [
+          "ESHPM research",
+          "Explore research in health policy, management, organisation and health economics.",
+          "https://www.eur.nl/en/eshpm/research"
+        ],
+        [
+          "EsCHER",
+          "Research collaboration in health economics, health technology assessment and health-system performance.",
+          "https://www.eur.nl/en/research/research-groups-initiatives/escher/research"
+        ]
+      ],
+      "careers": [
+        [
+          "EUR Career Services",
+          "Use coaching, events and opportunity platforms to prepare for internships and jobs.",
+          "https://www.eur.nl/en/education/practical-matters/career-services"
+        ],
+        [
+          "Erasmus Enterprise",
+          "Explore entrepreneurship, start-up support and innovation initiatives.",
+          "https://www.erasmusenterprise.com/"
+        ]
+      ],
+      "studentLife": [
+        [
+          "Campus & student organisations",
+          "Explore student associations, sport and events through EUR student-life channels.",
+          "https://www.eur.nl/en/campus"
+        ]
+      ],
+      "rankings": [
+        [
+          "QS World University Rankings",
+          "2027",
+          "148",
+          "University overall · worldwide",
+          "https://www.topuniversities.com/universities/erasmus-university-rotterdam"
+        ],
+        [
+          "THE World University Rankings",
+          "2026",
+          "107",
+          "University overall · worldwide",
+          "https://www.timeshighereducation.com/world-university-rankings/erasmus-university-rotterdam"
+        ],
+        [
+          "THE Business & Economics",
+          "2026",
+          "24",
+          "University subject area · worldwide",
+          "https://www.timeshighereducation.com/world-university-rankings/erasmus-university-rotterdam"
+        ]
+      ],
+      "checklist": [
+        "Confirm your ESHPM teaching location",
+        "Test MyEUR, Canvas and Osiris",
+        "Set up campus Wi-Fi",
+        "Open the library search and save a study-space option",
+        "Check career-services access",
+        "Explore one campus organisation or event"
+      ],
+      "contacts": [
+        [
+          "Programme question",
+          "EU-HEM at Erasmus University Rotterdam",
+          "https://www.eur.nl/en/master/european-master-health-economics-and-management"
+        ],
+        [
+          "Library question",
+          "EUR University Library",
+          "https://www.eur.nl/en/library"
+        ],
+        [
+          "Student support",
+          "Student wellbeing",
+          "https://www.eur.nl/en/education/practical-matters/student-wellbeing"
+        ]
+      ],
+      "faq": [
+        [
+          "Where is EU-HEM hosted at EUR?",
+          "The programme connects with Erasmus School of Health Policy & Management (ESHPM)."
+        ],
+        [
+          "Is every class in the building shown in the campus photo?",
+          "No. Use your current timetable for the actual room and building."
+        ],
+        [
+          "Which systems should I expect to use?",
+          "MyEUR, Canvas and Osiris cover different parts of the student experience; follow programme instructions for the exact workflow."
+        ],
+        [
+          "Where can I explore health-economics research?",
+          "Start with ESHPM research and EsCHER."
+        ]
+      ],
+      "official": "https://www.eur.nl/en",
+      "programme": "https://www.eur.nl/en/master/european-master-health-economics-and-management/during-your-study",
+      "cityGuide": "city-guide.html?city=rotterdam"
+    },
+    {
+      "id": "mci",
+      "name": "MCI | The Entrepreneurial School",
+      "shortName": "MCI",
+      "localName": "MCI Management Center Innsbruck",
+      "city": "Innsbruck",
+      "country": "Austria",
+      "tagline": "Applied healthcare management, innovation and entrepreneurship in the Alps.",
+      "summary": "MCI is the EU-HEM partner in Innsbruck. It is not the University of Innsbruck. This guide focuses on the MCI systems, services, applied research, entrepreneurship environment and practical support relevant to your EU-HEM mobility period.",
+      "image": {
+        "src": "assets/images/cities/innsbruck/ai-students-mountains-1200.webp",
+        "srcSmall": "assets/images/cities/innsbruck/ai-students-mountains-640.webp",
+        "alt": "AI-generated illustration of students with Innsbruck mountains in the background",
+        "caption": "Innsbruck student-life illustration.",
+        "note": "Illustrative city image; not a photograph of an MCI building."
+      },
+      "facts": [
+        [
+          "Established",
+          "1995/96"
+        ],
+        [
+          "Location",
+          "Innsbruck, Tyrol, Austria"
+        ],
+        [
+          "Academic approach",
+          "Applied teaching, research and entrepreneurship"
+        ],
+        [
+          "EU-HEM teaching language",
+          "English"
+        ],
+        [
+          "Key systems",
+          "myMCI · Sakai"
+        ]
+      ],
+      "quickLinks": [
+        [
+          "myMCI",
+          "Study information, examinations and administrative processes.",
+          "https://www.mci4me.at/en/services/it-services",
+          "MCI credentials"
+        ],
+        [
+          "Sakai",
+          "Learning environment for course materials and collaboration.",
+          "https://www.mci4me.at/en/services/it-services",
+          "MCI credentials"
+        ],
+        [
+          "MCI Library",
+          "Library resources, literature access and reference-management support.",
+          "https://www.mci4me.at/en/services/library",
+          "Mixed access"
+        ],
+        [
+          "Campus",
+          "Locations and campus information.",
+          "https://www.mci.edu/en/university/the-mci/campus",
+          "Public"
+        ],
+        [
+          "EU-HEM at MCI",
+          "Official programme page.",
+          "https://www.mci.edu/en/study/master/european-health-economics-management",
+          "Public"
+        ]
+      ],
+      "services": [
+        [
+          "Library & literature access",
+          "Use MCI Library guidance for collections, online resources and cooperation with the University and State Library of Tyrol.",
+          "https://www.mci4me.at/en/services/library",
+          "library"
+        ],
+        [
+          "IT services",
+          "Find myMCI, Sakai, email and the IT Helpdesk.",
+          "https://www.mci4me.at/en/services/it-services",
+          "digital"
+        ],
+        [
+          "Student Support",
+          "Organisation and student-support routes.",
+          "https://www.mci4me.at/en/services/student-support",
+          "support"
+        ],
+        [
+          "Mental health",
+          "Counselling and mental-health support information.",
+          "https://www.mci4me.at/en/services/student-support/mental-health",
+          "support"
+        ],
+        [
+          "Language Center",
+          "German and other language courses plus tandem opportunities.",
+          "https://www.mci4me.at/en/services/language-center",
+          "support"
+        ],
+        [
+          "Career Center",
+          "Career planning, job and internship portal, events and mentoring.",
+          "https://www.mci4me.at/en/services/career-center",
+          "careers"
+        ]
+      ],
+      "research": [
+        [
+          "Center for Social & Health Innovation",
+          "Research across health, social services and the public sector.",
+          "https://research.mci.edu/en/cshi/"
+        ],
+        [
+          "Health innovation research",
+          "Explore projects and publications across health economics, policy and digital health.",
+          "https://research.mci.edu/en/cshi/research"
+        ]
+      ],
+      "careers": [
+        [
+          "Career Center",
+          "Career coaching, job and internship routes and career events.",
+          "https://www.mci4me.at/en/services/career-center"
+        ],
+        [
+          "Entrepreneurship & start-ups",
+          "Orientation, entrepreneurial learning and start-up support.",
+          "https://www.mci.edu/en/research/entrepreneurship-start-ups"
+        ]
+      ],
+      "studentLife": [
+        [
+          "Study+ and student life",
+          "Explore student organisations, activities and opportunities beyond the curriculum.",
+          "https://www.mci4me.at/en/student-life/student-life"
+        ]
+      ],
+      "rankings": [
+        [
+          "AACSB Business Accreditation",
+          "Checked 2026",
+          "Accredited",
+          "Business education at MCI Management Center Innsbruck",
+          "https://www.aacsb.edu/accredited/m/mci-management-center-innsbruck"
+        ]
+      ],
+      "checklist": [
+        "Confirm your EU-HEM arrival instructions",
+        "Test myMCI and Sakai",
+        "Match your timetable to the correct MCI location",
+        "Set up literature access",
+        "Review academic standards and examination guidance",
+        "Explore one language, career or community activity"
+      ],
+      "contacts": [
+        [
+          "Study organisation",
+          "MCI Student Support",
+          "https://www.mci4me.at/en/services/student-support"
+        ],
+        [
+          "Library question",
+          "MCI Library",
+          "https://www.mci4me.at/en/services/library"
+        ],
+        [
+          "Career question",
+          "MCI Career Center",
+          "https://www.mci4me.at/en/services/career-center"
+        ]
+      ],
+      "faq": [
+        [
+          "Is MCI the University of Innsbruck?",
+          "No. MCI is a separate institution and the EU-HEM partner in Innsbruck."
+        ],
+        [
+          "Where will my classes take place?",
+          "MCI has several locations. Use your current timetable and programme instructions for the correct building and room."
+        ],
+        [
+          "What is the difference between myMCI and Sakai?",
+          "myMCI covers study information and administration; Sakai supports course materials and collaboration."
+        ],
+        [
+          "Can I use the University and State Library of Tyrol?",
+          "MCI documents library cooperation and activation routes; follow the current MCI instructions because access conditions differ by resource."
+        ]
+      ],
+      "official": "https://www.mci.edu/en/",
+      "programme": "https://www.mci.edu/en/study/master/european-health-economics-management",
+      "cityGuide": "city-guide.html?city=innsbruck"
+    }
+  ]
+}
