@@ -371,7 +371,7 @@
       <div class="hem-hero-chips">
         <span>Current module · Health Economics</span>
         <span>${summary.available}/8 sessions live</span>
-        <a href="fhem-exam.html">90-minute mock ready →</a>
+        <a href="fhem-exam.html">Sessions 1–5 mock ready →</a>
       </div>
     `;
     const actions = el("div", "hem-actions");
