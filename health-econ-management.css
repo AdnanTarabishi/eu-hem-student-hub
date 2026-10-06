@@ -219,6 +219,13 @@
   border: 0;
   box-shadow: none;
 }
+.hem-page .hem-generic-panel {
+  padding: 30px;
+  border: 1px solid var(--hem-line);
+  border-radius: 20px;
+  background: var(--hem-surface);
+  box-shadow: var(--hem-shadow);
+}
 .hem-kicker {
   margin: 0 0 11px;
   color: var(--hem-muted);
@@ -1158,7 +1165,8 @@
     border-right: 0;
   }
   .hem-progress-card,
-  .hem-tool-shelf {
+  .hem-tool-shelf,
+  .hem-page .hem-generic-panel {
     padding: 23px;
   }
   .hem-section-heading {
