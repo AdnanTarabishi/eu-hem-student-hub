@@ -6,12 +6,12 @@
     {
       "id": "interactive-study-sessions",
       "version": "v0.9",
-      "date": null,
+      "date": "2026-10-06",
       "title": "Interactive study sessions",
       "summary": "Fundamentals in Health Economics gets interactive study sessions 1–5, and Statistics gets a study centre with connected practice tools.",
       "category": "learning",
       "type": "new",
-      "status": "draft",
+      "status": "published",
       "highlights": [
         "Sessions 1–5 with notes, practice questions, flashcards and activities.",
         "A Statistics Study Centre with eight connected practice tools.",
@@ -27,17 +27,46 @@
           "url": "notes.html"
         }
       ],
-      "evidence": null
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37516807519",
+        "deployedAt": "2026-10-06T21:09:48+02:00",
+        "commits": [
+          {
+            "sha": "e4387cc8e7aa30b69f5bead134d191e8b17f1ff0",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/e4387cc8e7aa30b69f5bead134d191e8b17f1ff0"
+          },
+          {
+            "sha": "093c1b29eefa1a3e9810595c5825078d0d7f5792",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/093c1b29eefa1a3e9810595c5825078d0d7f5792"
+          },
+          {
+            "sha": "1120d8cf9e83cf7471f904da6781a0c7d3389d12",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/1120d8cf9e83cf7471f904da6781a0c7d3389d12"
+          },
+          {
+            "sha": "36d697969c7ea2617da0587cef0398583ec2cdfb",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/36d697969c7ea2617da0587cef0398583ec2cdfb"
+          },
+          {
+            "sha": "3b6e0fa2c2caaa43cfbba26948655e684c978091",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/3b6e0fa2c2caaa43cfbba26948655e684c978091"
+          },
+          {
+            "sha": "e51411f39c47659fa562a5551be5d93841b0434b",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/e51411f39c47659fa562a5551be5d93841b0434b"
+          }
+        ]
+      }
     },
     {
       "id": "universities-hub",
       "version": "v0.9",
-      "date": null,
+      "date": "2026-10-06",
       "title": "Universities hub",
       "summary": "Explore the four EU-HEM partner universities: their role in the programme, campus services, research and verified university information.",
       "category": "life",
       "type": "new",
-      "status": "draft",
+      "status": "published",
       "highlights": [
         "A guide page for each university, with links to the official sources."
       ],
@@ -47,17 +76,34 @@
           "url": "universities.html"
         }
       ],
-      "evidence": null
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37516807519",
+        "deployedAt": "2026-10-06T21:09:48+02:00",
+        "commits": [
+          {
+            "sha": "3e977613815c06a08276b4e7662202f7cf8470a7",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/3e977613815c06a08276b4e7662202f7cf8470a7"
+          },
+          {
+            "sha": "d6673410ce4bef6fc7e8259321501d337694bfe5",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/d6673410ce4bef6fc7e8259321501d337694bfe5"
+          },
+          {
+            "sha": "98ff1ab4a17339dbee4022b5165723ab26d80070",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/98ff1ab4a17339dbee4022b5165723ab26d80070"
+          }
+        ]
+      }
     },
     {
       "id": "student-experiences-section",
       "version": "v0.9",
-      "date": null,
+      "date": "2026-10-06",
       "title": "Student Experiences",
       "summary": "Read what EU-HEM students and alumni say about study, tracks, mobility, housing, thesis work and careers, and draft your own experience to share later.",
       "category": "community",
       "type": "new",
-      "status": "draft",
+      "status": "published",
       "highlights": [
         "Stories come from interviews published by the partner universities, each with its date and source.",
         "Search by name, city, topic or advice."
@@ -68,7 +114,20 @@
           "url": "experiences.html"
         }
       ],
-      "evidence": null
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37516807519",
+        "deployedAt": "2026-10-06T21:09:48+02:00",
+        "commits": [
+          {
+            "sha": "5a5e1bdacf80d37bb80939a0e2246efadcd1726c",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/5a5e1bdacf80d37bb80939a0e2246efadcd1726c"
+          },
+          {
+            "sha": "d1fa60e5ff13a3ac7c826f99413b2b866a7cabfe",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/d1fa60e5ff13a3ac7c826f99413b2b866a7cabfe"
+          }
+        ]
+      }
     },
     {
       "id": "homepage-and-menu",
