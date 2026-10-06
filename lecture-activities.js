@@ -870,7 +870,7 @@
     "disparity-theories": {
       title: "Compare the disparity hypotheses",
       intro:
-        "Pick a hypothesis to see its causal direction, mechanism, evidence role and the kind of policy question it raises. Wording follows the lecture's framework.",
+        "Pick a hypothesis to see its causal direction, mechanism, evidence role and the kind of policy question it raises. Wording follows the lecture’s framework.",
       build(node) {
         const items = {
           education:["Efficient producer","SES → Health","Education improves the efficiency of producing health.","Prevention, response to information, innovation and self-management are discussed in the lecture.","Could education, simpler treatment or more supportive care reduce the gradient?"],
@@ -917,7 +917,7 @@
           out.innerHTML =
             '<div class="formula">Next-period health = '+number(next,2)+'</div>'+
             '<dl class="activity-stats"><div><dt>Depreciation loss δH</dt><dd>'+number(loss,2)+'</dd></div><div><dt>Investment needed just to maintain H</dt><dd>'+number(maintain,2)+'</dd></div><div><dt>Chosen gross investment</dt><dd>'+number(i,2)+'</dd></div></dl>'+
-            '<p>As δ rises, more investment is required just to keep the same health stock. This is the mechanical Grossman link used in the lecture's allostatic-load hypothesis.</p>'+
+            '<p>As δ rises, more investment is required just to keep the same health stock. This is the mechanical Grossman link used in the lecture’s allostatic-load hypothesis.</p>'+
             '<p class="small">This does not estimate the size of a real stress effect; the slider is only a teaching illustration of the model mechanism.</p>';
         });
       }
@@ -925,7 +925,7 @@
     "policy-mechanism": {
       title: "Match the intervention to the causal mechanism",
       intro:
-        "Select a hypothetical intervention and ask which Session 4 mechanism it most directly targets. Several policies can affect more than one pathway; this activity focuses on the lecture's primary logic.",
+        "Select a hypothetical intervention and ask which Session 4 mechanism it most directly targets. Several policies can affect more than one pathway; this activity focuses on the lecture’s primary logic.",
       build(node) {
         const cases=[
           ["Simplify a demanding self-management treatment","Efficient producer","Reducing the skill burden can narrow an education-related gap in treatment effectiveness."],
@@ -933,7 +933,7 @@
           ["Reduce chronic workplace stress and increase control","Allostatic load","This targets the stress pathway that the lecture maps to faster health depreciation."],
           ["Prevent disabling illness and protect earnings during recovery","Productive time","This targets the reverse-causality pathway from poor health to lower SES."],
           ["Provide cash to low-income adults","Direct income","This directly tests the resource pathway, although the lecture emphasizes mixed adult causal evidence."],
-          ["Invest in education over the life course","Efficient producer / long-run policy","The lecture's final takeaways emphasize education as protective and potentially important for long-run disparities."]
+          ["Invest in education over the life course","Efficient producer / long-run policy","The lecture’s final takeaways emphasize education as protective and potentially important for long-run disparities."]
         ];
         let index=0;
         const render=()=>{
