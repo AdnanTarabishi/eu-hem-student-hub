@@ -155,7 +155,7 @@ function failRemainingCards(message) {
 async function initDashboard() {
   const now = new Date();
   document.getElementById("dash-date").textContent = formatDay(todayKey(), { weekday: "long", day: "numeric", month: "long", year: "numeric" });
-  document.getElementById("dash-greeting").textContent = `${greeting(now.getHours())} 👋`;
+  document.getElementById("dash-greeting").textContent = greeting(now.getHours());
   for (const id of ["dash-today", "dash-exam", "dash-plan"]) document.getElementById(id).appendChild(skeleton(3));
 
   try {

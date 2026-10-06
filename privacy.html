@@ -6,13 +6,14 @@
   <title>Privacy – EU-HEM Student Hub</title>
   <meta name="description" content="How the EU-HEM Student Hub handles data: what is loaded, what stays on your device, and who to ask.">
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=8a2df1f3">
-  <meta name="theme-color" content="#20242a">
+  <link rel="stylesheet" href="style.css?v=b0b6b3c7">
+  <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="icon" href="img/app-icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-  <script src="theme.js?v=2016aab7"></script>
+  <script src="theme.js?v=d51d4769"></script>
 </head>
 <body>
 
@@ -22,16 +23,22 @@
       <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
       <!-- site-nav.js builds the menu here (defined once for all pages) -->
       <nav class="site-nav" id="site-nav" data-current="" aria-label="Main menu"></nav>
-      <script src="site-nav.js?v=00f10cac"></script>
+      <script src="site-nav.js?v=773e0a34"></script>
     </div>
   </header>
 
   <main class="container">
+    <section class="page-intro">
+      <div>
+        <p class="section-eyebrow">About</p>
+        <h1><svg class="icon" aria-hidden="true"><use href="icons.svg#lock"></use></svg> Privacy</h1>
+        <p>The short version: there are no accounts, no tracking and no analytics.
+          Your study plan and progress stay on your own device. The only personal information we collect is what
+          you choose to send through the <a href="#student-directory">Student Directory form</a>.</p>
+      </div>
+    </section>
+
     <article class="card text-page">
-      <h1>Privacy</h1>
-      <p class="text-page-lead">The short version: there are no accounts, no tracking and no analytics.
-        Your study plan and progress stay on your own device. The only personal information we collect is what
-        you choose to send through the <a href="#student-directory">Student Directory form</a>.</p>
 
       <h2>What stays on your device</h2>
       <p>Some choices are saved in your browser's own storage (called <em>localStorage</em>), on your device only.
@@ -300,11 +307,11 @@
     </div>
   </footer>
 
-  <script defer src="utils.js?v=671dcb1b"></script>
-  <script defer src="ui.js?v=3026c782"></script>
+  <script defer src="utils.js?v=ba40a359"></script>
+  <script defer src="ui.js?v=6d55e433"></script>
   <script defer src="search.js?v=5cf2db17"></script>
   <script defer src="pwa.js?v=c9212bf8"></script>
-  <script defer src="announcements.js?v=4ad85af3"></script>
+  <script defer src="announcements.js?v=3ecd40f0"></script>
 
 </body>
 </html>

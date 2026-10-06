@@ -39,7 +39,8 @@
     button.className = "theme-toggle header-button";
     const update = () => {
       const dark = currentTheme() === "dark";
-      button.textContent = dark ? "☀️" : "🌙";
+      // Outline icon from icons.svg (sun in dark mode, moon in light mode)
+      button.innerHTML = `<svg class="icon" aria-hidden="true"><use href="icons.svg#${dark ? "sun" : "moon"}"></use></svg>`;
       button.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
       button.title = button.getAttribute("aria-label");
     };

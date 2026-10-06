@@ -25,7 +25,7 @@
 }
 
 .directory-join .eyebrow {
-  color: var(--color-primary);
+  color: var(--color-brand-text);
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.16em;
@@ -80,7 +80,7 @@
 .directory-join .form-step,
 .directory-join .success-card {
   border: 1px solid var(--color-border);
-  border-radius: 18px;
+  border-radius: var(--radius-lg);
   background: var(--color-card);
   box-shadow: var(--shadow-md);
 }
@@ -144,7 +144,7 @@
 }
 
 .directory-join .step-kicker {
-  color: var(--color-primary);
+  color: var(--color-brand-text);
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -242,7 +242,8 @@
   min-height: 46px;
   padding: 0 18px;
   border: 0;
-  border-radius: 11px;
+  border-radius: var(--radius-sm);
+  transition: background var(--dur-fast) var(--ease);
   font: inherit;
   font-weight: 700;
   text-decoration: none;
@@ -250,18 +251,26 @@
 }
 
 .directory-join .btn-primary {
-  background: var(--color-primary);
-  color: var(--color-on-primary);
+  background: var(--action-navy);
+  color: #fff;
 }
 
 .directory-join .btn-primary:hover {
-  background: color-mix(in srgb, var(--color-primary) 85%, var(--color-text));
+  background: var(--action-navy-hover);
+}
+
+.directory-join #submitButton {
+  background: var(--color-brand-action);
+}
+
+.directory-join #submitButton:hover {
+  background: var(--color-brand-hover);
 }
 
 .directory-join .btn-secondary {
   border: 1px solid var(--color-input-border);
   background: var(--color-card);
-  color: var(--color-text);
+  color: var(--color-navy);
 }
 
 .directory-join .btn-secondary:hover {
@@ -287,7 +296,7 @@
   margin-bottom: 26px;
   padding: 20px;
   border: 1px dashed var(--color-input-border);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   background: var(--color-surface-alt);
 }
 
@@ -356,8 +365,24 @@
   margin-top: 5px;
 }
 
-.directory-join .privacy-icon {
-  font-size: 1.45rem;
+.directory-join .privacy-icon,
+.directory-join .role-icon,
+.directory-join .trust-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-primary-light);
+  color: var(--color-link);
+}
+
+.directory-join .privacy-icon .icon,
+.directory-join .role-icon .icon,
+.directory-join .trust-icon .icon {
+  width: 20px;
+  height: 20px;
 }
 
 .directory-join .privacy-copy strong,
@@ -626,10 +651,7 @@
   outline-offset: 2px;
 }
 
-.directory-join .role-icon {
-  font-size: 1.6rem;
-  line-height: 1.2;
-}
+
 
 .directory-join .role-copy strong,
 .directory-join .role-copy small {
@@ -941,4 +963,23 @@
   .directory-join .mobility-fieldset {
     padding: 14px;
   }
+}
+
+/* The lock icon in the trust note is a span too: keep it a centred circle */
+.directory-join .trust-strip .trust-icon {
+  display: grid;
+  margin-top: 0;
+  color: var(--color-link);
+}
+
+/* Outline icons instead of emoji: the photo placeholder and the "check your email" icon */
+.directory-join #photoPlaceholder .icon {
+  width: 34px;
+  height: 34px;
+  color: var(--color-muted);
+}
+
+.directory-join .success-icon .icon {
+  width: 28px;
+  height: 28px;
 }

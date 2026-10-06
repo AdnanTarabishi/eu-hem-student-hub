@@ -167,7 +167,7 @@ function flashcardSection(ctx) {
       buttons.appendChild(smallButton("◀ Previous", () => { position = (position - 1 + deck.length) % deck.length; revealed = false; draw(); }));
       buttons.appendChild(smallButton(revealed ? "Hide answer" : "Reveal answer", () => { revealed = !revealed; draw(); }, "button"));
       buttons.appendChild(smallButton("Next ▶", () => { position = (position + 1) % deck.length; revealed = false; draw(); }));
-      buttons.appendChild(smallButton("🔀 Shuffle", () => { shuffle(deck); position = 0; revealed = false; draw(); }));
+      buttons.appendChild(smallButton("Shuffle", () => { shuffle(deck); position = 0; revealed = false; draw(); }));
     }
     study.appendChild(buttons);
   };

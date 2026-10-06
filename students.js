@@ -95,13 +95,18 @@ function countryName(code) {
   return (EUHEM_COUNTRY_BY_CODE[code] && EUHEM_COUNTRY_BY_CODE[code].name) || code;
 }
 
+// A track's colour: the CSS token from style.css (lighter in dark mode), or the config colour
+function trackAccent(trackId) {
+  return `var(--track-${trackId}, ${SX_CONFIG.tracks[trackId].accent})`;
+}
+
 function trackPill(trackId) {
   const pill = el("span", "sx-track");
   pill.append(el("span", "sx-track-label", TRACK_LABELS[trackId] || TRACK_LABELS.unlisted));
   const track = SX_CONFIG.tracks[trackId];
   if (track) {
     pill.classList.add("sx-track-current");
-    pill.style.setProperty("--track-accent", track.accent);
+    pill.style.setProperty("--track-accent", trackAccent(trackId));
     pill.prepend(el("abbr", "sx-track-code", track.short));
     pill.title = TRACK_LABELS[trackId];
   }
@@ -112,7 +117,7 @@ function avatar(profile, size) {
   const a = el("span", `sx-avatar${size ? " sx-avatar-" + size : ""}`, SX.initialsOf(profile.name));
   a.setAttribute("aria-hidden", "true");
   const track = SX_CONFIG.tracks[profile.track];
-  if (track) a.style.setProperty("--track-accent", track.accent);
+  if (track) a.style.setProperty("--track-accent", trackAccent(profile.track));
   return a;
 }
 
@@ -319,7 +324,7 @@ function renderFilters() {
     for (const d of els.memberFilters.querySelectorAll("details.sx-filter")) if (open.has(d.dataset.key)) d.open = true;
   } else {
     els.memberFilters.append(el("p", "sx-hint sx-locked-hint",
-      "🔒 Citizenship-group and study-visa filters will be available only to verified EU-HEM members, and only for people who chose to share those answers." +
+      "Citizenship-group and study-visa filters will be available only to verified EU-HEM members, and only for people who chose to share those answers." +
       (IS_DEMO ? " Try them in the Verified-member preview." : "")));
   }
 
@@ -428,7 +433,7 @@ function emptyState(saved, visibleSaved) {
 function profileCard(p, saved) {
   const card = el("article", "sx-card");
   const track = SX_CONFIG.tracks[p.track];
-  if (track) card.style.setProperty("--track-accent", track.accent);
+  if (track) card.style.setProperty("--track-accent", trackAccent(p.track));
 
   const head = el("div", "sx-card-head");
   const who = el("div", "sx-card-who");
@@ -551,7 +556,7 @@ function renderDrawer() {
   body.replaceChildren();
   if (!p) return;
   const track = SX_CONFIG.tracks[p.track];
-  els.drawer.style.setProperty("--track-accent", track ? track.accent : "var(--color-primary)");
+  els.drawer.style.setProperty("--track-accent", track ? trackAccent(p.track) : "var(--color-primary)");
 
   const top = el("div", "sx-drawer-top");
   top.append(button("Close", "button button-quiet sx-drawer-close", () => closeProfile()));

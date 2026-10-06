@@ -116,7 +116,7 @@ function renderHeader(tab, tabs) {
 
   const titleRow = createElement("div", "notes-heading");
   const titleBox = createElement("div", "course-title-box");
-  titleBox.appendChild(createElement("span", "course-icon", info.icon || "📘"));
+  titleBox.appendChild(courseIcon(info.icon, "course-icon"));
   const title = createElement("h2", null, info.name + (info.integrated ? " (I.C.)" : ""));
   title.appendChild(createElement("span", "course-code", ` ${info.code}`));
   titleBox.appendChild(title);

@@ -10,15 +10,16 @@
   <!-- Link to our stylesheet (controls colors, fonts, layout) -->
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/source-serif-4-latin-600.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=8a2df1f3">
-  <meta name="theme-color" content="#20242a">
+  <link rel="stylesheet" href="style.css?v=b0b6b3c7">
+  <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="icon" href="img/app-icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-  <script src="theme.js?v=2016aab7"></script>
+  <script src="theme.js?v=d51d4769"></script>
   <!-- Homepage settings (photo, cohort numbers) + starts the photo download early -->
-  <script src="home.js?v=e42f6ab1"></script>
+  <script src="home.js?v=9ab4a75a"></script>
 </head>
 <body class="home-page">
 
@@ -28,71 +29,162 @@
       <p class="site-title"><a href="index.html">EU-HEM Student Hub</a></p>
       <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
       <!-- site-nav.js builds the menu here (defined once for all pages) -->
-      <nav class="site-nav" id="site-nav" data-current="" aria-label="Main menu"></nav>
-      <script src="site-nav.js?v=00f10cac"></script>
+      <nav class="site-nav" id="site-nav" data-current="home" aria-label="Main menu"></nav>
+      <script src="site-nav.js?v=773e0a34"></script>
     </div>
   </header>
 
   <main class="home">
 
-    <!-- 1. Hero: cohort photo (HERO_IMAGE in home.js), title, buttons, cohort numbers -->
+    <!-- 1. Hero: full width. Navy on the left with the text, the cohort photo (HERO_IMAGE in home.js) on the right -->
     <section class="home-hero" aria-labelledby="hero-title">
       <div id="hero-media" class="home-hero-media"></div>
       <div class="container home-hero-inner">
-        <p class="hero-badge">Unofficial student-run platform</p>
-        <h1 id="hero-title">EU-HEM Student Hub</h1>
-        <p class="hero-tagline">Everything EU-HEM, in one place.</p>
-        <p class="hero-sentence">Schedules, study resources, students, cities, and helpful tools — built by students, for students.</p>
-        <div class="hero-actions">
-          <a class="button hero-button" href="#explore">Explore the Hub</a>
-          <a class="button hero-button-secondary" href="timetable.html">View Timetable</a>
+        <div class="home-hero-text">
+          <p class="hero-eyebrow">European Health Economics &amp; Management</p>
+          <h1 id="hero-title">The student-built home for <span class="hero-accent">EU-HEM</span></h1>
+          <p class="hero-sentence">A collaborative space for current and future EU-HEM students to connect, learn, share
+            resources and find their way around the programme, its cities and student life.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="join.html">Join the Directory <span class="arrow" aria-hidden="true">→</span></a>
+            <a class="button hero-button-secondary" href="#explore">Explore the Hub <span class="arrow" aria-hidden="true">→</span></a>
+          </div>
+          <p class="hero-note">Unofficial and student-run · not affiliated with the University of Bologna</p>
         </div>
-      </div>
-      <!-- 2. Cohort statistics (filled from the settings in home.js) -->
-      <div class="home-stats-bar">
-        <ul id="home-stats" class="container home-stats" aria-label="The cohort in numbers" hidden></ul>
+        <p class="hero-signature" aria-hidden="true">Same passion,<br>one programme,<br>four cities.</p>
       </div>
     </section>
-    <!-- Adds the photo and the numbers now, before the page is drawn -->
+    <!-- Adds the photo now, before the page is drawn -->
     <script>buildHomeHero();</script>
 
-    <!-- 3. This week: live cards (dashboard.js fills them) -->
-    <section class="home-section" aria-labelledby="week-title">
+    <!-- 2. Cohort statistics (filled from the settings in home.js), overlapping the bottom of the hero -->
+    <div class="container home-stats-wrap">
+      <ul id="home-stats" class="home-stats" aria-label="The cohort in numbers" hidden></ul>
+    </div>
+    <script>buildHomeStats();</script>
+
+    <!-- 3. Explore the Hub: the five main areas, then more tools -->
+    <section id="explore" class="section home-explore" aria-labelledby="explore-title">
       <div class="container">
         <div class="section-head">
-          <h2 id="week-title" class="section-title">This Week</h2>
-          <p class="week-greeting"><span id="dash-greeting">Welcome 👋</span> <span id="dash-date" class="week-date"></span></p>
+          <div>
+            <p class="section-eyebrow">Explore the Hub</p>
+            <h2 id="explore-title" class="section-title">Everything you need, all in one place.</h2>
+          </div>
+          <p class="section-signature">Built by students, for students</p>
+        </div>
+        <ul class="feature-grid">
+          <li><a class="feature-card card-interactive" href="students.html">
+            <span class="feature-head"><span class="feature-icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#students"></use></svg></span><strong>Students Directory</strong></span>
+            <span class="feature-text">Meet your classmates and connect across tracks and countries.</span>
+            <span class="link-arrow">Browse students <span class="arrow" aria-hidden="true">→</span></span></a></li>
+          <li><a class="feature-card card-interactive" href="tracks.html">
+            <span class="feature-head"><span class="feature-icon is-brand"><svg class="icon" aria-hidden="true"><use href="icons.svg#route"></use></svg></span><strong>Tracks Explorer</strong></span>
+            <span class="feature-text">Learn about each track, its courses, cities and career paths.</span>
+            <span class="link-arrow">Explore tracks <span class="arrow" aria-hidden="true">→</span></span></a></li>
+          <li><a class="feature-card card-interactive" href="notes.html">
+            <span class="feature-head"><span class="feature-icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#notes"></use></svg></span><strong>Notes &amp; Resources</strong></span>
+            <span class="feature-text">Student notes, flashcards and practice. Official lectures stay on Virtuale.</span>
+            <span class="link-arrow">View resources <span class="arrow" aria-hidden="true">→</span></span></a></li>
+          <li><a class="feature-card card-interactive" href="thesis.html">
+            <span class="feature-head"><span class="feature-icon is-brand"><svg class="icon" aria-hidden="true"><use href="icons.svg#library"></use></svg></span><strong>Thesis Hub</strong></span>
+            <span class="feature-text">Past thesis topics from earlier cohorts, to inspire your own research.</span>
+            <span class="link-arrow">Explore thesis <span class="arrow" aria-hidden="true">→</span></span></a></li>
+          <li><a class="feature-card card-interactive" href="city-guide.html">
+            <span class="feature-head"><span class="feature-icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#guide"></use></svg></span><strong>City Life</strong></span>
+            <span class="feature-text">Bologna, Oslo, Rotterdam and Innsbruck: housing, permits and daily life.</span>
+            <span class="link-arrow">Explore life <span class="arrow" aria-hidden="true">→</span></span></a></li>
+        </ul>
+        <div class="more-tools">
+          <p class="more-tools-label">Everyday tools</p>
+          <ul>
+            <li><a href="timetable.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#timetable"></use></svg>Timetable</a></li>
+            <li><a href="exams.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#exams"></use></svg>Exams</a></li>
+            <li><a href="studyplan.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#study-plan"></use></svg>Study Plan</a></li>
+            <li><a href="calendar.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#calendar"></use></svg>Calendar</a></li>
+            <li><a href="announcements.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#announcements"></use></svg>Announcements</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. A global community: text, a world map with the four programme cities, demo profile cards -->
+    <section class="section section-white home-community" aria-labelledby="cohort-title">
+      <div class="container community-grid">
+        <div class="community-text">
+          <p class="section-eyebrow">A global community</p>
+          <h2 id="cohort-title" class="section-title">Students from around the world</h2>
+          <p class="section-description"><span data-setting="STUDENT_COUNT"></span> students from
+            <span data-setting="COUNTRY_COUNT"></span> countries, one programme across four European universities.</p>
+          <ul class="community-values">
+            <li><svg class="icon" aria-hidden="true"><use href="icons.svg#globe"></use></svg>Different backgrounds</li>
+            <li><svg class="icon" aria-hidden="true"><use href="icons.svg#students"></use></svg>Shared goals</li>
+            <li><svg class="icon" aria-hidden="true"><use href="icons.svg#route"></use></svg>Four cities</li>
+          </ul>
+          <a class="button button-secondary" href="students.html#sx-map-section">Explore the map <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+        <figure class="community-map" aria-labelledby="community-map-caption">
+          <div id="community-map" class="community-map-svg" aria-hidden="true"></div>
+          <figcaption id="community-map-caption"><span class="community-map-dot"></span> The four EU-HEM universities:
+            Bologna, Oslo, Rotterdam and Innsbruck</figcaption>
+        </figure>
+        <div class="community-people">
+          <div class="community-people-head">
+            <p class="section-eyebrow">Meet the community</p>
+            <div class="people-nav">
+              <button type="button" class="people-prev" aria-label="Previous profiles"><svg class="icon" aria-hidden="true"><use href="icons.svg#chevron-left"></use></svg></button>
+              <button type="button" class="people-next" aria-label="Next profiles"><svg class="icon" aria-hidden="true"><use href="icons.svg#chevron-right"></use></svg></button>
+            </div>
+          </div>
+          <!-- home.js fills this with public profiles from the Students page's demo data (fictional people) -->
+          <ul id="community-people" class="people-cards" aria-live="polite"></ul>
+          <p class="people-note"><span class="pill demo-pill">Fictional demo</span> Example profiles until real students join
+            the directory. <a href="students.html">See all</a></p>
+          <p id="cohort-demo-note" hidden></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Your Week: live cards (dashboard.js fills them) -->
+    <section class="section home-week" aria-labelledby="week-title">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-eyebrow" id="dash-greeting">Welcome</p>
+            <h2 id="week-title" class="section-title">Your Week</h2>
+          </div>
+          <p class="week-greeting"><span id="dash-date" class="week-date"></span></p>
         </div>
         <script>fillWeekGreeting();</script>
 
         <div class="dash-grid">
           <section class="dash-card dash-today" aria-labelledby="dash-today-title">
-            <h3 id="dash-today-title"><svg class="icon" aria-hidden="true"><use href="icons.svg#clock"></use></svg> Today</h3>
+            <h3 id="dash-today-title"><svg class="icon dash-icon" aria-hidden="true"><use href="icons.svg#clock"></use></svg> Today</h3>
             <div id="dash-today" class="dash-body"></div>
-            <a class="dash-more" href="timetable.html">Open timetable →</a>
+            <a class="dash-more" href="timetable.html">Open timetable <span class="arrow" aria-hidden="true">→</span></a>
           </section>
 
           <section class="dash-card" aria-labelledby="dash-exam-title">
-            <h3 id="dash-exam-title"><svg class="icon" aria-hidden="true"><use href="icons.svg#exams"></use></svg> Next exam</h3>
+            <h3 id="dash-exam-title"><svg class="icon dash-icon" aria-hidden="true"><use href="icons.svg#exams"></use></svg> Next exam</h3>
             <div id="dash-exam" class="dash-body"></div>
-            <a class="dash-more" href="exams.html">All exams →</a>
+            <a class="dash-more" href="exams.html">All exams <span class="arrow" aria-hidden="true">→</span></a>
           </section>
 
           <section class="dash-card" aria-labelledby="dash-plan-title">
-            <h3 id="dash-plan-title"><svg class="icon" aria-hidden="true"><use href="icons.svg#study-plan"></use></svg> My plan</h3>
+            <h3 id="dash-plan-title"><svg class="icon dash-icon" aria-hidden="true"><use href="icons.svg#study-plan"></use></svg> My Study Plan</h3>
             <div id="dash-plan" class="dash-body"></div>
-            <a class="dash-more" href="studyplan.html">Open Study Plan →</a>
+            <a class="dash-more" href="studyplan.html">Open Study Plan <span class="arrow" aria-hidden="true">→</span></a>
           </section>
 
           <section id="announcements" class="dash-card dash-wide" aria-labelledby="dash-news-title">
-            <h3 id="dash-news-title"><svg class="icon" aria-hidden="true"><use href="icons.svg#announcements"></use></svg> Announcements</h3>
+            <h3 id="dash-news-title"><svg class="icon dash-icon" aria-hidden="true"><use href="icons.svg#announcements"></use></svg> Announcements</h3>
             <p id="home-announcement-demo-note" class="demo-note" hidden>
               <strong>Demo announcements</strong> — examples only, not real news.
             </p>
             <!-- announcements.js fills this with the latest announcements -->
             <p id="latest-announcements-status" class="placeholder">Loading announcements…</p>
             <div id="latest-announcements" class="announcement-list"></div>
-            <a class="dash-more see-all" href="announcements.html">See all announcements →</a>
+            <a class="dash-more see-all" href="announcements.html">See all announcements <span class="arrow" aria-hidden="true">→</span></a>
           </section>
         </div>
 
@@ -101,66 +193,16 @@
       </div>
     </section>
 
-    <!-- 4. Explore: every section of the site -->
-    <section id="explore" class="home-section home-section-alt" aria-labelledby="explore-title">
+    <!-- 6. Life across EU-HEM: the cities of the programme -->
+    <section class="section section-white" aria-labelledby="cities-title">
       <div class="container">
         <div class="section-head">
-          <h2 id="explore-title" class="section-title">Explore</h2>
-          <p class="section-sub">Everything on the Hub, one tap away.</p>
-        </div>
-        <div class="tiles">
-          <a class="tile" href="studyplan.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#study-plan"></use></svg><strong>Study Plan</strong><span>Pick courses, track CFU</span></a>
-          <a class="tile" href="timetable.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#timetable"></use></svg><strong>Timetable</strong><span>Classes, rooms, maps</span></a>
-          <a class="tile" href="exams.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#exams"></use></svg><strong>Exams</strong><span>Dates and registration</span></a>
-          <a class="tile" href="calendar.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#calendar"></use></svg><strong>Calendar</strong><span>Subscribe on your phone</span></a>
-          <a class="tile" href="notes.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#notes"></use></svg><strong>Notes &amp; Resources</strong><span>Notes, flashcards, quizzes</span></a>
-          <a class="tile" href="city-guide.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#guide"></use></svg><strong>City Guide</strong><span>Bologna, Oslo, Rotterdam, Innsbruck</span></a>
-          <a class="tile" href="announcements.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#announcements"></use></svg><strong>Announcements</strong><span>News for the cohort</span></a>
-          <a class="tile" href="students.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#students"></use></svg><strong>Students</strong><span>Meet your classmates</span></a>
-        </div>
-      </div>
-    </section>
-
-    <!-- 5. Notes & Resources preview (no content shown here, only what kinds exist) -->
-    <section class="home-section" aria-labelledby="notes-title">
-      <div class="container home-split">
-        <div class="home-split-text">
-          <h2 id="notes-title" class="section-title">Notes &amp; Resources</h2>
-          <p class="section-sub">Student-created learning material. Official lecture materials remain on
-            <a href="https://virtuale.unibo.it" target="_blank" rel="noopener">Virtuale</a>.</p>
-          <a class="button" href="notes.html">Browse Notes &amp; Resources</a>
-        </div>
-        <ul class="mini-cards">
-          <li class="mini-card"><svg class="icon" aria-hidden="true"><use href="icons.svg#notes"></use></svg><strong>Course Notes</strong><span>Topic by topic, written by students</span></li>
-          <li class="mini-card"><svg class="icon" aria-hidden="true"><use href="icons.svg#file"></use></svg><strong>Summaries</strong><span>The key points before an exam</span></li>
-          <li class="mini-card"><svg class="icon" aria-hidden="true"><use href="icons.svg#flashcards"></use></svg><strong>Flashcards</strong><span>Spaced repetition that remembers your progress</span></li>
-          <li class="mini-card"><svg class="icon" aria-hidden="true"><use href="icons.svg#list"></use></svg><strong>Practice Questions</strong><span>Check yourself, with explanations</span></li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- 6. Meet the cohort (numbers from home.js; decorative only: no names or personal data) -->
-    <section class="home-section home-section-alt" aria-labelledby="cohort-title">
-      <div class="container home-split">
-        <div class="home-split-text">
-          <h2 id="cohort-title" class="section-title">Meet the Cohort</h2>
-          <p class="section-sub"><span data-setting="STUDENT_COUNT"></span> students from <span data-setting="COUNTRY_COUNT"></span> countries,
-            bringing together diverse academic and professional backgrounds.</p>
-          <a class="button" href="students.html">Explore Student Directory</a>
-          <p id="cohort-demo-note" class="cohort-demo-note" hidden>The directory currently shows <strong>demo profiles</strong>, not real students.</p>
-        </div>
-        <div class="cohort-art" aria-hidden="true">
-          <div id="cohort-dots" class="cohort-dots"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 7. Life across EU-HEM: the cities of the programme -->
-    <section class="home-section" aria-labelledby="cities-title">
-      <div class="container">
-        <div class="section-head">
-          <h2 id="cities-title" class="section-title">Life Across EU-HEM</h2>
-          <p class="section-sub">Practical guides to the cities of the programme, written by students.</p>
+          <div>
+            <p class="section-eyebrow">Life across EU-HEM</p>
+            <h2 id="cities-title" class="section-title">Four cities, one programme</h2>
+            <p class="section-description">Practical guides to the cities of the programme, written by students.</p>
+          </div>
+          <a class="link-arrow" href="city-guide.html">All city guides <span class="arrow" aria-hidden="true">→</span></a>
         </div>
         <!-- home.js fills these cards from guide-data.js and content/tracks.json; the links below are
              only shown if that fails -->
@@ -181,24 +223,39 @@
       </div>
     </section>
 
-    <!-- 8. Useful links and about -->
-    <section class="home-section home-section-alt" aria-labelledby="links-title">
+    <!-- 7. Useful links (grouped) and about -->
+    <section class="section" aria-labelledby="links-title">
       <div class="container home-links-grid">
         <div id="links">
-          <h2 id="links-title" class="section-title">Useful Links</h2>
-          <ul class="compact-links">
-            <li><a href="https://virtuale.unibo.it" target="_blank" rel="noopener">Virtuale (UniBo)</a><span>Official lectures and course materials</span></li>
-            <li><a href="https://studenti.unibo.it" target="_blank" rel="noopener">Studenti Online</a><span>Study plan, certificates, bus pass</span></li>
-            <li><a href="https://almaesami.unibo.it/almaesami/welcome.htm" target="_blank" rel="noopener">AlmaEsami</a><span>Exam registration</span></li>
-            <li><a href="https://corsi.unibo.it/2cycle/euHealthEconomicsManagement" target="_blank" rel="noopener">EU-HEM course website</a><span>Official information</span></li>
-          </ul>
+          <p class="section-eyebrow">Useful links</p>
+          <h2 id="links-title" class="section-title">Official systems and information</h2>
+          <div class="link-groups">
+            <div>
+              <h3>Academic systems</h3>
+              <ul class="compact-links">
+                <li><a href="https://virtuale.unibo.it" target="_blank" rel="noopener">Virtuale (UniBo)<svg class="icon" aria-hidden="true"><use href="icons.svg#external"></use></svg></a><span>Official lectures and course materials</span></li>
+                <li><a href="https://studenti.unibo.it" target="_blank" rel="noopener">Studenti Online<svg class="icon" aria-hidden="true"><use href="icons.svg#external"></use></svg></a><span>Study plan, certificates, bus pass</span></li>
+                <li><a href="https://almaesami.unibo.it/almaesami/welcome.htm" target="_blank" rel="noopener">AlmaEsami<svg class="icon" aria-hidden="true"><use href="icons.svg#external"></use></svg></a><span>Exam registration</span></li>
+              </ul>
+            </div>
+            <div>
+              <h3>Programme information</h3>
+              <ul class="compact-links">
+                <li><a href="https://corsi.unibo.it/2cycle/euHealthEconomicsManagement" target="_blank" rel="noopener">EU-HEM course website<svg class="icon" aria-hidden="true"><use href="icons.svg#external"></use></svg></a><span>Official information from the University of Bologna</span></li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <div id="about">
-          <h2 class="section-title">About</h2>
-          <p>A free, volunteer project by EU-HEM students, for EU-HEM students.
-            It is not an official website of the University of Bologna or any partner university.
-            Your study plan and progress are saved only on your device.</p>
-          <p><a href="privacy.html">Privacy</a> · <a href="contact.html">Contact</a></p>
+        <div id="about" class="about-card">
+          <p class="section-eyebrow">About</p>
+          <h2 class="section-title">Built by students, for students</h2>
+          <ul class="about-points">
+            <li><svg class="icon" aria-hidden="true"><use href="icons.svg#students"></use></svg>Student-run and free</li>
+            <li><svg class="icon" aria-hidden="true"><use href="icons.svg#info"></use></svg>Independent and unofficial</li>
+            <li><svg class="icon" aria-hidden="true"><use href="icons.svg#lock"></use></svg>Privacy-first: your plan stays on your device</li>
+          </ul>
+          <p class="about-links"><a href="privacy.html">Privacy</a> · <a href="contact.html">Contact</a> ·
+            <a href="https://github.com/AdnanTarabishi/eu-hem-student-hub" target="_blank" rel="noopener">GitHub</a></p>
         </div>
       </div>
       <!-- PHOTO CREDIT: hidden until we know the photographer. To show it: replace the text in
@@ -215,18 +272,19 @@
 
   <!-- Loaded at the end so the HTML above already exists when the scripts run.
        utils.js comes first because the other two use its helpers. -->
-  <script defer src="utils.js?v=671dcb1b"></script>
-  <script defer src="ui.js?v=3026c782"></script>
+  <script defer src="utils.js?v=ba40a359"></script>
+  <script defer src="ui.js?v=6d55e433"></script>
   <script defer src="search.js?v=5cf2db17"></script>
   <script defer src="pwa.js?v=c9212bf8"></script>
-  <script defer src="announcements.js?v=4ad85af3"></script>
+  <script defer src="announcements.js?v=3ecd40f0"></script>
   <script defer src="programme.js?v=bc6eeb23"></script>
   <script defer src="unibo-data.js?v=7939f2b4"></script>
   <script defer src="notes-data.js?v=44a1e162"></script>
   <script defer src="notes-progress.js?v=09768295"></script>
-  <script defer src="dashboard.js?v=d8100937"></script>
-  <script defer src="onboarding.js?v=818ae25e"></script>
+  <script defer src="dashboard.js?v=1d110f84"></script>
+  <script defer src="onboarding.js?v=ae00e6f0"></script>
   <script defer src="tracks-data.js?v=629a5538"></script>
+  <script defer src="students-data.js?v=0447923b"></script>
   <script defer src="guide-data.js?v=4c2fbe41"></script>
 
 </body>
