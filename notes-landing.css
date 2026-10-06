@@ -206,3 +206,75 @@
 @media (prefers-reduced-motion: reduce) {
   .notes-page *, .notes-page *::before, .notes-page *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
 }
+
+/* Course calendar: current teaching, future blocks and the next published sitting. */
+.notes-semester-overview { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 0 0 26px; }
+.notes-semester-card { display: flex; flex-direction: column; align-items: start; padding: 19px 20px; gap: 10px; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-md); color: var(--text-heading); text-align: left; font: inherit; text-decoration: none; cursor: pointer; min-width: 0; transition: background var(--dur), border-color var(--dur); }
+.notes-semester-card:hover, .notes-semester-card[aria-pressed="true"] { background: var(--color-info-soft); border-color: var(--color-link); }
+.notes-overview-label { display: inline-flex; align-items: center; gap: 7px; font-size: .73rem; font-weight: 500; color: var(--text-secondary); }
+.notes-overview-label .icon { width: 16px; height: 16px; color: var(--color-link); }
+.notes-overview-value { font-size: clamp(1.15rem, 1.7vw, 1.55rem); font-weight: 600; letter-spacing: -.03em; line-height: 1.25; }
+.notes-overview-detail { font-size: .69rem; line-height: 1.6; color: var(--text-secondary); }
+.notes-semester-exam { background: var(--color-brand-soft); border-color: var(--color-brand-soft); }
+.notes-semester-exam .notes-overview-label .icon { color: var(--color-brand-text); }
+.notes-exam-feed { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 14px 16px; border: 1px solid var(--border-subtle); background: var(--surface-warm); border-radius: var(--radius-sm); margin: 14px 0 28px; font-size: .75rem; color: var(--text-secondary); }
+.notes-exam-feed p { margin: 0; line-height: 1.6; }
+.notes-exam-feed-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; flex-shrink: 0; }
+.notes-refresh-exams { font: inherit; font-size: .72rem; color: var(--color-link); background: var(--surface-card); border: 1px solid var(--border-input); border-radius: var(--radius-sm); padding: 7px 10px; cursor: pointer; }
+.notes-refresh-exams:disabled { cursor: progress; color: var(--text-secondary); }
+.notes-page .course-group-title { font-size: 1.04rem; margin: 32px 0 8px; }
+.notes-page .course-group-title > .icon { display: block; width: 28px; height: 28px; padding: 6px; box-sizing: content-box; color: var(--color-link); background: var(--color-info-soft); border-radius: var(--radius-sm); }
+.notes-page .notes-group-now .course-group-title > .icon { color: var(--color-success-text); background: var(--color-success-bg); }
+.notes-group-description { margin: 0 0 18px; font-size: .8rem; color: var(--text-secondary); line-height: 1.6; }
+.notes-course-dates { margin: 0 0 16px; padding: 14px 15px; background: var(--surface-page); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); min-width: 0; }
+.notes-page .notes-card-section-title { display: flex; align-items: center; gap: 7px; font: 600 .71rem var(--font-sans); color: var(--text-heading); margin: 0 0 11px; }
+.notes-card-section-title .icon { width: 15px; height: 15px; color: var(--color-link); }
+.notes-module-dates + .notes-module-dates { border-top: 1px solid var(--border-default); padding-top: 10px; margin-top: 10px; }
+.notes-module-name { display: block; font-size: .76rem; font-weight: 500; color: var(--text-heading); margin-bottom: 5px; line-height: 1.5; }
+.notes-module-range { font-size: .72rem; color: var(--text-secondary); line-height: 1.8; }
+.notes-module-status { display: inline-block; font-size: .62rem; border-radius: 4px; padding: 1px 6px; margin-left: 7px; white-space: nowrap; }
+.notes-schedule-link { display: inline-block; font-size: .68rem; text-decoration: none; margin-top: 10px; }
+.notes-schedule-link:hover { text-decoration: underline; }
+.notes-course-exam { margin-bottom: 18px; padding: 14px 15px; border-radius: var(--radius-sm); border: 1px solid var(--border-default); background: var(--surface-warm); min-width: 0; }
+.notes-course-exam.has-exam { border-color: var(--color-primary-border); background: var(--color-info-soft); }
+.notes-next-exam-date { display: flex; flex-wrap: wrap; gap: 3px; align-items: center; font-size: .85rem; font-weight: 600; color: var(--text-heading); line-height: 1.7; }
+.notes-exam-countdown { font-size: .63rem; padding: 1px 7px; background: var(--surface-card); color: var(--color-link); border-radius: var(--radius-pill); margin-left: auto; font-weight: 500; }
+.notes-exam-module, .notes-exam-meta, .notes-exam-registration { margin: 5px 0 0; font-size: .69rem; color: var(--text-secondary); line-height: 1.6; }
+.notes-exam-module { color: var(--text-heading); font-weight: 500; }
+.notes-exam-registration.is-open { color: var(--color-success-text); font-weight: 600; }
+.notes-exam-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 10px; }
+.notes-exam-link { display: inline-flex; align-items: center; gap: 4px; font-size: .68rem; text-decoration: none; font-weight: 500; }
+.notes-exam-link:hover { text-decoration: underline; }
+.notes-exam-link .icon { width: 11px; height: 11px; }
+.notes-exam-source { display: block; font-size: .62rem; color: var(--text-secondary); margin-top: 9px; line-height: 1.6; }
+.notes-exam-empty { font-size: .75rem; color: var(--text-secondary); margin: 0 0 8px; line-height: 1.6; }
+.notes-page .is-list-view .notes-course-dates { grid-column: 2 / 4; grid-row: 4; }
+.notes-page .is-list-view .notes-course-exam { grid-column: 2 / 4; grid-row: 5; }
+.notes-page .is-list-view .course-card-progress { grid-column: 2 / 4; grid-row: 6; }
+.notes-page .is-list-view .notes-course-bottom { grid-column: 2 / 4; grid-row: 7; }
+.notes-page .is-list-view .notes-course-dates { display: flex; flex-wrap: wrap; align-items: start; gap: 10px 24px; }
+.notes-page .is-list-view .notes-course-dates .notes-card-section-title { flex-basis: 100%; margin-bottom: 0; }
+.notes-page .is-list-view .notes-course-dates .notes-module-dates { flex: 1; margin: 0; padding: 0; border: 0; min-width: 0; }
+.notes-page .is-list-view .notes-course-dates .notes-schedule-link { flex-basis: 100%; margin-top: 0; }
+@media (max-width: 900px) {
+  .notes-semester-overview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .notes-exam-feed { flex-direction: column; align-items: start; gap: 10px; }
+}
+@media (max-width: 780px) {
+  .notes-page .is-list-view .notes-course-dates, .notes-page .is-list-view .notes-course-exam, .notes-page .is-list-view .course-card-progress, .notes-page .is-list-view .notes-course-bottom { grid-column: 2; }
+  .notes-page .is-list-view .notes-course-dates { display: block; }
+  .notes-page .is-list-view .notes-course-dates .notes-card-section-title { margin-bottom: 11px; }
+  .notes-page .is-list-view .notes-course-dates .notes-module-dates + .notes-module-dates { border-top: 1px solid var(--border-default); padding-top: 10px; margin-top: 10px; }
+  .notes-page .is-list-view .notes-course-dates .notes-schedule-link { margin-top: 10px; }
+}
+@media (max-width: 600px) {
+  .notes-semester-overview { gap: 8px; }
+  .notes-semester-card { padding: 15px 12px; gap: 8px; }
+  .notes-overview-label { font-size: .67rem; }
+  .notes-overview-value { font-size: 1.15rem; }
+  .notes-overview-detail { font-size: .64rem; }
+  .notes-module-status { display: table; margin: 4px 0 0; }
+  .notes-course-dates, .notes-course-exam { padding: 12px; }
+  .notes-page .course-group-title { font-size: .95rem; }
+  .notes-page .course-group-title > .icon { width: 20px; height: 20px; }
+}

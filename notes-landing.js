@@ -21,6 +21,10 @@ const searchFilters = { type: "", course: "" };
 const courseFilters = { type: "", status: "", mine: false };
 let courseView = readStorage("euhem-notes-view", "grid") === "list" ? "list" : "grid";
 let searchIndexPromise = null;
+let landingExamState = { source: "", exams: [], refreshing: false, error: false };
+let landingExamRequest = null;
+let landingScheduleDay = NotesSchedule.clock().slice(0, 10);
+let landingExamSelection = "";
 
 function landingIcon(name) {
   const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -215,10 +219,224 @@ function courseCounts(course) {
   };
 }
 
-// Teaching status of a course: from its modules' first and last teaching day
+// A course is active only while at least one of its modules is actually teaching.
 function courseTeachingStatus(course, today) {
-  const dates = courseDates(course.info);
-  return teachingStatus({ teachingStart: dates.start, teachingEnd: dates.end }, today);
+  return NotesSchedule.courseStatus(course.info, today);
+}
+
+function landingDate(dateKey) {
+  return formatDay(dateKey, { day: "numeric", month: "short", year: "numeric" });
+}
+
+function datedText(dateKey) {
+  const time = createElement("time", null, landingDate(dateKey));
+  time.dateTime = dateKey;
+  return time;
+}
+
+function officialExamLink(label = "Check UniBo", className = "notes-exam-link") {
+  const link = landingLink(label, landingData.cohort.sources.examDates, className);
+  link.target = "_blank";
+  link.rel = "noopener";
+  link.appendChild(landingIcon("external"));
+  return link;
+}
+
+function teachingDates(course, today) {
+  const section = createElement("section", "notes-course-dates");
+  section.setAttribute("aria-label", `Teaching dates for ${course.info.name}`);
+  const head = createElement("h4", "notes-card-section-title", course.info.integrated ? "Teaching blocks" : "Teaching dates");
+  head.prepend(landingIcon("calendar"));
+  section.appendChild(head);
+  for (const { info, key } of courseTeachingStatus(course, today).modules) {
+    const row = createElement("div", `notes-module-dates is-${key}`);
+    row.dataset.module = info.id;
+    if (course.info.integrated) row.appendChild(createElement("strong", "notes-module-name", info.name));
+    const date = createElement("div", "notes-module-range");
+    if (key === "other") date.appendChild(createElement("span", null, "Dates to confirm"));
+    else {
+      date.appendChild(datedText(info.teachingStart));
+      if (info.teachingStart !== info.teachingEnd) date.append(document.createTextNode(" – "), datedText(info.teachingEnd));
+    }
+    const status = key === "now" ? "In progress" : key === "finished" ? "Teaching completed" : key === "upcoming" ? `Starts ${countdownText(info.teachingStart, today).toLowerCase()}` : "Not yet confirmed";
+    date.appendChild(createElement("span", `notes-module-status status-${key}`, status));
+    row.appendChild(date);
+    section.appendChild(row);
+  }
+  section.appendChild(landingLink("View course schedule", courseUrl(course.id, { tab: "schedule" }), "notes-schedule-link"));
+  return section;
+}
+
+function courseExamDetails(course) {
+  const box = createElement("section", "notes-course-exam");
+  box.dataset.courseExam = course.id;
+  box.setAttribute("aria-label", `Next exam for ${course.info.name}`);
+  fillCourseExam(box, course);
+  return box;
+}
+
+function fillCourseExam(box, course) {
+  const now = NotesSchedule.clock();
+  const today = now.slice(0, 10);
+  const exam = NotesSchedule.nextExam(landingExamState.exams, course.id, now);
+  box.replaceChildren();
+  box.classList.toggle("has-exam", !!exam);
+  box.setAttribute("aria-busy", String(landingExamState.refreshing && !landingExamState.source));
+  const head = createElement("h4", "notes-card-section-title", "Next exam");
+  head.prepend(landingIcon("exams"));
+  box.appendChild(head);
+  if (exam) {
+    const when = createElement("div", "notes-next-exam-date");
+    when.appendChild(datedText(exam.dateKey));
+    if (exam.time) when.appendChild(createElement("span", null, ` · ${exam.time.padStart(5, "0")} (Bologna)`));
+    when.appendChild(createElement("span", "notes-exam-countdown", countdownText(exam.dateKey, today)));
+    box.appendChild(when);
+    if (course.info.integrated) box.appendChild(createElement("p", "notes-exam-module", `Module: ${exam.title}`));
+    const meta = [exam.type, exam.place].filter(Boolean).join(" · ");
+    if (meta) box.appendChild(createElement("p", "notes-exam-meta", meta));
+    if (!exam.time) box.appendChild(createElement("p", "notes-exam-meta", landingExamState.source === "calendar" ? "Time: confirm on UniBo" : "Time not published"));
+    const registration = landingExamState.source === "unibo" ? registrationText(exam, today) : null;
+    if (registration) box.appendChild(createElement("p", `notes-exam-registration${registration.open ? " is-open" : ""}`, registration.text));
+    else if (exam.registrationCloses) box.appendChild(createElement("p", "notes-exam-registration", `${landingExamState.source === "calendar" ? "Calendar registration deadline" : "Registration deadline"}: ${landingDate(exam.registrationCloses)}`));
+    const actions = createElement("div", "notes-exam-actions");
+    actions.appendChild(landingLink("Exam details", courseUrl(course.id, { tab: "exam" }), "notes-exam-link"));
+    if (registration?.open) {
+      const register = landingLink("Register on AlmaEsami", "https://almaesami.unibo.it/almaesami/welcome.htm", "notes-exam-link");
+      register.target = "_blank"; register.rel = "noopener";
+      actions.appendChild(register);
+    } else actions.appendChild(officialExamLink());
+    box.appendChild(actions);
+    box.appendChild(createElement("span", "notes-exam-source", landingExamState.source === "calendar" ? "Calendar copy · verify on UniBo" : "Source: UniBo exam dates"));
+  } else {
+    const message = !landingExamState.source && !landingExamState.error ? "Checking published exam dates…"
+      : landingExamState.error && !landingExamState.source ? "Exam dates could not be loaded"
+      : landingExamState.source === "calendar" ? "No upcoming date in the calendar copy" : "No upcoming exam date published";
+    box.appendChild(createElement("p", "notes-exam-empty", message));
+    if (landingExamState.source || landingExamState.error) box.appendChild(officialExamLink("Check official exam dates"));
+  }
+}
+
+function buildSemesterOverview() {
+  const box = createElement("div", "notes-semester-overview");
+  box.setAttribute("aria-label", "Semester at a glance");
+  for (const [key, label, icon] of [["now", "Teaching now", "book"], ["upcoming", "Coming up", "calendar"], ["finished", "Teaching completed", "check"]]) {
+    const button = createElement("button", `notes-semester-card notes-semester-${key}`);
+    button.type = "button";
+    button.dataset.teachingFilter = key;
+    button.setAttribute("aria-pressed", String(courseFilters.status === key));
+    const title = createElement("span", "notes-overview-label", label);
+    title.prepend(landingIcon(icon));
+    button.append(title, createElement("strong", "notes-overview-value"), createElement("span", "notes-overview-detail"));
+    button.addEventListener("click", () => {
+      courseFilters.status = courseFilters.status === key ? "" : key;
+      document.querySelector(".notes-status-filter select").value = courseFilters.status;
+      renderCourseGrid();
+    });
+    box.appendChild(button);
+  }
+  const next = landingLink("", "exams.html", "notes-semester-card notes-semester-exam");
+  const title = createElement("span", "notes-overview-label", "Next published exam");
+  title.prepend(landingIcon("exams"));
+  next.append(title, createElement("strong", "notes-overview-value"), createElement("span", "notes-overview-detail"));
+  box.appendChild(next);
+  return box;
+}
+
+function updateSemesterOverview(entries) {
+  const now = NotesSchedule.clock(), today = now.slice(0, 10);
+  for (const button of document.querySelectorAll("[data-teaching-filter]")) {
+    const key = button.dataset.teachingFilter;
+    const members = entries.filter(({ course }) => courseTeachingStatus(course, today).key === key);
+    button.querySelector(".notes-overview-value").textContent = plural(members.length, "course");
+    button.setAttribute("aria-pressed", String(courseFilters.status === key));
+    const nextStart = members.map(({ course }) => courseTeachingStatus(course, today).nextDate).filter(Boolean).sort()[0];
+    button.querySelector(".notes-overview-detail").textContent = key === "now" ? "Classes currently in progress" : key === "finished" ? "Keep revising for your exams" : nextStart ? `Next start: ${landingDate(nextStart)}` : "No upcoming teaching blocks";
+  }
+  const next = document.querySelector(".notes-semester-exam");
+  if (!next) return;
+  const ids = new Set(entries.map(({ course }) => course.id));
+  const exam = NotesSchedule.nextExam(landingExamState.exams.filter(e => e.courseIds.some(id => ids.has(id))), null, now);
+  next.querySelector(".notes-overview-value").textContent = exam ? landingDate(exam.dateKey) : landingExamState.source ? "Check official dates" : landingExamState.error ? "Dates unavailable" : "Checking dates…";
+  next.querySelector(".notes-overview-detail").textContent = exam ? `${exam.title}${landingExamState.source === "calendar" ? " · calendar copy" : ""}` : "View the exam dates page";
+  next.href = exam ? courseUrl(exam.courseIds.find(id => ids.has(id)), { tab: "exam" }) : "exams.html";
+}
+
+function updateLandingExamUI() {
+  for (const box of document.querySelectorAll("[data-course-exam]")) {
+    const course = landingData.courses.find(c => c.id === box.dataset.courseExam);
+    if (course) fillCourseExam(box, course);
+  }
+  const status = document.getElementById("notes-exam-feed-status");
+  if (status) {
+    status.textContent = landingExamState.refreshing ? "Checking the official exam dates…"
+      : landingExamState.source === "unibo" ? "Exam dates from UniBo · times shown in Bologna time. Confirm details before registering."
+      : landingExamState.source === "calendar" ? "Official dates could not be refreshed. Showing the saved calendar copy; confirm dates and times on UniBo."
+      : "Exam dates are unavailable. Use the official UniBo link to check your next sitting.";
+    status.classList.toggle("is-calendar-copy", landingExamState.source === "calendar");
+  }
+  const refresh = document.getElementById("notes-refresh-exams");
+  if (refresh) refresh.disabled = landingExamState.refreshing;
+  updateSemesterOverview(filteredCourseEntries());
+  landingExamSelection = landingExamSignature();
+}
+
+function landingExamSignature() {
+  const now = NotesSchedule.clock();
+  return JSON.stringify(landingData.courses.map(course => {
+    const exam = NotesSchedule.nextExam(landingExamState.exams, course.id, now);
+    return exam ? [exam.dateKey, exam.time] : null;
+  }));
+}
+
+// Refresh local status when a tab stays open overnight or an exam has started.
+// Only replace the cards when the date changes; ordinary timer ticks preserve focus.
+function refreshLandingSchedule() {
+  if (!landingData || document.hidden) return;
+  const today = NotesSchedule.clock().slice(0, 10);
+  const dayChanged = today !== landingScheduleDay;
+  if (dayChanged) {
+    landingScheduleDay = today;
+    if (document.getElementById("notes-course-results")) renderCourseGrid();
+  }
+  if (dayChanged || landingExamSignature() !== landingExamSelection) updateLandingExamUI();
+}
+
+async function savedCalendarExams() {
+  const manifest = await readJson(fetchText, "calendar/calendars.json", []);
+  if (!Array.isArray(manifest)) throw new Error("Calendar list unavailable");
+  const entry = manifest.find(c => c.cohort === landingData.cohort.id && c.term === landingData.term.id && c.plan === null);
+  if (!entry || !/^[a-z0-9-]+\.ics$/i.test(entry.file)) throw new Error("Full calendar unavailable");
+  const text = await fetchText(`calendar/${entry.file}`);
+  if (!text) throw new Error("Calendar copy unavailable");
+  return NotesSchedule.calendarExams(text, landingData.term);
+}
+
+function loadLandingExams() {
+  if (landingExamRequest) return landingExamRequest;
+  landingExamState.refreshing = true;
+  updateLandingExamUI();
+  landingExamRequest = (async () => {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 8000);
+    try {
+      const response = await fetch(landingData.cohort.sources.examDates, { signal: controller.signal });
+      if (!response.ok) throw new Error("Official dates unavailable");
+      const text = await response.text();
+      if (!/<h3\b[^>]*role=["']tab["']/i.test(text) && !/no (?:upcoming |scheduled )?exam(?: dates)?s?\b|nessun appello|non sono presenti appelli/i.test(text)) throw new Error("Unrecognised exam page");
+      landingExamState = { source: "unibo", exams: matchExamsToTerm(parseExamsPage(text), landingData.term), refreshing: false, error: false };
+    } catch {
+      try {
+        landingExamState = { source: "calendar", exams: await savedCalendarExams(), refreshing: false, error: true };
+      } catch {
+        landingExamState = { source: "", exams: [], refreshing: false, error: true };
+      }
+    } finally {
+      clearTimeout(timer);
+      landingExamRequest = null;
+      updateLandingExamUI();
+    }
+  })();
+  return landingExamRequest;
 }
 
 function courseCard(course, index, progress, today, myCodes) {
@@ -274,6 +492,8 @@ function courseCard(course, index, progress, today, myCodes) {
   const samples = [...course.flashcards, ...course.questions, ...course.resources].some((i) => i.sample);
   if (samples) badges.appendChild(sampleTag());
   card.appendChild(badges);
+  card.appendChild(teachingDates(course, today));
+  card.appendChild(courseExamDetails(course));
 
   if (total) {
     const materials = createElement("div", "notes-course-materials");
@@ -314,6 +534,7 @@ function courseCard(course, index, progress, today, myCodes) {
 }
 
 function renderCourseList() {
+  landingContent.appendChild(buildSemesterOverview());
   const toolbar = createElement("div", "notes-toolbar");
   const filters = createElement("div", "notes-type-filters");
   filters.setAttribute("role", "group");
@@ -374,16 +595,39 @@ function renderCourseList() {
   const status = createElement("label", "notes-status-filter", "Teaching status");
   const select = createElement("select");
   select.setAttribute("aria-label", "Filter by teaching status");
-  for (const [key, label] of [["", "All teaching periods"], ["now", "Teaching now"], ["upcoming", "Coming up"], ["finished", "Finished"], ["other", "No teaching dates"]]) select.appendChild(new Option(label, key));
+  for (const [key, label] of [["", "All teaching periods"], ["now", "Teaching now"], ["upcoming", "Coming up"], ["finished", "Teaching completed"], ["other", "Dates to confirm"]]) select.appendChild(new Option(label, key));
   select.value = courseFilters.status;
   select.addEventListener("change", () => { courseFilters.status = select.value; renderCourseGrid(); });
   status.appendChild(select);
   meta.appendChild(status);
   landingContent.appendChild(meta);
+  const examFeed = createElement("div", "notes-exam-feed");
+  const feedStatus = createElement("p");
+  feedStatus.id = "notes-exam-feed-status";
+  feedStatus.setAttribute("role", "status");
+  examFeed.appendChild(feedStatus);
+  const feedActions = createElement("div", "notes-exam-feed-actions");
+  feedActions.appendChild(officialExamLink("Official exam dates"));
+  const refresh = createElement("button", "notes-refresh-exams", "Refresh dates");
+  refresh.id = "notes-refresh-exams";
+  refresh.type = "button";
+  refresh.setAttribute("aria-label", "Refresh exam dates");
+  refresh.addEventListener("click", loadLandingExams);
+  feedActions.appendChild(refresh);
+  examFeed.appendChild(feedActions);
+  landingContent.appendChild(examFeed);
   const results = createElement("div");
   results.id = "notes-course-results";
   landingContent.appendChild(results);
   renderCourseGrid();
+  updateLandingExamUI();
+}
+
+function filteredCourseEntries() {
+  const plan = loadPlan(landingData.programme);
+  const myCodes = plan.saved ? selectedCourseCodes(landingData.term, plan.choices) : null;
+  return landingData.courses.map((course, index) => ({ course, index, counts: courseCounts(course) })).filter(({ course, counts }) =>
+    (!courseFilters.type || counts[courseFilters.type] > 0) && (!courseFilters.mine || (myCodes && myCodes.includes(course.info.code))));
 }
 
 function renderCourseGrid() {
@@ -391,13 +635,12 @@ function renderCourseGrid() {
   if (!results) return;
   results.replaceChildren();
   const progress = loadProgress();
-  const today = todayKey();
+  const today = NotesSchedule.clock().slice(0, 10);
   const plan = loadPlan(landingData.programme);
   const myCodes = plan.saved ? selectedCourseCodes(landingData.term, plan.choices) : null;
-  const matches = landingData.courses.map((course, index) => ({ course, index, counts: courseCounts(course) })).filter(({ course, counts }) =>
-    (!courseFilters.type || counts[courseFilters.type] > 0) &&
-    (!courseFilters.mine || (myCodes && myCodes.includes(course.info.code))) &&
-    (!courseFilters.status || ((courseTeachingStatus(course, today) || {}).key || "other") === courseFilters.status));
+  const entries = filteredCourseEntries();
+  const matches = entries.filter(({ course }) => !courseFilters.status || courseTeachingStatus(course, today).key === courseFilters.status);
+  updateSemesterOverview(entries);
   document.getElementById("notes-course-count").textContent = `${plural(matches.length, "course")} · ${courseFilters.mine ? "From your saved study plan" : "First-year study library"}`;
   if (!matches.length) {
     const empty = createElement("div", "notes-empty-state");
@@ -414,18 +657,27 @@ function renderCourseGrid() {
     return;
   }
   const groups = [
-    { ready: true, title: "Ready to study" },
-    { ready: false, title: "Course overviews" },
+    { key: "now", title: "Teaching now", icon: "book", description: "Your current courses. Dates are shown for each teaching block." },
+    { key: "upcoming", title: "Coming up", icon: "calendar", description: "Your next courses and returning modules, ordered by their next start date." },
+    { key: "finished", title: "Teaching completed", icon: "check", description: "Classes have finished. Exams and revision may still be ahead." },
+    { key: "other", title: "Dates to confirm", icon: "info", description: "Teaching dates have not yet been confirmed for these courses." },
   ];
   for (const group of groups) {
-    const members = matches.filter(({ counts }) => Boolean(Object.values(counts).reduce((a, b) => a + b, 0)) === group.ready);
+    const members = matches.filter(({ course }) => courseTeachingStatus(course, today).key === group.key)
+      .sort((a, b) => courseTeachingStatus(a.course, today).nextDate.localeCompare(courseTeachingStatus(b.course, today).nextDate) || a.course.info.name.localeCompare(b.course.info.name));
     if (members.length === 0) continue;
+    const section = createElement("section", `notes-teaching-group notes-group-${group.key}`);
+    section.dataset.teachingGroup = group.key;
     const title = createElement("h3", "course-group-title", group.title);
+    title.id = `notes-group-${group.key}`;
+    title.prepend(landingIcon(group.icon));
     title.appendChild(createElement("span", "notes-group-count", String(members.length)));
-    results.appendChild(title);
+    section.setAttribute("aria-labelledby", title.id);
+    section.append(title, createElement("p", "notes-group-description", group.description));
     const list = createElement("div", `course-list${courseView === "list" ? " is-list-view" : ""}`);
     for (const { course, index } of members) list.appendChild(courseCard(course, index, progress, today, myCodes));
-    results.appendChild(list);
+    section.appendChild(list);
+    results.appendChild(section);
   }
 }
 
@@ -781,6 +1033,9 @@ async function initLanding() {
     landingStatus.hidden = true;
     buildLandingTabs();
     showLandingTab(currentLandingTab(), false);
+    loadLandingExams();
+    setInterval(refreshLandingSchedule, 60000);
+    document.addEventListener("visibilitychange", refreshLandingSchedule);
     window.addEventListener("popstate", () => { clearLandingSearch(); showLandingTab(currentLandingTab(), false); });
     window.addEventListener("storage", (event) => {
       if (![PROGRESS_KEY, STUDY_LIST_KEY, PLAN_KEY].includes(event.key) && event.key !== null) return;

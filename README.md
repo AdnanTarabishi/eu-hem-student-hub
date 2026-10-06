@@ -87,9 +87,14 @@ as JSON and Markdown files. Adding content never requires code changes.
 - Features: topic notes with formulas and diagrams, spaced-repetition flashcards, quizzes,
   progress tracking and search. Progress is saved only in each student's browser.
 - The Notes library has a personal study snapshot, filters for content and teaching period,
-  a saved-study-plan filter, course bookmarks and a remembered grid/list layout. Its styles
-  live in `notes-landing.css`; the existing shared data and progress formats are unchanged.
-- Check the library's interactions, responsive layouts and offline reload: `npm run test:notes`.
+  a saved-study-plan filter, course bookmarks and a remembered grid/list layout. Courses
+  are grouped by their actual teaching blocks: current, upcoming and teaching completed.
+  Each card shows module dates and the next exam, matched by official course codes.
+  Exam dates can be refreshed from UniBo; if unavailable, the existing generated calendar
+  is shown as a labelled copy with times to confirm. Missing dates are never inferred from
+  the term's exam period. Date calculations use Bologna time and update in an open tab.
+  Styles live in `notes-landing.css`, scheduling helpers in `notes-schedule.js`.
+- Check scheduling, library interactions, responsive layouts and offline reload: `npm run test:notes`.
 - Check content before committing: `node scripts/check-content.js`
 
 ## Announcements
