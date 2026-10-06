@@ -40,5 +40,95 @@
     "front": "Coinsurance vs copayment: what is the difference?",
     "back": "Coinsurance is a percentage of the cost of care (e.g. 20%). A copayment is a fixed amount per service (e.g. 10 euros per visit).",
     "sample": true
+  },
+  {
+    "id": "fund-health-economics.fc.007",
+    "topic": "fund-health-economics.session-1",
+    "front": "What does health economics study?",
+    "back": "How scarce resources are used in health and healthcare, including choices by patients, providers, insurers and governments."
+  },
+  {
+    "id": "fund-health-economics.fc.008",
+    "topic": "fund-health-economics.session-1",
+    "front": "Why is economic analysis relevant even when health is described as 'priceless'?",
+    "back": "Because producing and protecting health still uses scarce resources, so choices involve trade-offs and opportunity costs."
+  },
+  {
+    "id": "fund-health-economics.fc.009",
+    "topic": "fund-health-economics.session-1",
+    "front": "What is the difference between healthcare expenditure per capita and healthcare expenditure as a share of GDP?",
+    "back": "Per-capita expenditure relates spending to population; HCE/GDP relates spending to the size of the whole economy."
+  },
+  {
+    "id": "fund-health-economics.fc.010",
+    "topic": "fund-health-economics.session-1",
+    "front": "What is opportunity cost?",
+    "back": "The value of the best alternative that is given up when a choice is made."
+  },
+  {
+    "id": "fund-health-economics.fc.011",
+    "topic": "fund-health-economics.session-1",
+    "front": "What does marginal analysis ask?",
+    "back": "What happens when one additional unit of an activity, input or resource is added or removed."
+  },
+  {
+    "id": "fund-health-economics.fc.012",
+    "topic": "fund-health-economics.session-1",
+    "front": "What is information asymmetry in healthcare?",
+    "back": "A situation where the parties do not have the same information; for example, a physician usually knows more than a patient about diagnosis and treatment."
+  },
+  {
+    "id": "fund-health-economics.fc.013",
+    "topic": "fund-health-economics.session-1",
+    "front": "Why does uncertainty make insurance important in healthcare?",
+    "back": "People do not know exactly when illness will occur, what care will be needed, how much it will cost or what the outcome will be, so insurance can protect against uncertain financial losses."
+  },
+  {
+    "id": "fund-health-economics.fc.014",
+    "topic": "fund-health-economics.session-1",
+    "front": "What is an externality?",
+    "back": "A cost or benefit from an action that affects people other than the person making the decision."
+  },
+  {
+    "id": "fund-health-economics.fc.015",
+    "topic": "fund-health-economics.session-1",
+    "front": "Efficiency and equity: what is the difference?",
+    "back": "Efficiency concerns how well resources are used; equity concerns fairness in how resources, opportunities or outcomes are distributed."
+  },
+  {
+    "id": "fund-health-economics.fc.016",
+    "topic": "fund-health-economics.session-1",
+    "front": "What are the three government roles highlighted in Session 1?",
+    "back": "Regulator, insurer and provider."
+  },
+  {
+    "id": "fund-health-economics.fc.017",
+    "topic": "fund-health-economics.session-1",
+    "front": "Who are the three actors in the medical-care triad?",
+    "back": "Patient, provider and insurer/government."
+  },
+  {
+    "id": "fund-health-economics.fc.018",
+    "topic": "fund-health-economics.session-1",
+    "front": "What is financial intermediation in healthcare?",
+    "back": "Financing care through a third party, such as an insurer or government, instead of paying the provider entirely at the point of use."
+  },
+  {
+    "id": "fund-health-economics.fc.019",
+    "topic": "fund-health-economics.session-1",
+    "front": "Why can total healthcare value be high while marginal productivity is low?",
+    "back": "Healthcare may create large overall health gains, yet an additional euro of spending can produce only a small extra health gain when many valuable interventions are already funded."
+  },
+  {
+    "id": "fund-health-economics.fc.020",
+    "topic": "fund-health-economics.session-1",
+    "front": "Which four broad health-system models are used as a teaching framework in Session 1?",
+    "back": "Beveridge, Bismarck, American and cash-based."
+  },
+  {
+    "id": "fund-health-economics.fc.021",
+    "topic": "fund-health-economics.session-1",
+    "front": "Name the four economic features emphasized when asking why healthcare is different.",
+    "back": "Information asymmetry, uncertainty, externalities and equity concerns."
   }
 ]

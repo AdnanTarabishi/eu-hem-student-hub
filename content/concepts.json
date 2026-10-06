@@ -3,35 +3,141 @@
     "id": "concept.derived-demand",
     "term": "Derived demand",
     "explanation": "A demand for something that is wanted for what it produces, not for itself. Health care is wanted because it helps produce health.",
-    "topics": ["fund-health-economics.demand"],
+    "topics": [
+      "fund-health-economics.demand"
+    ],
     "sample": true
   },
   {
     "id": "concept.price-elasticity",
     "term": "Price elasticity of demand",
     "explanation": "How strongly the quantity demanded reacts to a change in price: the % change in quantity divided by the % change in price.",
-    "topics": ["fund-health-economics.demand"],
+    "topics": [
+      "fund-health-economics.demand"
+    ],
     "sample": true
   },
   {
     "id": "concept.moral-hazard",
     "term": "Moral hazard",
     "explanation": "When being insured changes behaviour: people use more care, or take less care of their health, because insurance lowers the price they face.",
-    "topics": ["fund-health-economics.moral-hazard"],
+    "topics": [
+      "fund-health-economics.moral-hazard"
+    ],
     "sample": true
   },
   {
     "id": "concept.cost-sharing",
     "term": "Cost-sharing",
     "explanation": "Making the insured person pay part of the cost of care, for example through deductibles, copayments or coinsurance.",
-    "topics": ["fund-health-economics.moral-hazard"],
+    "topics": [
+      "fund-health-economics.moral-hazard"
+    ],
     "sample": true
   },
   {
     "id": "concept.adverse-selection",
     "term": "Adverse selection",
     "explanation": "When people know more about their own health risk than the insurer, high-risk people are more likely to buy insurance. This can push premiums up and drive low-risk people out.",
-    "topics": ["fund-health-economics.adverse-selection"],
+    "topics": [
+      "fund-health-economics.adverse-selection"
+    ],
     "sample": true
+  },
+  {
+    "id": "concept.health-economics",
+    "term": "Health economics",
+    "explanation": "The application of economic reasoning to choices, incentives and the allocation of scarce resources related to health and healthcare.",
+    "topics": [
+      "fund-health-economics.session-1"
+    ]
+  },
+  {
+    "id": "concept.healthcare-expenditure",
+    "term": "Healthcare expenditure",
+    "explanation": "Resources spent on healthcare. It can be compared across countries as a level, per person, or as a share of GDP.",
+    "topics": [
+      "fund-health-economics.session-1"
+    ]
+  },
+  {
+    "id": "concept.opportunity-cost",
+    "term": "Opportunity cost",
+    "explanation": "The value of the best alternative that must be given up when a choice is made.",
+    "topics": [
+      "fund-health-economics.session-1"
+    ]
+  },
+  {
+    "id": "concept.marginal-analysis",
+    "term": "Marginal analysis",
+    "explanation": "Studying the effect of one additional unit of an activity, input or resource rather than focusing only on totals or averages.",
+    "topics": [
+      "fund-health-economics.session-1"
+    ]
+  },
+  {
+    "id": "concept.information-asymmetry",
+    "term": "Information asymmetry",
+    "explanation": "A situation in which one party has better or more relevant information than another, such as a physician knowing more about diagnosis and treatment than a patient.",
+    "topics": [
+      "fund-health-economics.session-1"
+    ]
+  },
+  {
+    "id": "concept.healthcare-uncertainty",
+    "term": "Uncertainty in healthcare",
+    "explanation": "Uncertainty about future health, when care will be needed, which treatment will be appropriate, what it will cost and what outcome will follow.",
+    "topics": [
+      "fund-health-economics.session-1"
+    ]
+  },
+  {
+    "id": "concept.externality",
+    "term": "Externality",
+    "explanation": "A cost or benefit created by an action that affects people other than the person making the decision.",
+    "topics": [
+      "fund-health-economics.session-1"
+    ]
+  },
+  {
+    "id": "concept.efficiency",
+    "term": "Efficiency",
+    "explanation": "Using available resources so that avoidable waste is reduced and the greatest feasible value can be produced.",
+    "topics": [
+      "fund-health-economics.session-1"
+    ]
+  },
+  {
+    "id": "concept.equity",
+    "term": "Equity",
+    "explanation": "Fairness in how resources, opportunities, access or outcomes are distributed across people or groups.",
+    "topics": [
+      "fund-health-economics.session-1"
+    ]
+  },
+  {
+    "id": "concept.financial-intermediation",
+    "term": "Financial intermediation",
+    "explanation": "Financing healthcare through a third party such as an insurer or government instead of relying only on direct payment at the point of use.",
+    "topics": [
+      "fund-health-economics.session-1"
+    ]
+  },
+  {
+    "id": "concept.out-of-pocket",
+    "term": "Out-of-pocket payment",
+    "explanation": "A payment made directly by a patient for healthcare rather than being fully financed by an insurer or government.",
+    "topics": [
+      "fund-health-economics.session-1"
+    ]
+  },
+  {
+    "id": "concept.medical-care-triad",
+    "term": "Medical-care triad",
+    "explanation": "A framework linking the three central actors in healthcare: patient, provider and insurer/government.",
+    "topics": [
+      "fund-health-economics.session-1"
+    ]
   }
 ]
