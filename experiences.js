@@ -118,16 +118,45 @@
     return node("span", "ex-tag" + (extra ? " " + extra : ""), text);
   }
 
+  function storyPicture(story, className, eager) {
+    if (!story.image) return null;
+    const picture = node("picture", className || "");
+    const img = node("img");
+    img.src = story.image.small || story.image.large;
+    if (story.image.small && story.image.large) {
+      img.srcset = story.image.small + " 640w, " + story.image.large + " 1200w";
+      img.sizes = className && className.includes("feature") ? "(max-width: 780px) 100vw, 44vw" :
+        className && className.includes("dialog") ? "(max-width: 760px) 100vw, 850px" :
+        "(max-width: 560px) 100vw, (max-width: 1050px) 50vw, 33vw";
+    }
+    img.alt = story.image.alt || "";
+    img.loading = eager ? "eager" : "lazy";
+    img.decoding = "async";
+    if (eager) img.fetchPriority = "high";
+    picture.appendChild(img);
+    return picture;
+  }
+
+  function imageFigure(story, className, eager) {
+    const figure = node("figure", className);
+    const picture = storyPicture(story, className + "-picture", eager);
+    if (picture) figure.appendChild(picture);
+    if (story.image && story.image.credit) {
+      figure.appendChild(node("figcaption", "ex-image-credit", story.image.credit));
+    }
+    return figure;
+  }
+
   function buildCard(story) {
     const article = node("article", "ex-card");
     article.dataset.storyId = story.id;
 
-    const top = node("div", "ex-card-top");
+    const media = imageFigure(story, "ex-card-media", false);
     const tags = node("div", "ex-tags");
     tags.appendChild(tag(story.stageLabel, "ex-tag-brand"));
     if (story.track) tags.appendChild(tag(trackName(story.track), "ex-tag-track"));
     if (story.cities.length) tags.appendChild(tag(cityName(story.cities[story.cities.length - 1])));
-    top.appendChild(tags);
+    media.appendChild(tags);
 
     const body = node("div", "ex-card-body");
     body.appendChild(node("h3", "", story.title));
@@ -151,7 +180,7 @@
     action.append(save, open);
     footer.appendChild(action);
     body.appendChild(footer);
-    article.append(top, body);
+    article.append(media, body);
     return article;
   }
 
@@ -234,6 +263,10 @@
     meta.replaceChildren(tag(story.stageLabel, "ex-tag-brand"));
     if (story.track) meta.appendChild(tag(trackName(story.track), "ex-tag-track"));
     story.cities.forEach((id) => meta.appendChild(tag(cityName(id))));
+
+    const panel = $(".ex-feature-panel");
+    panel.replaceChildren(imageFigure(story, "ex-feature-media", true));
+
     $("#ex-feature-open").addEventListener("click", () => openStory(story.id));
   }
 
@@ -244,6 +277,14 @@
     $("#ex-dialog-title").textContent = story.title;
     $("#ex-dialog-author").textContent = story.author;
     $("#ex-dialog-summary").textContent = story.summary;
+
+    const dialogMedia = $("#ex-dialog-media");
+    dialogMedia.replaceChildren();
+    const dialogPicture = storyPicture(story, "ex-dialog-picture", false);
+    if (dialogPicture) dialogMedia.appendChild(dialogPicture);
+    if (story.image && story.image.credit) {
+      dialogMedia.appendChild(node("figcaption", "ex-image-credit", story.image.credit));
+    }
 
     const facts = $("#ex-at-glance");
     facts.replaceChildren();
