@@ -19,6 +19,7 @@ const SITE_MENU = [
       { key: "studyplan", label: "Study Plan", href: "studyplan.html", icon: "study-plan", desc: "Your courses and CFU" },
       { key: "calendar", label: "Calendar & key dates", href: "calendar.html", icon: "calendar", desc: "Subscribe on your phone" },
       { key: "tracks", label: "Tracks Explorer", href: "tracks.html", icon: "route", desc: "Compare the four specialisations" },
+      { key: "universities", label: "Universities", href: "universities.html", icon: "library", desc: "Partner universities, services and campus life" },
       { key: "academic-rules", label: "Academic Rules", href: "academic-rules.html", icon: "scale", desc: "Re-sits, grades, plagiarism and AI" },
       { key: "journey", label: "Programme Journey", href: "journey.html", icon: "graduation", desc: "Your two years, degree, grants, fees" },
     ],
