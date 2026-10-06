@@ -16,6 +16,13 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
     if ((failJson && /content\/(roadmap|updates)\.json$/.test(file)) || !full.startsWith(ROOT) || !fs.existsSync(full) || fs.statSync(full).isDirectory()) {
       res.writeHead(failJson ? 503 : 404); return res.end("missing");
     }
+    if (file === "content/updates.json") {
+      const data = JSON.parse(fs.readFileSync(full, "utf8"));
+      data.items.unshift({ id: "test-draft", date: null, title: "Secret upcoming feature", summary: "Not released yet.", category: "platform",
+    type: "new", status: "draft", highlights: [], links: [], evidence: null });
+      res.writeHead(200, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify(data));
+    }
     res.writeHead(200, { "Content-Type": mime[path.extname(full)] || "text/plain" }); res.end(fs.readFileSync(full));
   }).listen(0);
   const base = `http://127.0.0.1:${site.address().port}/`;
@@ -45,7 +52,7 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   /* ----- Overview and the three stages ----- */
   let page = await open();
   assert.deepStrictEqual(await page.$$eval(".roadmap-overview-item", (all) => all.map((b) => b.textContent.replace(/\s+/g, ""))),
-    ["1Now", "8Next", "11Later", "12Released"]);
+    ["1Now", "8Next", "11Later", "13Released"]);
   assert.match(await text(page, "#roadmap-reviewed"), /Last reviewed 6 October 2026/);
   assert.match(await text(page, ".roadmap-card.is-now"), /In progress.*Student beta preparation/);
   assert.deepStrictEqual(await page.$$eval(".roadmap-window-label", (all) => all.map((h) => h.textContent)),
@@ -86,12 +93,12 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   assert.strictEqual(await page.evaluate(() => location.hash), "#updates");
   assert.strictEqual(await page.isVisible("#panel-updates"), true);
   assert.strictEqual(await page.isVisible("#panel-roadmap"), false);
-  assert.strictEqual(await page.locator(".update-entry").count(), 12);
-  assert.ok(!(await text(page, "#updates-list")).includes("Roadmap & Updates"), "the launch draft is hidden");
+  assert.strictEqual(await page.locator(".update-entry").count(), 13);
+  assert.ok(!(await text(page, "#updates-list")).includes("Secret upcoming feature"), "the test draft is hidden");
   await page.click('#roadmap-type .filter-chip:has-text("New")');
   const newCount = await page.locator(".update-entry").count();
   await page.click('#roadmap-type .filter-chip:has-text("Improved")');
-  assert.strictEqual(newCount + await page.locator(".update-entry").count(), 12);
+  assert.strictEqual(newCount + await page.locator(".update-entry").count(), 13);
   await page.click('#roadmap-type .filter-chip:has-text("All updates")');
   await page.focus("#tab-updates");
   await page.keyboard.press("ArrowRight");
@@ -156,7 +163,7 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   await page.waitForSelector(".toast");
   assert.match(await text(page, ".toast"), /not on the roadmap any more/);
   assert.strictEqual(await drawerOpen(page), false);
-  await page.goto(base + "roadmap.html#update-roadmap-and-updates");
+  await page.goto(base + "roadmap.html#update-test-draft");
   await page.waitForSelector(".toast");
   assert.strictEqual(await drawerOpen(page), false, "a draft cannot be opened by link");
   ok("direct links: a Later idea, a release (with deployment evidence), unknown ids and drafts get a neutral message");
@@ -206,7 +213,7 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   assert.match(await text(page, ".roadmap-preview-now"), /Now · In progresss*Student beta preparation/);
   assert.strictEqual(await page.getAttribute(".roadmap-preview-now", "href"), "roadmap.html#feature-student-beta-preparation");
   assert.deepStrictEqual(await page.$$eval(".roadmap-preview-latest a", (all) => all.map((a) => a.getAttribute("href"))),
-    ["roadmap.html#update-new-design", "roadmap.html#update-students-explorer", "roadmap.html#update-city-guides"]);
+    ["roadmap.html#update-roadmap-and-updates", "roadmap.html#update-new-design", "roadmap.html#update-students-explorer"]);
   assert.match(await text(page, ".roadmap-preview-progress"), /10% of the full Hub built · planned finish 3 March 2027/);
   assert.strictEqual(await page.getAttribute(".roadmap-preview-bar", "aria-valuenow"), "10");
   ok("homepage: current focus and the three latest releases, from the same data");
@@ -220,8 +227,8 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   await page.fill(".search-dialog .search-input", "past thesis explorer");
   await page.waitForSelector('.search-group-label:has-text("Released updates")');
   assert.match(await page.locator('.search-result[href="roadmap.html#update-thesis-explorer"]').textContent(), /Released · 4 October 2026/);
-  await page.fill(".search-dialog .search-input", "roadmap updates draft");
-  assert.strictEqual(await page.locator('.search-result[href="roadmap.html#update-roadmap-and-updates"]').count(), 0);
+  await page.fill(".search-dialog .search-input", "secret upcoming feature");
+  assert.strictEqual(await page.locator('.search-result[href="roadmap.html#update-test-draft"]').count(), 0);
   await page.keyboard.press("Escape"); // the first Escape clears the search box (browser behaviour)
   await page.keyboard.press("Escape");
   await page.waitForFunction(() => !document.querySelector(".search-dialog").open);

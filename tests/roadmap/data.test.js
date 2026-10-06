@@ -8,6 +8,10 @@ const read = (file) => JSON.parse(fs.readFileSync(path.join(ROOT, file), "utf8")
 const roadmap = read("content/roadmap.json");
 const updates = read("content/updates.json");
 const clone = (x) => JSON.parse(JSON.stringify(x));
+// The real file may have no draft at a given moment, so draft rules are tested with this extra one
+const withDraft = clone(updates);
+withDraft.items.unshift({ id: "test-draft", date: null, title: "Secret upcoming feature", summary: "Not released yet.", category: "platform",
+    type: "new", status: "draft", highlights: [], links: [], evidence: null });
 const today = R.dateInRome(new Date().toISOString());
 const pageExists = (file) => fs.existsSync(path.join(ROOT, file));
 let n = 0; const t = (name, fn) => { fn(); n++; console.log("  ok  " + name); };
@@ -53,17 +57,18 @@ t("accounts are planned, never presented as available", () => {
   assert.strictEqual(accounts.status, "planned");
   assert.ok(!updates.items.some((u) => u.status === "published" && /account|sign-in|login/i.test(u.title + u.summary)));
 });
-t("updates: 12 published with evidence, newest first; same day ordered by deployment time; the draft stays hidden", () => {
+t("updates: 13 published with evidence, newest first; same day ordered by deployment time; drafts stay hidden", () => {
   const published = R.publishedUpdates(updates);
-  assert.strictEqual(published.length, 12);
-  assert.deepStrictEqual(published.slice(0, 3).map((u) => u.id), ["new-design", "students-explorer", "city-guides"]);
-  assert.ok(!published.some((u) => u.id === "roadmap-and-updates"), "draft hidden");
+  assert.strictEqual(published.length, 13);
+  assert.deepStrictEqual(published.slice(0, 3).map((u) => u.id), ["roadmap-and-updates", "new-design", "students-explorer"]);
+  assert.deepStrictEqual(R.validate(roadmap, withDraft, { today, pageExists }), [], "a correct draft is valid");
+  assert.ok(!R.publishedUpdates(withDraft).some((u) => u.id === "test-draft"), "draft hidden");
   for (const u of published) assert.strictEqual(R.dateInRome(u.evidence.deployedAt), u.date, u.id);
 });
 t("the historical releases keep their verified dates", () => {
   const dates = Object.fromEntries(updates.items.filter((u) => u.status === "published").map((u) => [u.id, u.date]));
   assert.deepStrictEqual(dates, {
-    "students-explorer": "2026-10-06", "new-design": "2026-10-06", "city-guides": "2026-10-05", "thesis-discovery": "2026-10-05",
+    "roadmap-and-updates": "2026-10-06", "students-explorer": "2026-10-06", "new-design": "2026-10-06", "city-guides": "2026-10-05", "thesis-discovery": "2026-10-05",
     "thesis-explorer": "2026-10-04", tracks: "2026-10-04", "home-dashboard": "2026-10-03", "search-offline": "2026-10-03",
     "notes-practice": "2026-10-03", "personal-study-plan": "2026-10-03", "student-life-community": "2026-10-01", "first-academic-hub": "2026-10-01",
   });
@@ -84,7 +89,7 @@ t("overall progress: 10% of the full vision, planned finish 3 March 2027", () =>
 
 /* ----- the rules ----- */
 t("drafts must not carry a date or evidence; published needs both", () => {
-  const u = clone(updates);
+  const u = clone(withDraft);
   u.items[0].date = "2026-10-06";
   fails(roadmap, u, /draft has date: null/);
   const v = clone(updates);
@@ -130,14 +135,14 @@ t("no HTML in text fields", () => {
   const r = clone(roadmap); r.items[0].title = "<b>Bold</b>"; fails(r, updates, /title is required/);
 });
 t("search entries: plans lead with their status and say 'not available yet'; releases say Released; drafts never appear", () => {
-  const entries = R.searchEntries(roadmap, updates);
+  const entries = R.searchEntries(roadmap, withDraft);
   const plans = entries.filter((e) => e.type === "roadmap");
   assert.strictEqual(plans.length, roadmap.items.length);
   for (const e of plans) assert.match(e.meta, /^(In progress|Planned|Exploring) · .* · not available yet$/);
   const released = entries.filter((e) => e.type === "update");
-  assert.strictEqual(released.length, 12);
+  assert.strictEqual(released.length, 13);
   for (const e of released) assert.match(e.meta, /^Released · \d+ \w+ 2026 · /);
-  assert.ok(!entries.some((e) => /roadmap-and-updates/.test(e.url)));
+  assert.ok(!entries.some((e) => /test-draft/.test(e.url)));
   assert.ok(entries.every((e) => /^roadmap\.html#(feature|update)-[a-z0-9-]+$/.test(e.url)));
 });
 t("search matching is case- and accent-insensitive and needs every word", () => {
