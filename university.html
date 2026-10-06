@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>University guide – EU-HEM Student Hub</title>
+  <meta name="description" content="A practical EU-HEM student guide to the university, its programme role, campus, services, research and first-week essentials.">
+  <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/source-serif-4-latin-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="universities.css">
+  <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="img/app-icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <script src="theme.js"></script>
+</head>
+<body class="universities-page">
+  <header class="site-header"><div class="container">
+    <p class="site-title"><a href="index.html">EU-HEM Student Hub</a></p>
+    <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
+    <nav class="site-nav" id="site-nav" data-current="universities" aria-label="Main menu"></nav>
+    <script src="site-nav.js"></script>
+  </div></header>
+  <main class="container uni-main">
+    <div id="university-app" data-view="profile" aria-busy="true">
+      <p class="uni-loading" role="status">Loading university guide…</p>
+    </div>
+    <noscript><section class="uni-notice"><h1>EU-HEM partner universities</h1><p>Enable JavaScript to use the interactive guide. Official programme information remains available from the partner universities and EU-HEM.</p></section></noscript>
+  </main>
+  <footer class="site-footer"><div class="container"><p>EU-HEM Student Hub · Unofficial student project</p></div></footer>
+  <script defer src="utils.js"></script>
+  <script defer src="ui.js"></script>
+  <script defer src="search.js"></script>
+  <script defer src="pwa.js"></script>
+  <script defer src="tracks-data.js"></script>
+  <script defer src="universities-data.js"></script>
+  <script defer src="universities.js"></script>
+</body>
+</html>
