@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "topic": "fund-health-economics.demand",
+  "updated": "2026-10-06",
+  "heroTitle": "Price changes.\nPatients respond.",
+  "intro": "Build the demand curve, separate shifts from movements, see why RAND and Oregon matter, calculate elasticity and full price, then explore how insurance changes what patients pay.",
+  "guide": "lectures/session-2.html",
+  "activities": ["demand-curve", "consumer-surplus", "arc-elasticity", "full-price", "cost-sharing"],
+  "attribution": "Independent student-written study guide based on Daniele Fabbri’s Fundamentals in Health Economics, Session 2: Healthcare Demand, University of Bologna. Official slides and textbook answer keys are not reproduced. Always check Virtuale for the official materials."
+}
