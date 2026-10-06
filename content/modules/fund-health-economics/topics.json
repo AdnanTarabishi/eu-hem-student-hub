@@ -21,7 +21,9 @@
   },
   {
     "id": "fund-health-economics.health-capital",
-    "title": "Health capital and health inequalities"
+    "title": "Session 3: Health Capital and the Demand for Health",
+    "notes": "notes/health-capital.md",
+    "lecture": "lectures/session-3.json"
   },
   {
     "id": "fund-health-economics.physician-agency",
