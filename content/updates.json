@@ -5,12 +5,12 @@
   "items": [
     {
       "id": "homepage-and-menu",
-      "date": null,
+      "date": "2026-10-06",
       "title": "A new homepage and a simpler menu",
       "summary": "The homepage has a new editorial design, and the menu is now five clear groups: Study, Resources, Community, Life and About.",
       "category": "platform",
       "type": "improved",
-      "status": "draft",
+      "status": "published",
       "highlights": [
         "Your week, everyday shortcuts and the main tools on one page.",
         "Five menu groups instead of a long row of links, on every page.",
@@ -22,7 +22,20 @@
           "url": "index.html"
         }
       ],
-      "evidence": null
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37494956427",
+        "deployedAt": "2026-10-06T18:21:28+02:00",
+        "commits": [
+          {
+            "sha": "2555ee0877b96b281cc4e0e92d523a6efc784508",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/2555ee0877b96b281cc4e0e92d523a6efc784508"
+          },
+          {
+            "sha": "8d4bb5e78d39bf993a3cce978f8004c41072fa05",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/8d4bb5e78d39bf993a3cce978f8004c41072fa05"
+          }
+        ]
+      }
     },
     {
       "id": "academic-rules-journey-support",

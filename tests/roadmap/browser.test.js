@@ -52,7 +52,7 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   /* ----- Overview and the three stages ----- */
   let page = await open();
   assert.deepStrictEqual(await page.$$eval(".roadmap-overview-item", (all) => all.map((b) => b.textContent.replace(/\s+/g, ""))),
-    ["1Now", "8Next", "11Later", "14Released"]);
+    ["1Now", "8Next", "11Later", "15Released"]);
   assert.match(await text(page, "#roadmap-reviewed"), /Last reviewed 6 October 2026/);
   assert.match(await text(page, ".roadmap-card.is-now"), /In progress.*Student beta preparation/);
   assert.deepStrictEqual(await page.$$eval(".roadmap-window-label", (all) => all.map((h) => h.textContent)),
@@ -93,12 +93,12 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   assert.strictEqual(await page.evaluate(() => location.hash), "#updates");
   assert.strictEqual(await page.isVisible("#panel-updates"), true);
   assert.strictEqual(await page.isVisible("#panel-roadmap"), false);
-  assert.strictEqual(await page.locator(".update-entry").count(), 14);
+  assert.strictEqual(await page.locator(".update-entry").count(), 15);
   assert.ok(!(await text(page, "#updates-list")).includes("Secret upcoming feature"), "the test draft is hidden");
   await page.click('#roadmap-type .filter-chip:has-text("New")');
   const newCount = await page.locator(".update-entry").count();
   await page.click('#roadmap-type .filter-chip:has-text("Improved")');
-  assert.strictEqual(newCount + await page.locator(".update-entry").count(), 14);
+  assert.strictEqual(newCount + await page.locator(".update-entry").count(), 15);
   await page.click('#roadmap-type .filter-chip:has-text("All updates")');
   await page.focus("#tab-updates");
   await page.keyboard.press("ArrowRight");
@@ -213,7 +213,7 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   assert.match(await text(page, ".roadmap-preview-now"), /Now · In progresss*Student beta preparation/);
   assert.strictEqual(await page.getAttribute(".roadmap-preview-now", "href"), "roadmap.html#feature-student-beta-preparation");
   assert.deepStrictEqual(await page.$$eval(".roadmap-preview-latest a", (all) => all.map((a) => a.getAttribute("href"))),
-    ["roadmap.html#update-academic-rules-journey-support", "roadmap.html#update-roadmap-and-updates", "roadmap.html#update-new-design"]);
+    ["roadmap.html#update-homepage-and-menu", "roadmap.html#update-academic-rules-journey-support", "roadmap.html#update-roadmap-and-updates"]);
   assert.match(await text(page, ".roadmap-preview-progress"), /10% of the full Hub built · planned finish 3 March 2027/);
   assert.strictEqual(await page.getAttribute(".roadmap-preview-bar", "aria-valuenow"), "10");
   ok("homepage: current focus and the three latest releases, from the same data");
