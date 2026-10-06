@@ -610,15 +610,17 @@
   }
 
   function render(panel, tab, ctx) {
-    panel.classList.add("hem-course-panel");
     if (tab === "overview") {
+      panel.classList.add("hem-course-panel");
       overview(panel, ctx);
       return true;
     }
     if (tab === "lectures") {
+      panel.classList.add("hem-course-panel");
       learningPath(panel, ctx);
       return true;
     }
+    panel.classList.add("hem-generic-panel");
     return false;
   }
 
