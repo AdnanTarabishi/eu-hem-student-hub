@@ -15,8 +15,9 @@
   },
   {
     "id": "fund-health-economics.demand",
-    "title": "Demand for health care",
-    "notes": "notes/demand.md"
+    "title": "Session 2: Healthcare Demand",
+    "notes": "notes/demand.md",
+    "lecture": "lectures/session-2.json"
   },
   {
     "id": "fund-health-economics.health-capital",

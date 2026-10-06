@@ -543,6 +543,164 @@
         });
       },
     },
+    "demand-curve": {
+      title: "Move along it. Then shift it.",
+      intro:
+        "A stylised linear healthcare-demand curve. Change the patient price, then change a non-price demand factor. The numbers are teaching values, not empirical estimates.",
+      build(node) {
+        node.innerHTML =
+          '<div class="activity-controls">' +
+          '<div class="control"><label for="demand-price">Patient price (€)</label><input id="demand-price" type="range" min="0" max="100" value="50" step="1"><div class="range-labels"><span>0</span><span>50</span><span>100</span></div></div>' +
+          '<div class="control"><label for="demand-shift">Demand shift</label><select id="demand-shift"><option value="-15">Lower demand</option><option value="0" selected>Baseline</option><option value="15">Higher demand</option></select></div>' +
+          '</div>' + output("demand");
+        reactive(node, "demand", (out) => {
+          const price = read("demand-price", 0, 100),
+            shift = Number(node.querySelector("#demand-shift").value),
+            intercept = 100 + shift,
+            quantity = Math.max(0, intercept - price);
+          const x = (q) => 55 + (q / 120) * 520,
+            y = (p) => 225 - (p / 120) * 185,
+            qMax = Math.max(0, intercept);
+          out.innerHTML =
+            '<div class="formula">Quantity demanded = ' + number(quantity, 0) + '</div>' +
+            '<svg class="activity-chart" viewBox="0 0 640 280" role="img" aria-label="Stylised linear demand curve with the selected price and quantity marked.">' +
+            '<path d="M55 25V225H610" fill="none" stroke="currentColor"/>' +
+            '<path d="M' + x(0) + ' ' + y(intercept) + ' L' + x(Math.min(qMax,120)) + ' ' + y(0) + '" fill="none" stroke="#628473" stroke-width="4"/>' +
+            '<path d="M55 ' + y(price) + 'H' + x(quantity) + 'V225" fill="none" stroke="#cc6f4f" stroke-width="2" stroke-dasharray="5 5"/>' +
+            '<circle cx="' + x(quantity) + '" cy="' + y(price) + '" r="7" fill="#cc6f4f"/>' +
+            '<text x="58" y="16" fill="currentColor" font-size="12">Price</text><text x="555" y="250" fill="currentColor" font-size="12">Quantity</text>' +
+            '<text x="' + (x(quantity)+8) + '" y="' + (y(price)-8) + '" fill="currentColor" font-size="12">P=' + number(price,0) + ', Q=' + number(quantity,0) + '</text></svg>' +
+            '<p><strong>Own-price change:</strong> move the price slider. You move along the same curve.</p>' +
+            '<p><strong>Non-price change:</strong> change the demand-shift control. The whole curve moves because quantity demanded changes at every price.</p>';
+        });
+      },
+    },
+    "consumer-surplus": {
+      title: "Who buys, and how much surplus do they receive?",
+      intro:
+        "A hypothetical service with four buyers. Change the price and see who remains in the market. The willingness-to-pay values are invented for teaching.",
+      build(node) {
+        const buyers = [
+          ["Amina", 95],
+          ["Luca", 75],
+          ["Marta", 55],
+          ["Jonas", 35],
+        ];
+        node.innerHTML =
+          '<div class="control"><label for="surplus-price">Market price (€): <strong id="surplus-price-value">60</strong></label><input id="surplus-price" type="range" min="0" max="100" value="60" step="5"><div class="range-labels"><span>0</span><span>50</span><span>100</span></div></div>' +
+          output("surplus");
+        reactive(node, "surplus", (out) => {
+          const price = read("surplus-price", 0, 100);
+          node.querySelector("#surplus-price-value").textContent = number(price,0);
+          const active = buyers.filter(([,wtp]) => wtp >= price);
+          const total = active.reduce((s,[,wtp]) => s + wtp - price, 0);
+          out.innerHTML =
+            '<div class="formula">Total consumer surplus = €' + number(total,0) + '</div>' +
+            '<div class="table-scroll"><table><thead><tr><th>Buyer</th><th>WTP</th><th>Buys?</th><th>Surplus</th></tr></thead><tbody>' +
+            buyers.map(([name,wtp]) => '<tr><td>'+escape(name)+'</td><td>€'+wtp+'</td><td>'+(wtp>=price?'Yes':'No')+'</td><td>'+(wtp>=price?'€'+number(wtp-price,0):'—')+'</td></tr>').join("") +
+            '</tbody></table></div>' +
+            '<p>'+active.length+' of 4 buyers participate at this price. The marginal participating buyer is the one with the lowest WTP among those still buying; if WTP exactly equals price, that buyer receives zero surplus.</p>';
+        });
+      },
+    },
+    "arc-elasticity": {
+      title: "Calculate arc elasticity",
+      intro:
+        "Enter two price-quantity observations. The midpoint formula treats the two endpoints symmetrically and gives a unit-free measure of responsiveness.",
+      build(node) {
+        node.innerHTML =
+          '<div class="activity-controls">' +
+          input("arc-p1","Price P₁",20,'min="0.000001" step="any"') +
+          input("arc-q1","Quantity Q₁",12,'min="0.000001" step="any"') +
+          input("arc-p2","Price P₂",30,'min="0.000001" step="any"') +
+          input("arc-q2","Quantity Q₂",10,'min="0.000001" step="any"') +
+          '</div>' + output("arc");
+        reactive(node, "arc", (out) => {
+          const p1=read("arc-p1",1e-6,1e9), q1=read("arc-q1",1e-6,1e9),
+            p2=read("arc-p2",1e-6,1e9), q2=read("arc-q2",1e-6,1e9);
+          if (p1===p2) throw new Error("The two prices must differ to calculate price elasticity.");
+          const dq=(q2-q1)/((q1+q2)/2),
+            dp=(p2-p1)/((p1+p2)/2),
+            e=dq/dp,
+            magnitude=Math.abs(e),
+            label=magnitude<1-1e-10?"Inelastic":magnitude>1+1e-10?"Elastic":"Approximately unit elastic";
+          out.innerHTML =
+            '<div class="formula">Arc elasticity = ' + number(e,3) + '</div>' +
+            '<dl class="activity-stats"><div><dt>Midpoint %ΔQ</dt><dd>'+number(dq*100,2)+'%</dd></div><div><dt>Midpoint %ΔP</dt><dd>'+number(dp*100,2)+'%</dd></div><div><dt>|ε|</dt><dd>'+number(magnitude,3)+'</dd></div><div><dt>Classification</dt><dd>'+label+'</dd></div></dl>' +
+            '<p>For a standard downward-sloping demand relationship, price and quantity move in opposite directions, so elasticity is negative. Classification normally uses the absolute value.</p>';
+        });
+      },
+    },
+    "full-price": {
+      title: "Calculate the full price of a visit",
+      intro:
+        "The clinic bill is only one component. Add travel, waiting, treatment time and the opportunity cost of time.",
+      build(node) {
+        node.innerHTML =
+          '<div class="activity-controls">' +
+          input("full-money","Patient monetary price (€)",40,'min="0" step="any"') +
+          input("full-travel-cost","Travel / parking cost (€)",4,'min="0" step="any"') +
+          input("full-hourly","Value of time (€/hour)",12,'min="0" step="any"') +
+          input("full-oneway","Travel time each way (minutes)",15,'min="0" step="any"') +
+          input("full-wait","Waiting time (minutes)",25,'min="0" step="any"') +
+          input("full-visit","Time receiving care (minutes)",30,'min="0" step="any"') +
+          '</div>' + output("full");
+        reactive(node, "full", (out) => {
+          const money=read("full-money",0,1e7),
+            travelCost=read("full-travel-cost",0,1e7),
+            hourly=read("full-hourly",0,1e7),
+            oneWay=read("full-oneway",0,1440),
+            wait=read("full-wait",0,1440),
+            visit=read("full-visit",0,1440),
+            minutes=2*oneWay+wait+visit,
+            timeCost=hourly*minutes/60,
+            full=money+travelCost+timeCost;
+          out.innerHTML =
+            '<div class="formula">Full price = €' + number(full,2) + '</div>' +
+            '<dl class="activity-stats"><div><dt>Money price</dt><dd>€'+number(money,2)+'</dd></div><div><dt>Travel cost</dt><dd>€'+number(travelCost,2)+'</dd></div><div><dt>Total time</dt><dd>'+number(minutes,0)+' min</dd></div><div><dt>Time cost</dt><dd>€'+number(timeCost,2)+'</dd></div></dl>' +
+            '<p>If insurance lowers the money price but these other costs do not change, time and travel become a larger share of the patient’s full price.</p>';
+        });
+      },
+    },
+    "cost-sharing": {
+      title: "Compare what the patient pays",
+      intro:
+        "A simplified one-service comparison of four contract forms introduced in Session 2. It ignores annual caps, networks, exclusions and other real-world contract details.",
+      build(node) {
+        node.innerHTML =
+          '<div class="activity-controls">' +
+          input("share-price","Market price of service (€)",120,'min="0" step="any"') +
+          input("share-indemnity","Fixed indemnity paid by insurer (€)",50,'min="0" step="any"') +
+          input("share-rate","Coinsurance paid by patient (%)",20,'min="0" max="100" step="1"') +
+          input("share-copay","Copayment (€)",25,'min="0" step="any"') +
+          input("share-deductible","Deductible remaining before coverage (€)",80,'min="0" step="any"') +
+          '</div>' + output("share");
+        reactive(node, "share", (out) => {
+          const price=read("share-price",0,1e9),
+            indemnity=read("share-indemnity",0,1e9),
+            rate=read("share-rate",0,100)/100,
+            copay=read("share-copay",0,1e9),
+            deductible=read("share-deductible",0,1e9);
+          const vals=[
+            ["No insurance",price],
+            ["Fixed indemnity",Math.max(0,price-indemnity)],
+            ["Coinsurance",price*rate],
+            ["Copayment",Math.min(price,copay)],
+            ["Deductible remaining",Math.min(price,deductible)]
+          ];
+          out.innerHTML =
+            '<div class="table-scroll"><table><thead><tr><th>Arrangement</th><th>Patient pays now</th><th>What changes?</th></tr></thead><tbody>' +
+            vals.map(([name,v],i)=>'<tr><td>'+name+'</td><td>€'+number(v,2)+'</td><td>'+[
+              "Full service price",
+              "Market price minus a fixed insurer contribution",
+              "A percentage of the bill",
+              "A fixed amount per use, capped here at the service price",
+              "Up to the deductible amount still unmet"
+            ][i]+'</td></tr>').join("") +
+            '</tbody></table></div><p class="small">This is a teaching comparison for one service. A real deductible interacts with cumulative annual spending and later coverage; actual contracts can combine several forms of cost-sharing.</p>';
+        });
+      },
+    },
   };
   root.LectureActivities = {
     init(container, activityIds) {

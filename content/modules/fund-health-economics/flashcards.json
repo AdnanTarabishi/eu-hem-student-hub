@@ -1,7 +1,7 @@
 [
   {
     "id": "fund-health-economics.fc.001",
-    "topic": "fund-health-economics.demand",
+    "topic": "fund-health-economics.health-capital",
     "front": "Why is the demand for health care called a 'derived demand'?",
     "back": "Because what people really want is health. Health care is demanded mainly as a means to produce health.",
     "sample": true
@@ -10,15 +10,13 @@
     "id": "fund-health-economics.fc.002",
     "topic": "fund-health-economics.demand",
     "front": "What does a price elasticity of demand of -0.2 mean?",
-    "back": "Elasticity $\\varepsilon = \\frac{\\%\\Delta Q}{\\%\\Delta P} = -0.2$: a 10% rise in price lowers the quantity demanded by about 2%. Demand is inelastic: it reacts only a little to price.",
-    "sample": true
+    "back": "Elasticity $\\varepsilon = \\frac{\\%\\Delta Q}{\\%\\Delta P} = -0.2$: a 10% rise in price lowers the quantity demanded by about 2%. Demand is inelastic: it reacts only a little to price."
   },
   {
     "id": "fund-health-economics.fc.003",
     "topic": "fund-health-economics.demand",
     "front": "Name three non-price factors that affect the demand for health care.",
-    "back": "For example: health status, income, insurance coverage, time costs (travel and waiting), and information about one's own condition.",
-    "sample": true
+    "back": "For example: health status, income, insurance coverage, time costs (travel and waiting), and information about one's own condition."
   },
   {
     "id": "fund-health-economics.fc.004",
@@ -130,5 +128,125 @@
     "topic": "fund-health-economics.session-1",
     "front": "Name the four economic features emphasized when asking why healthcare is different.",
     "back": "Information asymmetry, uncertainty, externalities and equity concerns."
+  },
+  {
+    "id": "fund-health-economics.fc.022",
+    "topic": "fund-health-economics.demand",
+    "front": "What does a demand curve show?",
+    "back": "The quantity consumers are willing and able to buy at each price, holding other determinants constant."
+  },
+  {
+    "id": "fund-health-economics.fc.023",
+    "topic": "fund-health-economics.demand",
+    "front": "Movement along a demand curve vs a shift: what is the difference?",
+    "back": "A price change causes movement along a given demand curve. A change in another determinant, such as income, health status or the price of a related service, can shift the curve."
+  },
+  {
+    "id": "fund-health-economics.fc.024",
+    "topic": "fund-health-economics.demand",
+    "front": "What is willingness to pay (WTP)?",
+    "back": "The maximum amount a buyer is willing to pay for a good or service; it measures how much the buyer values it."
+  },
+  {
+    "id": "fund-health-economics.fc.025",
+    "topic": "fund-health-economics.demand",
+    "front": "What is consumer surplus?",
+    "back": "Willingness to pay minus the amount actually paid."
+  },
+  {
+    "id": "fund-health-economics.fc.026",
+    "topic": "fund-health-economics.demand",
+    "front": "What is a marginal consumer?",
+    "back": "The active buyer with the lowest willingness to pay at the market price; the marginal consumer receives zero consumer surplus."
+  },
+  {
+    "id": "fund-health-economics.fc.027",
+    "topic": "fund-health-economics.demand",
+    "front": "Name four determinants of how price-sensitive demand may be.",
+    "back": "Share of income spent on the good, availability of substitutes, necessity versus luxury, and the time horizon such as urgent versus elective care."
+  },
+  {
+    "id": "fund-health-economics.fc.028",
+    "topic": "fund-health-economics.demand",
+    "front": "How can worsening health status affect healthcare demand?",
+    "back": "People may demand more healthcare at every price; the lecture also illustrates demand becoming steeper when people are sicker."
+  },
+  {
+    "id": "fund-health-economics.fc.029",
+    "topic": "fund-health-economics.demand",
+    "front": "Why can observational estimates of healthcare demand be biased?",
+    "back": "People choose insurance partly according to health risk, so out-of-pocket prices are not randomly assigned. Unobserved health differences can be mistaken for a price effect."
+  },
+  {
+    "id": "fund-health-economics.fc.030",
+    "topic": "fund-health-economics.demand",
+    "front": "Why are randomized experiments useful for estimating healthcare demand?",
+    "back": "Random assignment creates groups that are statistically comparable, making differences in use easier to attribute to the assigned price or insurance condition."
+  },
+  {
+    "id": "fund-health-economics.fc.031",
+    "topic": "fund-health-economics.demand",
+    "front": "What are the two major randomized experiments emphasized in Session 2?",
+    "back": "The RAND Health Insurance Experiment and the Oregon Medicaid Experiment."
+  },
+  {
+    "id": "fund-health-economics.fc.032",
+    "topic": "fund-health-economics.demand",
+    "front": "What broad result do RAND and Oregon support about healthcare demand?",
+    "back": "Healthcare demand is downward sloping: when the price patients face is higher, use tends to be lower."
+  },
+  {
+    "id": "fund-health-economics.fc.033",
+    "topic": "fund-health-economics.demand",
+    "front": "Is healthcare demand perfectly inelastic?",
+    "back": "No. The lecture presents healthcare demand as inelastic overall, but still responsive to price."
+  },
+  {
+    "id": "fund-health-economics.fc.034",
+    "topic": "fund-health-economics.demand",
+    "front": "What is arc elasticity?",
+    "back": "A unit-free measure of responsiveness calculated between two price-quantity points using midpoint percentage changes."
+  },
+  {
+    "id": "fund-health-economics.fc.035",
+    "topic": "fund-health-economics.demand",
+    "front": "What is the full price of a healthcare visit?",
+    "back": "The monetary price plus other costs such as travel expenses and the opportunity cost of time spent travelling, waiting and receiving care."
+  },
+  {
+    "id": "fund-health-economics.fc.036",
+    "topic": "fund-health-economics.demand",
+    "front": "Why can time costs matter more when insurance is generous?",
+    "back": "Insurance can reduce the monetary price paid by the patient, while waiting and travel time remain. Time costs therefore become a larger share of the full price."
+  },
+  {
+    "id": "fund-health-economics.fc.037",
+    "topic": "fund-health-economics.demand",
+    "front": "What is a fixed indemnity?",
+    "back": "A fixed amount paid by the insurer for a particular covered service, leaving the patient responsible for the remaining price."
+  },
+  {
+    "id": "fund-health-economics.fc.038",
+    "topic": "fund-health-economics.demand",
+    "front": "What is coinsurance?",
+    "back": "The fraction of the healthcare bill that remains payable by the patient; the insurer pays the rest."
+  },
+  {
+    "id": "fund-health-economics.fc.039",
+    "topic": "fund-health-economics.demand",
+    "front": "What is a copayment?",
+    "back": "A fixed amount the patient pays for each unit of healthcare use, such as a fixed amount per visit."
+  },
+  {
+    "id": "fund-health-economics.fc.040",
+    "topic": "fund-health-economics.demand",
+    "front": "What is a deductible?",
+    "back": "An amount the patient must pay toward medical bills before insurance reimbursement begins."
+  },
+  {
+    "id": "fund-health-economics.fc.041",
+    "topic": "fund-health-economics.demand",
+    "front": "What policy concern does Session 2 raise about cost-sharing?",
+    "back": "Higher cost-sharing can reduce healthcare use without necessarily distinguishing between high-value and low-value care."
   }
 ]
