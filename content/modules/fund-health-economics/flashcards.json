@@ -505,5 +505,137 @@
     "topic": "fund-health-economics.disparities",
     "front": "What long-run policy emphasis appears in the lecture's final takeaways?",
     "back": "Supporting families with children and investing in education may address long-run health and socioeconomic disparities."
+  },
+  {
+    "id": "fund-health-economics.fc.085",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "Why can standard competitive-market models struggle to describe physician markets?",
+    "back": "Patients face costly search and imperfect information, physicians can have market power, prices can vary, and empirical responses of fees and quantities may not fit simple competitive predictions."
+  },
+  {
+    "id": "fund-health-economics.fc.086",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "Who is the principal and who is the agent in the physician–patient relationship?",
+    "back": "The patient is the principal and the physician is the agent hired to advise and provide care."
+  },
+  {
+    "id": "fund-health-economics.fc.087",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "Why does physician agency arise?",
+    "back": "The physician is better informed than the patient and may influence both the information the patient receives and the care demanded."
+  },
+  {
+    "id": "fund-health-economics.fc.088",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What is physician-induced demand (PID) in Session 5?",
+    "back": "Physician influence on a patient's demand for care that goes against the physician's own interpretation of the patient's best interest."
+  },
+  {
+    "id": "fund-health-economics.fc.089",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What is the difference between due and undue influence in the lecture?",
+    "back": "Influence can support the patient's interest, such as encouraging smoking cessation; PID refers to undue influence on demand."
+  },
+  {
+    "id": "fund-health-economics.fc.090",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "Why do economists model supplier-induced demand?",
+    "back": "To explain observed physician-market behaviour and to understand how physicians may respond to financial incentives and pricing rules."
+  },
+  {
+    "id": "fund-health-economics.fc.091",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What does the benchmark model assume physicians value?",
+    "back": "Net income and leisure positively, while disliking inducement of patient demand."
+  },
+  {
+    "id": "fund-health-economics.fc.092",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "Why can a non-zero level of inducement arise in the benchmark model?",
+    "back": "Inducement can increase income, but it creates disutility; the physician balances the two at the margin."
+  },
+  {
+    "id": "fund-health-economics.fc.093",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What is the substitution effect when the profit rate from services falls?",
+    "back": "Inducement becomes less profitable, creating an incentive to induce less."
+  },
+  {
+    "id": "fund-health-economics.fc.094",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What is the income effect when the profit rate falls?",
+    "back": "Lower income can make additional inducement more attractive as a way to restore income."
+  },
+  {
+    "id": "fund-health-economics.fc.095",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What determines the direction of inducement after a lower profit rate in the McGuire–Pauly synthesis?",
+    "back": "The relative strength of the substitution and income effects."
+  },
+  {
+    "id": "fund-health-economics.fc.096",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What happens if the income effect dominates the substitution effect?",
+    "back": "A lower profit rate can increase inducement and therefore quantity."
+  },
+  {
+    "id": "fund-health-economics.fc.097",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What role does professional ethics play in PID models?",
+    "back": "Stronger aversion to inducing care makes inducement more costly to the physician and can limit the response to financial incentives."
+  },
+  {
+    "id": "fund-health-economics.fc.098",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What does Session 5 say about empirical evidence on PID?",
+    "back": "The evidence is mixed, but the lecture presents a broad consensus that inducement is not literally zero."
+  },
+  {
+    "id": "fund-health-economics.fc.099",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "Why do PID tests not tell us the absolute original level of inducement?",
+    "back": "They often test how behaviour changes after an income or fee shock, not how much inducement already existed before the change."
+  },
+  {
+    "id": "fund-health-economics.fc.100",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "Which pure payment methods are listed in Session 5?",
+    "back": "Fee-for-service, capitation and salary."
+  },
+  {
+    "id": "fund-health-economics.fc.101",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "Which blended payment methods are listed in Session 5?",
+    "back": "Capitation with fee-for-service carve-outs and case rates."
+  },
+  {
+    "id": "fund-health-economics.fc.102",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What is the main incentive difference between fee-for-service and capitation in the lecture's policy discussion?",
+    "back": "Fee-for-service is a higher-powered activity incentive, while capitation is lower-powered with respect to the number of services delivered."
+  },
+  {
+    "id": "fund-health-economics.fc.103",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What is small-area variation (SAV)?",
+    "back": "Substantial geographic variation in treatment or procedure rates across nearby populations that cannot be fully explained by measured demand or supply characteristics."
+  },
+  {
+    "id": "fund-health-economics.fc.104",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What does the practice-style hypothesis propose?",
+    "back": "Physicians develop different practice styles because knowledge about diagnosis and treatment is incomplete and medical information diffuses unevenly."
+  },
+  {
+    "id": "fund-health-economics.fc.105",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What is the 'grey area of medicine' in Session 5?",
+    "back": "Clinical decisions where evidence and guidelines leave room for discretion, with clear appropriate and inappropriate cases forming only small tails."
+  },
+  {
+    "id": "fund-health-economics.fc.106",
+    "topic": "fund-health-economics.physician-agency",
+    "front": "What do the SAV conclusions imply about physicians as agents?",
+    "back": "Physicians may be imperfect agents not only because of self-interest but also because they can be incompletely informed."
   }
 ]

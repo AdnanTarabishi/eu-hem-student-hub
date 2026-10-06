@@ -388,5 +388,93 @@
     "topics": [
       "fund-health-economics.disparities"
     ]
+  },
+  {
+    "id": "concept.physician-agency",
+    "term": "Physician agency",
+    "explanation": "The principal–agent relationship in which the patient relies on a better-informed physician for advice and care.",
+    "topics": [
+      "fund-health-economics.physician-agency"
+    ]
+  },
+  {
+    "id": "concept.physician-induced-demand",
+    "term": "Physician-induced demand",
+    "explanation": "Physician influence on patient demand for care that conflicts with the physician's own interpretation of the patient's best interest.",
+    "topics": [
+      "fund-health-economics.physician-agency"
+    ]
+  },
+  {
+    "id": "concept.income-effect-pid",
+    "term": "Income effect in PID",
+    "explanation": "The tendency for a fall in physician income to make additional inducement more attractive as a way to restore income.",
+    "topics": [
+      "fund-health-economics.physician-agency"
+    ]
+  },
+  {
+    "id": "concept.substitution-effect-pid",
+    "term": "Substitution effect in PID",
+    "explanation": "The tendency for a lower profit rate to make inducement less financially attractive, pushing the physician away from inducement.",
+    "topics": [
+      "fund-health-economics.physician-agency"
+    ]
+  },
+  {
+    "id": "concept.fee-for-service",
+    "term": "Fee-for-service",
+    "explanation": "A payment method that pays the provider for each service delivered.",
+    "topics": [
+      "fund-health-economics.physician-agency"
+    ]
+  },
+  {
+    "id": "concept.capitation",
+    "term": "Capitation",
+    "explanation": "A payment method that pays a fixed amount per enrolled patient over a period rather than paying separately for every service.",
+    "topics": [
+      "fund-health-economics.physician-agency"
+    ]
+  },
+  {
+    "id": "concept.salary-physician",
+    "term": "Salary",
+    "explanation": "A physician payment method based primarily on fixed remuneration rather than service volume.",
+    "topics": [
+      "fund-health-economics.physician-agency"
+    ]
+  },
+  {
+    "id": "concept.blended-payment",
+    "term": "Blended payment",
+    "explanation": "A physician payment arrangement combining features of more than one payment method, such as capitation with fee-for-service carve-outs.",
+    "topics": [
+      "fund-health-economics.physician-agency"
+    ]
+  },
+  {
+    "id": "concept.small-area-variation",
+    "term": "Small-area variation",
+    "explanation": "Geographic variation in healthcare treatment or procedure rates across relatively small areas that is not fully explained by measured population needs.",
+    "topics": [
+      "fund-health-economics.physician-agency"
+    ]
+  },
+  {
+    "id": "concept.practice-style",
+    "term": "Practice style",
+    "explanation": "A pattern of diagnostic and treatment choices shaped by physician beliefs, uncertainty and uneven diffusion of medical information.",
+    "topics": [
+      "fund-health-economics.physician-agency"
+    ]
+  },
+  {
+    "id": "concept.clinical-grey-area",
+    "term": "Clinical grey area",
+    "explanation": "A region of medical decision-making where evidence and guidance leave room for discretion and patient-specific judgement.",
+    "topics": [
+      "fund-health-economics.physician-agency"
+    ]
   }
 ]
