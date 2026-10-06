@@ -33,7 +33,9 @@
   },
   {
     "id": "fund-health-economics.physician-agency",
-    "title": "Physician agency and supplier-induced demand"
+    "title": "Session 5: Physician Agency",
+    "notes": "notes/physician-agency.md",
+    "lecture": "lectures/session-5.json"
   },
   {
     "id": "fund-health-economics.insurance-demand",

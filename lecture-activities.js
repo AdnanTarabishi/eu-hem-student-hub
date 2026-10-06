@@ -948,6 +948,125 @@
         render();
       }
     },
+    "agency-map": {
+      title: "Map the physician–patient agency problem",
+      intro:
+        "Select a scenario and identify whether the main issue is helpful influence, physician-induced demand, supply-side rationing, or uncertainty. These are teaching scenarios, not clinical guidance.",
+      build(node) {
+        const scenarios = [
+          {
+            text: "A physician explains the benefits of smoking cessation and encourages the patient to quit because the physician believes this is in the patient’s interest.",
+            label: "Due influence",
+            reason: "The physician influences demand, but in the direction the physician believes benefits the patient."
+          },
+          {
+            text: "A physician recommends an extra low-value service mainly to protect income, despite believing it is not in the patient’s best interest.",
+            label: "Physician-induced demand",
+            reason: "This matches the lecture’s definition of undue influence on demand."
+          },
+          {
+            text: "A physician withholds a necessary treatment despite believing the patient needs it.",
+            label: "Undue supply-side influence",
+            reason: "The lecture distinguishes withholding necessary care from PID because it acts through supply or rationing rather than demand."
+          },
+          {
+            text: "Two physicians choose different reasonable treatments because evidence is incomplete and medical information has diffused unevenly.",
+            label: "Practice-style / information problem",
+            reason: "The agency failure here is imperfect information or uncertainty rather than a pure financial inducement story."
+          }
+        ];
+        let index=0;
+        const render=()=>{
+          const s=scenarios[index];
+          node.innerHTML =
+            '<p class="eyebrow">Scenario '+(index+1)+' / '+scenarios.length+'</p>'+
+            '<p>'+escape(s.text)+'</p>'+
+            '<details><summary>Reveal the Session 5 interpretation</summary><div class="note" style="margin-top:14px"><strong>'+escape(s.label)+'</strong><br>'+escape(s.reason)+'</div></details>'+
+            '<button type="button" class="btn small-btn" id="agency-next">Next scenario →</button>';
+          node.querySelector("#agency-next").addEventListener("click",()=>{index=(index+1)%scenarios.length;render();});
+        };
+        render();
+      }
+    },
+    "pid-forces": {
+      title: "Income effect vs substitution effect",
+      intro:
+        "A stylised teaching model of the McGuire–Pauly intuition. Change the strength of the income and substitution effects after a lower profit rate. The index is not an empirical estimate.",
+      build(node) {
+        node.innerHTML =
+          '<div class="activity-controls">'+
+          '<div class="control"><label for="pid-income">Income-effect strength</label><input id="pid-income" type="range" min="0" max="100" value="60" step="1"><div class="range-labels"><span>weak</span><span>strong</span></div></div>'+
+          '<div class="control"><label for="pid-sub">Substitution-effect strength</label><input id="pid-sub" type="range" min="0" max="100" value="40" step="1"><div class="range-labels"><span>weak</span><span>strong</span></div></div>'+
+          '<div class="control"><label for="pid-ethics">Professional aversion to inducement</label><input id="pid-ethics" type="range" min="0" max="100" value="50" step="1"><div class="range-labels"><span>lower</span><span>higher</span></div></div>'+
+          '</div>'+output("pidforces");
+        reactive(node,"pidforces",(out)=>{
+          const income=read("pid-income",0,100),
+            sub=read("pid-sub",0,100),
+            ethics=read("pid-ethics",0,100),
+            raw=income-sub,
+            damp=1-0.006*ethics,
+            index=raw*damp,
+            direction=Math.abs(index)<5?"Little net change in inducement":index>0?"Inducement pressure rises":"Inducement pressure falls";
+          out.innerHTML =
+            '<div class="formula">'+escape(direction)+'</div>'+
+            '<dl class="activity-stats"><div><dt>Income effect</dt><dd>+'+number(income,0)+'</dd></div><div><dt>Substitution effect</dt><dd>−'+number(sub,0)+'</dd></div><div><dt>Ethics damping</dt><dd>'+number(ethics,0)+'</dd></div><div><dt>Stylised net index</dt><dd>'+number(index,1)+'</dd></div></dl>'+
+            '<p>If the income effect dominates, lower profitability can increase inducement; if the substitution effect dominates, inducement falls. Higher aversion to inducement dampens the response in this teaching illustration.</p>'+
+            '<p class="small">The numerical index is invented only to visualise opposing forces. It does not reproduce or estimate the professor’s benchmark model.</p>';
+        });
+      }
+    },
+    "physician-payment": {
+      title: "Compare physician payment incentives",
+      intro:
+        "Select a payment method to compare how directly extra service volume changes physician revenue. This is a qualitative incentive map, not a claim about actual quality or behaviour in every system.",
+      build(node) {
+        const methods = {
+          ffs:["Fee-for-service","High","Each additional billed service can generate additional payment.","Potential pressure toward higher activity when other motives and constraints do not offset it."],
+          cap:["Capitation","Low","Payment is primarily linked to enrolled patients rather than each additional service.","Weaker direct incentive for extra service volume; can create concern about too little care if other safeguards are weak."],
+          salary:["Salary","Low","Remuneration is relatively fixed with respect to service count.","Weak direct volume incentive; actual effort and quality depend on professional norms and organisational design."],
+          blend:["Blended payment","Intermediate / targeted","Combines payment components, such as capitation with FFS carve-outs or case rates.","Can strengthen incentives for selected activities while retaining lower-powered incentives elsewhere."]
+        };
+        node.innerHTML =
+          '<div class="control"><label for="payment-select">Payment method</label><select id="payment-select">'+
+          Object.entries(methods).map(([id,v])=>'<option value="'+id+'">'+escape(v[0])+'</option>').join("")+
+          '</select></div><div id="payment-output" class="activity-output" aria-live="polite"></div>';
+        const show=()=>{
+          const v=methods[node.querySelector("#payment-select").value];
+          node.querySelector("#payment-output").innerHTML =
+            '<dl class="activity-stats"><div><dt>Method</dt><dd>'+escape(v[0])+'</dd></div><div><dt>Direct volume incentive</dt><dd>'+escape(v[1])+'</dd></div></dl>'+
+            '<p><strong>Payment logic:</strong> '+escape(v[2])+'</p>'+
+            '<p><strong>Session 5 interpretation:</strong> '+escape(v[3])+'</p>';
+        };
+        node.querySelector("#payment-select").addEventListener("change",show);
+        show();
+      }
+    },
+    "practice-variation": {
+      title: "Why can treatment rates vary across places?",
+      intro:
+        "Build a stylised explanation of small-area variation. Adjust supply, patient demand and information diffusion. The unexplained share is deliberately illustrative.",
+      build(node) {
+        node.innerHTML =
+          '<div class="activity-controls">'+
+          '<div class="control"><label for="sav-supply">Supply influence</label><input id="sav-supply" type="range" min="0" max="100" value="55" step="1"><div class="range-labels"><span>lower</span><span>higher</span></div></div>'+
+          '<div class="control"><label for="sav-demand">Patient-demand influence</label><input id="sav-demand" type="range" min="0" max="100" value="30" step="1"><div class="range-labels"><span>lower</span><span>higher</span></div></div>'+
+          '<div class="control"><label for="sav-info">Uneven information / practice style</label><input id="sav-info" type="range" min="0" max="100" value="65" step="1"><div class="range-labels"><span>more uniform</span><span>more uneven</span></div></div>'+
+          '</div>'+output("sav");
+        reactive(node,"sav",(out)=>{
+          const supply=read("sav-supply",0,100),
+            demand=read("sav-demand",0,100),
+            info=read("sav-info",0,100),
+            total=supply+demand+info || 1,
+            ps=supply/total*100,
+            pd=demand/total*100,
+            pi=info/total*100;
+          out.innerHTML =
+            '<dl class="activity-stats"><div><dt>Supply share of selected influences</dt><dd>'+number(ps,1)+'%</dd></div><div><dt>Demand share</dt><dd>'+number(pd,1)+'%</dd></div><div><dt>Information / practice-style share</dt><dd>'+number(pi,1)+'%</dd></div></dl>'+
+            '<p>Session 5 reports that measured supply and demand characteristics both matter, yet substantial variation remains unexplained. The practice-style hypothesis adds physician uncertainty and uneven diffusion of information as another mechanism.</p>'+
+            '<p class="small">These percentages are normalised slider weights, not estimates from the small-area variation literature.</p>';
+        });
+      }
+    },
   };
   root.LectureActivities = {
     init(container, activityIds) {
