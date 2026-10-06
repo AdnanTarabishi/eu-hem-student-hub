@@ -814,7 +814,34 @@
         "academicLabel": "Economics · DSE",
         "cardSummary": "A historic university setting, an economics foundation and a research community exploring health and public policy."
       },
-      "gallery": []
+      "gallery": [
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Palazzo_Poggi_UniBo.jpg/1280px-Palazzo_Poggi_UniBo.jpg",
+          "alt": "The University of Bologna entrance at Palazzo Poggi, Via Zamboni 33, with the university name visible above the doorway.",
+          "caption": "Palazzo Poggi at Via Zamboni 33, headquarters of the University of Bologna.",
+          "label": "Palazzo Poggi entrance",
+          "credit": "Mattia Barci / Wikimedia Commons",
+          "author": "Mattia Barci",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Palazzo_Poggi_UniBo.jpg",
+          "usageNote": "University of Bologna building; the timetable remains the source for your actual EU-HEM classroom.",
+          "changes": "Displayed from a Wikimedia Commons 1280 px derivative; CSS may crop the view."
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Bologna_-_Palazzo_Poggi_3402.jpg/1280px-Bologna_-_Palazzo_Poggi_3402.jpg",
+          "alt": "Another view across the historic courtyard of Palazzo Poggi at the University of Bologna.",
+          "caption": "A second view of the Palazzo Poggi courtyard at the University of Bologna.",
+          "label": "Palazzo Poggi courtyard",
+          "credit": "Phyrexian / Wikimedia Commons",
+          "author": "Phyrexian",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bologna_-_Palazzo_Poggi_3402.jpg",
+          "usageNote": "University of Bologna property and heritage context; not presented as an EU-HEM classroom.",
+          "changes": "Displayed from a Wikimedia Commons 1280 px derivative; CSS may crop the view."
+        }
+      ]
     },
     {
       "id": "uio",
@@ -1613,6 +1640,19 @@
           "height": 800,
           "changes": "Existing repository image reused; CSS may crop the display.",
           "label": "Blindern campus"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/UiO_006.jpg/1280px-UiO_006.jpg",
+          "alt": "The University of Oslo Blindern campus with the Air sculpture visible in the university grounds.",
+          "caption": "Blindern campus at the University of Oslo, with the Air sculpture.",
+          "label": "Blindern campus · Air sculpture",
+          "credit": "Dagny / Wikimedia Commons",
+          "author": "Dagny",
+          "license": "Public domain",
+          "licenseUrl": "https://commons.wikimedia.org/wiki/File:UiO_006.jpg",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:UiO_006.jpg",
+          "usageNote": "University of Oslo campus context; EU-HEM teaching locations vary by course.",
+          "changes": "Displayed from a Wikimedia Commons derivative; CSS may crop the view."
         }
       ]
     },
@@ -2576,6 +2616,19 @@
           "height": 800,
           "changes": "Existing repository image reused; CSS may crop the display.",
           "label": "Woudestein · university buildings"
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Erasmus_Campus_(47640186).jpeg/1280px-Erasmus_Campus_(47640186).jpeg",
+          "alt": "A black-and-white architectural photograph taken on the Erasmus University Rotterdam campus.",
+          "caption": "An architectural view of the Erasmus University Rotterdam campus.",
+          "label": "Erasmus campus architecture",
+          "credit": "Frits De Jong / Wikimedia Commons",
+          "author": "Frits De Jong",
+          "license": "CC0 1.0",
+          "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:Erasmus_Campus_(47640186).jpeg",
+          "usageNote": "Erasmus University Rotterdam campus context; confirm your exact teaching building in the timetable.",
+          "changes": "Displayed from a Wikimedia Commons derivative; CSS may crop the view."
         }
       ]
     },
@@ -3376,7 +3429,32 @@
         "academicLabel": "Health & management",
         "cardSummary": "Applied teaching, social and health innovation, and an entrepreneurial academic community in Innsbruck."
       },
-      "gallery": []
+      "gallery": [
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/AUT_Innsbruck,_Management_Center_Innsbruck_001.jpg/1280px-AUT_Innsbruck,_Management_Center_Innsbruck_001.jpg",
+          "alt": "A view of the Management Center Innsbruck building in Innsbruck.",
+          "caption": "Management Center Innsbruck — another exterior view of MCI.",
+          "label": "MCI exterior · view 1",
+          "credit": "Wikimedia Commons · see source page",
+          "license": "See source page",
+          "licenseUrl": "https://commons.wikimedia.org/wiki/File:AUT_Innsbruck,_Management_Center_Innsbruck_001.jpg",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:AUT_Innsbruck,_Management_Center_Innsbruck_001.jpg",
+          "usageNote": "This image depicts Management Center Innsbruck. MCI is distinct from the University of Innsbruck.",
+          "changes": "Displayed from a Wikimedia Commons derivative; CSS may crop the view."
+        },
+        {
+          "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/AUT_Innsbruck,_Management_Center_Innsbruck_002.jpg/1280px-AUT_Innsbruck,_Management_Center_Innsbruck_002.jpg",
+          "alt": "A second exterior view of the Management Center Innsbruck building.",
+          "caption": "A second exterior view of MCI | The Entrepreneurial School in Innsbruck.",
+          "label": "MCI exterior · view 2",
+          "credit": "Wikimedia Commons · see source page",
+          "license": "See source page",
+          "licenseUrl": "https://commons.wikimedia.org/wiki/File:AUT_Innsbruck,_Management_Center_Innsbruck_002.jpg",
+          "sourceUrl": "https://commons.wikimedia.org/wiki/File:AUT_Innsbruck,_Management_Center_Innsbruck_002.jpg",
+          "usageNote": "This image depicts Management Center Innsbruck. MCI is distinct from the University of Innsbruck.",
+          "changes": "Displayed from a Wikimedia Commons derivative; CSS may crop the view."
+        }
+      ]
     }
   ],
   "release": {
