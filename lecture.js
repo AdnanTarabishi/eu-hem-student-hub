@@ -279,6 +279,8 @@ function renderQuiz(focus = false) {
       if (state.answers[i] === null) return;
       state.checked[i] = true;
       persist();
+      const original = context.module.questions.find(q => q.id === questions[i].id);
+      if (original && window.recordStatisticsAnswer) window.recordStatisticsAnswer(original, state.answers[i]);
       renderQuiz();
       $("answer-feedback").focus();
     });
@@ -424,6 +426,7 @@ async function startLecture() {
     $("lecture-virtuale").href =
       found.module.info.virtualeUrl || data.programme.programme.virtualeUrl;
     $("lecture-guide").innerHTML = guide; // Reviewed repository content, never visitor input.
+    $("lecture-guide").querySelectorAll(".section-intro").forEach((section, i) => { section.id = "study-section-" + (i + 1); });
     $("lecture-save").replaceWith(saveButton(id));
     $("lecture-question-count").textContent =
       questions.length + " practice questions";
@@ -458,6 +461,10 @@ async function startLecture() {
     if (questions.length) renderQuiz();
     updateTopicStatus();
     showView(location.hash.slice(1), false);
+    const sectionNumber = new URLSearchParams(location.search).get("section");
+    if (/^[1-9]\d?$/.test(sectionNumber) && (!location.hash || location.hash === "#learn")) {
+      Promise.resolve(document.fonts?.ready).then(() => requestAnimationFrame(() => document.getElementById("study-section-" + sectionNumber)?.scrollIntoView({ behavior: "instant", block: "start" })));
+    }
     prepareOfflineCopy(files);
   } catch (error) {
     $("lecture-content").hidden = true;
@@ -532,6 +539,12 @@ function renderLectureSequence(module, currentId) {
   overview.href = courseUrl(context.course.id, { tab: "lectures" });
   overview.textContent = "All lectures";
   nav.appendChild(overview);
+  if (module.id === "statistics") {
+    const centre = document.createElement("a");
+    centre.href = "statistics.html";
+    centre.textContent = "Study Centre";
+    nav.appendChild(centre);
+  }
   module.topics.filter(t => t.lecture).forEach(topic => {
     const link = document.createElement("a");
     link.href = lectureUrl(topic.id);

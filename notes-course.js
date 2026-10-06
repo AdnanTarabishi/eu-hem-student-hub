@@ -378,6 +378,12 @@ function renderLectures(panel) {
     const lectures = module.topics.filter((t) => t.lecture);
     if (!lectures.length) continue;
     if (page.course.modules.length > 1) panel.appendChild(createElement("h4", "module-heading", module.info.name));
+    if (module.id === "statistics") {
+      const centre = createElement("a", "button", "Statistics Study Centre →");
+      centre.href = "statistics.html";
+      panel.appendChild(centre);
+      panel.appendChild(createElement("p", "schedule-meta", "Review mistakes, plan today's revision, take a timed mock, solve calculations and practise explaining results."));
+    }
     const list = createElement("ol", "topic-list");
     for (const topic of lectures) {
       const item = createElement("li", "topic-row");

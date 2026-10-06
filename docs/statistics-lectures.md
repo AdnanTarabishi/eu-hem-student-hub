@@ -49,3 +49,56 @@ cover the full exam. Official materials: https://virtuale.unibo.it/course/view.p
 
 Validation: `node scripts/check-content.js`, `node tests/lectures/math.test.js`,
 and `node tests/lectures/browser.test.js .` (uses Playwright and installed Chromium).
+
+## Statistics Study Centre
+
+`statistics.html` connects eight study tools to the same 120-question bank:
+progress, mistake review, daily spaced review, balanced mixed MCQ sessions,
+typed calculations, written interpretation, a concept/formula reference and
+synthetic Stata-output practice. It is linked from the course lecture list and
+every Statistics lecture. `study-tools.json` contains original teaching prompts,
+eight calculations with two examples each, six interpretation prompts, fourteen
+formula entries, six dependency-map nodes and three Stata examples.
+
+`statistics-study.js` owns the pure scheduling and session engine. Lecture and
+course-practice MCQs feed the same question records after submission. Reading
+status stays separate from latest question accuracy. Earlier checked lecture
+answers are imported once when their bank signature matches; their unknown
+review date is treated as due today. Editing question wording, options or its
+answer key invalidates the affected record and any session containing it.
+Successful retries resolve current mistakes but retain earlier miss counts.
+
+Review intervals: incorrect = today; first correct = three days; Hard = at least
+one day and 1.2× the previous interval; Good = 2.5×; Easy = seven days initially
+and 3× subsequently. Intervals cap at 365 days. Changing confidence repeatedly
+does not compound the interval or increment attempts. Dates follow the device's
+calendar. This is a transparent revision heuristic rather than a validated
+learning prediction.
+
+Practice and review show feedback after checking. Exam mode hides correctness
+until submission and uses a persisted wall-clock deadline that continues when
+the page is reloaded or another tool is open. Expired sessions submit once;
+unanswered exam questions count as incorrect and enter review. Options retain
+their shuffled order across reloads; sessions balance coverage across the six
+classes. A finished session's result is stored once, with up to 60 recent sessions.
+
+Calculation grading states its rounding tolerance and derives worked solutions
+from the same parameters using the existing normal/t math. Interpretation text
+and rubrics are local self-assessment, without external AI calls. Stata outputs
+are synthetic educational examples; upcoming workshops stay globally upcoming.
+A learner can preview preparation or mark a workshop covered on their own device.
+The regression example is explicitly a later-workshop preview.
+
+State is additive under `statistics` in the existing progress entry, so Notes
+backup, restore and reset include it. No accounts, analytics, server grading or
+notifications are introduced. Private-browser storage failures show a visible
+message and allow the current page session to continue in memory. Service-worker
+assets and captured public content make the study tools work offline after one
+connected visit; following a lecture link offline requires having visited that
+lecture first. Clearing browser storage removes local progress and offline copies.
+
+Validation: `npm run test:statistics` checks scheduling, import reconciliation,
+content references, independently calculated numeric results, shuffled balanced
+sessions, deadline/score idempotence, all eight browser flows, local drafts,
+backup/restore, mobile/dark rendering, offline reload and unavailable storage.
+`npm run test:lectures` remains the shared-lecture regression suite.

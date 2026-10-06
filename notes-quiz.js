@@ -84,6 +84,7 @@ function runQuiz(box, ctx, questions, options) {
           }
           answer.given = choice.label;
           answer.correct = choice.value === question.answer;
+          if (question.type === "mcq" && window.recordStatisticsAnswer) window.recordStatisticsAnswer(question, choice.value.charCodeAt(0) - 65, "course quiz");
           if (!answer.correct) b.classList.add("is-wrong");
           feedback.textContent = answer.correct ? "✔ Correct!" : `✖ The answer is ${correctAnswerText(question)}.`;
           feedback.className = answer.correct ? "answer-feedback is-right" : "answer-feedback is-wrong";

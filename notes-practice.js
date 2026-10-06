@@ -318,6 +318,7 @@ function questionCard(question, ctx) {
           if (choices[i].value === question.answer) other.classList.add("is-correct");
         }
         const right = choice.value === question.answer;
+        if (question.type === "mcq" && window.recordStatisticsAnswer) window.recordStatisticsAnswer(question, choice.value.charCodeAt(0) - 65, "course practice");
         if (!right) b.classList.add("is-wrong");
         feedback.textContent = right ? "✔ Correct!" : `✖ Not quite. The answer is ${correctAnswerText(question)}.`;
         feedback.className = right ? "answer-feedback is-right" : "answer-feedback is-wrong";
