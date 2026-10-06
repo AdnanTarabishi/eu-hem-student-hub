@@ -1,0 +1,1532 @@
+[
+  {
+    "id": "fund-statistics.q.001",
+    "topic": "fund-statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Descriptive",
+    "question": "In a survey of 80 admissions at one hospital, what is the statistical unit?",
+    "options": [
+      "An admission",
+      "The sample mean",
+      "All hospitals",
+      "The questionnaire"
+    ],
+    "answer": "A",
+    "explanation": "The unit is the entity on which the variable is recorded. Define admissions versus distinct patients carefully.",
+    "source": "Original student practice · Sara Capacci · Topic 1"
+  },
+  {
+    "id": "fund-statistics.q.002",
+    "topic": "fund-statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Descriptive",
+    "question": "Which variable is nominal?",
+    "options": [
+      "Pain category ordered mild to severe",
+      "Blood group",
+      "Number of visits",
+      "Time to discharge"
+    ],
+    "answer": "B",
+    "explanation": "Blood-group categories have no intrinsic ordering.",
+    "source": "Original student practice · Sara Capacci · Topic 1"
+  },
+  {
+    "id": "fund-statistics.q.003",
+    "topic": "fund-statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Descriptive",
+    "question": "Why is an average of ward codes 1, 2 and 3 usually meaningless?",
+    "options": [
+      "The sample is too small",
+      "The codes have no mode",
+      "The codes are arbitrary labels",
+      "Averages are forbidden in Excel"
+    ],
+    "answer": "C",
+    "explanation": "The numbers label nominal categories and do not quantify distances.",
+    "source": "Original student practice · Sara Capacci · Topic 1"
+  },
+  {
+    "id": "fund-statistics.q.004",
+    "topic": "fund-statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Descriptive",
+    "question": "A binary indicator is 1 for 18 of 30 patients. Its mean is…",
+    "options": [
+      "18",
+      "30",
+      "0.40",
+      "0.60"
+    ],
+    "answer": "D",
+    "explanation": "The mean of 0/1 values equals the fraction of ones: 18/30.",
+    "source": "Original student practice · Sara Capacci · Topic 1"
+  },
+  {
+    "id": "fund-statistics.q.005",
+    "topic": "fund-statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Descriptive",
+    "question": "Stays are 2, 3, 3, 4 and 8 days. What is the median?",
+    "options": [
+      "3 days",
+      "4 days",
+      "8 days",
+      "3.5 days"
+    ],
+    "answer": "A",
+    "explanation": "The ordered sample has five observations; the third is 3.",
+    "source": "Original student practice · Sara Capacci · Topic 1"
+  },
+  {
+    "id": "fund-statistics.q.006",
+    "topic": "fund-statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Descriptive",
+    "question": "For any numeric sample, Σ(xᵢ−x̄) equals…",
+    "options": [
+      "n",
+      "0",
+      "The sample variance",
+      "The sample mean"
+    ],
+    "answer": "B",
+    "explanation": "The mean balances the positive and negative deviations.",
+    "source": "Original student practice · Sara Capacci · Topic 1"
+  },
+  {
+    "id": "fund-statistics.q.007",
+    "topic": "fund-statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Descriptive",
+    "question": "For values 2 and 3, Σxᵢ² equals…",
+    "options": [
+      "25",
+      "5",
+      "13",
+      "10"
+    ],
+    "answer": "C",
+    "explanation": "Square each value before summing: 4+9. Squaring the sum gives 25.",
+    "source": "Original student practice · Sara Capacci · Topic 1"
+  },
+  {
+    "id": "fund-statistics.q.008",
+    "topic": "fund-statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Descriptive",
+    "question": "Which pair of Excel functions uses denominator n−1?",
+    "options": [
+      "VAR.P and STDEV.P",
+      "MEDIAN and MODE",
+      "SUM and COUNT",
+      "VAR.S and STDEV.S"
+    ],
+    "answer": "D",
+    "explanation": "The .S functions return adjusted sample variance and SD.",
+    "source": "Original student practice · Sara Capacci · Topic 1"
+  },
+  {
+    "id": "fund-statistics.q.009",
+    "topic": "fund-statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Descriptive",
+    "question": "For values 2, 4 and 6, the descriptive variance with denominator n is…",
+    "options": [
+      "8/3",
+      "4",
+      "8",
+      "2"
+    ],
+    "answer": "A",
+    "explanation": "The mean is 4, so the squared deviations sum to 8; divide by 3.",
+    "source": "Original student practice · Sara Capacci · Topic 1"
+  },
+  {
+    "id": "fund-statistics.q.010",
+    "topic": "fund-statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Descriptive",
+    "question": "Q1=10 and Q3=18. Which observation is beyond the upper 1.5 IQR fence?",
+    "options": [
+      "30",
+      "31",
+      "29",
+      "25"
+    ],
+    "answer": "B",
+    "explanation": "IQR=8 and the upper fence is 18+12=30. A value strictly greater than 30 is flagged.",
+    "source": "Original student practice · Sara Capacci · Topic 1"
+  },
+  {
+    "id": "fund-statistics.q.011",
+    "topic": "fund-statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Descriptive",
+    "question": "A box-plot upper whisker normally ends at…",
+    "options": [
+      "Q3+1.5 IQR even if no value is there",
+      "The sample mean",
+      "The largest observed value inside the upper fence",
+      "The largest value including all outliers"
+    ],
+    "answer": "C",
+    "explanation": "The fence is a threshold; the whisker is an actual non-outlying observation.",
+    "source": "Original student practice · Sara Capacci · Topic 1"
+  },
+  {
+    "id": "fund-statistics.q.012",
+    "topic": "fund-statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Descriptive",
+    "question": "Multiplying all values by −3 multiplies their SD by…",
+    "options": [
+      "−3",
+      "9",
+      "−9",
+      "3"
+    ],
+    "answer": "D",
+    "explanation": "SD is nonnegative and scales by the absolute multiplier; variance scales by its square.",
+    "source": "Original student practice · Sara Capacci · Topic 1"
+  },
+  {
+    "id": "fund-statistics.q.013",
+    "topic": "fund-statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Descriptive",
+    "question": "A cumulative frequency is meaningful primarily when categories…",
+    "options": [
+      "Have a meaningful order",
+      "Have different colours",
+      "Use numeric codes",
+      "Are nominal ward names"
+    ],
+    "answer": "A",
+    "explanation": "Accumulating “up to” a category needs an ordering.",
+    "source": "Original student practice · Sara Capacci · Topic 1"
+  },
+  {
+    "id": "fund-statistics.q.014",
+    "topic": "fund-statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Descriptive",
+    "question": "If Excel quartiles differ from the slide percentile rule, first check…",
+    "options": [
+      "Whether the data were measured in kg",
+      "The percentile convention",
+      "Whether percentages sum to 100",
+      "Whether the population is infinite"
+    ],
+    "answer": "B",
+    "explanation": "QUARTILE.INC interpolates; the slide rule uses np and a different position rule.",
+    "source": "Original student practice · Sara Capacci · Topic 1"
+  },
+  {
+    "id": "fund-statistics.q.015",
+    "topic": "fund-statistics.descriptive",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Descriptive",
+    "question": "A correlation near zero implies…",
+    "options": [
+      "No possible relationship",
+      "No measurement error",
+      "Little linear association, while nonlinear patterns may remain",
+      "A causal effect of zero"
+    ],
+    "answer": "C",
+    "explanation": "Correlation measures linear association. Inspect the scatterplot for nonlinear relationships.",
+    "source": "Original student practice · Sara Capacci · Topic 1"
+  },
+  {
+    "id": "fund-statistics.q.016",
+    "topic": "fund-statistics.distributions",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Distributions",
+    "question": "In simple random sampling without replacement, which statement defines the design?",
+    "options": [
+      "Every subset of the specified size is equally likely",
+      "Every volunteer is included",
+      "Every selected cluster contributes one person",
+      "Only the first n patients are selected"
+    ],
+    "answer": "A",
+    "explanation": "Equal probability applies to each possible size-n sample, not merely to convenient units.",
+    "source": "Original student practice · Sara Capacci · Topic 2"
+  },
+  {
+    "id": "fund-statistics.q.017",
+    "topic": "fund-statistics.distributions",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Distributions",
+    "question": "A stratified sample differs from a cluster sample because it…",
+    "options": [
+      "Always has equal sample sizes",
+      "Samples within every stratum",
+      "Uses no randomisation",
+      "Samples only one group"
+    ],
+    "answer": "B",
+    "explanation": "A basic stratified design samples within every stratum; a cluster design selects clusters.",
+    "source": "Original student practice · Sara Capacci · Topic 2"
+  },
+  {
+    "id": "fund-statistics.q.018",
+    "topic": "fund-statistics.distributions",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Distributions",
+    "question": "Every 10th record is selected after a random start. This is…",
+    "options": [
+      "Volunteer sampling",
+      "A census",
+      "Systematic sampling",
+      "Simple random sampling of all subsets"
+    ],
+    "answer": "C",
+    "explanation": "Systematic sampling has a random start and a regular interval, but not all subsets are possible.",
+    "source": "Original student practice · Sara Capacci · Topic 2"
+  },
+  {
+    "id": "fund-statistics.q.019",
+    "topic": "fund-statistics.distributions",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Distributions",
+    "question": "A very large volunteer survey can still have…",
+    "options": [
+      "No variance",
+      "No valid observations",
+      "A probability of selection known for everyone",
+      "Selection bias"
+    ],
+    "answer": "D",
+    "explanation": "Large n reduces random error, not systematic self-selection.",
+    "source": "Original student practice · Sara Capacci · Topic 2"
+  },
+  {
+    "id": "fund-statistics.q.020",
+    "topic": "fund-statistics.distributions",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Distributions",
+    "question": "Which is a valid discrete probability distribution?",
+    "options": [
+      "0.2, 0.5, 0.3",
+      "0.2, 0.5, 0.5",
+      "−0.1, 0.5, 0.6",
+      "0.8, 0.4, 0.1"
+    ],
+    "answer": "A",
+    "explanation": "Probabilities must be nonnegative and sum to 1.",
+    "source": "Original student practice · Sara Capacci · Topic 2"
+  },
+  {
+    "id": "fund-statistics.q.021",
+    "topic": "fund-statistics.distributions",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Distributions",
+    "question": "X takes 0, 1, 2 with probabilities 0.2, 0.5, 0.3. E(X) is…",
+    "options": [
+      "1",
+      "1.1",
+      "0.49",
+      "2"
+    ],
+    "answer": "B",
+    "explanation": "E(X)=0×0.2+1×0.5+2×0.3=1.1.",
+    "source": "Original student practice · Sara Capacci · Topic 2"
+  },
+  {
+    "id": "fund-statistics.q.022",
+    "topic": "fund-statistics.distributions",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Distributions",
+    "question": "For Bernoulli X with π=0.25, Var(X) is…",
+    "options": [
+      "0.25",
+      "0.75",
+      "0.1875",
+      "0.0625"
+    ],
+    "answer": "C",
+    "explanation": "Bernoulli variance is π(1−π)=0.25×0.75.",
+    "source": "Original student practice · Sara Capacci · Topic 2"
+  },
+  {
+    "id": "fund-statistics.q.023",
+    "topic": "fund-statistics.distributions",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Distributions",
+    "question": "For a continuous model, P(X=exactly a) is…",
+    "options": [
+      "The density height at a",
+      "Always 0.5",
+      "Always 1",
+      "0"
+    ],
+    "answer": "D",
+    "explanation": "A single point has zero area in a continuous distribution.",
+    "source": "Original student practice · Sara Capacci · Topic 2"
+  },
+  {
+    "id": "fund-statistics.q.024",
+    "topic": "fund-statistics.distributions",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Distributions",
+    "question": "A probability density may exceed 1 because…",
+    "options": [
+      "Probability is area, rather than curve height",
+      "All probabilities may exceed 1",
+      "Its cumulative probability exceeds 1",
+      "The normal table is incorrect"
+    ],
+    "answer": "A",
+    "explanation": "A sufficiently narrow density can exceed 1 while its total area is 1.",
+    "source": "Original student practice · Sara Capacci · Topic 2"
+  },
+  {
+    "id": "fund-statistics.q.025",
+    "topic": "fund-statistics.distributions",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Distributions",
+    "question": "The CDF F(a) represents…",
+    "options": [
+      "P(X=a) for a continuous X",
+      "P(X≤a)",
+      "The SD of X",
+      "P(X>a)"
+    ],
+    "answer": "B",
+    "explanation": "The cumulative distribution accumulates probability to the left.",
+    "source": "Original student practice · Sara Capacci · Topic 2"
+  },
+  {
+    "id": "fund-statistics.q.026",
+    "topic": "fund-statistics.distributions",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Distributions",
+    "question": "X~N(120,100), with the second parameter a variance. What is z for X=135?",
+    "options": [
+      "0.15",
+      "15",
+      "1.5",
+      "3.5"
+    ],
+    "answer": "C",
+    "explanation": "The SD is √100=10; (135−120)/10=1.5.",
+    "source": "Original student practice · Sara Capacci · Topic 2"
+  },
+  {
+    "id": "fund-statistics.q.027",
+    "topic": "fund-statistics.distributions",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Distributions",
+    "question": "If Φ(1.20)=0.8849, P(Z>1.20) is…",
+    "options": [
+      "0.8849",
+      "0.7698",
+      "0.50",
+      "0.1151"
+    ],
+    "answer": "D",
+    "explanation": "Use the complement of the left-tail probability.",
+    "source": "Original student practice · Sara Capacci · Topic 2"
+  },
+  {
+    "id": "fund-statistics.q.028",
+    "topic": "fund-statistics.distributions",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Distributions",
+    "question": "If Φ(1.20)=0.8849, Φ(−1.20) is…",
+    "options": [
+      "0.1151",
+      "0.8849",
+      "−0.8849",
+      "1.8849"
+    ],
+    "answer": "A",
+    "explanation": "Symmetry gives Φ(−z)=1−Φ(z).",
+    "source": "Original student practice · Sara Capacci · Topic 2"
+  },
+  {
+    "id": "fund-statistics.q.029",
+    "topic": "fund-statistics.distributions",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Distributions",
+    "question": "A two-sided 95% normal interval needs which positive percentile?",
+    "options": [
+      "95th",
+      "97.5th",
+      "90th",
+      "5th"
+    ],
+    "answer": "B",
+    "explanation": "The excluded 5% is split into 2.5% in each tail.",
+    "source": "Original student practice · Sara Capacci · Topic 2"
+  },
+  {
+    "id": "fund-statistics.q.030",
+    "topic": "fund-statistics.distributions",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Distributions",
+    "question": "For 21 independent normal observations with unknown population SD, the mean t statistic uses…",
+    "options": [
+      "21 degrees of freedom",
+      "22 degrees of freedom",
+      "20 degrees of freedom",
+      "No degrees of freedom"
+    ],
+    "answer": "C",
+    "explanation": "Estimating the mean leaves n−1 degrees of freedom.",
+    "source": "Original student practice · Sara Capacci · Topic 2"
+  },
+  {
+    "id": "fund-statistics.q.031",
+    "topic": "fund-statistics.estimation",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Estimation",
+    "question": "Which is an estimand in a hospital waiting-time study?",
+    "options": [
+      "The unknown population mean waiting time",
+      "The observed sample mean 24.2",
+      "The formula ΣXᵢ/n",
+      "The sample spreadsheet"
+    ],
+    "answer": "A",
+    "explanation": "The estimand is the target parameter, rather than a rule or observed number.",
+    "source": "Original student practice · Sara Capacci · Topic 3"
+  },
+  {
+    "id": "fund-statistics.q.032",
+    "topic": "fund-statistics.estimation",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Estimation",
+    "question": "The observed x̄=24.2 is an…",
+    "options": [
+      "Estimator before sampling",
+      "Estimate",
+      "Entire population",
+      "Individual random variable"
+    ],
+    "answer": "B",
+    "explanation": "An estimate is the realised number calculated from one sample.",
+    "source": "Original student practice · Sara Capacci · Topic 3"
+  },
+  {
+    "id": "fund-statistics.q.033",
+    "topic": "fund-statistics.estimation",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Estimation",
+    "question": "The sampling distribution of X̄ describes…",
+    "options": [
+      "Individual patients in one sample",
+      "Population means across countries",
+      "Means across repeated same-size samples",
+      "Only measurement mistakes"
+    ],
+    "answer": "C",
+    "explanation": "It is a distribution of a statistic under repeated sampling.",
+    "source": "Original student practice · Sara Capacci · Topic 3"
+  },
+  {
+    "id": "fund-statistics.q.034",
+    "topic": "fund-statistics.estimation",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Estimation",
+    "question": "For independent observations, E(X̄) equals…",
+    "options": [
+      "μ/n",
+      "σ/√n",
+      "The largest sample value",
+      "μ"
+    ],
+    "answer": "D",
+    "explanation": "The sample mean is unbiased for the population mean.",
+    "source": "Original student practice · Sara Capacci · Topic 3"
+  },
+  {
+    "id": "fund-statistics.q.035",
+    "topic": "fund-statistics.estimation",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Estimation",
+    "question": "Population SD is 12 and n=36. SE(X̄) is…",
+    "options": [
+      "2",
+      "12",
+      "1/3",
+      "72"
+    ],
+    "answer": "A",
+    "explanation": "SE=12/√36=2.",
+    "source": "Original student practice · Sara Capacci · Topic 3"
+  },
+  {
+    "id": "fund-statistics.q.036",
+    "topic": "fund-statistics.estimation",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Estimation",
+    "question": "To halve SE while holding population SD fixed, sample size must be…",
+    "options": [
+      "Doubled",
+      "Quadrupled",
+      "Halved",
+      "Squared"
+    ],
+    "answer": "B",
+    "explanation": "SE scales as 1/√n.",
+    "source": "Original student practice · Sara Capacci · Topic 3"
+  },
+  {
+    "id": "fund-statistics.q.037",
+    "topic": "fund-statistics.estimation",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Estimation",
+    "question": "Increasing sample size mechanically reduces…",
+    "options": [
+      "The population SD",
+      "The population variance",
+      "The SE of the mean",
+      "The population mean"
+    ],
+    "answer": "C",
+    "explanation": "Sample means become more precise; individual population variation does not vanish.",
+    "source": "Original student practice · Sara Capacci · Topic 3"
+  },
+  {
+    "id": "fund-statistics.q.038",
+    "topic": "fund-statistics.estimation",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Estimation",
+    "question": "An unbiased estimator means…",
+    "options": [
+      "Every estimate equals the target",
+      "Its variance is zero",
+      "It always uses a normal distribution",
+      "Its repeated-sampling expectation equals the target"
+    ],
+    "answer": "D",
+    "explanation": "Unbiasedness concerns an average over the sampling distribution.",
+    "source": "Original student practice · Sara Capacci · Topic 3"
+  },
+  {
+    "id": "fund-statistics.q.039",
+    "topic": "fund-statistics.estimation",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Estimation",
+    "question": "Which quantity is unbiased for population variance under independent sampling?",
+    "options": [
+      "S² with denominator n−1",
+      "Variance with denominator n",
+      "S in all populations",
+      "The sample range"
+    ],
+    "answer": "A",
+    "explanation": "The adjusted variance corrects the downward bias caused by estimating the mean.",
+    "source": "Original student practice · Sara Capacci · Topic 3"
+  },
+  {
+    "id": "fund-statistics.q.040",
+    "topic": "fund-statistics.estimation",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Estimation",
+    "question": "For an independent sample of size 5, E(Vₙ) with denominator n is…",
+    "options": [
+      "σ²",
+      "0.8 σ²",
+      "1.25 σ²",
+      "5 σ²"
+    ],
+    "answer": "B",
+    "explanation": "E(Vₙ)=(n−1)σ²/n=4σ²/5.",
+    "source": "Original student practice · Sara Capacci · Topic 3"
+  },
+  {
+    "id": "fund-statistics.q.041",
+    "topic": "fund-statistics.estimation",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Estimation",
+    "question": "Which statement about S=√S² is generally correct?",
+    "options": [
+      "S is always unbiased for σ",
+      "S equals σ in every sample",
+      "S estimates σ but is not generally unbiased",
+      "S has squared units"
+    ],
+    "answer": "C",
+    "explanation": "Unbiasedness of S² does not carry through the nonlinear square root.",
+    "source": "Original student practice · Sara Capacci · Topic 3"
+  },
+  {
+    "id": "fund-statistics.q.042",
+    "topic": "fund-statistics.estimation",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Estimation",
+    "question": "Two draws with replacement from five equally likely units yield how many ordered pairs?",
+    "options": [
+      "10",
+      "5",
+      "20",
+      "25"
+    ],
+    "answer": "D",
+    "explanation": "Each draw has five choices, so 5×5=25, including repeated units.",
+    "source": "Original student practice · Sara Capacci · Topic 3"
+  },
+  {
+    "id": "fund-statistics.q.043",
+    "topic": "fund-statistics.estimation",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Estimation",
+    "question": "Without replacement, ignoring order, choosing two of five units yields…",
+    "options": [
+      "10 possible samples",
+      "25 possible samples",
+      "20 possible samples",
+      "5 possible samples"
+    ],
+    "answer": "A",
+    "explanation": "The count is 5 choose 2 = 10; observations within a sample are dependent.",
+    "source": "Original student practice · Sara Capacci · Topic 3"
+  },
+  {
+    "id": "fund-statistics.q.044",
+    "topic": "fund-statistics.estimation",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Estimation",
+    "question": "The central limit theorem approximately normalises…",
+    "options": [
+      "Every individual observation",
+      "The sample mean as n grows under suitable assumptions",
+      "A biased selection mechanism",
+      "All samples with n=30 without conditions"
+    ],
+    "answer": "B",
+    "explanation": "It concerns sums or means and requires suitable independence and moments.",
+    "source": "Original student practice · Sara Capacci · Topic 3"
+  },
+  {
+    "id": "fund-statistics.q.045",
+    "topic": "fund-statistics.estimation",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Estimation",
+    "question": "To calculate P(X̄>a), the standardisation denominator is…",
+    "options": [
+      "σ²",
+      "σ",
+      "σ/√n",
+      "n−1"
+    ],
+    "answer": "C",
+    "explanation": "The mean varies with its SE; σ alone would concern one individual.",
+    "source": "Original student practice · Sara Capacci · Topic 3"
+  },
+  {
+    "id": "fund-statistics.q.046",
+    "topic": "fund-statistics.confidence-intervals",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Confidence Intervals",
+    "question": "A confidence interval is generally…",
+    "options": [
+      "Estimate ± critical value × SE",
+      "Mean ± population size",
+      "Estimate ± variance",
+      "Critical value ± mean"
+    ],
+    "answer": "A",
+    "explanation": "A critical value converts standard error into a margin of error.",
+    "source": "Original student practice · Sara Capacci · Topic 4"
+  },
+  {
+    "id": "fund-statistics.q.047",
+    "topic": "fund-statistics.confidence-intervals",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Confidence Intervals",
+    "question": "For x̄=80, known σ=12 and n=36, the 95% normal CI is approximately…",
+    "options": [
+      "[56.48,103.52]",
+      "[76.08,83.92]",
+      "[78.04,81.96]",
+      "[80,95]"
+    ],
+    "answer": "B",
+    "explanation": "SE=2 and the margin is 1.96×2=3.92.",
+    "source": "Original student practice · Sara Capacci · Topic 4"
+  },
+  {
+    "id": "fund-statistics.q.048",
+    "topic": "fund-statistics.confidence-intervals",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Confidence Intervals",
+    "question": "A 90% two-sided normal CI uses z≈…",
+    "options": [
+      "1.282",
+      "1.960",
+      "1.645",
+      "2.576"
+    ],
+    "answer": "C",
+    "explanation": "The cumulative probability for the upper critical value is 0.95.",
+    "source": "Original student practice · Sara Capacci · Topic 4"
+  },
+  {
+    "id": "fund-statistics.q.049",
+    "topic": "fund-statistics.confidence-intervals",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Confidence Intervals",
+    "question": "For unknown population variance and normal sampling, the mean interval uses…",
+    "options": [
+      "σ and z",
+      "s² instead of s",
+      "STDEV.P and no critical value",
+      "s and t with n−1 df"
+    ],
+    "answer": "D",
+    "explanation": "Estimate the SD with STDEV.S and account for its uncertainty with t.",
+    "source": "Original student practice · Sara Capacci · Topic 4"
+  },
+  {
+    "id": "fund-statistics.q.050",
+    "topic": "fund-statistics.confidence-intervals",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Confidence Intervals",
+    "question": "For n=16, the two-sided t interval uses…",
+    "options": [
+      "15 df",
+      "16 df",
+      "17 df",
+      "30 df"
+    ],
+    "answer": "A",
+    "explanation": "One mean has been estimated, giving n−1 degrees of freedom.",
+    "source": "Original student practice · Sara Capacci · Topic 4"
+  },
+  {
+    "id": "fund-statistics.q.051",
+    "topic": "fund-statistics.confidence-intervals",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Confidence Intervals",
+    "question": "A higher confidence level with the same data produces…",
+    "options": [
+      "A narrower interval",
+      "A wider interval",
+      "An unchanged interval",
+      "A lower SE"
+    ],
+    "answer": "B",
+    "explanation": "It changes the critical value, not the data-based SE.",
+    "source": "Original student practice · Sara Capacci · Topic 4"
+  },
+  {
+    "id": "fund-statistics.q.052",
+    "topic": "fund-statistics.confidence-intervals",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Confidence Intervals",
+    "question": "At fixed SD and critical value, quadrupling n changes interval width to…",
+    "options": [
+      "One quarter",
+      "Double",
+      "Half",
+      "Unchanged"
+    ],
+    "answer": "C",
+    "explanation": "Width scales with SE and hence 1/√n.",
+    "source": "Original student practice · Sara Capacci · Topic 4"
+  },
+  {
+    "id": "fund-statistics.q.053",
+    "topic": "fund-statistics.confidence-intervals",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Confidence Intervals",
+    "question": "The 95% confidence level refers to…",
+    "options": [
+      "95% of individual observations in this interval",
+      "A 95% probability that a fixed μ is in this realised frequentist interval",
+      "The probability H₀ is true",
+      "Coverage of repeated intervals from the procedure"
+    ],
+    "answer": "D",
+    "explanation": "Before sampling, endpoints vary. Approximately 95% of valid repeated intervals contain fixed μ.",
+    "source": "Original student practice · Sara Capacci · Topic 4"
+  },
+  {
+    "id": "fund-statistics.q.054",
+    "topic": "fund-statistics.confidence-intervals",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Confidence Intervals",
+    "question": "For a mean interval, the full width equals…",
+    "options": [
+      "Twice the margin of error",
+      "The SE",
+      "The SD",
+      "The confidence level"
+    ],
+    "answer": "A",
+    "explanation": "Width is U−L=2×critical×SE.",
+    "source": "Original student practice · Sara Capacci · Topic 4"
+  },
+  {
+    "id": "fund-statistics.q.055",
+    "topic": "fund-statistics.confidence-intervals",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Confidence Intervals",
+    "question": "120 successes among 200 observations gives p̂=…",
+    "options": [
+      "0.40",
+      "0.60",
+      "1.20",
+      "200/120"
+    ],
+    "answer": "B",
+    "explanation": "The sample proportion is successes divided by total n.",
+    "source": "Original student practice · Sara Capacci · Topic 4"
+  },
+  {
+    "id": "fund-statistics.q.056",
+    "topic": "fund-statistics.confidence-intervals",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Confidence Intervals",
+    "question": "The Wald proportion CI estimates its SE using…",
+    "options": [
+      "π₀(1−π₀)",
+      "The sample SD of group labels",
+      "p̂(1−p̂)",
+      "Only p̂/n"
+    ],
+    "answer": "C",
+    "explanation": "The interval uses the observed proportion; a null-based test uses π₀.",
+    "source": "Original student practice · Sara Capacci · Topic 4"
+  },
+  {
+    "id": "fund-statistics.q.057",
+    "topic": "fund-statistics.confidence-intervals",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Confidence Intervals",
+    "question": "For n=40 and one success, a normal Wald CI is questionable because…",
+    "options": [
+      "n must always exceed 120",
+      "The proportion is above 1",
+      "The data cannot be binary",
+      "Success/failure counts are inadequate"
+    ],
+    "answer": "D",
+    "explanation": "There is only one success; n≥30 alone does not ensure a good approximation.",
+    "source": "Original student practice · Sara Capacci · Topic 4"
+  },
+  {
+    "id": "fund-statistics.q.058",
+    "topic": "fund-statistics.confidence-intervals",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Confidence Intervals",
+    "question": "If a Wald CI extends below 0, the best response here is…",
+    "options": [
+      "Flag the approximation as unsuitable",
+      "Silently replace the endpoint by 0 and retain the same coverage claim",
+      "Call it an exact interval",
+      "Switch to a t interval automatically"
+    ],
+    "answer": "A",
+    "explanation": "The normal approximation can fail near boundaries; truncation does not fix its coverage.",
+    "source": "Original student practice · Sara Capacci · Topic 4"
+  },
+  {
+    "id": "fund-statistics.q.059",
+    "topic": "fund-statistics.confidence-intervals",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Confidence Intervals",
+    "question": "A 95% CI for mean stay [8,10] days implies…",
+    "options": [
+      "95% of patients stay 8–10 days",
+      "An interval estimate for the population mean stay",
+      "The sample has exactly 95 observations",
+      "No possible bias"
+    ],
+    "answer": "B",
+    "explanation": "The target is the mean, not the individual distribution.",
+    "source": "Original student practice · Sara Capacci · Topic 4"
+  },
+  {
+    "id": "fund-statistics.q.060",
+    "topic": "fund-statistics.confidence-intervals",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Confidence Intervals",
+    "question": "If sources disagree at n=120 about using a z approximation, which choice remains appropriate under normal sampling?",
+    "options": [
+      "No interval",
+      "A t interval with zero df",
+      "A t interval using n−1 df",
+      "A z interval with population SD set to 0"
+    ],
+    "answer": "C",
+    "explanation": "t is usable at both smaller and larger n; z is an optional large-sample approximation.",
+    "source": "Original student practice · Sara Capacci · Topic 4"
+  },
+  {
+    "id": "fund-statistics.q.061",
+    "topic": "fund-statistics.hypothesis-tests",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Hypothesis Tests",
+    "question": "Which correctly states a two-sided mean test?",
+    "options": [
+      "H₀:μ=100; Hₐ:μ≠100",
+      "H₀:x̄=100; Hₐ:x̄≠100",
+      "H₀:μ>100; Hₐ:μ>100",
+      "H₀:p=0.05"
+    ],
+    "answer": "A",
+    "explanation": "Hypotheses concern the unknown population parameter.",
+    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+  },
+  {
+    "id": "fund-statistics.q.062",
+    "topic": "fund-statistics.hypothesis-tests",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Hypothesis Tests",
+    "question": "Known σ=10, n=100, x̄=103 and μ₀=100. The z statistic is…",
+    "options": [
+      "0.3",
+      "3",
+      "30",
+      "1"
+    ],
+    "answer": "B",
+    "explanation": "SE=10/10=1, so z=(103−100)/1=3.",
+    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+  },
+  {
+    "id": "fund-statistics.q.063",
+    "topic": "fund-statistics.hypothesis-tests",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Hypothesis Tests",
+    "question": "Unknown σ, n=16, x̄=12, s=4 and μ₀=10. The t statistic is…",
+    "options": [
+      "2 with 16 df",
+      "0.5 with 15 df",
+      "2 with 15 df",
+      "8 with 15 df"
+    ],
+    "answer": "C",
+    "explanation": "SE=4/4=1 and t=2/1=2; df=15.",
+    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+  },
+  {
+    "id": "fund-statistics.q.064",
+    "topic": "fund-statistics.hypothesis-tests",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Hypothesis Tests",
+    "question": "A two-sided test compares the observed statistic using…",
+    "options": [
+      "Only its signed positive value",
+      "The sample maximum",
+      "Only its left-tail sign",
+      "Its absolute magnitude"
+    ],
+    "answer": "D",
+    "explanation": "Both sufficiently positive and negative values can reject a two-sided null.",
+    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+  },
+  {
+    "id": "fund-statistics.q.065",
+    "topic": "fund-statistics.hypothesis-tests",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Hypothesis Tests",
+    "question": "For p=0.032 at α=0.05, the decision is…",
+    "options": [
+      "Reject H₀",
+      "Do not reject H₀",
+      "Prove H₀",
+      "Reject only if the estimate is positive"
+    ],
+    "answer": "A",
+    "explanation": "0.032<0.05. The sign affects interpretation, not this two-sided rule.",
+    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+  },
+  {
+    "id": "fund-statistics.q.066",
+    "topic": "fund-statistics.hypothesis-tests",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Hypothesis Tests",
+    "question": "For p=0.12 at α=0.05, a defensible conclusion is…",
+    "options": [
+      "The populations are proven equal",
+      "Insufficient evidence to reject H₀",
+      "The null has probability 0.88",
+      "The test proves no clinical effect"
+    ],
+    "answer": "B",
+    "explanation": "Failure to reject is not proof of equality.",
+    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+  },
+  {
+    "id": "fund-statistics.q.067",
+    "topic": "fund-statistics.hypothesis-tests",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Hypothesis Tests",
+    "question": "The p-value is conditional on…",
+    "options": [
+      "Hₐ being proven true",
+      "The null having probability p",
+      "H₀ and the sampling model",
+      "The sample mean being a parameter"
+    ],
+    "answer": "C",
+    "explanation": "It measures extreme-statistic probability under the null assumptions.",
+    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+  },
+  {
+    "id": "fund-statistics.q.068",
+    "topic": "fund-statistics.hypothesis-tests",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Hypothesis Tests",
+    "question": "A Type I error means…",
+    "options": [
+      "Not rejecting a false H₀",
+      "Using a sample",
+      "Estimating the SD",
+      "Rejecting a true H₀"
+    ],
+    "answer": "D",
+    "explanation": "α controls the Type I error probability under the model.",
+    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+  },
+  {
+    "id": "fund-statistics.q.069",
+    "topic": "fund-statistics.hypothesis-tests",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Hypothesis Tests",
+    "question": "Statistical power is…",
+    "options": [
+      "1−β",
+      "α",
+      "1−α in every study",
+      "The p-value"
+    ],
+    "answer": "A",
+    "explanation": "β is the probability of failing to reject a false null at a specified alternative.",
+    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+  },
+  {
+    "id": "fund-statistics.q.070",
+    "topic": "fund-statistics.hypothesis-tests",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Hypothesis Tests",
+    "question": "A proportion test under H₀:π=0.50 uses which SE?",
+    "options": [
+      "√[p̂(1−p̂)/n] in all cases",
+      "√[0.50×0.50/n]",
+      "s²/n",
+      "p̂−0.50"
+    ],
+    "answer": "B",
+    "explanation": "The null reference variance uses the null parameter π₀.",
+    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+  },
+  {
+    "id": "fund-statistics.q.071",
+    "topic": "fund-statistics.hypothesis-tests",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Hypothesis Tests",
+    "question": "For 120 successes in 200 and π₀=0.5, the test statistic is approximately…",
+    "options": [
+      "2",
+      "0.10",
+      "2.828",
+      "0.283"
+    ],
+    "answer": "C",
+    "explanation": "p̂=0.6 and SE₀=√(0.25/200)=0.03536.",
+    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+  },
+  {
+    "id": "fund-statistics.q.072",
+    "topic": "fund-statistics.hypothesis-tests",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Hypothesis Tests",
+    "question": "A p-value printed as 0.000 usually means…",
+    "options": [
+      "Exactly zero",
+      "The null is impossible in every model",
+      "A probability larger than 1",
+      "Below the output’s displayed precision"
+    ],
+    "answer": "D",
+    "explanation": "Finite rounding can display a positive very small p-value as 0.000.",
+    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+  },
+  {
+    "id": "fund-statistics.q.073",
+    "topic": "fund-statistics.hypothesis-tests",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Hypothesis Tests",
+    "question": "For a mean test and CI using the same model, SE and critical value, a null mean outside the 95% CI indicates…",
+    "options": [
+      "Rejection by the corresponding two-sided 5% test",
+      "Acceptance of H₀",
+      "A 95% chance H₀ is true",
+      "A one-sided test only"
+    ],
+    "answer": "A",
+    "explanation": "The mean test and interval are algebraically equivalent under matched methods.",
+    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+  },
+  {
+    "id": "fund-statistics.q.074",
+    "topic": "fund-statistics.hypothesis-tests",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Hypothesis Tests",
+    "question": "Why need a Wald proportion CI and null-based proportion test not agree exactly?",
+    "options": [
+      "Both always use t",
+      "They use different SE estimates",
+      "The proportion has no variance",
+      "One always proves equality"
+    ],
+    "answer": "B",
+    "explanation": "The CI uses p̂ while the test uses π₀ in the variance.",
+    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+  },
+  {
+    "id": "fund-statistics.q.075",
+    "topic": "fund-statistics.hypothesis-tests",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Hypothesis Tests",
+    "question": "A tiny p-value by itself establishes…",
+    "options": [
+      "A large clinical effect",
+      "A causal treatment effect",
+      "Evidence against the specified null under the model",
+      "A representative sample"
+    ],
+    "answer": "C",
+    "explanation": "Effect size, clinical relevance, causality and sampling quality need separate evidence.",
+    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+  },
+  {
+    "id": "fund-statistics.q.076",
+    "topic": "fund-statistics.two-means",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Two Means",
+    "question": "Which comparison is paired?",
+    "options": [
+      "The same patients measured before and after treatment",
+      "Unrelated patients in two hospitals",
+      "Two samples with equal n",
+      "Two groups with the same sample mean"
+    ],
+    "answer": "A",
+    "explanation": "Pairing comes from matching observations, not equal sample sizes.",
+    "source": "Original student practice · Sara Capacci · Topic 6"
+  },
+  {
+    "id": "fund-statistics.q.077",
+    "topic": "fund-statistics.two-means",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Two Means",
+    "question": "For independent groups, SE of the difference is…",
+    "options": [
+      "s₁+s₂",
+      "√(s₁²/n₁+s₂²/n₂)",
+      "(s₁−s₂)/√n",
+      "√[(s₁²+s₂²)/(n₁+n₂)]"
+    ],
+    "answer": "B",
+    "explanation": "Each independent mean contributes its variance; add these variances and take the square root.",
+    "source": "Original student practice · Sara Capacci · Topic 6"
+  },
+  {
+    "id": "fund-statistics.q.078",
+    "topic": "fund-statistics.two-means",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Two Means",
+    "question": "If x̄₁=125 and x̄₂=129, x̄₁−x̄₂ is…",
+    "options": [
+      "4",
+      "254",
+      "−4",
+      "0.969"
+    ],
+    "answer": "C",
+    "explanation": "Subtract in the defined group order, retaining the outcome units.",
+    "source": "Original student practice · Sara Capacci · Topic 6"
+  },
+  {
+    "id": "fund-statistics.q.079",
+    "topic": "fund-statistics.two-means",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Two Means",
+    "question": "Reversing group order changes a two-sided test by…",
+    "options": [
+      "Doubling its p-value",
+      "Reversing the SE sign",
+      "Changing the sample sizes to zero",
+      "Reversing the statistic’s sign but keeping its p-value"
+    ],
+    "answer": "D",
+    "explanation": "The magnitude and uncertainty of the contrast are unchanged.",
+    "source": "Original student practice · Sara Capacci · Topic 6"
+  },
+  {
+    "id": "fund-statistics.q.080",
+    "topic": "fund-statistics.two-means",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Two Means",
+    "question": "The course’s main Topic 6 calculation uses…",
+    "options": [
+      "A large-sample normal approximation for independent means",
+      "An exact small-sample Welch calculator",
+      "A paired analysis for all studies",
+      "A chi-square table"
+    ],
+    "answer": "A",
+    "explanation": "The supplied slides use large independent samples and approximate t by z.",
+    "source": "Original student practice · Sara Capacci · Topic 6"
+  },
+  {
+    "id": "fund-statistics.q.081",
+    "topic": "fund-statistics.two-means",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Two Means",
+    "question": "A 95% CI for μ₁−μ₂ entirely below zero indicates…",
+    "options": [
+      "Proven causation by group 1",
+      "An estimated lower population mean in group 1",
+      "95% of group 1 observations are below group 2",
+      "Population equality"
+    ],
+    "answer": "B",
+    "explanation": "The sign concerns the mean contrast; causal interpretation needs study-design support.",
+    "source": "Original student practice · Sara Capacci · Topic 6"
+  },
+  {
+    "id": "fund-statistics.q.082",
+    "topic": "fund-statistics.two-means",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Two Means",
+    "question": "For a paired mean test, s_d is…",
+    "options": [
+      "s₁−s₂",
+      "s₁+s₂",
+      "Adjusted SD of the individual paired differences",
+      "The mean difference"
+    ],
+    "answer": "C",
+    "explanation": "Compute each dᵢ first, then its adjusted SD.",
+    "source": "Original student practice · Sara Capacci · Topic 6"
+  },
+  {
+    "id": "fund-statistics.q.083",
+    "topic": "fund-statistics.two-means",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Two Means",
+    "question": "The pooled equal-variance two-mean test assumes…",
+    "options": [
+      "Equal population means under all alternatives",
+      "Equal sample sizes",
+      "All observations are paired",
+      "Equal population variances"
+    ],
+    "answer": "D",
+    "explanation": "Pooling is justified by a common-variance assumption.",
+    "source": "Original student practice · Sara Capacci · Topic 6"
+  },
+  {
+    "id": "fund-statistics.q.084",
+    "topic": "fund-statistics.two-means",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Two Means",
+    "question": "For the pooled t test with n₁=20 and n₂=25, df is…",
+    "options": [
+      "43",
+      "44",
+      "45",
+      "19"
+    ],
+    "answer": "A",
+    "explanation": "df=n₁+n₂−2=43, under the equal-variance normal model.",
+    "source": "Original student practice · Sara Capacci · Topic 6"
+  },
+  {
+    "id": "fund-statistics.q.085",
+    "topic": "fund-statistics.two-means",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Two Means",
+    "question": "A significance-star legend should be…",
+    "options": [
+      "Assumed identical in every paper",
+      "Read for that specific paper",
+      "Ignored if the coefficient is positive",
+      "Treated as an effect-size scale"
+    ],
+    "answer": "B",
+    "explanation": "Authors use different star thresholds and footnotes.",
+    "source": "Original student practice · Sara Capacci · Topic 6"
+  },
+  {
+    "id": "fund-statistics.q.086",
+    "topic": "fund-statistics.two-means",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Two Means",
+    "question": "For p=0.08 at a pre-specified α=0.05, the result is…",
+    "options": [
+      "Significant at 5%",
+      "Proof of equality",
+      "Not significant at 5%",
+      "A causal null effect"
+    ],
+    "answer": "C",
+    "explanation": "The p-value exceeds 0.05; do not change α after seeing it.",
+    "source": "Original student practice · Sara Capacci · Topic 6"
+  },
+  {
+    "id": "fund-statistics.q.087",
+    "topic": "fund-statistics.two-means",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Two Means",
+    "question": "Equal observed group means producing p=1 imply…",
+    "options": [
+      "Proof of identical populations",
+      "Identical variances",
+      "A mistake in every case",
+      "No evidence against equal means from this test"
+    ],
+    "answer": "D",
+    "explanation": "A zero observed contrast can produce a zero statistic and p=1.",
+    "source": "Original student practice · Sara Capacci · Topic 6"
+  },
+  {
+    "id": "fund-statistics.q.088",
+    "topic": "fund-statistics.two-means",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Two Means",
+    "question": "Independent group SDs are both 10 and sample sizes both 100. Difference SE is…",
+    "options": [
+      "√2 ≈1.414",
+      "2",
+      "10",
+      "0.1"
+    ],
+    "answer": "A",
+    "explanation": "√(100/100+100/100)=√2.",
+    "source": "Original student practice · Sara Capacci · Topic 6"
+  },
+  {
+    "id": "fund-statistics.q.089",
+    "topic": "fund-statistics.two-means",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Two Means",
+    "question": "A statistically significant observational group difference can still reflect…",
+    "options": [
+      "Only random assignment",
+      "Confounding or selection differences",
+      "No uncertainty at all",
+      "Proven treatment efficacy"
+    ],
+    "answer": "B",
+    "explanation": "Design and adjustment matter for interpreting a group contrast.",
+    "source": "Original student practice · Sara Capacci · Topic 6"
+  },
+  {
+    "id": "fund-statistics.q.090",
+    "topic": "fund-statistics.two-means",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Two Means",
+    "question": "Which Topic 6 formulas are labelled illustrative in the supplied slides?",
+    "options": [
+      "All independent large-sample calculations",
+      "The definition of a sample mean",
+      "Paired, pooled equal-variance and two-proportion variations",
+      "All descriptive statistics"
+    ],
+    "answer": "C",
+    "explanation": "Slides 15–23 say those variation formulas will not be required for calculation.",
+    "source": "Original student practice · Sara Capacci · Topic 6"
+  }
+]

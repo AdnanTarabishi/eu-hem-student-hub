@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "topic": "fund-statistics.estimation",
+  "topicNumber": 3,
+  "updated": "2026-10-06",
+  "heroTitle": "The target. The rule.\nThe observed result.",
+  "intro": "Understand why an estimator varies across samples, how standard error measures precision, and why variance estimation uses n−1.",
+  "guide": "lectures/estimation.html",
+  "activities": [
+    "fund-sampling"
+  ],
+  "attribution": "Original student study explanations based on Sara Capacci’s Fundamentals of Statistics for Healthcare (96498), AY 2026/27. Sources: Topic 3, slides 1–33; Understanding Notation; Exercise Book 2026/27, exercises 29–32. Teaching examples and clarifications are original; consult Virtuale for authoritative materials."
+}

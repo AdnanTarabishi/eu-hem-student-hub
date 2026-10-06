@@ -1,0 +1,362 @@
+[
+  {
+    "id": "fund-statistics.fc.001",
+    "topic": "fund-statistics.descriptive",
+    "front": "In a survey of 80 admissions at one hospital, what is the statistical unit?",
+    "back": "An admission. The unit is the entity on which the variable is recorded. Define admissions versus distinct patients carefully."
+  },
+  {
+    "id": "fund-statistics.fc.002",
+    "topic": "fund-statistics.descriptive",
+    "front": "Which variable is nominal?",
+    "back": "Blood group. Blood-group categories have no intrinsic ordering."
+  },
+  {
+    "id": "fund-statistics.fc.003",
+    "topic": "fund-statistics.descriptive",
+    "front": "Why is an average of ward codes 1, 2 and 3 usually meaningless?",
+    "back": "The codes are arbitrary labels. The numbers label nominal categories and do not quantify distances."
+  },
+  {
+    "id": "fund-statistics.fc.004",
+    "topic": "fund-statistics.descriptive",
+    "front": "A binary indicator is 1 for 18 of 30 patients. Its mean is…",
+    "back": "0.60. The mean of 0/1 values equals the fraction of ones: 18/30."
+  },
+  {
+    "id": "fund-statistics.fc.005",
+    "topic": "fund-statistics.descriptive",
+    "front": "Stays are 2, 3, 3, 4 and 8 days. What is the median?",
+    "back": "3 days. The ordered sample has five observations; the third is 3."
+  },
+  {
+    "id": "fund-statistics.fc.006",
+    "topic": "fund-statistics.descriptive",
+    "front": "For any numeric sample, Σ(xᵢ−x̄) equals…",
+    "back": "0. The mean balances the positive and negative deviations."
+  },
+  {
+    "id": "fund-statistics.fc.007",
+    "topic": "fund-statistics.descriptive",
+    "front": "For values 2 and 3, Σxᵢ² equals…",
+    "back": "13. Square each value before summing: 4+9. Squaring the sum gives 25."
+  },
+  {
+    "id": "fund-statistics.fc.008",
+    "topic": "fund-statistics.descriptive",
+    "front": "Which pair of Excel functions uses denominator n−1?",
+    "back": "VAR.S and STDEV.S. The .S functions return adjusted sample variance and SD."
+  },
+  {
+    "id": "fund-statistics.fc.009",
+    "topic": "fund-statistics.descriptive",
+    "front": "For values 2, 4 and 6, the descriptive variance with denominator n is…",
+    "back": "8/3. The mean is 4, so the squared deviations sum to 8; divide by 3."
+  },
+  {
+    "id": "fund-statistics.fc.010",
+    "topic": "fund-statistics.descriptive",
+    "front": "Q1=10 and Q3=18. Which observation is beyond the upper 1.5 IQR fence?",
+    "back": "31. IQR=8 and the upper fence is 18+12=30. A value strictly greater than 30 is flagged."
+  },
+  {
+    "id": "fund-statistics.fc.011",
+    "topic": "fund-statistics.distributions",
+    "front": "In simple random sampling without replacement, which statement defines the design?",
+    "back": "Every subset of the specified size is equally likely. Equal probability applies to each possible size-n sample, not merely to convenient units."
+  },
+  {
+    "id": "fund-statistics.fc.012",
+    "topic": "fund-statistics.distributions",
+    "front": "A stratified sample differs from a cluster sample because it…",
+    "back": "Samples within every stratum. A basic stratified design samples within every stratum; a cluster design selects clusters."
+  },
+  {
+    "id": "fund-statistics.fc.013",
+    "topic": "fund-statistics.distributions",
+    "front": "Every 10th record is selected after a random start. This is…",
+    "back": "Systematic sampling. Systematic sampling has a random start and a regular interval, but not all subsets are possible."
+  },
+  {
+    "id": "fund-statistics.fc.014",
+    "topic": "fund-statistics.distributions",
+    "front": "A very large volunteer survey can still have…",
+    "back": "Selection bias. Large n reduces random error, not systematic self-selection."
+  },
+  {
+    "id": "fund-statistics.fc.015",
+    "topic": "fund-statistics.distributions",
+    "front": "Which is a valid discrete probability distribution?",
+    "back": "0.2, 0.5, 0.3. Probabilities must be nonnegative and sum to 1."
+  },
+  {
+    "id": "fund-statistics.fc.016",
+    "topic": "fund-statistics.distributions",
+    "front": "X takes 0, 1, 2 with probabilities 0.2, 0.5, 0.3. E(X) is…",
+    "back": "1.1. E(X)=0×0.2+1×0.5+2×0.3=1.1."
+  },
+  {
+    "id": "fund-statistics.fc.017",
+    "topic": "fund-statistics.distributions",
+    "front": "For Bernoulli X with π=0.25, Var(X) is…",
+    "back": "0.1875. Bernoulli variance is π(1−π)=0.25×0.75."
+  },
+  {
+    "id": "fund-statistics.fc.018",
+    "topic": "fund-statistics.distributions",
+    "front": "For a continuous model, P(X=exactly a) is…",
+    "back": "0. A single point has zero area in a continuous distribution."
+  },
+  {
+    "id": "fund-statistics.fc.019",
+    "topic": "fund-statistics.distributions",
+    "front": "A probability density may exceed 1 because…",
+    "back": "Probability is area, rather than curve height. A sufficiently narrow density can exceed 1 while its total area is 1."
+  },
+  {
+    "id": "fund-statistics.fc.020",
+    "topic": "fund-statistics.distributions",
+    "front": "The CDF F(a) represents…",
+    "back": "P(X≤a). The cumulative distribution accumulates probability to the left."
+  },
+  {
+    "id": "fund-statistics.fc.021",
+    "topic": "fund-statistics.estimation",
+    "front": "Which is an estimand in a hospital waiting-time study?",
+    "back": "The unknown population mean waiting time. The estimand is the target parameter, rather than a rule or observed number."
+  },
+  {
+    "id": "fund-statistics.fc.022",
+    "topic": "fund-statistics.estimation",
+    "front": "The observed x̄=24.2 is an…",
+    "back": "Estimate. An estimate is the realised number calculated from one sample."
+  },
+  {
+    "id": "fund-statistics.fc.023",
+    "topic": "fund-statistics.estimation",
+    "front": "The sampling distribution of X̄ describes…",
+    "back": "Means across repeated same-size samples. It is a distribution of a statistic under repeated sampling."
+  },
+  {
+    "id": "fund-statistics.fc.024",
+    "topic": "fund-statistics.estimation",
+    "front": "For independent observations, E(X̄) equals…",
+    "back": "μ. The sample mean is unbiased for the population mean."
+  },
+  {
+    "id": "fund-statistics.fc.025",
+    "topic": "fund-statistics.estimation",
+    "front": "Population SD is 12 and n=36. SE(X̄) is…",
+    "back": "2. SE=12/√36=2."
+  },
+  {
+    "id": "fund-statistics.fc.026",
+    "topic": "fund-statistics.estimation",
+    "front": "To halve SE while holding population SD fixed, sample size must be…",
+    "back": "Quadrupled. SE scales as 1/√n."
+  },
+  {
+    "id": "fund-statistics.fc.027",
+    "topic": "fund-statistics.estimation",
+    "front": "Increasing sample size mechanically reduces…",
+    "back": "The SE of the mean. Sample means become more precise; individual population variation does not vanish."
+  },
+  {
+    "id": "fund-statistics.fc.028",
+    "topic": "fund-statistics.estimation",
+    "front": "An unbiased estimator means…",
+    "back": "Its repeated-sampling expectation equals the target. Unbiasedness concerns an average over the sampling distribution."
+  },
+  {
+    "id": "fund-statistics.fc.029",
+    "topic": "fund-statistics.estimation",
+    "front": "Which quantity is unbiased for population variance under independent sampling?",
+    "back": "S² with denominator n−1. The adjusted variance corrects the downward bias caused by estimating the mean."
+  },
+  {
+    "id": "fund-statistics.fc.030",
+    "topic": "fund-statistics.estimation",
+    "front": "For an independent sample of size 5, E(Vₙ) with denominator n is…",
+    "back": "0.8 σ². E(Vₙ)=(n−1)σ²/n=4σ²/5."
+  },
+  {
+    "id": "fund-statistics.fc.031",
+    "topic": "fund-statistics.confidence-intervals",
+    "front": "A confidence interval is generally…",
+    "back": "Estimate ± critical value × SE. A critical value converts standard error into a margin of error."
+  },
+  {
+    "id": "fund-statistics.fc.032",
+    "topic": "fund-statistics.confidence-intervals",
+    "front": "For x̄=80, known σ=12 and n=36, the 95% normal CI is approximately…",
+    "back": "[76.08,83.92]. SE=2 and the margin is 1.96×2=3.92."
+  },
+  {
+    "id": "fund-statistics.fc.033",
+    "topic": "fund-statistics.confidence-intervals",
+    "front": "A 90% two-sided normal CI uses z≈…",
+    "back": "1.645. The cumulative probability for the upper critical value is 0.95."
+  },
+  {
+    "id": "fund-statistics.fc.034",
+    "topic": "fund-statistics.confidence-intervals",
+    "front": "For unknown population variance and normal sampling, the mean interval uses…",
+    "back": "s and t with n−1 df. Estimate the SD with STDEV.S and account for its uncertainty with t."
+  },
+  {
+    "id": "fund-statistics.fc.035",
+    "topic": "fund-statistics.confidence-intervals",
+    "front": "For n=16, the two-sided t interval uses…",
+    "back": "15 df. One mean has been estimated, giving n−1 degrees of freedom."
+  },
+  {
+    "id": "fund-statistics.fc.036",
+    "topic": "fund-statistics.confidence-intervals",
+    "front": "A higher confidence level with the same data produces…",
+    "back": "A wider interval. It changes the critical value, not the data-based SE."
+  },
+  {
+    "id": "fund-statistics.fc.037",
+    "topic": "fund-statistics.confidence-intervals",
+    "front": "At fixed SD and critical value, quadrupling n changes interval width to…",
+    "back": "Half. Width scales with SE and hence 1/√n."
+  },
+  {
+    "id": "fund-statistics.fc.038",
+    "topic": "fund-statistics.confidence-intervals",
+    "front": "The 95% confidence level refers to…",
+    "back": "Coverage of repeated intervals from the procedure. Before sampling, endpoints vary. Approximately 95% of valid repeated intervals contain fixed μ."
+  },
+  {
+    "id": "fund-statistics.fc.039",
+    "topic": "fund-statistics.confidence-intervals",
+    "front": "For a mean interval, the full width equals…",
+    "back": "Twice the margin of error. Width is U−L=2×critical×SE."
+  },
+  {
+    "id": "fund-statistics.fc.040",
+    "topic": "fund-statistics.confidence-intervals",
+    "front": "120 successes among 200 observations gives p̂=…",
+    "back": "0.60. The sample proportion is successes divided by total n."
+  },
+  {
+    "id": "fund-statistics.fc.041",
+    "topic": "fund-statistics.hypothesis-tests",
+    "front": "Which correctly states a two-sided mean test?",
+    "back": "H₀:μ=100; Hₐ:μ≠100. Hypotheses concern the unknown population parameter."
+  },
+  {
+    "id": "fund-statistics.fc.042",
+    "topic": "fund-statistics.hypothesis-tests",
+    "front": "Known σ=10, n=100, x̄=103 and μ₀=100. The z statistic is…",
+    "back": "3. SE=10/10=1, so z=(103−100)/1=3."
+  },
+  {
+    "id": "fund-statistics.fc.043",
+    "topic": "fund-statistics.hypothesis-tests",
+    "front": "Unknown σ, n=16, x̄=12, s=4 and μ₀=10. The t statistic is…",
+    "back": "2 with 15 df. SE=4/4=1 and t=2/1=2; df=15."
+  },
+  {
+    "id": "fund-statistics.fc.044",
+    "topic": "fund-statistics.hypothesis-tests",
+    "front": "A two-sided test compares the observed statistic using…",
+    "back": "Its absolute magnitude. Both sufficiently positive and negative values can reject a two-sided null."
+  },
+  {
+    "id": "fund-statistics.fc.045",
+    "topic": "fund-statistics.hypothesis-tests",
+    "front": "For p=0.032 at α=0.05, the decision is…",
+    "back": "Reject H₀. 0.032<0.05. The sign affects interpretation, not this two-sided rule."
+  },
+  {
+    "id": "fund-statistics.fc.046",
+    "topic": "fund-statistics.hypothesis-tests",
+    "front": "For p=0.12 at α=0.05, a defensible conclusion is…",
+    "back": "Insufficient evidence to reject H₀. Failure to reject is not proof of equality."
+  },
+  {
+    "id": "fund-statistics.fc.047",
+    "topic": "fund-statistics.hypothesis-tests",
+    "front": "The p-value is conditional on…",
+    "back": "H₀ and the sampling model. It measures extreme-statistic probability under the null assumptions."
+  },
+  {
+    "id": "fund-statistics.fc.048",
+    "topic": "fund-statistics.hypothesis-tests",
+    "front": "A Type I error means…",
+    "back": "Rejecting a true H₀. α controls the Type I error probability under the model."
+  },
+  {
+    "id": "fund-statistics.fc.049",
+    "topic": "fund-statistics.hypothesis-tests",
+    "front": "Statistical power is…",
+    "back": "1−β. β is the probability of failing to reject a false null at a specified alternative."
+  },
+  {
+    "id": "fund-statistics.fc.050",
+    "topic": "fund-statistics.hypothesis-tests",
+    "front": "A proportion test under H₀:π=0.50 uses which SE?",
+    "back": "√[0.50×0.50/n]. The null reference variance uses the null parameter π₀."
+  },
+  {
+    "id": "fund-statistics.fc.051",
+    "topic": "fund-statistics.two-means",
+    "front": "Which comparison is paired?",
+    "back": "The same patients measured before and after treatment. Pairing comes from matching observations, not equal sample sizes."
+  },
+  {
+    "id": "fund-statistics.fc.052",
+    "topic": "fund-statistics.two-means",
+    "front": "For independent groups, SE of the difference is…",
+    "back": "√(s₁²/n₁+s₂²/n₂). Each independent mean contributes its variance; add these variances and take the square root."
+  },
+  {
+    "id": "fund-statistics.fc.053",
+    "topic": "fund-statistics.two-means",
+    "front": "If x̄₁=125 and x̄₂=129, x̄₁−x̄₂ is…",
+    "back": "−4. Subtract in the defined group order, retaining the outcome units."
+  },
+  {
+    "id": "fund-statistics.fc.054",
+    "topic": "fund-statistics.two-means",
+    "front": "Reversing group order changes a two-sided test by…",
+    "back": "Reversing the statistic’s sign but keeping its p-value. The magnitude and uncertainty of the contrast are unchanged."
+  },
+  {
+    "id": "fund-statistics.fc.055",
+    "topic": "fund-statistics.two-means",
+    "front": "The course’s main Topic 6 calculation uses…",
+    "back": "A large-sample normal approximation for independent means. The supplied slides use large independent samples and approximate t by z."
+  },
+  {
+    "id": "fund-statistics.fc.056",
+    "topic": "fund-statistics.two-means",
+    "front": "A 95% CI for μ₁−μ₂ entirely below zero indicates…",
+    "back": "An estimated lower population mean in group 1. The sign concerns the mean contrast; causal interpretation needs study-design support."
+  },
+  {
+    "id": "fund-statistics.fc.057",
+    "topic": "fund-statistics.two-means",
+    "front": "For a paired mean test, s_d is…",
+    "back": "Adjusted SD of the individual paired differences. Compute each dᵢ first, then its adjusted SD."
+  },
+  {
+    "id": "fund-statistics.fc.058",
+    "topic": "fund-statistics.two-means",
+    "front": "The pooled equal-variance two-mean test assumes…",
+    "back": "Equal population variances. Pooling is justified by a common-variance assumption."
+  },
+  {
+    "id": "fund-statistics.fc.059",
+    "topic": "fund-statistics.two-means",
+    "front": "For the pooled t test with n₁=20 and n₂=25, df is…",
+    "back": "43. df=n₁+n₂−2=43, under the equal-variance normal model."
+  },
+  {
+    "id": "fund-statistics.fc.060",
+    "topic": "fund-statistics.two-means",
+    "front": "A significance-star legend should be…",
+    "back": "Read for that specific paper. Authors use different star thresholds and footnotes."
+  }
+]

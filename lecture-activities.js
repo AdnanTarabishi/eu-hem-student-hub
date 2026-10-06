@@ -1069,6 +1069,9 @@
     },
   };
   root.LectureActivities = {
+    register(id, definition) {
+      definitions[id] = definition;
+    },
     init(container, activityIds) {
       container.textContent = "";
       for (const id of activityIds) {

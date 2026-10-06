@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "topic": "fund-statistics.distributions",
+  "topicNumber": 2,
+  "updated": "2026-10-06",
+  "heroTitle": "Give uncertainty\na distribution.",
+  "intro": "Connect sampling design to probability models, expected values, normal standardisation and the Student’s t table.",
+  "guide": "lectures/distributions.html",
+  "activities": [
+    "normal-distribution",
+    "fund-table"
+  ],
+  "attribution": "Original student study explanations based on Sara Capacci’s Fundamentals of Statistics for Healthcare (96498), AY 2026/27. Sources: Topic 2, slides 1–64; Exercise Book 2026/27, exercises 13–28; Statistical Tables, tables D.1 and D.2. Teaching examples and clarifications are original; consult Virtuale for authoritative materials."
+}

@@ -113,9 +113,9 @@ const executable = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || (fs.exists
     ok("when both exam sources fail, courses remain usable and no dates are invented");
 
     await page.getByRole("button", { name: "Lectures", exact: true }).click();
-    assert.equal(await page.locator(".course-card").count(), 2);
+    assert.equal(await page.locator(".course-card").count(), 3);
     await page.getByRole("button", { name: "Flashcards", exact: true }).click();
-    assert.equal(await page.locator(".course-card").count(), 1);
+    assert.equal(await page.locator(".course-card").count(), 2);
     await page.getByRole("button", { name: "All resources", exact: true }).click();
     await page.getByLabel("Filter by teaching status").selectOption("other");
     assert.equal(await page.locator(".course-card").count(), 0);
@@ -164,7 +164,7 @@ const executable = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || (fs.exists
     ok("keyboard tabs, glossary bookmarks, full-text search, topic suggestions and Escape preserve the selected library section");
 
     await page.locator(".notes-library-stat[data-filter=lectures]").click();
-    assert.equal(await page.locator(".course-card").count(), 2);
+    assert.equal(await page.locator(".course-card").count(), 3);
     assert.equal(await page.getAttribute("#notes-tab-courses", "aria-selected"), "true");
     await page.goBack();
     assert.equal(await page.getAttribute("#notes-tab-concepts", "aria-selected"), "true");

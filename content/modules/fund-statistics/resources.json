@@ -1,0 +1,189 @@
+[
+  {
+    "id": "fund-statistics.r.001",
+    "title": "Official course and syllabus",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/course/view.php?id=83042",
+    "date": "2026-10-06",
+    "description": "Official reference. Virtuale materials require your UniBo login; availability may change."
+  },
+  {
+    "id": "fund-statistics.r.002",
+    "title": "Official lecture slides",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/course/section.php?id=868155",
+    "date": "2026-10-06",
+    "description": "Official reference. Virtuale materials require your UniBo login; availability may change."
+  },
+  {
+    "id": "fund-statistics.r.003",
+    "title": "Official exercise book",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/mod/resource/view.php?id=2506265",
+    "date": "2026-10-06",
+    "description": "Official reference. Virtuale materials require your UniBo login; availability may change."
+  },
+  {
+    "id": "fund-statistics.r.004",
+    "title": "Official exercise datasets",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/mod/folder/view.php?id=2424957",
+    "date": "2026-10-06",
+    "description": "Official reference. Virtuale materials require your UniBo login; availability may change."
+  },
+  {
+    "id": "fund-statistics.r.005",
+    "title": "Formula sheet",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/mod/resource/view.php?id=2424960",
+    "date": "2026-10-06",
+    "description": "Official reference. Virtuale materials require your UniBo login; availability may change."
+  },
+  {
+    "id": "fund-statistics.r.006",
+    "title": "Excel-function list",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/mod/resource/view.php?id=2424961",
+    "date": "2026-10-06",
+    "description": "Official reference. Virtuale materials require your UniBo login; availability may change."
+  },
+  {
+    "id": "fund-statistics.r.007",
+    "title": "Statistical tables",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/mod/resource/view.php?id=2424958",
+    "date": "2026-10-06",
+    "description": "Official reference. Virtuale materials require your UniBo login; availability may change."
+  },
+  {
+    "id": "fund-statistics.r.008",
+    "title": "Understanding notation",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/mod/resource/view.php?id=2424962",
+    "date": "2026-10-06",
+    "description": "Official reference. Virtuale materials require your UniBo login; availability may change.",
+    "topic": "fund-statistics.estimation"
+  },
+  {
+    "id": "fund-statistics.r.009",
+    "title": "Mock test and exam notice",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/course/section.php?id=849793",
+    "date": "2026-10-06",
+    "description": "Official reference. Virtuale materials require your UniBo login; availability may change."
+  },
+  {
+    "id": "fund-statistics.r.010",
+    "title": "Descriptive Statistics LAB",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/mod/folder/view.php?id=2424965",
+    "date": "2026-10-06",
+    "description": "Official reference. Virtuale materials require your UniBo login; availability may change.",
+    "topic": "fund-statistics.descriptive"
+  },
+  {
+    "id": "fund-statistics.r.011",
+    "title": "Variance and adjusted variance exercise",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/mod/folder/view.php?id=2424966",
+    "date": "2026-10-06",
+    "description": "Official reference. Virtuale materials require your UniBo login; availability may change.",
+    "topic": "fund-statistics.estimation"
+  },
+  {
+    "id": "fund-statistics.r.012",
+    "title": "Inferential Statistics LAB",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/mod/folder/view.php?id=2424967",
+    "date": "2026-10-06",
+    "description": "Official reference. Virtuale materials require your UniBo login; availability may change.",
+    "topic": "fund-statistics.confidence-intervals"
+  },
+  {
+    "id": "fund-statistics.r.013",
+    "title": "Confidence intervals in research",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/mod/folder/view.php?id=2424964",
+    "date": "2026-10-06",
+    "description": "Official reference. Virtuale materials require your UniBo login; availability may change.",
+    "topic": "fund-statistics.confidence-intervals"
+  },
+  {
+    "id": "fund-statistics.r.014",
+    "title": "Word Equation Editor",
+    "type": "Website",
+    "url": "https://support.microsoft.com/en-us/office/equation-editor-6eac7d71-3c74-437b-80d3-c7dea24fdf3f",
+    "date": "2026-10-06",
+    "description": "Microsoft guidance for exam preparation."
+  },
+  {
+    "id": "fund-statistics.r.015",
+    "title": "Excel: relative, absolute and mixed references",
+    "type": "Website",
+    "url": "https://support.microsoft.com/en-us/office/switch-between-relative-absolute-and-mixed-references-dfec08cd-ae65-4f56-839e-5f0d8d0baca9",
+    "date": "2026-10-06",
+    "description": "Microsoft guidance for exam preparation."
+  },
+  {
+    "id": "fund-statistics.r.016",
+    "title": "Excel: fill formulas into adjacent cells",
+    "type": "Website",
+    "url": "https://support.microsoft.com/en-us/office/fill-a-formula-down-into-adjacent-cells-041edfe2-05bc-40e6-b933-ef48c3f308c6",
+    "date": "2026-10-06",
+    "description": "Microsoft guidance for exam preparation."
+  },
+  {
+    "id": "fund-statistics.r.017",
+    "title": "Official Topic 1 slides",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/mod/resource/view.php?id=2501362",
+    "date": "2026-10-06",
+    "description": "Official reference. Virtuale materials require your UniBo login; availability may change.",
+    "topic": "fund-statistics.descriptive"
+  },
+  {
+    "id": "fund-statistics.r.018",
+    "title": "Official Topic 2 slides",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/mod/resource/view.php?id=2424970",
+    "date": "2026-10-06",
+    "description": "Official reference. Virtuale materials require your UniBo login; availability may change.",
+    "topic": "fund-statistics.distributions"
+  },
+  {
+    "id": "fund-statistics.r.019",
+    "title": "Official Topic 3 slides",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/mod/resource/view.php?id=2522593",
+    "date": "2026-10-06",
+    "description": "Official reference. Virtuale materials require your UniBo login; availability may change.",
+    "topic": "fund-statistics.estimation"
+  },
+  {
+    "id": "fund-statistics.r.020",
+    "title": "Official Topic 4 slides",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/mod/resource/view.php?id=2424972",
+    "date": "2026-10-06",
+    "description": "Official reference. Virtuale materials require your UniBo login; availability may change.",
+    "topic": "fund-statistics.confidence-intervals"
+  },
+  {
+    "id": "fund-statistics.r.021",
+    "title": "Official Topic 5 slides",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/mod/resource/view.php?id=2424973",
+    "date": "2026-10-06",
+    "description": "Official reference. Virtuale materials require your UniBo login; availability may change.",
+    "topic": "fund-statistics.hypothesis-tests"
+  },
+  {
+    "id": "fund-statistics.r.022",
+    "title": "Official Topic 6 slides",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/mod/resource/view.php?id=2424974",
+    "date": "2026-10-06",
+    "description": "Official reference. Virtuale materials require your UniBo login; availability may change.",
+    "topic": "fund-statistics.two-means"
+  }
+]

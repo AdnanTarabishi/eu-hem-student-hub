@@ -3,6 +3,7 @@
   "private": true,
   "description": "Unofficial EU-HEM Student Hub (static site). This file only lists the tools used to test it; the website itself needs no installation.",
   "scripts": {
+    "test:fund-statistics": "node scripts/check-content.js && node tests/fund-statistics/math.test.js && node tests/fund-statistics/browser.test.js",
     "test": "node scripts/check-content.js && node tests/directory/backend.test.js integrations/directory-apps-script/Code.gs && node tests/directory/browser.test.js . && node tests/students/data.test.js . && node tests/students/browser.test.js . && node tests/guide/browser.test.js . && node tests/roadmap/data.test.js . && node tests/roadmap/browser.test.js . && node tests/handbook/data.test.js . && node tests/handbook/browser.test.js . && node tests/home/browser.test.js . && node tests/site/shell.test.js .",
     "test:notes": "node scripts/check-content.js && node tests/notes/schedule.test.js && node tests/notes/browser.test.js .",
     "test:lectures": "node scripts/check-content.js && node tests/lectures/math.test.js && node tests/lectures/browser.test.js .",

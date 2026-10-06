@@ -476,5 +476,204 @@
     "topics": [
       "fund-health-economics.physician-agency"
     ]
+  },
+  {
+    "id": "concept.fund-statistical-unit",
+    "term": "Statistical unit",
+    "explanation": "The entity on which a variable is recorded, such as a patient, admission or country. Specify it before describing or comparing the data.",
+    "topics": [
+      "fund-statistics.descriptive"
+    ]
+  },
+  {
+    "id": "concept.fund-measurement-scale",
+    "term": "Measurement scale",
+    "explanation": "Nominal categories label, ordinal categories order, interval values measure differences and ratio values also have a meaningful zero. The scale determines meaningful summaries.",
+    "topics": [
+      "fund-statistics.descriptive"
+    ]
+  },
+  {
+    "id": "concept.fund-descriptive-variance",
+    "term": "Descriptive variance",
+    "explanation": "The average squared deviation of the observed values from their mean, dividing by n. It describes the entered data.",
+    "topics": [
+      "fund-statistics.descriptive"
+    ]
+  },
+  {
+    "id": "concept.fund-adjusted-variance",
+    "term": "Adjusted sample variance",
+    "explanation": "The sum of squared deviations from the sample mean divided by n−1. Under independent sampling it is unbiased for population variance.",
+    "topics": [
+      "fund-statistics.descriptive",
+      "fund-statistics.estimation"
+    ]
+  },
+  {
+    "id": "concept.fund-quartile-convention",
+    "term": "Quartile convention",
+    "explanation": "A rule assigning a percentile to ordered observations. The course np rule and Excel interpolation can produce different quartiles for the same values.",
+    "topics": [
+      "fund-statistics.descriptive"
+    ]
+  },
+  {
+    "id": "concept.fund-sampling-bias",
+    "term": "Sampling bias",
+    "explanation": "A systematic error due to who can enter or responds to a sample. Increasing sample size reduces random uncertainty but does not automatically repair bias.",
+    "topics": [
+      "fund-statistics.distributions"
+    ]
+  },
+  {
+    "id": "concept.fund-cdf",
+    "term": "Cumulative distribution function",
+    "explanation": "F(x)=P(X≤x), the probability accumulated up to x. For a continuous model it is an area under the density, not the density height.",
+    "topics": [
+      "fund-statistics.distributions"
+    ]
+  },
+  {
+    "id": "concept.fund-bernoulli-variable",
+    "term": "Bernoulli variable",
+    "explanation": "A variable taking 1 with probability π and 0 with probability 1−π. Its mean is π and its variance is π(1−π).",
+    "topics": [
+      "fund-statistics.distributions"
+    ]
+  },
+  {
+    "id": "concept.fund-normal-standardisation",
+    "term": "Normal standardisation",
+    "explanation": "For a measurement from a normal model, z=(x−μ)/σ. For a sample mean, the denominator is its SE instead.",
+    "topics": [
+      "fund-statistics.distributions",
+      "fund-statistics.estimation"
+    ]
+  },
+  {
+    "id": "concept.fund-student-t",
+    "term": "Student’s t reference",
+    "explanation": "For independent normal measurements with unknown population variance, (X̄−μ)/(S/√n) follows t with n−1 degrees of freedom.",
+    "topics": [
+      "fund-statistics.distributions",
+      "fund-statistics.confidence-intervals",
+      "fund-statistics.hypothesis-tests"
+    ]
+  },
+  {
+    "id": "concept.fund-estimator-estimate",
+    "term": "Estimator and estimate",
+    "explanation": "An estimator is a random rule before sampling, such as X̄; an estimate is its realised numerical value after sampling, such as x̄=24.2.",
+    "topics": [
+      "fund-statistics.estimation"
+    ]
+  },
+  {
+    "id": "concept.fund-sampling-distribution",
+    "term": "Sampling distribution",
+    "explanation": "The distribution of an estimator across repeated samples drawn by the same design, distinct from the distribution of individual observations.",
+    "topics": [
+      "fund-statistics.estimation"
+    ]
+  },
+  {
+    "id": "concept.fund-standard-error",
+    "term": "Standard error",
+    "explanation": "The standard deviation of an estimator’s sampling distribution. For an independent sample mean it is σ/√n, estimated with s/√n.",
+    "topics": [
+      "fund-statistics.estimation",
+      "fund-statistics.confidence-intervals"
+    ]
+  },
+  {
+    "id": "concept.fund-clt",
+    "term": "Central limit theorem",
+    "explanation": "Under suitable conditions, standardised sample means approach a normal distribution as n grows. It does not make individual observations normal; n≥30 is only a heuristic.",
+    "topics": [
+      "fund-statistics.estimation"
+    ]
+  },
+  {
+    "id": "concept.fund-confidence-coverage",
+    "term": "Confidence coverage",
+    "explanation": "The long-run proportion of intervals from a procedure that cover the fixed population parameter, under its assumptions. It is not the fraction of individual values inside an interval.",
+    "topics": [
+      "fund-statistics.confidence-intervals"
+    ]
+  },
+  {
+    "id": "concept.fund-margin-of-error",
+    "term": "Margin of error",
+    "explanation": "The critical value multiplied by the estimate’s SE. A symmetric confidence interval has total width twice the margin of error.",
+    "topics": [
+      "fund-statistics.confidence-intervals"
+    ]
+  },
+  {
+    "id": "concept.fund-wald-proportion-interval",
+    "term": "Wald proportion interval",
+    "explanation": "The course normal interval p̂±z√[p̂(1−p̂)/n]. Check success and failure counts; unreliable cases can give endpoints outside [0,1].",
+    "topics": [
+      "fund-statistics.confidence-intervals"
+    ]
+  },
+  {
+    "id": "concept.fund-null-hypothesis",
+    "term": "Null hypothesis",
+    "explanation": "A specified statement about a population parameter that defines the test’s reference distribution, such as H₀: μ=μ₀.",
+    "topics": [
+      "fund-statistics.hypothesis-tests"
+    ]
+  },
+  {
+    "id": "concept.fund-p-value",
+    "term": "P-value",
+    "explanation": "The probability, assuming the null and model, of a test statistic at least as extreme as observed. It is not the probability that the null is true.",
+    "topics": [
+      "fund-statistics.hypothesis-tests",
+      "fund-statistics.two-means"
+    ]
+  },
+  {
+    "id": "concept.fund-type-i-error",
+    "term": "Type I error",
+    "explanation": "Rejecting a true null hypothesis. A pre-specified significance level α controls this error probability under the test model.",
+    "topics": [
+      "fund-statistics.hypothesis-tests"
+    ]
+  },
+  {
+    "id": "concept.fund-power",
+    "term": "Statistical power",
+    "explanation": "The probability of rejecting a false null at a specified alternative: 1−β. It depends on effect size, uncertainty, sample size and the testing rule.",
+    "topics": [
+      "fund-statistics.hypothesis-tests"
+    ]
+  },
+  {
+    "id": "concept.fund-independent-paired",
+    "term": "Independent and paired samples",
+    "explanation": "Independent groups have unrelated observations. Paired data link observations, such as repeated measurements on the same patients; analyse their differences.",
+    "topics": [
+      "fund-statistics.two-means"
+    ]
+  },
+  {
+    "id": "concept.fund-two-mean-standard-error",
+    "term": "SE of an independent mean difference",
+    "explanation": "For independent groups, the estimated SE is √(s₁²/n₁+s₂²/n₂). The group order determines the sign of the contrast but not this SE.",
+    "topics": [
+      "fund-statistics.two-means"
+    ]
+  },
+  {
+    "id": "concept.fund-clinical-statistical-significance",
+    "term": "Clinical and statistical significance",
+    "explanation": "A small p-value indicates evidence against a specified null under the model. Clinical importance depends on the effect size, outcome, context and consequences.",
+    "topics": [
+      "fund-statistics.hypothesis-tests",
+      "fund-statistics.two-means"
+    ]
   }
 ]
