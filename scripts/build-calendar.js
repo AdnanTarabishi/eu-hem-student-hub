@@ -229,7 +229,13 @@ const VTIMEZONE = [
 // A fixed timestamp keeps the file identical when nothing changed (no needless updates)
 const DTSTAMP = "DTSTAMP:20260101T000000Z";
 
-function buildCalendar(calendarName, sessions, exams) {
+// Key dates from programme.json that belong in a calendar: exact days only (a month-only date
+// such as "May 2027" has no day to put it on), and no "classes" ranges (the classes themselves are there)
+function calendarKeyDates(cohort) {
+  return programmeRules.keyDates(cohort).filter((d) => !d.approximate && d.start.length === 10 && d.kind !== "classes");
+}
+
+function buildCalendar(calendarName, sessions, exams, keyDates = []) {
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
@@ -237,12 +243,27 @@ function buildCalendar(calendarName, sessions, exams) {
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
     `X-WR-CALNAME:${calendarName}`,
-    "X-WR-CALDESC:Unofficial. Classes and exams from the official UniBo pages.",
+    "X-WR-CALDESC:Unofficial. Classes and exams from the official UniBo pages; exam periods and deadlines from the EU-HEM handbook.",
     "X-WR-TIMEZONE:Europe/Rome",
     "REFRESH-INTERVAL;VALUE=DURATION:PT6H",
     "X-PUBLISHED-TTL:PT6H",
     ...VTIMEZONE,
   ];
+
+  for (const keyDate of keyDates) {
+    const description = [keyDate.note, "Source: EU-HEM Student Handbook. Dates can change; check the official pages."]
+      .filter(Boolean).join("\n");
+    lines.push(
+      "BEGIN:VEVENT",
+      `UID:${uid(`key-${keyDate.id}`)}`,
+      DTSTAMP,
+      `DTSTART;VALUE=DATE:${icsDate(keyDate.start)}`,
+      `DTEND;VALUE=DATE:${icsDate(nextDayKey(keyDate.end))}`, // the end of an all-day event is the day after
+      `SUMMARY:${icsEscape(keyDate.label)}`,
+      `DESCRIPTION:${icsEscape(description)}`,
+      "END:VEVENT",
+    );
+  }
 
   for (const s of sessions) {
     const description = [s.teacher, s.note, s.online ? "Online" : "", "Source: official UniBo timetable"]
@@ -324,10 +345,11 @@ async function main() {
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
   const entries = [];
   let changed = 0;
+  const keyDates = calendarKeyDates(cohort);
 
   // 1. The full calendar (same file name as before, so existing subscriptions keep working)
   const fullFile = `eu-hem-${cohort.id}-year${term.year}.ics`;
-  changed += writeIfChanged(fullFile, buildCalendar(`EU-HEM 1st year ${cohort.label}`, sessions, exams));
+  changed += writeIfChanged(fullFile, buildCalendar(`EU-HEM 1st year ${cohort.label}`, sessions, exams, keyDates));
   entries.push({ cohort: cohort.id, term: term.id, year: term.year, file: fullFile, plan: null });
 
   // 2. One calendar per possible study plan (worked out from the rules)
@@ -337,7 +359,7 @@ async function main() {
     const file = `eu-hem-${cohort.id}-y${term.year}s${term.semester}-${key}.ics`;
     const mySessions = sessions.filter((s) => codes.includes(s.courseCode));
     const myExams = exams.filter((e) => e.courseCodes.some((c) => codes.includes(c)));
-    changed += writeIfChanged(file, buildCalendar(`EU-HEM my courses ${cohort.label} (${key})`, mySessions, myExams));
+    changed += writeIfChanged(file, buildCalendar(`EU-HEM my courses ${cohort.label} (${key})`, mySessions, myExams, keyDates));
     entries.push({ cohort: cohort.id, term: term.id, year: term.year, file, plan: key, courses: codes });
   }
 

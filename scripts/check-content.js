@@ -743,6 +743,28 @@ function checkSources() {
   }
 }
 
+// Key dates of each cohort (calendar page, homepage, calendar files): see programme.js
+function checkKeyDates() {
+  const programme = JSON.parse(fs.readFileSync(path.join(ROOT, "content/programme.json"), "utf8"));
+  for (const cohort of programme.cohorts) {
+    const seen = new Set();
+    for (const [i, keyDate] of (cohort.keyDates || []).entries()) {
+      const where = `content/programme.json cohort ${cohort.id} keyDates ${keyDate.id || `#${i + 1}`}`;
+      if (!ID_PATTERN.test(keyDate.id || "")) error(where, "needs an id like \"exams-term-1\"");
+      if (seen.has(keyDate.id)) error(where, "id is used twice");
+      seen.add(keyDate.id);
+      if (!programmeRules.KEY_DATE_KINDS.includes(keyDate.kind)) error(where, `kind must be one of ${programmeRules.KEY_DATE_KINDS.join(", ")}`);
+      requireText(keyDate, "label", where);
+      if (!keyDate.source) error(where, "needs a source (an id from content/sources.json)");
+      const valid = (value) => /^\d{4}-\d{2}(-\d{2})?$/.test(value || "") && !isNaN(Date.parse(value));
+      if (!valid(keyDate.start) || !valid(keyDate.end)) { error(where, "start and end must be YYYY-MM-DD, or YYYY-MM if only the month is known"); continue; }
+      if (keyDate.start.length !== keyDate.end.length) error(where, "start and end must both be days or both be months");
+      if (keyDate.end < keyDate.start) error(where, "ends before it starts");
+      if (keyDate.start.length === 7 && !keyDate.approximate) error(where, "a month-only date must have \"approximate\": true");
+    }
+  }
+}
+
 // The {official:id} / {tip:id} markers of one guide line; problems are reported at "at"
 function checkSourceMarkers(line, at) {
   const found = [...line.matchAll(SOURCE_MARKER)];
@@ -980,6 +1002,7 @@ async function main() {
 
   // --- City guides (docs/content/<city>-guide.md) ---
   checkSources(); // before the guides: they use its ids
+  checkKeyDates();
   checkCityGuides();
 
   // --- topics (first, so everything else can link to them) ---
