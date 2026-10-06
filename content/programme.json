@@ -25,7 +25,7 @@
         "deadlineSource": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/study-plan-eu-hem"
       },
       "keyDates": [
-        { "id": "classes-term-1", "kind": "classes", "label": "Classes, first term", "start": "2026-09-14", "end": "2026-10-24", "note": "Dates from the handbook. Some courses started on 7 September in the UniBo timetable.", "source": "euhem-handbook-2026" },
+        { "id": "classes-term-1", "kind": "classes", "label": "Classes, first term", "start": "2026-09-14", "end": "2026-10-24", "note": "The programme officially starts on 14 September. The optional crash courses (no attendance required) start one week earlier, on 7 September.", "source": "euhem-handbook-2026" },
         { "id": "exams-term-1", "kind": "exams", "label": "Exams, first term", "start": "2026-10-26", "end": "2026-11-07", "source": "euhem-handbook-2026" },
         { "id": "classes-term-2", "kind": "classes", "label": "Classes, second term", "start": "2026-11-09", "end": "2026-12-16", "source": "euhem-handbook-2026" },
         { "id": "exams-term-2", "kind": "exams", "label": "Exams, second term", "start": "2026-12-17", "end": "2026-12-23", "source": "euhem-handbook-2026" },
