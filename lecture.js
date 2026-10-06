@@ -453,6 +453,14 @@ async function startLecture() {
       .querySelectorAll("[data-view]")
       .forEach((b) => (b.hidden = !views.includes(b.dataset.view)));
     bindConceptCards();
+    if (found.course.id === "quant-methods" && window.QuantMethods) {
+      await QuantMethods.prepare(found.module, read);
+      QuantMethods.attachLecture({topic:found.topic,module:found.module,config,selectQuestion:questionId=>{
+        const index=questions.findIndex(q=>q.id===questionId);
+        if(index<0)return;
+        state.index=index;state.review=false;persist();renderQuiz();showView("practice");$("question-heading")?.focus();
+      }});
+    }
     $("lecture-status").hidden = true;
     $("lecture-content").hidden = false;
     if (config.activities.includes("sampling")) simulate();

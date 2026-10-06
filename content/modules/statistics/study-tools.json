@@ -180,6 +180,26 @@
   ],
   "calculations": [
     {
+      "id": "union",
+      "title": "Combine overlapping events",
+      "kind": "union",
+      "topic": "statistics.risk-uncertainty",
+      "section": 5,
+      "hint": "Add the two event probabilities, then subtract the overlap once.",
+      "variants": [
+        {
+          "a": 0.4,
+          "b": 0.3,
+          "overlap": 0.1
+        },
+        {
+          "a": 0.65,
+          "b": 0.25,
+          "overlap": 0.15
+        }
+      ]
+    },
+    {
       "id": "se",
       "title": "Precision of a sample mean",
       "kind": "se",
@@ -339,6 +359,19 @@
     }
   ],
   "interpretations": [
+    {
+      "id": "population",
+      "title": "Name the target population",
+      "prompt": "A random sample of 100 children living in Bologna has an average weight of 28 kg. Define the population, sample, estimand and estimate. Explain one limit on generalisation.",
+      "model": "The population is all children living in Bologna, and the sample is the 100 selected children. The estimand is the population mean weight; 28 kg is the sample estimate. The sampling method and coverage matter for generalising to Bologna children. This sample does not automatically represent all children in Italy.",
+      "rubric": [
+        "Separates the population from the sample",
+        "Names the population mean as the estimand and 28 kg as the estimate",
+        "Limits generalisation to the intended population and sampling assumptions"
+      ],
+      "topic": "statistics.risk-uncertainty",
+      "section": 2
+    },
     {
       "id": "ppv",
       "title": "Explain a positive result",

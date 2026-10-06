@@ -10,6 +10,15 @@
     let prompt, values, labels, steps;
     const se = p.sd / Math.sqrt(p.n);
     switch (kind) {
+      case "union":
+        prompt = `In one probability model, P(A) = ${p.a}, P(B) = ${p.b} and P(A ∩ B) = ${p.overlap}. Find P(A ∪ B), the probability of A or B, as a decimal.`;
+        labels = ["Union probability (0 to 1)"];
+        values = [p.a + p.b - p.overlap];
+        steps = [
+          `Add P(A) + P(B) = ${f(p.a + p.b)}.`,
+          `The overlap was counted twice. Subtract it once: ${f(p.a + p.b)} − ${p.overlap} = ${f(values[0])}.`,
+        ];
+        break;
       case "se":
         prompt = `An independent sample has n = ${p.n}. The population SD is ${p.sd} kg. Find the standard error of the sample mean in kg.`;
         labels = ["Standard error (kg)"];
@@ -108,7 +117,7 @@
       tolerances: values.map((v, i) =>
         labels[i] === "Degrees of freedom"
           ? 0
-          : kind === "normal" || kind === "binomial"
+          : kind === "normal" || kind === "binomial" || kind === "union"
             ? 0.0001
             : kind === "ppv"
               ? 0.1

@@ -57,7 +57,7 @@ progress, mistake review, daily spaced review, balanced mixed MCQ sessions,
 typed calculations, written interpretation, a concept/formula reference and
 synthetic Stata-output practice. It is linked from the course lecture list and
 every Statistics lecture. `study-tools.json` contains original teaching prompts,
-eight calculations with two examples each, six interpretation prompts, fourteen
+nine calculations with two examples each, seven interpretation prompts, fourteen
 formula entries, six dependency-map nodes and three Stata examples.
 
 `statistics-study.js` owns the pure scheduling and session engine. Lecture and
@@ -102,3 +102,42 @@ content references, independently calculated numeric results, shuffled balanced
 sessions, deadline/score idempotence, all eight browser flows, local drafts,
 backup/restore, mobile/dark rendering, offline reload and unavailable storage.
 `npm run test:lectures` remains the shared-lecture regression suite.
+
+
+## Course 96525 visual redesign
+
+The integrated Quantitative Methods course uses a scoped shared identity in
+`quant-methods.css` and `quant-methods.js`: Inter typography, an off-white canvas,
+forest-green interactions, lime chart accents and consistent cards and navigation.
+The course overview, six Statistics lectures and all eight study tools share it;
+other courses retain their existing layouts. Both real modules are represented:
+Statistics for Healthcare (74948, Martin Forster) and Econometrics (32626,
+Elisabetta De Cao). Econometrics syllabus topics are clearly awaiting lecture
+materials; they are not presented as completed guides.
+
+`study-path.json` defines the six learning goals, useful keywords, linked
+calculation/interpretation/formula IDs and a guide-section reference for every
+MCQ. The overview has a live known-SD confidence-interval demonstration and
+resume links; the classroom has concept search, class outcomes and future-session
+links. Each lecture has a reading outline, contextual checks that select the
+actual quiz question without resetting earlier responses, and related practice
+plus previous/next classes.
+
+The study centre accepts `?topic=<stable-topic-id>` for lecture-specific
+calculations, explanations, formulas, mistakes and daily review. The chosen
+focus survives a reload in the URL. Progress totals and mixed mocks still cover
+the six classes; the interface states this explicitly. A new union-probability
+exercise and population/estimand interpretation prompt give Class 1 the same
+numeric and written practice coverage as the remaining classes. Existing learner
+state and question IDs stay compatible with saved backups.
+
+Review checks cover all 120 question-to-section mappings and every learning
+path's exercises, formulas and model answers. The existing math/state suite adds
+independent references for both new union-probability examples. Public data read
+on an initial visit is retained for offline use even while the service worker is
+starting. The new design does not require new packages, fonts or a backend.
+
+`npm run test:quant-methods` verifies the two-module overview, live interval demo,
+concept search, contextual checks, focus controls, saved progress, 320/390/768px
+layouts, dark mode, offline navigation and other-course isolation. Use it together
+with `npm run test:statistics` and `npm run test:lectures` before publishing.

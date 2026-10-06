@@ -144,6 +144,7 @@ assert.equal(damaged.workshops[7], false);
 assert.equal(damaged.workshops[10], true);
 // Independent reference answers exercise both examples of every calculation.
 const expected = {
+  union: [[0.6], [0.75]],
   se: [[2], [2]],
   ci: [
     [66.080072, 73.919928],
@@ -191,8 +192,8 @@ for (const ex of tools.calculations)
 // Validate all published content references, dependencies and learner-facing answer keys.
 assert.equal(tools.schemaVersion, 1);
 assert.equal(tools.nodes.length, 6);
-assert.equal(tools.calculations.length, 8);
-assert.equal(tools.interpretations.length, 6);
+assert.equal(tools.calculations.length, 9);
+assert.equal(tools.interpretations.length, 7);
 for (const key of [
   "nodes",
   "formulas",
@@ -235,4 +236,41 @@ for (const n of tools.nodes)
   }
 console.log(
   "Statistics state, scheduling, exam scoring, reference calculations and study content checks passed.",
+);
+
+const pathway = require("../../content/modules/statistics/study-path.json");
+assert.equal(pathway.course, "quant-methods");
+assert.equal(pathway.schemaVersion, 1);
+assert.equal(pathway.lessons.length, 6);
+for (const [i, l] of pathway.lessons.entries()) {
+  assert.equal(l.topic, topics[i].id);
+  assert.equal(l.classNumber, i + 1);
+  assert.equal(l.outcomes.length, 3);
+  const qs = bank.filter((q) => q.topic === l.topic);
+  assert.deepEqual(
+    Object.keys(l.questionSections),
+    qs.map((q) => q.id),
+  );
+  const config = JSON.parse(
+    fs.readFileSync("content/modules/statistics/" + topics[i].lecture),
+  );
+  const sectionCount =
+    fs
+      .readFileSync("content/modules/statistics/" + config.guide, "utf8")
+      .split('class="section-intro"').length - 1;
+  for (const section of Object.values(l.questionSections))
+    assert.ok(
+      Number.isInteger(section) && section >= 1 && section <= sectionCount,
+    );
+  for (const type of ["calculations", "interpretations", "formulas"]) {
+    assert.ok(l[type].length > 0);
+    for (const id of l[type])
+      assert.ok(
+        tools[type].some((x) => x.id === id && x.topic === l.topic),
+        type + " connected to " + l.topic,
+      );
+  }
+}
+console.log(
+  "Connected learning path passed: all 120 questions link to valid guide sections; every class has numeric, written and formula practice.",
 );

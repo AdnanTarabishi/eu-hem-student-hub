@@ -11,11 +11,12 @@
     <title>Statistics Study Centre · EU-HEM Student Hub</title>
     <link rel="stylesheet" href="style.css?v=709b9303" />
     <link rel="stylesheet" href="statistics.css?v=a312d09c" />
+    <link rel="stylesheet" href="quant-methods.css?v=d3f352c4" />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png" />
     <script src="theme.js?v=d51d4769"></script>
   </head>
-  <body class="statistics-page">
+  <body class="statistics-page qm-page qm-study-page">
     <a class="skip-link" href="#main">Skip to study content</a>
     <header class="site-header">
       <div class="container">
@@ -29,10 +30,11 @@
           data-current="notes"
           aria-label="Main menu"
         ></nav>
-        <script src="site-nav.js?v=6f76a7a0"></script>
+        <script src="site-nav.js?v=0901859b"></script>
       </div>
     </header>
     <main class="container study-main" id="main" tabindex="-1">
+      <div id="qm-study-identity"></div>
       <p>
         <a href="course.html?course=quant-methods&amp;tab=lectures"
           >← All Statistics lectures</a
@@ -42,10 +44,10 @@
         <p class="study-kicker">
           Statistics for Healthcare · Martin Forster · Classes 1–6
         </p>
-        <h1>Make your next study session count.</h1>
+        <h1>Learn it. Use it.<br /><em>Make it stick.</em></h1>
         <p>
-          Follow your progress, revisit difficult ideas and practise turning
-          numbers into an explanation.
+          A practice workspace connected to your lectures. Recall an idea, work
+          through the numbers and explain the result.
         </p>
         <a class="study-button" href="#review">What should I review today? →</a>
       </div>
@@ -59,6 +61,17 @@
         </p></noscript
       >
       <div id="study-content" hidden>
+        <div class="qm-study-context">
+          <div>
+            <label for="study-topic-filter">Your study focus</label
+            ><select id="study-topic-filter">
+              <option value="">All six classes</option>
+            </select>
+          </div>
+          <p id="study-focus-note">
+            Choose a class to see its connected exercises and formulas.
+          </p>
+        </div>
         <nav class="study-nav" aria-label="Statistics study tools">
           <a href="#dashboard">Progress</a><a href="#mistakes">Mistakes</a
           ><a href="#review">Daily review</a><a href="#mock">Mock test</a
@@ -92,8 +105,9 @@
     <script defer src="notes-progress.js?v=23382d79"></script>
     <script defer src="lecture-activities.js?v=6dc83792"></script>
     <script defer src="statistics-study.js?v=f0fe60e8"></script>
-    <script defer src="statistics-calculations.js?v=8dfc694f"></script>
-    <script defer src="statistics.js?v=68b3ce0c"></script>
+    <script defer src="statistics-calculations.js?v=85621092"></script>
+    <script defer src="quant-methods.js?v=88e12444"></script>
+    <script defer src="statistics.js?v=9aa21732"></script>
     <script defer src="pwa.js?v=c9212bf8"></script>
   </body>
 </html>

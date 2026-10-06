@@ -111,6 +111,7 @@ function moduleOfTopic(topicId) {
 // ----- Header -----
 
 function renderHeader(tab, tabs) {
+  if (page.course.id === "quant-methods" && window.QuantMethods) return QuantMethods.header({ pageLink }, tab, tabs);
   const info = page.course.info;
   const term = page.data.term;
   const header = createElement("section", "card course-header");
@@ -182,10 +183,11 @@ function renderPage() {
 
   const panel = createElement("section", "card course-panel");
   coursePage.appendChild(panel);
-  if (tab === "overview") renderOverview(panel);
+  const custom = page.course.id === "quant-methods" && window.QuantMethods && QuantMethods.render(panel, tab, {course:page.course,pageLink,planStatusBox});
+  if (tab === "overview" && !custom) renderOverview(panel);
   if (tab === "schedule") renderSchedule(panel, params);
   if (tab === "exam") renderExam(panel);
-  if (tab === "lectures") renderLectures(panel);
+  if (tab === "lectures" && !custom) renderLectures(panel);
   if (tab === "topics") renderTopics(panel, params);
   if (tab === "concepts") renderConcepts(panel);
   if (tab === "practice") renderPractice(panel, { course: page.course, params, topicTitle, topicLink, navigate });
@@ -758,7 +760,9 @@ async function initCoursePage() {
 
   if (!requested) return showMessage("No course was chosen.");
   try {
-    page.data = await loadAll();
+    const publicFiles = new Map();
+    const read = async file => { const text = await fetchText(file); if (text !== null) publicFiles.set(file, text); return text; };
+    page.data = await loadAll(read);
     page.settings = page.data.settings;
     // Old links used module IDs (e.g. course=fund-health-economics): forward to the course
     let courseId = requested;
@@ -776,12 +780,14 @@ async function initCoursePage() {
 
     for (const module of page.course.modules) {
       const withNotes = module.topics.filter((t) => t.notes);
-      const loaded = await Promise.all(withNotes.map((t) => loadNotes(module, t)));
+      const loaded = await Promise.all(withNotes.map((t) => loadNotes(module, t, read)));
       withNotes.forEach((topic, i) => { if (loaded[i]) page.notesByTopic[topic.id] = loaded[i]; });
     }
 
     document.title = `${page.course.info.name} – EU-HEM Student Hub`;
+    if (page.course.id === "quant-methods" && window.QuantMethods) await QuantMethods.prepare(page.course.modules.find(m=>m.id==="statistics"),read);
     renderPage();
+    if (page.course.id === "quant-methods" && window.QuantMethods) QuantMethods.cacheFiles(publicFiles);
     window.addEventListener("popstate", renderPage);
     loadUniboData();
   } catch (error) {

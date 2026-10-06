@@ -49,109 +49,25 @@
     S.save(state);
     $("storage-warning").hidden = !S.storageUnavailable();
   }
+  let focusTopic = "";
+  const focusBank = () =>
+    focusTopic ? bank.filter((q) => q.topic === focusTopic) : bank;
+  const focusedTools = (list) =>
+    focusTopic ? list.filter((item) => item.topic === focusTopic) : list;
+  function updateFocus(value) {
+    focusTopic = topics.some((t) => t.id === value) ? value : "";
+    mistakeTopic = focusTopic;
+    const url = new URL(location.href);
+    if (focusTopic) url.searchParams.set("topic", focusTopic);
+    else url.searchParams.delete("topic");
+    history.replaceState(null, "", url);
+    $("study-topic-filter").value = focusTopic;
+    if (focusTopic)
+      selectedNode = tools.nodes.find((n) => n.topic === focusTopic).id;
+    render();
+  }
   function questionSection(q) {
-    const i = topics.findIndex((t) => t.id === q.topic),
-      cat = q.category;
-    const groups = [
-      [
-        ["Risk", "Models"],
-        ["Population", "Sample", "Census"],
-        [
-          "Experiment",
-          "Sample space",
-          "Events",
-          "Exclusivity",
-          "Exhaustiveness",
-        ],
-        ["Axioms", "Complement", "Uniform law", "Impossible event"],
-        ["Union", "Intersection", "Overlap", "Repeated experiments"],
-        ["Counting samples", "Simple random sampling"],
-      ],
-      [
-        ["Conditional probability", "Reversing the condition", "Conditioning"],
-        ["Independence", "Exclusive vs independent", "Replacement"],
-        [
-          "Sensitivity",
-          "Specificity",
-          "Joint table",
-          "Predictive value",
-          "Base rates",
-        ],
-        ["Measurement scales", "Interval scale"],
-        ["Random variables", "PMF", "Expectation", "Variance"],
-        ["Bernoulli", "Binomial", "Binomial probability"],
-      ],
-      [
-        ["PDF", "Density", "CDF", "Interval probability"],
-        ["Uniform probability", "Uniform moments", "Uniform shape"],
-        ["Normal notation", "Normal location", "Standardisation"],
-        [
-          "Upper tail",
-          "Central interval",
-          "Normal symmetry",
-          "Probability calculation",
-          "Landmarks",
-        ],
-        ["Skewness", "Approximation"],
-        ["Transformation", "Conditional expectation", "Independence"],
-      ],
-      [
-        ["Randomisation", "RCT"],
-        ["Cohort", "Case-control", "Cross-sectional", "Before–after"],
-        ["Confounding", "Balance", "RCT limitations"],
-        [
-          "Data preparation",
-          "Categorical summary",
-          "Graph choice",
-          "Scatterplot",
-          "Density histogram",
-        ],
-        ["Sample median", "Sample variance", "Units", "Outliers"],
-        ["Change convention", "Comparing graphs"],
-      ],
-      [
-        ["Population & sample"],
-        ["The three terms", "Random sampling", "Sampling error"],
-        ["Sampling distributions", "Random variables", "SD versus SE"],
-        ["Unbiasedness", "Consistency", "The normal distribution"],
-        [
-          "Calculate standard error",
-          "Increase the sample size",
-          "Choose a sample size",
-          "Exercise 5.1",
-          "Exercise 5.2",
-        ],
-        [
-          "95% confidence interval",
-          "Interpret confidence",
-          "Compare precision",
-          "99% confidence interval",
-        ],
-      ],
-      [
-        ["Hypotheses", "Two-sided tests"],
-        ["Known variance", "Direction"],
-        [
-          "Unknown variance",
-          "Degrees of freedom",
-          "Normality",
-          "T distribution",
-          "Worked statistic",
-        ],
-        ["P-value"],
-        [
-          "Critical values",
-          "Decision",
-          "Confidence interval",
-          "Matching levels",
-          "Significance threshold",
-        ],
-        ["Non-rejection", "Type I error", "Type II error"],
-        ["Clinical importance", "Reporting"],
-      ],
-    ];
-    const section = groups[i]?.findIndex((group) => group.includes(cat));
-    return section >= 0 ? section + 1 : 1;
+    return window.QuantMethods.questionSection(q);
   }
   function heading(title, text) {
     return `<div class="study-heading"><h2 id="view-title" tabindex="-1">${title}</h2><p>${text}</p></div>`;
@@ -187,6 +103,30 @@
       (notice
         ? `<p class="study-notice" role="status">${esc(notice)}</p>`
         : "") + renderers[view]();
+    const context = $("study-focus-note");
+    const filtered = [
+      "mistakes",
+      "review",
+      "calculations",
+      "interpretation",
+      "reference",
+    ].includes(view);
+    context.textContent =
+      focusTopic && filtered
+        ? `Connected to ${topicLabel(focusTopic)}. Switch to all classes to broaden your practice.`
+        : view === "mock"
+          ? "Mixed tests connect all six covered classes, regardless of your study focus."
+          : view === "dashboard"
+            ? "Course-wide progress. Choose a class to narrow the exercises and reference tools."
+            : "Choose a class to see its connected exercises and formulas.";
+    if (focusTopic && filtered) {
+      const back = document.createElement("a");
+      back.href = link(focusTopic);
+      back.textContent = "Back to this lecture →";
+      back.className = "qm-filter-link";
+      context.appendChild(document.createElement("br"));
+      context.appendChild(back);
+    }
     bindView();
     tickLabel();
     if (focus) $("view-title")?.focus();
@@ -265,15 +205,15 @@
     );
   }
   function review() {
-    const due = S.due(state, bank, todayKey(), false),
-      unseen = bank.filter((q) => !state.questions[q.id]);
+    const due = S.due(state, focusBank(), todayKey(), false),
+      unseen = focusBank().filter((q) => !state.questions[q.id]);
     let html = heading(
       "A little review, at the right time.",
       "Questions you miss return today. Correct answers return in three days by default; Hard, Good and Easy adjust the next date. Dates use this device’s local calendar.",
     );
     if (state.active?.kind === "review") return html + runner();
     html += `<article class="study-card"><h3>${due.length} due · ${unseen.length} new</h3><p>Start with difficult questions and older due items. Add new questions when you have room in your session.</p><label class="study-check"><input type="checkbox" id="review-new" checked> Include new questions (up to 12 questions total)</label><div class="study-actions">${button("start-review", "Start today’s review", !due.length && !unseen.length ? "disabled" : "")}</div>${active() ? "<p>Finish or discard the current session before starting another.</p>" : ""}</article>`;
-    const future = bank
+    const future = focusBank()
       .filter((q) => state.questions[q.id]?.due > todayKey())
       .sort((a, b) =>
         state.questions[a.id].due.localeCompare(state.questions[b.id].due),
@@ -325,7 +265,7 @@
         "Work it out, then check your method.",
         "Enter numbers, including signs. Probabilities use decimals except where a percentage is requested. Each exercise has two teaching examples, a hint and a worked solution.",
       ) +
-      tools.calculations
+      focusedTools(tools.calculations)
         .map((ex) => {
           const saved = state.exercises[ex.id] || {},
             variant = Number.isInteger(saved.variant)
@@ -343,7 +283,7 @@
         "Explain what the numbers mean.",
         "Write a response before opening the model. Use the checklist to assess your own explanation. The checklist is self-assessment; your text is saved locally and is not sent for automatic grading.",
       ) +
-      tools.interpretations
+      focusedTools(tools.interpretations)
         .map((ex) => {
           const r = state.explanations[ex.id] || {};
           return `<article class="study-card"><p class="study-meta">${esc(topicLabel(ex.topic))}</p><h3>${esc(ex.title)}</h3><p>${esc(ex.prompt)}</p><label for="draft-${ex.id}">Your explanation</label><textarea id="draft-${ex.id}" data-draft="${ex.id}" maxlength="8000" placeholder="Explain it in your own words…">${esc(typeof r.text === "string" ? r.text : "")}</textarea><p class="study-meta">Saved on this device as you type.</p><details><summary>Model explanation & self-assessment</summary><p>${esc(ex.model)}</p>${ex.rubric.map((text, i) => `<label class="study-check"><input type="checkbox" data-rubric="${ex.id}" data-index="${i}" ${r.checks?.[i] === true ? "checked" : ""}>${esc(text)}</label>`).join("")}<p class="study-meta" id="rubric-${ex.id}">${ex.rubric.filter((_, i) => r.checks?.[i] === true).length} / ${ex.rubric.length} criteria you marked as met.</p><a href="${link(ex.topic, ex.section)}">Review the lecture →</a></details></article>`;
@@ -371,7 +311,7 @@
   }
   function formulaList(query) {
     const terms = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
-    const list = tools.formulas.filter((f) =>
+    const list = focusedTools(tools.formulas).filter((f) =>
       terms.every((t) =>
         [f.title, f.expression, f.purpose, f.assumptions, topicLabel(f.topic)]
           .join(" ")
@@ -556,7 +496,11 @@
     const node = e.target.closest("[data-node]");
     if (node) {
       selectedNode = node.dataset.node;
-      if (view === "reference") render();
+      if (view === "reference") {
+        if (focusTopic)
+          updateFocus(tools.nodes.find((n) => n.id === selectedNode).topic);
+        else render();
+      }
       return;
     }
     const el = e.target.closest("[data-action]");
@@ -574,10 +518,13 @@
         });
         return;
       case "start-review":
-        startSession(S.due(state, bank, todayKey(), $("review-new").checked), {
-          kind: "review",
-          size: 12,
-        });
+        startSession(
+          S.due(state, focusBank(), todayKey(), $("review-new").checked),
+          {
+            kind: "review",
+            size: 12,
+          },
+        );
         return;
       case "retry-mistakes":
         startSession(
@@ -684,7 +631,9 @@
       }
       case "node":
         selectedNode = el.dataset.id;
-        render();
+        if (focusTopic)
+          updateFocus(tools.nodes.find((n) => n.id === selectedNode).topic);
+        else render();
         document
           .querySelector(`[data-action="node"][data-id="${selectedNode}"]`)
           ?.focus({ preventScroll: true });
@@ -757,7 +706,20 @@
       tools = JSON.parse(raw);
       if (tools.schemaVersion !== 1)
         throw new Error("Unsupported study tools version.");
+      await QuantMethods.prepare(module, read);
+      $("qm-study-identity").appendChild(QuantMethods.identity("practice"));
       topics = module.topics.filter((t) => t.lecture);
+      const filter = $("study-topic-filter");
+      topics.forEach((t) => filter.appendChild(new Option(t.title, t.id)));
+      const requestedFocus = new URLSearchParams(location.search).get("topic");
+      focusTopic = topics.some((t) => t.id === requestedFocus)
+        ? requestedFocus
+        : "";
+      mistakeTopic = focusTopic;
+      filter.value = focusTopic;
+      if (focusTopic)
+        selectedNode = tools.nodes.find((n) => n.topic === focusTopic).id;
+      filter.addEventListener("change", (e) => updateFocus(e.target.value));
       bank = module.questions.filter(
         (q) => q.type === "mcq" && topics.some((t) => t.id === q.topic),
       );
