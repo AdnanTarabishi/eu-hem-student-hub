@@ -210,7 +210,7 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
     const figures = await page.locator("#numbers .journey-figure").allTextContents();
     assert.ok(figures.some((f) => /104/.test(f) && /students/.test(f)) && figures.some((f) => /24/.test(f) && /nationalities/.test(f)), figures.join("|"));
     assert.match(await page.locator("#numbers .source-badge").textContent(), /Welcome Days 2026/);
-    assert.deepStrictEqual(await page.locator(".journey-year").allTextContents(), ["2009", "2010", "2012", "2015", "2018", "2021", "2025"]);
+    assert.deepStrictEqual(await page.locator(".journey-year").allTextContents(), ["2009", "2010", "2012", "2015", "2018", "2021", "2022", "2025"]);
     assert.match(await page.locator("#fees").textContent(), /€4,000.*€9,000/s);
     assert.match(await page.locator("#fees").textContent(), /2026\/27/);
     assert.match(await page.locator(".journey-erasmus-caveat").textContent(), /balance/);
@@ -232,8 +232,9 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
     assert.doesNotMatch(await page.locator("#emergency").textContent(), /\[S\d+\]/);
     assert.strictEqual(await page.locator("#site-nav a[href='support.html'][aria-current='page']").count(), 1, "menu marks the page");
     const mailboxes = await page.locator("a[href^='mailto:']").evaluateAll((els) => [...new Set(els.map((e) => e.getAttribute("href")))].sort());
-    assert.deepStrictEqual(mailboxes, ["mailto:didatticasociale.euhem@unibo.it", "mailto:eu-hem@mci.edu", "mailto:euhem@eshpm.eur.nl", "mailto:garante@unibo.it"]);
-    assert.strictEqual(await page.locator("#contacts-uio a[href^='mailto:']").count(), 0, "Oslo: no mailbox, official page only");
+    assert.deepStrictEqual(mailboxes, ["mailto:didatticasociale.euhem@unibo.it", "mailto:eu-hem@mci.edu", "mailto:euhem@eshpm.eur.nl", "mailto:garante@unibo.it",
+      "mailto:med-studieinfo@medisin.uio.no", "mailto:mentalhealth@mci.edu", "mailto:safe@eur.nl"]);
+    assert.strictEqual(await page.locator("#contacts-uio .support-coordinator a[href='mailto:med-studieinfo@medisin.uio.no']").count(), 1, "Oslo: service mailbox");
     assert.strictEqual(await page.locator("#contacts-uio a[href='https://www.uio.no/english/studies/programmes/hem-master/contact/']").count(), 1);
     assert.strictEqual(await page.locator(".support-staff-page a").getAttribute("href"), "https://www.eur.nl/en/eshpm/master/european-master-health-economics-and-management/contact");
     assert.doesNotMatch(await page.locator("main").textContent(), /\b(Prof|Dr|Mr|Ms)\.\s+[A-Z]|docs\.google/);

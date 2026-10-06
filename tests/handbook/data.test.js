@@ -137,7 +137,7 @@ t("journey: facts from the brief (104 students, 24 nationalities, fees, four tit
   assert.strictEqual(J.euros(events.fees.byCohort["2026-2028"].programmeCountries), "€4,000");
   assert.strictEqual(J.euros(events.fees.byCohort["2026-2028"].partnerCountries), "€9,000");
   assert.strictEqual(events.jointDegree.titles.length, 4);
-  assert.deepStrictEqual(events.history.events.map((e) => e.year), [2009, 2010, 2012, 2015, 2018, 2021, 2025]);
+  assert.deepStrictEqual(events.history.events.map((e) => e.year), [2009, 2010, 2012, 2015, 2018, 2021, 2022, 2025]);
   assert.match(events.erasmus.caveat, /balance/);
 });
 
@@ -147,7 +147,8 @@ global.parseGuide = require(path.join(ROOT, "guide-data.js")).parseGuide;
 const S = require(path.join(ROOT, "support.js"));
 
 t("support: only the approved role mailboxes appear in the handbook content", () => {
-  const allowed = ["didatticasociale.euhem@unibo.it", "euhem@eshpm.eur.nl", "eu-hem@mci.edu", "garante@unibo.it"];
+  const allowed = ["didatticasociale.euhem@unibo.it", "euhem@eshpm.eur.nl", "eu-hem@mci.edu", "garante@unibo.it",
+    "safe@eur.nl", "mentalhealth@mci.edu", "med-studieinfo@medisin.uio.no"];
   for (const file of ["content/sources.json", "content/academic-rules.json", "content/programme-events.json", "content/people.json"]) {
     for (const email of S.emailsIn(read(file))) assert.ok(allowed.includes(email), `${file}: ${email}`);
   }
@@ -176,7 +177,7 @@ t("support: outcomes point to the right people", () => {
   const practical = S.supportOutcome(people, { topic: "practical", university: "mci" });
   assert.strictEqual(practical.contacts[0].coordinator.email, "eu-hem@mci.edu");
   const oslo = S.supportOutcome(people, { topic: "practical", university: "uio" });
-  assert.strictEqual(oslo.contacts[0].coordinator.email, undefined, "Oslo: official page, no mailbox");
+  assert.strictEqual(oslo.contacts[0].coordinator.email, "med-studieinfo@medisin.uio.no", "Oslo: service mailbox");
   assert.strictEqual(oslo.contacts[0].coordinator.source, "uio-hem-contact");
   const safety = S.supportOutcome(people, { topic: "safety", university: "eur" });
   assert.ok(safety.emergency);

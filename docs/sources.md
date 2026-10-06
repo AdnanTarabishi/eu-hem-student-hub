@@ -47,7 +47,8 @@ The kind in the guide marker must match the source: `{tip:esn-bologna-guide-2026
 - Every source has a title, a known type and a past `lastChecked` date; links are `https://`.
 - A price in a guide has a `[S#]` tag or a `{official:…}`/`{tip:…}` marker.
 - **Privacy:** only these role mailboxes may appear in the handbook content: `didatticasociale.euhem@unibo.it`,
-  `euhem@eshpm.eur.nl`, `eu-hem@mci.edu`, `garante@unibo.it` (list `ROLE_MAILBOXES` in the checker).
+  `euhem@eshpm.eur.nl`, `eu-hem@mci.edu`, `garante@unibo.it`, and the service mailboxes `safe@eur.nl`,
+  `mentalhealth@mci.edu`, `med-studieinfo@medisin.uio.no` (list `ROLE_MAILBOXES` in the checker).
   Never staff or student names, never personal emails, never Google Docs/Sheets links.
 
 ## Adding a new cohort's handbook

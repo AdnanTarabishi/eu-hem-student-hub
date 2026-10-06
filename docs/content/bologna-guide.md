@@ -223,7 +223,7 @@ UniBo's living-costs page has no date, and some of its prices are clearly old (i
 
 These places were **recommended by earlier EU-HEM students** in their 2026 welcome presentation. They are personal suggestions, not reviews or rankings, and places change: check before you go {tip:student-reps-2026}.
 
-- **Eating out:** Panini di Miro (the EU-HEM favourite), Bottega Portici (tortellini, with space to study), Osteria dell'Orsa (good when your family visits), Ca' Pelletti (terrace facing the Two Towers), Indegno (Bolognese street food), Ristorante è Cucina Leopardi (set dinner), Pizza ii Portico, Pizzeria Due Torri, Da Michele (Neapolitan pizza), Casa Altabella (pizza, also gluten-free), Città d'Oro (sushi and Asian), Patatatà (fries).
+- **Eating out:** Panini di Miro (the EU-HEM favourite), Bottega Portici (tortellini, with space to study), Osteria dell'Orsa (good when your family visits), Ca' Pelletti (terrace facing the Two Towers), Indegno (Bolognese street food), Ristorante è Cucina Leopardi (set dinner), Pizzeria Due Torri, Da Michele (Neapolitan pizza), Casa Altabella (pizza, also gluten-free), Città d'Oro (sushi and Asian), Patatatà (fries).
 - **Breakfast and cafés:** Pappare, Floriano, Naama Café, Vasiniko, and Senza Nome, a bar run by deaf staff.
 - **Aperitivo:** Impero and Neaera (buffet aperitivo), La Prosciutteria, Cucchiaio d'Oro.
 - **Gelato:** Santo Stefano, Cremeria Mascarella, Cremeria Cavour, Cremeria La Vecchia Stalla, Gelateria Mazzini, Gelateria Gianni.
