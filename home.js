@@ -13,6 +13,7 @@
 // │ STUDENT_COUNT     Students in the cohort.                                    │
 // │ COUNTRY_COUNT     Countries they come from.                                  │
 // │ TRACK_COUNT       Specialisation tracks in semester 2.                       │
+// │ COHORT_LABEL      The cohort these numbers describe, e.g. "2026–2028".      │
 // │ PROGRAM_END_DATE  "YYYY-MM-DD". "Estimated days to graduation" is counted    │
 // │                   from it every day; it's hidden if empty or in the past.    │
 // │ DIRECTORY_IS_DEMO true while students.html shows fictional demo profiles.    │
@@ -22,6 +23,7 @@ const HERO_IMAGE_ALT = "The EU-HEM 2026 cohort together under the porticoes of a
 const STUDENT_COUNT = 104;
 const COUNTRY_COUNT = 23;
 const TRACK_COUNT = 4;
+const COHORT_LABEL = "2026–2028";
 const PROGRAM_END_DATE = "2028-09-30";
 const DIRECTORY_IS_DEMO = true;
 
@@ -42,16 +44,22 @@ function daysUntil(dateKey) {
   return Math.round((Date.UTC(y, m - 1, d) - today) / 86400000);
 }
 
+// "2028-09-30" -> "30 Sep 2028"
+function formatEndDate(dateKey) {
+  const [y, m, d] = dateKey.split("-").map(Number);
+  return `${d} ${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][m - 1]} ${y}`;
+}
+
 // The four numbers in the hero. The days are left out when the date is missing or past.
 function homeStats(today = null) {
   const days = today === null ? daysUntil(PROGRAM_END_DATE) : today;
   const stats = [
-    { value: STUDENT_COUNT, label: "Students", caption: "A diverse community", icon: "students" },
-    { value: COUNTRY_COUNT, label: "Countries", caption: "An international cohort", icon: "globe" },
-    { value: TRACK_COUNT, label: "Tracks", caption: "Different paths, one goal", icon: "graduation" },
+    { value: STUDENT_COUNT, label: "Students", caption: `Cohort ${COHORT_LABEL}`, icon: "students" },
+    { value: COUNTRY_COUNT, label: "Countries", caption: "Cohort overview", icon: "globe" },
+    { value: TRACK_COUNT, label: "Tracks", caption: "Different perspectives", icon: "route" },
   ];
   if (days !== null && days > 0) {
-    stats.push({ value: days, label: "Days to graduation", caption: "An estimate for your cohort", noCount: true, icon: "calendar" });
+    stats.push({ value: days, label: "Estimated days left", caption: `${formatEndDate(PROGRAM_END_DATE)} · provisional`, noCount: true, icon: "calendar" });
   }
   return stats;
 }
@@ -169,7 +177,7 @@ function fillWeekGreeting() {
 // ----- Below the hero: texts that use the settings (filled when the page has loaded) -----
 function fillHomeSettings() {
   for (const element of document.querySelectorAll("[data-setting]")) {
-    const value = { STUDENT_COUNT, COUNTRY_COUNT, TRACK_COUNT }[element.dataset.setting];
+    const value = { STUDENT_COUNT, COUNTRY_COUNT, TRACK_COUNT, COHORT_LABEL }[element.dataset.setting];
     if (value !== undefined) element.textContent = value;
   }
   const demo = document.querySelector(".people-note");
@@ -212,10 +220,10 @@ async function fillCityCards() {
 const PROGRAMME_CITIES = [
   { name: "Bologna", x: 527.1, y: 84.1 },
   { name: "Oslo", x: 522.5, y: 40.6 },
-  { name: "Rotterdam", x: 510.1, y: 61.9 },
-  { name: "Innsbruck", x: 526.7, y: 75.6 },
+  { name: "Rotterdam", x: 510.1, y: 61.9, labelLeft: true },
+  { name: "Innsbruck", x: 526.7, y: 75.6, labelLeft: true },
 ];
-const COMMUNITY_MAP_VIEW = "20 10 960 400";
+const COMMUNITY_MAP_VIEW = "470 22 100 76"; // Europe, around the four cities
 
 async function fillCommunityMap() {
   const box = document.getElementById("community-map");
@@ -233,14 +241,21 @@ async function fillCommunityMap() {
       const halo = document.createElementNS(ns, "circle");
       halo.setAttribute("cx", city.x);
       halo.setAttribute("cy", city.y);
-      halo.setAttribute("r", "14");
+      halo.setAttribute("r", "2.6");
       halo.setAttribute("class", "city-halo");
       const dot = document.createElementNS(ns, "circle");
       dot.setAttribute("cx", city.x);
       dot.setAttribute("cy", city.y);
-      dot.setAttribute("r", "6");
+      dot.setAttribute("r", "1.1");
       dot.setAttribute("class", "city-dot");
-      svg.append(halo, dot);
+      // City name next to the dot (Bologna and Innsbruck are close together: one left, one right)
+      const label = document.createElementNS(ns, "text");
+      label.setAttribute("x", city.x + (city.labelLeft ? -3.2 : 3.2));
+      label.setAttribute("y", city.y + 1.3);
+      label.setAttribute("text-anchor", city.labelLeft ? "end" : "start");
+      label.setAttribute("class", "city-label");
+      label.textContent = city.name;
+      svg.append(halo, dot, label);
     }
     box.replaceChildren(document.importNode(svg, true));
   } catch {

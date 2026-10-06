@@ -8,12 +8,12 @@
 //   "Update available · Reload", and old saved copies are deleted.
 // Nothing personal is stored here: only public site files and public data.
 
-const VERSION = "8f973058";
+const VERSION = "f03d4512";
 const SITE_CACHE = `site-${VERSION}`;
 const DATA_CACHE = "data"; // kept across versions, so offline data survives an update
 
 const SITE_FILES = [
-  "./", "index.html", "studyplan.html", "timetable.html", "exams.html", "calendar.html",
+  "./", "index.html", "home.css", "studyplan.html", "timetable.html", "exams.html", "calendar.html",
   "notes.html", "course.html", "create.html", "city-guide.html", "announcements.html", "students.html",
   "privacy.html", "contact.html", "tracks.html", "thesis.html", "join.html",
   "join.css", "directory-config.js", "directory-options.js", "join.js",

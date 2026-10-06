@@ -7,17 +7,17 @@
 // - The header gets a soft shadow and shrinks a little while scrolling
 // - Footer with links (deep navy)
 
+// Four groups (Study, Resources, Community, Life), from the editorial homepage design (October 2026).
+// Home is the brand lockup. search.js indexes these pages; the footer shows the same groups.
 const SITE_MENU = [
-  { key: "home", label: "Home", href: "index.html", icon: "home" },
-  { key: "students", label: "Students", href: "students.html", icon: "students" },
-  { key: "tracks", label: "Tracks", href: "tracks.html", icon: "route" },
   {
-    label: "Academics",
+    label: "Study",
     items: [
-      { key: "studyplan", label: "Study Plan", href: "studyplan.html", icon: "study-plan", desc: "Choose courses, track your CFU" },
-      { key: "timetable", label: "Timetable", href: "timetable.html", icon: "timetable", desc: "Classes and rooms, live from UniBo" },
-      { key: "exams", label: "Exams", href: "exams.html", icon: "exams", desc: "Dates and registration windows" },
-      { key: "calendar", label: "Calendar", href: "calendar.html", icon: "calendar", desc: "Subscribe on your phone" },
+      { key: "timetable", label: "Timetable", href: "timetable.html", icon: "timetable", desc: "Classes, times and rooms, live from UniBo" },
+      { key: "exams", label: "Exams & deadlines", href: "exams.html", icon: "exams", desc: "Published dates and registration" },
+      { key: "studyplan", label: "Study Plan", href: "studyplan.html", icon: "study-plan", desc: "Your courses and CFU" },
+      { key: "calendar", label: "Calendar & key dates", href: "calendar.html", icon: "calendar", desc: "Subscribe on your phone" },
+      { key: "tracks", label: "Tracks Explorer", href: "tracks.html", icon: "route", desc: "Compare the four specialisations" },
       { key: "academic-rules", label: "Academic Rules", href: "academic-rules.html", icon: "scale", desc: "Re-sits, grades, plagiarism and AI" },
       { key: "journey", label: "Programme Journey", href: "journey.html", icon: "graduation", desc: "Your two years, degree, grants, fees" },
     ],
@@ -25,21 +25,32 @@ const SITE_MENU = [
   {
     label: "Resources",
     items: [
-      { key: "notes", label: "Notes & Resources", href: "notes.html", icon: "notes", desc: "Notes, flashcards, practice" },
+      { key: "notes", label: "Notes & Resources", href: "notes.html", icon: "notes", desc: "Notes, flashcards and practice" },
+      { key: "thesis", label: "Thesis Explorer", href: "thesis.html", icon: "library", desc: "Find inspiration in past topics" },
       { key: "announcements", label: "Announcements", href: "announcements.html", icon: "announcements", desc: "News for the cohort" },
-      { key: "links", label: "Useful Links", href: "index.html#links", icon: "link", desc: "Virtuale, Studenti Online and more" },
+      { key: "links", label: "Official links", href: "index.html#links", icon: "link", desc: "Virtuale, Studenti Online and more" },
     ],
   },
-  { key: "thesis", label: "Thesis", href: "thesis.html", icon: "library" },
-  { key: "city-guide", label: "Life", href: "city-guide.html", icon: "guide" },
   {
-    label: "About",
+    label: "Community",
     items: [
+      { key: "students", label: "Students & cohort map", href: "students.html", icon: "students", desc: "Meet the people behind EU-HEM" },
+      { key: "join", label: "Join the Directory", href: "join.html", icon: "plus", desc: "Your profile, your privacy choices" },
       { key: "support", label: "Support & Contacts", href: "support.html", icon: "phone", desc: "Who to ask, wellbeing, leave" },
-      { key: "roadmap", label: "Roadmap & Updates", href: "roadmap.html", icon: "route", desc: "What is new and what is next" },
-      { key: "about", label: "About the Hub", href: "index.html#about", icon: "info", desc: "Student-run, free and unofficial" },
+      { key: "roadmap", label: "Roadmap & Updates", href: "roadmap.html", icon: "rocket", desc: "What is new and what is next" },
+      { key: "about", label: "About the Hub", href: "index.html#about", icon: "info", desc: "Independent and student-run" },
       { key: "privacy", label: "Privacy", href: "privacy.html", icon: "lock", desc: "What stays on your device" },
       { key: "contact", label: "Contact", href: "contact.html", icon: "mail", desc: "Questions, corrections and ideas" },
+    ],
+  },
+  {
+    label: "Life",
+    items: [
+      { key: "city-guide", label: "All city guides", href: "city-guide.html", icon: "guide", desc: "Prepare, arrive and feel at home" },
+      { key: "bologna", label: "Bologna", href: "city-guide.html?city=bologna", icon: "map-pin", desc: "Italy" },
+      { key: "oslo", label: "Oslo", href: "city-guide.html?city=oslo", icon: "map-pin", desc: "Norway" },
+      { key: "innsbruck", label: "Innsbruck", href: "city-guide.html?city=innsbruck", icon: "map-pin", desc: "Austria" },
+      { key: "rotterdam", label: "Rotterdam", href: "city-guide.html?city=rotterdam", icon: "map-pin", desc: "Netherlands" },
     ],
   },
 ];
@@ -91,6 +102,7 @@ function brandLockup(make) {
     const titleLink = title.querySelector("a") || title;
     titleLink.textContent = "";
     titleLink.setAttribute("aria-label", "EU-HEM Student Hub, home");
+    if (current === "home") titleLink.setAttribute("aria-current", "page"); // Home has no menu item: the brand is Home
     titleLink.appendChild(brandLockup(make));
     brand.appendChild(title);
   }
@@ -172,8 +184,6 @@ function brandLockup(make) {
     if (item.key === current) {
       a.setAttribute("aria-current", "page");
       a.classList.add("is-current");
-    } else if (current === "join" && item.key === "students") {
-      a.classList.add("is-current"); // join.html belongs to Students
     }
     return a;
   };
@@ -334,39 +344,69 @@ function brandLockup(make) {
     li.appendChild(a);
     return li;
   }
+  // The official systems, in the footer of every page (index.html#links points here)
+  const OFFICIAL_LINKS = [
+    ["Virtuale (UniBo)", "https://virtuale.unibo.it"],
+    ["Studenti Online", "https://studenti.unibo.it"],
+    ["AlmaEsami", "https://almaesami.unibo.it/almaesami/welcome.htm"],
+    ["EU-HEM course website", "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement"],
+  ];
+  function footerColumn(title, links, id) {
+    const column = make("section", "footer-column");
+    if (id) column.id = id;
+    column.appendChild(make("h2", "footer-heading", title));
+    const list = make("ul");
+    for (const [label, href] of links) list.appendChild(footerLink(label, href));
+    column.appendChild(list);
+    return column;
+  }
   function buildFooter() {
     const footer = document.querySelector(".site-footer .container");
     if (!footer) return;
     footer.textContent = "";
-    const row = make("div", "footer-row");
-    const brandBox = make("div", "footer-brand");
+    const grid = make("div", "footer-grid");
+
+    // Brand and "about" (index.html#about points here)
+    const brandBox = make("section", "footer-brand");
+    brandBox.id = "about";
     const home = make("a", "footer-brand-link");
     home.href = "index.html";
     home.setAttribute("aria-label", "EU-HEM Student Hub, home");
     home.appendChild(brandLockup(make));
-    brandBox.append(home, make("p", null, "A student-built home for EU-HEM: academics, resources, mobility and student life."));
-    row.appendChild(brandBox);
+    brandBox.append(home,
+      make("p", null, "Less searching. More learning, living and connecting."),
+      make("p", "footer-about", "Independent, student-run and free. Your study plan stays on your device."));
+    const brandLinks = make("ul", "footer-brand-links");
+    for (const [label, href] of [["Home", "index.html"], ["Getting started", "index.html#welcome"]]) brandLinks.appendChild(footerLink(label, href));
+    brandBox.appendChild(brandLinks);
+    grid.appendChild(brandBox);
+
+    // One column per menu group, then the official systems
     const links = make("nav", "footer-links");
     links.setAttribute("aria-label", "Footer");
-    const list = make("ul");
-    const all = SITE_MENU.flatMap((entry) => entry.items || [entry]);
-    for (const item of all) list.appendChild(footerLink(item.label === "Life" ? "City Guide" : item.label, item.href));
-    for (const [label, href] of [["Getting started", "index.html#welcome"],
-      ["GitHub", "https://github.com/AdnanTarabishi/eu-hem-student-hub"]]) list.appendChild(footerLink(label, href));
+    for (const group of SITE_MENU) {
+      links.appendChild(footerColumn(group.label, (group.items || [group]).map((item) => [item.label, item.href])));
+    }
+    const official = footerColumn("Official platforms", [...OFFICIAL_LINKS, ["Source on GitHub", "https://github.com/AdnanTarabishi/eu-hem-student-hub"]], "links");
     const install = make("li", "footer-install");
     install.hidden = true; // shown by pwa.js where the browser can install the app
     const installButton = make("button", "footer-link", "Install the app");
     installButton.type = "button";
     installButton.addEventListener("click", () => document.dispatchEvent(new CustomEvent("install-app")));
     install.appendChild(installButton);
-    list.appendChild(install);
-    links.appendChild(list);
-    row.appendChild(links);
-    footer.appendChild(row);
-    footer.appendChild(make("p", "footer-bottom",
-      "Unofficial student project. Not an official website of the University of Bologna, EU-HEM, or any partner university. " +
-      "Your study plan and progress are saved only on your device."));
+    official.querySelector("ul").appendChild(install);
+    links.appendChild(official);
+    grid.appendChild(links);
+    footer.appendChild(grid);
+
+    const bottom = make("div", "footer-bottom");
+    bottom.append(
+      make("p", null, "Unofficial student project. Not an official website of the University of Bologna, EU-HEM, or any partner university. " +
+        "Your study plan and progress are saved only on your device."),
+      make("p", "footer-signature", "One programme. A shared journey."));
+    footer.appendChild(bottom);
   }
+
   const afterLoad = () => {
     addSkipLink();
     buildFooter();

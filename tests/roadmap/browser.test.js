@@ -234,10 +234,10 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   await page.waitForFunction(() => !document.querySelector(".search-dialog").open);
   ok("search finds plans (marked as not available yet) and releases, never drafts");
 
-  await page.click('.menu-group:has-text("About")');
+  await page.click('.menu-group:has-text("Community")');
   assert.ok(await page.isVisible('.menu-dropdown a[href="roadmap.html"]'));
   assert.ok(await page.$('.footer-links a[href="roadmap.html"]'));
-  ok("About menu and footer link to Roadmap & Updates");
+  ok("Community menu and footer link to Roadmap & Updates");
   await page.context().close();
 
   /* ----- Phones, dark mode, reduced motion ----- */
