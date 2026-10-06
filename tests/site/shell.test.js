@@ -40,18 +40,17 @@ const PAGES = ['index.html', 'studyplan.html', 'tracks.html', 'timetable.html', 
   assert.strictEqual(await page.textContent('.site-title .brand-product'), 'Student Hub');
   assert.strictEqual(await page.getAttribute('.site-title a', 'aria-label'), 'EU-HEM Student Hub, home');
   assert.deepStrictEqual(await page.$$eval('.menu > .menu-item > :first-child', (all) => all.map((e) => e.textContent.trim())),
-    ['Academics', 'Resources', 'Community', 'Life', 'About']);
-  assert.ok(await page.$('.menu-group.is-current:text("Academics")'));
-  assert.strictEqual(await page.getAttribute('.menu-dropdown a[href="tracks.html"]', 'aria-current'), 'page');
+    ['Home', 'Students', 'Tracks', 'Academics', 'Resources', 'Thesis', 'Life', 'Contact']);
+  assert.strictEqual(await page.getAttribute('.menu > .menu-item > a[href="tracks.html"]', 'aria-current'), 'page');
   assert.ok(await page.isVisible('.header-cta'));
   assert.strictEqual(await page.isVisible('.menu-toggle'), false);
-  ok('header: brand lockup, five menu groups, current group and page marked, Join the Directory, no phone menu button');
+  ok('header: brand lockup, eight menu entries, current page marked, Join the Directory, no phone menu button');
 
   await page.focus('.menu-group:text("Resources")');
   await page.keyboard.press('Enter');
   assert.strictEqual(await page.getAttribute('.menu-group:text("Resources")', 'aria-expanded'), 'true');
-  assert.ok(await page.isVisible('.menu-dropdown a[href="thesis.html"]'));
-  assert.match(await page.textContent('.menu-dropdown a[href="thesis.html"]'), /Explore past thesis topics/);
+  assert.ok(await page.isVisible('.menu-dropdown a[href="notes.html"]'));
+  assert.match(await page.textContent('.menu-dropdown a[href="notes.html"]'), /Notes, flashcards, practice/);
   await page.keyboard.press('Escape');
   assert.strictEqual(await page.getAttribute('.menu-group:text("Resources")', 'aria-expanded'), 'false');
   assert.strictEqual(await page.evaluate(() => document.activeElement.textContent.trim()), 'Resources');
@@ -66,16 +65,16 @@ const PAGES = ['index.html', 'studyplan.html', 'tracks.html', 'timetable.html', 
 
   await page.evaluate(() => window.scrollTo(0, 400));
   await page.waitForFunction(() => document.querySelector('.site-header').classList.contains('is-compact'));
-  const footer = await page.$$eval('.footer-grid h3', (all) => all.map((h) => h.textContent));
-  assert.deepStrictEqual(footer, ['Academics', 'Resources', 'Community', 'Life', 'Help', 'About']);
+  const footer = await page.$$eval('.footer-links a', (all) => all.map((a) => a.textContent));
+  for (const label of ['Home', 'Timetable', 'Notes & Resources', 'City Guide', 'Privacy', 'Contact', 'GitHub']) assert.ok(footer.includes(label), label);
   assert.match(await page.textContent('.footer-bottom'), /Unofficial student project/);
-  ok('header compacts on scroll; navy footer with six groups and the unofficial disclaimer');
+  ok('header compacts on scroll; slim navy footer with every page and the unofficial disclaimer');
   await page.context().close();
 
   page = await open('join.html');
   assert.strictEqual(await page.$('.header-cta'), null);
-  assert.ok(await page.$('.menu-group.is-current:text("Community")'));
-  ok('the Join page hides the header Join button and marks Community');
+  assert.ok(await page.$('.menu > .menu-item > a.is-current[href="students.html"]'));
+  ok('the Join page hides the header Join button and marks Students');
   await page.context().close();
 
   /* ----- Phone drawer ----- */

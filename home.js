@@ -46,11 +46,13 @@ function daysUntil(dateKey) {
 function homeStats(today = null) {
   const days = today === null ? daysUntil(PROGRAM_END_DATE) : today;
   const stats = [
-    { value: STUDENT_COUNT, label: "Students", icon: "students" },
-    { value: COUNTRY_COUNT, label: "Countries", icon: "globe" },
-    { value: TRACK_COUNT, label: "Tracks", icon: "route" },
+    { value: STUDENT_COUNT, label: "Students", caption: "A diverse community", icon: "students" },
+    { value: COUNTRY_COUNT, label: "Countries", caption: "An international cohort", icon: "globe" },
+    { value: TRACK_COUNT, label: "Tracks", caption: "Different paths, one goal", icon: "graduation" },
   ];
-  if (days !== null && days > 0) stats.push({ value: days, label: "Estimated days to graduation", noCount: true, icon: "graduation" });
+  if (days !== null && days > 0) {
+    stats.push({ value: days, label: "Days to graduation", caption: "An estimate for your cohort", noCount: true, icon: "calendar" });
+  }
   return stats;
 }
 
@@ -99,6 +101,10 @@ function buildHomeHero() {
     media.appendChild(picture);
   }
 
+}
+
+// ----- Called from index.html right after the stats list (still before the first paint) -----
+function buildHomeStats() {
   const list = document.getElementById("home-stats");
   if (!list) return;
   const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -116,7 +122,16 @@ function buildHomeHero() {
     const label = document.createElement("span");
     label.className = "home-stat-label";
     label.textContent = stat.label;
-    item.append(number, label);
+    const text = document.createElement("span");
+    text.className = "home-stat-text";
+    text.append(number, label);
+    if (stat.caption) {
+      const caption = document.createElement("span");
+      caption.className = "home-stat-caption";
+      caption.textContent = stat.caption;
+      text.appendChild(caption);
+    }
+    item.appendChild(text);
     list.appendChild(item);
     if (!reduceMotion && !stat.noCount) countUp(number, stat.value);
   }
@@ -157,7 +172,7 @@ function fillHomeSettings() {
     const value = { STUDENT_COUNT, COUNTRY_COUNT, TRACK_COUNT }[element.dataset.setting];
     if (value !== undefined) element.textContent = value;
   }
-  const demo = document.getElementById("cohort-demo-note");
+  const demo = document.querySelector(".people-note");
   if (demo) demo.hidden = !DIRECTORY_IS_DEMO;
   // Decorative: one small dot per student (no names, no data)
   const dots = document.getElementById("cohort-dots");
@@ -190,11 +205,17 @@ async function fillCityCards() {
   }
 }
 
-// ----- "Meet the Community": a small, decorative Europe map with the four programme countries -----
+// ----- "Students from around the world": a decorative world map with the four programme cities -----
 // The same local map as the Students page (assets/map/world-countries.svg, Natural Earth, public domain).
-// It marks only where the programme's universities are, never students.
-const COMMUNITY_MAP_VIEW = "436 16 178 102"; // the "Europe" view, as in students-config.js
-const PROGRAMME_COUNTRIES = ["IT", "NO", "NL", "AT"];
+// The dots mark the four universities only: there is no real data on where students come from.
+// Positions are the cities' coordinates in the map's projection (scripts/build-world-map.js).
+const PROGRAMME_CITIES = [
+  { name: "Bologna", x: 527.1, y: 84.1 },
+  { name: "Oslo", x: 522.5, y: 40.6 },
+  { name: "Rotterdam", x: 510.1, y: 61.9 },
+  { name: "Innsbruck", x: 526.7, y: 75.6 },
+];
+const COMMUNITY_MAP_VIEW = "20 10 960 400";
 
 async function fillCommunityMap() {
   const box = document.getElementById("community-map");
@@ -205,11 +226,21 @@ async function fillCommunityMap() {
     const svg = new DOMParser().parseFromString(await response.text(), "image/svg+xml").documentElement;
     if (svg.nodeName !== "svg") throw new Error("not an SVG");
     svg.setAttribute("viewBox", COMMUNITY_MAP_VIEW);
-    svg.setAttribute("preserveAspectRatio", "xMidYMid slice");
+    svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
     svg.setAttribute("focusable", "false");
-    for (const code of PROGRAMME_COUNTRIES) {
-      const path = svg.querySelector(`path[data-code="${code}"]`);
-      if (path) path.classList.add("is-programme");
+    const ns = "http://www.w3.org/2000/svg";
+    for (const city of PROGRAMME_CITIES) {
+      const halo = document.createElementNS(ns, "circle");
+      halo.setAttribute("cx", city.x);
+      halo.setAttribute("cy", city.y);
+      halo.setAttribute("r", "14");
+      halo.setAttribute("class", "city-halo");
+      const dot = document.createElementNS(ns, "circle");
+      dot.setAttribute("cx", city.x);
+      dot.setAttribute("cy", city.y);
+      dot.setAttribute("r", "6");
+      dot.setAttribute("class", "city-dot");
+      svg.append(halo, dot);
     }
     box.replaceChildren(document.importNode(svg, true));
   } catch {
@@ -217,9 +248,57 @@ async function fillCommunityMap() {
   }
 }
 
+// ----- "Meet the community": three public profiles at a time from the Students page's demo data -----
+// Fictional people only (data/demo-students.json, isDemo). The same privacy rules as the Students page
+// (students-data.js, public view), so a members-only or hidden detail never appears here.
+let peopleProfiles = [];
+let peopleStart = 0;
+
+function personCard(p) {
+  const li = createElement("li", "person-card");
+  const avatar = createElement("span", "person-avatar", EUHEM_STUDENTS_DATA.initialsOf(p.name));
+  avatar.setAttribute("aria-hidden", "true");
+  const name = createElement("a", "person-name", p.name);
+  name.href = `students.html?profile=${encodeURIComponent(p.id)}`;
+  li.append(avatar, name);
+  const meta = [p.field && p.field.label, p.country && p.country.name].filter(Boolean).join(" · ");
+  if (meta) li.appendChild(createElement("span", "person-meta", meta));
+  if (p.bio) li.appendChild(createElement("span", "person-bio", p.bio.length > 90 ? p.bio.slice(0, 88).trim() + "…" : p.bio));
+  return li;
+}
+
+function showPeople() {
+  const list = document.getElementById("community-people");
+  if (!list || !peopleProfiles.length) return;
+  const shown = [0, 1, 2].map((i) => peopleProfiles[(peopleStart + i) % peopleProfiles.length]);
+  list.replaceChildren(...shown.map(personCard));
+}
+
+async function fillCommunityPeople() {
+  const list = document.getElementById("community-people");
+  if (!list || typeof EUHEM_STUDENTS_DATA === "undefined") return;
+  try {
+    const response = await fetch("data/demo-students.json");
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const records = ((await response.json()).records || []).filter((r) => r && r.isDemo === true);
+    const D = EUHEM_STUDENTS_DATA;
+    peopleProfiles = D.projectAll(records, D.makeViewer("public")).filter((p) => p.bio && p.field);
+    showPeople();
+    const step = (delta) => {
+      peopleStart = (peopleStart + delta + peopleProfiles.length) % peopleProfiles.length;
+      showPeople();
+    };
+    document.querySelector(".people-prev").addEventListener("click", () => step(-3));
+    document.querySelector(".people-next").addEventListener("click", () => step(3));
+  } catch {
+    list.closest(".community-people").hidden = true;
+  }
+}
+
 if (typeof document !== "undefined") {
   document.addEventListener("DOMContentLoaded", fillHomeSettings);
   document.addEventListener("DOMContentLoaded", fillCommunityMap);
+  document.addEventListener("DOMContentLoaded", fillCommunityPeople);
   document.addEventListener("DOMContentLoaded", fillCityCards);
 }
 

@@ -8,11 +8,13 @@
 // - Footer with links (deep navy)
 
 const SITE_MENU = [
+  { key: "home", label: "Home", href: "index.html", icon: "home" },
+  { key: "students", label: "Students", href: "students.html", icon: "students" },
+  { key: "tracks", label: "Tracks", href: "tracks.html", icon: "route" },
   {
     label: "Academics",
     items: [
       { key: "studyplan", label: "Study Plan", href: "studyplan.html", icon: "study-plan", desc: "Choose courses, track your CFU" },
-      { key: "tracks", label: "Tracks", href: "tracks.html", icon: "route", desc: "The four paths after semester 1" },
       { key: "timetable", label: "Timetable", href: "timetable.html", icon: "timetable", desc: "Classes and rooms, live from UniBo" },
       { key: "exams", label: "Exams", href: "exams.html", icon: "exams", desc: "Dates and registration windows" },
       { key: "calendar", label: "Calendar", href: "calendar.html", icon: "calendar", desc: "Subscribe on your phone" },
@@ -22,22 +24,13 @@ const SITE_MENU = [
     label: "Resources",
     items: [
       { key: "notes", label: "Notes & Resources", href: "notes.html", icon: "notes", desc: "Notes, flashcards, practice" },
-      { key: "thesis", label: "Thesis", href: "thesis.html", icon: "library", desc: "Explore past thesis topics" },
+      { key: "announcements", label: "Announcements", href: "announcements.html", icon: "announcements", desc: "News for the cohort" },
       { key: "links", label: "Useful Links", href: "index.html#links", icon: "link", desc: "Virtuale, Studenti Online and more" },
     ],
   },
-  {
-    label: "Community",
-    items: [
-      { key: "students", label: "Students", href: "students.html", icon: "students", desc: "Meet the EU-HEM community" },
-      { key: "announcements", label: "Announcements", href: "announcements.html", icon: "announcements", desc: "News for the cohort" },
-    ],
-  },
-  {
-    label: "Life",
-    items: [{ key: "city-guide", label: "City Guide", href: "city-guide.html", icon: "guide", desc: "Bologna, Oslo, Rotterdam, Innsbruck" }],
-  },
-  { key: "about", label: "About", href: "index.html#about", icon: "info" },
+  { key: "thesis", label: "Thesis", href: "thesis.html", icon: "library" },
+  { key: "city-guide", label: "Life", href: "city-guide.html", icon: "guide" },
+  { key: "contact", label: "Contact", href: "contact.html", icon: "mail" },
 ];
 
 // An icon from icons.svg: <svg class="icon"><use href="icons.svg#name"></use></svg>
@@ -52,11 +45,11 @@ function siteIcon(name, className = "icon") {
   return svg;
 }
 
-// The brand lockup: monogram + "EU-HEM" + "Student Hub". Text only: no official logos.
+// The brand lockup: graduation cap + "EU-HEM" + "Student Hub". No official logos.
 function brandLockup(make) {
   const box = make("span", "brand-lockup");
-  const mark = make("span", "brand-mark", "SH");
-  mark.setAttribute("aria-hidden", "true");
+  const mark = make("span", "brand-mark");
+  mark.appendChild(siteIcon("graduation"));
   const words = make("span", "brand-words");
   words.append(make("span", "brand-name", "EU-HEM"), make("span", "brand-product", "Student Hub"));
   box.append(mark, words);
@@ -94,7 +87,9 @@ function brandLockup(make) {
   if (tagline) tagline.remove(); // replaced by the descriptor below
   brand.style.display = "flex";
   brand.style.alignItems = "center";
-  brand.appendChild(make("span", "brand-descriptor", "Unofficial student-run platform"));
+  const descriptor = make("span", "brand-descriptor");
+  descriptor.append(make("span", null, "Unofficial, student-run"), make("span", null, "for EU-HEM students"));
+  brand.appendChild(descriptor);
 
   const actions = make("div", "header-actions");
   const searchButton = make("button", "header-button search-button");
@@ -107,8 +102,9 @@ function brandLockup(make) {
   actions.appendChild(searchButton);
 
   if (current !== "join") {
-    const join = make("a", "header-button header-cta", "Join the Directory");
+    const join = make("a", "button button-primary header-cta", "Join the Directory");
     join.href = "join.html";
+    join.insertAdjacentHTML("beforeend", ' <span class="arrow" aria-hidden="true">→</span>');
     actions.appendChild(join);
   }
 
@@ -165,6 +161,8 @@ function brandLockup(make) {
     if (item.key === current) {
       a.setAttribute("aria-current", "page");
       a.classList.add("is-current");
+    } else if (current === "join" && item.key === "students") {
+      a.classList.add("is-current"); // join.html belongs to Students
     }
     return a;
   };
@@ -175,8 +173,7 @@ function brandLockup(make) {
       menu.appendChild(li);
       return;
     }
-    // join.html belongs to Community (it has no menu entry of its own)
-    const isCurrentGroup = entry.items.some((item) => item.key === current || (current === "join" && item.key === "students"));
+    const isCurrentGroup = entry.items.some((item) => item.key === current);
     const button = make("button", isCurrentGroup ? "menu-group is-current" : "menu-group", entry.label);
     button.type = "button";
     button.setAttribute("aria-expanded", "false");
@@ -330,45 +327,31 @@ function brandLockup(make) {
     const footer = document.querySelector(".site-footer .container");
     if (!footer) return;
     footer.textContent = "";
-    const grid = make("div", "footer-grid");
+    const row = make("div", "footer-row");
     const brandBox = make("div", "footer-brand");
-    brandBox.appendChild(brandLockup(make));
-    brandBox.appendChild(make("p", null,
-      "An independent, student-run platform created to help EU-HEM students navigate academics, resources, mobility and student life."));
-    grid.appendChild(brandBox);
-    for (const entry of SITE_MENU.filter((e) => e.items)) {
-      const column = make("div");
-      column.appendChild(make("h3", null, entry.label));
-      const list = make("ul");
-      for (const item of entry.items) list.appendChild(footerLink(item.label, item.href));
-      column.appendChild(list);
-      grid.appendChild(column);
-    }
-    // "Help" goes under "Life"
-    const help = grid.lastElementChild;
-    help.appendChild(make("h3", "footer-help", "Help"));
-    const helpList = make("ul");
-    helpList.appendChild(footerLink("Getting started", "index.html#welcome"));
+    const home = make("a", "footer-brand-link");
+    home.href = "index.html";
+    home.setAttribute("aria-label", "EU-HEM Student Hub, home");
+    home.appendChild(brandLockup(make));
+    brandBox.append(home, make("p", null, "A student-built home for EU-HEM: academics, resources, mobility and student life."));
+    row.appendChild(brandBox);
+    const links = make("nav", "footer-links");
+    links.setAttribute("aria-label", "Footer");
+    const list = make("ul");
+    const all = SITE_MENU.flatMap((entry) => entry.items || [entry]);
+    for (const item of all) list.appendChild(footerLink(item.label === "Life" ? "City Guide" : item.label, item.href));
+    for (const [label, href] of [["Getting started", "index.html#welcome"], ["Privacy", "privacy.html"],
+      ["GitHub", "https://github.com/AdnanTarabishi/eu-hem-student-hub"]]) list.appendChild(footerLink(label, href));
     const install = make("li", "footer-install");
     install.hidden = true; // shown by pwa.js where the browser can install the app
     const installButton = make("button", "footer-link", "Install the app");
     installButton.type = "button";
     installButton.addEventListener("click", () => document.dispatchEvent(new CustomEvent("install-app")));
     install.appendChild(installButton);
-    helpList.appendChild(install);
-    help.appendChild(helpList);
-    const about = make("div");
-    about.appendChild(make("h3", null, "About"));
-    const aboutList = make("ul");
-    for (const [label, href] of [
-      ["About", "index.html#about"],
-      ["Privacy", "privacy.html"],
-      ["Contact", "contact.html"],
-      ["GitHub", "https://github.com/AdnanTarabishi/eu-hem-student-hub"],
-    ]) aboutList.appendChild(footerLink(label, href));
-    about.appendChild(aboutList);
-    grid.appendChild(about);
-    footer.appendChild(grid);
+    list.appendChild(install);
+    links.appendChild(list);
+    row.appendChild(links);
+    footer.appendChild(row);
     footer.appendChild(make("p", "footer-bottom",
       "Unofficial student project. Not an official website of the University of Bologna, EU-HEM, or any partner university. " +
       "Your study plan and progress are saved only on your device."));
