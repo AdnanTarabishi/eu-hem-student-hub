@@ -830,6 +830,124 @@
         show("age");
       },
     },
+    "causal-directions": {
+      title: "Same gradient, three causal stories",
+      intro:
+        "Choose a causal structure and follow the arrows. The goal is to separate an observed SES–health association from the mechanism that produced it.",
+      build(node) {
+        const stories = {
+          direct: {
+            label: "Direct causality",
+            path: ["Socioeconomic status", "Resources / skills / stress / access", "Health"],
+            note: "SES is upstream. Examples in the lecture include efficient production, early-life conditions, direct income, allostatic load and income inequality."
+          },
+          reverse: {
+            label: "Reverse causality",
+            path: ["Health", "Productive time / work capacity", "Income and SES"],
+            note: "Health is upstream. The productive-time hypothesis explains how illness can reduce earnings, wealth and labour-force participation."
+          },
+          third: {
+            label: "Third factor",
+            path: ["Time preference", "Education / SES", "Health investment"],
+            note: "A common factor can affect both sides. The Fuchs hypothesis uses willingness to delay gratification."
+          }
+        };
+        node.innerHTML =
+          '<div class="activity-presets">'+
+          Object.entries(stories).map(([id,s])=>'<button type="button" class="btn secondary" data-causal="'+id+'">'+escape(s.label)+'</button>').join("")+
+          '</div><div id="causal-output" class="activity-output" aria-live="polite"></div>';
+        const show=(id)=>{
+          const s=stories[id];
+          node.querySelectorAll("[data-causal]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.causal===id)));
+          node.querySelector("#causal-output").innerHTML =
+            '<div class="flow">'+s.path.map((x,i)=>'<div class="flow-step"><span>Step '+(i+1)+'</span><strong>'+escape(x)+'</strong></div>'+(i<s.path.length-1?'<span class="flow-arrow" aria-hidden="true">→</span>':'')).join("")+'</div>'+
+            '<p>'+escape(s.note)+'</p>';
+        };
+        node.querySelectorAll("[data-causal]").forEach(b=>b.addEventListener("click",()=>show(b.dataset.causal)));
+        show("direct");
+      }
+    },
+    "disparity-theories": {
+      title: "Compare the disparity hypotheses",
+      intro:
+        "Pick a hypothesis to see its causal direction, mechanism, evidence role and the kind of policy question it raises. Wording follows the lecture's framework.",
+      build(node) {
+        const items = {
+          education:["Efficient producer","SES → Health","Education improves the efficiency of producing health.","Prevention, response to information, innovation and self-management are discussed in the lecture.","Could education, simpler treatment or more supportive care reduce the gradient?"],
+          early:["Thrifty phenotype","Early conditions → Adult health / SES","In-utero or early-childhood deprivation can create persistent biological effects.","Dutch famine and other historical shocks are used as natural experiments.","Could maternal/child support prevent long-run disparities?"],
+          income:["Direct income","Income → Health","More resources expand the feasible set for producing health.","Adult causal evidence is presented as weak or mixed; child income appears more protective.","Which populations and life stages actually respond to additional resources?"],
+          stress:["Allostatic load","Rank / stress → Health","Repeated stress can accelerate health-capital depreciation.","Whitehall is used to connect lower grade, stress and worse morbidity/mortality.","Would reducing chronic stress or improving control change health?"],
+          inequality:["Income inequality","Community inequality → Health","Unequal societies may affect cohesion, stress or political allocation.","The lecture presents associations and competing mechanisms but no settled causal link.","What mechanism would an inequality policy need to change?"],
+          productive:["Productive time","Health → SES","Illness reduces time and capacity for work, lowering earnings and wealth.","Health shocks predict retirement, reduced labour participation and lower earnings.","Could health protection or income replacement reduce SES consequences of illness?"],
+          fuchs:["Fuchs hypothesis","Time preference → SES + Health","Long-term orientation can encourage investment in both education and health.","Used as a third-factor explanation rather than a direct SES-to-health pathway.","Would changing resources alone leave the common preference mechanism untouched?"]
+        };
+        node.innerHTML =
+          '<div class="control"><label for="theory-select">Hypothesis</label><select id="theory-select">'+
+          Object.entries(items).map(([id,v])=>'<option value="'+id+'">'+escape(v[0])+'</option>').join("")+
+          '</select></div><div id="theory-output" class="activity-output" aria-live="polite"></div>';
+        const show=()=>{
+          const v=items[node.querySelector("#theory-select").value];
+          node.querySelector("#theory-output").innerHTML =
+            '<dl class="activity-stats"><div><dt>Direction</dt><dd>'+escape(v[1])+'</dd></div><div><dt>Mechanism</dt><dd>'+escape(v[2])+'</dd></div></dl>'+
+            '<p><strong>Evidence role in the lecture:</strong> '+escape(v[3])+'</p>'+
+            '<p><strong>Policy question:</strong> '+escape(v[4])+'</p>';
+        };
+        node.querySelector("#theory-select").addEventListener("change",show);
+        show();
+      }
+    },
+    "stress-depreciation": {
+      title: "Translate stress into Grossman depreciation",
+      intro:
+        "Session 4 maps prolonged stress to a higher depreciation rate of health capital. Use the Session 3 stock equation to see the mechanical implication. Numbers are stylised.",
+      build(node) {
+        node.innerHTML =
+          '<div class="activity-controls">'+
+          input("stress-health","Inherited health stock",80,'min="0" max="200" step="1"')+
+          input("stress-invest","Gross health investment",10,'min="0" max="200" step="1"')+
+          '<div class="control"><label for="stress-delta">Depreciation / stress load (%)</label><input id="stress-delta" type="range" min="2" max="30" value="8" step="1"><div class="range-labels"><span>lower δ</span><span>higher δ</span></div></div>'+
+          '</div>'+output("stress");
+        reactive(node,"stress",(out)=>{
+          const h=read("stress-health",0,200),
+            i=read("stress-invest",0,200),
+            d=read("stress-delta",2,30)/100,
+            loss=d*h,
+            next=(1-d)*h+i,
+            maintain=loss;
+          out.innerHTML =
+            '<div class="formula">Next-period health = '+number(next,2)+'</div>'+
+            '<dl class="activity-stats"><div><dt>Depreciation loss δH</dt><dd>'+number(loss,2)+'</dd></div><div><dt>Investment needed just to maintain H</dt><dd>'+number(maintain,2)+'</dd></div><div><dt>Chosen gross investment</dt><dd>'+number(i,2)+'</dd></div></dl>'+
+            '<p>As δ rises, more investment is required just to keep the same health stock. This is the mechanical Grossman link used in the lecture's allostatic-load hypothesis.</p>'+
+            '<p class="small">This does not estimate the size of a real stress effect; the slider is only a teaching illustration of the model mechanism.</p>';
+        });
+      }
+    },
+    "policy-mechanism": {
+      title: "Match the intervention to the causal mechanism",
+      intro:
+        "Select a hypothetical intervention and ask which Session 4 mechanism it most directly targets. Several policies can affect more than one pathway; this activity focuses on the lecture's primary logic.",
+      build(node) {
+        const cases=[
+          ["Simplify a demanding self-management treatment","Efficient producer","Reducing the skill burden can narrow an education-related gap in treatment effectiveness."],
+          ["Protect maternal and early-childhood nutrition","Thrifty phenotype","This targets early-life deprivation before long-run biological effects accumulate."],
+          ["Reduce chronic workplace stress and increase control","Allostatic load","This targets the stress pathway that the lecture maps to faster health depreciation."],
+          ["Prevent disabling illness and protect earnings during recovery","Productive time","This targets the reverse-causality pathway from poor health to lower SES."],
+          ["Provide cash to low-income adults","Direct income","This directly tests the resource pathway, although the lecture emphasizes mixed adult causal evidence."],
+          ["Invest in education over the life course","Efficient producer / long-run policy","The lecture's final takeaways emphasize education as protective and potentially important for long-run disparities."]
+        ];
+        let index=0;
+        const render=()=>{
+          const c=cases[index];
+          node.innerHTML =
+            '<p class="eyebrow">Scenario '+(index+1)+' / '+cases.length+'</p>'+
+            '<h3>'+escape(c[0])+'</h3>'+
+            '<details><summary>Reveal the main Session 4 mechanism</summary><div class="note" style="margin-top:14px"><strong>'+escape(c[1])+'</strong><br>'+escape(c[2])+'</div></details>'+
+            '<button type="button" class="btn small-btn" id="policy-next">Next scenario →</button>';
+          node.querySelector("#policy-next").addEventListener("click",()=>{index=(index+1)%cases.length;render();});
+        };
+        render();
+      }
+    },
   };
   root.LectureActivities = {
     init(container, activityIds) {
