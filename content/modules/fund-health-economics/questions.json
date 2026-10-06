@@ -1174,5 +1174,299 @@
     "question": "Compare the direct-income and productive-time hypotheses.",
     "answer": "The direct-income hypothesis runs from SES to health: greater resources expand the possibilities for producing health. The productive-time hypothesis runs from health to SES: illness reduces productive time, earnings and labour-force participation. The same income–health association can therefore reflect opposite causal directions.",
     "explanation": "This question tests whether the student can distinguish direct from reverse causality."
+  },
+  {
+    "id": "fund-health-economics.q.088",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Agency",
+    "question": "In the physician–patient principal–agent relationship, who is the agent?",
+    "options": [
+      "The patient",
+      "The physician",
+      "The insurer only",
+      "The hospital regulator"
+    ],
+    "answer": "B",
+    "explanation": "The patient is the principal and the physician acts as the better-informed agent."
+  },
+  {
+    "id": "fund-health-economics.q.089",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Agency",
+    "question": "What creates the central agency problem in Session 5?",
+    "options": [
+      "Perfect information and zero switching costs",
+      "The physician has an information advantage and may not be perfectly loyal to the patient's interest",
+      "Patients always set physician fees",
+      "Physicians cannot influence treatment choices"
+    ],
+    "answer": "B",
+    "explanation": "Information asymmetry gives the physician influence, while self-interest or imperfect knowledge can make agency imperfect."
+  },
+  {
+    "id": "fund-health-economics.q.090",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "PID definition",
+    "question": "Which example best fits the lecture's definition of physician-induced demand?",
+    "options": [
+      "A physician explains why smoking cessation would improve health",
+      "A physician encourages extra care that the physician believes is not in the patient's best interest",
+      "A patient requests a second opinion",
+      "A necessary treatment is provided after informed consent"
+    ],
+    "answer": "B",
+    "explanation": "PID is undue physician influence on demand against the physician's own interpretation of the patient's best interest."
+  },
+  {
+    "id": "fund-health-economics.q.091",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Benchmark model",
+    "question": "Which combination best describes the physician in the benchmark PID model?",
+    "options": [
+      "Likes income and leisure, dislikes inducement",
+      "Likes inducement for its own sake",
+      "Cares only about patient health and never income",
+      "Faces no trade-offs"
+    ],
+    "answer": "A",
+    "explanation": "The lecture's benchmark physician values net income and leisure but has disutility from inducing demand."
+  },
+  {
+    "id": "fund-health-economics.q.092",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Income vs substitution",
+    "question": "A lower profit rate makes inducement less financially attractive. Which effect is this?",
+    "options": [
+      "Income effect",
+      "Substitution effect",
+      "Practice-style effect",
+      "Selection effect"
+    ],
+    "answer": "B",
+    "explanation": "The substitution effect pushes toward less inducement because the marginal financial return to inducement has fallen."
+  },
+  {
+    "id": "fund-health-economics.q.093",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Income vs substitution",
+    "question": "A lower profit rate reduces physician income, making extra inducement more attractive as a way to restore income. Which effect is this?",
+    "options": [
+      "Income effect",
+      "Substitution effect",
+      "Demand-side moral hazard",
+      "Price dispersion"
+    ],
+    "answer": "A",
+    "explanation": "The income effect can push inducement upward after an income loss."
+  },
+  {
+    "id": "fund-health-economics.q.094",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "McGuire–Pauly",
+    "question": "In the McGuire–Pauly synthesis, when can a lower profit rate increase quantity supplied through inducement?",
+    "options": [
+      "Only when the substitution effect dominates",
+      "When the income effect dominates the substitution effect",
+      "Whenever professional ethics are stronger",
+      "Never"
+    ],
+    "answer": "B",
+    "explanation": "The lecture states that if the income effect dominates, lower profitability can lead to more inducement and quantity."
+  },
+  {
+    "id": "fund-health-economics.q.095",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Evidence",
+    "question": "What limitation of empirical PID tests is emphasized in Session 5?",
+    "options": [
+      "They cannot observe any physician behaviour",
+      "They may show whether inducement changes after an income shock but not the absolute baseline level of inducement",
+      "They prove all physicians induce equally",
+      "They measure only patient preferences"
+    ],
+    "answer": "B",
+    "explanation": "The lecture notes that response tests are silent about how much inducement existed before the shock."
+  },
+  {
+    "id": "fund-health-economics.q.096",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Payment methods",
+    "question": "Which of the following is listed as a pure physician payment method?",
+    "options": [
+      "Fee-for-service",
+      "Capitation with FFS carve-outs",
+      "Case rate only",
+      "Risk adjustment"
+    ],
+    "answer": "A",
+    "explanation": "Session 5 lists fee-for-service, capitation and salary as pure methods; carve-outs and case rates are listed under blended methods."
+  },
+  {
+    "id": "fund-health-economics.q.097",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Payment methods",
+    "question": "Which payment method gives a direct payment for each service delivered?",
+    "options": [
+      "Fee-for-service",
+      "Pure capitation",
+      "Salary",
+      "None of the above"
+    ],
+    "answer": "A",
+    "explanation": "Fee-for-service links payment directly to activity, making it a relatively high-powered volume incentive."
+  },
+  {
+    "id": "fund-health-economics.q.098",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Practice variation",
+    "question": "Which statement best reflects the small-area variation literature as presented in Session 5?",
+    "options": [
+      "Demand characteristics explain all geographic variation",
+      "Supply variables matter, demand variables also matter, but substantial variation remains unexplained",
+      "Regional treatment rates are now almost identical",
+      "Variation proves every physician is financially motivated"
+    ],
+    "answer": "B",
+    "explanation": "The slides present supply and demand factors as significant but insufficient to explain the full variation."
+  },
+  {
+    "id": "fund-health-economics.q.099",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Practice style",
+    "question": "What does the practice-style hypothesis emphasize as a source of geographic treatment variation?",
+    "options": [
+      "Only patient income",
+      "Uneven diffusion of medical information and physician uncertainty",
+      "Perfectly uniform medical knowledge",
+      "Only insurance deductibles"
+    ],
+    "answer": "B",
+    "explanation": "The lecture links practice styles to incomplete knowledge and uneven diffusion of information about medical technologies."
+  },
+  {
+    "id": "fund-health-economics.q.100",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "true-false",
+    "difficulty": "easy",
+    "question": "Physician agency is relevant because the physician can possess more information about diagnosis and treatment than the patient.",
+    "answer": true,
+    "explanation": "True. Information asymmetry is central to the principal–agent relationship."
+  },
+  {
+    "id": "fund-health-economics.q.101",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "In Session 5, every attempt by a physician to influence patient demand counts as physician-induced demand.",
+    "answer": false,
+    "explanation": "False. The lecture distinguishes due influence that supports the patient's interest from undue influence that defines PID."
+  },
+  {
+    "id": "fund-health-economics.q.102",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "A lower physician profit rate has only one predicted effect on inducement in the McGuire–Pauly synthesis.",
+    "answer": false,
+    "explanation": "False. It creates offsetting substitution and income effects."
+  },
+  {
+    "id": "fund-health-economics.q.103",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "The lecture presents evidence on physician-induced demand as completely one-sided and conclusive.",
+    "answer": false,
+    "explanation": "False. The evidence section is explicitly described as mixed."
+  },
+  {
+    "id": "fund-health-economics.q.104",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "true-false",
+    "difficulty": "medium",
+    "question": "Session 5 presents small-area variation as fully explained by measurable demand and supply characteristics.",
+    "answer": false,
+    "explanation": "False. A substantial share remains unexplained in the cited SAV literature."
+  },
+  {
+    "id": "fund-health-economics.q.105",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "Explain why information asymmetry makes the physician a special kind of agent for the patient.",
+    "answer": "The patient hires the physician both to advise on what care is needed and often to provide that care. Because the physician has better clinical information, the physician can influence the patient's demand, creating scope for both helpful guidance and conflicts of interest.",
+    "explanation": "A strong answer connects information advantage to the physician's ability to shape demand."
+  },
+  {
+    "id": "fund-health-economics.q.106",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "question": "Explain the two offsetting effects of a lower profit rate on physician inducement.",
+    "answer": "The substitution effect makes inducement less attractive because each induced unit yields less profit, pushing inducement down. The income effect arises because lower profitability reduces income, which can make inducement more attractive as a way to restore income. The net response depends on which effect is stronger.",
+    "explanation": "This is the central McGuire–Pauly synthesis in the lecture."
+  },
+  {
+    "id": "fund-health-economics.q.107",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Why can small-area variation exist even when physicians follow scientific evidence and clinical guidelines?",
+    "answer": "The lecture describes a broad grey area of clinical discretion where evidence is incomplete, benefits are patient-specific and clearly appropriate or inappropriate cases are limited. Different physician beliefs and practice styles can therefore generate different procedure rates without necessarily violating guidelines.",
+    "explanation": "The answer should link clinical uncertainty, discretion and uneven information to practice variation."
+  },
+  {
+    "id": "fund-health-economics.q.108",
+    "topic": "fund-health-economics.physician-agency",
+    "source": "EU-HEM Hub original practice · Session 5",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Why does physician-induced demand complicate welfare analysis using ordinary patient demand curves?",
+    "answer": "If physicians can shift patient demand, the observed demand curve may not represent independent patient willingness to pay. The quantity demanded can partly reflect provider influence, so using that curve directly as a welfare measure becomes questionable.",
+    "explanation": "This follows the lecture's public-policy discussion about whether demand curves remain meaningful under strong PID."
   }
 ]
