@@ -7,13 +7,14 @@
 // - The header gets a soft shadow and shrinks a little while scrolling
 // - Footer with links (deep navy)
 
-// Four groups (Study, Resources, Community, Life), from the editorial homepage design (October 2026).
+// Five groups (Study, Resources, Community, Life, About): the editorial homepage design (October 2026)
+// plus an About group for help and information about the Hub.
 // Home is the brand lockup. search.js indexes these pages; the footer shows the same groups.
 const SITE_MENU = [
   {
     label: "Study",
     items: [
-      { key: "timetable", label: "Timetable", href: "timetable.html", icon: "timetable", desc: "Classes, times and rooms, live from UniBo" },
+      { key: "timetable", label: "Timetable", href: "timetable.html", icon: "timetable", desc: "Classes and rooms, live from UniBo" },
       { key: "exams", label: "Exams & deadlines", href: "exams.html", icon: "exams", desc: "Published dates and registration" },
       { key: "studyplan", label: "Study Plan", href: "studyplan.html", icon: "study-plan", desc: "Your courses and CFU" },
       { key: "calendar", label: "Calendar & key dates", href: "calendar.html", icon: "calendar", desc: "Subscribe on your phone" },
@@ -27,7 +28,6 @@ const SITE_MENU = [
     items: [
       { key: "notes", label: "Notes & Resources", href: "notes.html", icon: "notes", desc: "Notes, flashcards and practice" },
       { key: "thesis", label: "Thesis Explorer", href: "thesis.html", icon: "library", desc: "Find inspiration in past topics" },
-      { key: "announcements", label: "Announcements", href: "announcements.html", icon: "announcements", desc: "News for the cohort" },
       { key: "links", label: "Official links", href: "index.html#links", icon: "link", desc: "Virtuale, Studenti Online and more" },
     ],
   },
@@ -36,11 +36,7 @@ const SITE_MENU = [
     items: [
       { key: "students", label: "Students & cohort map", href: "students.html", icon: "students", desc: "Meet the people behind EU-HEM" },
       { key: "join", label: "Join the Directory", href: "join.html", icon: "plus", desc: "Your profile, your privacy choices" },
-      { key: "support", label: "Support & Contacts", href: "support.html", icon: "phone", desc: "Who to ask, wellbeing, leave" },
-      { key: "roadmap", label: "Roadmap & Updates", href: "roadmap.html", icon: "rocket", desc: "What is new and what is next" },
-      { key: "about", label: "About the Hub", href: "index.html#about", icon: "info", desc: "Independent and student-run" },
-      { key: "privacy", label: "Privacy", href: "privacy.html", icon: "lock", desc: "What stays on your device" },
-      { key: "contact", label: "Contact", href: "contact.html", icon: "mail", desc: "Questions, corrections and ideas" },
+      { key: "announcements", label: "Announcements", href: "announcements.html", icon: "announcements", desc: "News for the cohort" },
     ],
   },
   {
@@ -51,6 +47,16 @@ const SITE_MENU = [
       { key: "oslo", label: "Oslo", href: "city-guide.html?city=oslo", icon: "map-pin", desc: "Norway" },
       { key: "innsbruck", label: "Innsbruck", href: "city-guide.html?city=innsbruck", icon: "map-pin", desc: "Austria" },
       { key: "rotterdam", label: "Rotterdam", href: "city-guide.html?city=rotterdam", icon: "map-pin", desc: "Netherlands" },
+    ],
+  },
+  {
+    label: "About",
+    items: [
+      { key: "support", label: "Support & Contacts", href: "support.html", icon: "phone", desc: "Who to ask, wellbeing, leave" },
+      { key: "roadmap", label: "Roadmap & Updates", href: "roadmap.html", icon: "rocket", desc: "What is new and what is next" },
+      { key: "about", label: "About the Hub", href: "index.html#about", icon: "info", desc: "Independent and student-run" },
+      { key: "privacy", label: "Privacy", href: "privacy.html", icon: "lock", desc: "What stays on your device" },
+      { key: "contact", label: "Contact", href: "contact.html", icon: "mail", desc: "Questions, corrections and ideas" },
     ],
   },
 ];

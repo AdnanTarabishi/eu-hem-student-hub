@@ -90,18 +90,29 @@ ok("no standalone-preview leftovers: one menu script, no demo dashboard text, no
     ok("UniBo offline: the cards say so (no invented classes), the exam period still shows from programme.json");
 
     // --- Menu: four groups by keyboard; the brand is Home ---
-    assert.deepStrictEqual(await page.$$eval(".menu > .menu-item > :first-child", (all) => all.map((e) => e.textContent.trim())), ["Study", "Resources", "Community", "Life"]);
+    assert.deepStrictEqual(await page.$$eval(".menu > .menu-item > :first-child", (all) => all.map((e) => e.textContent.trim())), ["Study", "Resources", "Community", "Life", "About"]);
     assert.strictEqual(await page.getAttribute(".site-title a", "aria-current"), "page");
     const menu = await page.evaluate(() => SITE_MENU.flatMap((g) => g.items.map((i) => i.href)));
     for (const href of ["timetable.html", "exams.html", "studyplan.html", "tracks.html", "calendar.html", "academic-rules.html", "journey.html",
       "notes.html", "thesis.html", "announcements.html", "index.html#links", "students.html", "join.html", "support.html", "roadmap.html",
       "index.html#about", "privacy.html", "contact.html", "city-guide.html"]) assert.ok(menu.includes(href), href);
+    for (const group of ["Study", "Resources", "Community", "Life", "About"]) {
+      await page.click(`.menu-group:text("${group}")`);
+      const overflow = await page.evaluate(() => {
+        const open = [...document.querySelectorAll(".menu-dropdown")].find((d) => d.offsetParent);
+        const box = open.getBoundingClientRect();
+        return [...open.querySelectorAll(".menu-link-desc, .menu-link-text > span:first-child")]
+          .filter((el) => el.getBoundingClientRect().right > box.right + 1).map((el) => el.textContent);
+      });
+      assert.deepStrictEqual(overflow, [], `${group}: text wider than the dropdown`);
+    }
+    await page.keyboard.press("Escape");
     await page.focus('.menu-group:text("Life")');
     await page.keyboard.press("Enter");
     assert.ok(await page.isVisible('.menu-dropdown a[href="city-guide.html?city=oslo"]'));
     await page.keyboard.press("Escape");
     assert.strictEqual(await page.getAttribute('.menu-group:text("Life")', "aria-expanded"), "false");
-    ok("shared menu: Study, Resources, Community, Life (one SITE_MENU), every page reachable, keyboard open/close, brand = Home");
+    ok("shared menu: Study, Resources, Community, Life, About (one SITE_MENU), every page reachable, keyboard open/close, brand = Home");
 
     // --- Site search (search.js) still indexes everything ---
     await page.keyboard.press("Control+k");

@@ -4,6 +4,27 @@
   "dateBasis": "Each date is the day (Rome time) the change first went live through a successful site deployment. Only important student-facing releases are listed.",
   "items": [
     {
+      "id": "homepage-and-menu",
+      "date": null,
+      "title": "A new homepage and a simpler menu",
+      "summary": "The homepage has a new editorial design, and the menu is now five clear groups: Study, Resources, Community, Life and About.",
+      "category": "platform",
+      "type": "improved",
+      "status": "draft",
+      "highlights": [
+        "Your week, everyday shortcuts and the main tools on one page.",
+        "Five menu groups instead of a long row of links, on every page.",
+        "A new footer with every page and the official university platforms."
+      ],
+      "links": [
+        {
+          "label": "Open the homepage",
+          "url": "index.html"
+        }
+      ],
+      "evidence": null
+    },
+    {
       "id": "academic-rules-journey-support",
       "date": "2026-10-06",
       "title": "Academic rules, your programme journey and support contacts",

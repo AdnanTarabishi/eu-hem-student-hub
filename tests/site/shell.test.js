@@ -40,12 +40,12 @@ const PAGES = ['index.html', 'studyplan.html', 'tracks.html', 'timetable.html', 
   assert.strictEqual(await page.textContent('.site-title .brand-product'), 'Student Hub');
   assert.strictEqual(await page.getAttribute('.site-title a', 'aria-label'), 'EU-HEM Student Hub, home');
   assert.deepStrictEqual(await page.$$eval('.menu > .menu-item > :first-child', (all) => all.map((e) => e.textContent.trim())),
-    ['Study', 'Resources', 'Community', 'Life']);
+    ['Study', 'Resources', 'Community', 'Life', 'About']);
   assert.strictEqual(await page.getAttribute('.menu-dropdown a[href="tracks.html"]', 'aria-current'), 'page');
   assert.ok(await page.$eval('.menu-group:text("Study")', (b) => b.classList.contains('is-current')), 'Study group marked');
   assert.ok(await page.isVisible('.header-cta'));
   assert.strictEqual(await page.isVisible('.menu-toggle'), false);
-  ok('header: brand lockup, four menu groups, current page and its group marked, Join the Directory, no phone menu button');
+  ok('header: brand lockup, five menu groups, current page and its group marked, Join the Directory, no phone menu button');
 
   await page.focus('.menu-group:text("Resources")');
   await page.keyboard.press('Enter');
@@ -69,10 +69,10 @@ const PAGES = ['index.html', 'studyplan.html', 'tracks.html', 'timetable.html', 
   const footer = await page.$$eval('.site-footer a', (all) => all.map((a) => a.textContent));
   for (const label of ['Home', 'Timetable', 'Notes & Resources', 'All city guides', 'Academic Rules', 'Support & Contacts', 'Privacy', 'Contact',
     'Virtuale (UniBo)', 'Source on GitHub']) assert.ok(footer.includes(label), label);
-  assert.deepStrictEqual(await page.$$eval('.footer-heading', (all) => all.map((h) => h.textContent)), ['Study', 'Resources', 'Community', 'Life', 'Official platforms']);
+  assert.deepStrictEqual(await page.$$eval('.footer-heading', (all) => all.map((h) => h.textContent)), ['Study', 'Resources', 'Community', 'Life', 'About', 'Official platforms']);
   assert.ok(await page.$('.site-footer #links') && await page.$('.site-footer #about'), 'index.html#links and #about targets');
   assert.match(await page.textContent('.footer-bottom'), /Unofficial student project/);
-  ok('header compacts on scroll; navy footer: the four menu groups, official platforms (#links), about (#about), disclaimer');
+  ok('header compacts on scroll; navy footer: the five menu groups, official platforms (#links), about (#about), disclaimer');
   await page.context().close();
 
   /* ----- Homepage: Home is the brand (no menu item) ----- */
