@@ -1290,6 +1290,22 @@ main {
   max-width: 70ch;
 }
 
+/* Release stage and version (site-nav.js, from content/roadmap.json) */
+.footer-bottom .footer-version {
+  padding: 2px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-pill);
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.footer-bottom .footer-version:hover {
+  color: #fff;
+  border-color: #fff;
+}
+
 .footer-bottom .footer-signature {
   font-family: var(--font-serif);
   font-size: 1.05rem;
@@ -9503,21 +9519,7 @@ main > :is(.page-intro, .notes-hero, .tracks-hero, .thesis-intro, .sx-hero):firs
   color: #fff;
 }
 
-.roadmap-preview-bar {
-  display: block;
-  height: 8px;
-  border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.16);
-  overflow: hidden;
-}
 
-.roadmap-preview-bar span {
-  display: block;
-  height: 100%;
-  min-width: 8px;
-  border-radius: inherit;
-  background: #e7845f;
-}
 
 /* ----- Source labels (utils.js → sourceLabel): Official vs Student tip, always written out ----- */
 .source-badge {
@@ -9836,14 +9838,14 @@ main > :is(.page-intro, .notes-hero, .tracks-hero, .thesis-intro, .sx-hero):firs
 .journey-track-note { margin: 8px 0 0; }
 
 /* Vertical timeline: a line with a dot per stage */
-.journey-timeline {
+.journey-page .journey-timeline {
   list-style: none;
   margin: 0;
   padding: 0 0 0 28px;
   position: relative;
 }
 
-.journey-timeline::before {
+.journey-page .journey-timeline::before {
   content: "";
   position: absolute;
   left: 9px;

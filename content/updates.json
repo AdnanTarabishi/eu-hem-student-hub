@@ -5,6 +5,7 @@
   "items": [
     {
       "id": "homepage-and-menu",
+      "version": "v0.9",
       "date": "2026-10-06",
       "title": "A new homepage and a simpler menu",
       "summary": "The homepage has a new editorial design, and the menu is now five clear groups: Study, Resources, Community, Life and About.",
@@ -39,6 +40,7 @@
     },
     {
       "id": "academic-rules-journey-support",
+      "version": "v0.9",
       "date": "2026-10-06",
       "title": "Academic rules, your programme journey and support contacts",
       "summary": "Three new pages, based on the EU-HEM handbook and official university pages: re-sits and grades, your two years step by step, and who to contact for help.",
@@ -86,6 +88,7 @@
     },
     {
       "id": "roadmap-and-updates",
+      "version": "v0.9",
       "date": "2026-10-06",
       "title": "Roadmap & Updates",
       "summary": "See what the Student Hub team is working on now, what comes next, bigger ideas for later and every major release so far.",
@@ -121,6 +124,7 @@
     },
     {
       "id": "students-explorer",
+      "version": "v0.9",
       "date": "2026-10-06",
       "title": "Students explorer (demo)",
       "summary": "Explore the EU-HEM community on a map, as profile cards or a list, with filters and profile details. It shows fictional demo profiles until real students join.",
@@ -152,6 +156,7 @@
     },
     {
       "id": "new-design",
+      "version": "v0.9",
       "date": "2026-10-06",
       "title": "A new look across the Hub",
       "summary": "A complete redesign: a clearer homepage, simpler navigation, consistent page headers and a refreshed dark mode on every page.",
@@ -195,6 +200,7 @@
     },
     {
       "id": "city-guides",
+      "version": "v0.5",
       "date": "2026-10-05",
       "title": "City guides for all four destinations",
       "summary": "Expanded Bologna, Oslo, Rotterdam and Innsbruck guides with practical sections, sources, image galleries and side-by-side city comparison.",
@@ -245,6 +251,7 @@
     },
     {
       "id": "thesis-discovery",
+      "version": "v0.5",
       "date": "2026-10-05",
       "title": "Discover thesis topics by interest",
       "summary": "Explore themes, methods and possible relevance to current tracks, with related past topics. The added classifications are Student Hub interpretations.",
@@ -279,6 +286,7 @@
     },
     {
       "id": "thesis-explorer",
+      "version": "v0.4",
       "date": "2026-10-04",
       "title": "Past Thesis Explorer introduced",
       "summary": "Search past thesis titles by cohort, legacy specialisation and university to find topic ideas.",
@@ -308,6 +316,7 @@
     },
     {
       "id": "tracks",
+      "version": "v0.4",
       "date": "2026-10-04",
       "title": "Explore & compare EU-HEM tracks",
       "summary": "Browse the four specialisations, compare courses and mobility paths, save My track and try an informal student-made track quiz.",
@@ -346,6 +355,7 @@
     },
     {
       "id": "home-dashboard",
+      "version": "v0.3",
       "date": "2026-10-03",
       "title": "A clearer home dashboard",
       "summary": "See this week’s classes, the next exam and your study plan from the homepage, with dedicated Timetable, Exams and Calendar pages.",
@@ -380,6 +390,7 @@
     },
     {
       "id": "search-offline",
+      "version": "v0.3",
       "date": "2026-10-03",
       "title": "Search, dark mode & offline access",
       "summary": "Search across the Hub, switch themes and install the site on supported devices. Previously cached pages and information can be opened offline.",
@@ -418,6 +429,7 @@
     },
     {
       "id": "notes-practice",
+      "version": "v0.3",
       "date": "2026-10-03",
       "title": "Notes & practice tools",
       "summary": "Added course resource pages, a shared glossary, flashcards, quizzes and browser-saved study progress. Fundamentals in Health Economics is the pilot content area.",
@@ -452,6 +464,7 @@
     },
     {
       "id": "personal-study-plan",
+      "version": "v0.3",
       "date": "2026-10-03",
       "title": "Personal study plan & calendars",
       "summary": "Plan course choices, track progress and subscribe to a calendar for your selected study plan. Choices are saved on this device.",
@@ -490,6 +503,7 @@
     },
     {
       "id": "student-life-community",
+      "version": "v0.1",
       "date": "2026-10-01",
       "title": "Bologna guide, announcements & directory preview",
       "summary": "Added a Bologna city guide and an announcement feed, alongside a searchable student directory preview with fictional profiles.",
@@ -536,6 +550,7 @@
     },
     {
       "id": "first-academic-hub",
+      "version": "v0.1",
       "date": "2026-10-01",
       "title": "First academic hub",
       "summary": "Added the homepage, first-year timetable, exam dates and calendar subscription links.",

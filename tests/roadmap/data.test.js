@@ -22,19 +22,23 @@ const fails = (r, u, pattern) => assert.ok(problems(r, u).some((p) => pattern.te
 t("both files are valid (today's date, real pages)", () => {
   assert.deepStrictEqual(R.validate(roadmap, updates, { today, pageExists }), []);
 });
-t("Now: exactly one current focus, Student beta preparation, in progress", () => {
+t("Now: Exam Prep and Student beta preparation, both in progress", () => {
   const now = roadmap.items.filter((i) => i.lane === "now");
-  assert.deepStrictEqual(now.map((i) => [i.id, i.status]), [["student-beta-preparation", "in-progress"]]);
+  assert.deepStrictEqual(now.map((i) => [i.id, i.status]), [["exam-prep", "in-progress"], ["student-beta-preparation", "in-progress"]]);
+  const exam = now[0];
+  assert.strictEqual(exam.category, "learning");
+  assert.strictEqual(exam.target.label, "October 2026");
 });
-t("Next: the requested plans, grouped Oct → Oct–Nov → Nov–Dec, from target dates in the data", () => {
+t("Next: four dated plans (Oct → Nov → Nov–Dec), the rest After launch", () => {
   const groups = R.groupNext(R.readRoadmap(roadmap).items);
-  assert.deepStrictEqual(groups.map((g) => g.label), ["October 2026", "October–November 2026", "November–December 2026"]);
+  assert.deepStrictEqual(groups.map((g) => g.label), ["October 2026", "November 2026", "November–December 2026", "After launch"]);
   const ids = (label) => groups.find((g) => g.label === label).items.map((i) => i.id);
-  assert.deepStrictEqual(ids("October 2026"), ["beta-feedback-improvements", "student-accounts-cohort-profiles", "domain-admin-dashboard"]);
-  for (const id of ["student-stories-experiences", "partner-university-guides", "expanded-notes-interactive-lessons", "expanded-practice-bank"]) {
-    assert.ok(ids("October–November 2026").includes(id), id);
-  }
-  assert.deepStrictEqual(ids("November–December 2026"), ["beyond-euhem-opportunities"]);
+  assert.deepStrictEqual(ids("October 2026"), ["beta-feedback-improvements", "domain-admin-dashboard"]);
+  assert.deepStrictEqual(ids("November 2026"), ["mobility-checklists"]);
+  assert.deepStrictEqual(ids("November–December 2026"), ["student-accounts-cohort-profiles"]);
+  assert.deepStrictEqual(ids("After launch").sort(), ["beyond-euhem-opportunities", "expanded-notes-interactive-lessons",
+    "expanded-practice-bank", "partner-university-guides", "student-stories-experiences"]);
+  assert.ok(roadmap.items.filter((i) => i.lane === "next" && i.target).length <= R.MAX_DATED_NEXT);
   const beyond = roadmap.items.find((i) => i.id === "beyond-euhem-opportunities");
   const text = JSON.stringify(beyond).toLowerCase();
   for (const word of ["jobs", "internships", "research", "career preparation", "phd"]) assert.ok(text.includes(word), word);
@@ -48,13 +52,16 @@ t("Later: ideas without dates, including trips and the Student Digital Toolkit",
   const later = roadmap.items.filter((i) => i.lane === "later");
   assert.ok(later.length >= 10 && later.length <= 12, "a focused list, not a huge wishlist");
   for (const i of later) { assert.strictEqual(i.target, null, i.id); assert.strictEqual(i.status, "exploring", i.id); }
-  for (const id of ["group-trips-adventures", "student-digital-toolkit", "mobility-checklists", "budget-shared-expenses",
+  assert.ok(!later.some((i) => i.id === "mobility-checklists"), "mobility checklists moved to Next");
+  for (const id of ["group-trips-adventures", "student-digital-toolkit", "budget-shared-expenses",
     "cross-device-revision-workspace", "group-project-workspace", "research-reading-workbench", "career-application-tracker",
     "methods-health-economics-labs", "alumni-mentoring-skills-exchange"]) assert.ok(later.some((i) => i.id === id), id);
 });
 t("accounts are planned, never presented as available", () => {
   const accounts = roadmap.items.find((i) => i.id === "student-accounts-cohort-profiles");
   assert.strictEqual(accounts.status, "planned");
+  assert.strictEqual(accounts.target.label, "November–December 2026");
+  assert.match(accounts.note, /secure sign-in and a privacy review/);
   assert.ok(!updates.items.some((u) => u.status === "published" && /account|sign-in|login/i.test(u.title + u.summary)));
 });
 t("updates: 15 published with evidence, newest first; same day ordered by deployment time; drafts stay hidden", () => {
@@ -79,12 +86,46 @@ t("every evidence commit exists in this repository's history", () => {
   }
 });
 
-t("overall progress: 10% of the full vision, planned finish 3 March 2027", () => {
+t("progress: releases counted from updates.json, the full Hub in Spring 2027 (no percentage)", () => {
   const vision = R.readRoadmap(roadmap).vision;
-  assert.deepStrictEqual([vision.progressPercent, vision.targetDate], [10, "2027-03-03"]);
-  assert.strictEqual(R.daysUntil("2026-10-06", "2027-03-03"), 148);
-  const bad = clone(roadmap); bad.vision.progressPercent = 150; fails(bad, updates, /whole number from 0 to 100/);
-  const bad2 = clone(roadmap); bad2.vision.targetDate = "2027-02-30"; fails(bad2, updates, /real YYYY-MM-DD date/);
+  assert.strictEqual(vision.targetLabel, "Spring 2027");
+  assert.strictEqual(vision.progressPercent, undefined);
+  assert.deepStrictEqual(R.releaseCount(updates), { count: 15, since: "2026-10-01", text: "15 releases shipped since 1 Oct 2026" });
+  assert.strictEqual(R.releaseCount(withDraft).count, 15, "drafts are not counted");
+  const bad = clone(roadmap); bad.vision.progressPercent = 10; fails(bad, updates, /no longer used/);
+  const bad2 = clone(roadmap); delete bad2.vision.targetLabel; fails(bad2, updates, /targetLabel/);
+});
+t("release: Beta v0.9, next v1.0 Public Launch on 15 Oct 2026 (a target), with what it contains", () => {
+  const release = R.readRoadmap(roadmap).release;
+  assert.deepStrictEqual([release.stage, release.version, release.next.version, release.next.name, release.next.targetDate],
+    ["Beta", "v0.9", "v1.0", "Public Launch", "2026-10-15"]);
+  assert.match(release.note, /target, not a promise/);
+  assert.deepStrictEqual(release.next.includes.map((e) => e.label), ["Custom domain", "Admin dashboard", "Exam Prep",
+    "Academic Rules", "Programme Journey", "Support & Contacts"]);
+  const bad = clone(roadmap); bad.release.version = "0.9"; fails(bad, updates, /version like "v0\.9"/);
+  const bad2 = clone(roadmap); bad2.release.next.includes.push({ label: "Ghost", item: "no-such-plan" }); fails(bad2, updates, /roadmap item \(item\) or a published update/);
+  const bad3 = clone(roadmap); bad3.release.next.includes.push({ label: "Draft", update: "test-draft" }); fails(bad3, withDraft, /published update/);
+});
+t("versions: every release has one, by release day; the newest first for the filter", () => {
+  const byDay = {};
+  for (const u of R.publishedUpdates(updates)) (byDay[u.date] = byDay[u.date] || new Set()).add(u.version);
+  assert.deepStrictEqual(Object.fromEntries(Object.entries(byDay).map(([d, v]) => [d, [...v]])),
+    { "2026-10-06": ["v0.9"], "2026-10-05": ["v0.5"], "2026-10-04": ["v0.4"], "2026-10-03": ["v0.3"], "2026-10-01": ["v0.1"] });
+  assert.deepStrictEqual(R.updateVersions(updates), ["v0.9", "v0.5", "v0.4", "v0.3", "v0.1"]);
+  const u = clone(updates); delete u.items[0].version; fails(roadmap, u, /needs a version/);
+});
+t("milestones: the cohort beta is still planned (9 Oct), the public launch planned for 15 Oct", () => {
+  const ms = Object.fromEntries(roadmap.milestones.map((m) => [m.id, [m.date, m.status]]));
+  assert.deepStrictEqual(ms["first-cohort-beta"], ["2026-10-09", "planned"]);
+  assert.deepStrictEqual(ms["public-launch-v1"], ["2026-10-15", "planned"]);
+});
+t("known limitations, the domain move and the feedback link", () => {
+  const plan = R.readRoadmap(roadmap);
+  assert.match(plan.limitations.items.join(" "), /fictional demo profiles/);
+  assert.match(plan.limitations.items.join(" "), /only on this device/);
+  assert.match(plan.domainMove.items.join(" "), /redirect/);
+  assert.match(plan.domainMove.items.join(" "), /will not carry over/);
+  assert.deepStrictEqual(plan.feedback, { label: "Suggest a feature / Report a problem", url: "contact.html" });
 });
 
 /* ----- the rules ----- */
@@ -121,7 +162,10 @@ t("ids are unique slugs; statuses fit their stage; Later has no dates; Next need
   const status = clone(roadmap); status.items.find((i) => i.lane === "later").status = "planned"; fails(status, updates, /not allowed in later/);
   const dated = clone(roadmap); dated.items.find((i) => i.lane === "later").target = { start: "2027-01", end: "2027-01", label: "Jan" }; fails(dated, updates, /no target/);
   const order = clone(roadmap); order.items[1].target.start = "2026-12"; fails(order, updates, /start ≤ end/);
-  const twoNow = clone(roadmap); twoNow.items[1].lane = "now"; twoNow.items[1].status = "in-progress"; fails(twoNow, updates, /exactly one item must be in Now/);
+  const threeNow = clone(roadmap); threeNow.items[2].lane = "now"; threeNow.items[2].status = "in-progress"; fails(threeNow, updates, /Now must have one or 2 items/);
+  const fiveDated = clone(roadmap); fiveDated.items.find((i) => i.id === "partner-university-guides").target = { start: "2026-11", end: "2026-11", label: "November 2026" };
+  fails(fiveDated, updates, /at most 4 Next items may have a date/);
+  const nowNoDate = clone(roadmap); nowNoDate.items[0].target = null; fails(nowNoDate, updates, /Now item needs a target/);
 });
 t("links: only pages of this site or https; missing pages are reported", () => {
   for (const bad of ["javascript:alert(1)", "//evil.example", "../secret.html", "http://insecure.example", "data:text/html,x"]) {

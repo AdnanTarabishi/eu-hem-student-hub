@@ -317,7 +317,13 @@ function brandLockup(make) {
 
   // --- The header gets a shadow and shrinks a little while scrolling ---
   if (header) {
-    const onScroll = () => header.classList.toggle("is-compact", window.scrollY > 24);
+    // Two thresholds (shrink after 32px, grow back under 8px): with one, the header's own size change could
+    // nudge the scroll position back and forth across it, and the header would flicker
+    const onScroll = () => {
+      const compact = header.classList.contains("is-compact");
+      if (!compact && window.scrollY > 32) header.classList.add("is-compact");
+      else if (compact && window.scrollY < 8) header.classList.remove("is-compact");
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
   }
@@ -411,6 +417,18 @@ function brandLockup(make) {
         "Your study plan and progress are saved only on your device."),
       make("p", "footer-signature", "One programme. A shared journey."));
     footer.appendChild(bottom);
+    // The release stage and version, from content/roadmap.json → release (left out if it cannot be read)
+    fetch("content/roadmap.json")
+      .then((response) => (response.ok ? response.json() : null))
+      .then((data) => {
+        const release = data && data.release;
+        if (!release || typeof release.stage !== "string" || !/^v\d+\.\d+$/.test(release.version || "")) return;
+        const version = make("a", "footer-version", `${release.stage} · ${release.version}`);
+        version.href = "roadmap.html#updates";
+        version.setAttribute("aria-label", `Student Hub ${release.stage} ${release.version}: see the updates`);
+        bottom.querySelector(".footer-signature").before(version);
+      })
+      .catch(() => {});
   }
 
   const afterLoad = () => {

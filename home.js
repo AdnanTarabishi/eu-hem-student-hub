@@ -340,22 +340,13 @@ async function fillRoadmapPreview() {
     const label = createElement("span", "roadmap-preview-label");
     label.append(createElement("span", "roadmap-preview-dot"), document.createTextNode(`Now · ${R.ROADMAP_STATUS[now.status]}`));
     card.append(label, createElement("strong", null, now.title), createElement("span", null, now.summary));
-    // Overall progress towards the full vision (roadmap.json → vision)
-    if (plan.vision) {
-      const progress = createElement("span", "roadmap-preview-progress");
-      const bar = createElement("span", "roadmap-preview-bar");
-      bar.setAttribute("role", "progressbar");
-      bar.setAttribute("aria-valuemin", "0");
-      bar.setAttribute("aria-valuemax", "100");
-      bar.setAttribute("aria-valuenow", String(plan.vision.progressPercent));
-      bar.setAttribute("aria-label", `${plan.vision.title}: ${plan.vision.progressPercent}% complete`);
-      const fill = createElement("span");
-      fill.style.width = `${plan.vision.progressPercent}%`;
-      bar.appendChild(fill);
-      progress.append(createElement("span", null,
-        `${plan.vision.progressPercent}% of the full Hub built · planned finish ${R.dayLabel(plan.vision.targetDate)}`), bar);
-      card.appendChild(progress);
-    }
+    // Stage, releases shipped (counted from updates.json) and the season of the full Hub (roadmap.json)
+    const parts = [
+      plan.release && `${plan.release.stage} ${plan.release.version}`,
+      updates && R.releaseCount(updates).text,
+      plan.vision && `full Hub: ${plan.vision.targetLabel}`,
+    ].filter(Boolean);
+    if (parts.length) card.appendChild(createElement("span", "roadmap-preview-progress", parts.join(" · ")));
     card.appendChild(createElement("span", "roadmap-preview-more", "See what is planned next →"));
     box.appendChild(card);
   }

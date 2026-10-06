@@ -5,7 +5,8 @@
 //        [--highlight "..."]... [--link "Label|page.html"]...
 //     Adds a hidden draft (date: null, evidence: null) to content/updates.json.
 //
-//   node scripts/updates.js publish <id> --run <GitHub Actions run id or URL> --commit <sha> [--commit <sha>]...
+//   node scripts/updates.js publish <id> --run <GitHub Actions run id or URL> --commit <sha> [--commit <sha>]... [--version v1.0]
+//     (without --version: the draft's version, otherwise the current release.version in content/roadmap.json)
 //     Looks the run up on GitHub (public, no token needed), and only if it is a successful "pages build and
 //     deployment" from main, and every commit is part of the deployed version (checked with git), fills in
 //     the date (Rome time) and the evidence, and marks the update "published".
@@ -57,8 +58,9 @@ function addDraft(id, o) {
     const [label, url] = text.split("|");
     return { label: (label || "").trim(), url: (url || "").trim() };
   });
+  if (o.version && !R.VERSION_PATTERN.test(o.version)) fail('--version must look like "v1.0"');
   data.items.unshift({
-    id, date: null, title: o.title, summary: o.summary, category: o.category, type: o.type, status: "draft",
+    id, version: o.version || null, date: null, title: o.title, summary: o.summary, category: o.category, type: o.type, status: "draft",
     highlights: o.highlight, links, evidence: null,
   });
   writeUpdates(data);
@@ -122,7 +124,12 @@ async function publish(id, o) {
   const date = R.dateInRome(run.updated_at);
   const deployedAt = romeTimestamp(run.updated_at);
 
+  const roadmap = JSON.parse(fs.readFileSync(path.join(ROOT, "content", "roadmap.json"), "utf8"));
+  const version = o.version || item.version || (roadmap.release && roadmap.release.version);
+  if (!R.VERSION_PATTERN.test(version || "")) fail('A published update needs a version: add --version v1.0 (or set release.version in content/roadmap.json)');
+
   Object.assign(item, {
+    version,
     status: "published",
     date,
     evidence: {
@@ -133,7 +140,7 @@ async function publish(id, o) {
   });
   if (data.updatedAt < date) data.updatedAt = date;
   writeUpdates(data);
-  console.log(`✔ "${id}" published with date ${date} (deployment ${runId[1]}).`);
+  console.log(`✔ "${id}" published as ${version} with date ${date} (deployment ${runId[1]}).`);
   console.log("  Next: review the change, run node scripts/check-content.js, then commit and merge it.");
 }
 

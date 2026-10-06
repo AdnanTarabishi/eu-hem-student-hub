@@ -24,25 +24,44 @@ and the site search finds plans and releases. All of them read the same two file
 - **A published update needs evidence**: a successful GitHub Pages deployment from `main`, its time, and
   the commits it contained. Its date is the deployment day in Rome time. No invented dates.
 - Only important, student-facing releases become updates. Small fixes and visual tweaks do not.
-- Dates in Next are estimates, not promises (said on the page). Later ideas never have dates.
+- Dates in Next are estimates, not promises (said on the page). At most **four** Next items have a date; the
+  rest are shown as **After launch** (`"target": null`). Later ideas never have dates.
+- Progress is a **count of published releases** ("15 releases shipped since 1 Oct 2026"), never a typed
+  percentage. A release counts only once it is published with deployment evidence.
 
 ## Editing `content/roadmap.json`
 
-**Overall progress.** The `vision` block at the top sets the progress bar shown on the Roadmap page and
-the homepage:
+**Release stage.** The `release` block sets the banner at the top of the Roadmap page and the version in
+the footer of every page:
 
 ```json
-"vision": {
-  "title": "Progress towards the full Student Hub",
-  "progressPercent": 10,
-  "targetDate": "2027-03-03",
-  "note": "Our own estimate of how much of the complete Student Hub vision is built. The finish date is the original plan, not a promise."
+"release": {
+  "stage": "Beta",
+  "version": "v0.9",
+  "note": "The launch date is a target, not a promise.",
+  "next": {
+    "version": "v1.0", "name": "Public Launch", "targetDate": "2026-10-15",
+    "includes": [
+      { "label": "Exam Prep", "item": "exam-prep" },
+      { "label": "Academic Rules", "update": "academic-rules-journey-support" }
+    ]
+  }
 }
 ```
 
-Change `progressPercent` (a whole number, 0–100) when you review the roadmap; the days left to
-`targetDate` are counted automatically. It is an estimate set by the team, and the page says so.
+`includes` lists what the next release contains. Each line points to a roadmap item (`item`, shown with its
+status) or a published update (`update`, shown as "Released in v0.9"), so nothing released looks planned and
+nothing planned looks released. When a release ships, change `version` and `next`.
 
+**Towards the full Hub.** The `vision` block shows the releases shipped (counted automatically from
+updates.json) and when the full Hub is planned, as a season:
+
+```json
+"vision": { "title": "Towards the full Student Hub", "targetLabel": "Spring 2027", "note": "…" }
+```
+
+**Good to know.** `limitations` and `domainMove` (`{ "title": …, "items": ["…"] }`) appear at the bottom of
+the page, with the `feedback` button (`{ "label": …, "url": "contact.html" }`).
 
 ```jsonc
 {
@@ -60,7 +79,8 @@ Change `progressPercent` (a whole number, 0–100) when you review the roadmap; 
 }
 ```
 
-- Exactly **one** item is in Now.
+- **One or two** items are in Now, each with a target.
+- An item may have a one-line `note` shown on its card (e.g. what it depends on).
 - Next items are grouped automatically by `target.start`/`target.end`; change the dates there.
 - Update `updatedAt` (YYYY-MM-DD) whenever you review the roadmap; the page shows "Last reviewed …".
 - The checker warns when a Next item's period has passed: move it, re-date it or publish it.
@@ -80,8 +100,10 @@ Change `progressPercent` (a whole number, 0–100) when you review the roadmap; 
 3. **Wait for the deployment** to succeed (GitHub → Actions → *pages build and deployment*).
 4. **Publish** with that run and the feature's commit(s):
    ```
-   node scripts/updates.js publish student-experiences --run <run id or URL> --commit <sha>
+   node scripts/updates.js publish student-experiences --run <run id or URL> --commit <sha> [--version v1.0]
    ```
+   Without `--version` the update gets the draft's version or the current `release.version`. Every published
+   update has a version (`v0.9`); the Updates tab shows it as a tag and can filter by it.
    The helper checks on GitHub that the run succeeded from `main`, checks with git that each commit is
    inside the deployed version, then fills in the date and evidence. It never commits or deploys.
 5. Run `node scripts/check-content.js`, commit `content/updates.json`, and merge again. The page, the

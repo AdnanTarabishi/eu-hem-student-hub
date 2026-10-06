@@ -6,8 +6,8 @@
   <title>Roadmap &amp; Updates – EU-HEM Student Hub</title>
   <meta name="description" content="What the EU-HEM Student Hub team is working on now, what comes next, bigger ideas for later, and every major release so far.">
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=709b9303">
-  <link rel="stylesheet" href="roadmap.css?v=6d38745d">
+  <link rel="stylesheet" href="style.css?v=044399cf">
+  <link rel="stylesheet" href="roadmap.css?v=ec71800f">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -24,7 +24,7 @@
       <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
       <!-- site-nav.js builds the menu here (defined once for all pages) -->
       <nav class="site-nav" id="site-nav" data-current="roadmap" aria-label="Main menu"></nav>
-      <script src="site-nav.js?v=6f76a7a0"></script>
+      <script src="site-nav.js?v=2a72af1d"></script>
     </div>
   </header>
 
@@ -39,7 +39,9 @@
         <p>What the Student Hub team is working on now, what is likely to come next, bigger ideas for later, and
           everything released so far.</p>
         <p class="roadmap-reviewed" id="roadmap-reviewed"></p>
-        <!-- Overall progress towards the full vision (roadmap.json → vision) -->
+        <!-- Release stage and the next release (roadmap.json → release) -->
+        <div class="roadmap-release" id="roadmap-release" hidden></div>
+        <!-- Releases shipped and the target for the full Hub (roadmap.json → vision, counted from updates.json) -->
         <div class="roadmap-vision" id="roadmap-vision" hidden></div>
       </div>
       <!-- Four shortcuts with live counts (roadmap.js) -->
@@ -61,6 +63,7 @@
       <div class="roadmap-filter-row">
         <div class="roadmap-chips" id="roadmap-stage" role="group" aria-label="Stage"></div>
         <div class="roadmap-chips" id="roadmap-type" role="group" aria-label="Type of update" hidden></div>
+        <div class="roadmap-chips" id="roadmap-version" role="group" aria-label="Version" hidden></div>
         <div class="roadmap-chips" id="roadmap-category" role="group" aria-label="Category"></div>
         <button type="button" class="filter-chip roadmap-saved-toggle" id="roadmap-saved-only" aria-pressed="false"></button>
       </div>
@@ -72,6 +75,8 @@
 
     <section id="panel-roadmap" class="roadmap-panel" role="tabpanel" aria-labelledby="tab-roadmap" tabindex="-1">
       <p class="roadmap-status" id="roadmap-status">Loading the roadmap…</p>
+      <!-- What the next release contains, each part with its real status (roadmap.json → release.next.includes) -->
+      <section class="roadmap-v1" id="roadmap-v1" aria-labelledby="roadmap-v1-title" hidden></section>
       <div id="roadmap-board"></div>
       <p class="roadmap-note" id="roadmap-planning-note"></p>
     </section>
@@ -86,6 +91,9 @@
       <h2 class="section-title roadmap-journey-title">How the Student Hub grew</h2>
       <ol class="journey-timeline" id="journey-list"></ol>
     </section>
+
+    <!-- Known limitations, the domain move and the feedback button (roadmap.json) -->
+    <section class="roadmap-info" id="roadmap-info" aria-label="Good to know" hidden></section>
 
     <!-- Details of one plan or update: a native dialog (Escape closes it, focus stays inside while open) -->
     <dialog class="roadmap-drawer" id="roadmap-drawer" aria-labelledby="roadmap-drawer-title">
@@ -104,8 +112,8 @@
   <script defer src="search.js?v=0beae815"></script>
   <script defer src="pwa.js?v=c9212bf8"></script>
   <script defer src="announcements.js?v=3ecd40f0"></script>
-  <script defer src="roadmap-data.js?v=108d4344"></script>
-  <script defer src="roadmap.js?v=f37b2772"></script>
+  <script defer src="roadmap-data.js?v=c0f72e93"></script>
+  <script defer src="roadmap.js?v=4c12b287"></script>
 
 </body>
 </html>

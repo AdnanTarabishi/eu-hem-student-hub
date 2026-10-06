@@ -52,39 +52,58 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   /* ----- Overview and the three stages ----- */
   let page = await open();
   assert.deepStrictEqual(await page.$$eval(".roadmap-overview-item", (all) => all.map((b) => b.textContent.replace(/\s+/g, ""))),
-    ["1Now", "8Next", "11Later", "15Released"]);
+    ["2Now", "9Next", "10Later", "15Released"]);
   assert.match(await text(page, "#roadmap-reviewed"), /Last reviewed 6 October 2026/);
-  assert.match(await text(page, ".roadmap-card.is-now"), /In progress.*Student beta preparation/);
+  assert.deepStrictEqual(await page.$$eval(".roadmap-card.is-now .roadmap-card-title", (all) => all.map((h) => h.textContent)),
+    ["Exam Prep", "Student beta preparation"]);
   assert.deepStrictEqual(await page.$$eval(".roadmap-window-label", (all) => all.map((h) => h.textContent)),
-    ["October 2026", "October–November 2026", "November–December 2026"]);
+    ["October 2026", "November 2026", "November–December 2026", "After launch"]);
   assert.match(await text(page, ".roadmap-lane.is-next"), /Estimated periods, not promises/);
-  assert.strictEqual(await page.getAttribute("#roadmap-vision [role=progressbar]", "aria-valuenow"), "10");
-  assert.match(await text(page, "#roadmap-vision"), /10%.*Planned finish: 3 March 2027 · \d+ days to go/);
-  ok("overview counts, one prominent Now card, Next grouped by estimated period, overall progress 10% with the planned finish");
+  assert.strictEqual(await page.locator("#roadmap-vision [role=progressbar]").count(), 0, "no percentage bar");
+  assert.match(await text(page, "#roadmap-vision"), /15 releases shipped since 1 Oct 2026.*Full Hub: Spring 2027/s);
+  ok("overview counts, two Now cards, Next by period with After launch, releases counted (no percentage), full Hub Spring 2027");
+
+  // Release banner, What's in v1.0, the plan note, limitations, domain move, feedback
+  assert.match(await text(page, "#roadmap-release"), /Beta\s*v0\.9.*Next: v1\.0 — Public Launch · target 15 October 2026.*target, not a promise/s);
+  const v1 = await page.$$eval(".roadmap-v1-item", (all) => all.map((li) => [li.querySelector(".roadmap-pill").textContent, li.querySelector("button").textContent]));
+  assert.deepStrictEqual(v1, [["Planned", "Custom domain"], ["Planned", "Admin dashboard"], ["In progress", "Exam Prep"],
+    ["Released in v0.9", "Academic Rules"], ["Released in v0.9", "Programme Journey"], ["Released in v0.9", "Support & Contacts"]]);
+  assert.match(await text(page, "#feature-student-accounts-cohort-profiles"), /Needs a secure sign-in and a privacy review first/);
+  assert.match(await text(page, "#roadmap-info"), /Known limitations.*fictional demo profiles.*only on this device.*Moving to a new domain.*redirect.*will not carry over/s);
+  assert.strictEqual(await page.getAttribute(".roadmap-feedback-button", "href"), "contact.html");
+  assert.match(await text(page, ".roadmap-feedback-button"), /Suggest a feature \/ Report a problem/);
+  await page.locator(".site-footer .footer-version").waitFor();
+  assert.strictEqual(await text(page, ".site-footer .footer-version"), "Beta · v0.9");
+  ok("release banner (Beta v0.9, v1.0 target), What's in v1.0 with real statuses, plan note, limitations, domain move, feedback, footer version");
+  await page.click('.roadmap-v1-item button:has-text("Academic Rules")');
+  assert.strictEqual(await page.evaluate(() => location.hash), "#update-academic-rules-journey-support");
+  await page.keyboard.press("Escape");
+  await page.click("#tab-roadmap");
+  ok("a released part of v1.0 opens its release");
 
   assert.strictEqual(await page.locator(".roadmap-card.is-later").count(), 6);
   assert.strictEqual(await page.getAttribute(".roadmap-later-toggle", "aria-expanded"), "false");
   await page.click(".roadmap-later-toggle");
-  assert.strictEqual(await page.locator(".roadmap-card.is-later").count(), 11);
+  assert.strictEqual(await page.locator(".roadmap-card.is-later").count(), 10);
   assert.strictEqual(await page.getAttribute(".roadmap-later-toggle", "aria-expanded"), "true");
   assert.strictEqual(await page.evaluate(() => document.activeElement.classList.contains("roadmap-later-toggle")), true);
-  ok("Later shows six ideas, expands to all eleven, focus stays on the toggle");
+  ok("Later shows six ideas, expands to all ten, focus stays on the toggle");
 
   /* ----- Filters and search ----- */
   await page.click('#roadmap-stage .filter-chip:has-text("Now")');
-  assert.match(await text(page, "#roadmap-count"), /Showing 1 of 20 plans/);
+  assert.match(await text(page, "#roadmap-count"), /Showing 2 of 21 plans/);
   assert.strictEqual(await page.evaluate(() => document.activeElement.textContent), "Now", "focus stays on the chip");
   await page.click('#roadmap-stage .filter-chip:has-text("Next")');
   await page.click('#roadmap-category .filter-chip:has-text("Learning")');
-  assert.match(await text(page, "#roadmap-count"), /Showing 2 of 20 plans/);
+  assert.match(await text(page, "#roadmap-count"), /Showing 2 of 21 plans/);
   await page.click("#roadmap-clear");
   await page.fill("#roadmap-search", "EXPÉRIENCES second-year");
-  assert.match(await text(page, "#roadmap-count"), /Showing 1 of 20 plans/);
+  assert.match(await text(page, "#roadmap-count"), /Showing 1 of 21 plans/);
   assert.match(await text(page, "#roadmap-board"), /Student experiences/);
   await page.fill("#roadmap-search", "zebra unicorn");
   assert.match(await text(page, ".empty-state"), /No plans match these filters/);
   await page.click('.empty-state button:has-text("Clear filters")');
-  assert.match(await text(page, "#roadmap-count"), /^20 plans$/);
+  assert.match(await text(page, "#roadmap-count"), /^21 plans$/);
   assert.strictEqual(await page.inputValue("#roadmap-search"), "");
   ok("stage + topic filters combine, accent-insensitive search, empty state with Clear filters");
 
@@ -109,13 +128,26 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   assert.strictEqual(await page.evaluate(() => document.activeElement.id), "tab-roadmap");
   ok("tabs: click and arrow keys, address follows, toolbar hidden on Our journey; Updates filter by type; draft hidden");
 
+  // Version tags and the version filter on the Updates tab
+  await page.click("#tab-updates");
+  assert.deepStrictEqual(await page.$$eval("#roadmap-version .filter-chip", (all) => all.map((b) => b.textContent)),
+    ["All versions", "v0.9", "v0.5", "v0.4", "v0.3", "v0.1"]);
+  assert.strictEqual(await page.locator(".update-entry .roadmap-version").count(), 15);
+  await page.click('#roadmap-version .filter-chip:has-text("v0.5")');
+  assert.deepStrictEqual(await page.$$eval(".update-entry .roadmap-version", (all) => [...new Set(all.map((t) => t.textContent))]), ["v0.5"]);
+  assert.match(await text(page, "#roadmap-count"), /Showing 2 of 15 updates/);
+  await page.click("#roadmap-clear");
+  assert.match(await text(page, "#roadmap-count"), /^15 updates$/);
+  ok("Updates: a version tag on every release; the version filter shows one version; Clear filters resets it");
+
   await page.click("#tab-journey");
   const journey = await page.$$eval(".journey-title", (all) => all.map((h) => h.textContent));
   assert.strictEqual(journey[0], "First code");
-  assert.strictEqual(journey.at(-1), "First cohort beta");
+  assert.deepStrictEqual(journey.slice(-2), ["First cohort beta", "Public Launch v1.0 — custom domain and dashboard"]);
   assert.ok(journey.indexOf("First academic hub") < journey.indexOf("Bologna guide, announcements & directory preview"), "same-day releases in deployment order");
-  assert.match(await text(page, ".journey-event.is-planned"), /Planned/);
-  ok("Our journey: milestones and releases in time order, the beta clearly planned");
+  assert.strictEqual(await page.locator(".journey-event.is-planned").count(), 2);
+  assert.match(await text(page, ".journey-event.is-release"), /Released · v0\.1/);
+  ok("Our journey: milestones and releases in time order with versions; the beta and the launch clearly planned");
   await page.context().close();
 
   /* ----- Details drawer, deep links, Back/Forward, copy link ----- */
@@ -125,7 +157,7 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   assert.strictEqual(await drawerOpen(page), true);
   assert.strictEqual(await page.evaluate(() => location.hash), "#feature-student-stories-experiences");
   assert.strictEqual(await text(page, "#roadmap-drawer-title"), "Student experiences");
-  assert.match(await text(page, "#roadmap-drawer"), /an estimate, not a promise.*Not available yet/);
+  assert.match(await text(page, "#roadmap-drawer"), /After launch: planned, no date yet.*Not available yet/);
   assert.strictEqual(await page.evaluate(() => document.activeElement.getAttribute("aria-label")), "Close details");
   for (let i = 0; i < 15; i++) await page.keyboard.press("Tab");
   assert.ok(await page.evaluate(() => document.getElementById("roadmap-drawer").contains(document.activeElement)), "focus stays in the drawer");
@@ -210,20 +242,20 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   /* ----- Homepage preview, search, navigation ----- */
   page = await open("index.html");
   await page.waitForSelector(".roadmap-preview-now");
-  assert.match(await text(page, ".roadmap-preview-now"), /Now · In progresss*Student beta preparation/);
-  assert.strictEqual(await page.getAttribute(".roadmap-preview-now", "href"), "roadmap.html#feature-student-beta-preparation");
+  assert.match(await text(page, ".roadmap-preview-now"), /Now · In progress\s*Exam Prep/);
+  assert.strictEqual(await page.getAttribute(".roadmap-preview-now", "href"), "roadmap.html#feature-exam-prep");
   assert.deepStrictEqual(await page.$$eval(".roadmap-preview-latest a", (all) => all.map((a) => a.getAttribute("href"))),
     ["roadmap.html#update-homepage-and-menu", "roadmap.html#update-academic-rules-journey-support", "roadmap.html#update-roadmap-and-updates"]);
-  assert.match(await text(page, ".roadmap-preview-progress"), /10% of the full Hub built · planned finish 3 March 2027/);
-  assert.strictEqual(await page.getAttribute(".roadmap-preview-bar", "aria-valuenow"), "10");
-  ok("homepage: current focus and the three latest releases, from the same data");
+  assert.strictEqual(await text(page, ".roadmap-preview-progress"), "Beta v0.9 · 15 releases shipped since 1 Oct 2026 · full Hub: Spring 2027");
+  assert.strictEqual(await page.locator(".roadmap-preview-bar").count(), 0, "no percentage bar");
+  ok("homepage: current focus, stage, releases shipped and the three latest releases, from the same data");
 
   await page.keyboard.press("Control+k");
   await page.waitForSelector(".search-dialog .search-input");
   await page.fill(".search-dialog .search-input", "student experiences");
   await page.waitForSelector('.search-group-label:has-text("Roadmap plans (not available yet)")');
   const plan = page.locator('.search-result[href="roadmap.html#feature-student-stories-experiences"]');
-  assert.match(await plan.textContent(), /Planned · October–November 2026 · not available yet/);
+  assert.match(await plan.textContent(), /Planned · After launch · not available yet/);
   await page.fill(".search-dialog .search-input", "past thesis explorer");
   await page.waitForSelector('.search-group-label:has-text("Released updates")');
   assert.match(await page.locator('.search-result[href="roadmap.html#update-thesis-explorer"]').textContent(), /Released · 4 October 2026/);

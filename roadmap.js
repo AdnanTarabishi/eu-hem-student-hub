@@ -20,6 +20,7 @@
     category: "all",
     stage: "all",
     type: "all",
+    version: "all", // Updates tab: "v0.9", ...
     savedOnly: false,
     laterOpen: false,
     saved: new Set(),
@@ -128,7 +129,7 @@
 
   // ----- Filters -----
   const hasFilters = () => Boolean(state.query.trim() || state.category !== "all" ||
-    (state.tab === "roadmap" && (state.stage !== "all" || state.savedOnly)) || (state.tab === "updates" && state.type !== "all"));
+    (state.tab === "roadmap" && (state.stage !== "all" || state.savedOnly)) || (state.tab === "updates" && (state.type !== "all" || state.version !== "all")));
 
   function visiblePlans() {
     if (!state.roadmap) return [];
@@ -144,11 +145,12 @@
     return state.updates.filter((item) =>
       (state.category === "all" || item.category === state.category) &&
       (state.type === "all" || item.type === state.type) &&
+      (state.version === "all" || item.version === state.version) &&
       R.matchesQuery(item, state.query, category(item.category).label));
   }
 
   function clearFilters() {
-    Object.assign(state, { query: "", category: "all", stage: "all", type: "all", savedOnly: false });
+    Object.assign(state, { query: "", category: "all", stage: "all", type: "all", version: "all", savedOnly: false });
     $("roadmap-search").value = "";
     render();
   }
@@ -167,10 +169,14 @@
     $("roadmap-stage").hidden = !roadmapTab;
     $("roadmap-saved-only").hidden = !roadmapTab;
     $("roadmap-type").hidden = state.tab !== "updates";
+    $("roadmap-version").hidden = state.tab !== "updates";
     chipGroup($("roadmap-stage"), [["all", "All stages"], ["now", "Now"], ["next", "Next"], ["later", "Later"]], state.stage,
       (value) => { state.stage = value; render(); });
     chipGroup($("roadmap-type"), [["all", "All updates"], ["new", "New"], ["improved", "Improved"]], state.type,
       (value) => { state.type = value; render(); });
+    const versions = R.updateVersions({ items: state.updates || [] });
+    chipGroup($("roadmap-version"), [["all", "All versions"], ...versions.map((v) => [v, v])], state.version,
+      (value) => { state.version = value; render(); });
     const categories = state.roadmap ? state.roadmap.categories : [];
     chipGroup($("roadmap-category"), [["all", "All topics"], ...categories.map((c) => [c.id, c.label])], state.category,
       (value) => { state.category = value; render(); });
@@ -211,29 +217,91 @@
     renderVision();
   }
 
-  // Overall progress towards the full vision, with the original finish date
+  // Progress: the releases shipped so far (counted from updates.json) and the season of the full Hub
   function renderVision() {
     const box = $("roadmap-vision");
     const vision = state.roadmap && state.roadmap.vision;
     box.hidden = !vision;
     if (!vision) return;
-    const percent = vision.progressPercent;
-    const days = R.daysUntil(R.dateInRome(new Date().toISOString()), vision.targetDate);
+    const shipped = R.releaseCount({ items: state.updates || [] });
     const head = el("div", "roadmap-vision-head");
-    head.append(el("span", "roadmap-vision-title", vision.title), el("span", "roadmap-vision-percent", `${percent}%`));
-    const bar = el("div", "roadmap-vision-bar");
-    bar.setAttribute("role", "progressbar");
-    bar.setAttribute("aria-valuemin", "0");
-    bar.setAttribute("aria-valuemax", "100");
-    bar.setAttribute("aria-valuenow", String(percent));
-    bar.setAttribute("aria-label", `${vision.title}: ${percent}% complete`);
-    const fill = el("span", "roadmap-vision-fill");
-    fill.style.width = `${percent}%`;
-    bar.appendChild(fill);
-    const when = days > 0 ? `${days} ${days === 1 ? "day" : "days"} to go` : days === 0 ? "today" : "date passed";
+    head.append(el("span", "roadmap-vision-title", vision.title), el("span", "roadmap-vision-count", shipped.text));
     const meta = el("p", "roadmap-vision-meta");
-    meta.append(el("strong", null, `Planned finish: ${R.dayLabel(vision.targetDate)}`), document.createTextNode(` · ${when}`));
-    box.replaceChildren(head, bar, meta, el("p", "roadmap-vision-note", vision.note));
+    meta.append(el("strong", null, `Full Hub: ${vision.targetLabel}`));
+    box.replaceChildren(head, meta, el("p", "roadmap-vision-note", vision.note));
+  }
+
+  // Release stage (Beta · v0.9) and the next release with its target date
+  function renderRelease() {
+    const box = $("roadmap-release");
+    const release = state.roadmap && state.roadmap.release;
+    box.hidden = !release;
+    if (!release) return;
+    const stage = el("p", "roadmap-release-stage");
+    stage.append(el("span", "roadmap-release-badge", release.stage), el("strong", null, release.version));
+    const next = el("p", "roadmap-release-next");
+    next.append(document.createTextNode("Next: "), el("strong", null, `${release.next.version} — ${release.next.name}`),
+      document.createTextNode(" · target "));
+    const date = el("time", null, R.dayLabel(release.next.targetDate));
+    date.dateTime = release.next.targetDate;
+    next.appendChild(date);
+    box.replaceChildren(stage, next, el("p", "roadmap-release-note", release.note));
+  }
+
+  // "What's in v1.0": each part with its real status (planned / in progress / released in a version)
+  function renderV1() {
+    const box = $("roadmap-v1");
+    const release = state.roadmap && state.roadmap.release;
+    const includes = release ? release.next.includes : [];
+    box.hidden = !includes.length || hasFilters();
+    if (box.hidden) return;
+    const head = el("div", "roadmap-v1-head");
+    const title = el("h2", "roadmap-v1-title", `What's in ${release.next.version}`);
+    title.id = "roadmap-v1-title";
+    head.append(title, el("p", "roadmap-estimate", `${release.next.name} · target ${R.dayLabel(release.next.targetDate)}`));
+    const list = el("ul", "roadmap-v1-list");
+    for (const entry of includes) {
+      const li = el("li", "roadmap-v1-item");
+      const plan = entry.item && state.roadmap.items.find((i) => i.id === entry.item);
+      const update = entry.update && (state.updates || []).find((u) => u.id === entry.update);
+      if (plan) {
+        li.append(statusPill(plan.status), openButton(plan, "feature", entry.label));
+      } else if (update) {
+        const pill = el("span", "roadmap-pill is-released", `${R.RELEASED_LABEL} in ${update.version}`);
+        li.append(pill, openButton(update, "update", entry.label));
+      } else {
+        continue; // points to something not on the page (e.g. an unpublished update): leave it out
+      }
+      li.lastChild.dataset.focusKey = `v1-${entry.label}`;
+      list.appendChild(li);
+    }
+    box.replaceChildren(head, list);
+  }
+
+  // Known limitations, the domain move and the feedback button
+  function renderInfo() {
+    const box = $("roadmap-info");
+    const r = state.roadmap;
+    const blocks = r ? [r.limitations, r.domainMove].filter(Boolean) : [];
+    box.hidden = !blocks.length && !(r && r.feedback);
+    if (box.hidden) return;
+    const grid = el("div", "roadmap-info-grid");
+    for (const block of blocks) {
+      const card = el("section", "roadmap-info-card");
+      card.append(el("h2", "roadmap-info-title", block.title));
+      const list = el("ul");
+      for (const line of block.items) list.appendChild(el("li", null, line));
+      card.appendChild(list);
+      grid.appendChild(card);
+    }
+    box.replaceChildren(grid);
+    if (r.feedback) {
+      const row = el("p", "roadmap-feedback");
+      const a = linkTo(r.feedback, "button button-primary roadmap-feedback-button");
+      a.prepend(icon("mail"), document.createTextNode(" "));
+      row.appendChild(a);
+      box.appendChild(row);
+    }
   }
 
   // ----- Roadmap tab -----
@@ -252,6 +320,7 @@
     const title = el(variant === "now" ? "h3" : "h4", "roadmap-card-title");
     title.appendChild(openButton(item, "feature", item.title));
     card.append(head, title, el("p", "roadmap-card-summary", item.summary));
+    if (item.note) card.appendChild(el("p", "roadmap-card-note", item.note));
     if (variant === "now") {
       const list = el("ul", "roadmap-now-list");
       for (const line of item.details) list.appendChild(el("li", null, line));
@@ -359,6 +428,7 @@
     article.id = `update-${item.id}`;
     const head = el("div", "roadmap-card-head");
     head.append(el("span", `roadmap-pill is-${item.type}`, R.UPDATE_TYPES[item.type]), categoryTag(item.category));
+    if (item.version) head.appendChild(el("span", "roadmap-version", item.version));
     const title = el("h3", "roadmap-card-title");
     title.appendChild(openButton(item, "update", item.title));
     article.append(head, title, el("p", "roadmap-card-summary", item.summary));
@@ -426,7 +496,7 @@
       const body = el("div", "journey-body");
       const tag = event.kind === "milestone"
         ? el("span", `roadmap-pill is-${planned ? "planned" : "milestone"}`, planned ? "Planned" : "Milestone")
-        : el("span", "roadmap-pill is-released", R.RELEASED_LABEL);
+        : el("span", "roadmap-pill is-released", event.item.version ? `${R.RELEASED_LABEL} · ${event.item.version}` : R.RELEASED_LABEL);
       const title = el("h3", "journey-title");
       if (event.kind === "release") title.appendChild(openButton(event.item, "update", event.item.title));
       else title.textContent = event.item.title;
@@ -450,8 +520,11 @@
     const active = document.activeElement;
     const key = active && active.dataset ? active.dataset.focusKey : null;
     renderOverview();
+    renderRelease();
     renderToolbar();
+    renderV1();
     renderRoadmap();
+    renderInfo();
     renderUpdates();
     renderJourney();
     // The focused control was replaced: focus its new copy (if it is still shown)
@@ -535,12 +608,14 @@
     body.append(top, title, el("p", "roadmap-drawer-summary", item.summary));
 
     if (kind === "feature") {
-      const when = item.target ? `${item.target.label} · an estimate, not a promise` : "No date yet: an idea we are exploring";
+      const when = item.target ? `${item.target.label} · an estimate, not a promise`
+        : item.lane === "next" ? `${R.AFTER_LAUNCH}: planned, no date yet` : "No date yet: an idea we are exploring";
       body.appendChild(el("p", "roadmap-drawer-when", when));
       body.appendChild(el("p", "roadmap-drawer-note",
         item.status === "in-progress" ? "Being worked on now. Not available yet." : "Not available yet."));
       body.appendChild(section("Why it matters", el("p", null, item.why)));
       if (item.details.length) body.appendChild(section("What it may include", bulletList(item.details)));
+      if (item.note) body.appendChild(el("p", "roadmap-card-note", item.note));
       if (item.dependencies.length) body.appendChild(section("Depends on", bulletList(item.dependencies)));
     } else {
       const date = el("p", "roadmap-drawer-when", `Released ${R.dayLabel(item.date)}`);
