@@ -2,13 +2,13 @@
 // A small script the browser runs in the background (registered by pwa.js).
 // - Site files (pages, styles, scripts, icons, fonts) are saved when the app is installed,
 //   then served from the saved copy and refreshed in the background ("stale while revalidate").
-// - Data (timetable, exam dates, programme, notes, announcements, calendars, the city guide, roadmap)
+// - Data (timetable, exam dates, programme, notes, announcements, calendars, city and university guides, roadmap)
 //   is always fetched fresh; the last saved copy is used only when there is no internet.
 // - When the site is updated, VERSION changes: the new worker waits, pwa.js shows
 //   "Update available · Reload", and old saved copies are deleted.
 // Nothing personal is stored here: only public site files and public data.
 
-const VERSION = "ed8f12f3";
+const VERSION = "universities-v2-20261006";
 const SITE_CACHE = `site-${VERSION}`;
 const DATA_CACHE = "data"; // kept across versions, so offline data survives an update
 
@@ -16,6 +16,7 @@ const SITE_FILES = [
   "./", "index.html", "home.css", "studyplan.html", "timetable.html", "exams.html", "calendar.html",
   "notes.html", "course.html", "lecture.html", "create.html", "city-guide.html", "announcements.html", "students.html",
   "privacy.html", "contact.html", "tracks.html", "thesis.html", "join.html",
+  "universities.html", "university.html", "universities.css", "universities-data.js", "universities.js",
   "join.css", "directory-config.js", "directory-options.js", "join.js",
   "students.css", "students-config.js", "students-data.js", "countries.js", "assets/map/world-countries.svg",
   "roadmap.html", "roadmap.css", "roadmap.js", "roadmap-data.js",
