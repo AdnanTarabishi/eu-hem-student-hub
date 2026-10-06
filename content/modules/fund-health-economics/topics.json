@@ -26,6 +26,12 @@
     "lecture": "lectures/session-3.json"
   },
   {
+    "id": "fund-health-economics.disparities",
+    "title": "Session 4: Socio-economic Disparities in Health",
+    "notes": "notes/disparities.md",
+    "lecture": "lectures/session-4.json"
+  },
+  {
     "id": "fund-health-economics.physician-agency",
     "title": "Physician agency and supplier-induced demand"
   },

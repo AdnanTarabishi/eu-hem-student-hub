@@ -300,5 +300,93 @@
     "topics": [
       "fund-health-economics.health-capital"
     ]
+  },
+  {
+    "id": "concept.health-disparity",
+    "term": "Health disparity",
+    "explanation": "A difference in health — including incidence, prevalence, mortality or burden of disease — between specific populations.",
+    "topics": [
+      "fund-health-economics.disparities"
+    ]
+  },
+  {
+    "id": "concept.ses-health-gradient",
+    "term": "Socioeconomic health gradient",
+    "explanation": "A systematic relationship in which health differs across socioeconomic position such as education, income or occupational rank.",
+    "topics": [
+      "fund-health-economics.disparities"
+    ]
+  },
+  {
+    "id": "concept.efficient-producer",
+    "term": "Efficient producer hypothesis",
+    "explanation": "The idea that education can improve the efficiency with which people turn time, information and healthcare inputs into health.",
+    "topics": [
+      "fund-health-economics.disparities"
+    ]
+  },
+  {
+    "id": "concept.thrifty-phenotype",
+    "term": "Thrifty phenotype hypothesis",
+    "explanation": "The idea that nutritional deprivation in utero or early life can create lasting biological adaptations that increase later disease risk when the environment changes.",
+    "topics": [
+      "fund-health-economics.disparities"
+    ]
+  },
+  {
+    "id": "concept.natural-experiment",
+    "term": "Natural experiment",
+    "explanation": "A naturally occurring event or policy shock that creates comparison groups and can help study causal effects when deliberate randomization is impossible or unethical.",
+    "topics": [
+      "fund-health-economics.disparities"
+    ]
+  },
+  {
+    "id": "concept.direct-income-hypothesis",
+    "term": "Direct income hypothesis",
+    "explanation": "The hypothesis that higher income improves health by expanding the resources available for health production.",
+    "topics": [
+      "fund-health-economics.disparities"
+    ]
+  },
+  {
+    "id": "concept.allostatic-load",
+    "term": "Allostatic load",
+    "explanation": "Cumulative physiological wear from prolonged or repeated stress; Session 4 links it to a higher depreciation rate of health capital.",
+    "topics": [
+      "fund-health-economics.disparities"
+    ]
+  },
+  {
+    "id": "concept.income-inequality-hypothesis",
+    "term": "Income inequality hypothesis",
+    "explanation": "The hypothesis that community health worsens as income becomes more unequally distributed, potentially through stress, social cohesion or political mechanisms.",
+    "topics": [
+      "fund-health-economics.disparities"
+    ]
+  },
+  {
+    "id": "concept.productive-time-hypothesis",
+    "term": "Productive time hypothesis",
+    "explanation": "A reverse-causality theory in which poor health reduces productive time, earnings and labour-force participation, thereby lowering socioeconomic status.",
+    "topics": [
+      "fund-health-economics.disparities"
+    ]
+  },
+  {
+    "id": "concept.fuchs-hypothesis",
+    "term": "Fuchs hypothesis",
+    "explanation": "A third-factor explanation in which time preference influences both investment in education and investment in health.",
+    "topics": [
+      "fund-health-economics.disparities"
+    ]
+  },
+  {
+    "id": "concept.time-preference",
+    "term": "Time preference",
+    "explanation": "How strongly a person values present benefits relative to future benefits; greater willingness to delay gratification can encourage long-term investment.",
+    "topics": [
+      "fund-health-economics.disparities"
+    ]
   }
 ]
