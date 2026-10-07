@@ -26,5 +26,24 @@ close(two.se,1.466287829861518);close(two.statistic,-2.727977357881894);close(tw
 const reverse=f.twoMeans({n1:180,n2:160,mean1:129,mean2:125,sd1:15,sd2:12});
 close(two.p,reverse.p);close(two.lower,-reverse.upper);
 assert.equal(f.proportionTest({n:20,k:10,nullProportion:.5}).decision,'Do not reject H₀');
+const nonSignificant=f.evidence({statistic:1.5});
+close(nonSignificant.p,.13361440253771617,2e-7);
+assert.equal(nonSignificant.decision,'Do not reject H₀');
+const significant=f.evidence({statistic:2.5});
+close(significant.p,.012419330651552265,2e-7);
+assert.equal(significant.decision,'Reject H₀');
+assert.equal(f.evidence({statistic:2.5,alpha:.01}).decision,'Do not reject H₀');
+close(significant.p,f.evidence({statistic:-2.5}).p);
+close(f.evidence({statistic:0}).p,1);
+assert.equal(f.evidence({statistic:significant.critical}).decision,'Boundary: p = α');
+assert.throws(()=>f.evidence({statistic:5}));
+assert.throws(()=>f.evidence({statistic:NaN}));
+// Independent counterexample: a null-based proportion test and usual Wald CI are not an exact pair.
+const nullTest=f.proportionTest({n:100,k:22,nullProportion:.31});
+const unmatchedCI=f.interval({mode:'proportion',n:100,k:22});
+close(nullTest.p,.051657817773735744,2e-7);
+close(unmatchedCI.upper,.30119078356754,1e-6);
+assert.equal(nullTest.decision,'Do not reject H₀');
+assert.ok(unmatchedCI.upper<.31);
 for(const run of [()=>f.describe([1]),()=>f.describe([2,NaN]),()=>f.describe([1e308,1e308]),()=>f.interval({n:16,mean:12,sd:4}),()=>f.interval({n:36,mean:12,sd:4,approximate:true}),()=>f.interval({mode:'proportion',n:20,k:19}),()=>f.interval({mode:'proportion',n:20,k:21}),()=>f.interval({n:36,mean:1,sd:0}),()=>f.proportionTest({n:10,k:3,nullProportion:.1}),()=>f.twoMeans({n1:20,n2:100,mean1:2,mean2:3,sd1:1,sd2:1})]) assert.throws(run);
 console.log('Fundamentals maths passed: course/Excel quartiles, exact sampling moments, z/t/Wald intervals, tests, group-order invariance and invalid-input guards.');

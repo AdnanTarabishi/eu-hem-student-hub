@@ -1034,7 +1034,7 @@
     ],
     "answer": "A",
     "explanation": "Hypotheses concern the unknown population parameter.",
-    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+    "source": "Original student practice · Sara Capacci · Topic 5, slides 4–6"
   },
   {
     "id": "fund-statistics.q.062",
@@ -1051,7 +1051,7 @@
     ],
     "answer": "B",
     "explanation": "SE=10/10=1, so z=(103−100)/1=3.",
-    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+    "source": "Original student practice · Sara Capacci · Topic 5, slides 14–18"
   },
   {
     "id": "fund-statistics.q.063",
@@ -1068,7 +1068,7 @@
     ],
     "answer": "C",
     "explanation": "SE=4/4=1 and t=2/1=2; df=15.",
-    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+    "source": "Original student practice · Sara Capacci · Topic 5, slides 19–21"
   },
   {
     "id": "fund-statistics.q.064",
@@ -1085,7 +1085,7 @@
     ],
     "answer": "D",
     "explanation": "Both sufficiently positive and negative values can reject a two-sided null.",
-    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+    "source": "Original student practice · Sara Capacci · Topic 5, slides 16–18"
   },
   {
     "id": "fund-statistics.q.065",
@@ -1102,7 +1102,7 @@
     ],
     "answer": "A",
     "explanation": "0.032<0.05. The sign affects interpretation, not this two-sided rule.",
-    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+    "source": "Original student practice · Sara Capacci · Topic 5, slides 23–25"
   },
   {
     "id": "fund-statistics.q.066",
@@ -1119,7 +1119,7 @@
     ],
     "answer": "B",
     "explanation": "Failure to reject is not proof of equality.",
-    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+    "source": "Original student practice · Sara Capacci · Topic 5, slides 13"
   },
   {
     "id": "fund-statistics.q.067",
@@ -1136,7 +1136,7 @@
     ],
     "answer": "C",
     "explanation": "It measures extreme-statistic probability under the null assumptions.",
-    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+    "source": "Original student practice · Sara Capacci · Topic 5, slides 23"
   },
   {
     "id": "fund-statistics.q.068",
@@ -1153,7 +1153,7 @@
     ],
     "answer": "D",
     "explanation": "α controls the Type I error probability under the model.",
-    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+    "source": "Original student practice · Sara Capacci · Topic 5, slides 12"
   },
   {
     "id": "fund-statistics.q.069",
@@ -1170,7 +1170,7 @@
     ],
     "answer": "A",
     "explanation": "β is the probability of failing to reject a false null at a specified alternative.",
-    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+    "source": "Supplementary original practice · Type II error and power; additional context beyond Topic 5 slides"
   },
   {
     "id": "fund-statistics.q.070",
@@ -1187,7 +1187,7 @@
     ],
     "answer": "B",
     "explanation": "The null reference variance uses the null parameter π₀.",
-    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+    "source": "Original student practice · Sara Capacci · Topic 5, slides 33–35"
   },
   {
     "id": "fund-statistics.q.071",
@@ -1204,7 +1204,7 @@
     ],
     "answer": "C",
     "explanation": "p̂=0.6 and SE₀=√(0.25/200)=0.03536.",
-    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+    "source": "Original student practice · Sara Capacci · Topic 5, slides 34–35"
   },
   {
     "id": "fund-statistics.q.072",
@@ -1221,7 +1221,7 @@
     ],
     "answer": "D",
     "explanation": "Finite rounding can display a positive very small p-value as 0.000.",
-    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+    "source": "Original student practice · Sara Capacci · Topic 5, slides 23–29"
   },
   {
     "id": "fund-statistics.q.073",
@@ -1238,7 +1238,7 @@
     ],
     "answer": "A",
     "explanation": "The mean test and interval are algebraically equivalent under matched methods.",
-    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+    "source": "Original student practice · Sara Capacci · Topic 5, slides 22 and 30–31"
   },
   {
     "id": "fund-statistics.q.074",
@@ -1255,7 +1255,7 @@
     ],
     "answer": "B",
     "explanation": "The CI uses p̂ while the test uses π₀ in the variance.",
-    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+    "source": "Original student practice · Sara Capacci · Topic 5, slides 34–35"
   },
   {
     "id": "fund-statistics.q.075",
@@ -1272,7 +1272,7 @@
     ],
     "answer": "C",
     "explanation": "Effect size, clinical relevance, causality and sampling quality need separate evidence.",
-    "source": "Original student practice · Syllabus, Exercise Book and Formula Sheet; Topic 5 slides pending"
+    "source": "Original student practice · Sara Capacci · Topic 5, slides 13 and 23"
   },
   {
     "id": "fund-statistics.q.076",

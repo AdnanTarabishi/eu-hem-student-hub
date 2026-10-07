@@ -291,7 +291,7 @@
     "id": "fund-statistics.fc.049",
     "topic": "fund-statistics.hypothesis-tests",
     "front": "Statistical power is…",
-    "back": "1−β. β is the probability of failing to reject a false null at a specified alternative."
+    "back": "1−β. β is the probability of failing to reject a false null at a specified alternative. Supplementary context beyond the supplied Topic 5 slide deck."
   },
   {
     "id": "fund-statistics.fc.050",

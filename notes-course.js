@@ -306,7 +306,7 @@ function renderOverview(panel) {
       const studyLink = createElement("a", "button", "Open the Fundamentals study workspace →");
       studyLink.href = "fund-statistics.html";
       box.appendChild(studyLink);
-      box.appendChild(createElement("p", "schedule-meta", "Six interactive topic guides · 90 original questions · 60 flashcards · exam preparation. Topic 5 slides are pending."));
+      box.appendChild(createElement("p", "schedule-meta", "Six interactive topic guides · 90 original questions · 60 flashcards · exam preparation. All six topic slide decks reviewed."));
     }
     const mf = createElement("dl", "course-facts");
     const add = (label, value) => {
@@ -415,7 +415,7 @@ function renderLectures(panel) {
       const centre = createElement("a", "button", "Fundamentals of Statistics workspace");
       centre.href = "fund-statistics.html";
       panel.appendChild(centre);
-      panel.appendChild(createElement("p", "schedule-meta", "Six topic guides, 90 original questions, 60 flashcards, Excel reference and a 90-minute practice exam. Topic 5 slides are pending; its guide uses the syllabus and exercises."));
+      panel.appendChild(createElement("p", "schedule-meta", "Six topic guides, 90 original questions, 60 flashcards, Excel reference and a 90-minute practice exam. All six topic slide decks have been reviewed."));
     }
     const list = createElement("ol", "topic-list");
     for (const topic of lectures) {
