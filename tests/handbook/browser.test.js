@@ -153,9 +153,12 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
     assert.strictEqual(await page.evaluate(() => document.activeElement.name), "resit-university");
     ok("re-sit guide: keyboard only, location question only after a fail, live outcome, start again");
 
+    // Arrive from another page, as students do with a shared link. (Jumping inside the already open page
+    // right after typing in the form was flaky: focus in a form turns on smooth scrolling, which can be cut short.)
+    await page.goto("about:blank");
     await page.goto(base + "academic-rules.html#grading");
     await page.locator(".rules-grades tbody tr").first().waitFor();
-    // Same page as before, so this is an in-page jump: it may glide (smooth scrolling), so wait for it to land
+    // academic-rules.js scrolls to the section after building the page; wait for it to land
     await page.waitForFunction(() => {
       const top = document.getElementById("grading").getBoundingClientRect().top;
       return top >= 0 && top < 300;
