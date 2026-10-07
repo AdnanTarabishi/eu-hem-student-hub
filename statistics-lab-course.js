@@ -40,7 +40,7 @@
     }
     const module = course.querySelector(".qm-module");
     if (module && !module.querySelector("[data-statistics-lab-cta]")) {
-      const anchor = link("Normal Distribution + Z-table →", "qm-button qm-secondary");
+      const anchor = link("Open 7 interactive statistics tools →", "qm-button qm-secondary");
       anchor.dataset.statisticsLabCta = "true";
       module.appendChild(anchor);
     }

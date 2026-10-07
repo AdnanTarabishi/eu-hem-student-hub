@@ -1,0 +1,77 @@
+/* v2 only. Uses the lab's original tokens; no global course layout changes. */
+.sl2-lab .sl-toolbar { flex-wrap:wrap; gap:8px; }
+.sl2-lab .sl2-tabs { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); width:100%; flex:0 0 100%; gap:5px; }
+.sl2-lab .sl2-tabs button { text-align:left; min-width:0; padding:13px 12px; }
+.sl2-lab .sl2-tabs button span { font-size:.8rem; margin-left:5px; }
+.sl2-lab .sl-toolbar > .sl-text-button { margin-left:auto; }
+.sl2-actions { display:flex; width:100%; justify-content:flex-end; gap:22px; }
+.sl2-lab .sl2-guide { border-left:3px solid var(--sl-accent); padding:11px 16px; background:var(--sl-accent-soft); color:var(--sl-ink); border-radius:0 8px 8px 0; font-size:.88rem; font-weight:600; margin:-8px 0 26px; }
+.sl2-intro { margin:8px 0 22px; }
+.sl2-intro h2 { font-size:1.75rem; margin-bottom:8px; }
+.sl2-intro .sl-small { max-width:760px; }
+.sl2-intro .sl-eyebrow { font-size:.65rem; }
+.sl2-result { min-height:160px; }
+.sl2-metrics { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:20px 0; }
+.sl2-metric { border:1px solid var(--sl-border); background:var(--sl-soft); padding:13px 14px; border-radius:10px; min-width:0; }
+.sl2-metric span { display:block; color:var(--sl-muted); font-size:.69rem; line-height:1.5; }
+.sl2-metric strong { display:block; color:var(--sl-accent); font-weight:700; font-size:1.17rem; font-variant-numeric:tabular-nums; margin-top:7px; overflow-wrap:anywhere; line-height:1.4; }
+.sl2-working { border-top:1px solid var(--sl-border); margin-top:24px; padding-top:22px; }
+.sl2-work-step { display:flex; gap:14px; margin:17px 0 23px; }
+.sl2-work-step > span { border:1px solid var(--sl-border); color:var(--sl-accent); padding:5px 8px; border-radius:7px; font-size:.7rem; font-weight:700; align-self:flex-start; }
+.sl2-work-step > div { min-width:0; flex:1; }
+.sl2-work-step h3 { font-size:.91rem; }
+.sl2-work-step .sl-small { margin-top:9px; font-size:.79rem; }
+.sl2-lab pre.sl-formula { white-space:pre-wrap; overflow-wrap:anywhere; word-break:break-word; font-weight:400; margin:11px 0; max-width:100%; }
+.sl2-lab .sl-field textarea { resize:vertical; min-height:130px; line-height:1.7; }
+.sl2-excel { border-top:1px solid var(--sl-border); padding:12px 0; margin-top:10px; }
+.sl2-excel summary { cursor:pointer; font-size:.8rem; font-weight:650; color:var(--sl-accent); padding:7px 0; }
+.sl2-lab .sl2-sources { color:var(--sl-muted); font-size:.73rem; margin-top:17px; line-height:1.8; }
+.sl2-lab .sl2-chart-title { margin-top:27px; font-size:.89rem; }
+.sl2-interval, .sl2-boxplot { display:block; width:100%; margin:20px 0; }
+.sl2-interval-line { stroke:var(--sl-accent); stroke-width:10; stroke-linecap:round; opacity:.6; }
+.sl2-box-line { stroke:var(--sl-ink); stroke-width:3; fill:none; }
+.sl2-box { fill:var(--sl-accent-soft); stroke:var(--sl-accent); stroke-width:2; }
+.sl2-outlier { fill:var(--sl-ink); opacity:.7; }
+.sl2-hist-bar { fill:var(--sl-accent); opacity:.7; }
+.sl2-hist-bar:hover { opacity:1; }
+.sl2-comparison { stroke:var(--sl-ink); stroke-width:2.5; fill:none; stroke-dasharray:7 5; }
+.sl2-simulator { margin-top:25px; }
+.sl2-simulator h2 { margin-bottom:12px; }
+.sl2-sim-controls { display:grid; grid-template-columns:1.6fr 1fr 1fr 1.1fr; gap:15px; align-items:end; margin:22px 0 12px; }
+.sl2-sim-controls .sl-button { margin-bottom:15px; font-size:.78rem!important; }
+.sl2-table-wrap { overflow:auto; max-height:360px; }
+.sl2-lab .sl2-table-wrap table { min-width:400px; font-size:.76rem; }
+.sl2-lab .sl2-table-wrap td, .sl2-lab .sl2-table-wrap th { padding:9px; }
+.sl2-lab .sl2-table-wrap th { background:var(--sl-soft); }
+@media(max-width:1100px){
+  .sl2-lab .sl2-tabs { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .sl2-metric strong { font-size:1rem; }
+  .sl2-metric { padding:10px; }
+  .sl2-sim-controls { grid-template-columns:1fr 1fr; }
+}
+@media(max-width:720px){
+  .sl2-lab .sl2-tabs { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .sl2-lab .sl2-tabs button { font-size:.65rem; padding:12px 7px; }
+  .sl2-lab .sl2-tabs button span { font-size:.75rem; }
+  .sl2-lab .sl2-guide { font-size:.79rem; }
+  .sl2-intro h2 { font-size:1.5rem; }
+  .sl2-metrics { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .sl2-metric strong { font-size:1.05rem; }
+  .sl2-work-step { gap:10px; }
+  .sl2-lab .sl2-graph .sl-tick, .sl2-lab .sl2-interval .sl-tick, .sl2-lab .sl2-boxplot .sl-tick { font-size:21px; }
+  .sl2-interval { min-height:100px; }
+  .sl2-sim-controls { grid-template-columns:1fr; gap:0; }
+  .sl2-actions { gap:20px; justify-content:space-between; }
+  .sl2-actions .sl-text-button { font-size:.77rem!important; }
+}
+@media(max-width:380px){
+  .sl2-lab .sl2-tabs button { font-size:0; }
+  .sl2-lab .sl2-tabs button span { font-size:.7rem; margin:0; }
+  .sl2-lab .sl2-metric strong { font-size:.92rem; }
+}
+@media print {
+  .sl2-tabs, .sl2-actions, .sl2-sim-controls { display:none!important; }
+  .sl2-result, .sl2-metric, .sl2-work-step { break-inside:avoid; }
+}
+
+.sl2-sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
