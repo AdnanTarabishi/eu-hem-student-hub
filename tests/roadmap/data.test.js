@@ -24,7 +24,7 @@ t("both files are valid (today's date, real pages)", () => {
 });
 t("Now: Exam Prep and Student beta preparation, both in progress", () => {
   const now = roadmap.items.filter((i) => i.lane === "now");
-  assert.deepStrictEqual(now.map((i) => [i.id, i.status]), [["exam-prep", "in-progress"], ["student-beta-preparation", "in-progress"]]);
+  assert.deepStrictEqual(now.map((i) => [i.id, i.status]), [["exam-prep", "in-progress"], ["beta-feedback-improvements", "in-progress"]]);
   const exam = now[0];
   assert.strictEqual(exam.category, "learning");
   assert.strictEqual(exam.target.label, "October 2026");
@@ -33,7 +33,7 @@ t("Next: four dated plans (Oct → Nov → Nov–Dec), the rest After launch", (
   const groups = R.groupNext(R.readRoadmap(roadmap).items);
   assert.deepStrictEqual(groups.map((g) => g.label), ["October 2026", "November 2026", "November–December 2026", "After launch"]);
   const ids = (label) => groups.find((g) => g.label === label).items.map((i) => i.id);
-  assert.deepStrictEqual(ids("October 2026"), ["beta-feedback-improvements", "domain-admin-dashboard"]);
+  assert.deepStrictEqual(ids("October 2026"), ["domain-admin-dashboard"]);
   assert.deepStrictEqual(ids("November 2026"), ["mobility-checklists"]);
   assert.deepStrictEqual(ids("November–December 2026"), ["student-accounts-cohort-profiles"]);
   assert.deepStrictEqual(ids("After launch").sort(), ["beyond-euhem-opportunities", "expanded-notes-interactive-lessons", "expanded-practice-bank"]);
@@ -114,7 +114,7 @@ t("versions: every release has one, by release day; the newest first for the fil
 });
 t("milestones: the cohort beta is planned for today (6 Oct), the public launch planned for 15 Oct", () => {
   const ms = Object.fromEntries(roadmap.milestones.map((m) => [m.id, [m.date, m.status]]));
-  assert.deepStrictEqual(ms["first-cohort-beta"], ["2026-10-06", "planned"]);
+  assert.deepStrictEqual(ms["first-cohort-beta"], ["2026-10-06", "completed"]); // the beta went out on 6 October 2026
   assert.deepStrictEqual(ms["public-launch-v1"], ["2026-10-15", "planned"]);
 });
 t("known limitations, the domain move and the feedback link", () => {
@@ -161,7 +161,8 @@ t("ids are unique slugs; statuses fit their stage; Later has no dates; Next need
   const dated = clone(roadmap); dated.items.find((i) => i.lane === "later").target = { start: "2027-01", end: "2027-01", label: "Jan" }; fails(dated, updates, /no target/);
   const order = clone(roadmap); order.items[1].target.start = "2026-12"; fails(order, updates, /start ≤ end/);
   const threeNow = clone(roadmap); threeNow.items[2].lane = "now"; threeNow.items[2].status = "in-progress"; fails(threeNow, updates, /Now must have one or 2 items/);
-  const fiveDated = clone(roadmap); fiveDated.items.find((i) => i.id === "expanded-practice-bank").target = { start: "2026-11", end: "2026-11", label: "November 2026" };
+  const fiveDated = clone(roadmap);
+  for (const id of ["expanded-practice-bank", "beyond-euhem-opportunities"]) fiveDated.items.find((i) => i.id === id).target = { start: "2026-11", end: "2026-11", label: "November 2026" };
   fails(fiveDated, updates, /at most 4 Next items may have a date/);
   const nowNoDate = clone(roadmap); nowNoDate.items[0].target = null; fails(nowNoDate, updates, /Now item needs a target/);
 });

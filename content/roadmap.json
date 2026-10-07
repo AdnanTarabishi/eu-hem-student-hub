@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-06",
+  "updatedAt": "2026-10-07",
   "release": {
     "stage": "Beta",
     "version": "v0.9",
@@ -118,40 +118,12 @@
       ]
     },
     {
-      "id": "student-beta-preparation",
-      "title": "Student beta preparation",
-      "summary": "Preparing the first cohort beta: checking the main student journeys and making feedback easy to share.",
-      "category": "platform",
-      "lane": "now",
-      "status": "in-progress",
-      "target": {
-        "start": "2026-10",
-        "end": "2026-10",
-        "label": "October 2026"
-      },
-      "why": "Help students try the Hub with confidence and shape what improves next.",
-      "details": [
-        "Review the timetable, exams, study plan and essential links on phones and computers.",
-        "Keep example content clearly labelled and explain where personal choices are saved.",
-        "Invite the first cohort to explore the beta and report anything confusing or missing."
-      ],
-      "dependencies": [
-        "Final checks of the main student journeys and a working feedback route."
-      ],
-      "links": [
-        {
-          "label": "Share beta feedback",
-          "url": "contact.html"
-        }
-      ]
-    },
-    {
       "id": "beta-feedback-improvements",
       "title": "Beta feedback & essential improvements",
       "summary": "Use the first student feedback to fix confusing steps and improve the sections people use most.",
       "category": "platform",
-      "lane": "next",
-      "status": "planned",
+      "lane": "now",
+      "status": "in-progress",
       "target": {
         "start": "2026-10",
         "end": "2026-10",
@@ -164,7 +136,7 @@
         "Explain the main changes in Updates, so students can see how their feedback helped."
       ],
       "dependencies": [
-        "Feedback from the first student beta."
+        "Feedback from the first student beta (coming in since 6 October 2026)."
       ],
       "links": [
         {
@@ -573,8 +545,8 @@
       "id": "first-cohort-beta",
       "date": "2026-10-06",
       "title": "First cohort beta",
-      "summary": "EU-HEM students are invited to explore the beta. Their feedback will decide the next improvements.",
-      "status": "planned"
+      "summary": "EU-HEM students were invited to explore the beta. Their feedback decides the next improvements.",
+      "status": "completed"
     },
     {
       "id": "public-launch-v1",

@@ -52,10 +52,10 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   /* ----- Overview and the three stages ----- */
   let page = await open();
   assert.deepStrictEqual(await page.$$eval(".roadmap-overview-item", (all) => all.map((b) => b.textContent.replace(/\s+/g, ""))),
-    ["2Now", "7Next", "10Later", "18Released"]);
-  assert.match(await text(page, "#roadmap-reviewed"), /Last reviewed 6 October 2026/);
+    ["2Now", "6Next", "10Later", "18Released"]);
+  assert.match(await text(page, "#roadmap-reviewed"), /Last reviewed 7 October 2026/);
   assert.deepStrictEqual(await page.$$eval(".roadmap-card.is-now .roadmap-card-title", (all) => all.map((h) => h.textContent)),
-    ["Exam Prep", "Student beta preparation"]);
+    ["Exam Prep", "Beta feedback & essential improvements"]);
   assert.deepStrictEqual(await page.$$eval(".roadmap-window-label", (all) => all.map((h) => h.textContent)),
     ["October 2026", "November 2026", "November–December 2026", "After launch"]);
   assert.match(await text(page, ".roadmap-lane.is-next"), /Estimated periods, not promises/);
@@ -92,19 +92,19 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
 
   /* ----- Filters and search ----- */
   await page.click('#roadmap-stage .filter-chip:has-text("Now")');
-  assert.match(await text(page, "#roadmap-count"), /Showing 2 of 19 plans/);
+  assert.match(await text(page, "#roadmap-count"), /Showing 2 of 18 plans/);
   assert.strictEqual(await page.evaluate(() => document.activeElement.textContent), "Now", "focus stays on the chip");
   await page.click('#roadmap-stage .filter-chip:has-text("Next")');
   await page.click('#roadmap-category .filter-chip:has-text("Learning")');
-  assert.match(await text(page, "#roadmap-count"), /Showing 2 of 19 plans/);
+  assert.match(await text(page, "#roadmap-count"), /Showing 2 of 18 plans/);
   await page.click("#roadmap-clear");
   await page.fill("#roadmap-search", "MOBILITY chécklists");
-  assert.match(await text(page, "#roadmap-count"), /Showing 1 of 19 plans/);
+  assert.match(await text(page, "#roadmap-count"), /Showing 1 of 18 plans/);
   assert.match(await text(page, "#roadmap-board"), /Personal mobility checklists/);
   await page.fill("#roadmap-search", "zebra unicorn");
   assert.match(await text(page, ".empty-state"), /No plans match these filters/);
   await page.click('.empty-state button:has-text("Clear filters")');
-  assert.match(await text(page, "#roadmap-count"), /^19 plans$/);
+  assert.match(await text(page, "#roadmap-count"), /^18 plans$/);
   assert.strictEqual(await page.inputValue("#roadmap-search"), "");
   ok("stage + topic filters combine, accent-insensitive search, empty state with Clear filters");
 
@@ -144,11 +144,14 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   await page.click("#tab-journey");
   const journey = await page.$$eval(".journey-title", (all) => all.map((h) => h.textContent));
   assert.strictEqual(journey[0], "First code");
-  assert.deepStrictEqual(journey.slice(-2), ["First cohort beta", "Public Launch v1.0 — custom domain and dashboard"]);
+  assert.strictEqual(journey[journey.length - 1], "Public Launch v1.0 — custom domain and dashboard");
+  // The beta (completed on 6 Oct) comes before that day's releases: completed milestones lead their day
+  assert.ok(journey.indexOf("First cohort beta") < journey.indexOf("Student Experiences"), "completed milestone leads its day");
+  assert.ok(await page.locator('.journey-event:not(.is-planned) .journey-title:text-is("First cohort beta")').count() === 1, "the beta is shown as done");
   assert.ok(journey.indexOf("First academic hub") < journey.indexOf("Bologna guide, announcements & directory preview"), "same-day releases in deployment order");
-  assert.strictEqual(await page.locator(".journey-event.is-planned").count(), 2);
+  assert.strictEqual(await page.locator(".journey-event.is-planned").count(), 1); // the launch; the beta is completed
   assert.match(await text(page, ".journey-event.is-release"), /Released · v0\.1/);
-  ok("Our journey: milestones and releases in time order with versions; the beta and the launch clearly planned");
+  ok("Our journey: milestones and releases in time order with versions; the beta completed, the launch clearly planned");
   await page.context().close();
 
   /* ----- Details drawer, deep links, Back/Forward, copy link ----- */
@@ -213,7 +216,7 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   assert.deepStrictEqual(await page.$$eval("#roadmap-board .roadmap-card", (all) => all.map((c) => c.id)), ["feature-student-digital-toolkit"]);
   await page.click("#feature-student-digital-toolkit .roadmap-save");
   assert.match(await text(page, ".empty-state"), /No saved plans yet/);
-  await page.click("#feature-student-beta-preparation .roadmap-open, #roadmap-saved-only");
+  await page.click("#roadmap-saved-only");
   await page.evaluate(() => localStorage.setItem("euhem.roadmap.saved.v1", "{not json"));
   await page.reload(); await page.waitForSelector("#roadmap-board .roadmap-card");
   assert.match(await text(page, "#roadmap-saved-only"), /Saved \(0\)/, "broken storage is ignored");
