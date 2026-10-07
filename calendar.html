@@ -19,6 +19,7 @@
   <!-- /Social preview -->
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=daabf49c">
+  <link rel="stylesheet" href="events.css?v=fa8379ed">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -75,6 +76,15 @@
       <ol id="key-dates-list" class="key-dates"></ol>
     </section>
 
+    <!-- Community events: written in the editor dashboard, published by an admin. events.js fills this
+         from data/events.json and shows the section only once that file exists. -->
+    <section class="card" id="community-events" aria-labelledby="community-events-title" hidden>
+      <h2 id="community-events-title">Community events</h2>
+      <p class="schedule-meta">Student and social events for the cohort, shared by the Student Hub editors. Not official programme events.</p>
+      <ul id="community-events-list" class="event-list"></ul>
+      <p id="community-events-empty" class="schedule-meta" hidden>No upcoming events right now.</p>
+    </section>
+
     <section class="card">
       <h2>How to subscribe</h2>
       <details class="help-step">
@@ -118,6 +128,7 @@
   <script defer src="programme.js?v=92916c59"></script>
   <script defer src="unibo-data.js?v=892a323e"></script>
   <script defer src="calendar.js?v=70af6548"></script>
+  <script defer src="events.js?v=0b80fe76"></script>
 
 </body>
 </html>

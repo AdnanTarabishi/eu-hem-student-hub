@@ -8,7 +8,7 @@
 //   "Update available · Reload", and old saved copies are deleted.
 // Nothing personal is stored here: only public site files and public data.
 
-const VERSION = "134cd8ae";
+const VERSION = "5785afbd";
 const SITE_CACHE = `site-${VERSION}`;
 const DATA_CACHE = "data"; // kept across versions, so offline data survives an update
 
@@ -43,7 +43,7 @@ const SITE_FILES = [
   "assets/images/cities/bologna/archiginnasio-anatomical-theatre-640.webp", "assets/images/cities/bologna/archiginnasio-anatomical-theatre-1200.webp", "assets/images/cities/oslo/blindern-campus-640.webp", "assets/images/cities/oslo/blindern-campus-1200.webp", "assets/images/cities/rotterdam/campus-woudestein-640.webp", "assets/images/cities/rotterdam/campus-woudestein-1200.webp", "assets/images/cities/innsbruck/valley-view-640.webp", "assets/images/cities/innsbruck/valley-view-1200.webp",
   "theme.js", "home.js", "site-nav.js", "utils.js", "ui.js", "search.js", "pwa.js", "announcements.js",
   "programme.js", "unibo-data.js", "dashboard.js", "onboarding.js", "studyplan.js",
-  "timetable.js", "exams.js", "calendar.js", "guide.js", "students.js",
+  "timetable.js", "exams.js", "calendar.js", "events.js", "events.css", "guide.js", "students.js",
   "notes-data.js", "notes-progress.js", "notes-render.js", "notes-landing.js", "notes-course.js",
   "notes-practice.js", "notes-quiz.js", "notes-create.js",
   "tracks-data.js", "tracks.js", "thesis-enrichment.js", "thesis-data.js", "thesis.js", "thesis-guide.css", "thesis-guide-data.js", "thesis-guide.js", "guide-data.js",

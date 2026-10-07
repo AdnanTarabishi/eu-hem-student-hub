@@ -1,77 +1,278 @@
 // ===== Editor dashboard (admin.html) =====
-// Approved editors sign in with an emailed one-time link, then write announcements.
-// The flow: Draft -> Waiting for review -> Published (by an admin) -> Archived.
+// Approved editors sign in with an emailed one-time link. Sections:
+//   Overview       what needs attention, what is live, and whether the public site is up to date
+//   Announcements  } written and reviewed with admin-content.js:
+//   Events         } Draft -> Waiting for review -> Published (by an admin) -> Archived
+//   Team           admins add editors, change roles, remove people (database functions in schema.sql)
+//   Activity       who did what, written automatically by the database
 //
 // Where the data lives: the Supabase database (supabase/schema.sql). The database itself decides who
 // may do what (Row Level Security), so hiding a button here is only a convenience, never the protection.
-// The public site does not read Supabase directly: a GitHub robot copies published announcements into
-// data/announcements.csv every 15 minutes (scripts/fetch-announcements.js).
+// The public site does not read Supabase directly: a GitHub robot copies published items into
+// data/announcements.csv and data/events.json every 15 minutes (scripts/fetch-announcements.js).
 // Setup and roles: docs/editor-dashboard.md
 
 (function () {
-  const config = window.EUHEM_SUPABASE || {};
+  const { $, el, say, explain, todayKey, addDays, formatDate, timeAgo } = window.AdminKit;
   const D = window.EditorData;
-  const $ = (id) => document.getElementById(id);
+  const config = window.EUHEM_SUPABASE || {};
 
-  const TABS = ["submitted", "draft", "published", "archived"];
-  const SECTIONS = ["admin-offline", "admin-signin", "admin-not-editor", "admin-app"];
+  const SCREENS = ["admin-offline", "admin-signin", "admin-not-editor", "admin-app"];
+  const SECTIONS = [
+    { id: "overview", label: "Overview" },
+    { id: "announcements", label: "Announcements" },
+    { id: "events", label: "Events" },
+    { id: "team", label: "Team", adminOnly: true },
+    { id: "activity", label: "Activity" },
+  ];
+  const TYPE_LABELS = { announcements: "Announcement", events: "Event", editors: "Team" };
 
-  let client = null; // the Supabase connection
-  let editor = null; // { id, email, role, display_name } of the signed-in editor
-  let items = []; // the cohort's announcements, all statuses
-  let tab = "submitted";
-  let editing = null; // the announcement open in the form, or null for a new one
-  let sessionUserId = undefined; // avoids reloading when Supabase repeats the same session event
+  let client = null;
+  let editor = null; // { id, email, role, display_name }
+  let sessionUserId; // avoids reloading when Supabase repeats the same session event
+  let panels = {}; // the content panels, by type name
+  let currentSection = "overview";
 
-  // ----- Small helpers -----
-
-  // Builds an element safely: text always goes in as text, never as HTML
-  function el(tag, props = {}, children = []) {
-    const node = document.createElement(tag);
-    for (const [key, value] of Object.entries(props)) {
-      if (key === "text") node.textContent = value;
-      else if (key === "class") node.className = value;
-      else if (key.startsWith("on")) node.addEventListener(key.slice(2), value);
-      else node.setAttribute(key, value);
-    }
-    for (const child of [].concat(children)) if (child) node.append(child);
-    return node;
-  }
+  const isAdmin = () => Boolean(editor && editor.role === "admin");
+  const app = {
+    get client() { return client; },
+    config,
+    editor: () => editor,
+    isAdmin,
+    changed: () => { if (currentSection === "overview") renderOverview(); },
+  };
 
   function showOnly(id) {
-    for (const section of SECTIONS) $(section).hidden = section !== id;
+    for (const screen of SCREENS) $(screen).hidden = screen !== id;
   }
 
-  function say(message, kind = "info") {
-    const box = $("admin-status");
-    box.textContent = message;
-    box.dataset.kind = kind;
-    box.hidden = !message;
+  // ----- Sections (menu on the left, or on top on phones) -----
+
+  function buildNav() {
+    const nav = $("admin-sections");
+    nav.replaceChildren(...SECTIONS.filter((s) => !s.adminOnly || isAdmin()).map((section) =>
+      el("a", { href: `#${section.id}`, class: "admin-section-link", "data-section": section.id }, [
+        section.label, el("span", { class: "admin-badge", "data-badge": section.id, hidden: true }),
+      ])));
   }
 
-  // Turns database errors into words an editor can act on
-  function explain(error) {
-    if (!error) return "";
-    if (error.code === "42501" || /row-level security|permission/i.test(error.message || "")) {
-      return "You don't have permission to do this. Editors can change only their own drafts; admins publish.";
+  function sectionFromHash() {
+    const id = window.location.hash.slice(1);
+    const section = SECTIONS.find((s) => s.id === id && (!s.adminOnly || isAdmin()));
+    return section ? section.id : "overview";
+  }
+
+  async function showSection(id) {
+    currentSection = id;
+    for (const section of SECTIONS) {
+      const panel = $(`panel-${section.id}`);
+      if (panel) panel.hidden = section.id !== id;
     }
-    if (error.code === "23514") return "The database refused a value (for example a category or a date). Check the form.";
-    if (/fetch|network/i.test(error.message || "")) return "No connection to the database. Check your internet and try again.";
-    return error.message || "Something went wrong. Please try again.";
+    for (const link of document.querySelectorAll(".admin-section-link")) {
+      if (link.dataset.section === id) link.setAttribute("aria-current", "page");
+      else link.removeAttribute("aria-current");
+    }
+    say("");
+    if (id === "overview") await renderOverview();
+    else if (panels[id]) await panels[id].load();
+    else if (id === "team") await loadTeam();
+    else if (id === "activity") await loadActivity();
   }
 
-  const isAdmin = () => editor && editor.role === "admin";
-  const isOwn = (item) => editor && item.created_by === editor.id;
-  const canEdit = (item) => isAdmin() || (isOwn(item) && (item.status === "draft" || item.status === "submitted"));
-
-  function todayKey() {
-    const now = new Date();
-    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+  // Red numbers in the menu: items waiting for review (admins) or sent back to you (editors)
+  function updateBadges() {
+    for (const typeName of Object.keys(panels)) {
+      const items = panels[typeName].items();
+      const count = isAdmin()
+        ? items.filter((i) => i.status === "submitted").length
+        : items.filter((i) => i.created_by === editor.id && i.status === "draft" && i.review_note).length;
+      const badge = document.querySelector(`[data-badge="${typeName}"]`);
+      if (badge) {
+        badge.textContent = count ? String(count) : "";
+        badge.hidden = count === 0;
+        badge.setAttribute("aria-label", isAdmin() ? `${count} waiting for review` : `${count} sent back to you`);
+      }
+    }
   }
 
-  function formatDate(key) {
-    if (!key) return "";
-    return new Date(key + "T12:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+  // ----- Overview -----
+
+  async function renderOverview() {
+    await Promise.all(Object.values(panels).map((p) => p.load()));
+    updateBadges();
+    const today = todayKey();
+    const announcements = panels.announcements.items();
+    const events = panels.events.items();
+    const all = [...announcements.map((i) => ["announcements", i]), ...events.map((i) => ["events", i])];
+    const state = (typeName, item) => D.publicState(typeName, item, today);
+
+    const stats = [
+      isAdmin()
+        ? ["Waiting for review", all.filter(([, i]) => i.status === "submitted").length, "admin-stat-attention"]
+        : ["Your drafts", all.filter(([, i]) => i.status === "draft" && i.created_by === editor.id).length, ""],
+      ["Live announcements", announcements.filter((i) => (state("announcements", i) || {}).key === "live").length, ""],
+      ["Scheduled", announcements.filter((i) => (state("announcements", i) || {}).key === "scheduled").length, ""],
+      ["Upcoming events", events.filter((i) => (state("events", i) || {}).key === "live").length, ""],
+    ];
+    $("overview-stats").replaceChildren(...stats.map(([label, value, extra]) =>
+      el("div", { class: `admin-stat ${extra}`.trim() }, [el("span", { class: "admin-stat-value", text: String(value) }), el("span", { class: "admin-stat-label", text: label })])));
+
+    // What needs a person's attention, most important first
+    const todo = [];
+    const soon = addDays(today, 3);
+    for (const [typeName, item] of all) {
+      if (isAdmin() && item.status === "submitted") todo.push([typeName, item, "Waiting for your review"]);
+      if (!isAdmin() && item.created_by === editor.id && item.status === "draft" && item.review_note) todo.push([typeName, item, `Sent back: ${item.review_note}`]);
+      if (typeName === "announcements" && item.status === "published" && item.category === "Urgent" && (state(typeName, item) || {}).key === "live") {
+        todo.push([typeName, item, item.expires ? `Urgent banner on every page until ${formatDate(item.expires)}` : "Urgent banner on every page, with no end date"]);
+      }
+      if (typeName === "announcements" && item.status === "published" && item.expires && item.expires >= today && item.expires <= soon) {
+        todo.push([typeName, item, `Disappears after ${formatDate(item.expires)}`]);
+      }
+    }
+    $("overview-todo").replaceChildren(...(todo.length ? todo.map(([typeName, item, why]) => el("li", { class: "admin-todo" }, [
+      el("span", { class: "admin-chip", text: TYPE_LABELS[typeName] }),
+      el("div", { class: "admin-todo-text" }, [el("strong", { text: item.title }), el("span", { class: "admin-small", text: why })]),
+      el("a", { class: "button button-secondary button-sm", href: `#${typeName}`, "data-open": item.id, text: "Open",
+        onclick: () => { window.setTimeout(() => panels[typeName].showItem(item.id), 50); } }),
+    ])) : [el("li", { class: "admin-empty", text: "Nothing needs your attention. 🎉" })]));
+
+    renderSyncCheck(announcements, events);
+    renderRecentActivity();
+  }
+
+  // Compares what is published in the database with what the public site shows right now
+  async function renderSyncCheck(announcements, events) {
+    const box = $("overview-sync");
+    box.replaceChildren(el("p", { class: "admin-small", text: "Checking the public site…" }));
+    const lines = [];
+    try {
+      const response = await fetch(`data/announcements.csv?check=${Date.now()}`, { cache: "no-store" });
+      const rows = response.ok ? D.parseCsv(await response.text()) : [];
+      const [header = [], ...body] = rows;
+      const onSite = new Set(body.map((r) => `${r[header.indexOf("Date")]}|${r[header.indexOf("Title")]}`));
+      const published = announcements.filter((i) => i.status === "published");
+      const missing = published.filter((i) => !onSite.has(`${i.date}|${i.title}`));
+      const publishedKeys = new Set(published.map((i) => `${i.date}|${i.title}`));
+      const leftover = [...onSite].filter((key) => !publishedKeys.has(key));
+      lines.push(missing.length || leftover.length
+        ? ["pending", `Announcements: ${missing.length ? `${missing.length} published not on the site yet` : ""}${missing.length && leftover.length ? ", " : ""}${leftover.length ? `${leftover.length} still on the site but no longer published` : ""}.`]
+        : ["ok", published.length ? `Announcements: the site shows all ${published.length} published.` : "Announcements: nothing published yet."]);
+    } catch (error) {
+      lines.push(["pending", "Announcements: could not read the public site."]);
+    }
+    try {
+      const response = await fetch(`data/events.json?check=${Date.now()}`, { cache: "no-store" });
+      const onSite = response.ok ? new Set(((await response.json()).events || []).map((e) => e.id)) : new Set();
+      const published = events.filter((i) => i.status === "published");
+      const missing = published.filter((i) => !onSite.has(i.id));
+      const leftover = [...onSite].filter((id) => !published.some((i) => i.id === id));
+      lines.push(missing.length || leftover.length
+        ? ["pending", `Events: ${missing.length ? `${missing.length} published not on the site yet` : ""}${missing.length && leftover.length ? ", " : ""}${leftover.length ? `${leftover.length} still on the site but no longer published` : ""}.`]
+        : ["ok", published.length ? `Events: the site shows all ${published.length} published.` : "Events: nothing published yet."]);
+    } catch (error) {
+      lines.push(["pending", "Events: could not read the public site."]);
+    }
+    const pending = lines.some(([kind]) => kind === "pending");
+    box.replaceChildren(
+      ...lines.map(([kind, text]) => el("p", { class: `admin-sync is-${kind}`, text: (kind === "ok" ? "✓ " : "⏳ ") + text })),
+      pending ? el("p", { class: "admin-small", text: "The robot copies published items to the site every 15 minutes (GitHub sometimes runs a few minutes late). No action needed." }) : null,
+    );
+  }
+
+  async function renderRecentActivity() {
+    const { data, error } = await client.from("activity_log").select("*").order("at", { ascending: false }).limit(6);
+    const box = $("overview-activity");
+    if (error) {
+      box.replaceChildren(el("li", { class: "admin-small", text: explain(error) }));
+      return;
+    }
+    box.replaceChildren(...(data && data.length ? data.map(activityItem) : [el("li", { class: "admin-empty", text: "No activity yet." })]));
+  }
+
+  function activityItem(entry) {
+    return el("li", { class: "admin-activity-item" }, [
+      el("span", { class: "admin-activity-time", text: timeAgo(entry.at), title: new Date(entry.at).toLocaleString("en-GB") }),
+      el("span", { class: "admin-activity-text" }, [
+        el("strong", { text: entry.actor_email || "Someone" }),
+        ` ${entry.action} `,
+        el("span", { class: "admin-chip", text: TYPE_LABELS[entry.item_table] || entry.item_table }),
+        entry.item_title ? ` “${entry.item_title}”` : "",
+        entry.detail ? el("span", { class: "admin-activity-detail", text: `Note: ${entry.detail}` }) : null,
+      ]),
+    ]);
+  }
+
+  // ----- Activity -----
+
+  async function loadActivity() {
+    const filter = $("activity-filter").value;
+    let query = client.from("activity_log").select("*").order("at", { ascending: false }).limit(200);
+    if (filter) query = query.eq("item_table", filter);
+    const { data, error } = await query;
+    if (error) {
+      say(explain(error), "error");
+      return;
+    }
+    $("activity-list").replaceChildren(...(data && data.length ? data.map(activityItem) : [el("li", { class: "admin-empty", text: "No activity yet." })]));
+  }
+
+  // ----- Team (admins only) -----
+
+  async function loadTeam() {
+    const { data, error } = await client.from("editors").select("*").order("created_at", { ascending: true });
+    if (error) {
+      say(explain(error), "error");
+      return;
+    }
+    const admins = data.filter((m) => m.role === "admin").length;
+    $("team-list").replaceChildren(...data.map((member) => {
+      const nameId = `team-name-${member.user_id}`, roleId = `team-role-${member.user_id}`;
+      const name = el("input", { id: nameId, type: "text", value: member.display_name, maxlength: 60 });
+      const role = el("select", { id: roleId }, ["editor", "admin"].map((r) => el("option", { value: r, text: r === "admin" ? "Admin" : "Editor", selected: r === member.role })));
+      const lastAdmin = member.role === "admin" && admins === 1;
+      return el("li", { class: "card admin-member", "data-user": member.user_id }, [
+        el("div", { class: "admin-member-head" }, [
+          el("strong", { text: member.email }),
+          member.user_id === editor.id && el("span", { class: "admin-chip", text: "You" }),
+          el("span", { class: "admin-small", text: `Since ${formatDate(todayKey(new Date(member.created_at)))}` }),
+        ]),
+        el("div", { class: "admin-member-fields" }, [
+          el("div", { class: "admin-field" }, [el("label", { for: nameId, text: "Shown as “Posted by”" }), name]),
+          el("div", { class: "admin-field" }, [el("label", { for: roleId, text: "Role" }), role]),
+        ]),
+        el("div", { class: "button-row" }, [
+          el("button", { type: "button", class: "button button-secondary button-sm", text: "Save changes", onclick: async () => {
+            const { error: saveError } = await client.rpc("update_editor", { p_user_id: member.user_id, p_role: role.value, p_display_name: name.value });
+            if (saveError) return say(explain(saveError), "error");
+            if (member.user_id === editor.id) { editor.role = role.value; editor.display_name = name.value.trim(); }
+            say("Saved.", "success");
+            if (member.user_id === editor.id && role.value !== "admin") return window.location.reload();
+            loadTeam();
+          } }),
+          el("button", { type: "button", class: "button button-quiet button-sm", text: "Remove from team", disabled: lastAdmin,
+            title: lastAdmin ? "The team needs at least one admin" : null, onclick: async () => {
+              if (!window.confirm(`Remove ${member.email} from the team? Their published items stay.`)) return;
+              const { error: removeError } = await client.rpc("remove_editor", { p_user_id: member.user_id });
+              if (removeError) return say(explain(removeError), "error");
+              say(`${member.email} was removed from the team.`, "success");
+              if (member.user_id === editor.id) return window.location.reload();
+              loadTeam();
+            } }),
+        ]),
+      ]);
+    }));
+  }
+
+  async function addMember(event) {
+    event.preventDefault();
+    const email = $("team-email").value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return say("Enter a valid email address.", "error");
+    const { error } = await client.rpc("add_editor", { p_email: email, p_role: $("team-role").value, p_display_name: $("team-display-name").value });
+    if (error) return say(explain(error), "error");
+    say(`${email} was added to the team. They can now sign in on this page.`, "success");
+    event.target.reset();
+    loadTeam();
   }
 
   // ----- Signing in -----
@@ -102,9 +303,9 @@
     }
     editor = { id: userId, ...data };
     $("admin-who").textContent = `${data.email} · ${data.role === "admin" ? "Admin" : "Editor"}`;
-    tab = isAdmin() ? "submitted" : "draft";
+    buildNav();
     showOnly("admin-app");
-    await load();
+    await showSection(sectionFromHash());
   }
 
   async function sendSignInLink(event) {
@@ -131,184 +332,9 @@
     say("If this email is on the editor list, a sign-in link is on its way. Check your inbox (and spam).", "success");
   }
 
-  // ----- The list -----
-
-  async function load() {
-    const { data, error } = await client
-      .from("announcements")
-      .select("*")
-      .eq("cohort", config.cohort)
-      .order("date", { ascending: false })
-      .order("created_at", { ascending: false });
-    if (error) {
-      say(explain(error), "error");
-      return;
-    }
-    items = data || [];
-    render();
-  }
-
-  function renderTabs() {
-    const box = $("admin-tabs");
-    box.replaceChildren();
-    for (const status of TABS) {
-      const count = items.filter((item) => item.status === status).length;
-      box.append(el("button", {
-        type: "button",
-        role: "tab",
-        class: "admin-tab",
-        "aria-selected": String(status === tab),
-        "data-status": status,
-        onclick: () => { tab = status; render(); },
-      }, [D.STATUSES[status].label, el("span", { class: "admin-count", text: String(count) })]));
-    }
-    $("admin-tab-help").textContent = D.STATUSES[tab].help;
-  }
-
-  function actionsFor(item) {
-    const actions = [];
-    const add = (label, handler, kind = "button-secondary") =>
-      actions.push(el("button", { type: "button", class: `button ${kind} button-sm`, text: label, onclick: handler }));
-
-    if (canEdit(item)) add("Edit", () => openForm(item));
-    if (isAdmin()) {
-      if (item.status === "submitted" || item.status === "draft") add("Publish", () => changeStatus(item, "published"), "button-primary");
-      if (item.status === "submitted") add("Send back to draft", () => changeStatus(item, "draft"));
-      if (item.status === "published") add("Archive", () => changeStatus(item, "archived"));
-      if (item.status === "archived") add("Restore as draft", () => changeStatus(item, "draft"));
-    } else if (isOwn(item)) {
-      if (item.status === "draft") add("Send for review", () => changeStatus(item, "submitted"));
-      if (item.status === "submitted") add("Back to draft", () => changeStatus(item, "draft"));
-    }
-    if (isAdmin() || (isOwn(item) && item.status === "draft")) add("Delete", () => remove(item), "button-quiet");
-    return actions;
-  }
-
-  function render() {
-    renderTabs();
-    const list = $("admin-list");
-    list.replaceChildren();
-    const shown = items.filter((item) => item.status === tab);
-    if (!shown.length) {
-      list.append(el("li", { class: "admin-empty", text: "Nothing here." }));
-      return;
-    }
-    for (const item of shown) {
-      const meta = [formatDate(item.date), item.category, `Posted by ${item.posted_by}`];
-      if (item.pinned) meta.push("Pinned");
-      if (item.expires) meta.push(`Shown until ${formatDate(item.expires)}`);
-      const excerpt = item.message.length > 240 ? item.message.slice(0, 240) + "…" : item.message;
-      list.append(el("li", { class: "card admin-item", "data-id": item.id }, [
-        el("p", { class: "admin-meta", text: meta.join(" · ") }),
-        el("h3", { text: item.title }),
-        el("p", { class: "admin-excerpt", text: excerpt }),
-        el("div", { class: "button-row admin-actions" }, actionsFor(item)),
-      ]));
-    }
-  }
-
-  // ----- Changing announcements -----
-
-  async function changeStatus(item, status) {
-    const { error } = await client.from("announcements").update({ status }).eq("id", item.id).select().single();
-    if (error) {
-      say(explain(error), "error");
-      return;
-    }
-    const messages = {
-      published: "Published. It appears on the site within about 15 minutes.",
-      submitted: "Sent for review. An admin will check it.",
-      draft: "Moved to drafts.",
-      archived: "Archived: it disappears from the site within about 15 minutes.",
-    };
-    say(messages[status], "success");
-    tab = status;
-    await load();
-  }
-
-  async function remove(item) {
-    if (!window.confirm(`Delete “${item.title}” for good? This cannot be undone.`)) return;
-    const { error } = await client.from("announcements").delete().eq("id", item.id);
-    if (error) {
-      say(explain(error), "error");
-      return;
-    }
-    say("Deleted.", "success");
-    await load();
-  }
-
-  // ----- The form -----
-
-  function openForm(item) {
-    editing = item || null;
-    const form = $("admin-form");
-    form.reset();
-    clearErrors();
-    $("admin-form-title").textContent = item ? "Edit announcement" : "New announcement";
-    $("f-date").value = item ? item.date : todayKey();
-    $("f-category").value = item ? item.category : "Student Hub";
-    $("f-title").value = item ? item.title : "";
-    $("f-message").value = item ? item.message : "";
-    $("f-link").value = item ? item.link || "" : "";
-    $("f-expires").value = item ? item.expires || "" : "";
-    $("f-posted-by").value = item ? item.posted_by : editor.display_name || "Student Hub team";
-    $("f-pinned").checked = item ? item.pinned : false;
-    $("admin-publish").hidden = !isAdmin();
-    $("admin-submit-review").hidden = isAdmin(); // admins publish directly or save drafts
-    $("admin-dialog").showModal();
-    $("f-title").focus();
-  }
-
-  function clearErrors() {
-    $("admin-form-errors").hidden = true;
-    for (const input of $("admin-form").querySelectorAll("[aria-invalid]")) input.removeAttribute("aria-invalid");
-  }
-
-  const FIELD_IDS = { date: "f-date", title: "f-title", category: "f-category", message: "f-message", link: "f-link", expires: "f-expires", posted_by: "f-posted-by" };
-
-  async function saveForm(event) {
-    event.preventDefault();
-    const status = (event.submitter && event.submitter.value) || "draft";
-    // Read by id: form.title would return the form's own "title" attribute, not the field
-    const { value, errors } = D.validateAnnouncement({
-      date: $("f-date").value, title: $("f-title").value, category: $("f-category").value, message: $("f-message").value,
-      link: $("f-link").value, expires: $("f-expires").value, posted_by: $("f-posted-by").value, pinned: $("f-pinned").checked,
-    });
-    clearErrors();
-    const problems = Object.entries(errors);
-    if (problems.length) {
-      for (const [field] of problems) $(FIELD_IDS[field]).setAttribute("aria-invalid", "true");
-      const box = $("admin-form-errors");
-      box.textContent = problems.map(([, message]) => message).join(" ");
-      box.hidden = false;
-      $(FIELD_IDS[problems[0][0]]).focus();
-      return;
-    }
-
-    const row = { ...value, status };
-    const request = editing
-      ? client.from("announcements").update(row).eq("id", editing.id).select().single()
-      : client.from("announcements").insert({ ...row, cohort: config.cohort }).select().single();
-    const { error } = await request;
-    if (error) {
-      const box = $("admin-form-errors");
-      box.textContent = explain(error);
-      box.hidden = false;
-      return;
-    }
-    $("admin-dialog").close();
-    say({ draft: "Draft saved.", submitted: "Sent for review. An admin will check it.", published: "Published. It appears on the site within about 15 minutes." }[status], "success");
-    tab = status;
-    await load();
-  }
-
   // ----- Start -----
 
   function start() {
-    for (const category of D.CATEGORIES) $("f-category").append(el("option", { value: category, text: category }));
-    $("admin-new").addEventListener("click", () => openForm(null));
-    $("admin-cancel").addEventListener("click", () => $("admin-dialog").close());
-    $("admin-form").addEventListener("submit", saveForm);
     $("admin-signin-form").addEventListener("submit", sendSignInLink);
 
     if (!config.url || !config.publishableKey || !window.supabase) {
@@ -318,6 +344,16 @@
     client = window.supabase.createClient(config.url, config.publishableKey, {
       auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
     });
+
+    for (const typeName of Object.keys(D.CONTENT_TYPES)) {
+      panels[typeName] = window.AdminContent.create(typeName, app);
+      panels[typeName].mount($(`panel-${typeName}`));
+    }
+    $("team-add-form").addEventListener("submit", addMember);
+    $("activity-filter").addEventListener("change", loadActivity);
+    $("overview-refresh").addEventListener("click", () => renderOverview());
+    window.addEventListener("hashchange", () => { if (editor) showSection(sectionFromHash()); });
+
     $("admin-signout").addEventListener("click", async () => {
       await client.auth.signOut();
       say("Signed out.", "info");

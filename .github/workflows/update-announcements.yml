@@ -41,6 +41,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/announcements.csv
+          if [ -f data/events.json ]; then git add data/events.json; fi
           if git diff --staged --quiet; then
             echo "Announcements unchanged."
             exit 0

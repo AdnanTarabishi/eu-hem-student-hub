@@ -9,30 +9,9 @@
 const fs = require("fs");
 const path = require("path");
 const { cohort } = require("../supabase-config.js");
-const { validateAnnouncement } = require("../editor-data.js");
+const { validateAnnouncement, parseCsv } = require("../editor-data.js");
 
 const CSV_FILE = path.join(__dirname, "..", "data", "announcements.csv");
-
-// Standard CSV: quoted cells may contain commas, "" quotes and line breaks
-function parseCsv(text) {
-  const rows = [];
-  let row = [], cell = "", quoted = false;
-  for (let i = 0; i < text.length; i++) {
-    const c = text[i];
-    if (quoted) {
-      if (c === '"' && text[i + 1] === '"') { cell += '"'; i++; }
-      else if (c === '"') quoted = false;
-      else cell += c;
-    } else if (c === '"') quoted = true;
-    else if (c === ",") { row.push(cell); cell = ""; }
-    else if (c === "\n" || c === "\r") {
-      if (c === "\r" && text[i + 1] === "\n") i++;
-      row.push(cell); rows.push(row); row = []; cell = "";
-    } else cell += c;
-  }
-  if (cell || row.length) { row.push(cell); rows.push(row); }
-  return rows.filter((r) => r.some((value) => value.trim()));
-}
 
 // A text value for SQL: 'it''s' (quotes doubled), or null
 const sql = (value) => (value == null || value === "" ? "null" : `'${String(value).replace(/'/g, "''")}'`);

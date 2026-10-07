@@ -17,7 +17,7 @@ A free, volunteer website for students of the EU-HEM master's program (European 
 - City guides for Bologna, Oslo, Rotterdam and Innsbruck (permits, housing, healthcare, transport, study places and more)
 - **Roadmap & Updates** (`roadmap.html`): what the team is working on now, what comes next, ideas for later and every major release, from `content/roadmap.json` and `content/updates.json` ([docs/roadmap.md](docs/roadmap.md))
 - **Students explorer** (`students.html`): community map, profile cards and list, filters and privacy-aware statistics, currently a **demo with 40 fictional people** (`data/demo-students.json`)
-- **Editor dashboard** (`admin.html`, not in the menu): approved editors sign in with an emailed link and write announcements; admins review and publish. Backend: Supabase (first Phase 2 piece); a robot copies published announcements into `data/announcements.csv` ([docs/editor-dashboard.md](docs/editor-dashboard.md)). Not connected yet: until then announcements still come from the Google Sheet
+- **Editor dashboard** (`admin.html`, not in the menu): approved editors sign in with an emailed link and write announcements and events (shown as Community events on the Calendar page); admins review, publish and manage the team; an activity log records every change. Backend: Supabase (first Phase 2 piece); a robot copies published announcements into `data/announcements.csv` ([docs/editor-dashboard.md](docs/editor-dashboard.md)). Not connected yet: until then announcements still come from the Google Sheet
 - Useful links, including Virtuale for official course materials
 - **Search the whole site** with the 🔍 button, Ctrl+K (⌘K on Mac) or `/`
 - **Installable app that works offline** (on phones: "Install app" / "Add to Home Screen")

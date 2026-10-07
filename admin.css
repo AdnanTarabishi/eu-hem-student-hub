@@ -19,7 +19,8 @@
   overflow-wrap: anywhere;
 }
 
-.admin-status[data-kind="error"] {
+.admin-status[data-kind="error"],
+.admin-errors {
   background: var(--danger-bg);
   color: var(--danger);
 }
@@ -29,9 +30,47 @@
   color: var(--success);
 }
 
+.admin-warning {
+  background: var(--warning-bg);
+  color: var(--warning);
+}
+
 .admin-small {
   color: var(--text-secondary);
   font-size: 0.875rem;
+}
+
+.admin-optional {
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+/* Form fields: style.css only sets colours and the border, each page sets the size.
+   (The dialogs live outside .admin-page, at the end of <body>, so they are listed separately.) */
+.admin-page :is(input:not([type="checkbox"]), select, textarea),
+.admin-dialog :is(input:not([type="checkbox"]), select, textarea) {
+  min-height: 44px; /* comfortable touch target */
+  padding: 0.55rem 0.75rem;
+  font: inherit;
+  font-size: 1rem; /* 16px: phones do not zoom in when the field gets focus */
+  line-height: 1.4;
+}
+
+.admin-page textarea,
+.admin-dialog textarea {
+  resize: vertical;
+}
+
+.admin-page :is(input, select, textarea):focus-visible,
+.admin-dialog :is(input, select, textarea):focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 1px;
+}
+
+.admin-page input[type="checkbox"],
+.admin-dialog input[type="checkbox"] {
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .admin-signin {
@@ -42,14 +81,186 @@
   width: 100%;
 }
 
-/* Tabs + "New announcement" */
+/* ----- App layout: section menu + panels ----- */
+.admin-app {
+  display: grid;
+  grid-template-columns: 12rem minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.admin-sections {
+  position: sticky;
+  top: 1rem;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.admin-section-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: 44px; /* comfortable touch target */
+  padding: 0.5rem 0.85rem;
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.admin-section-link:hover {
+  background: var(--surface-subtle);
+}
+
+.admin-section-link[aria-current="page"] {
+  background: var(--color-primary-light);
+  color: var(--text-heading);
+  font-weight: 600;
+}
+
+/* Red count: items waiting for review */
+.admin-badge {
+  min-width: 1.4rem;
+  padding: 0 0.4rem;
+  border-radius: var(--radius-pill);
+  background: var(--danger);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.admin-panel > h2:first-child,
+.admin-panel-head h2 {
+  margin-top: 0;
+}
+
+.admin-panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+/* ----- Overview ----- */
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.admin-stat {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+}
+
+.admin-stat-value {
+  color: var(--text-heading);
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.admin-stat-label {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.admin-stat-attention {
+  border-color: var(--color-brand);
+}
+
+.admin-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+
+.admin-overview-grid h3 {
+  margin-top: 0;
+}
+
+.admin-overview-grid h3 + * {
+  margin-top: 0.5rem;
+}
+
+.admin-overview-grid .card > h3:not(:first-child) {
+  margin-top: 1.25rem;
+}
+
+.admin-todo-list,
+.admin-activity {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-todo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.admin-todo-text {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.admin-sync {
+  margin: 0 0 0.35rem;
+}
+
+.admin-sync.is-ok {
+  color: var(--success);
+}
+
+.admin-sync.is-pending {
+  color: var(--warning);
+}
+
+.admin-activity-item {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.admin-activity-time {
+  color: var(--text-secondary);
+}
+
+.admin-activity-text {
+  overflow-wrap: anywhere;
+}
+
+.admin-activity-detail {
+  display: block;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* ----- Content panels ----- */
 .admin-toolbar {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .admin-tabs {
@@ -62,7 +273,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  min-height: 44px; /* comfortable touch target */
+  min-height: 44px;
   padding: 0.4rem 0.85rem;
   border: 1px solid var(--border-default);
   border-radius: var(--radius-pill);
@@ -89,7 +300,17 @@
   text-align: center;
 }
 
-/* The list */
+.admin-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.5rem;
+}
+
+.admin-filters input,
+.admin-filters select {
+  width: 100%;
+}
+
 .admin-list {
   display: grid;
   gap: 0.75rem;
@@ -104,7 +325,7 @@
 }
 
 .admin-meta {
-  margin: 0;
+  margin: 0.25rem 0 0;
   color: var(--text-secondary);
   font-size: 0.85rem;
 }
@@ -112,6 +333,47 @@
 .admin-excerpt {
   white-space: pre-line; /* keep the editor's line breaks */
   overflow-wrap: anywhere;
+}
+
+.admin-review-note {
+  overflow-wrap: anywhere;
+}
+
+.admin-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.admin-chip {
+  display: inline-block;
+  padding: 0.1rem 0.55rem;
+  border-radius: var(--radius-pill);
+  background: var(--surface-subtle);
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.admin-chip.is-live {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.admin-chip.is-scheduled {
+  background: var(--color-primary-light);
+  color: var(--text-heading);
+}
+
+.admin-chip.is-expired {
+  background: var(--surface-subtle);
+  color: var(--text-secondary);
+}
+
+.admin-chip.is-urgent {
+  background: var(--danger-bg);
+  color: var(--danger);
 }
 
 .admin-empty {
@@ -122,9 +384,9 @@
   text-align: center;
 }
 
-/* The form, in a dialog box */
+/* ----- The form, in a dialog box, with a live preview ----- */
 .admin-dialog {
-  width: min(44rem, calc(100vw - 2rem));
+  width: min(64rem, calc(100vw - 2rem));
   max-height: calc(100vh - 2rem);
   padding: 1.25rem;
   border: 1px solid var(--border-default);
@@ -133,12 +395,27 @@
   color: var(--text-primary);
 }
 
+.admin-note-dialog {
+  width: min(32rem, calc(100vw - 2rem));
+}
+
+.admin-note-dialog textarea {
+  width: 100%;
+}
+
 .admin-dialog::backdrop {
   background: rgba(9, 29, 58, 0.55);
 }
 
 .admin-dialog h2 {
   margin-top: 0;
+}
+
+.admin-form-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 1.25rem;
+  align-items: start;
 }
 
 .admin-grid {
@@ -151,12 +428,31 @@
   display: grid;
   gap: 0.3rem;
   min-width: 0;
+  align-content: start;
 }
 
 .admin-field input,
 .admin-field select,
 .admin-field textarea {
   width: 100%;
+}
+
+.admin-field-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.admin-counter {
+  margin-left: auto;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.admin-counter.is-near {
+  color: var(--warning);
+  font-weight: 600;
 }
 
 .admin-wide {
@@ -173,18 +469,31 @@
   width: auto;
 }
 
-.admin-optional {
-  color: var(--text-secondary);
-  font-weight: 400;
-}
-
 .admin-field [aria-invalid="true"] {
   border-color: var(--danger);
 }
 
-.admin-errors {
-  background: var(--danger-bg);
-  color: var(--danger);
+.admin-preview {
+  position: sticky;
+  top: 0;
+  padding: 0.9rem;
+  border-radius: var(--radius-md);
+  background: var(--surface-page);
+}
+
+.admin-preview .section-eyebrow {
+  margin-top: 0;
+}
+
+.admin-preview-stack {
+  display: grid;
+  gap: 0.75rem;
+}
+
+/* The urgent banner, shown inside the preview instead of at the top of the page */
+.admin-preview-banner {
+  position: static;
+  border-radius: var(--radius-sm);
 }
 
 .admin-form-actions {
@@ -192,12 +501,113 @@
   margin-top: 1rem;
 }
 
+/* In the long form, the buttons stay visible at the bottom while you scroll */
+.admin-dialog form > .admin-form-actions {
+  position: sticky;
+  bottom: -1.25rem; /* the dialog's padding */
+  margin: 1rem -1.25rem -1.25rem;
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid var(--border-default);
+  background: var(--surface-card);
+}
+
 @media (max-width: 600px) {
-  .admin-grid {
-    grid-template-columns: 1fr;
+  .admin-dialog form > .admin-form-actions {
+    bottom: -1rem;
+    margin: 1rem -1rem -1rem;
+    padding: 0.75rem 1rem;
+  }
+}
+
+/* ----- Team ----- */
+.admin-member-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  overflow-wrap: anywhere;
+}
+
+.admin-member-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 0.75rem;
+  margin: 0.75rem 0;
+}
+
+.admin-member-fields input,
+.admin-member-fields select,
+.admin-add-member input,
+.admin-add-member select {
+  width: 100%;
+}
+
+.admin-add-member {
+  margin-top: 1rem;
+}
+
+.admin-add-member h3 {
+  margin-top: 0;
+}
+
+.admin-add-member .button-row {
+  margin-top: 1rem;
+}
+
+/* ----- Smaller screens ----- */
+@media (max-width: 900px) {
+  .admin-app {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  /* The section menu becomes a row you can swipe */
+  .admin-sections {
+    position: static;
+    display: flex;
+    overflow-x: auto;
+    gap: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .admin-section-link {
+    flex: 0 0 auto;
+  }
+
+  .admin-overview-grid,
+  .admin-form-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .admin-preview {
+    position: static;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-grid,
+  .admin-member-fields,
+  .admin-filters {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .admin-dialog {
     padding: 1rem;
+  }
+
+  .admin-activity-item {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  /* Needs attention: type label on its own line, the title gets the full width */
+  .admin-todo {
+    flex-wrap: wrap;
+  }
+
+  .admin-todo .admin-chip {
+    flex-basis: 100%;
+    width: max-content;
+    max-width: max-content;
   }
 }

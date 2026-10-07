@@ -1,0 +1,78 @@
+/* ===== Community events (calendar.html, and the preview in admin.html) ===== */
+
+.event-list {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.event-card {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1rem;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+}
+
+/* The calendar-page style date block: OCT / 7 */
+.event-date {
+  display: grid;
+  flex: 0 0 3.5rem;
+  place-items: center;
+  padding: 0.4rem 0;
+  border-radius: var(--radius-sm);
+  background: var(--color-brand-soft);
+  color: var(--color-brand-text);
+  line-height: 1.1;
+  text-align: center;
+}
+
+.event-date-month {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.event-date-day {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.event-body {
+  min-width: 0;
+}
+
+.event-meta,
+.event-location,
+.event-footer {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.event-category {
+  color: var(--color-brand-text);
+  font-weight: 600;
+}
+
+.event-title {
+  margin: 0.2rem 0 0.35rem;
+  overflow-wrap: anywhere;
+}
+
+.event-description {
+  margin: 0.5rem 0;
+  white-space: pre-line; /* keep the editor's line breaks */
+  overflow-wrap: anywhere;
+}
+
+.event-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+}
