@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Student Toolkit – EU-HEM Student Hub</title>
-  <meta name="description" content="Tools for study, research and student life. Explore 8 ready-made collections, create local lists and compare useful resources.">
+  <meta name="description" content="Find a method, check Excel formulas and explore health economics. Study tools, collections, personal lists and comparisons for EU-HEM students.">
   <!-- Social preview (scripts/social-tags.js) -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="EU-HEM Student Hub">
   <meta property="og:title" content="Student Toolkit – EU-HEM Student Hub">
-  <meta property="og:description" content="Tools for study, research and student life. Explore 8 ready-made collections, create local lists and compare useful resources.">
+  <meta property="og:description" content="Find a method, check Excel formulas and explore health economics. Study tools, collections, personal lists and comparisons for EU-HEM students.">
   <meta property="og:url" content="https://adnantarabishi.github.io/eu-hem-student-hub/toolkit.html">
   <meta property="og:image" content="https://adnantarabishi.github.io/eu-hem-student-hub/img/social-preview.png">
   <meta property="og:image:width" content="1200">
@@ -28,6 +28,7 @@
   <link rel="icon" href="img/app-icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <script src="theme.js?v=d51d4769"></script>
+  <link rel="stylesheet" href="toolkit-solve.css?v=51ab978c">
 </head>
 <body class="toolkit-page">
   <header class="site-header">
@@ -61,11 +62,12 @@
       <nav class="tk-breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">/</span><a href="notes.html">Resources</a><span aria-hidden="true">/</span><span aria-current="page">Student Toolkit</span></nav>
       <nav id="tk2-sections" class="tk2-sections" aria-label="Toolkit sections">
         <button type="button" data-section="browse" aria-pressed="true" aria-controls="tk2-browse"><span>01</span> Browse tools</button>
-        <button type="button" data-section="collections" aria-pressed="false" aria-controls="tk2-collections"><span>02</span> Ready-made collections</button>
-        <button type="button" data-section="lists" aria-pressed="false" aria-controls="tk2-lists"><span>03</span> My lists</button>
-        <button type="button" data-section="compare" aria-pressed="false" aria-controls="tk2-compare"><span>04</span> Compare <b id="tk2-compare-count">0</b></button>
+        <button type="button" data-section="solve" aria-pressed="false" aria-controls="tk2-solve"><span>02</span> Solve a Problem</button>
+        <button type="button" data-section="collections" aria-pressed="false" aria-controls="tk2-collections"><span>03</span> Ready-made collections</button>
+        <button type="button" data-section="lists" aria-pressed="false" aria-controls="tk2-lists"><span>04</span> My lists</button>
+        <button type="button" data-section="compare" aria-pressed="false" aria-controls="tk2-compare"><span>05</span> Compare <b id="tk2-compare-count">0</b></button>
       </nav>
-      <p id="tk2-notice" class="tk2-notice">New in the Toolkit: 8 practical collections, your own lists and 12 more provider resources. <button type="button" id="tk2-new-resources" class="tk-text-button">Browse the new additions →</button></p>
+      <p id="tk2-notice" class="tk2-notice">New: choose a statistical method, explore 52 Excel recipes and calculate ICER, QALYs or discounted values. <button type="button" data-section="solve" class="tk-text-button">Solve a Problem →</button> <button type="button" id="tk2-new-resources" class="tk-text-button">Browse recent provider additions →</button></p>
       <div id="tk2-browse" class="tk-layout">
         <div class="tk-catalogue">
           <section id="tk-library" class="tk-discovery" aria-label="Find a tool">
@@ -102,6 +104,7 @@
           <section class="tk-side-card tk-suggest"><svg class="icon" aria-hidden="true"><use href="icons.svg#sparkles"></use></svg><h2>What would make your week easier?</h2><p>Suggest a tool or report an outdated link.</p><a href="contact.html" class="tk-text-link">Share an idea <span aria-hidden="true">→</span></a></section>
         </aside>
       </div>
+      <section id="tk2-solve" class="tk2-panel sv-workbench" aria-labelledby="tk2-solve-title" hidden></section>
       <section id="tk2-collections" class="tk2-panel" aria-labelledby="tk2-collections-title" hidden></section>
       <section id="tk2-lists" class="tk2-panel" aria-labelledby="tk2-lists-title" hidden></section>
       <section id="tk2-compare" class="tk2-panel" aria-labelledby="tk2-compare-title" hidden></section>
@@ -121,9 +124,12 @@
   <script defer src="ui.js?v=6d55e433"></script>
   <script defer src="search.js?v=65002110"></script>
   <script defer src="pwa.js?v=c9212bf8"></script>
-  <script defer src="toolkit-data.js?v=0bbae809"></script>
+  <script defer src="toolkit-data.js?v=59ade365"></script>
   <script defer src="toolkit-organiser-data.js?v=936cf0ff"></script>
-  <script defer src="toolkit.js?v=38608503"></script>
-  <script defer src="toolkit-organiser.js?v=4c9dc901"></script>
+  <script defer src="toolkit.js?v=cef42943"></script>
+  <script defer src="toolkit-solve-core.js?v=6d4f9b2f"></script>
+  <script defer src="toolkit-formulas.js?v=2d4b8129"></script>
+  <script defer src="toolkit-organiser.js?v=bc639ddd"></script>
+  <script defer src="toolkit-solve.js?v=ec71ebf6"></script>
 </body>
 </html>

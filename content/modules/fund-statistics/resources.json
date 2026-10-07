@@ -230,5 +230,22 @@
     "date": "2026-10-07",
     "topic": "fund-statistics.confidence-intervals",
     "description": "Source for the Labs & reports study guide; official teacher files remain on Virtuale."
+  },
+  {
+    "id": "fund-statistics.r.solve-method",
+    "title": "Statistical Test Finder",
+    "type": "Website",
+    "url": "https://adnantarabishi.github.io/eu-hem-student-hub/toolkit.html?section=solve&solver=finder",
+    "date": "2026-10-08",
+    "description": "Original educational method chooser linked to the shared Lab; checks design and distinguishes supplementary methods. For preparation, not an approved in-exam aid.",
+    "topic": "fund-statistics.hypothesis-tests"
+  },
+  {
+    "id": "fund-statistics.r.solve-excel",
+    "title": "Excel Formula Assistant",
+    "type": "Website",
+    "url": "https://adnantarabishi.github.io/eu-hem-student-hub/toolkit.html?section=solve&solver=excel",
+    "date": "2026-10-08",
+    "description": "52 original formula recipes with fixed worked examples and copyable Excel syntax. Check the method and function required by your assignment."
   }
 ]

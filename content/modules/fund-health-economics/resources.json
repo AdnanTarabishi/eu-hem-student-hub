@@ -63,5 +63,13 @@
     "date": "2026-10-06",
     "topic": "fund-health-economics.physician-agency",
     "description": "Official University of Bologna materials for Fundamentals in Health Economics. Sign in with your UniBo account."
+  },
+  {
+    "id": "fund-health-economics.r.solve-econ",
+    "title": "Health Economics Calculator · supplementary",
+    "type": "Website",
+    "url": "https://adnantarabishi.github.io/eu-hem-student-hub/toolkit.html?section=solve&solver=health",
+    "date": "2026-10-08",
+    "description": "Original supplementary cost-effectiveness, QALY and discounting models. Not a claim that these are required topics in the current introductory lectures."
   }
 ]

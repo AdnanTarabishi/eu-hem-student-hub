@@ -8,7 +8,7 @@
   const $=id=>root.querySelector('#'+id);
   const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const icon=n=>`<svg class="icon" aria-hidden="true"><use href="icons.svg#${esc(n)}"></use></svg>`;
-  const KEY='euhem-toolkit-lists-v1',sections=['browse','collections','lists','compare'];
+  const KEY='euhem-toolkit-lists-v1',sections=['browse','solve','collections','lists','compare'];
   let store=O.cleanStore({}),storageOK=true,section='browse',selectedList=null,pack=null,compared=[],pendingTool=null,pendingImport=null,modalOpener=null;
   try{const raw=window.localStorage.getItem(KEY);if(raw)store=O.cleanStore(JSON.parse(raw));}catch(e){if(e instanceof SyntaxError)store=O.cleanStore({});else storageOK=false;}
   const makeId=()=>`l-${Date.now().toString(36)}-${window.crypto?.randomUUID?window.crypto.randomUUID():Math.random().toString(36).slice(2)}`;
@@ -33,7 +33,7 @@
     section=sections.includes(next)?next:'browse';
     for(const key of sections){$('tk2-'+key).hidden=key!==section;root.querySelector(`[data-section="${key}"]`).setAttribute('aria-pressed',String(key===section));}
     if(section==='collections')renderCollections();if(section==='lists')renderLists();if(section==='compare')renderCompare();
-    writeURL();if(focus){const title=section==='browse'?$('tk-results-heading'):$('tk2-'+section+'-title');title?.focus();}
+    writeURL();root.dispatchEvent(new CustomEvent('toolkit:section',{detail:{section}}));if(focus){const title=section==='browse'?$('tk-results-heading'):$('tk2-'+section+'-title');title?.focus();}
   }
   function renderCollections(){
     $('tk2-collections').innerHTML=`<div class="tk2-heading"><div><p class="tk-eyebrow">START WITH A GOAL, NOT A LONG DIRECTORY</p><h2 id="tk2-collections-title" tabindex="-1">A useful set. A clear next step.</h2><p class="tk-meta">Eight editorial collections, each with four suggested steps. Choose what fits your task; these are not official course requirements.</p></div><span class="tk2-pill">8 collections</span></div><div class="tk2-pack-grid">${O.collections.map(c=>`<article class="tk2-pack" data-pack-card="${c.id}"><div class="tk2-pack-top"><span class="tk-tool-symbol">${icon(c.icon)}</span><span class="tk-meta tk-small">${esc(c.category)}</span></div><h3>${esc(c.title)}</h3><p>${esc(c.summary)}</p><div class="tk2-pack-bottom"><span>${c.items.length} entries · 4 steps</span><button type="button" class="tk-text-button" data-pack="${c.id}" aria-expanded="${pack===c.id}" aria-controls="tk2-pack-detail">Explore collection →</button></div></article>`).join('')}</div><div id="tk2-pack-detail"></div>`;
