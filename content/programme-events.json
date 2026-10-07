@@ -67,15 +67,20 @@
   },
 
   "cohortNumbers": {
-    "title": "Cohort 12 in numbers",
+    "title": "Welcome Days snapshot",
     "cohortLabel": "2026–2028",
+    "note": "Figures as reported in the Welcome Days presentation, with its original labels. The separately supplied country-of-origin table reports a different total; see the updated overview below.",
     "figures": [
       { "value": "104", "label": "students" },
       { "value": "24", "label": "nationalities" },
       { "value": "94", "label": "from the EEA or Switzerland" },
       { "value": "10", "label": "from outside the EEA" }
     ],
-    "source": "welcome-days-2026"
+    "source": "welcome-days-2026",
+    "updatedOverview": {
+      "label": "Explore the updated country-of-origin map",
+      "href": "students.html#sx-map-section"
+    }
   },
 
   "history": {

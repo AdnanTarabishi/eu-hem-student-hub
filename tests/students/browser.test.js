@@ -43,9 +43,16 @@ const NOT_AVAILABLE = 'This profile is not available in your current view.';
   const cardNames = (page) => page.$$eval('.sx-card-name', (all) => all.map((e) => e.textContent));
   const sideways = (page) => page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   const query = (page) => page.evaluate(() => window.location.search);
+  const openDemoMap = async (page) => {
+    if (!(await page.locator('#sx-map-details').evaluate((details) => details.open))) {
+      await page.locator('#sx-map-details > summary').click();
+    }
+  };
 
   /* ----- public preview ----- */
   let page = await open();
+  assert.strictEqual(await page.locator('#sx-map-details').evaluate((details) => details.open), false);
+  assert.strictEqual(await page.locator('#sx-map-section[data-cohort-atlas]').isVisible(), true);
   assert.match(await countText(page), /Showing 1–12 of 24 matching profiles \(24 public in this view\)/);
   assert.strictEqual((await cardNames(page)).length, 12);
   assert.match(await text(page, '#sx-pagination'), /Page 1 of 2/);
@@ -88,7 +95,8 @@ const NOT_AVAILABLE = 'This profile is not available in your current view.';
   ok('member preview: 36 profiles, hidden ones never; citizenship filter only there, only in memory, cleared when leaving');
 
   /* ----- map and synchronised filters ----- */
-  await page.goto(base + 'students.html'); await page.waitForSelector('#sx-map svg path[data-code="NL"]');
+  await page.goto(base + 'students.html'); await openDemoMap(page);
+  await page.waitForSelector('#sx-map svg path[data-code="NL"]');
   assert.strictEqual(await page.getAttribute('#sx-map path[data-code="NL"]', 'aria-label'), 'Netherlands: 7 visible profiles');
   assert.strictEqual(await page.getAttribute('#sx-map path[data-code="FR"]', 'tabindex'), null, 'countries without profiles are not tab stops');
   await page.dispatchEvent('#sx-map path[data-code="IT"]', 'click');
@@ -125,7 +133,8 @@ const NOT_AVAILABLE = 'This profile is not available in your current view.';
   ok('map views: Europe and World presets, zoom, reset; legend labelled "Visible profiles"; profiles outside the view are mentioned');
 
   // Track filter changes the map counts (faceted: every filter except Country)
-  await page.goto(base + 'students.html?track=mhi'); await page.waitForSelector('#sx-map svg path[data-code="NL"][aria-label]');
+  await page.goto(base + 'students.html?track=mhi'); await openDemoMap(page);
+  await page.waitForSelector('#sx-map svg path[data-code="NL"][aria-label]');
   const nlMhi = pub.filter((p) => p.track === 'mhi' && p.country && p.country.code === 'NL').length;
   assert.strictEqual(await page.getAttribute('#sx-map path[data-code="NL"]', 'aria-label'), `Netherlands: ${nlMhi} visible profile${nlMhi === 1 ? '' : 's'}`);
   ok('track filter updates the map counts');
@@ -183,6 +192,7 @@ const NOT_AVAILABLE = 'This profile is not available in your current view.';
   await page.click('.sx-drawer-close');
   await page.waitForFunction(expected => document.activeElement.textContent === expected, openerName);
   assert.strictEqual(await page.evaluate(() => document.activeElement.textContent), openerName, 'focus returns to the opener');
+  await openDemoMap(page);
   await page.dispatchEvent('#sx-map path[data-code="NO"]', 'click');
   assert.match(await query(page), /country=NO/);
   await page.goBack(); await page.waitForFunction(() => !location.search.includes('country'));
@@ -235,6 +245,7 @@ const NOT_AVAILABLE = 'This profile is not available in your current view.';
   /* ----- map failure, phones, dark mode, reduced motion ----- */
   breakMap = true;
   page = await open();
+  await openDemoMap(page);
   await page.waitForSelector('.sx-map-status:has-text("could not be loaded")');
   assert.match(await countText(page), /of 24 matching/);
   await page.click('.sx-country-item:has-text("Italy")');
@@ -245,6 +256,7 @@ const NOT_AVAILABLE = 'This profile is not available in your current view.';
 
   for (const width of [360, 375, 768, 1024, 1440]) {
     page = await open('students.html', { viewport: { width, height: 900 } });
+    await openDemoMap(page);
     await page.waitForSelector('#sx-map svg');
     assert.strictEqual(await sideways(page), 0, `cards ${width}`);
     await page.click('[data-layout="list"]');

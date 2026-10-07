@@ -10,20 +10,23 @@
 // │                   (smaller and faster). Phones get the 640, big and sharp    │
 // │                   screens the 1600. Use "" for no photo (dark background).   │
 // │ HERO_IMAGE_ALT    What the photo shows, for people using screen readers.     │
-// │ STUDENT_COUNT     Students in the cohort.                                    │
-// │ COUNTRY_COUNT     Countries they come from.                                  │
+// │ Cohort counts, origins and source notes come from cohort-data.js.            │
 // │ TRACK_COUNT       Specialisation tracks in semester 2.                       │
-// │ COHORT_LABEL      The cohort these numbers describe, e.g. "2026–2028".      │
 // │ PROGRAM_END_DATE  "YYYY-MM-DD". "Estimated days to graduation" is counted    │
 // │                   from it every day; it's hidden if empty or in the past.    │
 // │ DIRECTORY_IS_DEMO true while students.html shows fictional demo profiles.    │
 // └──────────────────────────────────────────────────────────────────────────────┘
 const HERO_IMAGE = "assets/images/euhem-cohort-2026.jpg";
 const HERO_IMAGE_ALT = "The EU-HEM 2026 cohort together under the porticoes of a street in Bologna";
-const STUDENT_COUNT = 104;
-const COUNTRY_COUNT = 23;
+const HOME_COHORT = typeof EUHEM_COHORT !== "undefined" ? EUHEM_COHORT
+  : typeof module !== "undefined" && module.exports ? require("./cohort-data.js") : null;
+const PEOPLE_COUNT = HOME_COHORT ? HOME_COHORT.total : undefined;
+const COUNTRY_COUNT = HOME_COHORT ? HOME_COHORT.countryCount : undefined;
+const CONTINENT_COUNT = HOME_COHORT ? HOME_COHORT.continentCount : undefined;
+const COHORT_LABEL = HOME_COHORT ? HOME_COHORT.label : undefined;
+const SOURCE_TITLE = HOME_COHORT ? HOME_COHORT.source.title : undefined;
+const SOURCE_NOTATION = HOME_COHORT ? HOME_COHORT.source.notation : undefined;
 const TRACK_COUNT = 4;
-const COHORT_LABEL = "2026–2028";
 const PROGRAM_END_DATE = "2028-09-30";
 const DIRECTORY_IS_DEMO = true;
 
@@ -54,8 +57,10 @@ function formatEndDate(dateKey) {
 function homeStats(today = null) {
   const days = today === null ? daysUntil(PROGRAM_END_DATE) : today;
   const stats = [
-    { value: STUDENT_COUNT, label: "Students", caption: `Cohort ${COHORT_LABEL}`, icon: "students" },
-    { value: COUNTRY_COUNT, label: "Countries", caption: "Cohort overview", icon: "globe" },
+    ...(HOME_COHORT ? [
+      { value: PEOPLE_COUNT, label: "People represented", caption: `Source total · ${SOURCE_NOTATION}`, icon: "students" },
+      { value: COUNTRY_COUNT, label: "Countries of origin", caption: `Across ${CONTINENT_COUNT} continents`, icon: "globe" },
+    ] : []),
     { value: TRACK_COUNT, label: "Tracks", caption: "Different perspectives", icon: "route" },
   ];
   if (days !== null && days > 0) {
@@ -177,15 +182,15 @@ function fillWeekGreeting() {
 // ----- Below the hero: texts that use the settings (filled when the page has loaded) -----
 function fillHomeSettings() {
   for (const element of document.querySelectorAll("[data-setting]")) {
-    const value = { STUDENT_COUNT, COUNTRY_COUNT, TRACK_COUNT, COHORT_LABEL }[element.dataset.setting];
+    const value = { PEOPLE_COUNT, COUNTRY_COUNT, CONTINENT_COUNT, TRACK_COUNT, COHORT_LABEL, SOURCE_TITLE, SOURCE_NOTATION }[element.dataset.setting];
     if (value !== undefined) element.textContent = value;
   }
   const demo = document.querySelector(".people-note");
   if (demo) demo.hidden = !DIRECTORY_IS_DEMO;
-  // Decorative: one small dot per student (no names, no data)
+  // Decorative: one small dot per person represented (aggregate counts only)
   const dots = document.getElementById("cohort-dots");
   if (dots && !dots.children.length) {
-    for (let i = 0; i < STUDENT_COUNT; i++) dots.appendChild(document.createElement("span"));
+    for (let i = 0; i < PEOPLE_COUNT; i++) dots.appendChild(document.createElement("span"));
   }
 }
 
@@ -213,53 +218,63 @@ async function fillCityCards() {
   }
 }
 
-// ----- "Students from around the world": a decorative world map with the four programme cities -----
-// The same local map as the Students page (assets/map/world-countries.svg, Natural Earth, public domain).
-// The dots mark the four universities only: there is no real data on where students come from.
-// Positions are the cities' coordinates in the map's projection (scripts/build-world-map.js).
-const PROGRAMME_CITIES = [
-  { name: "Bologna", x: 527.1, y: 84.1 },
-  { name: "Oslo", x: 522.5, y: 40.6 },
-  { name: "Rotterdam", x: 510.1, y: 61.9, labelLeft: true },
-  { name: "Innsbruck", x: 526.7, y: 75.6, labelLeft: true },
-];
-const COMMUNITY_MAP_VIEW = "470 22 100 76"; // Europe, around the four cities
-
+// ----- Cohort origins: shared aggregate counts and the local Natural Earth map -----
+// This compact overview links to the interactive atlas. It is independent of demo profiles.
 async function fillCommunityMap() {
   const box = document.getElementById("community-map");
-  if (!box) return;
+  if (!box || !HOME_COHORT) return;
+  const largest = document.getElementById("community-origin-countries");
+  if (largest) {
+    const countries = [...HOME_COHORT.countries].sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, "en"));
+    largest.replaceChildren(...countries.slice(0, 3).map((country) => {
+      const item = createElement("li", "eh-origin-country");
+      const flag = createElement("span", "country-flag");
+      flag.dataset.countryFlag = country.code;
+      flag.setAttribute("aria-hidden", "true");
+      const count = createElement("strong", null, country.count);
+      count.setAttribute("aria-label", `${country.count} people`);
+      item.append(flag, createElement("span", null, country.name), count);
+      return item;
+    }));
+  }
   try {
     const response = await fetch("assets/map/world-countries.svg");
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const svg = new DOMParser().parseFromString(await response.text(), "image/svg+xml").documentElement;
-    if (svg.nodeName !== "svg") throw new Error("not an SVG");
-    svg.setAttribute("viewBox", COMMUNITY_MAP_VIEW);
+    const source = new DOMParser().parseFromString(await response.text(), "image/svg+xml").documentElement;
+    if (source.nodeName !== "svg") throw new Error("not an SVG");
+    const viewBox = (source.getAttribute("viewBox") || "").trim().split(/\s+/).map(Number);
+    if (viewBox.length !== 4 || !viewBox.every(Number.isFinite) || viewBox[2] <= 0 || viewBox[3] <= 0) throw new Error("invalid map dimensions");
+    const ns = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(ns, "svg");
+    svg.setAttribute("viewBox", viewBox.join(" "));
     svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
     svg.setAttribute("focusable", "false");
-    const ns = "http://www.w3.org/2000/svg";
-    for (const city of PROGRAMME_CITIES) {
-      const halo = document.createElementNS(ns, "circle");
-      halo.setAttribute("cx", city.x);
-      halo.setAttribute("cy", city.y);
-      halo.setAttribute("r", "2.6");
-      halo.setAttribute("class", "city-halo");
-      const dot = document.createElementNS(ns, "circle");
-      dot.setAttribute("cx", city.x);
-      dot.setAttribute("cy", city.y);
-      dot.setAttribute("r", "1.1");
-      dot.setAttribute("class", "city-dot");
-      // City name next to the dot (Bologna and Innsbruck are close together: one left, one right)
-      const label = document.createElementNS(ns, "text");
-      label.setAttribute("x", city.x + (city.labelLeft ? -3.2 : 3.2));
-      label.setAttribute("y", city.y + 1.3);
-      label.setAttribute("text-anchor", city.labelLeft ? "end" : "start");
-      label.setAttribute("class", "city-label");
-      label.textContent = city.name;
-      svg.append(halo, dot, label);
+    svg.setAttribute("aria-hidden", "true");
+    const origins = new Map(HOME_COHORT.countries.map((country) => [country.code, country]));
+    // Copy only country geometry from the local asset into fresh, inert SVG elements.
+    for (const outline of source.querySelectorAll("path")) {
+      const path = document.createElementNS(ns, "path");
+      path.setAttribute("d", outline.getAttribute("d") || "");
+      path.setAttribute("class", "map-country");
+      const code = outline.getAttribute("data-code");
+      if (code && /^[A-Z]{2}$/.test(code)) path.setAttribute("data-code", code);
+      const country = origins.get(code);
+      if (country) {
+        path.classList.add("has-origin");
+        path.setAttribute("data-count", country.count);
+        const title = document.createElementNS(ns, "title");
+        title.textContent = `${country.name}: ${country.count} ${country.count === 1 ? "person" : "people"}`;
+        path.appendChild(title);
+      }
+      svg.appendChild(path);
     }
-    box.replaceChildren(document.importNode(svg, true));
+    box.replaceChildren(svg);
+    const legend = document.getElementById("community-map-legend");
+    if (legend) legend.hidden = false;
   } catch {
-    box.closest(".community-map").hidden = true; // decorative only: hide it quietly
+    // Keep the source, figures and atlas link available when the map asset cannot load.
+    box.classList.add("is-unavailable");
+    box.replaceChildren(createElement("p", "eh-origin-map-error", "The world map is unavailable. The full country overview is available through the link below."));
   }
 }
 

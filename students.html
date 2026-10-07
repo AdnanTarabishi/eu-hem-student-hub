@@ -6,12 +6,12 @@
   <!-- Asks search engines not to list this page (it does not block visitors) -->
   <meta name="robots" content="noindex">
   <title>Students &amp; Cohort Map – EU-HEM Student Hub</title>
-  <meta name="description" content="Preview the EU-HEM community atlas with fictional profiles: explore academic perspectives, represented countries and cohort insights.">
+  <meta name="description" content="Explore the EU-HEM 2026–2028 cohort: 105 people from 24 countries across five continents, with an interactive origin map and a separate fictional directory preview.">
   <!-- Social preview (scripts/social-tags.js) -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="EU-HEM Student Hub">
   <meta property="og:title" content="Students &amp; Cohort Map – EU-HEM Student Hub">
-  <meta property="og:description" content="Preview the EU-HEM community atlas with fictional profiles: explore academic perspectives, represented countries and cohort insights.">
+  <meta property="og:description" content="Explore the EU-HEM 2026–2028 cohort: 105 people from 24 countries across five continents, with an interactive origin map and a separate fictional directory preview.">
   <meta property="og:url" content="https://adnantarabishi.github.io/eu-hem-student-hub/students.html">
   <meta property="og:image" content="https://adnantarabishi.github.io/eu-hem-student-hub/img/social-preview.png">
   <meta property="og:image:width" content="1200">
@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="style.css?v=daabf49c">
   <link rel="stylesheet" href="assets/flags/country-flags.css?v=6127599e">
   <link rel="stylesheet" href="students.css?v=5b3e8e05">
+  <link rel="stylesheet" href="cohort-map.css?v=91779f37">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -52,12 +53,12 @@
       <div class="sx-hero-copy">
         <p class="section-eyebrow">Community · Your cohort atlas</p>
         <h1>One community.<br><span>Many perspectives.</span></h1>
-        <p class="sx-subtitle">Discover the people, academic backgrounds and shared paths that bring EU-HEM together. Your next study partner could start with a little curiosity.</p>
+        <p class="sx-subtitle">24 countries of origin. Five continents. A shared journey in health economics and management. Explore where our cohort comes from, then preview the future student directory.</p>
         <div class="sx-hero-actions">
           <a class="button button-primary" href="#sx-map-section" id="sx-explore-map">Explore the map <span class="arrow" aria-hidden="true">→</span></a>
           <a class="button button-secondary" href="join.html">Join the directory <span class="arrow" aria-hidden="true">→</span></a>
         </div>
-        <p class="sx-hero-note">Profiles, perspectives and shared paths.</p>
+        <p class="sx-hero-note">Cohort 2026–2028 · Supplied country overview: 103+2 people.</p>
       </div>
       <div class="sx-hero-visual" aria-hidden="true">
         <div class="sx-community-orbit">
@@ -71,17 +72,111 @@
     </section>
 
     <nav class="sx-section-nav" aria-label="Community sections">
-      <a href="#sx-discover"><span aria-hidden="true">01</span> Discover</a>
-      <a href="#sx-map-section"><span aria-hidden="true">02</span> World map</a>
-      <a href="#sx-results-section"><span aria-hidden="true">03</span> People</a>
-      <a href="#sx-insights"><span aria-hidden="true">04</span> Cohort insights</a>
+      <a href="#sx-map-section"><span aria-hidden="true">01</span> Cohort map</a>
+      <a href="#cm-breakdowns"><span aria-hidden="true">02</span> Diversity</a>
+      <a href="#sx-discover"><span aria-hidden="true">03</span> Directory preview</a>
+      <a href="#sx-results-section"><span aria-hidden="true">04</span> Demo profiles</a>
     </nav>
+
+    <!-- Supplied aggregate origins. No records or identities from the directory feed this map. -->
+    <section class="cohort-atlas" id="sx-map-section" data-cohort-atlas aria-labelledby="cm-title">
+      <div class="cm-heading">
+        <div>
+          <p class="cm-eyebrow">Our cohort · 2026–2028</p>
+          <h2 id="cm-title">24 countries. One shared journey.</h2>
+          <p class="cm-intro">Explore the countries of origin represented in our cohort. Select a country to see its count and share, or compare the full distribution below.</p>
+        </div>
+        <span class="cm-badge">Cohort overview</span>
+      </div>
+      <ul class="cm-stats" id="cm-summary" aria-label="Supplied cohort overview">
+        <li class="cm-stat"><strong class="cm-stat-number">105</strong><span class="cm-stat-label">People represented</span><span class="cm-stat-caption">Source overview: 103+2 pax</span></li>
+        <li class="cm-stat"><strong class="cm-stat-number">24</strong><span class="cm-stat-label">Countries of origin</span><span class="cm-stat-caption">EU-HEM cohort 2026–2028</span></li>
+        <li class="cm-stat"><strong class="cm-stat-number">5</strong><span class="cm-stat-label">Continents</span><span class="cm-stat-caption">Connected through one programme</span></li>
+      </ul>
+      <noscript><p class="cm-noscript">The supplied overview represents 105 people from 24 countries across five continents. Enable JavaScript to explore the map and country list. The source labels the total “103+2 pax”.</p></noscript>
+      <div class="cm-map-layout">
+        <div class="cm-map-card">
+          <div class="cm-map-toolbar">
+            <h3>Where our cohort comes from</h3>
+            <div class="cm-map-presets" role="group" aria-label="Cohort origin map view">
+              <button type="button" data-cm-view="world" aria-pressed="true">World</button>
+              <button type="button" data-cm-view="europe" aria-pressed="false">Europe</button>
+            </div>
+          </div>
+          <div class="cm-map-frame" id="cm-map-frame">
+            <div class="cm-map" id="cm-map" aria-busy="true"><p class="cm-muted">Loading the cohort map…</p></div>
+            <div class="cm-tooltip" id="cm-tooltip" role="tooltip" hidden></div>
+            <div class="cm-zoom" role="group" aria-label="Cohort map zoom">
+              <button type="button" data-cm-zoom="in" aria-label="Zoom in on cohort map">+</button>
+              <button type="button" data-cm-zoom="out" aria-label="Zoom out on cohort map">−</button>
+              <button type="button" data-cm-zoom="reset">Reset view</button>
+            </div>
+          </div>
+          <div class="cm-map-footer">
+            <div class="cm-legend" aria-label="People listed per country">
+              <strong>People</strong>
+              <span><i class="cm-key-0" aria-hidden="true"></i>No entry</span>
+              <span><i class="cm-key-1" aria-hidden="true"></i>1</span>
+              <span><i class="cm-key-2" aria-hidden="true"></i>2–4</span>
+              <span><i class="cm-key-3" aria-hidden="true"></i>5–14</span>
+              <span><i class="cm-key-4" aria-hidden="true"></i>15+</span>
+            </div>
+            <p class="cm-muted" id="cm-view-note">Shading shows the number of people listed for each country. Use Europe view or the list for smaller countries.</p>
+          </div>
+        </div>
+        <aside class="cm-spotlight" id="cm-country-detail" aria-live="polite" aria-atomic="true"></aside>
+      </div>
+      <div class="cm-detail-layout" id="cm-breakdowns">
+        <section class="cm-panel" aria-labelledby="cm-countries-title">
+          <p class="cm-eyebrow">Every country, at a glance</p>
+          <h3 id="cm-countries-title">The full country breakdown</h3>
+          <p class="cm-muted">Counts and percentages of all 105 people in the supplied overview.</p>
+          <div class="cm-list-controls">
+            <label class="cm-search-label" for="cm-country-search">Find a country
+              <input type="search" id="cm-country-search" placeholder="Search all 24 countries…" autocomplete="off" aria-controls="cm-countries">
+            </label>
+            <label for="cm-continent-filter">Continent
+              <select id="cm-continent-filter" aria-controls="cm-countries"><option value="">All continents</option></select>
+            </label>
+            <label for="cm-sort">Sort by
+              <select id="cm-sort" aria-controls="cm-countries"><option value="count">Most represented</option><option value="name">Country A–Z</option></select>
+            </label>
+          </div>
+          <div class="cm-list-heading">
+            <p id="cm-results-count" aria-live="polite"></p>
+            <button type="button" class="cm-reset" id="cm-reset">Show all countries</button>
+          </div>
+          <ul class="cm-countries" id="cm-countries" aria-label="Country counts and shares"></ul>
+          <p class="cm-no-results" id="cm-empty" hidden>No countries match. Try another name or choose all continents.</p>
+        </section>
+        <div class="cm-breakdowns">
+          <section class="cm-panel" aria-labelledby="cm-geography-title">
+            <p class="cm-eyebrow">Geographic diversity</p>
+            <h3 id="cm-geography-title">Across five continents</h3>
+            <p class="cm-muted">Most people in this overview come from Europe, with countries also represented across Asia, Africa and the Americas.</p>
+            <ul class="cm-regions" id="cm-geography" aria-label="Counts by continent"></ul>
+          </section>
+          <section class="cm-panel" aria-labelledby="cm-groups-title">
+            <p class="cm-eyebrow">As grouped in the source</p>
+            <h3 id="cm-groups-title">EU, EEA and other countries</h3>
+            <ul id="cm-source-groups" aria-label="Country groups from the supplied overview"></ul>
+            <p class="cm-muted cm-group-note">“EEA outside the EU” includes Iceland and Norway. “Other countries” follows the source’s “Third countries” group, including Switzerland. These are country-of-origin groups.</p>
+          </section>
+        </div>
+      </div>
+      <details class="cm-source" id="cm-source">
+        <summary><span id="cm-source-line">Source: supplied “Countries where you come from” overview · 103+2 pax.</span> About these numbers</summary>
+        <p>The 24 country counts add up to 105. The source does not explain the distinction between the 103 and the additional 2 people; this page uses the full listed total and preserves the original notation.</p>
+        <p>Every percentage uses 105 as its denominator, including when you search or filter the country list. Percentages are rounded to one decimal place and may not add up to exactly 100%.</p>
+        <p>This is a supplied country-of-origin overview. It does not establish anyone’s citizenship, nationality, residence, language or location. It is independent of the fictional directory preview below, and selecting a country does not link to individual profiles.</p>
+      </details>
+    </section>
 
     <!-- 2. Demo notice and the demo-only preview switch (students.js hides both outside demo mode) -->
     <section class="sx-demo" id="sx-demo" aria-labelledby="sx-demo-title">
       <div class="sx-demo-text">
-        <p id="sx-demo-title"><strong>Demonstration with fictional people.</strong>
-          Every name, background and bio on this page is invented. Real profiles will appear only after
+        <p id="sx-demo-title"><strong>Student directory preview · Fictional people.</strong>
+          The country overview above uses the supplied cohort totals. Every name, background and bio in the directory below is invented. Real profiles will appear only after
           students choose to join and their EU-HEM membership has been checked.</p>
       </div>
       <fieldset class="sx-preview" id="sx-preview">
@@ -96,7 +191,7 @@
     </section>
 
     <!-- 3. Summary statistics -->
-    <section class="sx-summary" aria-label="Summary">
+    <section class="sx-summary" aria-label="Fictional directory summary">
       <ul class="sx-stats" id="sx-stats">
         <li class="sx-stat"><span class="sx-stat-value">…</span><span class="sx-stat-label">Loading</span></li>
       </ul>
@@ -106,7 +201,7 @@
     <section class="sx-filters-section" id="sx-discover" aria-labelledby="sx-discover-title">
       <div class="sx-section-heading">
         <div>
-          <p class="section-eyebrow">Discover · Follow your curiosity</p>
+          <p class="section-eyebrow">Directory demo · Follow your curiosity</p>
           <h2 id="sx-discover-title">Find a shared perspective</h2>
           <p>Explore a background, a track or a country. Combine filters to make the directory your own.</p>
         </div>
@@ -136,11 +231,11 @@
     </section>
 
     <!-- 5. Map with the selected-country panel -->
-    <section class="sx-map-section" id="sx-map-section" aria-labelledby="sx-map-title">
-      <details class="sx-map-details" id="sx-map-details" open>
+    <section class="sx-map-section" id="sx-demo-map-section" aria-labelledby="sx-map-title">
+      <details class="sx-map-details" id="sx-map-details">
         <summary>
-          <span><span class="sx-section-title" id="sx-map-title">A world of perspectives</span>
-          <span class="sx-subtitle">Select a country to explore the profiles available in your current view.</span></span>
+          <span><span class="sx-section-title" id="sx-map-title">Fictional directory map</span>
+          <span class="sx-subtitle">Preview how countries filter the example profiles. These demo counts are separate from the supplied cohort overview above.</span></span>
         </summary>
         <div class="sx-map-layout">
           <div class="sx-map-card">
@@ -236,7 +331,7 @@
     <section class="sx-insights" id="sx-insights" aria-labelledby="sx-insights-title">
       <div class="sx-section-heading">
         <div>
-          <p class="section-eyebrow">Cohort insights · See the bigger picture</p>
+          <p class="section-eyebrow">Fictional directory insights</p>
           <h2 id="sx-insights-title">Different paths. Shared possibilities.</h2>
           <p>Explore the mix of disciplines and tracks in your selection, alongside separately prepared mobility statistics.</p>
         </div>
@@ -289,12 +384,14 @@
   <script defer src="search.js?v=65002110"></script>
   <script defer src="pwa.js?v=c9212bf8"></script>
   <script defer src="announcements.js?v=3ecd40f0"></script>
+  <script defer src="cohort-data.js?v=b416d283"></script>
+  <script defer src="cohort-map.js?v=f5b0278a"></script>
   <script defer src="directory-config.js?v=bb28e887"></script>
   <script defer src="directory-options.js?v=cefd40bc"></script>
   <script defer src="countries.js?v=9ba10988"></script>
   <script defer src="students-config.js?v=5d661d5b"></script>
   <script defer src="students-data.js?v=0447923b"></script>
-  <script defer src="students.js?v=6291e228"></script>
+  <script defer src="students.js?v=e0a46f9b"></script>
 
 </body>
 </html>

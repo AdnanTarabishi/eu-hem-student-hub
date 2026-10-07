@@ -291,7 +291,7 @@
   .eh-home .home-stat-label { font-size: 10px; }
   .eh-home .home-stat-icon { width: 25px; height: 25px; }
   .eh-home .eh-stats-note { font-size: 9px; display: block; line-height: 1.7; }
-  .eh-home .eh-stats-note span { display: block; }
+  .eh-home .eh-stats-note > span { display: block; }
   .eh-home .eh-quick { margin-top: 24px; }
   .eh-home .eh-eyebrow { font-size: 8px; letter-spacing: .12em; }
   .eh-home .eh-quick-grid { grid-template-columns: repeat(2,minmax(0,1fr)); padding: 7px; margin-top: 10px; }
@@ -363,10 +363,32 @@
 .eh-home .eh-hero-badge { text-transform: uppercase; }
 .eh-home .eh-eyebrow { text-transform: uppercase; }
 
-/* Community map: the project's local map, zoomed on the four university cities (home.js) */
-.eh-home .eh-network-map { aspect-ratio: 100 / 76; max-height: 280px; margin: 4px auto 0; width: 100%; }
-.eh-home .eh-network-map .city-dot { stroke-width: 1.5; }
-.eh-home .eh-network-map .city-label { font: 600 3.4px var(--eh-sans); fill: var(--eh-navy); paint-order: stroke; stroke: var(--eh-soft); stroke-width: .8px; }
+/* Cohort origins: a compact preview of the same aggregate data as the interactive atlas. */
+.eh-home .eh-origin-metrics { display: flex; gap: 28px; margin: 17px 0 0; }
+.eh-home .eh-origin-metrics > div { display: flex; flex-direction: column; gap: 3px; }
+.eh-home .eh-origin-metrics dt { color: var(--eh-muted); font-size: 11px; }
+.eh-home .eh-origin-metrics dd { order: -1; color: var(--eh-navy); font: 600 25px/1 var(--eh-serif); margin: 0; font-variant-numeric: tabular-nums; }
+.eh-home .eh-network-map { aspect-ratio: 1000 / 438; margin: 14px auto 8px; width: calc(100% - 24px); }
+.eh-home .eh-network-map .map-country { fill: var(--eh-border); stroke: var(--eh-soft); stroke-width: .5; }
+.eh-home .eh-network-map .map-country.has-origin { fill: var(--eh-blue); stroke: var(--eh-panel); }
+.eh-home .eh-origin-groups { padding: 0 25px; }
+.eh-home .eh-origin-label { color: var(--eh-muted); font-size: 10px; font-weight: 600; }
+.eh-home #community-origin-countries { display: flex; flex-wrap: wrap; gap: 7px; list-style: none; padding: 0; margin: 8px 0 0; }
+.eh-home .eh-origin-country { display: flex; align-items: center; gap: 7px; padding: 6px 8px; border: 1px solid var(--eh-border); border-radius: 7px; color: var(--eh-text); background: var(--eh-panel); font-size: 11px; }
+.eh-home .eh-origin-country strong { color: var(--eh-navy); font-variant-numeric: tabular-nums; }
+.eh-home .eh-origin-legend { display: block; margin-bottom: 6px; }
+.eh-home .eh-origin-legend .eh-map-dot { background: var(--eh-blue); }
+.eh-home .eh-origin-source { display: block; font-size: 11px; line-height: 1.6; }
+.eh-home .eh-network-card figcaption a { display: inline-flex; flex-wrap: wrap; gap: 0; min-height: 36px; margin-top: 7px; }
+.eh-home .eh-network-card figcaption a > [data-setting] { margin-inline: .3em; }
+.eh-home .eh-network-card figcaption a > .eh-icon { margin-left: 8px; }
+.eh-home .eh-network-map.is-unavailable { display: grid; align-items: center; min-height: 130px; }
+.eh-home .eh-origin-map-error { padding: 18px; color: var(--eh-muted); font-size: 12px; line-height: 1.6; }
+
+@media (max-width: 720px) {
+  .eh-home .eh-origin-groups { padding-inline: 22px; }
+  .eh-home .eh-origin-metrics { gap: 24px; }
+}
 
 /* Six resource cards: two rows of three */
 .eh-home .eh-resource-grid { row-gap: 18px; }

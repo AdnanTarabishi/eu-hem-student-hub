@@ -23,7 +23,8 @@
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/source-serif-4-latin-600.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=daabf49c">
-  <link rel="stylesheet" href="home.css?v=eb528e72">
+  <link rel="stylesheet" href="assets/flags/country-flags.css?v=6127599e">
+  <link rel="stylesheet" href="home.css?v=9f60c43a">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -31,8 +32,10 @@
   <link rel="icon" href="img/app-icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <script src="theme.js?v=d51d4769"></script>
-  <!-- Homepage settings (photo, cohort numbers) + starts the photo download early -->
-  <script src="home.js?v=e25ef1cd"></script>
+  <!-- Aggregate cohort data is available synchronously when home.js builds the hero stats. -->
+  <script src="cohort-data.js?v=b416d283"></script>
+  <!-- Homepage settings and early photo download -->
+  <script src="home.js?v=dee0e0b9"></script>
 </head>
 <body class="home-page eh-home">
 
@@ -67,10 +70,10 @@
     <!-- Adds the photo now, before the page is drawn -->
     <script>buildHomeHero();</script>
 
-    <!-- 2. Cohort numbers (filled from the settings in home.js), overlapping the bottom of the hero -->
+    <!-- 2. Cohort numbers (shared cohort-data.js), overlapping the bottom of the hero -->
     <div class="eh-wrap eh-stats-container">
       <ul id="home-stats" class="eh-stats" aria-label="The cohort in numbers" hidden></ul>
-      <p class="eh-stats-note"><span>Cohort overview · <span data-setting="COHORT_LABEL"></span></span>
+      <p class="eh-stats-note"><span>Cohort overview · <span data-setting="COHORT_LABEL"></span> · Source: <span data-setting="SOURCE_NOTATION"></span></span>
         <span>The graduation countdown is an estimate, not an official deadline.</span></p>
     </div>
     <script>buildHomeStats();</script>
@@ -181,7 +184,7 @@
       </div>
     </section>
 
-    <!-- 6. Community: the four partner cities and fictional demo profiles -->
+    <!-- 6. Community: aggregate countries of origin and the fictional profile preview -->
     <section class="eh-section eh-community" aria-labelledby="cohort-title">
       <div class="eh-wrap">
         <div class="eh-section-head">
@@ -194,15 +197,25 @@
         <div class="eh-community-grid">
           <figure class="eh-network-card community-map" aria-labelledby="community-map-caption">
             <div class="eh-network-copy">
-              <h3>Four cities. One connection.</h3>
-              <p><span data-setting="STUDENT_COUNT"></span> students from <span data-setting="COUNTRY_COUNT"></span> countries,
-                one programme across four European universities.</p>
+              <h3><span data-setting="COUNTRY_COUNT">—</span> countries. One cohort.</h3>
+              <p>Countries of origin in our <span data-setting="COHORT_LABEL">EU-HEM</span> overview.</p>
+              <dl class="eh-origin-metrics">
+                <div><dt>People represented</dt><dd data-setting="PEOPLE_COUNT">—</dd></div>
+                <div><dt>Continents</dt><dd data-setting="CONTINENT_COUNT">—</dd></div>
+              </dl>
             </div>
-            <!-- home.js draws the local map (assets/map/world-countries.svg) with the four university cities -->
+            <!-- home.js highlights every supplied origin on the local Natural Earth world map. -->
             <div id="community-map" class="eh-network-map community-map-svg" aria-hidden="true"></div>
-            <figcaption id="community-map-caption"><span class="eh-map-dot"></span> The four EU-HEM universities: Bologna, Oslo,
-              Rotterdam and Innsbruck. Not where students come from.
-              <a href="students.html#sx-map-section">Explore the cohort map <svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a></figcaption>
+            <div class="eh-origin-groups">
+              <p class="eh-origin-label">Largest country groups</p>
+              <ul id="community-origin-countries" aria-label="Largest country groups by people represented"></ul>
+            </div>
+            <figcaption id="community-map-caption">
+              <span id="community-map-legend" class="eh-origin-legend" hidden><span class="eh-map-dot"></span> Countries of origin highlighted</span>
+              <span class="eh-origin-source">Source: “<span data-setting="SOURCE_TITLE">cohort overview</span>” · <span data-setting="SOURCE_NOTATION">—</span>.
+                Country counts total <span data-setting="PEOPLE_COUNT">—</span> people.</span>
+              <a href="students.html#sx-map-section">Explore all <span data-setting="COUNTRY_COUNT">—</span> countries <svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+            </figcaption>
           </figure>
           <div class="community-people eh-people-panel">
             <div class="eh-people-head">

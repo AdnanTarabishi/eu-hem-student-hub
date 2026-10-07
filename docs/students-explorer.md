@@ -1,15 +1,19 @@
 # Students explorer (students.html)
 
-"One community. Many perspectives.": a community atlas with a map, profile cards and a compact list, filters, profile details, saved profiles
-and statistics. **Phase 1 shows only fictional demo data.** Real profiles need a real login and a server that
-applies the rules below (Phase 2); nothing in the browser can unlock private data.
+"One community. Many perspectives.": a community atlas with a supplied **aggregate country-of-origin
+overview** and a separate **fictional directory preview**. The 2026–2028 overview reports 105 people from
+24 countries across 5 continents. Profile cards, the compact directory list, directory filters, profile
+details, saved profiles and mobility statistics still use fictional demo data only. Real profiles need a
+real login and a server that applies the rules below (Phase 2); nothing in the browser can unlock private data.
 
 ## Files
 
 | What | File |
 |---|---|
 | Page | `students.html`, `students.css` |
-| Page code (rendering, map, drawer, address) | `students.js` |
+| Supplied aggregate country counts, source wording and derived cohort totals | `cohort-data.js` |
+| Aggregate country-of-origin map and overview | `cohort-map.js`, `cohort-map.css` |
+| Fictional directory code (rendering, demo map, drawer, address) | `students.js` |
 | **All privacy rules**, filters, counts, statistics checks (no page code, tested on its own) | `students-data.js` |
 | Settings (data mode, page size, minimum group size, map views, track colours) | `students-config.js` |
 | Countries: names, ISO codes, "in Europe" (geography only) | `countries.js` (shared with the Join form) |
@@ -20,7 +24,34 @@ applies the rules below (Phase 2); nothing in the browser can unlock private dat
 | Map | `assets/map/world-countries.svg`, built by `scripts/build-world-map.js` |
 | Tests | `tests/students/data.test.js`, `tests/students/browser.test.js` |
 
-## Processing order (privacy depends on it)
+## Aggregate cohort overview
+
+- **Single data source:** `cohort-data.js` contains the exact country counts supplied by the maintainer.
+  Its source heading is **"Countries where you come from (103+2 pax)"**. The country rows add to **105**;
+  the notation does not explain who the additional two people are, so the site does not assign them roles.
+  Country count, continent count and totals are derived from those rows. Update this file rather than
+  maintaining separate copies of the current country table in page code or fictional records.
+- The overview is at `students.html#sx-map-section`, above the directory preview at `#sx-demo`.
+  Its country selections and overview controls operate on the supplied aggregates, independently of
+  fictional directory search, privacy projections and filters. The old profile-based map is retained
+  inside the collapsed demo at `#sx-demo-map-section`.
+- Every country, continent and source-group percentage uses **105 people as its denominator**, including
+  while exploring a subset of countries. Percentages are rounded for display and may not sum to exactly 100%.
+- Source groups are mutually exclusive: **EU: 85**, **EEA outside the EU: 8** (Iceland and Norway),
+  **Other countries: 12** (the source's "Third countries" column). The separate EEA label avoids counting
+  EU countries twice. Switzerland remains in the source's Other countries group.
+- Continents describe geography only. Switzerland and North Macedonia are in Europe even though they
+  are in the source's Other countries group. The geographic Europe total is 95; the other 10 people
+  represent Asia, Africa, North America and South America.
+- These are **countries of origin as reported in the supplied table**, not a citizenship, nationality,
+  ethnicity, residence or visa dataset. Do not infer any of those attributes from a country row. There
+  are no names, profile identifiers, photos or contact details in the aggregate file, and it must not
+  be joined to directory records or used to create real or fictional individual profiles.
+- The older `journey.html` numbers are preserved under **Welcome Days snapshot**, with their original
+  source and labels. A visible note explains the differing total and links to this updated origin map;
+  the two sources are not combined into a single citizenship or mobility breakdown.
+
+## Directory processing order (privacy depends on it)
 
 1. **Projection** (`projectProfile`): from a source record to what *this viewer* may see, built from an
    allowlist. Only records with email verified, role verified **and** admin approved are considered. A record
@@ -28,7 +59,8 @@ applies the rules below (Phase 2); nothing in the browser can unlock private dat
 2. **Field rules** (inside the projection): each detail has its own visibility and can never be wider than the
    profile. Unknown or missing values count as hidden (fail closed).
 3. **Search and filters** run on the projected copies only, so a hidden detail can never make a profile match.
-4. **Counts** (map colours, country list, totals, insights) count projected and filtered profiles only.
+4. **Directory counts** (demo map colours, country list, totals, insights) count projected and filtered
+   profiles only. They do not supply the aggregate cohort overview above.
 5. **Pagination** last, so counts never depend on the page.
 
 ## Access matrix
@@ -83,12 +115,14 @@ there is no student login yet, and has no fake login button.
 ## Community atlas presentation
 
 - Page styles are scoped to `body.students-page` and `#sx`; shared navigation and other pages retain their styles.
-- The hero's orbit is decorative, not a depiction of real people or their connections. The fictional notice
-  remains above the statistics and every demo profile has a fictional badge.
-- Discover, World map, People and Cohort insights links jump to the corresponding visible sections.
-  Search and filters support a persistent Clear filters action; the map starts open on phones as well.
-- Summary tiles describe matching, viewer-visible profiles, represented countries and academic backgrounds
-  before pagination. The separate fictional source-record total is not a count of real EU-HEM students.
+- Decorative artwork does not depict real people or their connections. The supplied cohort overview is
+  labelled with its aggregate source; the directory's fictional notice remains above its statistics and
+  every demo profile has a fictional badge.
+- Page links distinguish the aggregate map from the fictional directory preview. Directory search and
+  filters support a persistent Clear filters action. Opening the preview does not change the cohort overview.
+- The aggregate summary describes the supplied country table. Directory summary tiles describe matching,
+  viewer-visible fictional profiles, represented countries and academic backgrounds before pagination.
+  The separate fictional source-record total is not a count of real EU-HEM students.
 - Cards, compact list and the native profile dialog support both colour themes, narrow screens, keyboard
   navigation and reduced motion. If the local map fails to load, Retry map restores it without a page reload;
   the country list and filters remain usable throughout.
@@ -100,7 +134,7 @@ there is no student login yet, and has no fake login button.
 - Regression coverage: `tests/students/data.test.js`, `tests/students/browser.test.js` and
   `tests/students/design.test.js` (layout, focus, storage failure, retries and unbroken profile text).
 
-## The map
+## Map geometry
 
 - **Source:** Natural Earth, Admin 0 – Countries, 1:50m, **v5.1.2**,
   `https://github.com/nvkelso/natural-earth-vector/blob/v5.1.2/geojson/ne_50m_admin_0_countries.geojson`.
@@ -115,6 +149,16 @@ there is no student login yet, and has no fake login button.
   Tuvalu. They stay in `countries.js`, the filters and "Explore by country"; profiles from them are never dropped.
 - **"In Europe"** in `countries.js` is Natural Earth's `CONTINENT` (geography). It is **not** EU/EEA/Swiss
   citizenship and is never used for citizenship. Türkiye was added by hand (Asia, as in Natural Earth).
+
+### Aggregate map counts
+
+The cohort map uses the supplied rows in `cohort-data.js`, with its total and source stated on the page.
+Selecting a country displays that country's supplied count and its share of the whole 105-person table.
+It does not reveal profiles or use the directory's public/member preview mode. The accessible country
+overview remains available when the SVG cannot be loaded.
+
+### Fictional directory map counts and controls
+
 - **Counts:** colours count visible profiles that match **every filter except Country** (faceted), so you can
   compare countries; the selected country, the panel and the results apply all filters, and therefore agree.
   The page says so under the map. Additional countries ("Also identifies with") are not counted on the map.
@@ -126,12 +170,18 @@ there is no student login yet, and has no fake login button.
 
 ## Statistics
 
-Two separate products:
+Three separate products:
 
-**A. Who is in this view** (directory insights): computed in the browser from the **visible, filtered**
-profiles only. Labelled "Based on visible profiles in this view." It can only repeat what is already visible.
+**A. Cohort countries of origin** (supplied aggregates): computed from `cohort-data.js`, independently of
+directory data. Uses the 105-person denominator and the source wording explained above. These numbers do
+not describe directory participation, citizenship or study-visa experience.
 
-**B. Mobility statistics** (whole cohort): citizenship group and self-reported study-visa experience. Never
+**B. Who is in this view** (fictional directory insights): computed in the browser from the **visible,
+filtered** demo profiles only. Labelled "Based on visible profiles in this view." It can only repeat what
+is already visible and must retain its fictional label.
+
+**C. Mobility statistics** (fictional whole-cohort demonstration): citizenship group and self-reported
+study-visa experience. These do not use the supplied country-of-origin table. Never
 computed in the browser from people: they must be **precomputed elsewhere** from consenting records and
 disclosure-checked before release. The demo file is made by `scripts/build-demo-students.js` from the fictional
 records with the same rules (`safeBreakdown` in `students-data.js`):
@@ -177,7 +227,7 @@ Add it to `directory-config.js` → `cohorts` (newest first). The explorer lists
 profiles, so an empty future cohort never appears as if it had students. The registration form and the
 retention rules pick it up from the same file.
 
-## How real public data could be added later (not now)
+## How real directory profiles could be added later (not now)
 
 Only after the Phase 2 decisions (ask the maintainer first):
 1. A **server-side** export that applies the same rules as `projectProfile`: approved + email verified + role
@@ -190,6 +240,7 @@ Only after the Phase 2 decisions (ask the maintainer first):
 
 ## Offline (PWA)
 
-The page, styles, scripts, `countries.js` and the map are in the service worker's site files. The demo JSON is
-under `data/` (always fetched fresh, saved copy used offline). Real person-level data must never be added to the
-service worker's precache.
+The page, styles, scripts, `countries.js`, `cohort-data.js` and the map are in the service worker's site files.
+The aggregate country table is public information supplied for this overview; it contains no profile
+records. The demo JSON is under `data/` (always fetched fresh, saved copy used offline). Real person-level
+data must never be added to the service worker's precache.

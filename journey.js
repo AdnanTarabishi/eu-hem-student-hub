@@ -136,12 +136,21 @@ function renderNumbers() {
   const { cohortNumbers } = journey.events;
   section.querySelector("h2").textContent = `${cohortNumbers.title} (${cohortNumbers.cohortLabel})`;
   const list = section.querySelector(".journey-figures");
+  if (cohortNumbers.note) list.before(createElement("p", "schedule-meta", cohortNumbers.note));
   for (const figure of cohortNumbers.figures) {
     const box = createElement("div", "journey-figure");
     box.append(createElement("dt", null, figure.label), createElement("dd", null, figure.value));
     list.appendChild(box);
   }
   section.appendChild(sourceLabel(cohortNumbers.source, journey.sources));
+  if (cohortNumbers.updatedOverview) {
+    const { label, href } = cohortNumbers.updatedOverview;
+    const note = createElement("p", "rules-note");
+    const link = createElement("a", null, label);
+    link.href = href;
+    note.appendChild(link);
+    section.appendChild(note);
+  }
 }
 
 function renderHistory() {
