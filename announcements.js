@@ -183,7 +183,12 @@ function announcementCard(announcement, today, compact) {
   }
 
   card.appendChild(createElement("h3", "announcement-title", announcement.title));
-  if (announcement.message) card.appendChild(createElement("p", "announcement-message", announcement.message));
+  if (isElectionResultsAnnouncement(announcement)) {
+    card.classList.add("announcement-election");
+    card.appendChild(renderElectionResults(announcement));
+  } else if (announcement.message) {
+    card.appendChild(createElement("p", "announcement-message", announcement.message));
+  }
 
   const footer = createElement("div", "announcement-footer");
   if (announcement.link) {
@@ -199,6 +204,97 @@ function announcementCard(announcement, today, compact) {
   if (announcement.postedBy) footer.appendChild(createElement("span", "posted-by", `Posted by ${announcement.postedBy}`));
   if (footer.children.length > 0) card.appendChild(footer);
   return card;
+}
+
+// ----- Special layout: 7 October 2026 student representative election results -----
+// The announcement itself still comes from the regularly synced CSV.
+// Only its presentation (and the full candidate lists) are enriched here,
+// so refreshing the CSV does not remove the table.
+const ELECTION_RESULTS_2026 = [
+  {
+    title: "1st Semester Representatives",
+    candidates: [
+      "Brent Van Berge",
+      "Heleen Hulsebosch",
+      "Ghulam Murtaza Ran",
+      "Filipe Pinheiro",
+      "Nina Kuenen",
+    ],
+    elected: [
+      { name: "Filipe Pinheiro", percentage: "67%" },
+      { name: "Nina Kuenen", percentage: "54%" },
+    ],
+  },
+  {
+    title: "JQEC Representative",
+    candidates: [
+      "Maud Van Ekeren",
+      "Marcio Jacob",
+      "Rik Joosse",
+      "Ties Van Huystee",
+      "Maud Hamster",
+      "Heleen Hulsebosch",
+      "Kristina Tergau",
+    ],
+    elected: [
+      { name: "Maud Hamster", percentage: "53%" },
+    ],
+  },
+];
+
+function isElectionResultsAnnouncement(announcement) {
+  return announcement.date === "2026-10-07" &&
+    announcement.title.toLowerCase().startsWith("student representatives election results");
+}
+
+function renderElectionResults(announcement) {
+  const container = createElement("div", "election-details");
+  // Keep the opening line editable in the announcements sheet.
+  const openingLine = (announcement.message || "").split(/\r?\n/)[0].trim();
+  container.appendChild(createElement("p", "election-lead",
+    openingLine || "The final student representatives election results have been announced."));
+
+  const results = createElement("div", "election-results");
+  ELECTION_RESULTS_2026.forEach((group, index) => {
+    const section = createElement("section", "election-section");
+    const header = createElement("div", "election-section-header");
+    const heading = createElement("h4", "election-section-title", group.title);
+    heading.id = "election-results-group-" + index;
+    section.setAttribute("aria-labelledby", heading.id);
+    header.appendChild(heading);
+    header.appendChild(createElement("span", "election-count",
+      group.elected.length + " elected"));
+    section.appendChild(header);
+
+    const columns = createElement("div", "election-columns");
+    const candidatesColumn = createElement("div", "election-column");
+    candidatesColumn.appendChild(createElement("h5", "election-column-heading", "Candidates"));
+    const candidates = createElement("ul", "election-name-list");
+    group.candidates.forEach((name) => candidates.appendChild(createElement("li", null, name)));
+    candidatesColumn.appendChild(candidates);
+
+    const electedColumn = createElement("div", "election-column");
+    electedColumn.appendChild(createElement("h5", "election-column-heading", "Candidates elected"));
+    const electedList = createElement("ul", "election-name-list");
+    group.elected.forEach((winner) => {
+      const item = createElement("li", "election-winner");
+      item.appendChild(createElement("span", "election-winner-name", winner.name));
+      item.appendChild(createElement("span", "election-percentage", winner.percentage));
+      electedList.appendChild(item);
+    });
+    electedColumn.appendChild(electedList);
+    columns.appendChild(candidatesColumn);
+    columns.appendChild(electedColumn);
+    section.appendChild(columns);
+    results.appendChild(section);
+  });
+  container.appendChild(results);
+
+  container.appendChild(createElement("p", "election-outro",
+    "Congratulations to the elected representatives, and thank you to everyone who stood as a candidate or participated in the elections."));
+  container.appendChild(createElement("p", "election-outro",
+    "The representatives will help bring student perspectives into the programme and strengthen communication with the EU-HEM academic team."));
+  return container;
 }
 
 // Red bar at the very top of the page, linking to the newest active Urgent announcement
