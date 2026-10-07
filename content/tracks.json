@@ -1,5 +1,5 @@
 {
-  "note": "Tracks page data (tracks.html). Facts (courses, credits, rules, cities, sectors) come from the official 'EU-HEM tracks overview 2026'. Everything under 'student' and the quiz is written by students and is not official. Format: docs/tracks-format.md",
+  "note": "Tracks page data (tracks.html). Facts (courses, rules, cities, sectors) come from the official 'EU-HEM tracks overview 2026'. Credits use that overview and, for UniBo, its published 2026/27 course structure (see creditsSource). Everything under 'student' and the quiz is written by students and is not official. Format: docs/tracks-format.md",
   "cohorts": [
     {
       "id": "2026-2028",
@@ -109,15 +109,15 @@
         "uio-fhe5110": { "name": "Introduction to Causal Inference", "code": "FHE5110", "university": "uio", "credits": null, "themes": ["econometrics"] },
         "uio-hman5190": { "name": "Health System Coordination: Policy Analysis and Implementation", "code": "HMAN5190", "university": "uio", "credits": 10, "themes": ["policy"] },
 
-        "unibo-pharma-markets": { "name": "Law and Economics of Pharmaceutical Markets (I.C.)", "university": "unibo", "themes": ["pharma"] },
-        "unibo-policy-evaluation": { "name": "Planning and Evaluation of Health Policy", "university": "unibo", "themes": ["policy"] },
-        "unibo-seminars": { "name": "Seminars in Health Economics", "university": "unibo", "themes": [] },
-        "unibo-internship": { "name": "Internship", "university": "unibo", "themes": ["internship"] },
-        "unibo-international-law": { "name": "International Law and Health", "university": "unibo", "themes": ["policy", "global"] },
-        "unibo-health-systems": { "name": "Health Systems", "university": "unibo", "themes": ["policy"] },
-        "unibo-lmic": { "name": "Health Economics and Policy in Low and Middle Income Countries", "university": "unibo", "themes": ["global", "policy"] },
-        "unibo-risky-behaviours": { "name": "Economics of Risky Health Behaviours", "university": "unibo", "themes": ["epidemiology"] },
-        "unibo-behavioral-public": { "name": "Behavioral Public Economics & Policy", "university": "unibo", "themes": ["policy"] },
+        "unibo-pharma-markets": { "name": "Law and Economics of Pharmaceutical Markets (I.C.)", "university": "unibo", "themes": ["pharma"], "code": "96526", "credits": 10, "creditsSource": "Credits and code verified against the official UniBo 2026/27 course structure on 7 October 2026; future offerings remain subject to confirmation." },
+        "unibo-policy-evaluation": { "name": "Planning and Evaluation of Health Policy", "university": "unibo", "themes": ["policy"], "code": "96562", "credits": 5, "creditsSource": "Credits and code verified against the official UniBo 2026/27 course structure on 7 October 2026; future offerings remain subject to confirmation." },
+        "unibo-seminars": { "name": "Seminars in Health Economics", "university": "unibo", "themes": [], "code": "C9942", "credits": 5, "creditsSource": "Credits and code verified against the official UniBo 2026/27 course structure on 7 October 2026; future offerings remain subject to confirmation." },
+        "unibo-internship": { "name": "Internship", "university": "unibo", "themes": ["internship"], "code": "79330", "credits": 5, "creditsSource": "Credits and code verified against the official UniBo 2026/27 course structure on 7 October 2026; future offerings remain subject to confirmation." },
+        "unibo-international-law": { "name": "International Law and Health", "university": "unibo", "themes": ["policy", "global"], "code": "70125", "credits": 5, "creditsSource": "Credits and code verified against the official UniBo 2026/27 course structure on 7 October 2026; future offerings remain subject to confirmation." },
+        "unibo-health-systems": { "name": "Health Systems", "university": "unibo", "themes": ["policy"], "code": "C8393", "credits": 5, "creditsSource": "Credits and code verified against the official UniBo 2026/27 course structure on 7 October 2026; future offerings remain subject to confirmation." },
+        "unibo-lmic": { "name": "Health Economics and Policy in Low and Middle Income Countries", "university": "unibo", "themes": ["global", "policy"], "code": "79077", "credits": 5, "creditsSource": "Credits and code verified against the official UniBo 2026/27 course structure on 7 October 2026; future offerings remain subject to confirmation." },
+        "unibo-risky-behaviours": { "name": "Economics of Risky Health Behaviours", "university": "unibo", "themes": ["epidemiology"], "code": "B5429", "credits": 5, "creditsSource": "Credits and code verified against the official UniBo 2026/27 course structure on 7 October 2026; future offerings remain subject to confirmation." },
+        "unibo-behavioral-public": { "name": "Behavioral Public Economics & Policy", "university": "unibo", "themes": ["policy"], "code": "B2030", "credits": 5, "creditsSource": "Credits and code verified against the official UniBo 2026/27 course structure on 7 October 2026; future offerings remain subject to confirmation." },
 
         "mci-law-public-health": { "name": "Law and Public Health Practice", "university": "mci", "themes": ["policy", "epidemiology"] },
         "mci-economic-evaluation": { "name": "Economic Evaluation", "university": "mci", "themes": ["evaluation"] },

@@ -8,11 +8,12 @@
 //   "Update available · Reload", and old saved copies are deleted.
 // Nothing personal is stored here: only public site files and public data.
 
-const VERSION = "abaa2333";
+const VERSION = "21423c64";
 const SITE_CACHE = `site-${VERSION}`;
 const DATA_CACHE = "data"; // kept across versions, so offline data survives an update
 
 const SITE_FILES = [
+  "studyplan.css", "studyplan-data.js",
   "planning.css", "planning.js",
   "fund-course.css", "fund-course.js",
   "fund-statistics.html", "fund-statistics.css", "fund-statistics.js", "fund-statistics-math.js", "fund-statistics-activities.js", "fund-statistics-practice.js", "fund-statistics-labs.js",

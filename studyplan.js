@@ -1,230 +1,329 @@
-// ===== Study Plan & Progress =====
-// Built entirely from content/programme.json: the groups, rules, courses, modules and cycles.
-// The plan can't become invalid: required courses are locked, "choose one" groups use radio
-// buttons, optional groups use checkboxes limited by their maximum.
-// Choices and statuses are saved in this browser only (localStorage), never sent anywhere.
-
-const planPage = {
-  programme: null, cohort: null, term: null, plan: null,
-  view: "choose", // "choose" | "mine"
-  calendars: [],
-};
-
+// Two-year personal planner. Semester 1 uses the existing shared plan and calendars;
+// specialisation choices are separate local drafts, never university registration.
+const planPage = { programme: null, cohort: null, term: null, plan: null, tracks: null,
+  track: null, draft: null, advice: null, view: "choose", semester: 1, calendars: [], ready: false };
 const planContent = document.getElementById("plan-content");
 const planSummaryBox = document.getElementById("plan-summary");
+const PLAN_VIEW_KEY = "euhem-study-view-v1";
+const THESIS_LABELS = { "": "Not started", planning: "Planning", researching: "Researching", writing: "Writing", submitted: "Submitted", completed: "Completed" };
 
-// ----- Saving -----
-
-function updatePlan(change, message = "Plan saved on this device ✓") {
-  const y = window.scrollY;
-  change(planPage.plan);
-  planPage.plan.saved = true;
-  savePlan(planPage.plan);
-  render();
-  window.scrollTo(0, y); // keep the place on the page
-  if (typeof toast === "function") toast(message);
+function planToast(message) {
+  // A quick sequence of choices needs one current message, especially on phones.
+  document.querySelectorAll(".sp-feedback-toast").forEach(item => item.remove());
+  toast(message).classList.add("sp-feedback-toast");
 }
 
-// ----- Small pieces -----
-
-function shortDate(dateKey) {
-  return formatDay(dateKey, { day: "numeric", month: "short" });
-}
-
+function s1Courses() { return selectedCourseCodes(planPage.term, planPage.plan.choices).map(code => courseByCode(planPage.term, code)); }
+function selectedTrack() { return planPage.tracks ? trackById(planPage.tracks, planPage.track) : null; }
+function trackSlice() { return planPage.draft?.tracks[planPage.track] || null; }
+function shortDate(key) { return formatDay(key, { day: "numeric", month: "short" }); }
 function externalLink(label, url, className = "inline-link") {
   const link = createElement("a", className, label);
-  link.href = url;
-  link.target = "_blank";
-  link.rel = "noopener";
+  link.href = url; link.target = "_blank"; link.rel = "noopener";
   return link;
+}
+function saveCaption(success) {
+  const box = document.getElementById("sp-save-state");
+  box.textContent = success ? "Saved on this device" : "Changes kept in this tab · storage unavailable";
+  box.classList.toggle("is-temporary", !success);
+}
+function saveView() { writeStorage(PLAN_VIEW_KEY, { semester: planPage.semester, view: planPage.view }); }
+function saveFuture() { return planPage.draft ? writeStorage(StudyPlanData.DRAFT_KEY, planPage.draft) : true; }
+function updatePlan(change, message = "Plan saved on this device") {
+  change(planPage.plan);
+  const saved = savePlan(planPage.plan);
+  planPage.plan.saved = saved;
+  let futureSaved = true;
+  if (planPage.tracks) {
+    const before = JSON.stringify(planPage.draft.tracks.ep?.choices);
+    planPage.draft = StudyPlanData.sanitizeDraft(planPage.tracks, planPage.draft, s1Courses());
+    if (before !== JSON.stringify(planPage.draft.tracks.ep?.choices)) message = "Semester 1 updated. A repeated later elective was removed from your draft.";
+    futureSaved = saveFuture();
+  }
+  saveCaption(saved && futureSaved);
+  render();
+  planToast(saved && futureSaved ? message : "Changes are available in this tab; device storage is unavailable.");
+}
+function updateFuture(change, message = "Journey draft saved") {
+  if (!selectedTrack()) return;
+  change(trackSlice());
+  planPage.draft = StudyPlanData.sanitizeDraft(planPage.tracks, planPage.draft, s1Courses());
+  const saved = saveFuture();
+  saveCaption(saved); render();
+  if (message) planToast(saved ? message : "Changes are available in this tab; device storage is unavailable.");
 }
 
 function courseLinks(course) {
   const row = createElement("div", "plan-links");
-  const page = createElement("a", "inline-link", "Course page");
+  const page = createElement("a", "inline-link", "Study resources");
   page.href = `course.html?course=${encodeURIComponent(course.id)}`;
   row.appendChild(page);
-  if (course.officialUrl) row.appendChild(externalLink("Official UniBo page ↗", course.officialUrl));
-  else row.appendChild(createElement("span", "schedule-meta", "Official page not published yet"));
-  row.appendChild(externalLink("Open on Virtuale ↗", course.modules[0].virtualeUrl || planPage.programme.programme.virtualeUrl));
+  if (course.officialUrl) row.appendChild(externalLink("Official course", course.officialUrl));
+  row.appendChild(externalLink("Virtuale", course.modules[0].virtualeUrl || planPage.programme.programme.virtualeUrl));
   return row;
 }
-
-function statusSelect(course) {
-  const label = createElement("label", "plan-status", "Status ");
+function statusSelect(course, future = false) {
+  const label = createElement("label", "plan-status", "Progress ");
   const select = createElement("select");
+  select.id = `${future ? "future-status" : "status"}-${course.id}`;
   select.setAttribute("aria-label", `Status of ${course.name}`);
-  for (const status of COURSE_STATUSES) select.appendChild(new Option(COURSE_STATUS_LABELS[status] || "—", status));
-  select.value = planPage.plan.statuses[course.code] || "";
-  select.addEventListener("change", () => updatePlan((plan) => {
-    if (select.value) plan.statuses[course.code] = select.value;
-    else delete plan.statuses[course.code];
-  }, `${course.name}: ${COURSE_STATUS_LABELS[select.value] || "Not started"} ✓`));
-  label.appendChild(select);
-  return label;
+  for (const status of COURSE_STATUSES) select.appendChild(new Option(COURSE_STATUS_LABELS[status] || "Not started", status));
+  select.value = future ? trackSlice().statuses[course.id] || "" : planPage.plan.statuses[course.code] || "";
+  select.addEventListener("change", () => {
+    const value = select.value;
+    if (future) updateFuture(draft => { if (value) draft.statuses[course.id] = value; else delete draft.statuses[course.id]; });
+    else updatePlan(plan => { if (value) plan.statuses[course.code] = value; else delete plan.statuses[course.code]; }, `${course.name}: ${COURSE_STATUS_LABELS[value] || "Not started"}`);
+  });
+  label.appendChild(select); return label;
 }
-
-// One course: name, CFU, group, cycle, badge, modules, links, (status if selected)
 function courseCard(course, group, input, selected) {
-  const card = createElement("div", `plan-course${selected ? " is-selected" : ""}`);
+  const card = createElement("article", `plan-course${selected ? " is-selected" : ""}`);
   card.style.setProperty("--course-color", course.color || "var(--color-primary)");
   if (input) card.appendChild(input);
   const body = createElement("div", "plan-course-body");
-
-  const title = createElement("label", "plan-course-title");
-  if (input && input.id) title.htmlFor = input.id;
-  title.appendChild(courseIcon(course.icon, "course-icon small"));
-  title.appendChild(createElement("span", null, `${course.name}${course.integrated ? " (I.C.)" : ""}`));
+  const title = createElement(input?.tagName === "INPUT" ? "label" : "h4", "plan-course-title");
+  if (input?.id) title.htmlFor = input.id;
+  title.append(courseIcon(course.icon, "course-icon small"), createElement("span", null, `${course.name}${course.integrated ? " (I.C.)" : ""}`));
   body.appendChild(title);
-
   const meta = createElement("div", "plan-course-meta");
-  meta.appendChild(createElement("span", `plan-badge plan-badge-${group.kind}`, group.badge || group.label));
-  meta.appendChild(createElement("span", "schedule-meta", `${course.code} · ${course.cfu} CFU · ${group.label} · cycle ${courseCycles(course)}`));
+  meta.append(createElement("span", `plan-badge plan-badge-${group.kind}`, group.badge || group.label),
+    createElement("span", "schedule-meta", `${course.cfu} CFU · ${course.code} · cycle ${courseCycles(course)}`));
   body.appendChild(meta);
-
   const modules = createElement("ul", "plan-modules");
   for (const module of course.modules) {
-    const period = module.teachingStart ? `${shortDate(module.teachingStart)} – ${shortDate(module.teachingEnd)}` : "";
-    const text = course.integrated
-      ? `${module.name} (${module.code}, ${module.cfu} CFU) · ${module.professors.join(", ")} · ${period}`
-      : `${module.professors.join(", ")} · ${period}`;
-    modules.appendChild(createElement("li", null, text));
+    const period = module.teachingStart ? `${shortDate(module.teachingStart)} – ${shortDate(module.teachingEnd)}` : "Dates to confirm";
+    const name = course.integrated ? `${module.name} · ${module.cfu} CFU · ` : "";
+    modules.appendChild(createElement("li", null, `${name}${module.professors.join(", ")} · ${period}`));
   }
-  body.appendChild(modules);
-  body.appendChild(courseLinks(course));
+  body.append(modules, courseLinks(course));
+  const fit = planPage.advice?.courses[course.id]?.trackFits.find(item => item.trackId === planPage.track);
+  if (fit && group.kind !== "required") body.appendChild(createElement("p", "sp-course-fit", `${fit.strength === "strong" ? "Strong connection" : "Useful connection"} · ${selectedTrack().abbr}: ${fit.reason}`));
   if (selected) body.appendChild(statusSelect(course));
-  card.appendChild(body);
-  return card;
+  card.appendChild(body); return card;
 }
-
-// ----- Choose courses -----
-
 function groupRuleText(group) {
-  if (group.kind === "required") return "All required";
+  if (group.kind === "required") return "Included for everyone";
   if (group.kind === "choose-one") return "Choose exactly one";
-  const max = group.max ?? group.courses.length;
-  return `Optional · choose ${group.min ?? 0} to ${max}`;
+  return `Optional · choose ${group.min ?? 0} to ${group.max ?? group.courses.length}`;
 }
-
-function adviceBox(group) {
-  const details = createElement("details", "plan-advice");
-  details.appendChild(createElement("summary", null, "Which one should I choose?"));
-  if (group.advice) {
-    details.appendChild(createElement("p", null, group.advice));
-  } else {
-    // No advice yet: say so plainly and invite students who took these courses to share it
-    const empty = createElement("p", "plan-advice-empty", "No student advice yet. Took one of these courses? ");
-    const share = createElement("a", null, "Share a tip");
-    share.href = "contact.html";
-    empty.appendChild(share);
-    details.appendChild(empty);
-  }
-  const links = createElement("p", "schedule-meta", "Official course pages: ");
-  group.courses.forEach((code, i) => {
-    const course = courseByCode(planPage.term, code);
-    if (i > 0) links.appendChild(document.createTextNode(" · "));
-    if (course.officialUrl) links.appendChild(externalLink(`${course.name} ↗`, course.officialUrl));
-    else links.appendChild(document.createTextNode(`${course.name} (not published yet)`));
-  });
-  details.appendChild(links);
-  return details;
-}
-
-// A short note under a group heading, with its "Official · …" label (sources.json)
 function groupNote(note) {
-  const paragraph = createElement("p", "schedule-meta plan-group-note", `${note.text} `);
-  loadSources().then((sources) => paragraph.appendChild(sourceLabel(note.source, sources)));
+  const paragraph = createElement("p", "schedule-meta plan-group-note", note.text);
+  loadSources().then(sources => paragraph.append(" ", sourceLabel(note.source, sources))).catch(() => {});
   return paragraph;
 }
-
+function adviceBox(group) {
+  const details = createElement("details", "plan-advice");
+  details.id = `advice-${group.id}`;
+  details.appendChild(createElement("summary", null, "Student choice guide · connect this choice to your track"));
+  if (!planPage.advice) {
+    details.appendChild(createElement("p", null, "Choice guidance is unavailable right now. Compare the official course outcomes and discuss your background with the lecturers."));
+    return details;
+  }
+  details.appendChild(createElement("p", "sp-advice-label", "Authored planning guidance · track connections are our interpretation of official course outcomes."));
+  const grid = createElement("div", "sp-advice-grid");
+  for (const code of group.courses) {
+    const course = courseByCode(planPage.term, code), advice = planPage.advice.courses[course.id];
+    if (!advice) continue;
+    const card = createElement("article", "sp-advice-card");
+    card.append(createElement("h4", null, course.name), createElement("p", null, advice.summary));
+    const skills = createElement("div", "sp-advice-skills");
+    advice.skills.forEach(skill => skills.appendChild(createElement("span", null, skill)));
+    card.appendChild(skills);
+    const fits = createElement("div", "sp-fit-list");
+    for (const fit of advice.trackFits) {
+      const track = planPage.tracks ? trackById(planPage.tracks, fit.trackId) : null;
+      if (!track) continue;
+      const chip = createElement("span", `sp-fit${fit.trackId === planPage.track ? " is-current" : ""}`, `${track.abbr} · ${fit.strength === "strong" ? "strong fit" : "useful"}`);
+      chip.dataset.track = fit.trackId; chip.title = fit.reason; fits.appendChild(chip);
+    }
+    card.appendChild(fits);
+    const fit = advice.trackFits.find(item => item.trackId === planPage.track);
+    if (fit) card.appendChild(createElement("p", "sp-advice-fit", `For ${selectedTrack().name}: ${fit.reason}`));
+    card.appendChild(createElement("p", "sp-advice-tip", advice.decisionTip));
+    const sources = createElement("div", "sp-advice-sources");
+    for (const id of advice.sources) {
+      const source = planPage.advice.sources.find(item => item.id === id);
+      if (source) sources.appendChild(externalLink(source.title, source.url));
+    }
+    card.appendChild(sources); grid.appendChild(card);
+  }
+  details.appendChild(grid); return details;
+}
 function renderChooseView() {
   const { term, plan } = planPage;
-  for (const group of term.groups) {
-    const section = createElement("section", "card plan-group");
-    section.id = `group-${group.id}`;
+  const order = ["core", "quant", "elective", "crash"];
+  for (const group of [...term.groups].sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id))) {
+    const section = createElement("section", "card plan-group"); section.id = `group-${group.id}`;
     const head = createElement("div", "notes-heading");
-    head.appendChild(createElement("h3", null, group.label));
-    head.appendChild(createElement("span", "schedule-meta", groupRuleText(group)));
+    head.append(createElement("h3", null, group.label), createElement("span", "schedule-meta", groupRuleText(group)));
     section.appendChild(head);
     if (group.note) section.appendChild(groupNote(group.note));
-
     const optionalFull = group.kind === "optional" && plan.choices[group.id].length >= (group.max ?? Infinity);
     for (const code of group.courses) {
       const course = courseByCode(term, code);
-      let input = null;
-      let selected = false;
+      let input, selected;
       if (group.kind === "required") {
-        selected = true;
-        input = createElement("span", "plan-lock");
-        input.appendChild(siteIcon("lock"));
-        input.title = "Required: always part of the plan";
+        selected = true; input = createElement("span", "plan-lock"); input.appendChild(siteIcon("lock"));
         input.setAttribute("aria-label", "Required course, always selected");
       } else {
-        input = createElement("input");
-        input.id = `pick-${code}`;
-        input.type = group.kind === "choose-one" ? "radio" : "checkbox";
-        input.name = `group-${group.id}`;
+        input = createElement("input"); input.id = `pick-${code}`;
+        input.type = group.kind === "choose-one" ? "radio" : "checkbox"; input.name = `group-${group.id}`;
         selected = group.kind === "choose-one" ? plan.choices[group.id] === code : plan.choices[group.id].includes(code);
         input.checked = selected;
         if (group.kind === "optional" && optionalFull && !selected) input.disabled = true;
-        input.addEventListener("change", () => updatePlan((p) => {
-          p.choices = applyChoice(term, p.choices, group.id, code, input.checked).choices;
-          if (!selectedCourseCodes(term, p.choices).includes(code)) delete p.statuses[code];
-        }));
+        input.addEventListener("change", () => {
+          const checked = input.checked;
+          updatePlan(p => {
+            p.choices = applyChoice(term, p.choices, group.id, code, checked).choices;
+            const codes = selectedCourseCodes(term, p.choices);
+            for (const key of Object.keys(p.statuses)) if (!codes.includes(key)) delete p.statuses[key];
+          });
+        });
       }
       section.appendChild(courseCard(course, group, input, selected));
     }
-    if (group.kind === "optional" && optionalFull && group.courses.length > group.max) {
-      section.appendChild(createElement("p", "schedule-meta", `Maximum ${group.max} reached. Untick one to choose another.`));
-    }
-    if (group.kind === "choose-one") section.appendChild(adviceBox(group));
+    if (group.kind !== "required") section.appendChild(adviceBox(group));
     planContent.appendChild(section);
   }
-  planContent.appendChild(timelineSection());
+  appendTimeline();
 }
-
-// ----- My Study Plan -----
-
 function renderMyPlanView() {
-  const { term, plan } = planPage;
-  const summary = planSummary(term, plan.choices);
-  const box = createElement("section", "card");
-  box.appendChild(createElement("h3", null, "My Study Plan"));
-  if (!summary.complete) {
-    const missing = summary.groups.filter((g) => !g.satisfied).map((g) => g.label).join(", ");
-    const note = createElement("p", "demo-note", `Your plan isn't complete yet: choose ${missing}. `);
-    const back = createElement("button", "inline-link", "Go to choices");
-    back.type = "button";
-    back.addEventListener("click", () => { planPage.view = "choose"; render(); });
-    note.appendChild(back);
-    box.appendChild(note);
-  }
-
-  const codes = selectedCourseCodes(term, plan.choices);
-  const counts = { "": 0, studying: 0, booked: 0, passed: 0 };
-  for (const code of codes) counts[plan.statuses[code] || ""]++;
-  box.appendChild(createElement("p", "student-totals",
-    `${codes.length} courses · ${summary.requiredCfu} CFU required${summary.optionalCfu ? ` + ${summary.optionalCfu} CFU optional` : ""} · ` +
-    `Studying ${counts.studying} · Exam booked ${counts.booked} · Passed ${counts.passed}`));
-
-  for (const code of codes) {
-    const course = courseByCode(term, code);
-    box.appendChild(courseCard(course, groupOfCourse(term, code), null, true));
-  }
-
-  const back = createElement("button", "button button-light", "View full programme");
-  back.type = "button";
-  back.addEventListener("click", () => { planPage.view = "choose"; render(); });
-  box.appendChild(back);
-  planContent.appendChild(box);
-  planContent.appendChild(calendarSection(summary));
-  planContent.appendChild(timelineSection());
+  const summary = planSummary(planPage.term, planPage.plan.choices);
+  if (!summary.complete) planContent.appendChild(createElement("p", "sp-unknown-note", "Your Semester 1 choices are still open. Choose one quantitative route and one elective to complete the 30-CFU plan."));
+  const section = createElement("section", "card plan-group");
+  section.appendChild(createElement("h3", null, "Your Semester 1 courses"));
+  for (const course of s1Courses()) section.appendChild(courseCard(course, groupOfCourse(planPage.term, course.code), null, true));
+  planContent.append(section, calendarSection(summary)); appendTimeline();
+}
+function appendTimeline() {
+  const details = createElement("details", "sp-timeline-disclosure"); details.id = "sp-timeline-disclosure";
+  details.append(createElement("summary", null, "Teaching timeline · see how your Semester 1 modules fit together"), timelineSection());
+  planContent.appendChild(details);
 }
 
-// The calendar subscription for exactly this plan (one file per possible plan)
+function futureCourseCard(course, selected, required = false) {
+  const card = createElement("div", "sp-future-course");
+  card.dataset.course = course.id;
+  card.appendChild(createElement("h4", null, course.name));
+  const label = course.credits === null ? "ECTS to confirm" : `${course.credits} ECTS`;
+  card.appendChild(createElement("p", "sp-course-meta", `${label}${course.code ? ` · ${course.code}` : ""}${required ? " · Required" : ""}`));
+  const university = planPage.tracks.universities[course.university];
+  if (university?.programmePage) {
+    const links = createElement("div", "plan-links");
+    links.appendChild(externalLink("Host university curriculum", university.programmePage.url)); card.appendChild(links);
+    if (course.university === "unibo" && course.creditsSource) links.appendChild(externalLink("2026/27 credit source", planPage.cohort.sources.structureDiagram));
+  }
+  if (selected) card.appendChild(statusSelect(course, true));
+  return card;
+}
+function chooseFuture(semester, groupIndex, optionIndex, checked) {
+  const result = StudyPlanData.applyFutureChoice(planPage.tracks, planPage.track, semester, groupIndex, planPage.draft, optionIndex, checked, s1Courses());
+  planPage.draft = result.draft;
+  if (result.refused) { render(); planToast(result.reason); return; }
+  const saved = saveFuture(); saveCaption(saved); render();
+  planToast(saved ? "Specialisation choice saved as a draft" : "Choice kept in this tab; device storage is unavailable.");
+}
+function renderFutureSemester() {
+  const track = selectedTrack();
+  if (!track) return renderTrackPrompt();
+  const semester = track.semesters.find(s => s.number === planPage.semester);
+  const summary = StudyPlanData.semesterSummary(planPage.tracks, track, semester.number, planPage.draft, s1Courses());
+  planContent.appendChild(createElement("p", "sp-preview-note", "Curriculum preview for your cohort. These are local planning preferences; confirm final course availability, credits and registration with the host university. Teaching and exam dates follow the host university’s published schedule."));
+  if (summary.unknownCredits) planContent.appendChild(createElement("p", "sp-unknown-note", `Individual credits are not stated for ${summary.unknownCredits} selected course${summary.unknownCredits === 1 ? "" : "s"} in the overview. The semester target is 30 ECTS; the known-credit subtotal is not a verified full semester total.`));
+  const required = createElement("section", "card sp-future-section");
+  required.append(createElement("h3", null, "Core specialisation"), createElement("p", "schedule-meta", "Required for this track"));
+  const grid = createElement("div", "sp-course-grid");
+  for (const id of semester.required) grid.appendChild(futureCourseCard({ ...planPage.tracks.courses[id], id, credits: planPage.tracks.courses[id].credits ?? null }, true, true));
+  required.appendChild(grid); planContent.appendChild(required);
+  semester.choices.forEach((choice, groupIndex) => {
+    const state = summary.choiceStates[groupIndex];
+    const section = createElement("section", "card sp-future-section");
+    const head = createElement("div", "notes-heading");
+    head.append(createElement("h3", null, `${choice.kind === "complementary" ? "Complementary courses" : "Electives"}${semester.choices.length > 1 ? ` · group ${groupIndex + 1}` : ""}`),
+      createElement("span", "sp-choice-state", state.complete === true ? "Choice ready" : state.complete === null ? "Needs confirmation" : "Choose your option"));
+    section.append(head, createElement("p", "sp-choice-rule", choice.rule || "Selection rule to confirm with your track coordinator"));
+    if (state.ruleModel.kind === "credits") section.appendChild(createElement("p", "schedule-meta", `${state.knownCredits} / ${state.ruleModel.target} EC selected from published credits${state.unknownCredits ? ` · ${state.unknownCredits} course credits to confirm` : ""}`));
+    if (state.notice) section.appendChild(createElement("p", "sp-unknown-note", state.notice));
+    if (semester.choicesNote) section.appendChild(createElement("p", "schedule-meta", semester.choicesNote));
+    const options = createElement("div", "sp-option-grid");
+    state.options.forEach(option => {
+      const selected = state.selected.includes(option.index);
+      if (planPage.view === "mine" && !selected && !option.blocked) return;
+      const card = createElement("article", `sp-choice-option${selected ? " is-selected" : ""}${option.blocked ? " is-blocked" : ""}`);
+      const input = createElement("input");
+      input.type = state.ruleModel.kind === "count" && state.ruleModel.target === 1 ? "radio" : "checkbox";
+      input.name = `future-${track.id}-${state.key}`;
+      input.id = `future-${track.id}-s${semester.number}-${groupIndex}-${option.index}`;
+      const countFull = state.ruleModel.kind === "count" && state.ruleModel.target > 1 && state.selected.length >= state.ruleModel.target;
+      const creditFull = state.ruleModel.kind === "credits" && state.knownCredits + option.knownCredits > state.ruleModel.target;
+      const limited = !selected && (countFull || creditFull);
+      input.checked = selected; input.disabled = option.blocked || limited;
+      input.addEventListener("change", () => chooseFuture(semester.number, groupIndex, option.index, input.checked));
+      const label = createElement("label", null, option.courses.length > 1 ? `Take this pair · ${option.courses.length} courses together` : "Add to my draft");
+      label.htmlFor = input.id;
+      const optionHead = createElement("div", "sp-option-heading"); optionHead.append(input, label); card.appendChild(optionHead);
+      option.courses.forEach(course => card.appendChild(futureCourseCard(course, selected)));
+      option.notes.forEach(note => card.appendChild(createElement("p", "schedule-meta", note)));
+      if (option.blocked) card.appendChild(createElement("p", "sp-unknown-note", `${option.reason} Choose another option to avoid repeating it.`));
+      else if (limited) card.appendChild(createElement("p", "schedule-meta", "Remove a selected option first to stay within this group’s rule."));
+      options.appendChild(card);
+    });
+    if (planPage.view === "mine" && !state.selected.length) section.appendChild(createElement("p", "schedule-meta", "No preference saved for this group yet. Open Choose courses to compare the options."));
+    section.appendChild(options); planContent.appendChild(section);
+  });
+}
+function renderTrackPrompt() {
+  const box = createElement("div", "sp-empty");
+  box.append(createElement("h3", null, "A direction opens the next chapter."),
+    createElement("p", null, "Choose one of the four tracks above to explore its Semester 2 and 3 courses and thesis universities. Your Semester 1 plan stays with you."));
+  const button = createElement("button", "button", "Choose a track"); button.type = "button";
+  button.addEventListener("click", () => {
+    const target = document.querySelector("#sp-track-options button");
+    if (target) { target.scrollIntoView({ block: "center", behavior: "smooth" }); target.focus({ preventScroll: true }); }
+  });
+  box.appendChild(button); planContent.appendChild(box);
+}
+function renderThesis() {
+  const track = selectedTrack();
+  if (!track) return renderTrackPrompt();
+  const draft = trackSlice();
+  const section = createElement("section", "card sp-thesis-card");
+  section.append(createElement("p", "section-eyebrow", "Semester 4 · 30 ECTS"), createElement("h3", null, "Turn your questions into a contribution."),
+    createElement("p", null, `Your thesis connects to ${track.name}. Plan a host university and a research direction; approval belongs to your supervisor and track committee.`));
+  const universities = createElement("div", "sp-thesis-universities");
+  for (const id of track.thesis) {
+    const university = planPage.tracks.universities[id];
+    const label = createElement("label", "sp-thesis-option");
+    const input = createElement("input"); input.type = "radio"; input.name = "thesis-university"; input.value = id;
+    input.id = `thesis-university-${id}`; input.checked = draft.thesisUniversity === id;
+    input.addEventListener("change", () => updateFuture(p => { p.thesisUniversity = id; }));
+    label.append(input, createElement("strong", null, university.city), createElement("span", null, university.name)); universities.appendChild(label);
+  }
+  section.appendChild(universities);
+  const grid = createElement("div", "sp-thesis-grid");
+  const topic = createElement("label", null, "Research direction · optional");
+  const area = createElement("textarea"); area.id = "sp-thesis-topic"; area.maxLength = StudyPlanData.THESIS_TOPIC_MAX;
+  area.rows = 3; area.placeholder = "Which healthcare question would you like to investigate?"; area.value = draft.thesisTopic;
+  area.addEventListener("change", () => updateFuture(p => { p.thesisTopic = area.value; }, "Research direction saved on this device"));
+  topic.appendChild(area); grid.appendChild(topic);
+  const status = createElement("label", null, "Thesis progress");
+  const select = createElement("select"); select.id = "sp-thesis-status";
+  for (const value of StudyPlanData.THESIS_STATUSES) select.appendChild(new Option(THESIS_LABELS[value], value));
+  select.value = draft.thesisStatus;
+  select.addEventListener("change", () => updateFuture(p => { p.thesisStatus = select.value; }));
+  status.appendChild(select); grid.appendChild(status); section.appendChild(grid);
+  section.appendChild(createElement("p", "sp-preview-note", "An organisation-based research assignment can support data collection alongside the thesis; it adds no extra ECTS. Discuss feasibility and permission with your supervisor."));
+  const resources = createElement("div", "sp-thesis-resources");
+  for (const [name, url, description] of [["Thesis Explorer", "thesis.html", "Find research themes, methods and examples."], ["Programme Journey", "journey.html#stage-semester-4", "Understand the programme milestones."], ["University support", "universities.html", "Find the host university’s support and official links."]]) {
+    const link = createElement("a", "sp-thesis-resource"); link.href = url;
+    link.append(createElement("strong", null, name), createElement("span", null, description)); resources.appendChild(link);
+  }
+  section.appendChild(resources); planContent.appendChild(section);
+}
+
 function calendarSection(summary) {
   const box = createElement("section", "card");
-  box.appendChild(createElement("h3", null, "📅 My calendar"));
+  box.appendChild(createElement("h3", null, "Your Semester 1 calendar"));
   const key = planKey(planPage.term, planPage.plan.choices);
   const entry = planPage.calendars.find((c) => c.term === planPage.term.id && c.plan === key);
   if (!summary.complete) {
@@ -265,7 +364,7 @@ function timelineSection() {
   const end = term.cycles.map((c) => c.end).sort().pop();
   const total = daysBetween(start, end) || 1;
   const position = (dateKey) => Math.min(100, Math.max(0, (daysBetween(start, dateKey) / total) * 100));
-  const today = todayKey();
+  const today = NotesSchedule.clock().slice(0, 10);
 
   const chart = createElement("div", "timeline-chart");
   // Month labels
@@ -330,106 +429,280 @@ function timelineSection() {
   return box;
 }
 
-// ----- Summary and page -----
 
+function stat(label, value, note) {
+  const box = createElement("div", "sp-stat");
+  box.append(createElement("span", "sp-stat-label", label), createElement("strong", "sp-stat-value", String(value)), createElement("small", "sp-stat-note", note));
+  return box;
+}
 function renderSummary() {
-  const summary = planSummary(planPage.term, planPage.plan.choices);
-  planSummaryBox.innerHTML = "";
-  const percent = Math.round((summary.requiredCfu / summary.requiredTotal) * 100);
-  const row = createElement("div", "plan-summary-row");
-  row.appendChild(progressBar(percent, `${summary.requiredCfu} of ${summary.requiredTotal} required CFU`));
-  row.appendChild(createElement("strong", "plan-cfu",
-    `${summary.requiredCfu} / ${summary.requiredTotal} CFU required` + (summary.optionalCfu ? ` + ${summary.optionalCfu} CFU optional` : "")));
-  planSummaryBox.appendChild(row);
-  const checklist = createElement("div", "plan-checklist");
-  for (const group of summary.groups) {
-    const check = createElement("span", group.satisfied ? "plan-check is-done" : "plan-check");
-    check.append(group.satisfied ? siteIcon("check") : createElement("span", "plan-check-dot"), document.createTextNode(` ${group.label}`));
-    checklist.appendChild(check);
-  }
-  planSummaryBox.appendChild(checklist);
-  if (summary.complete) {
-    const done = createElement("p", "plan-complete");
-    done.append(siteIcon("check"), document.createTextNode(" Study plan complete"));
-    planSummaryBox.appendChild(done);
+  const first = planSummary(planPage.term, planPage.plan.choices);
+  const ring = document.getElementById("sp-degree-ring");
+  ring.style.setProperty("--sp-progress", Math.round(first.requiredCfu / first.requiredTotal * 100));
+  ring.setAttribute("role", "progressbar"); ring.setAttribute("aria-label", "Semester 1 required credits planned");
+  ring.setAttribute("aria-valuemin", "0"); ring.setAttribute("aria-valuemax", String(first.requiredTotal)); ring.setAttribute("aria-valuenow", String(first.requiredCfu));
+  ring.querySelector(".sp-ring-progress").style.strokeDasharray = `${first.requiredCfu / first.requiredTotal * 100} 100`;
+  document.getElementById("sp-ring-value").textContent = `${first.requiredCfu} / ${first.requiredTotal}`;
+  planSummaryBox.replaceChildren();
+  if (planPage.semester === 1) {
+    const passed = s1Courses().filter(c => planPage.plan.statuses[c.code] === "passed" && groupOfCourse(planPage.term, c.code).countsTowardRequired !== false).reduce((sum, c) => sum + c.cfu, 0);
+    const open = first.groups.filter(g => !g.satisfied).length;
+    planSummaryBox.append(stat("Degree credits planned", `${first.requiredCfu} / ${first.requiredTotal} CFU`, `${first.optionalCfu ? `${first.optionalCfu} optional refresher CFU · ` : ""}Semester 1 target`),
+      stat("Degree credits passed", `${passed} CFU`, "From your recorded course statuses"), stat("Choices to make", open, first.complete ? "Semester 1 choices are complete" : "Complete the required choice groups"));
+    const checklist = createElement("div", "plan-checklist");
+    for (const group of first.groups) {
+      const check = createElement("span", group.satisfied ? "plan-check is-done" : "plan-check");
+      check.append(group.satisfied ? siteIcon("check") : siteIcon("clock"), document.createTextNode(group.label)); checklist.appendChild(check);
+    }
+    planSummaryBox.appendChild(checklist);
+  } else if (!selectedTrack()) {
+    planSummaryBox.append(stat("Semester target", "30 ECTS", "The programme allocates 30 ECTS per semester"), stat("Your direction", "Open", "Choose a track to see the curriculum"), stat("Your journey", "120 ECTS", "Across four semesters · two years"));
+  } else if (planPage.semester === 4) {
+    const draft = trackSlice();
+    planSummaryBox.append(stat("Thesis", "30 ECTS", "Semester 4 degree component"), stat("Host preference", draft.thesisUniversity ? planPage.tracks.universities[draft.thesisUniversity].city : "Choose a host", "One of your track’s two universities"), stat("Your progress", THESIS_LABELS[draft.thesisStatus], "A personal record, not an official result"));
+  } else {
+    const summary = StudyPlanData.semesterSummary(planPage.tracks, planPage.track, planPage.semester, planPage.draft, s1Courses());
+    const ready = summary.choiceStates.filter(s => s.complete === true).length;
+    planSummaryBox.append(stat("Semester target", "30 ECTS", "Programme requirement · verify the final course plan"),
+      stat("Known course credits", summary.knownCredits === 0 && summary.unknownCredits ? "To confirm" : `${summary.knownCredits} ECTS`, summary.unknownCredits ? `${summary.unknownCredits} selected course credits to confirm` : "Selected courses with published credits"),
+      stat("Choice groups ready", `${ready} / ${summary.choiceStates.length}`, summary.choicesComplete === null ? "A rule or credit value needs confirmation" : summary.choicesComplete ? "Your draft choices satisfy the listed rules" : "Continue choosing your specialisation"));
   }
 }
-
-function renderViews() {
-  const box = document.getElementById("plan-views");
-  box.innerHTML = "";
-  for (const [key, label] of [["choose", "Choose courses"], ["mine", "My Study Plan"]]) {
-    const chip = createElement("button", "filter-chip", label);
-    chip.type = "button";
-    chip.setAttribute("aria-pressed", String(planPage.view === key));
-    chip.addEventListener("click", () => { planPage.view = key; render(); });
-    box.appendChild(chip);
+function renderJourney() {
+  const track = selectedTrack(), first = planSummary(planPage.term, planPage.plan.choices);
+  for (const tab of document.querySelectorAll("#plan-terms [data-semester]")) {
+    const number = Number(tab.dataset.semester), active = number === planPage.semester;
+    tab.setAttribute("aria-selected", String(active)); tab.tabIndex = active ? 0 : -1;
+    let city = "Bologna", state = first.complete ? "Choices ready" : "Build your foundations";
+    if (number === 2 || number === 3) {
+      const semester = track?.semesters.find(s => s.number === number);
+      city = semester ? planPage.tracks.universities[semester.university].city : "Choose your direction";
+      if (semester) {
+        const summary = StudyPlanData.semesterSummary(planPage.tracks, track, number, planPage.draft, s1Courses());
+        state = summary.choicesComplete === true ? "Draft choices ready" : summary.choicesComplete === null ? "Confirm the rule" : "Specialisation choices";
+      } else state = "Track curriculum";
+    } else if (number === 4) {
+      city = track ? track.thesis.map(id => planPage.tracks.universities[id].city).join(" / ") : "Your thesis";
+      state = track ? "Research at your track’s university" : "Choose a track";
+    }
+    tab.querySelector(".sp-semester-place").textContent = city;
+    tab.querySelector(".sp-semester-state").textContent = state;
   }
+  for (const button of document.querySelectorAll("#sp-track-options [data-track]")) button.setAttribute("aria-pressed", String(button.dataset.track === planPage.track));
+  document.getElementById("sp-clear-track").hidden = !track;
+  if (planPage.tracks) document.getElementById("sp-track-status").textContent = track ? `${track.name} · Bologna → ${trackRoute(planPage.tracks, track)} → Thesis. Your drafts in other tracks are retained.` : "No track preference yet. Semester 1 is shared by everyone; choose a direction when you are ready.";
 }
-
+function renderSemesterHeading() {
+  const track = selectedTrack(), box = document.getElementById("sp-semester-heading");
+  box.replaceChildren();
+  const title = planPage.semester === 1 ? "Semester 1 · Shared foundations" : planPage.semester === 4 ? "Semester 4 · Master’s thesis" : `Semester ${planPage.semester} · ${track?.name || "Your specialisation"}`;
+  box.appendChild(createElement("h2", null, title));
+  if (planPage.semester === 1) box.appendChild(createElement("p", null, "Bologna · September–December 2026 · choose courses, follow progress and connect the foundations to your direction."));
+  else box.appendChild(createElement("p", null, planPage.semester === 4 ? "Your final research chapter · personal host preference and thesis planning." : "Future curriculum preview · final timetables, assessments and any catalogue changes come from the host university."));
+}
 function render() {
-  renderViews();
-  renderSummary();
-  planContent.innerHTML = "";
-  if (planPage.view === "mine") renderMyPlanView();
-  else renderChooseView();
+  if (!planPage.ready) return;
+  const focusId = document.activeElement?.id;
+  const openDetails = [...planContent.querySelectorAll("details[open][id]")].map(d => d.id);
+  const y = window.scrollY;
+  document.querySelectorAll("#plan-views [data-view]").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.view === planPage.view)));
+  document.getElementById("plan-views").hidden = planPage.semester === 4;
+  planContent.setAttribute("aria-labelledby", `semester-tab-${planPage.semester}`);
+  renderJourney(); renderSummary(); renderSemesterHeading();
+  planContent.replaceChildren();
+  if (planPage.semester === 1) planPage.view === "mine" ? renderMyPlanView() : renderChooseView();
+  else if (planPage.semester === 4) renderThesis();
+  else renderFutureSemester();
+  for (const id of openDetails) { const details = document.getElementById(id); if (details) details.open = true; }
+  const focused = focusId ? document.getElementById(focusId) : null;
+  if (focused && !focused.disabled && !focused.closest("[hidden]")) focused.focus({ preventScroll: true });
+  window.scrollTo(0, y);
+  planContent.setAttribute("aria-busy", "false");
+  renderPrintSummary();
 }
-
+function setTrack(id) {
+  if (!planPage.tracks || (id && !trackById(planPage.tracks, id))) return;
+  planPage.track = id || null;
+  const saved = saveMyTrack(planPage.tracks.id, id);
+  saveCaption(saved); render();
+  planToast(saved ? id ? "Track preference saved locally. Your course choices stay yours." : "Exploring without a track preference" : "Track preference kept in this tab; device storage is unavailable.");
+}
+function buildTrackPicker() {
+  const box = document.getElementById("sp-track-options"); box.replaceChildren();
+  for (const track of planPage.tracks.tracks) {
+    const button = createElement("button", "sp-track-option"); button.type = "button";
+    button.id = `sp-track-${track.id}`; button.dataset.track = track.id;
+    button.style.setProperty("--track-accent", track.accent);
+    button.append(createElement("span", "sp-track-abbr", track.abbr), createElement("strong", "sp-track-name", track.name), createElement("span", "sp-track-route", trackRoute(planPage.tracks, track)));
+    button.setAttribute("aria-pressed", String(planPage.track === track.id));
+    button.addEventListener("click", () => setTrack(track.id)); box.appendChild(button);
+  }
+}
+async function fetchJson(url) {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`${url}: ${response.status}`);
+  return response.json();
+}
+async function loadPlannerExtras() {
+  const results = await Promise.allSettled([fetchJson(TRACKS_URL), fetchJson("content/study-advice.json"), fetchJson("calendar/calendars.json")]);
+  if (results[0].status === "fulfilled") {
+    planPage.tracks = tracksCohort(results[0].value);
+    planPage.draft = StudyPlanData.sanitizeDraft(planPage.tracks, planPage.draft || readStorage(StudyPlanData.DRAFT_KEY, null), s1Courses());
+    const preferred = loadMyTrack();
+    if (!planPage.track && preferred?.cohort === planPage.tracks.id && trackById(planPage.tracks, preferred.track)) planPage.track = preferred.track;
+    buildTrackPicker();
+  } else {
+    const status = document.getElementById("sp-track-status");
+    status.replaceChildren(document.createTextNode("Track data is unavailable. Your Semester 1 plan remains usable. "));
+    status.appendChild(iconButton("Reload track data", "arrow-right", { onClick: loadPlannerExtras }));
+  }
+  if (results[1].status === "fulfilled") planPage.advice = results[1].value;
+  if (results[2].status === "fulfilled") planPage.calendars = results[2].value;
+  render();
+}
+function setupOfficialSources() {
+  const cohort = planPage.cohort, submission = cohort.studyPlanSubmission || {};
+  document.getElementById("plan-submit").href = submission.url || planPage.programme.programme.studentsOnlineUrl;
+  const deadline = document.getElementById("plan-deadline");
+  deadline.replaceChildren();
+  if (submission.deadline) deadline.textContent = `Official submission deadline: ${formatDay(submission.deadline)}.`;
+  else if (submission.noDeadline) deadline.textContent = submission.deadlineNote || "No submission deadline is stated. Fill in your official plan before registering for exams.";
+  else deadline.textContent = "Check Studenti Online for the official submission deadline.";
+  if (submission.deadlineSource) deadline.append(" ", externalLink("Official submission information", submission.deadlineSource));
+  const source = document.getElementById("plan-source");
+  source.replaceChildren(document.createTextNode(`Semester 1: official UniBo structure, checked ${shortDate(cohort.lastChecked)}. Semesters 2–4: the 2026 track overview and EU-HEM Student Handbook for cohort 2026–2028. Future offerings may change; missing individual ECTS stay unconfirmed. `));
+  source.append(externalLink("Official course structure", cohort.sources.structureDiagram), document.createTextNode(" · "), externalLink("EU-HEM programme", "https://eu-hem.eu/programme/"));
+}
 async function initStudyPlan() {
+  planContent.setAttribute("aria-busy", "true");
+  planContent.replaceChildren(skeleton(3, "card"));
   try {
-    planPage.programme = await loadProgramme();
-    planPage.cohort = currentCohort(planPage.programme);
-    planPage.term = currentTerm(planPage.programme);
+    planPage.programme = await loadProgramme(); planPage.cohort = currentCohort(planPage.programme); planPage.term = currentTerm(planPage.programme);
     planPage.plan = loadPlan(planPage.programme);
-    if (planPage.plan.saved) planPage.view = "mine";
-
-    const { cohort } = planPage;
-    const submission = cohort.studyPlanSubmission || {};
-    document.getElementById("plan-submit").href = submission.url || planPage.programme.programme.studentsOnlineUrl;
-    const deadline = document.getElementById("plan-deadline");
-    deadline.textContent = "Official submission deadline: ";
-    if (submission.deadline) deadline.appendChild(createElement("strong", null, formatDay(submission.deadline)));
-    else if (submission.noDeadline) {
-      // The course states there is no deadline; the note says what the plan is needed for
-      deadline.appendChild(createElement("strong", null, "none."));
-      if (submission.deadlineNote) deadline.appendChild(document.createTextNode(` ${submission.deadlineNote.replace(/^There is no deadline, but y/, "Y")} `));
-      if (submission.deadlineSource) deadline.appendChild(externalLink("Source ↗", submission.deadlineSource));
-    } else deadline.appendChild(createElement("strong", null, "not announced yet."));
-
-    const source = document.getElementById("plan-source");
-    source.textContent = `Rules for cohort ${cohort.label}. Last checked: ${formatDay(cohort.lastChecked, { day: "numeric", month: "short", year: "numeric" })}. `;
-    source.appendChild(externalLink("Official course structure ↗", cohort.sources.structureDiagram));
-
-    // Only semesters that have courses get a tab (just Semester 1 for now)
-    const terms = document.getElementById("plan-terms");
-    for (const term of cohort.terms.filter((t) => t.courses.length)) {
-      const tab = createElement("button", "track-tab", `${term.label}${cohort.terms.length > 1 ? "" : ""}`);
-      tab.type = "button";
-      tab.setAttribute("role", "tab");
-      tab.setAttribute("aria-selected", String(term.id === planPage.term.id));
-      terms.appendChild(tab);
-    }
-
-    document.getElementById("plan-reset").addEventListener("click", () => {
-      if (!confirm("Reset your study plan on this device? Your choices and course statuses will be cleared.")) return;
-      resetPlan();
-      if (typeof toast === "function") toast("Your plan was reset");
-      planPage.plan = loadPlan(planPage.programme);
-      planPage.view = "choose";
-      render();
-    });
-
-    try {
-      const response = await fetch("calendar/calendars.json");
-      if (response.ok) planPage.calendars = await response.json();
-    } catch {
-      planPage.calendars = [];
-    }
-    render();
+    const ui = readStorage(PLAN_VIEW_KEY, null);
+    planPage.view = ui?.view === "choose" || ui?.view === "mine" ? ui.view : planPage.plan.saved ? "mine" : "choose";
+    planPage.semester = [1, 2, 3, 4].includes(ui?.semester) ? ui.semester : 1;
+    setupOfficialSources();
+    planPage.ready = true;
+    document.getElementById("sp-save-state").textContent = planPage.plan.saved ? "Your saved plan · this device" : "Start your personal plan";
+    document.getElementById("sp-print").disabled = false; document.getElementById("sp-tools-button").disabled = false;
+    render(); await loadPlannerExtras();
   } catch (error) {
-    console.error("Could not load the study plan:", error);
-    planContent.appendChild(createElement("p", "placeholder", "Sorry, the study plan could not be loaded right now. Please try again later."));
+    planPage.ready = false; planContent.setAttribute("aria-busy", "false");
+    document.getElementById("sp-save-state").textContent = "Study-plan data unavailable";
+    const box = createElement("div", "sp-empty");
+    box.append(createElement("h3", null, "Let’s reconnect to your study plan."), createElement("p", null, "The course rules could not be loaded. Your saved choices have not been changed."), iconButton("Retry", "arrow-right", { onClick: initStudyPlan }));
+    planContent.replaceChildren(box);
   }
 }
 
+// A printable overview includes every semester, irrespective of the open screen.
+function renderPrintSummary() {
+  const box = document.getElementById("sp-print-summary"); box.replaceChildren();
+  box.append(createElement("h1", null, "EU-HEM · My two-year study plan"), createElement("p", null, `Cohort 2026–2028 · 120 ECTS · ${selectedTrack()?.name || "Track not selected"}`));
+  const first = createElement("section"); first.appendChild(createElement("h2", null, "Semester 1 · Bologna · 30 degree CFU"));
+  const courses = createElement("ul");
+  for (const course of s1Courses()) courses.appendChild(createElement("li", null, `${course.name} · ${course.cfu} CFU${groupOfCourse(planPage.term, course.code).countsTowardRequired === false ? " · optional, outside degree credits" : ""} · ${COURSE_STATUS_LABELS[planPage.plan.statuses[course.code] || ""]}`));
+  first.appendChild(courses); box.appendChild(first);
+  for (const number of [2, 3]) {
+    const section = createElement("section"); section.appendChild(createElement("h2", null, `Semester ${number} · 30 ECTS target`));
+    if (!selectedTrack()) section.appendChild(createElement("p", null, "Choose a track to see its curriculum."));
+    else {
+      const summary = StudyPlanData.semesterSummary(planPage.tracks, planPage.track, number, planPage.draft, s1Courses());
+      section.appendChild(createElement("p", null, planPage.tracks.universities[summary.university].name));
+      const list = createElement("ul");
+      for (const course of summary.courses) list.appendChild(createElement("li", null, `${course.name} · ${course.credits === null ? "ECTS to confirm" : `${course.credits} ECTS`} · ${course.required ? "required" : "draft preference"} · ${COURSE_STATUS_LABELS[trackSlice().statuses[course.id] || ""]}`));
+      section.appendChild(list);
+      for (const choice of summary.choiceStates) if (choice.complete !== true) section.appendChild(createElement("p", null, `${choice.rule || "Selection rule to confirm"}: ${choice.notice || "A choice is still needed."}`));
+    }
+    box.appendChild(section);
+  }
+  const thesis = createElement("section"); thesis.appendChild(createElement("h2", null, "Semester 4 · Master’s thesis · 30 ECTS"));
+  if (selectedTrack()) {
+    const draft = trackSlice();
+    thesis.appendChild(createElement("p", null, `Host: ${draft.thesisUniversity ? planPage.tracks.universities[draft.thesisUniversity].name : "Not chosen"} · ${THESIS_LABELS[draft.thesisStatus]}`));
+    if (draft.thesisTopic) thesis.appendChild(createElement("p", null, draft.thesisTopic));
+  } else thesis.appendChild(createElement("p", null, "At one of your chosen track’s two universities."));
+  box.append(thesis, createElement("p", null, "Personal planning record. This does not submit course choices or register exams. Future curriculum and missing credits must be checked with the host university."));
+}
+function exportPlan() {
+  const journey = planPage.draft || readStorage(StudyPlanData.DRAFT_KEY, null);
+  const preference = loadMyTrack();
+  const data = { format: "euhem-study-plan-backup", version: 1, cohort: planPage.cohort.id, trackCohort: planPage.tracks?.id || journey?.cohort || null,
+    track: planPage.track || (!planPage.tracks ? preference?.track || null : null), semester1: { choices: planPage.plan.choices, statuses: planPage.plan.statuses }, journey, exportedAt: new Date().toISOString() };
+  const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }));
+  const link = createElement("a"); link.href = url; link.download = "euhem-study-plan-2026-2028.json"; link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+async function importPlan(file) {
+  const status = document.getElementById("sp-import-status");
+  if (!file) return;
+  try {
+    if (file.size > 1048576) throw new Error("Choose a study-plan backup smaller than 1 MB.");
+    const raw = JSON.parse(await file.text());
+    if (raw.trackCohort && !planPage.tracks) throw new Error("Reload the track data before restoring a two-year backup.");
+    if (raw.format !== "euhem-study-plan-backup" || raw.version !== 1 || raw.cohort !== planPage.cohort.id || !raw.semester1 ||
+      (raw.trackCohort && raw.trackCohort !== planPage.tracks?.id)) throw new Error("This backup does not match the current programme and cohort.");
+    const choices = sanitizeChoices(planPage.term, raw.semester1.choices), codes = selectedCourseCodes(planPage.term, choices);
+    const statuses = {};
+    for (const [code, value] of Object.entries(raw.semester1.statuses || {})) if (codes.includes(code) && COURSE_STATUSES.includes(value) && value) statuses[code] = value;
+    planPage.plan = { cohort: planPage.cohort.id, term: planPage.term.id, saved: true, choices, statuses };
+    if (planPage.tracks) {
+      planPage.draft = StudyPlanData.sanitizeDraft(planPage.tracks, raw.journey, s1Courses());
+      planPage.track = trackById(planPage.tracks, raw.track)?.id || null;
+    }
+    const firstSaved = savePlan(planPage.plan), futureSaved = saveFuture();
+    if (planPage.tracks) saveMyTrack(planPage.tracks.id, planPage.track);
+    planPage.plan.saved = firstSaved; planPage.view = "mine"; planPage.semester = 1;
+    saveCaption(firstSaved && futureSaved); saveView();
+    status.textContent = "Backup restored. Your imported choices have been checked against the current rules.";
+    document.getElementById("sp-tools-dialog").close(); render(); planToast("Study-plan backup restored");
+  } catch (error) {
+    status.textContent = `Could not restore this backup. ${error instanceof SyntaxError ? "The file is not valid JSON." : error.message}`;
+  }
+}
+function showPlanTools() {
+  let dialog = document.getElementById("sp-tools-dialog");
+  if (!dialog) {
+    dialog = createElement("dialog", "sp-tools-dialog"); dialog.id = "sp-tools-dialog"; dialog.setAttribute("aria-labelledby", "sp-tools-title");
+    dialog.appendChild(iconButton("Close", "close", { iconOnly: true, className: "dialog-close", onClick: () => dialog.close() }));
+    const title = createElement("h2", null, "Take your plan with you."); title.id = "sp-tools-title"; dialog.appendChild(title);
+    const body = createElement("div", "sp-tools-body");
+    body.appendChild(createElement("p", null, "Save a backup to move your course choices, progress and thesis draft to another device. Restoring a backup replaces the personal plan in this browser."));
+    const exportButton = iconButton("Export backup", "download", { onClick: exportPlan }); exportButton.id = "sp-export"; body.appendChild(exportButton);
+    const label = createElement("label", "sp-portable", "Restore a backup");
+    const input = createElement("input"); input.type = "file"; input.accept = ".json,application/json"; input.id = "sp-import";
+    input.addEventListener("change", () => { importPlan(input.files[0]); input.value = ""; }); label.appendChild(input); body.appendChild(label);
+    const status = createElement("p", "sp-import-status"); status.id = "sp-import-status"; status.setAttribute("role", "status"); body.appendChild(status);
+    const reset = iconButton("Reset all plans", "close", { className: "button-danger", onClick: () => {
+      if (!confirm("Reset your course choices, progress and thesis drafts on this device? Your track preference will remain.")) return;
+      resetPlan();
+      try { localStorage.removeItem(StudyPlanData.DRAFT_KEY); } catch { /* The in-tab state still resets. */ }
+      planPage.plan = loadPlan(planPage.programme);
+      if (planPage.tracks) planPage.draft = StudyPlanData.sanitizeDraft(planPage.tracks, null, s1Courses());
+      planPage.semester = 1; planPage.view = "choose"; saveView();
+      dialog.close(); document.getElementById("sp-save-state").textContent = "Plan reset · choose your courses"; render(); planToast("Your personal plans were reset");
+    } });
+    reset.id = "plan-reset";
+    const actions = createElement("div", "sp-tools-actions"); actions.appendChild(reset);
+    body.appendChild(actions); dialog.appendChild(body);
+    dialog.addEventListener("click", event => { if (event.target === dialog) dialog.close(); }); document.body.appendChild(dialog);
+  }
+  dialog.showModal();
+}
+
+for (const button of document.querySelectorAll("#plan-terms [data-semester]")) button.addEventListener("click", () => {
+  planPage.semester = Number(button.dataset.semester); saveView(); render();
+});
+document.getElementById("plan-terms").addEventListener("keydown", event => {
+  const buttons = [...event.currentTarget.querySelectorAll("[data-semester]")], index = buttons.indexOf(document.activeElement);
+  if (index < 0 || !["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+  event.preventDefault();
+  const next = event.key === "Home" ? 0 : event.key === "End" ? buttons.length - 1 : (index + (event.key === "ArrowRight" ? 1 : -1) + buttons.length) % buttons.length;
+  buttons[next].focus(); planPage.semester = next + 1; saveView(); render();
+});
+for (const button of document.querySelectorAll("#plan-views [data-view]")) button.addEventListener("click", () => { planPage.view = button.dataset.view; saveView(); render(); });
+document.getElementById("sp-clear-track").addEventListener("click", () => setTrack(null));
+document.getElementById("sp-tools-button").addEventListener("click", showPlanTools);
+document.getElementById("sp-print").addEventListener("click", () => { renderPrintSummary(); window.print(); });
 initStudyPlan();

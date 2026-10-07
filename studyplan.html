@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Study Plan – EU-HEM Student Hub</title>
-  <meta name="description" content="Plan your EU-HEM courses: choose options, check CFU and follow your progress.">
+  <meta name="description" content="Build your two-year EU-HEM study journey: four semesters, track-based courses, elective guidance, progress and a personal thesis plan.">
   <!-- Social preview (scripts/social-tags.js) -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="EU-HEM Student Hub">
   <meta property="og:title" content="Study Plan – EU-HEM Student Hub">
-  <meta property="og:description" content="Plan your EU-HEM courses: choose options, check CFU and follow your progress.">
+  <meta property="og:description" content="Build your two-year EU-HEM study journey: four semesters, track-based courses, elective guidance, progress and a personal thesis plan.">
   <meta property="og:url" content="https://adnantarabishi.github.io/eu-hem-student-hub/studyplan.html">
   <meta property="og:image" content="https://adnantarabishi.github.io/eu-hem-student-hub/img/social-preview.png">
   <meta property="og:image:width" content="1200">
@@ -19,6 +19,7 @@
   <!-- /Social preview -->
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=b540d8a2">
+  <link rel="stylesheet" href="studyplan.css?v=1a600676">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -27,7 +28,7 @@
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <script src="theme.js?v=d51d4769"></script>
 </head>
-<body class="wide-page">
+<body class="wide-page study-plan-page">
 
   <header class="site-header">
     <div class="container">
@@ -40,40 +41,65 @@
   </header>
 
   <main class="container">
-    <section class="page-intro">
-      <div>
-        <p class="section-eyebrow">Academics</p>
-        <h1><svg class="icon" aria-hidden="true"><use href="icons.svg#study-plan"></use></svg> Study Plan</h1>
-        <p>Choose your courses, follow your CFU and see how your semester fits together. Everything is saved on this
-          device only.</p>
+    <section class="sp-hero" aria-labelledby="sp-title">
+      <div class="sp-hero-copy">
+        <p class="section-eyebrow">EU-HEM · Your study trajectory</p>
+        <h1 id="sp-title">Your degree.<br><span>Your direction.</span></h1>
+        <p class="sp-hero-lead">Four semesters. A world of possibilities. Connect your first choices to your specialisation, your next city and the research you want to do.</p>
+        <div class="sp-hero-links">
+          <a href="#sp-workspace">Build your journey <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+          <a href="tracks.html">Explore the four tracks <svg class="icon" aria-hidden="true"><use href="icons.svg#route"></use></svg></a>
+        </div>
+        <p class="sp-hero-caption">Cohort 2026–2028 · 120 ECTS · Your personal plan</p>
+      </div>
+      <div class="sp-hero-visual" aria-label="Semester 1 planning progress">
+        <div class="sp-orbit" aria-hidden="true">
+          <span class="sp-orbit-node">Bologna</span><span class="sp-orbit-node">Oslo</span><span class="sp-orbit-node">Rotterdam</span><span class="sp-orbit-node">Innsbruck</span>
+        </div>
+        <div id="sp-degree-ring" class="sp-degree-ring">
+          <svg viewBox="0 0 160 160" aria-hidden="true"><circle class="sp-ring-track" cx="80" cy="80" r="68"></circle><circle class="sp-ring-progress" cx="80" cy="80" r="68" pathLength="100"></circle></svg>
+          <div class="sp-ring-copy"><strong id="sp-ring-value">—</strong><span id="sp-ring-label">S1 credits planned</span></div>
+        </div>
+        <p class="sp-hero-caption">Start with foundations. Build towards your future.</p>
       </div>
     </section>
 
-    <!-- Clearly visible: this page does not submit anything -->
+    <section class="sp-workspace" id="sp-workspace" aria-labelledby="sp-workspace-title">
+      <div class="sp-workspace-head">
+        <div><p class="section-eyebrow">Personal study space</p><h2 id="sp-workspace-title">Map your next chapter.</h2></div>
+        <div class="sp-tools">
+          <span id="sp-save-state" class="sp-save-state" role="status">Loading your plan…</span>
+          <button id="sp-print" type="button" class="icon-button" disabled>Print / PDF</button>
+          <button id="sp-tools-button" type="button" class="icon-button" disabled>Plan tools</button>
+        </div>
+      </div>
+      <div class="sp-track-picker">
+        <div class="sp-track-picker-head"><h3>Choose your direction</h3><a href="tracks.html#quiz">Help me explore</a></div>
+        <p class="sp-track-note">Select your track to see its courses and cities. You can compare routes here; the university’s official allocation remains unchanged.</p>
+        <div id="sp-track-options" role="group" aria-label="Your track"></div>
+        <p id="sp-track-status" class="sp-track-note" aria-live="polite">Looking up the track curricula…</p>
+        <button id="sp-clear-track" class="inline-link" type="button" hidden>Explore without a track</button>
+      </div>
+      <div id="plan-terms" class="sp-journey" role="tablist" aria-label="Semester">
+        <button id="semester-tab-1" class="sp-semester-card" type="button" role="tab" data-semester="1" aria-selected="true" aria-controls="plan-content"><span class="sp-semester-number">01</span><span class="sp-semester-label">Semester 1</span><strong class="sp-semester-place">Bologna</strong><span class="sp-semester-state">Shared foundations</span><span class="sp-semester-credit">30 ECTS</span></button>
+        <button id="semester-tab-2" class="sp-semester-card" type="button" role="tab" data-semester="2" aria-selected="false" aria-controls="plan-content" tabindex="-1"><span class="sp-semester-number">02</span><span class="sp-semester-label">Semester 2</span><strong class="sp-semester-place">Your first specialisation</strong><span class="sp-semester-state">Choose a track</span><span class="sp-semester-credit">30 ECTS</span></button>
+        <button id="semester-tab-3" class="sp-semester-card" type="button" role="tab" data-semester="3" aria-selected="false" aria-controls="plan-content" tabindex="-1"><span class="sp-semester-number">03</span><span class="sp-semester-label">Semester 3</span><strong class="sp-semester-place">Go deeper</strong><span class="sp-semester-state">Choose a track</span><span class="sp-semester-credit">30 ECTS</span></button>
+        <button id="semester-tab-4" class="sp-semester-card" type="button" role="tab" data-semester="4" aria-selected="false" aria-controls="plan-content" tabindex="-1"><span class="sp-semester-number">04</span><span class="sp-semester-label">Semester 4</span><strong class="sp-semester-place">Your thesis</strong><span class="sp-semester-state">Make your contribution</span><span class="sp-semester-credit">30 ECTS</span></button>
+      </div>
+      <div id="plan-views" class="sp-view-switch" role="group" aria-label="View">
+        <button class="filter-chip" type="button" data-view="choose" aria-pressed="true">Choose courses</button>
+        <button class="filter-chip" type="button" data-view="mine" aria-pressed="false">My Study Plan</button>
+      </div>
+      <div id="plan-summary" class="sp-summary" aria-label="Selected semester summary"></div>
+      <div id="sp-semester-heading" class="sp-semester-heading"></div>
+      <div id="plan-content" role="tabpanel" aria-labelledby="semester-tab-1" aria-busy="true"></div>
+    </section>
     <section class="plan-notice" role="note">
-      <div>
-        <p class="plan-notice-title">ⓘ This is a planning tool. It does not submit your study plan.</p>
-        <p id="plan-deadline">Official submission deadline: …</p>
-      </div>
-      <a id="plan-submit" class="button" href="https://studenti.unibo.it" target="_blank" rel="noopener">Submit on Studenti Online ↗</a>
+      <div><p class="plan-notice-title">Your personal plan. Your official submission is a separate step.</p><p id="plan-deadline">Loading the official submission information…</p><p class="schedule-meta">Nothing on this page registers courses, books exams or changes your allocated track.</p></div>
+      <a id="plan-submit" class="button" href="https://studenti.unibo.it" target="_blank" rel="noopener">Submit on Studenti Online <svg class="icon" aria-hidden="true"><use href="icons.svg#external"></use></svg></a>
     </section>
-
-    <section class="card">
-      <div class="notes-heading">
-        <h2>Your plan &amp; progress</h2>
-        <button id="plan-reset" type="button" class="button button-danger">Reset my plan</button>
-      </div>
-      <p id="plan-source" class="schedule-meta">Loading the rules…</p>
-      <p class="demo-note">Saved on this device only. Nothing is sent anywhere.</p>
-      <p class="schedule-meta">From Semester 2 you follow one of four tracks: <a href="tracks.html">see the Tracks page</a> for their courses and cities.</p>
-
-      <!-- studyplan.js fills the semester tabs, the view switch, the summary and the course groups -->
-      <div id="plan-terms" class="track-tabs page-tabs" role="tablist" aria-label="Semester"></div>
-      <div id="plan-views" class="filter-chips" role="group" aria-label="View"></div>
-      <div id="plan-summary"></div>
-    </section>
-
-    <div id="plan-content"></div>
+    <p id="plan-source" class="sp-preview-note">Curriculum sources will appear here.</p>
+    <div id="sp-print-summary" class="sp-print-summary"></div>
   </main>
 
   <footer class="site-footer">
@@ -88,7 +114,10 @@
   <script defer src="pwa.js?v=c9212bf8"></script>
   <script defer src="announcements.js?v=3ecd40f0"></script>
   <script defer src="programme.js?v=92916c59"></script>
-  <script defer src="studyplan.js?v=0efc07c6"></script>
+  <script defer src="tracks-data.js?v=629a5538"></script>
+  <script defer src="notes-schedule.js?v=72ca9b39"></script>
+  <script defer src="studyplan-data.js?v=9befd2e8"></script>
+  <script defer src="studyplan.js?v=7fb61cec"></script>
 
 </body>
 </html>
