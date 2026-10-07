@@ -53,6 +53,19 @@
     add("experience", "A wider perspective and a wider network", "experiences.html?story=remy-lesuis#stories", "Remy Lesuis Erasmus healthcare systems network conference internship study career community");
     add("experience", "Seeing healthcare through other perspectives", "experiences.html?story=frank-bisselink#stories", "Frank Bisselink Erasmus multidisciplinary international study community career");
 
+    // Student Toolkit: one catalogue shared with the page, including honest planned labels.
+    try {
+      await loadScript("toolkit-data.js");
+      if (window.StudentToolkitData) for (const tool of StudentToolkitData.items) {
+        add(tool.kind === "planned" ? "roadmap" : "resource", tool.title,
+          `toolkit.html?tool=${encodeURIComponent(tool.id)}`,
+          `${tool.summary} ${tool.tags || ""}`, "Student Toolkit",
+          tool.kind === "planned" ? "Planned · not available yet" : tool.kind === "external" ? "External provider" : "Available on the Hub");
+      }
+    } catch (error) {
+      console.error("Search: toolkit", error);
+    }
+
     // Notes & Resources and courses (reuses notes-data.js)
     try {
       await loadScript("programme.js");
