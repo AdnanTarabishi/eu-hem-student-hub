@@ -1,0 +1,38 @@
+name: Verify Toolkit v3 academic tools
+on:
+  push:
+    branches: [work/toolkit-v3-20261008]
+    paths:
+      - .github/workflows/toolkit-v3-candidate.yml
+      - scripts/tk3-candidate.py
+permissions:
+  contents: write
+jobs:
+  verify-and-integrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: work/toolkit-v3-20261008
+      - name: Reconstruct reviewed files with exact base and output hash guards
+        run: python3 scripts/tk3-candidate.py
+      - name: Run all 191 catalogue, organiser, lab and new solver tests
+        run: >-
+          node --test tests/toolkit.test.js tests/toolkit-organiser.test.js
+          tests/statistics-lab-math.test.js tests/statistics-lab-tools.test.js
+          tests/statistics-lab-inference.test.js tests/toolkit-solve.test.js
+      - name: Check asset fingerprints, content, contrast tokens and whitespace
+        run: |
+          node scripts/stamp-versions.js --check
+          node scripts/check-content.js
+          node scripts/check-contrast.js
+          git diff --check
+          python3 scripts/tk3-candidate.py --verify
+      - name: Commit only the exact reviewed release files to this candidate branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          python3 scripts/tk3-candidate.py --stage
+          git commit -m 'Integrate Toolkit v3 academic tools and verify tested source'
+          git push origin HEAD:work/toolkit-v3-20261008
