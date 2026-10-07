@@ -41,6 +41,10 @@
       for (const item of entry.items || [entry]) add("page", item.label, item.href, "", entry.items ? entry.label : "");
     }
     add("page", "Create an item", "create.html", "write flashcard question concept resource contribute");
+    add("page", "Thesis guide: Getting started", "thesis.html#guide-roadmap", "master thesis dissertation when begin semester summer school proposal supervisor milestones", "Thesis Explorer");
+    add("page", "Thesis guide: Find a topic", "thesis.html#guide-topics", "research question topic ideas specialisation track healthcare economics policy management population", "Thesis Explorer");
+    add("page", "Thesis guide: Research toolkit", "thesis.html#guide-toolkit", "literature review methods data ethics writing reporting defence resources", "Thesis Explorer");
+    add("page", "My thesis workspace", "thesis.html#guide-planner", "personal research brief proposal draft feasibility supervisor checklist backup", "Thesis Explorer");
     // Curated public Student Experiences. Keep private drafts/submissions out of global search.
     add("experience", "Learning by doing, with the mountains in view", "experiences.html?story=hanna-lichter#stories", "Hanna Lichter MCI Innsbruck Bologna Oslo study thesis track Management of Healthcare Institutions practical teaching");
     add("experience", "From medicine to a broader view of healthcare", "experiences.html?story=skander-essafi#stories", "Skander Essafi MCI Bologna Innsbruck Rotterdam Population Health Management mobility study track thesis medicine");
