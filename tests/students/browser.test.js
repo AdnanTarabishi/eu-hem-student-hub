@@ -48,7 +48,7 @@ const NOT_AVAILABLE = 'This profile is not available in your current view.';
   assert.match(await countText(page), /Showing 1–12 of 24 matching profiles \(24 public in this view\)/);
   assert.strictEqual((await cardNames(page)).length, 12);
   assert.match(await text(page, '#sx-pagination'), /Page 1 of 2/);
-  assert.match(await text(page, '#sx-stats'), /24\s*public profiles available in this view/);
+  assert.match(await text(page, '#sx-stats'), /24\s*matching public profiles/);
   assert.match(await text(page, '#sx-stats'), /40\s*fictional records in this demonstration/);
   assert.match(await text(page, '#sx-demo'), /do not sign you in or grant access to any real student information/);
   await page.click('#sx-pagination button:has-text("Next")');

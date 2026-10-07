@@ -1,6 +1,6 @@
 # Students explorer (students.html)
 
-"Meet the EU-HEM Community": a map, profile cards and a compact list, filters, profile details, saved profiles
+"One community. Many perspectives.": a community atlas with a map, profile cards and a compact list, filters, profile details, saved profiles
 and statistics. **Phase 1 shows only fictional demo data.** Real profiles need a real login and a server that
 applies the rules below (Phase 2); nothing in the browser can unlock private data.
 
@@ -77,6 +77,23 @@ there is no student login yet, and has no fake login button.
 - "Meet someone new" picks at random from the current, visible results (never AI, never hidden records).
 - Saved profiles: profile ids only, in this browser's localStorage (`euhem-saved-profiles-v1`), no server, easy
   "Clear saved". Ids that are not available in the current view are not shown and are only counted.
+  If device storage is unavailable, saving works in memory for this tab and feedback states that it will not
+  persist after a reload. Save controls retain keyboard focus when profiles are redrawn.
+
+## Community atlas presentation
+
+- Page styles are scoped to `body.students-page` and `#sx`; shared navigation and other pages retain their styles.
+- The hero's orbit is decorative, not a depiction of real people or their connections. The fictional notice
+  remains above the statistics and every demo profile has a fictional badge.
+- Discover, World map, People and Cohort insights links jump to the corresponding visible sections.
+  Search and filters support a persistent Clear filters action; the map starts open on phones as well.
+- Summary tiles describe matching, viewer-visible profiles, represented countries and academic backgrounds
+  before pagination. The separate fictional source-record total is not a count of real EU-HEM students.
+- Cards, compact list and the native profile dialog support both colour themes, narrow screens, keyboard
+  navigation and reduced motion. If the local map fails to load, Retry map restores it without a page reload;
+  the country list and filters remain usable throughout.
+- Regression coverage: `tests/students/data.test.js`, `tests/students/browser.test.js` and
+  `tests/students/design.test.js` (layout, focus, storage failure, retries and unbroken profile text).
 
 ## The map
 

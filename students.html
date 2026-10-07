@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Asks search engines not to list this page (it does not block visitors) -->
   <meta name="robots" content="noindex">
-  <title>Students – EU-HEM Student Hub</title>
-  <meta name="description" content="Meet the EU-HEM community: explore the people, countries and academic backgrounds that make up EU-HEM.">
+  <title>Students &amp; Cohort Map – EU-HEM Student Hub</title>
+  <meta name="description" content="Preview the EU-HEM community atlas with fictional profiles: explore academic perspectives, represented countries and cohort insights.">
   <!-- Social preview (scripts/social-tags.js) -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="EU-HEM Student Hub">
-  <meta property="og:title" content="Students – EU-HEM Student Hub">
-  <meta property="og:description" content="Meet the EU-HEM community: explore the people, countries and academic backgrounds that make up EU-HEM.">
+  <meta property="og:title" content="Students &amp; Cohort Map – EU-HEM Student Hub">
+  <meta property="og:description" content="Preview the EU-HEM community atlas with fictional profiles: explore academic perspectives, represented countries and cohort insights.">
   <meta property="og:url" content="https://adnantarabishi.github.io/eu-hem-student-hub/students.html">
   <meta property="og:image" content="https://adnantarabishi.github.io/eu-hem-student-hub/img/social-preview.png">
   <meta property="og:image:width" content="1200">
@@ -21,7 +21,7 @@
   <!-- /Social preview -->
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=b540d8a2">
-  <link rel="stylesheet" href="students.css?v=355007a4">
+  <link rel="stylesheet" href="students.css?v=7a05d30a">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -30,7 +30,7 @@
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <script src="theme.js?v=d51d4769"></script>
 </head>
-<body>
+<body class="wide-page students-page">
 
   <header class="site-header">
     <div class="container">
@@ -46,18 +46,35 @@
        students-config.js; documentation: docs/students-explorer.md -->
   <main class="container students-explorer" id="sx">
 
-    <!-- 1. Compact hero -->
+    <!-- 1. Community atlas hero -->
     <section class="sx-hero">
-      <div>
-        <p class="section-eyebrow">Community · Students explorer</p>
-        <h1>Meet the EU-HEM Community</h1>
-        <p class="sx-subtitle">Explore the people, countries and academic backgrounds that make up EU-HEM.</p>
+      <div class="sx-hero-copy">
+        <p class="section-eyebrow">Community · Your cohort atlas</p>
+        <h1>One community.<br><span>Many perspectives.</span></h1>
+        <p class="sx-subtitle">Discover the people, academic backgrounds and shared paths that bring EU-HEM together. Your next study partner could start with a little curiosity.</p>
+        <div class="sx-hero-actions">
+          <a class="button button-primary" href="#sx-map-section" id="sx-explore-map">Explore the map <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="button button-secondary" href="join.html">Join the directory <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+        <p class="sx-hero-note">Profiles, perspectives and shared paths.</p>
       </div>
-      <div class="sx-hero-actions">
-        <a class="button button-secondary" href="#sx-map-section" id="sx-explore-map">Explore the map</a>
-        <a class="button button-primary" href="join.html">Join the directory <span class="arrow" aria-hidden="true">→</span></a>
+      <div class="sx-hero-visual" aria-hidden="true">
+        <div class="sx-community-orbit">
+          <div class="sx-orbit-centre">EU-HEM<br><span>Community</span></div>
+          <span class="sx-orbit-node">Learn</span>
+          <span class="sx-orbit-node">Connect</span>
+          <span class="sx-orbit-node">Explore</span>
+          <span class="sx-orbit-node">Share</span>
+        </div>
       </div>
     </section>
+
+    <nav class="sx-section-nav" aria-label="Community sections">
+      <a href="#sx-discover"><span aria-hidden="true">01</span> Discover</a>
+      <a href="#sx-map-section"><span aria-hidden="true">02</span> World map</a>
+      <a href="#sx-results-section"><span aria-hidden="true">03</span> People</a>
+      <a href="#sx-insights"><span aria-hidden="true">04</span> Cohort insights</a>
+    </nav>
 
     <!-- 2. Demo notice and the demo-only preview switch (students.js hides both outside demo mode) -->
     <section class="sx-demo" id="sx-demo" aria-labelledby="sx-demo-title">
@@ -85,7 +102,15 @@
     </section>
 
     <!-- 4. Search and filters -->
-    <section class="sx-filters-section" aria-label="Search and filters">
+    <section class="sx-filters-section" id="sx-discover" aria-labelledby="sx-discover-title">
+      <div class="sx-section-heading">
+        <div>
+          <p class="section-eyebrow">Discover · Follow your curiosity</p>
+          <h2 id="sx-discover-title">Find a shared perspective</h2>
+          <p>Explore a background, a track or a country. Combine filters to make the directory your own.</p>
+        </div>
+        <button type="button" class="button button-quiet" id="sx-clear-all" disabled>Clear filters</button>
+      </div>
       <div class="sx-search-row">
         <label class="search-pill sx-search">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
@@ -113,7 +138,7 @@
     <section class="sx-map-section" id="sx-map-section" aria-labelledby="sx-map-title">
       <details class="sx-map-details" id="sx-map-details" open>
         <summary>
-          <span><span class="sx-section-title" id="sx-map-title">Our Community Around the World</span>
+          <span><span class="sx-section-title" id="sx-map-title">A world of perspectives</span>
           <span class="sx-subtitle">Select a country to explore the profiles available in your current view.</span></span>
         </summary>
         <div class="sx-map-layout">
@@ -153,8 +178,14 @@
     </section>
 
     <!-- 6. Active filters, result count and view controls -->
-    <section class="sx-results" aria-labelledby="sx-results-title">
-      <h2 class="visually-hidden" id="sx-results-title">Profiles</h2>
+    <section class="sx-results" id="sx-results-section" aria-labelledby="sx-results-title">
+      <div class="sx-section-heading">
+        <div>
+          <p class="section-eyebrow">People · Explore the directory</p>
+          <h2 id="sx-results-title">Find your people</h2>
+          <p>Open a profile to discover more, or save it to revisit on this device.</p>
+        </div>
+      </div>
       <div class="sx-chips" id="sx-chips"></div>
       <div class="sx-results-bar">
         <p class="sx-result-count" id="sx-result-count" aria-live="polite">Loading profiles…</p>
@@ -194,15 +225,21 @@
           <p>Secure member access is planned. There is no student login yet.</p>
           <p>When it exists, “EU-HEM members” will mean verified participating EU-HEM students across the
             supported cohorts, checked by the Student Hub administrator (not by the university). Until then,
-            members-only and hidden profiles are never sent to this page.
+            real members-only and hidden profiles are never sent to this page.
             <a href="privacy.html#student-directory">Read the privacy notice</a>.</p>
         </div>
       </div>
     </section>
 
     <!-- 9. Insights -->
-    <section class="sx-insights" aria-labelledby="sx-insights-title">
-      <h2 id="sx-insights-title">Cohort insights</h2>
+    <section class="sx-insights" id="sx-insights" aria-labelledby="sx-insights-title">
+      <div class="sx-section-heading">
+        <div>
+          <p class="section-eyebrow">Cohort insights · See the bigger picture</p>
+          <h2 id="sx-insights-title">Different paths. Shared possibilities.</h2>
+          <p>Explore the mix of disciplines and tracks in your selection, alongside separately prepared mobility statistics.</p>
+        </div>
+      </div>
       <div class="sx-insight-grid">
         <div class="sx-insight-card">
           <h3>Who is in this view</h3>
@@ -222,6 +259,7 @@
     <!-- 10. Call to action -->
     <section class="sx-cta">
       <div>
+        <p class="section-eyebrow">Your perspective belongs here</p>
         <h2>Help represent your cohort</h2>
         <p>Add your profile and choose what you share with the EU-HEM community.</p>
       </div>
@@ -255,7 +293,7 @@
   <script defer src="countries.js?v=9ba10988"></script>
   <script defer src="students-config.js?v=5d661d5b"></script>
   <script defer src="students-data.js?v=0447923b"></script>
-  <script defer src="students.js?v=0c0e0e22"></script>
+  <script defer src="students.js?v=d3315c0b"></script>
 
 </body>
 </html>

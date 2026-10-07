@@ -11,7 +11,8 @@
     "test:notes": "node scripts/check-content.js && node tests/notes/schedule.test.js && node tests/notes/browser.test.js .",
     "test:lectures": "node scripts/check-content.js && node tests/lectures/math.test.js && node tests/lectures/browser.test.js .",
     "test:statistics": "node scripts/check-content.js && node tests/statistics/state.test.js && node tests/statistics/browser.test.js",
-    "test:quant-methods": "node scripts/check-content.js && node tests/statistics/state.test.js && node tests/quant-methods/browser.test.js"
+    "test:quant-methods": "node scripts/check-content.js && node tests/statistics/state.test.js && node tests/quant-methods/browser.test.js",
+    "test:students": "node scripts/check-content.js && node tests/students/data.test.js . && node tests/students/browser.test.js . && node tests/students/design.test.js ."
   },
   "devDependencies": {
     "playwright": "^1.49.0"
