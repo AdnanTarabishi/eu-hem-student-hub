@@ -28,6 +28,8 @@
       const defaults=D.cleanState({});
       if(value!==defaults[key])url.searchParams.set(key,typeof value==='boolean'?'1':value);
     }
+    const current=new URL(window.location.href);
+    for(const key of ['section','collection'])if(current.searchParams.has(key))url.searchParams.set(key,current.searchParams.get(key));
     if(toolId)url.searchParams.set('tool',toolId);
     return url;
   }
@@ -47,7 +49,7 @@
     return `<button type="button" class="${className}" data-save="${esc(t.id)}" aria-pressed="${saved}" aria-label="${esc(label)}" title="${esc(label)}">${icon('bookmark')}</button>`;
   }
   function card(t){
-    return `<article class="tk-tool" id="tool-${esc(t.id)}" data-kind="${t.kind}" data-category="${t.category}"><div class="tk-tool-top"><span class="tk-tool-symbol">${icon(t.icon)}</span><span class="tk-badge tk-badge-${t.kind}">${kinds[t.kind]}</span>${saveButton(t)}</div><h4>${esc(t.title)}</h4><p class="tk-tool-description">${esc(t.summary)}</p><div class="tk-tool-meta">${esc(t.kind==='planned'?'Proposed scope · no release date':t.collection||'Independent provider')}</div><div class="tk-tool-actions">${t.kind==='planned'?`<button type="button" class="tk-button" data-detail="${t.id}">See the plan ${icon('arrow-right')}</button>`:launch(t,t.kind==='external'?'Visit site':'Open tool')+`<button type="button" class="tk-text-button" data-detail="${t.id}" aria-label="About ${esc(t.title)}">Details</button>`}</div></article>`;
+    return `<article class="tk-tool" id="tool-${esc(t.id)}" data-kind="${t.kind}" data-category="${t.category}"><div class="tk-tool-top"><span class="tk-tool-symbol">${icon(t.icon)}</span><span class="tk-badge tk-badge-${t.kind}">${kinds[t.kind]}</span>${saveButton(t)}</div><h4>${esc(t.title)}${t.fresh?'<span class="tk2-new-badge">New</span>':''}</h4><p class="tk-tool-description">${esc(t.summary)}</p><div class="tk-tool-meta">${esc(t.kind==='planned'?'Proposed scope · no release date':t.collection||'Independent provider')}</div><div class="tk-tool-actions">${t.kind==='planned'?`<button type="button" class="tk-button" data-detail="${t.id}">See the plan ${icon('arrow-right')}</button>`:launch(t,t.kind==='external'?'Visit site':'Open tool')+`<button type="button" class="tk-text-button" data-detail="${t.id}" aria-label="About ${esc(t.title)}">Details</button>`}</div><div class="tk2-card-actions"><button type="button" class="tk-text-button" data-add-list="${t.id}">Add to list</button>${t.kind!=='planned'?`<button type="button" class="tk-text-button" data-compare="${t.id}" aria-pressed="false">Compare</button>`:'<span class="tk-meta tk-small">Idea, not a live tool</span>'}</div></article>`;
   }
   function quick(t,subtitle){
     return `<button type="button" class="tk-quick" data-detail="${t.id}"><span class="tk-tool-symbol">${icon(t.icon)}</span><div><strong>${esc(t.title)}</strong><small>${esc(subtitle||kinds[t.kind])}</small></div><span aria-hidden="true">›</span></button>`;
@@ -61,15 +63,16 @@
   }
   function syncControls(){
     $('tk-search').value=state.q;
-    for(const k of ['kind','course','sort'])$('tk-'+k).value=state[k];
+    $('tk-fresh').checked=state.fresh;
+    for(const k of ['kind','course','sort','city'])$('tk-'+k).value=state[k];
     $('tk-all').setAttribute('aria-pressed',String(!state.saved));$('tk-saved').setAttribute('aria-pressed',String(state.saved));
     $('tk-grid').setAttribute('aria-pressed',String(state.view==='grid'));$('tk-list').setAttribute('aria-pressed',String(state.view==='list'));
     root.querySelectorAll('[data-category-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.categoryFilter===state.category)));
-    if(state.kind!=='all'||state.course!=='all'||state.sort!=='curated')root.querySelector('.tk-refine').open=true;
+    if(state.kind!=='all'||state.course!=='all'||state.city!=='all'||state.fresh||state.sort!=='curated')root.querySelector('.tk-refine').open=true;
   }
   function render(){
     const list=D.selectItems(state,prefs.saved),live=list.filter(t=>t.kind!=='planned'),planned=list.filter(t=>t.kind==='planned');
-    const active=state.q||state.category!=='all'||state.kind!=='all'||state.course!=='all'||state.saved;
+    const active=state.q||state.category!=='all'||state.kind!=='all'||state.course!=='all'||state.city!=='all'||state.fresh||state.saved;
     $('tk-results-heading').textContent=state.saved?'Your useful finds.':state.category==='all'?'Find something useful.':D.categories.find(c=>c.id===state.category).label+'.';
     $('tk-results-summary').textContent=`${live.length} available ${live.length===1?'entry':'entries'} · ${planned.length} planned ${planned.length===1?'idea':'ideas'}${state.saved?' in your saved list':''}. ${active?'Results match all selected filters.':'Built-in tools, existing Hub workspaces and selected external services.'}`;
     $('tk-results').innerHTML=live.slice(0,shown).map(card).join('');
@@ -86,14 +89,15 @@
     $('tk-lab-feature').hidden=Boolean(active);
     $('tk-storage-warning').hidden=storageOK;
     syncControls();sidebar();syncURL();
+    root.dispatchEvent(new CustomEvent('toolkit:render'));
   }
   function apply(patch){state=D.cleanState({...state,...patch});shown=9;plansShown=state.kind==='planned'?6:3;render();}
-  function reset(){apply({q:'',category:'all',kind:'all',course:'all',saved:false,sort:'curated'});}
+  function reset(){apply({q:'',category:'all',kind:'all',course:'all',city:'all',fresh:false,saved:false,sort:'curated'});}
   function detail(t){
     const cat=D.categories.find(c=>c.id===t.category);
     const courseLinks=t.collection==='Statistics Lab'?(t.courses||[]).filter(c=>['fundamentals','statistics'].includes(c)).map(c=>`<a href="course.html?course=${c==='fundamentals'?'fund-quant-methods':'quant-methods'}&amp;tab=lab&amp;labtool=${t.id}">${c==='fundamentals'?'Open in Fundamentals':'Open in Statistics'}</a>`).join(''):'';
     const source=t.kind==='external'&&D.safeHref(t.source,true)?`<p class="tk-detail-source"><a href="${esc(t.source)}" target="_blank" rel="noopener noreferrer">Provider information ${icon('external')}</a><br>Editorial review: <time datetime="${t.reviewed}">7 October 2026</time>. This is not a live check of access, price or availability.</p>`:'';
-    return `<div class="tk-detail-top"><span class="tk-tool-symbol">${icon(t.icon)}</span><span class="tk-badge tk-badge-${t.kind}">${kinds[t.kind]}</span><span class="tk-meta">${cat.label}</span></div><h2 id="tk-detail-title">${esc(t.title)}</h2><p class="tk-detail-lead">${esc(t.summary)}</p><h3 class="tk-detail-heading">${t.kind==='planned'?'What it could include':'What you can use it for'}</h3><ul class="tk-detail-list">${t.includes.map(v=>`<li>${esc(v)}</li>`).join('')}</ul><p class="tk-detail-note${t.kind==='planned'?' is-planned':''}">${esc(t.note)}</p><p class="tk-meta"><strong>Access:</strong> ${esc(t.access)}</p>${courseLinks?`<div class="tk-detail-courses">${courseLinks}</div>`:''}<div class="tk-detail-actions">${t.kind==='planned'?'<a class="tk-button" href="contact.html">Discuss this idea '+icon('arrow-right')+'</a>':launch(t,t.kind==='external'?'Open provider site':'Open tool')}${saveButton(t)}<button type="button" id="tk-copy-link" class="tk-text-button">Copy entry link</button></div>${source}<p class="tk-detail-source"><a href="contact.html">Suggest a correction or report a broken link</a></p><p id="tk-copy-status" class="tk-meta" role="status"></p><label id="tk-link-fallback" class="tk-meta" hidden>Copy this entry link<input id="tk-link-text" type="text" readonly></label>`;
+    return `<div class="tk-detail-top"><span class="tk-tool-symbol">${icon(t.icon)}</span><span class="tk-badge tk-badge-${t.kind}">${kinds[t.kind]}</span><span class="tk-meta">${cat.label}</span></div><h2 id="tk-detail-title">${esc(t.title)}</h2><p class="tk-detail-lead">${esc(t.summary)}</p><h3 class="tk-detail-heading">${t.kind==='planned'?'What it could include':'What you can use it for'}</h3><ul class="tk-detail-list">${t.includes.map(v=>`<li>${esc(v)}</li>`).join('')}</ul><p class="tk-detail-note${t.kind==='planned'?' is-planned':''}">${esc(t.note)}</p><p class="tk-meta"><strong>Access:</strong> ${esc(t.access)}</p>${courseLinks?`<div class="tk-detail-courses">${courseLinks}</div>`:''}<div class="tk-detail-actions">${t.kind==='planned'?'<a class="tk-button" href="contact.html">Discuss this idea '+icon('arrow-right')+'</a>':launch(t,t.kind==='external'?'Open provider site':'Open tool')}${saveButton(t)}<button type="button" id="tk-copy-link" class="tk-text-button">Copy entry link</button></div><div class="tk2-detail-actions"><button type="button" class="tk-button tk-button-outline" data-add-list="${t.id}">Add to a personal list</button>${t.kind!=='planned'?`<button type="button" class="tk-text-button" data-compare="${t.id}" aria-pressed="false">Compare this tool</button>`:''}</div>${source}<p class="tk-detail-source"><a href="contact.html">Suggest a correction or report a broken link</a></p><p id="tk-copy-status" class="tk-meta" role="status"></p><label id="tk-link-fallback" class="tk-meta" hidden>Copy this entry link<input id="tk-link-text" type="text" readonly></label>`;
   }
   function openDetail(id,opener){
     const t=D.byId.get(id);if(!t)return;
@@ -103,6 +107,7 @@
       if(typeof dialog.showModal==='function')dialog.showModal();
       else{dialog.setAttribute('open','');dialog.setAttribute('role','dialog');}
     }
+    root.dispatchEvent(new CustomEvent('toolkit:detail',{detail:{id}}));
     dialog.scrollTop=0;$('tk-detail-close').focus();syncURL();
   }
   function closeDetail(){
@@ -131,12 +136,13 @@
   $('tk-categories').innerHTML=D.categories.map(c=>`<button type="button" class="tk-chip" data-category-filter="${c.id}" aria-pressed="false">${icon(c.icon)}${esc(c.label)}</button>`).join('');
   $('tk-search-form').addEventListener('submit',e=>{e.preventDefault();clearTimeout(queryTimer);apply({q:$('tk-search').value});});
   $('tk-search').addEventListener('input',()=>{clearTimeout(queryTimer);queryTimer=setTimeout(()=>apply({q:$('tk-search').value}),140);});
-  for(const k of ['kind','course','sort'])$('tk-'+k).addEventListener('change',()=>apply({[k]:$('tk-'+k).value}));
+  for(const k of ['kind','course','sort','city'])$('tk-'+k).addEventListener('change',()=>apply({[k]:$('tk-'+k).value}));
+  $('tk-fresh').addEventListener('change',()=>apply({fresh:$('tk-fresh').checked}));
   $('tk-grid').addEventListener('click',()=>apply({view:'grid'}));$('tk-list').addEventListener('click',()=>apply({view:'list'}));
   $('tk-all').addEventListener('click',()=>apply({saved:false}));$('tk-saved').addEventListener('click',()=>apply({saved:!state.saved}));
-  $('tk-show-saved').addEventListener('click',()=>{apply({saved:true,q:'',category:'all',kind:'all',course:'all'});$('tk-results-heading').focus();});
+  $('tk-show-saved').addEventListener('click',()=>{apply({saved:true,q:'',category:'all',kind:'all',course:'all',city:'all',fresh:false});$('tk-results-heading').focus();});
   $('tk-reset').addEventListener('click',reset);$('tk-empty-reset').addEventListener('click',()=>{reset();$('tk-search').focus();});
-  $('tk-find-calculators').addEventListener('click',()=>{apply({q:'Statistics Lab',category:'study',kind:'builtin',course:'all',saved:false});$('tk-results-heading').focus();});
+  $('tk-find-calculators').addEventListener('click',()=>{apply({q:'Statistics Lab',category:'study',kind:'builtin',course:'all',city:'all',fresh:false,saved:false});$('tk-results-heading').focus();});
   $('tk-more').addEventListener('click',()=>{const previous=shown;shown+=9;render();const first=$('tk-results').children[previous];first?.querySelector('[data-save]')?.focus();});
   $('tk-more-plans').addEventListener('click',()=>{const previous=plansShown;plansShown+=6;render();$('tk-plans').children[previous]?.querySelector('[data-save]')?.focus();});
   $('tk-remember').addEventListener('change',()=>{prefs.rememberRecent=$('tk-remember').checked;if(!prefs.rememberRecent)prefs.recent=[];writePreferences();sidebar();});
@@ -179,6 +185,7 @@
     state=readURL();const id=new URLSearchParams(window.location.search).get('tool');
     if(dialog.open&&!D.byId.has(id))closeDetail();render();if(D.byId.has(id))openDetail(id);
   });
+  window.StudentToolkitUI=Object.freeze({apply,reset,openDetail,getSaved:()=>[...prefs.saved]});
   const requested=new URLSearchParams(window.location.search).get('tool');
   render();if(D.byId.has(requested))openDetail(requested);else if(requested){$('tk-feedback').textContent='That catalogue entry was not found. Showing the current catalogue.';syncURL();}
 })();
