@@ -1,0 +1,78 @@
+diff --git a/site-nav.js b/site-nav.js
+--- a/site-nav.js
++++ b/site-nav.js
+@@ -28,6 +28,7 @@
+     label: "Resources",
+     items: [
+       { key: "notes", label: "Notes & Resources", href: "notes.html", icon: "notes", desc: "Notes, flashcards and practice" },
++      { key: "toolkit", label: "Student Toolkit", href: "toolkit.html", icon: "calculator", desc: "Study tools, useful services and future ideas" },
+       { key: "thesis", label: "Thesis Explorer", href: "thesis.html", icon: "library", desc: "Plan your research, explore topics" },
+       { key: "links", label: "Official links", href: "index.html#links", icon: "link", desc: "Virtuale, Studenti Online and more" },
+     ],
+diff --git a/search.js b/search.js
+--- a/search.js
++++ b/search.js
+@@ -52,6 +52,19 @@
+     add("experience", "Taking an international degree into digital health", "experiences.html?story=susanne-cornelis-klitsie#stories", "Susanne Cornelis-Klitsie Erasmus Rotterdam Innsbruck digital health career study community alumni");
+     add("experience", "A wider perspective and a wider network", "experiences.html?story=remy-lesuis#stories", "Remy Lesuis Erasmus healthcare systems network conference internship study career community");
+     add("experience", "Seeing healthcare through other perspectives", "experiences.html?story=frank-bisselink#stories", "Frank Bisselink Erasmus multidisciplinary international study community career");
++
++    // Student Toolkit: one catalogue shared with the page, including honest planned labels.
++    try {
++      await loadScript("toolkit-data.js");
++      if (window.StudentToolkitData) for (const tool of StudentToolkitData.items) {
++        add(tool.kind === "planned" ? "roadmap" : "resource", tool.title,
++          `toolkit.html?tool=${encodeURIComponent(tool.id)}`,
++          `${tool.summary} ${tool.tags || ""}`, "Student Toolkit",
++          tool.kind === "planned" ? "Planned · not available yet" : tool.kind === "external" ? "External provider" : "Available on the Hub");
++      }
++    } catch (error) {
++      console.error("Search: toolkit", error);
++    }
+ 
+     // Notes & Resources and courses (reuses notes-data.js)
+     try {
+diff --git a/notes.html b/notes.html
+--- a/notes.html
++++ b/notes.html
+@@ -65,6 +65,12 @@
+ 
+     <div id="hero-stats" class="notes-library-stats" aria-label="Explore available study content"></div>
+ 
++    <section class="notes-contribution" aria-labelledby="toolkit-entry-title">
++      <span class="notes-contribution-icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#calculator"></use></svg></span>
++      <div><p class="section-eyebrow">NEW / STUDENT TOOLKIT</p><h2 id="toolkit-entry-title">The right tool, a little closer.</h2><p>Open our 12 statistics calculators, discover useful services and explore what is planned next.</p></div>
++      <a class="button button-secondary" href="toolkit.html">Explore the Toolkit →</a>
++    </section>
++
+     <section class="notes-discovery" aria-label="Search the library">
+       <div class="notes-search-row">
+         <label class="search-pill notes-search" for="notes-search">
+diff --git a/privacy.html b/privacy.html
+--- a/privacy.html
++++ b/privacy.html
+@@ -57,6 +57,7 @@
+         They are never sent to us or to anyone else:</p>
+       <ul>
+         <li>your study plan and course statuses</li>
++        <li>Student Toolkit bookmarks and, only when you enable the option, up to six recently opened tool IDs; you can clear these separately on the Toolkit page, without deleting course progress</li>
+         <li>your progress in Notes &amp; Resources and your saved study list</li>
+         <li>Fundamentals mock-exam answers and its deadline are saved in this tab's <em>sessionStorage</em>, separate from Notes progress backups; closing the tab normally clears the session</li>
+         <li>your first-week checklist progress in the Universities guide</li>
+diff --git a/sw.js b/sw.js
+--- a/sw.js
++++ b/sw.js
+@@ -13,6 +13,13 @@
+ const DATA_CACHE = "data"; // kept across versions, so offline data survives an update
+ 
+ const SITE_FILES = [
++  "toolkit.html",
++  "toolkit-data.js",
++  "toolkit.js",
++  "toolkit.css",
++  "assets/images/cities/bologna/two-towers-640.webp",
++  "assets/images/cities/oslo/oslofjord-640.webp",
++  "assets/images/cities/rotterdam/cube-houses-640.webp",
+   "statistics-lab.html", "statistics-lab.css", "statistics-lab.js", "statistics-lab-math.js",
+   "statistics-lab-tools.css", "statistics-lab-tools.js", "statistics-lab-tools-math.js",
+   "statistics-lab-foundations.css", "statistics-lab-foundations.js", "statistics-lab-inference-math.js",

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Toolkit – EU-HEM Student Hub</title>
+  <meta name="description" content="Useful tools for study, research and student life. Explore the shared Statistics Lab, selected external services and clearly labelled future tools.">
+  <!-- Social preview (scripts/social-tags.js) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="EU-HEM Student Hub">
+  <meta property="og:title" content="Student Toolkit – EU-HEM Student Hub">
+  <meta property="og:description" content="Useful tools for study, research and student life. Explore the shared Statistics Lab, selected external services and clearly labelled future tools.">
+  <meta property="og:url" content="https://adnantarabishi.github.io/eu-hem-student-hub/toolkit.html">
+  <meta property="og:image" content="https://adnantarabishi.github.io/eu-hem-student-hub/img/social-preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="EU-HEM Student Hub: less searching, more learning, living and connecting.">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- /Social preview -->
+  <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css?v=daabf49c">
+  <link rel="stylesheet" href="toolkit.css?v=c88c82db">
+  <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="img/app-icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <script src="theme.js?v=d51d4769"></script>
+</head>
+<body class="toolkit-page">
+  <header class="site-header">
+    <div class="container">
+      <p class="site-title"><a href="index.html">EU-HEM Student Hub</a></p>
+      <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
+      <!-- site-nav.js builds the menu here (defined once for all pages) -->
+      <nav class="site-nav" id="site-nav" data-current="toolkit" aria-label="Main menu"></nav>
+      <script src="site-nav.js?v=858cf9d1"></script>
+    </div>
+  </header>
+
+  <main id="toolkit-main" class="tk-page">
+    <section class="tk-hero" aria-labelledby="tk-title">
+      <div class="tk-hero-photos" aria-label="The four programme cities">
+        <figure><img src="assets/images/cities/bologna/two-towers-640.webp" width="640" height="427" alt="The Two Towers in Bologna"><figcaption>Bologna</figcaption></figure>
+        <figure><img src="assets/images/cities/oslo/oslofjord-640.webp" width="640" height="427" alt="The Oslofjord from Aker Brygge"><figcaption>Oslo</figcaption></figure>
+        <figure><img src="assets/images/cities/innsbruck/valley-view-640.webp" width="640" height="427" alt="Innsbruck and its mountain valley"><figcaption>Innsbruck</figcaption></figure>
+        <figure><img src="assets/images/cities/rotterdam/cube-houses-640.webp" width="640" height="427" alt="The Cube Houses in Rotterdam"><figcaption>Rotterdam</figcaption></figure>
+      </div>
+      <div class="tk-hero-copy">
+        <p class="tk-eyebrow">RESOURCES <span aria-hidden="true">/</span> YOUR EVERYDAY COMPANION</p>
+        <h1 id="tk-title">Student Toolkit<span>.</span></h1>
+        <p>Study smarter. Live easier.<br>Make more of your EU-HEM journey.</p>
+        <div class="tk-hero-links"><a href="#tk-library" class="tk-button tk-button-light">Find your next tool <span aria-hidden="true">↓</span></a><a href="#tk-how">How it works <span aria-hidden="true">↗</span></a></div>
+        <span class="tk-hero-note">Built by students. Open to everyone.</span>
+      </div>
+      <a class="tk-credit-link" href="#tk-photo-credits">Photo credits</a>
+    </section>
+    <div class="tk-wrap">
+      <nav class="tk-breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">/</span><a href="notes.html">Resources</a><span aria-hidden="true">/</span><span aria-current="page">Student Toolkit</span></nav>
+      <div class="tk-layout">
+        <div class="tk-catalogue">
+          <section id="tk-library" class="tk-discovery" aria-label="Find a tool">
+            <form id="tk-search-form" role="search">
+              <label class="tk-search" for="tk-search"><svg class="icon" aria-hidden="true"><use href="icons.svg#search"></use></svg><input id="tk-search" type="search" maxlength="160" placeholder="What do you need help with?" autocomplete="off" aria-controls="tk-results"><span class="tk-search-hint">Try: confidence, thesis, budget</span></label>
+              <button type="submit" class="tk-search-submit">Search</button>
+            </form>
+            <div id="tk-categories" class="tk-chips" role="group" aria-label="Tool category"></div>
+            <details class="tk-refine"><summary>Refine your search</summary><div class="tk-refine-fields">
+              <label>Tool type<select id="tk-kind"><option value="all">All types</option><option value="builtin">Built-in / Hub</option><option value="external">External services</option><option value="planned">Planned tools</option></select></label>
+              <label>Course connection<select id="tk-course"><option value="all">Any course or everyday use</option><option value="fundamentals">Fundamentals of Statistics</option><option value="statistics">Statistics for Healthcare</option></select></label>
+              <label>Order<select id="tk-sort"><option value="curated">Editor's selection</option><option value="az">Name A–Z</option></select></label>
+            </div></details>
+            <div class="tk-collection-bar"><div class="tk-collections" role="group" aria-label="Collection"><button id="tk-all" type="button" aria-pressed="true">Explore all</button><button id="tk-saved" type="button" aria-pressed="false">Saved <span id="tk-saved-count">0</span></button></div><div class="tk-layout-toggle" role="group" aria-label="Card layout"><button id="tk-grid" type="button" aria-pressed="true" aria-label="Grid view"><svg class="icon" aria-hidden="true"><use href="icons.svg#grid"></use></svg></button><button id="tk-list" type="button" aria-pressed="false" aria-label="List view"><svg class="icon" aria-hidden="true"><use href="icons.svg#list"></use></svg></button></div></div>
+          </section>
+          <section id="tk-lab-feature" class="tk-lab-feature" aria-labelledby="tk-lab-title">
+            <div class="tk-lab-illustration" aria-hidden="true"><svg viewBox="0 0 180 125"><path class="tk-demo-grid" d="M12 25H170M12 60H170M12 95H170M45 12V107M90 12V107M135 12V107"/><path class="tk-demo-area" d="M50 100C65 92 69 28 90 24C112 28 116 91 132 100Z"/><path class="tk-demo-curve" d="M12 102C63 102 61 24 90 24S118 102 170 102"/><path class="tk-demo-bound" d="M50 48V105M132 48V105"/></svg></div>
+            <div><p class="tk-eyebrow">BUILT HERE · AVAILABLE NOW</p><h2 id="tk-lab-title">One lab. Twelve ways to understand.</h2><p>Explore distributions, confidence intervals and tests, with worked steps.</p><div class="tk-lab-actions"><a class="tk-button" href="statistics-lab.html">Open Statistics Lab <span aria-hidden="true">→</span></a><button type="button" id="tk-find-calculators" class="tk-text-button">Browse the calculators</button></div></div>
+          </section>
+          <div class="tk-results-head"><div><p class="tk-eyebrow">A LITTLE LESS SEARCHING</p><h2 id="tk-results-heading" tabindex="-1">Find something useful.</h2></div><button type="button" id="tk-reset" class="tk-text-button" hidden>Clear filters</button></div>
+          <p id="tk-results-summary" class="tk-meta" role="status" aria-live="polite">Loading the catalogue…</p>
+          <section id="tk-available" aria-labelledby="tk-available-title"><div class="tk-subheading"><h3 id="tk-available-title">Available now</h3><span id="tk-available-count" class="tk-count"></span></div><div id="tk-results" class="tk-grid"></div><button type="button" id="tk-more" class="tk-more" hidden>Show more tools</button></section>
+          <section id="tk-planned" class="tk-planned-section" aria-labelledby="tk-planned-title"><div class="tk-subheading"><h3 id="tk-planned-title"><svg class="icon" aria-hidden="true"><use href="icons.svg#clock"></use></svg> On the drawing board</h3><span id="tk-planned-count" class="tk-count"></span></div><p class="tk-meta">Useful ideas for what comes next. These tools are <strong>not available yet</strong>; scope and timing may change.</p><div id="tk-plans" class="tk-grid"></div><button type="button" id="tk-more-plans" class="tk-more" hidden>Explore all planned tools</button></section>
+          <section id="tk-empty" class="tk-empty" hidden><svg class="icon" aria-hidden="true"><use href="icons.svg#search"></use></svg><h3 id="tk-empty-title">No matches yet.</h3><p id="tk-empty-copy">Try a broader word or clear the filters.</p><button type="button" id="tk-empty-reset" class="tk-button">Explore the catalogue</button></section>
+          <noscript><section class="tk-empty"><h2>Open a useful starting point</h2><p>Search, filters and local bookmarks need JavaScript. These links work without it:</p><p><a href="statistics-lab.html">Statistics Lab</a> · <a href="thesis.html">Thesis Explorer</a> · <a href="city-guide.html">City guides</a> · <a href="https://www.zotero.org/" rel="noopener noreferrer">Zotero</a></p><p>Budget planning, the Health Economics Calculator and a standalone Excel assistant are planned, not available here yet.</p></section></noscript>
+        </div>
+        <aside class="tk-sidebar" aria-label="Quick access">
+          <section class="tk-side-card tk-starter"><p class="tk-eyebrow">A GOOD PLACE TO START</p><h2>Small tools.<br>More possibilities.</h2><p class="tk-meta">An editorial selection, not a popularity ranking.</p><div id="tk-starters"></div></section>
+          <section class="tk-side-card" aria-labelledby="tk-favourites-title"><div class="tk-side-heading"><h2 id="tk-favourites-title"><svg class="icon" aria-hidden="true"><use href="icons.svg#bookmark"></use></svg> Your saved tools</h2><button type="button" id="tk-show-saved" class="tk-text-button">View all</button></div><div id="tk-favourites"></div><p class="tk-meta tk-small">Bookmarks stay on this device. Saving a planned tool does not subscribe you to updates.</p></section>
+          <section class="tk-side-card" aria-labelledby="tk-recent-title"><h2 id="tk-recent-title"><svg class="icon" aria-hidden="true"><use href="icons.svg#clock"></use></svg> Recently opened</h2><label class="tk-check"><input id="tk-remember" type="checkbox"> Remember on this device</label><div id="tk-recents"></div><p class="tk-meta tk-small">Off by default. Only tools opened from this page are recorded; nothing is sent to the Hub.</p></section>
+          <section class="tk-side-card tk-next-city"><p class="tk-eyebrow">FOUR CITIES. ONE JOURNEY.</p><h2>Make your next move easier.</h2><p class="tk-meta">Practical guides already available on the Hub.</p><div class="tk-city-links"><a href="city-guide.html?city=bologna">Bologna <span>IT ↗</span></a><a href="city-guide.html?city=oslo">Oslo <span>NO ↗</span></a><a href="city-guide.html?city=innsbruck">Innsbruck <span>AT ↗</span></a><a href="city-guide.html?city=rotterdam">Rotterdam <span>NL ↗</span></a></div></section>
+          <section class="tk-side-card tk-suggest"><svg class="icon" aria-hidden="true"><use href="icons.svg#sparkles"></use></svg><h2>What would make your week easier?</h2><p>Suggest a tool or report an outdated link.</p><a href="contact.html" class="tk-text-link">Share an idea <span aria-hidden="true">→</span></a></section>
+        </aside>
+      </div>
+      <section class="tk-how" id="tk-how" aria-labelledby="tk-how-title"><div><p class="tk-eyebrow">KNOW WHAT YOU'RE OPENING</p><h2 id="tk-how-title">A toolkit, not another login.</h2></div><div class="tk-how-grid"><article><span class="tk-badge tk-badge-builtin">Built-in / Hub</span><h3>Already here.</h3><p>Open existing calculators and workspaces. Educational tools support learning, not unapproved in-exam use.</p></article><article><span class="tk-badge tk-badge-external">External</span><h3>A useful next stop.</h3><p>Provider links are selected and described, not integrated with your account. Review access, costs, privacy and course rules.</p></article><article><span class="tk-badge tk-badge-planned">Planned</span><h3>A direction, not a deadline.</h3><p>Read proposed scope and why it may help. No fake launch buttons, popularity statistics or promised release dates.</p></article></div></section>
+      <details class="tk-maintenance"><summary>Sources, privacy &amp; catalogue notes</summary><p>Provider descriptions were reviewed on <time datetime="2026-10-07">7 October 2026</time>. This is not a live availability or price monitor. Open an entry's details for the provider source. Fees, account requirements, eligibility and features may change. Inclusion is an editorial suggestion, not university endorsement or a commercial partnership.</p><p>Bookmarks and optional recent-tool IDs are saved locally in this browser. No datasets, personal profiles or usage counts are collected by this catalogue. Other pages and external providers have their own privacy practices. Avoid uploading protected teaching materials or confidential data to AI and cloud services without permission.</p><p><a href="privacy.html">Read the Hub privacy page</a> · <button type="button" id="tk-clear-device" class="tk-text-button">Clear Toolkit bookmarks and recent tools</button></p><p>Toolkit preferences are separate from your course progress. Clearing them will not remove your study plan, notes progress or other Hub data.</p></details>
+      <details class="tk-maintenance" id="tk-photo-credits"><summary>Hero photo credits</summary><p>Existing locally hosted city photos, displayed with crops and a colour overlay: Bologna — Vanni Lazzari, 2017, <a href="https://commons.wikimedia.org/wiki/File:Due_Torri_di_Bologna_Asinelli_e_Garisenda.jpg" rel="noopener noreferrer">original</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" rel="noopener noreferrer">CC BY-SA 4.0</a>. Oslo — Øyvind Holmstad, 2014, <a href="https://commons.wikimedia.org/wiki/File:Oslo_Fjord_Oslo_Aker_Brygge_etc.JPG" rel="noopener noreferrer">original</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" rel="noopener noreferrer">CC BY-SA 3.0</a>. Innsbruck — -wuppertaler, 2022, <a href="https://commons.wikimedia.org/wiki/File:AUT_Innsbruck,_Nordkette_005.jpg" rel="noopener noreferrer">original</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" rel="noopener noreferrer">CC BY-SA 4.0</a>. Rotterdam — Trougnouf (Benoit Brummer), 2021, <a href="https://commons.wikimedia.org/wiki/File:Cube_houses_(DSC_3076).jpg" rel="noopener noreferrer">original</a>, <a href="https://creativecommons.org/licenses/by/4.0" rel="noopener noreferrer">CC BY 4.0</a>.</p></details>
+      <p id="tk-storage-warning" class="tk-warning" role="status" hidden>Browser storage is unavailable. Bookmarks work for this page session but may not survive a reload.</p>
+      <p id="tk-feedback" class="tk-sr-only" role="status" aria-live="polite"></p>
+    </div>
+    <dialog id="tk-dialog" aria-labelledby="tk-detail-title"><div class="tk-dialog-shell"><button id="tk-detail-close" type="button" class="tk-icon-button tk-close" aria-label="Close tool details"><svg class="icon" aria-hidden="true"><use href="icons.svg#close"></use></svg></button><div id="tk-detail-content"></div></div></dialog>
+  </main>
+  <footer class="site-footer"><div class="container"><p>EU-HEM Student Hub · Unofficial student project</p></div></footer>
+  <script defer src="utils.js?v=3f08bd92"></script>
+  <script defer src="ui.js?v=6d55e433"></script>
+  <script defer src="search.js?v=65002110"></script>
+  <script defer src="pwa.js?v=c9212bf8"></script>
+  <script defer src="toolkit-data.js?v=77b020fd"></script>
+  <script defer src="toolkit.js?v=d05b11e6"></script>
+</body>
+</html>

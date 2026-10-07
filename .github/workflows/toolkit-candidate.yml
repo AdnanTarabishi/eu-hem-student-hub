@@ -1,0 +1,34 @@
+# Temporary candidate-only integration check. Removed before the main release.
+name: Verify Student Toolkit candidate
+on:
+  push:
+    branches: [work/student-toolkit-20261007]
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+      - name: Apply reviewed integration and update asset fingerprints
+        run: |
+          git apply --check scripts/toolkit-integration.patch
+          git apply scripts/toolkit-integration.patch
+          node scripts/stamp-versions.js
+      - name: Check catalogue, existing lab regressions and site integrity
+        run: |
+          node --test tests/toolkit.test.js tests/statistics-lab-math.test.js tests/statistics-lab-tools.test.js tests/statistics-lab-inference.test.js
+          node scripts/check-content.js
+          node scripts/check-contrast.js
+          git diff --check
+      - name: Commit only the validated integration to this candidate branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- '*.html' site-nav.js search.js sw.js
+          git commit -m 'Integrate Student Toolkit and refresh shared asset fingerprints'
+          git push origin HEAD:refs/heads/work/student-toolkit-20261007
+          echo "CANDIDATE_COMMIT=$(git rev-parse HEAD)"
