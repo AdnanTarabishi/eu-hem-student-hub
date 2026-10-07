@@ -501,7 +501,7 @@ function emptyState(saved, visibleSaved) {
       state.filters.country = [];
       update({ push: true });
       els.mapDetails.open = true;
-      scrollToSection($("sx-map-section"));
+      scrollToSection($("sx-demo-map-section"));
     }));
   }
   const join = el("a", "button button-quiet", "Join the directory");
@@ -1188,7 +1188,6 @@ function wireControls() {
       else setMapView(SX_CONFIG.map.defaultView);
     });
   }
-  $("sx-explore-map").addEventListener("click", () => { els.mapDetails.open = true; });
   const more = $("sx-locked-more");
   more.addEventListener("click", () => {
     const open = more.getAttribute("aria-expanded") !== "true";

@@ -16,7 +16,7 @@ A free, volunteer website for students of the EU-HEM master's program (European 
 - Notes & Resources: student-made notes, flashcards, practice questions and a shared glossary (pilot: Fundamentals in Health Economics)
 - City guides for Bologna, Oslo, Rotterdam and Innsbruck (permits, housing, healthcare, transport, study places and more)
 - **Roadmap & Updates** (`roadmap.html`): what the team is working on now, what comes next, ideas for later and every major release, from `content/roadmap.json` and `content/updates.json` ([docs/roadmap.md](docs/roadmap.md))
-- **Students explorer** (`students.html`): community map, profile cards and list, filters and privacy-aware statistics, currently a **demo with 40 fictional people** (`data/demo-students.json`)
+- **Students explorer** (`students.html`): a country-of-origin atlas from the supplied 2026–2028 aggregate counts, plus profile cards, list, filters and privacy-aware directory statistics. Individual profiles remain a **demo with 40 fictional people** (`data/demo-students.json`)
 - **Editor dashboard** (`admin.html`, not in the menu): approved editors sign in with an emailed link and write announcements and events (shown as Community events on the Calendar page); admins review, publish and manage the team; an activity log records every change. Backend: Supabase (first Phase 2 piece); a robot copies published announcements into `data/announcements.csv` ([docs/editor-dashboard.md](docs/editor-dashboard.md)). Not connected yet: until then announcements still come from the Google Sheet
 - Useful links, including Virtuale for official course materials
 - **Search the whole site** with the 🔍 button, Ctrl+K (⌘K on Mac) or `/`
@@ -44,10 +44,21 @@ My Study List, theme, timetable view, welcome checklist. Nothing is sent anywher
 
 The header, main menu and footer are drawn on every page by `site-nav.js`.
 
-**Homepage settings:** the photo, cohort numbers and programme end date are in one block at the
-top of `home.js` (`HERO_IMAGE`, `STUDENT_COUNT`, `COUNTRY_COUNT`, `TRACK_COUNT`, `PROGRAM_END_DATE`).
+**Homepage settings:** the photo, track count and programme end date are in one block at the
+top of `home.js` (`HERO_IMAGE`, `TRACK_COUNT`, `PROGRAM_END_DATE`).
 For a new photo, put the JPG in `assets/images/` with WebP copies named `<name>-640.webp`,
 `<name>-960.webp` and `<name>-1280.webp`. The photo credit is at the bottom of `index.html`.
+
+**Cohort origins:** `cohort-data.js` is the shared aggregate source for the homepage and the
+interactive atlas on `students.html#sx-map-section`. It contains the supplied 2026–2028
+country-of-origin counts and source notation, “103+2 pax”. The total (105 people), country
+count (24) and continent count (5) are calculated from its 24 country rows. Update those rows
+and the source metadata together; homepage figures and country highlights follow automatically.
+The source does not explain the additional two people, so the interface says “people represented”.
+Its EU, EEA outside the EU and Other countries groups classify countries of origin; they do not
+establish anyone's citizenship or visa status. The homepage uses the local Natural Earth SVG
+and flag atlas, then links to the full interactive overview. Individual profiles remain fictional
+demo data and are independent of these supplied aggregate counts.
 
 **Design system:** the brand palette (terracotta, ink, warm paper) is at the top of `style.css` as
 `--brand-…` variables; every other colour, size, corner and shadow variable builds on it (light and dark mode).
@@ -114,8 +125,9 @@ Sheet columns (any order): `Date | Title | Category | Message | Link | Pinned | 
 - Don't put personal data (phone numbers, private emails) in announcements: the published sheet is public.
 
 ## Students directory and privacy
-The Students explorer (`students.html`) shows **only fictional demo data** in Phase 1
-(`data/demo-students.json`, made by `node scripts/build-demo-students.js`). All privacy rules live in
+Individual profiles in the Students explorer (`students.html`) show **only fictional demo data** in Phase 1
+(`data/demo-students.json`, made by `node scripts/build-demo-students.js`). The separate country-of-origin
+atlas uses the supplied aggregate counts in `cohort-data.js`. All profile privacy rules live in
 `students-data.js`; settings in `students-config.js`. Read [docs/students-explorer.md](docs/students-explorer.md)
 before changing anything. In short:
 - Never export the private registration Sheet to the site (no "Publish to web", CSV, gviz or JSON exports).
