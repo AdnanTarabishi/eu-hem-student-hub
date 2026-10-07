@@ -47,7 +47,7 @@
     source: Object.freeze({
       title: "Countries where you come from",
       notation: "103+2 pax",
-      providedOn: "2026-10-08",
+      providedOn: "2026-10-07",
       note: "Country-of-origin counts supplied for this cohort. The source labels the total ‘103+2 pax’ without explaining the additional two people.",
     }),
     countries: Object.freeze(countries),
