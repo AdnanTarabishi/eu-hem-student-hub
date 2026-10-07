@@ -1,0 +1,1245 @@
+/* Course 96496: a dedicated identity for the Fundamentals overview and course tabs.
+   Every rule is scoped so other courses and the separate Statistics workspaces keep their design. */
+.fund-course-page {
+  --fc-page: var(--surface-page);
+  --fc-card: var(--surface-card);
+  --fc-text: var(--text-primary);
+  --fc-muted: var(--text-secondary);
+  --fc-line: var(--border-default);
+  --fc-soft: #edf3f0;
+  --fc-ink: #17353d;
+  --fc-teal: #25675c;
+  --fc-orange: #a74628;
+  --fc-orange-soft: #fcf0e7;
+  --fc-hero: #142f3c;
+  --fc-hero-text: #f6faf8;
+  --fc-hero-muted: #c2d3d5;
+  --fc-shadow: 0 4px 20px rgb(25 49 45 / 3%);
+  background: var(--fc-page);
+  color: var(--fc-text);
+  font-family: var(--font-sans);
+}
+:root[data-theme="dark"] .fund-course-page {
+  --fc-soft: #203a3c;
+  --fc-ink: #e5f0ec;
+  --fc-teal: #9fd6c4;
+  --fc-orange: #f0b796;
+  --fc-orange-soft: #382d28;
+  --fc-hero: #112a35;
+  --fc-shadow: none;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .fund-course-page {
+    --fc-soft: #203a3c;
+    --fc-ink: #e5f0ec;
+    --fc-teal: #9fd6c4;
+    --fc-orange: #f0b796;
+    --fc-orange-soft: #382d28;
+    --fc-hero: #112a35;
+    --fc-shadow: none;
+  }
+}
+.fund-course-page main.container {
+  max-width: 1320px;
+  padding: 24px 32px 64px;
+}
+.fund-course-page #course-page > .back-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin: 0 0 18px;
+  color: var(--fc-muted);
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+.fund-course-page #course-page > .back-link:hover {
+  color: var(--fc-teal);
+  text-decoration: underline;
+}
+.fund-course-page main h1,
+.fund-course-page main h2,
+.fund-course-page main h3,
+.fund-course-page main h4 {
+  font-family: var(--font-sans);
+  color: var(--fc-ink);
+  line-height: 1.25;
+  letter-spacing: -0.035em;
+}
+.fund-course-page main a {
+  color: var(--fc-teal);
+}
+.fund-course-page main :focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 4px;
+}
+.fund-course-page .fc-header {
+  margin: 0 0 26px;
+}
+.fund-course-page .fc-identity {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 8px 0 24px;
+}
+.fund-course-page .fc-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+  min-height: 44px;
+  color: var(--fc-ink);
+  text-decoration: none;
+}
+.fund-course-page .fc-brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 auto;
+  padding: 10px;
+  border-radius: 13px;
+  background: var(--fc-hero);
+  color: #b4dfcf;
+}
+.fund-course-page .fc-brand-mark svg {
+  display: block;
+  width: 26px;
+  height: 26px;
+}
+.fund-course-page .fc-page-title {
+  margin: 2px 0 25px;
+  max-width: 900px;
+  font-size: clamp(1.6rem, 3vw, 2.35rem);
+  line-height: 1.25;
+  font-weight: 650;
+}
+.fund-course-page .fc-brand-copy {
+  font-size: 0.8rem;
+  line-height: 1.4;
+  font-weight: 750;
+  letter-spacing: 0.09em;
+}
+.fund-course-page .fc-brand-copy small {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.78rem;
+  color: var(--fc-muted);
+  font-weight: 450;
+  letter-spacing: 0;
+}
+.fund-course-page .fc-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  font-size: 0.8rem;
+}
+.fund-course-page .fc-header-actions .save-button {
+  padding: 8px 14px;
+  min-height: 44px;
+  border-radius: 9px;
+  background: var(--fc-card);
+  border-color: var(--fc-line);
+  color: var(--fc-ink);
+  font-size: 0.8rem;
+}
+.fund-course-page .fc-header-actions .save-button[aria-pressed="true"],
+.fund-course-page .fc-header-actions .save-button.is-saved {
+  background: var(--fc-soft);
+  color: var(--fc-teal);
+}
+.fund-course-page .fc-utility-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: none;
+  font-weight: 550;
+}
+.fund-course-page .fc-utility-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.fund-course-page .fc-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 7px;
+  border: 1px solid var(--fc-line);
+  background: var(--fc-card);
+  border-radius: 13px;
+  box-shadow: var(--fc-shadow);
+}
+.fund-course-page .fc-tab {
+  display: block;
+  padding: 10px 15px;
+  min-height: 44px;
+  color: var(--fc-muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  font-weight: 550;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background 160ms ease, color 160ms ease;
+}
+.fund-course-page .fc-tab:hover {
+  background: var(--fc-soft);
+  color: var(--fc-teal);
+}
+.fund-course-page .fc-tab[aria-current="page"] {
+  color: var(--fc-card);
+  background: var(--fc-ink);
+  font-weight: 650;
+}
+.fund-course-page .fc-course-panel {
+  padding: 28px;
+  border-color: var(--fc-line);
+  box-shadow: var(--fc-shadow);
+  color: var(--fc-text);
+}
+.fund-course-page .fc-course-panel.fc-overview {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.fund-course-page .fc-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
+  align-items: center;
+  gap: 48px;
+  padding: clamp(30px, 4vw, 52px);
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-radius: 22px;
+  background: var(--fc-hero);
+  color: var(--fc-hero-text);
+  overflow: hidden;
+}
+.fund-course-page .fc-hero-copy,
+.fund-course-page .fc-evidence {
+  min-width: 0;
+}
+.fund-course-page .fc-kicker {
+  margin: 0 0 10px;
+  color: var(--fc-teal);
+  font-size: 0.72rem;
+  font-weight: 650;
+  line-height: 1.55;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+.fund-course-page .fc-hero .fc-kicker {
+  color: #b0d6c9;
+}
+.fund-course-page .fc-hero-copy h1 {
+  margin: 0 0 22px;
+  color: var(--fc-hero-text);
+  font-size: clamp(2.5rem, 3.8vw, 3.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.055em;
+  font-weight: 650;
+}
+.fund-course-page .fc-hero-copy h1 span {
+  display: block;
+  color: #b1ddcf;
+}
+.fund-course-page .fc-hero-description {
+  max-width: 540px;
+  margin: 0 0 20px;
+  color: var(--fc-hero-muted);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+.fund-course-page .fc-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+  margin: 0 0 25px;
+  color: var(--fc-hero-muted);
+  font-size: 0.78rem;
+}
+.fund-course-page .fc-hero-meta span + span {
+  position: relative;
+}
+.fund-course-page .fc-hero-meta span + span::before {
+  content: "";
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  margin-right: 12px;
+  border-radius: 50%;
+  background: #8ab5ad;
+  vertical-align: middle;
+}
+.fund-course-page .fc-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.fund-course-page a.fc-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 18px;
+  min-height: 46px;
+  border: 1px solid #eab596;
+  border-radius: 9px;
+  background: #efb695;
+  color: #2f241f;
+  font-size: 0.86rem;
+  font-weight: 650;
+  line-height: 1.5;
+  text-decoration: none;
+  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+.fund-course-page a.fc-button:hover {
+  background: #f8c7aa;
+  border-color: #f8c7aa;
+  transform: translateY(-1px);
+}
+.fund-course-page a.fc-button-secondary {
+  background: transparent;
+  border-color: var(--fc-line);
+  color: var(--fc-teal);
+}
+.fund-course-page a.fc-button-secondary:hover {
+  background: var(--fc-soft);
+  border-color: var(--fc-teal);
+}
+.fund-course-page .fc-hero a.fc-button-secondary {
+  border-color: #67858b;
+  color: var(--fc-hero-text);
+}
+.fund-course-page .fc-hero a.fc-button-secondary:hover {
+  background: #24444f;
+  border-color: #a6c4c7;
+}
+.fund-course-page .fc-hero :focus-visible {
+  outline-color: #f3c5a8;
+}
+.fund-course-page .fc-evidence {
+  padding: 26px 25px 22px;
+  border: 1px solid #47606a;
+  border-radius: 15px;
+  background: #1b3a47;
+  color: var(--fc-hero-muted);
+}
+.fund-course-page .fc-evidence-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #41606a;
+  font-size: 0.74rem;
+  line-height: 1.5;
+}
+.fund-course-page .fc-example-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--fc-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: left;
+}
+.fund-course-page .fc-evidence .fc-example-label {
+  color: #bae4d7;
+  font-size: 0.71rem;
+}
+.fund-course-page .fc-evidence-top .fc-example-label {
+  font-size: 0.69rem;
+  text-align: right;
+}
+.fund-course-page .fc-evidence-top .fc-example-label::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #9bdcc7;
+}
+.fund-course-page .fc-hero-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 12px 0;
+  color: #c3d9da;
+  overflow: visible;
+}
+.fund-course-page .fc-hero-chart text {
+  font-family: var(--font-sans);
+}
+.fund-course-page .fc-evidence-result {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  margin: 6px 0 18px;
+  padding: 14px 0;
+  border-block: 1px solid #41606a;
+  font-size: 0.75rem;
+}
+.fund-course-page .fc-evidence-result strong {
+  display: block;
+  margin-top: 3px;
+  color: var(--fc-hero-text);
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.45;
+}
+.fund-course-page .fc-evidence-result > strong {
+  margin-top: 0;
+}
+.fund-course-page .fc-evidence-interval {
+  text-align: right;
+}
+.fund-course-page a.fc-evidence-link {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  color: #bae4d7;
+  font-size: 0.78rem;
+  font-weight: 550;
+  text-decoration: none;
+}
+.fund-course-page a.fc-evidence-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.fund-course-page .fc-evidence > p {
+  margin: 12px 0 0;
+  color: var(--fc-hero-muted);
+  font-size: 0.71rem;
+  line-height: 1.65;
+}
+.fund-course-page .fc-evidence > p.fc-example-label {
+  display: block;
+  margin: 12px 0 5px;
+}
+.fund-course-page .fc-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  padding: 22px 24px;
+  margin: 18px 0 44px;
+  background: var(--fc-card);
+  border: 1px solid var(--fc-line);
+  border-radius: 14px;
+  box-shadow: var(--fc-shadow);
+}
+.fund-course-page .fc-metrics > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding-inline: 24px;
+  border-right: 1px solid var(--fc-line);
+}
+.fund-course-page .fc-metrics > div:first-child {
+  padding-left: 0;
+}
+.fund-course-page .fc-metrics > div:last-child {
+  padding-right: 0;
+  border-right: 0;
+}
+.fund-course-page .fc-metrics dt {
+  color: var(--fc-muted);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+.fund-course-page .fc-metrics dd {
+  order: -1;
+  margin: 0;
+  color: var(--fc-ink);
+  font-size: 1.85rem;
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: -0.045em;
+}
+.fund-course-page .fc-content-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 310px;
+  align-items: start;
+  gap: 30px;
+  margin-bottom: 46px;
+}
+.fund-course-page .fc-learning-column,
+.fund-course-page .fc-sidebar {
+  min-width: 0;
+}
+.fund-course-page .fc-section-heading {
+  margin: 0 0 23px;
+}
+.fund-course-page .fc-section-heading h2 {
+  margin: 0 0 9px;
+  font-size: clamp(1.6rem, 2.15vw, 2rem);
+  font-weight: 650;
+}
+.fund-course-page .fc-section-heading > p:not(.fc-kicker) {
+  max-width: 630px;
+  margin: 0;
+  color: var(--fc-muted);
+  font-size: 0.89rem;
+  line-height: 1.75;
+}
+.fund-course-page .fc-topic-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+.fund-course-page a.fc-topic-card {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  min-width: 0;
+  padding: 23px;
+  background: var(--fc-card);
+  border: 1px solid var(--fc-line);
+  border-radius: 13px;
+  color: var(--fc-text);
+  text-decoration: none;
+  box-shadow: var(--fc-shadow);
+  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+.fund-course-page a.fc-topic-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--fc-teal);
+  box-shadow: 0 7px 20px rgb(25 49 45 / 6%);
+}
+.fund-course-page .fc-topic-top {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.fund-course-page .fc-topic-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 35px;
+  min-height: 35px;
+  padding: 5px;
+  border-radius: 9px;
+  background: var(--fc-soft);
+  color: var(--fc-teal);
+  font-size: 0.78rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+.fund-course-page .fc-status {
+  padding: 4px 8px;
+  border-radius: 5px;
+  background: var(--fc-soft);
+  color: var(--fc-teal);
+  font-size: 0.69rem;
+  line-height: 1.5;
+  font-weight: 550;
+  text-align: right;
+}
+.fund-course-page .fc-topic-card h3 {
+  margin: 0 0 11px;
+  font-size: 1.05rem;
+  line-height: 1.4;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+}
+.fund-course-page .fc-topic-card > p {
+  margin: 0 0 18px;
+  color: var(--fc-muted);
+  font-size: 0.8rem;
+  line-height: 1.75;
+}
+.fund-course-page .fc-topic-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 12px;
+  margin-top: auto;
+  margin-bottom: 18px;
+  color: var(--fc-muted);
+  font-size: 0.72rem;
+  line-height: 1.6;
+}
+.fund-course-page .fc-topic-action {
+  display: block;
+  padding-top: 14px;
+  width: 100%;
+  border-top: 1px solid var(--fc-line);
+  color: var(--fc-teal);
+  font-size: 0.78rem;
+  font-weight: 650;
+}
+.fund-course-page .fc-sidebar {
+  display: grid;
+  gap: 16px;
+}
+.fund-course-page .fc-resume-card,
+.fund-course-page .fc-exam-card,
+.fund-course-page .fc-source-card {
+  min-width: 0;
+  padding: 24px;
+  background: var(--fc-card);
+  border: 1px solid var(--fc-line);
+  border-radius: 13px;
+  box-shadow: var(--fc-shadow);
+}
+.fund-course-page .fc-resume-card {
+  background: var(--fc-soft);
+}
+.fund-course-page .fc-sidebar h3 {
+  margin: 0 0 11px;
+  font-size: 1.15rem;
+  font-weight: 650;
+  line-height: 1.4;
+}
+.fund-course-page .fc-sidebar p:not(.fc-kicker) {
+  margin: 0 0 16px;
+  color: var(--fc-muted);
+  font-size: 0.8rem;
+  line-height: 1.75;
+}
+.fund-course-page .fc-sidebar p.fc-example-label {
+  margin-top: 15px;
+  margin-bottom: 0;
+  font-size: 0.73rem;
+  font-weight: 450;
+  line-height: 1.7;
+}
+.fund-course-page .fc-sidebar .fc-button {
+  width: 100%;
+  padding-inline: 10px;
+  font-size: 0.79rem;
+}
+.fund-course-page .fc-progress-label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 18px;
+  color: var(--fc-muted);
+  font-size: 0.73rem;
+  line-height: 1.55;
+}
+.fund-course-page progress.fc-progress {
+  display: block;
+  width: 100%;
+  height: 5px;
+  margin: 8px 0 4px;
+  border: 0;
+  border-radius: 5px;
+  background: var(--fc-line);
+  accent-color: var(--fc-teal);
+  overflow: hidden;
+}
+.fund-course-page progress.fc-progress::-webkit-progress-bar {
+  background: var(--fc-line);
+  border-radius: 5px;
+}
+.fund-course-page progress.fc-progress::-webkit-progress-value {
+  background: var(--fc-teal);
+  border-radius: 5px;
+}
+.fund-course-page progress.fc-progress::-moz-progress-bar {
+  background: var(--fc-teal);
+  border-radius: 5px;
+}
+.fund-course-page .fc-compact-facts,
+.fund-course-page .fc-module-facts {
+  margin: 16px 0;
+  font-size: 0.79rem;
+}
+.fund-course-page .fc-compact-facts > div,
+.fund-course-page .fc-module-facts > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 8px 0;
+}
+.fund-course-page .fc-compact-facts dt,
+.fund-course-page .fc-module-facts dt {
+  color: var(--fc-muted);
+}
+.fund-course-page .fc-compact-facts dd,
+.fund-course-page .fc-module-facts dd {
+  margin: 0;
+  text-align: right;
+  color: var(--fc-ink);
+  font-weight: 550;
+}
+.fund-course-page .fc-exam-parts {
+  padding: 0;
+  margin: 18px 0;
+  list-style: none;
+  font-size: 0.78rem;
+}
+.fund-course-page .fc-exam-parts li {
+  display: grid;
+  grid-template-columns: 43px minmax(0, 1fr);
+  gap: 10px;
+  padding: 9px 0;
+  border-top: 1px solid var(--fc-line);
+  color: var(--fc-muted);
+  line-height: 1.6;
+}
+.fund-course-page .fc-exam-parts strong {
+  color: var(--fc-teal);
+  font-weight: 650;
+}
+.fund-course-page .fc-exam-date {
+  padding: 14px;
+  margin: 18px 0;
+  border-radius: 8px;
+  background: var(--fc-orange-soft);
+  color: var(--fc-orange);
+  font-size: 0.78rem;
+  line-height: 1.7;
+}
+.fund-course-page .fc-exam-card p.fc-exam-date {
+  margin: 18px 0;
+  color: var(--fc-orange);
+  font-size: 0.78rem;
+  line-height: 1.7;
+}
+.fund-course-page .fc-exam-date strong {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+.fund-course-page .fc-source-card a,
+.fund-course-page .fc-exam-card > a:not(.fc-button),
+.fund-course-page .fc-resume-card > a:not(.fc-button) {
+  font-size: 0.79rem;
+  font-weight: 550;
+  text-underline-offset: 3px;
+}
+.fund-course-page .fc-source-card > a,
+.fund-course-page .fc-exam-card > a:not(.fc-button) {
+  display: flex;
+}
+.fund-course-page .fc-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0 0 46px;
+}
+.fund-course-page a.fc-tool-card {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  position: relative;
+  min-width: 0;
+  padding: 26px;
+  border: 1px solid var(--fc-line);
+  border-radius: 13px;
+  background: var(--fc-card);
+  color: var(--fc-text);
+  text-decoration: none;
+  transition: border-color 180ms ease, transform 180ms ease;
+}
+.fund-course-page a.fc-tool-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--fc-teal);
+}
+.fund-course-page .fc-tool-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 22px;
+  border-radius: 11px;
+  background: var(--fc-soft);
+  color: var(--fc-teal);
+}
+.fund-course-page .fc-tool-icon svg {
+  display: block;
+  width: 23px;
+  height: 23px;
+}
+.fund-course-page .fc-tool-card:nth-child(3n + 2) .fc-tool-icon {
+  background: var(--fc-orange-soft);
+  color: var(--fc-orange);
+}
+.fund-course-page .fc-tool-card h3 {
+  margin: 0 0 10px;
+  padding-right: 12px;
+  font-size: 1.1rem;
+  font-weight: 650;
+}
+.fund-course-page .fc-tool-card > p {
+  margin: 0 0 20px;
+  color: var(--fc-muted);
+  font-size: 0.82rem;
+  line-height: 1.75;
+}
+.fund-course-page .fc-tool-meta {
+  margin-top: auto;
+  color: var(--fc-teal);
+  font-size: 0.75rem;
+  line-height: 1.55;
+  font-weight: 600;
+}
+.fund-course-page .fc-tool-arrow {
+  display: block;
+  width: 100%;
+  margin-top: 18px;
+  padding-top: 13px;
+  border-top: 1px solid var(--fc-line);
+  color: var(--fc-teal);
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.fund-course-page .fc-module-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  margin-bottom: 24px;
+}
+.fund-course-page .fc-module-card {
+  min-width: 0;
+  padding: 28px;
+  background: var(--fc-card);
+  border: 1px solid var(--fc-line);
+  border-radius: 14px;
+}
+.fund-course-page .fc-module-active {
+  border-top: 3px solid var(--fc-teal);
+  padding-top: 26px;
+}
+.fund-course-page .fc-module-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+  color: var(--fc-muted);
+  font-size: 0.73rem;
+  font-weight: 550;
+  line-height: 1.6;
+}
+.fund-course-page .fc-module-top > span:first-child {
+  color: var(--fc-teal);
+  text-transform: uppercase;
+  letter-spacing: 0.075em;
+}
+.fund-course-page .fc-module-top > span:last-child {
+  padding: 3px 8px;
+  border-radius: 5px;
+  background: var(--fc-soft);
+}
+.fund-course-page .fc-module-card h3 {
+  margin: 0 0 12px;
+  font-size: 1.3rem;
+  line-height: 1.35;
+  font-weight: 650;
+}
+.fund-course-page .fc-module-card > p {
+  margin: 0 0 20px;
+  color: var(--fc-muted);
+  font-size: 0.86rem;
+  line-height: 1.75;
+}
+.fund-course-page .fc-module-meta {
+  color: var(--fc-teal);
+  font-size: 0.82rem;
+  font-weight: 550;
+  line-height: 1.65;
+}
+.fund-course-page .fc-module-facts {
+  padding-top: 13px;
+  margin: 18px 0;
+  border-top: 1px solid var(--fc-line);
+}
+.fund-course-page .fc-module-details {
+  margin-top: 18px;
+  padding-top: 15px;
+  border-top: 1px solid var(--fc-line);
+}
+.fund-course-page .fc-module-details summary {
+  min-height: 44px;
+  padding-block: 10px;
+  color: var(--fc-ink);
+  font-size: 0.81rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.fund-course-page .fc-module-details p,
+.fund-course-page .fc-module-details li {
+  color: var(--fc-muted);
+  font-size: 0.82rem;
+  line-height: 1.75;
+}
+.fund-course-page .fc-module-details h4 {
+  margin: 20px 0 8px;
+  font-size: 0.9rem;
+}
+.fund-course-page .fc-module-details ul {
+  padding-left: 19px;
+}
+.fund-course-page .fc-module-resources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-top: 19px;
+}
+.fund-course-page .fc-module-resources a {
+  min-height: 44px;
+  font-size: 0.78rem;
+  font-weight: 550;
+  line-height: 1.65;
+  text-underline-offset: 3px;
+}
+.fund-course-page .fc-plan-wrap {
+  padding: 18px 24px;
+  background: var(--fc-card);
+  border: 1px solid var(--fc-line);
+  border-radius: 12px;
+  color: var(--fc-muted);
+  font-size: 0.82rem;
+}
+.fund-course-page .fc-plan-wrap .plan-status-box {
+  padding: 0;
+  margin: 0;
+  background: transparent;
+}
+.fund-course-page .fc-plan-wrap .plan-status-box a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.fund-course-page .fc-plan-wrap select {
+  max-width: 100%;
+  min-height: 44px;
+  margin-top: 4px;
+  border-color: var(--fc-line);
+  color: var(--fc-text);
+  background: var(--fc-card);
+}
+.fund-course-page .fc-footer-note {
+  margin: 24px 0 0;
+  color: var(--fc-muted);
+  font-size: 0.75rem;
+  line-height: 1.8;
+  text-align: center;
+}
+@media (max-width: 1120px) {
+  .fund-course-page .fc-hero {
+    gap: 28px;
+  }
+  .fund-course-page .fc-content-layout {
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 22px;
+  }
+  .fund-course-page .fc-topic-card {
+    padding: 20px;
+  }
+  .fund-course-page .fc-topic-top {
+    flex-wrap: wrap;
+  }
+  .fund-course-page .fc-evidence {
+    padding: 22px;
+  }
+  .fund-course-page .fc-hero-copy h1 {
+    font-size: 2.9rem;
+  }
+}
+@media (max-width: 900px) {
+  .fund-course-page main.container {
+    padding-inline: 24px;
+  }
+  .fund-course-page .fc-hero {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 34px;
+  }
+  .fund-course-page .fc-hero-copy h1 {
+    max-width: 600px;
+    font-size: 3rem;
+  }
+  .fund-course-page .fc-evidence {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 28px;
+    align-items: center;
+  }
+  .fund-course-page .fc-evidence-top {
+    grid-column: 1 / -1;
+  }
+  .fund-course-page .fc-hero-chart {
+    grid-row: span 3;
+  }
+  .fund-course-page .fc-evidence-result {
+    margin: 14px 0 12px;
+    border-top: 0;
+  }
+  .fund-course-page .fc-content-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .fund-course-page .fc-sidebar {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+    gap: 14px;
+  }
+  .fund-course-page .fc-resume-card,
+  .fund-course-page .fc-exam-card,
+  .fund-course-page .fc-source-card {
+    padding: 20px;
+  }
+  .fund-course-page .fc-topic-top {
+    flex-wrap: nowrap;
+  }
+  .fund-course-page .fc-topic-card h3 {
+    font-size: 1.12rem;
+  }
+  .fund-course-page .fc-metrics > div {
+    padding-inline: 18px;
+  }
+  .fund-course-page .fc-tool-card {
+    padding: 22px;
+  }
+}
+@media (max-width: 700px) {
+  .fund-course-page main.container {
+    padding: 20px 20px 48px;
+  }
+  .fund-course-page .fc-identity {
+    flex-wrap: wrap;
+    gap: 17px;
+    padding-bottom: 19px;
+  }
+  .fund-course-page .fc-header-actions {
+    justify-content: flex-start;
+    gap: 8px 18px;
+  }
+  .fund-course-page .fc-header {
+    margin-bottom: 20px;
+  }
+  .fund-course-page .fc-tabs {
+    gap: 3px;
+    padding: 5px;
+  }
+  .fund-course-page .fc-tab {
+    padding: 9px 12px;
+    font-size: 0.78rem;
+  }
+  .fund-course-page .fc-hero {
+    padding: 28px;
+    border-radius: 17px;
+  }
+  .fund-course-page .fc-hero-copy h1 {
+    font-size: clamp(2.1rem, 5.5vw, 2.9rem);
+  }
+  .fund-course-page .fc-hero-description {
+    font-size: 0.9rem;
+  }
+  .fund-course-page .fc-evidence {
+    display: block;
+  }
+  .fund-course-page .fc-hero-chart {
+    max-height: 210px;
+  }
+  .fund-course-page .fc-evidence-result {
+    border-top: 1px solid #41606a;
+  }
+  .fund-course-page .fc-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 24px;
+    padding: 23px;
+    margin-bottom: 34px;
+  }
+  .fund-course-page .fc-metrics > div {
+    padding: 0;
+    border: 0;
+  }
+  .fund-course-page .fc-metrics dd {
+    font-size: 1.75rem;
+  }
+  .fund-course-page .fc-sidebar {
+    grid-template-columns: 1fr;
+  }
+  .fund-course-page .fc-resume-card,
+  .fund-course-page .fc-exam-card,
+  .fund-course-page .fc-source-card {
+    padding: 23px;
+  }
+  .fund-course-page .fc-tools-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .fund-course-page .fc-module-grid {
+    grid-template-columns: 1fr;
+    gap: 17px;
+  }
+  .fund-course-page .fc-content-layout,
+  .fund-course-page .fc-tools-grid {
+    margin-bottom: 35px;
+  }
+  .fund-course-page .fc-course-panel:not(.fc-overview) {
+    padding: 20px;
+  }
+}
+@media (max-width: 480px) {
+  .fund-course-page main.container {
+    padding-inline: 16px;
+  }
+  .fund-course-page .fc-brand {
+    gap: 11px;
+  }
+  .fund-course-page .fc-brand-copy {
+    font-size: 0.72rem;
+    letter-spacing: 0.065em;
+  }
+  .fund-course-page .fc-brand-copy small {
+    font-size: 0.73rem;
+  }
+  .fund-course-page .fc-brand-mark {
+    width: 42px;
+    height: 42px;
+  }
+  .fund-course-page .fc-header-actions {
+    width: 100%;
+    gap: 6px 15px;
+    font-size: 0.75rem;
+  }
+  .fund-course-page .fc-tab {
+    padding: 8px 11px;
+    min-height: 44px;
+    font-size: 0.76rem;
+  }
+  .fund-course-page .fc-hero {
+    gap: 25px;
+    padding: 24px 20px;
+  }
+  .fund-course-page .fc-kicker {
+    font-size: 0.69rem;
+    letter-spacing: 0.075em;
+  }
+  .fund-course-page .fc-hero-copy h1 {
+    margin-bottom: 18px;
+    font-size: clamp(2.05rem, 8.3vw, 2.6rem);
+    line-height: 1.1;
+  }
+  .fund-course-page .fc-hero-meta {
+    gap: 7px 12px;
+    font-size: 0.73rem;
+  }
+  .fund-course-page .fc-hero-meta span + span::before {
+    margin-right: 8px;
+  }
+  .fund-course-page .fc-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .fund-course-page .fc-actions .fc-button {
+    width: 100%;
+    font-size: 0.81rem;
+  }
+  .fund-course-page .fc-evidence {
+    padding: 19px 16px;
+  }
+  .fund-course-page .fc-evidence-top {
+    gap: 10px;
+    padding-bottom: 13px;
+    font-size: 0.72rem;
+  }
+  .fund-course-page .fc-evidence-result {
+    gap: 12px;
+    font-size: 0.7rem;
+  }
+  .fund-course-page .fc-evidence-result strong {
+    font-size: 1.12rem;
+  }
+  .fund-course-page .fc-metrics {
+    gap: 20px;
+    padding: 22px 20px;
+  }
+  .fund-course-page .fc-metrics dt {
+    font-size: 0.75rem;
+  }
+  .fund-course-page .fc-topic-grid,
+  .fund-course-page .fc-tools-grid {
+    grid-template-columns: 1fr;
+  }
+  .fund-course-page a.fc-topic-card,
+  .fund-course-page a.fc-tool-card {
+    padding: 20px;
+  }
+  .fund-course-page .fc-topic-top {
+    margin-bottom: 14px;
+  }
+  .fund-course-page .fc-topic-card > p {
+    margin-bottom: 14px;
+  }
+  .fund-course-page a.fc-tool-card {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 0 14px;
+  }
+  .fund-course-page .fc-tool-card > p,
+  .fund-course-page .fc-tool-card .fc-tool-meta,
+  .fund-course-page .fc-tool-card .fc-tool-arrow {
+    grid-column: 1 / -1;
+  }
+  .fund-course-page .fc-tool-card > p {
+    margin: 16px 0;
+  }
+  .fund-course-page .fc-topic-card > p,
+  .fund-course-page .fc-tool-card > p {
+    font-size: 0.85rem;
+  }
+  .fund-course-page .fc-tool-icon {
+    margin: 0;
+  }
+  .fund-course-page .fc-tool-card h3 {
+    align-self: center;
+    margin: 0;
+    padding: 0;
+    font-size: 1.15rem;
+  }
+  .fund-course-page .fc-tool-arrow {
+    margin-top: 14px;
+    padding-top: 12px;
+  }
+  .fund-course-page .fc-module-card {
+    padding: 23px;
+  }
+  .fund-course-page .fc-module-active {
+    padding-top: 21px;
+  }
+  .fund-course-page .fc-module-top {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .fund-course-page .fc-module-card h3 {
+    font-size: 1.22rem;
+  }
+  .fund-course-page .fc-module-facts > div {
+    gap: 12px;
+    font-size: 0.76rem;
+  }
+  .fund-course-page .fc-plan-wrap {
+    padding: 18px 20px;
+  }
+  .fund-course-page .fc-footer-note {
+    text-align: left;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fund-course-page *,
+  .fund-course-page *::before,
+  .fund-course-page *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}

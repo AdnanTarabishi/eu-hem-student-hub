@@ -1,6 +1,6 @@
 const http=require('node:http'),fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const {chromium}=require('playwright');
-const root=path.resolve('.'),bank=require('../../content/modules/fund-statistics/questions.json'),extension=require('../../content/modules/fund-statistics/extended-practice.json');
+const root=path.resolve('.'),bank=require('../../content/modules/fund-statistics/questions.json'),extension=require('../../content/modules/fund-statistics/extended-practice.json'),reading=require('../../content/modules/fund-statistics/practical-study.json');
 const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.md':'text/markdown','.svg':'image/svg+xml','.png':'image/png','.woff2':'font/woff2','.webmanifest':'application/manifest+json','.csv':'text/csv'};
 (async()=>{
   const server=http.createServer((req,res)=>{
@@ -34,7 +34,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
       await page.reload();await page.waitForSelector('#answer-feedback');
       assert.equal(await page.locator('input[name="answer"]:checked').inputValue(),String(q.answer.charCodeAt(0)-65));
       if(topic==='fund-statistics.hypothesis-tests') {
-        assert.equal(await page.locator('#lecture-guide section').count(),13);
+        assert.equal(await page.locator('#lecture-guide section').count(),14);
         assert.match(await page.locator('#lecture-guide').textContent(),/All 36 Topic 5 slides/);
         assert.match(await page.locator('#lecture-guide').textContent(),/0.05166/);
         await page.locator('.lecture-toolbar [data-view="explore"]').click();
@@ -46,6 +46,56 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     await page.getByRole('button',{name:/Good/}).click();
     const progress=await page.evaluate(()=>JSON.parse(localStorage.getItem('euhem-progress-v1')));
     assert.equal(Object.keys(progress.cards).filter(k=>k.startsWith('fund-statistics.')).length,1);
+    // Source-based guides: feedback, all 22 questions, published chart endpoints and saved backup.
+    await nav('lab-guides');assert.equal(await page.locator('#fs-guide-choice option').count(),11);
+    assert.equal(await page.locator('#fs-reading-feedback-0').innerText(),'');
+    await page.locator('[data-reading-check="0"]').click();assert.match(await page.locator('#fs-reading-feedback-0').innerText(),/Choose an answer first/);
+    await page.locator('input[name="fs-reading-0"][value="1"]').check();await page.locator('[data-reading-check="0"]').click();
+    assert.match(await page.locator('#fs-reading-feedback-0').innerText(),/Revisit/);
+    await page.locator('input[name="fs-reading-0"][value="0"]').check();assert.equal(await page.locator('#fs-reading-feedback-0').innerText(),'');
+    await page.locator('#fs-oecd-variable').selectOption('3');assert.match(await page.locator('#fs-oecd-comparison').innerText(),/94.9057/);
+    assert.match(await page.locator('#fs-oecd-comparison').innerText(),/Mexico, Brazil, Argentina/);
+    for(const g of reading.guides){
+      await page.locator('#fs-guide-choice').selectOption(g.id);
+      assert.match(await page.locator('#fs-guide-title').innerText(),new RegExp(g.title.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
+      for(let i=0;i<2;i++){
+        await page.locator(`input[name="fs-reading-${i}"][value="${g.questions[i].answer}"]`).check();await page.locator(`[data-reading-check="${i}"]`).click();
+        assert.match(await page.locator('#fs-reading-feedback-'+i).innerText(),/✓ Correct/);
+      }
+      if(g.confidenceExplorer){
+        assert.match(await page.locator('#fs-food-result').innerText(),/5.3055, 8.7153/);
+        await page.locator('#fs-food-confidence').selectOption('.99');assert.match(await page.locator('#fs-food-result').innerText(),/99%/);
+        await page.locator('#fs-food-variable').selectOption('2');assert.match(await page.locator('#fs-food-result').innerText(),/meat/);
+      }
+      if(g.intervals){
+        assert.equal(await page.locator('#fs-report-chart svg circle').count(),g.intervals.length);
+        await page.locator('#fs-report-row').selectOption('1');assert.match(await page.locator('#fs-report-meaning').innerText(),new RegExp(g.intervals[1].label));
+        assert.match(await page.locator('#fs-report-chart svg').getAttribute('aria-label'),/Exact values follow/);
+        for(const width of [320,390,768,1440]){
+          await page.setViewportSize({width,height:1000});
+          await page.waitForFunction(()=>document.documentElement.scrollWidth<=innerWidth+1,{},{timeout:2000});
+          assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${width}px overflow in report ${g.id}`);
+        }
+        if(g.id==='pisa-report'){
+          await page.locator('.fs-source-explorer').screenshot({path:'/workspace/work/statistics/batch-3/report-desktop.png'});
+          await page.setViewportSize({width:390,height:844});await page.locator('.fs-source-explorer').screenshot({path:'/workspace/work/statistics/batch-3/report-mobile.png'});
+          await page.evaluate(()=>document.documentElement.setAttribute('data-theme','dark'));await page.locator('.fs-source-explorer').screenshot({path:'/workspace/work/statistics/batch-3/report-mobile-dark.png'});
+          await page.evaluate(()=>document.documentElement.setAttribute('data-theme','light'));await page.setViewportSize({width:1440,height:1000});
+        }
+      }
+    }
+    assert.match(await page.locator('#fs-reading-progress').innerText(),/22 \/ 22/);
+    let readingBackup=await page.evaluate(()=>JSON.parse(exportProgressText()));
+    assert.equal(Object.keys(readingBackup.progress.statistics['fund-statistics.labs'].answers).length,22);
+    assert.deepEqual(readingBackup.progress.cards,progress.cards);assert.deepEqual(readingBackup.progress.lectures,progress.lectures);
+    await page.reload();await page.waitForSelector('#fs-guide-choice');assert.equal(await page.locator('#fs-guide-choice').inputValue(),'oecd-performance-report');
+    assert.match(await page.locator('#fs-reading-feedback-0').innerText(),/✓ Correct/);
+    await page.locator('#fs-guide-category').selectOption('dataset');assert.equal(await page.locator('#fs-guide-choice option').count(),7);
+    await page.locator('#fs-guide-category').selectOption('report');assert.equal(await page.locator('#fs-guide-choice option').count(),4);
+    await page.goto(base+'fund-statistics.html?guide=sampling-enumeration#lab-guides');await page.waitForSelector('#fs-guide-choice');
+    assert.equal(await page.locator('#fs-guide-choice').inputValue(),'sampling-enumeration');
+    await page.getByRole('link',{name:'Explore the exact sampling distribution'}).click();await page.waitForSelector('[data-activity="fund-sampling"]');
+    await page.goto(base+'fund-statistics.html?guide=unknown#lab-guides');await page.waitForSelector('#fs-guide-choice');assert.equal(await page.locator('#fs-guide-choice').inputValue(),'oecd-lab');
     // New cases check all 36 answers, preserve old quiz/card state and save written drafts.
     await nav('cases');assert.equal(await page.locator('#fs-case-solution').isVisible(),false);
     await page.getByRole('button',{name:'Check answer 1',exact:true}).click();
@@ -118,8 +168,8 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
     await page.locator('#fs-lab').screenshot({path:'/workspace/work/statistics/batch-2/evidence-mobile.png'});
     await page.setViewportSize({width:1440,height:1000});
-    await nav('sources');assert.equal(await page.locator('tbody').nth(1).locator('tr').count(),8);assert.match(await page.locator('#fs-view').innerText(),/before−after/);
-    assert.match(await page.locator('.fs-stats').innerText(),/37 \/ 21/);
+    await nav('sources');assert.equal(await page.locator('tbody').nth(1).locator('tr').count(),17);assert.match(await page.locator('#fs-view').innerText(),/before−after/);
+    assert.match(await page.locator('.fs-stats').innerText(),/53 \/ 37/);
     assert.match(await page.locator('.fs-stats').innerText(),/6 \/ 274/);
     await nav('reference');assert.match(await page.locator('#fs-view').innerText(),/T.DIST.2T/);
     await nav('mock');await page.getByRole('button',{name:'Start 90-minute mock'}).click();
@@ -144,7 +194,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     // Responsive light and dark views have no page-width overflow.
     for(const width of [390,768,1440]) {
       await page.setViewportSize({width,height:900});
-      for(const hash of ['learn','cases','methods','cards','explore','mock','reference','sources']) {
+      for(const hash of ['learn','lab-guides','cases','methods','cards','explore','mock','reference','sources']) {
         await open(hash);
         assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${width}px overflow in ${hash}`);
       }
@@ -161,13 +211,17 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     // After a first online visit the new shell, data and registered activities work offline.
     await page.evaluate(()=>navigator.serviceWorker.ready);await page.reload();await page.waitForSelector('#fs-content:not([hidden])');
     await ctx.setOffline(true);await page.reload();await page.waitForSelector('#fs-content:not([hidden])');await nav('explore');
-    assert.equal(await page.locator('#fs-lab [data-activity]').count(),1);await nav('cases');assert.equal(await page.locator('#fs-case-choice').count(),1);await nav('methods');assert.equal(await page.locator('#fs-method-target').count(),1);await ctx.setOffline(false);
+    assert.equal(await page.locator('#fs-lab [data-activity]').count(),1);await nav('cases');assert.equal(await page.locator('#fs-case-choice').count(),1);await nav('methods');assert.equal(await page.locator('#fs-method-target').count(),1);
+    await nav('lab-guides');assert.equal(await page.locator('#fs-guide-choice option').count(),11);await page.locator('#fs-guide-choice').selectOption('pisa-report');assert.equal(await page.locator('#fs-report-chart svg circle').count(),4);await ctx.setOffline(false);
     assert.deepEqual(errors,[]);await ctx.close();
     const blocked=await browser.newContext();await blocked.addInitScript(()=>{Storage.prototype.setItem=function(){throw new Error('blocked');};});
     const p=await blocked.newPage();await p.goto(base+'fund-statistics.html#mock');await p.waitForSelector('#fs-content:not([hidden])');
     assert.equal(await p.locator('#fs-storage-warning').isVisible(),true);await p.locator('#fs-start-mock').click();assert.match(await p.locator('#fs-view').innerText(),/Session storage is unavailable/);
     await p.locator('.fs-nav a[href="#cases"]').click();await p.locator('#fs-case-answer-0').fill('5');await p.locator('[data-check="0"]').click();assert.match(await p.locator('#fs-case-feedback-0').innerText(),/Correct within/);
     await p.locator('#fs-case-choice').selectOption('extreme-stay');await p.locator('#fs-case-choice').selectOption('stay-summary');assert.equal(await p.locator('#fs-case-answer-0').inputValue(),'5');
-    await blocked.close();console.log('Fundamentals browser passed: expanded six guides, 36 checked case answers/saved reflections/backups, method/design guards, shared quizzes/cards, nine labs, timed mock, mobile/dark/offline and blocked storage.');
+    await p.locator('.fs-nav a[href="#lab-guides"]').click();await p.locator('input[name="fs-reading-0"][value="0"]').check();await p.locator('[data-reading-check="0"]').click();
+    await p.locator('#fs-guide-choice').selectOption('food-lab');await p.locator('#fs-guide-choice').selectOption('oecd-lab');assert.match(await p.locator('#fs-reading-feedback-0').innerText(),/✓ Correct/);
+    await p.locator('.fs-nav a[href="#methods"]').click();await p.locator('.fs-nav a[href="#lab-guides"]').click();assert.match(await p.locator('#fs-reading-feedback-0').innerText(),/✓ Correct/);
+    await blocked.close();console.log('Fundamentals browser passed: 6 expanded guides, 11 lab/report guides, 22 saved reading checks, 36 case checks, chart/table inspection, confidence controls, shared backups, mobile/dark/offline and blocked storage.');
   } finally {await browser.close();server.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});

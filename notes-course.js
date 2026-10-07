@@ -111,6 +111,7 @@ function moduleOfTopic(topicId) {
 // ----- Header -----
 
 function renderHeader(tab, tabs) {
+  if (page.course.id === "fund-quant-methods" && window.FundCourse) return FundCourse.header({ pageLink, course: page.course, settings: page.settings }, tab, tabs);
   if (page.course.id === "quant-methods" && window.QuantMethods) return QuantMethods.header({ pageLink }, tab, tabs);
   if (page.course.id === "fund-health-econ-management" && window.HealthEconManagement) {
     return HealthEconManagement.header({ pageLink, course: page.course }, tab, tabs);
@@ -187,6 +188,11 @@ function renderPage() {
   const panel = createElement("section", "card course-panel");
   coursePage.appendChild(panel);
   const custom =
+    (page.course.id === "fund-quant-methods" &&
+      window.FundCourse &&
+      FundCourse.render(panel, tab, {
+        course: page.course, data: page.data, pageLink, planStatusBox, unibo: page.unibo,
+      })) ||
     (page.course.id === "quant-methods" &&
       window.QuantMethods &&
       QuantMethods.render(panel, tab, {
@@ -306,7 +312,7 @@ function renderOverview(panel) {
       const studyLink = createElement("a", "button", "Open the Fundamentals study workspace →");
       studyLink.href = "fund-statistics.html";
       box.appendChild(studyLink);
-      box.appendChild(createElement("p", "schedule-meta", "Six interactive topic guides · 90 original questions · 60 flashcards · exam preparation. All six topic slide decks reviewed."));
+      box.appendChild(createElement("p", "schedule-meta", `${module.topics.filter(t => t.lecture).length} interactive topic guides · ${module.questions.filter(q => q.type === "mcq").length} original questions · ${module.flashcards.length} flashcards · exam preparation. All six topic slide decks reviewed.`));
     }
     const mf = createElement("dl", "course-facts");
     const add = (label, value) => {
@@ -415,7 +421,7 @@ function renderLectures(panel) {
       const centre = createElement("a", "button", "Fundamentals of Statistics workspace");
       centre.href = "fund-statistics.html";
       panel.appendChild(centre);
-      panel.appendChild(createElement("p", "schedule-meta", "Six topic guides, 90 original questions, 60 flashcards, Excel reference and a 90-minute practice exam. All six topic slide decks have been reviewed."));
+      panel.appendChild(createElement("p", "schedule-meta", `${module.topics.filter(t => t.lecture).length} topic guides, ${module.questions.filter(q => q.type === "mcq").length} original questions, ${module.flashcards.length} flashcards, Excel reference and a 90-minute practice exam. All six topic slide decks have been reviewed.`));
     }
     const list = createElement("ol", "topic-list");
     for (const topic of lectures) {
@@ -463,7 +469,11 @@ function renderTopics(panel, params) {
   const progress = loadProgress();
   panel.appendChild(createElement("h3", null, "Topics"));
   for (const module of page.course.modules) {
-    if (page.course.modules.length > 1) panel.appendChild(createElement("h4", "module-heading", `${module.info.name} (${module.info.code})`));
+    if (page.course.modules.length > 1) {
+      const heading = createElement("h4", "module-heading", `${module.info.name} (${module.info.code})`);
+      heading.id = "module-" + module.id;
+      panel.appendChild(heading);
+    }
     if (module.topics.length === 0) {
       panel.appendChild(createElement("p", "placeholder", "No topics yet."));
       continue;
@@ -816,6 +826,9 @@ async function initCoursePage() {
     }
 
     document.title = `${page.course.info.name} – EU-HEM Student Hub`;
+    if (page.course.id === "fund-quant-methods" && window.FundCourse) {
+      await FundCourse.prepare(read);
+    }
     if (page.course.id === "quant-methods" && window.QuantMethods) {
       await QuantMethods.prepare(page.course.modules.find((m) => m.id === "statistics"), read);
     }

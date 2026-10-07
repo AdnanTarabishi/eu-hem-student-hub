@@ -164,6 +164,90 @@
       "name": "Understandiing notation.docx",
       "duplicate": true,
       "batch": 2
+    },
+    {
+      "name": "NHSR_2024.pdf",
+      "duplicate": false,
+      "batch": 3,
+      "pages": 11
+    },
+    {
+      "name": "PISA-2022_Canadian_Report_EN.pdf",
+      "duplicate": false,
+      "batch": 3,
+      "pages": 252
+    },
+    {
+      "name": "OECD_2025.pdf",
+      "duplicate": false,
+      "batch": 3,
+      "pages": 84
+    },
+    {
+      "name": "NHSR_2024_bis.pdf",
+      "duplicate": false,
+      "batch": 3,
+      "pages": 16
+    },
+    {
+      "name": "DESCRIPTIVE STATISTICS LAB_answers.docx",
+      "duplicate": false,
+      "batch": 3
+    },
+    {
+      "name": "Exercise Variance and Adjusted Variance (1).xlsx",
+      "duplicate": false,
+      "batch": 3
+    },
+    {
+      "name": "Food.xlsx",
+      "duplicate": false,
+      "batch": 3
+    },
+    {
+      "name": "Exercise Variance and Adjusted Variance_ with answers.xlsx",
+      "duplicate": false,
+      "batch": 3
+    },
+    {
+      "name": "OECD (3).xlsx",
+      "duplicate": false,
+      "batch": 3
+    },
+    {
+      "name": "OECD_with answers.xlsx",
+      "duplicate": false,
+      "batch": 3
+    },
+    {
+      "name": "DESCRIPTIVE STATISTICS LAB (3).docx",
+      "duplicate": false,
+      "batch": 3
+    },
+    {
+      "name": "Birthweight_Estriol.xlsx",
+      "duplicate": false,
+      "batch": 3
+    },
+    {
+      "name": "Othitis.xlsx",
+      "duplicate": false,
+      "batch": 3
+    },
+    {
+      "name": "List of 25 independent samples from a 5 units population (2).xlsx",
+      "duplicate": false,
+      "batch": 3
+    },
+    {
+      "name": "Cholesterol measurements_example (1).xlsx",
+      "duplicate": false,
+      "batch": 3
+    },
+    {
+      "name": "INFERENTIAL STATISTICS LAB.docx",
+      "duplicate": false,
+      "batch": 3
     }
   ],
   "workbooks": [
@@ -214,10 +298,64 @@
       "n": "A:10; B:10; C:11 values",
       "example": "Means A=16.6; B=27.6; C=18.72727",
       "note": "Select observations only (rows 2–11 for A/B and 2–12 for C); answer/summary rows below are not observations."
+    },
+    {
+      "name": "Exercise Variance and Adjusted Variance (1).xlsx",
+      "n": "8 measurements",
+      "example": "Mean=170.25; VAR.P=567.1875; VAR.S=648.2143",
+      "note": "Data!B2:B9; measurement unit not stated."
+    },
+    {
+      "name": "Exercise Variance and Adjusted Variance_ with answers.xlsx",
+      "n": "8 measurements",
+      "example": "Squared-deviation sum=4537.5; STDEV.S=25.4601",
+      "note": "Answer variant independently verified; absolute mean reference when copying deviations."
+    },
+    {
+      "name": "Food.xlsx",
+      "n": "50 adults",
+      "example": "Fruit mean=7.0104 £; 90% CI=[5.3055,8.7153] £",
+      "note": "Data rows 2–51; keep zeros; t df=49; total-expense VAR.S=2603.2557 £²."
+    },
+    {
+      "name": "OECD (3).xlsx",
+      "n": "38 countries; n varies",
+      "example": "SUICIDE mean=10.6053; CHILDVACCIN mean=93.5974%",
+      "note": "Rows 2–39. Missing cells are not zero. Name the quartile convention."
+    },
+    {
+      "name": "OECD_with answers.xlsx",
+      "n": "38 reordered country rows",
+      "example": "CHILDVACCIN correctly filtered n=35, mean=94.9057%",
+      "note": "Raw values match; answer formulas/outlier list have documented discrepancies."
+    },
+    {
+      "name": "Birthweight_Estriol.xlsx",
+      "n": "15 paired records",
+      "example": "r=0.7175; COVARIANCE.P=1.2111",
+      "note": "B2:C16. Keep corresponding pairs; birthweight kg, estriol unit unspecified."
+    },
+    {
+      "name": "Othitis.xlsx",
+      "n": "7 possible counts, 0–6",
+      "example": "E(X)=2.038; Var(X)=1.966556; P(X≥3)=.336",
+      "note": "Probability model, not a seven-observation sample; total probability=1."
+    },
+    {
+      "name": "List of 25 independent samples from a 5 units population (2).xlsx",
+      "n": "25 ordered size-two outcomes",
+      "example": "E(X̄)=6.2; Var(X̄)=4.88; average S²=9.76",
+      "note": "Exact enumeration with replacement, not 25 new empirical observations."
+    },
+    {
+      "name": "Cholesterol measurements_example (1).xlsx",
+      "n": "Two samples of 5",
+      "example": "Both means=200; VAR.P=272 versus 31.6",
+      "note": "B3:B7 and H3:H7. Equal n does not establish pairing; distinct from CHOLESTEROL.xlsx."
     }
   ],
   "findings": [
-    "Across two batches, 37 uploads represent 21 distinct files. The second batch adds the 36-slide Topic 5 deck and repeats 14 previously reviewed files with identical byte-level hashes.",
+    "Across three batches, 53 uploads represent 37 distinct files. The 16 third-batch files are new; earlier repeated uploads were byte-identical. All workbook sheets were inspected and key report methods/tables reviewed from full-text extraction (363 PDF pages).",
     "The current Exercise Book contains 64 exercises. Some slide exercise references are offset; the pathway uses the current book numbering.",
     "Topic 1 percentile convention and Excel QUARTILE.INC use different definitions. A numerical difference need not be a calculation error.",
     "Topic 3 uses a rounded population variance of 9.8 for the five-unit example; exact calculation gives 9.76. Exact with-replacement mean variance is 4.88.",
@@ -232,6 +370,38 @@
     "All six topic slide decks are now supplied: 274 slides in total. The complete mock paper and referenced lab/research files listed below remain outstanding.",
     "Topic 5 slide 35 suggests using a proportion confidence interval for the test. The usual Wald interval and null-based proportion test use different SEs and need not agree exactly; the guide includes an original numerical counterexample.",
     "Topic 5 slides 32 and 36 reference older exercise ranges (50–55 and 56–59). The uploaded 2026/27 book places Topic 5 exercises at 51–60; use the current book numbering.",
-    "Topic 5 slide 29 displays the t(64) two-sided p-value for t=2.1 as 0.04. Its unrounded value is approximately 0.03968; make decisions before rounding."
+    "Topic 5 slide 29 displays the t(64) two-sided p-value for t=2.1 as 0.04. Its unrounded value is approximately 0.03968; make decisions before rounding.",
+    "OECD: raw country values match the Answers sheet after reordering. Variables have different nonmissing counts. Sheet1!B42 reverses its upper/lower conditions and includes summary rows; its cached result is #DIV/0!.",
+    "OECD CHILDVACCIN: the stated QUARTILE.INC fences flag Mexico as well as Brazil and Argentina. A variable-specific exclusion of all three gives n=35, mean=94.9057%; the supplied filtered workbook retains Mexico and the Word table differs. The lab guide documents the discrepancy rather than treating that table as an independent answer key.",
+    "Food: all 50 rows, including numerical zeros, enter the checks. Unknown-σ 90% mean intervals use adjusted SD, SE=s/√50 and t(.95,49)=1.6765509. Total expenditure VAR.S=2603.2557 £².",
+    "The cholesterol measurements_example workbook is distinct from CHOLESTEROL.xlsx: its two n=5 samples both have mean 200 but different variances. Their pairing/independence design is not stated.",
+    "NHSR 211 reports weighted visits (not unique people); NHSR 209 uses complex-survey Korn–Graubard intervals. Keep their published intervals and denominators.",
+    "PISA Table B.1.2 includes a dependent Quebec−Canada contrast with its own SE. Appendix A flags possible student nonresponse bias. OECD 2025 uses Tukey family-wise difference intervals; neither report supports causal claims from group associations."
+  ],
+  "reports": [
+    {
+      "name": "NHSR_2024.pdf",
+      "title": "Health-centre visits: define the denominator",
+      "citation": "NCHS, National Health Statistics Reports No. 211, Visits to Health Centers Among Adults, by Selected Characteristics: United States, 2022 (22 October 2024), Table 1, PDF p. 7; methods pp. 2–3.",
+      "guide": "health-centre-report"
+    },
+    {
+      "name": "NHSR_2024_bis.pdf",
+      "title": "Medication use: proportions in a complex survey",
+      "citation": "NCHS, National Health Statistics Reports No. 209, Prescription Medication Use, Coverage, and Nonadherence Among Adults Age 65 and Older: United States, 2021–2022 (5 September 2024), Table 1, PDF p. 8; methods pp. 2–3.",
+      "guide": "medication-report"
+    },
+    {
+      "name": "PISA-2022_Canadian_Report_EN.pdf",
+      "title": "PISA: mean, SE and a dependent comparison",
+      "citation": "Measuring Up: Canadian Results of the OECD PISA 2022 Study, Box 1 PDF p. 27 (printed p. 13), Table B.1.2 PDF p. 126 (printed p. 112), Appendix A PDF pp. 115–120.",
+      "guide": "pisa-report"
+    },
+    {
+      "name": "OECD_2025.pdf",
+      "title": "Health systems: intervals do not make a league table",
+      "citation": "OECD / The Health Foundation (2025), How Do Health System Features Influence Health System Performance?, Table 2.1 PDF p. 23 (printed p. 21); Figure 2.6 p. 24; Table 2.3 p. 26. DOI: 10.1787/7b877762-en. Selected numerical rows and original teaching plot; source CC BY 4.0, no endorsement implied.",
+      "guide": "oecd-performance-report"
+    }
   ]
 }

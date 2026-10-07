@@ -162,3 +162,15 @@ Five observed stays are 2, 4, 4, 5 and 10 days. A corrected record changes the f
 
 [Choose a method interactively](fund-statistics.html#methods).
 <!-- /Extended original practice -->
+
+
+## Use the new workbooks to check centre, spread and association
+
+The OECD lab has 38 countries, with variable-specific nonmissing counts from 25 to 38. Its checked full-data table uses STDEV.P and QUARTILE.INC. The lower CHILDVACCIN fence 83.1375 flags Mexico, Brazil and Argentina; the supplied answer list omits Mexico. Investigate outliers and show exclusions as a sensitivity analysis.
+
+The standalone cholesterol example has two n=5 samples with mean 200 but descriptive variances 272 and 31.6. Birthweight–estriol has 15 linked records and r≈0.7175. Preserve the rows and distinguish positive linear association from causation.
+
+- [OECD: describe countries, then investigate outliers](fund-statistics.html?guide=oecd-lab#lab-guides)
+- [Two cholesterol samples: same mean, different spread](fund-statistics.html?guide=cholesterol-spread#lab-guides)
+- [Birthweight and estriol: preserve the pairs](fund-statistics.html?guide=birthweight-association#lab-guides)
+- [Variance: why n and n−1 give different answers](fund-statistics.html?guide=variance-lab#lab-guides)

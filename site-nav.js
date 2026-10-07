@@ -28,7 +28,7 @@ const SITE_MENU = [
     label: "Resources",
     items: [
       { key: "notes", label: "Notes & Resources", href: "notes.html", icon: "notes", desc: "Notes, flashcards and practice" },
-      { key: "thesis", label: "Thesis Explorer", href: "thesis.html", icon: "library", desc: "Find inspiration in past topics" },
+      { key: "thesis", label: "Thesis Explorer", href: "thesis.html", icon: "library", desc: "Plan your research, explore topics" },
       { key: "links", label: "Official links", href: "index.html#links", icon: "link", desc: "Virtuale, Studenti Online and more" },
     ],
   },

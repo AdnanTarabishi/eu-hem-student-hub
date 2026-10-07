@@ -1,100 +1,141 @@
-// ===== Timetable page =====
-// Loads the 1st-year timetable live from UniBo (address in content/programme.json).
-// Two views: Week (Mon-Fri grid) and List (grouped by day). "Now / Next" bar at the top.
-// Course names come from programme.json. With a saved study plan, "My courses only" shows just your courses.
-
+// Academic planner: official UniBo classes, with a weekly calendar and searchable agenda.
 const scheduleList = document.getElementById("schedule-list");
 const scheduleStatus = document.getElementById("schedule-status");
 const courseFilter = document.getElementById("course-filter");
+const classSearch = document.getElementById("timetable-search");
 const showPastCheckbox = document.getElementById("show-past");
 const VIEW_KEY = "euhem-timetable-view";
+const timetable = { programme: null, index: null, sessions: [], ready: false,
+  view: readStorage(VIEW_KEY, window.innerWidth < 640 ? "list" : "week") === "list" ? "list" : "week",
+  weekStart: weekStartOf(Planner.clock().slice(0, 10)), lastClock: "" };
 
-const timetable = { programme: null, index: null, sessions: [], view: "week", weekStart: null };
-
-// Classes that pass the filters (course, My courses only)
 function filteredSessions() {
-  const { programme, index } = timetable;
-  const mine = myCoursesOnly(programme) ? new Set(myModuleCodes(programme)) : null;
-  const courseId = courseFilter.value;
-  return timetable.sessions.filter((session) => {
+  const mine = myCoursesOnly(timetable.programme) ? new Set(myModuleCodes(timetable.programme)) : null;
+  const query = simplify(classSearch.value.trim());
+  return timetable.sessions.filter(session => {
     if (mine && !mine.has(session.moduleCode)) return false;
-    if (courseId && (index.modulesByCode[session.moduleCode] || {}).course?.id !== courseId) return false;
-    return true;
+    if (courseFilter.value && timetable.index.modulesByCode[session.moduleCode]?.course.id !== courseFilter.value) return false;
+    return !query || simplify([sessionLabel(session, timetable.index), session.room, session.teacher, session.note,
+      session.online ? "online" : ""].join(" ")).includes(query);
   });
 }
 
 function courseColorOf(session) {
-  const found = timetable.index.modulesByCode[session.moduleCode];
-  return (found && found.course.color) || "var(--color-primary)";
+  return timetable.index.modulesByCode[session.moduleCode]?.course.color || "var(--color-primary)";
 }
 
-// ----- "Now / Next" bar -----
-
-function renderNowNext() {
-  const box = document.getElementById("now-next");
-  const sessions = filteredSessions();
-  const { now, next } = nowAndNext(sessions, localIso(new Date()));
-  box.innerHTML = "";
-  box.hidden = !now && !next;
-  const card = (label, session, className) => {
-    const item = createElement("div", `now-next-item ${className}`);
-    item.style.setProperty("--course-color", courseColorOf(session));
-    item.appendChild(createElement("span", "now-next-label", label));
-    item.appendChild(createElement("strong", null, sessionLabel(session, timetable.index)));
-    const when = session.dateKey === todayKey() ? session.time : `${formatDay(session.dateKey, { weekday: "short", day: "numeric", month: "short" })} · ${session.time}`;
-    item.appendChild(createElement("span", "schedule-meta", `${when}${session.room ? " · " + session.room.split(",")[0] : ""}`));
-    return item;
-  };
-  if (now) box.appendChild(card("Now", now, "is-now"));
-  if (next) box.appendChild(card(now ? "Next" : "Next class", next, "is-next"));
-}
-
-// ----- List view -----
-
-function renderList() {
-  const today = todayKey();
-  const visible = filteredSessions().filter((s) => showPastCheckbox.checked || s.dateKey >= today);
-  scheduleList.innerHTML = "";
-  const mine = myCoursesOnly(timetable.programme);
-  scheduleStatus.textContent = visible.length
-    ? `${visible.length} classes${mine ? " for your courses" : ""}.`
-    : "No classes to show for this selection.";
-  if (visible.length) scheduleList.appendChild(scheduleDays(visible, timetable.index, today));
-}
-
-// ----- Week view -----
-
-function shiftWeek(weeks) {
-  const date = new Date(timetable.weekStart + "T12:00:00");
-  date.setDate(date.getDate() + weeks * 7);
-  timetable.weekStart = dateToKey(date);
+function resetTimetableFilters() {
+  courseFilter.value = "";
+  classSearch.value = "";
+  showPastCheckbox.checked = false;
   render();
 }
 
-function renderWeekNav() {
-  const nav = document.getElementById("week-nav");
-  nav.innerHTML = "";
-  const end = new Date(timetable.weekStart + "T12:00:00");
-  end.setDate(end.getDate() + 4);
-  nav.appendChild(iconButton("Previous week", "chevron-left", { iconOnly: true, onClick: () => shiftWeek(-1) }));
-  nav.appendChild(createElement("strong", "week-label",
-    `${formatDay(timetable.weekStart, { day: "numeric", month: "short" })} – ${formatDay(dateToKey(end), { day: "numeric", month: "short", year: "numeric" })}`));
-  nav.appendChild(iconButton("Next week", "chevron-right", { iconOnly: true, onClick: () => shiftWeek(1) }));
-  const thisWeek = weekStartOf(defaultWeekDay());
-  if (timetable.weekStart !== thisWeek) {
-    const back = createElement("button", "inline-link", "This week");
-    back.type = "button";
-    back.addEventListener("click", () => { timetable.weekStart = thisWeek; render(); });
-    nav.appendChild(back);
+function weekSessions() {
+  const end = Planner.addDays(timetable.weekStart, 6);
+  return filteredSessions().filter(s => s.dateKey >= timetable.weekStart && s.dateKey <= end);
+}
+
+function listSessions(now) {
+  return filteredSessions().filter(s => showPastCheckbox.checked || s.end > now);
+}
+
+function renderNowNext(now) {
+  const box = document.getElementById("now-next");
+  // Automatic updates must not remove a class button that holds keyboard focus.
+  if (box.contains(document.activeElement)) return;
+  const { now: current, next } = nowAndNext(filteredSessions(), now);
+  box.replaceChildren();
+  for (const [label, session, state] of [["Happening now", current, "is-now"], ["Next class", next, "is-next"]]) {
+    if (!session) continue;
+    const item = createElement("button", `now-next-item ${state}`);
+    item.type = "button";
+    item.style.setProperty("--course-color", courseColorOf(session));
+    item.append(createElement("span", "now-next-label", label),
+      createElement("strong", null, sessionLabel(session, timetable.index)));
+    const day = session.dateKey === now.slice(0, 10) ? "Today" : formatDay(session.dateKey, { weekday: "short", day: "numeric", month: "short" });
+    item.appendChild(createElement("span", "schedule-meta", `${day} · ${session.time}`));
+    item.appendChild(createElement("span", "schedule-meta", session.online ? "Online class" : session.room.split(",")[0] || "Room to be confirmed"));
+    item.addEventListener("click", () => showSessionDetails(session));
+    box.appendChild(item);
+  }
+  if (!current && !next) box.appendChild(createElement("p", "planning-next-meta", "No upcoming classes for this selection. Browse another week or clear your filters."));
+}
+
+function renderSummary(sessions) {
+  const hours = sessions.reduce((sum, s) => sum + (Date.parse(s.end + "Z") - Date.parse(s.start + "Z")) / 3600000, 0);
+  const courses = new Set(sessions.map(s => timetable.index.modulesByCode[s.moduleCode]?.course.id || s.moduleCode));
+  const scope = myCoursesOnly(timetable.programme) ? "Your study plan" : "All courses";
+  const range = timetable.view === "week" ? "Selected week" : showPastCheckbox.checked ? "Full agenda" : "Upcoming agenda";
+  Planner.summary(document.getElementById("timetable-summary"), [
+    { label: "Classes in view", value: sessions.length, note: `${range} · ${scope}` },
+    { label: "Teaching hours", value: `${Number(hours.toFixed(1))} h`, note: "Total scheduled class time" },
+    { label: "Courses in view", value: courses.size, note: "Course colours connect your schedule" },
+  ]);
+  const legend = document.getElementById("timetable-legend");
+  legend.replaceChildren();
+  const seen = new Set();
+  for (const session of sessions) {
+    const course = timetable.index.modulesByCode[session.moduleCode]?.course;
+    const key = course?.id || session.moduleCode;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    const item = createElement("span", "planning-legend-item", course?.name || sessionLabel(session, timetable.index));
+    item.style.setProperty("--course-color", courseColorOf(session));
+    legend.appendChild(item);
   }
 }
 
-// On Saturday/Sunday, "this week" means the coming week
-function defaultWeekDay() {
-  const today = new Date();
-  if (today.getDay() === 6) today.setDate(today.getDate() + 2);
-  if (today.getDay() === 0) today.setDate(today.getDate() + 1);
-  return dateToKey(today);
+function noClasses(title, text) {
+  Planner.empty(scheduleList, { title, text, onReset: resetTimetableFilters });
+  if (timetable.view !== "week") return;
+  const next = filteredSessions().find(s => s.dateKey > Planner.addDays(timetable.weekStart, 6));
+  if (next) scheduleList.querySelector(".item-actions").appendChild(iconButton("Next week with classes", "arrow-right", {
+    onClick: () => { timetable.weekStart = weekStartOf(next.dateKey); render(); },
+  }));
+}
+
+function renderList(sessions, now) {
+  scheduleList.replaceChildren();
+  scheduleStatus.textContent = sessions.length ? `${sessions.length} ${sessions.length === 1 ? "class" : "classes"} · ${showPastCheckbox.checked ? "including past classes" : "upcoming and in progress"}.` : "No classes for this selection.";
+  if (!sessions.length) return noClasses("A little breathing room.", "No classes match this agenda. Try another course or search, or include past classes. If My courses only is on, check your study plan.");
+  const groups = new Map();
+  for (const session of sessions) {
+    if (!groups.has(session.dateKey)) groups.set(session.dateKey, []);
+    groups.get(session.dateKey).push(session);
+  }
+  for (const [day, classes] of groups) {
+    const section = createElement("section", `agenda-day${day === now.slice(0, 10) ? " is-today" : ""}`);
+    const head = createElement("div", "agenda-day-head");
+    const date = createElement("time", "agenda-date-badge", formatDay(day, { day: "2-digit", month: "short" }));
+    date.dateTime = day;
+    date.setAttribute("aria-label", formatDay(day));
+    head.appendChild(date);
+    head.appendChild(createElement("h3", null, day === now.slice(0, 10) ? "Today" : formatDay(day, { weekday: "long" })));
+    head.appendChild(createElement("span", "schedule-meta", `${classes.length} ${classes.length === 1 ? "class" : "classes"}`));
+    section.appendChild(head);
+    for (const session of classes) {
+      const item = createElement("article", "agenda-item");
+      item.style.setProperty("--course-color", courseColorOf(session));
+      const time = createElement("div", "agenda-time", session.time);
+      if (session.start <= now && session.end > now) time.appendChild(createElement("span", "badge", "Now"));
+      const details = createElement("div", "agenda-details");
+      details.appendChild(createElement("h4", null, sessionLabel(session, timetable.index)));
+      if (session.online) details.appendChild(createElement("span", "badge", "Online"));
+      for (const text of [session.room || (session.online ? "Online class" : "Room to be confirmed"), session.teacher, session.note]) {
+        if (text) details.appendChild(createElement("p", "agenda-meta", text));
+      }
+      details.appendChild(sessionActions(session, timetable.index));
+      item.append(time, details);
+      section.appendChild(item);
+    }
+    scheduleList.appendChild(section);
+  }
+}
+
+function updateWeekControls(dayCount) {
+  document.getElementById("week-label").textContent = `${formatDay(timetable.weekStart, { day: "numeric", month: "short" })} – ${formatDay(Planner.addDays(timetable.weekStart, dayCount - 1), { day: "numeric", month: "short", year: "numeric" })}`;
+  document.getElementById("week-picker").value = timetable.weekStart;
 }
 
 function showSessionDetails(session) {
@@ -102,43 +143,40 @@ function showSessionDetails(session) {
   if (!dialog) {
     dialog = createElement("dialog", "session-dialog");
     dialog.id = "session-dialog";
-    dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
+    dialog.setAttribute("aria-labelledby", "session-detail-title");
+    dialog.addEventListener("click", event => { if (event.target === dialog) dialog.close(); });
     document.body.appendChild(dialog);
   }
-  dialog.innerHTML = "";
-  const close = iconButton("Close", "close", { iconOnly: true, className: "dialog-close", onClick: () => dialog.close() });
-  dialog.appendChild(close);
-  dialog.appendChild(createElement("h2", null, sessionLabel(session, timetable.index)));
-  dialog.appendChild(createElement("p", null, `${formatDay(session.dateKey)} · ${session.time}`));
-  for (const text of [session.room, session.teacher, session.note, session.online ? "Online" : ""]) {
-    if (text) dialog.appendChild(createElement("p", "schedule-meta", text));
+  dialog.replaceChildren(iconButton("Close", "close", { iconOnly: true, className: "dialog-close", onClick: () => dialog.close() }));
+  dialog.appendChild(createElement("p", "section-eyebrow", "Class details"));
+  const heading = createElement("h2", null, sessionLabel(session, timetable.index));
+  heading.id = "session-detail-title";
+  dialog.append(heading, createElement("p", "planning-detail-date", `${formatDay(session.dateKey)} · ${session.time}`));
+  const grid = createElement("div", "session-detail-grid");
+  for (const [label, value] of [["Location", session.room || (session.online ? "Online class" : "Room to be confirmed")], ["Teacher", session.teacher], ["Format", session.online ? "Online" : "On campus"], ["Notes", session.note]]) {
+    if (!value) continue;
+    const detail = createElement("div", "session-detail");
+    detail.append(createElement("span", null, label), createElement("strong", null, value));
+    grid.appendChild(detail);
   }
-  dialog.appendChild(sessionActions(session, timetable.index));
+  dialog.append(grid, createElement("p", "schedule-meta", "Bologna time · Check UniBo for last-minute changes."), sessionActions(session, timetable.index));
   dialog.showModal();
 }
 
-function renderWeek() {
-  renderWeekNav();
-  const days = [0, 1, 2, 3, 4].map((offset) => {
-    const date = new Date(timetable.weekStart + "T12:00:00");
-    date.setDate(date.getDate() + offset);
-    return dateToKey(date);
-  });
-  const sessions = filteredSessions().filter((s) => days.includes(s.dateKey));
-  const today = todayKey();
-  scheduleList.innerHTML = "";
-  const mine = myCoursesOnly(timetable.programme);
-  scheduleStatus.textContent = sessions.length
-    ? `${sessions.length} classes this week${mine ? " for your courses" : ""}. Click a class for details.`
-    : "No classes this week.";
-
-  // Hours shown: 8:00-19:00, stretched if a class starts earlier or ends later
-  const first = Math.min(8, ...sessions.map((s) => Math.floor(hourOf(s.start))));
-  const last = Math.max(19, ...sessions.map((s) => Math.ceil(hourOf(s.end))));
+function renderWeek(sessions, now) {
+  const dayCount = sessions.some(s => s.dateKey === Planner.addDays(timetable.weekStart, 6)) ? 7 : sessions.some(s => s.dateKey === Planner.addDays(timetable.weekStart, 5)) ? 6 : 5;
+  updateWeekControls(dayCount);
+  scheduleList.replaceChildren();
+  scheduleStatus.textContent = sessions.length ? `${sessions.length} ${sessions.length === 1 ? "class" : "classes"} in this week. Select a class for details.` : "No classes in this week.";
+  if (!sessions.length) return noClasses("No classes in this week.", "Explore another week or adjust your filters. Only published UniBo classes appear here.");
+  const first = Math.min(8, ...sessions.map(s => Math.floor(hourOf(s.start))));
+  const last = Math.max(19, ...sessions.map(s => Math.ceil(hourOf(s.end))));
   const span = last - first;
-
   const grid = createElement("div", "week-grid");
   grid.style.setProperty("--hours", String(span));
+  grid.style.setProperty("--days", String(dayCount));
+  grid.dataset.first = first;
+  grid.dataset.span = span;
   const times = createElement("div", "week-times");
   times.appendChild(createElement("div", "week-day-head"));
   const timeBody = createElement("div", "week-body");
@@ -149,15 +187,14 @@ function renderWeek() {
   }
   times.appendChild(timeBody);
   grid.appendChild(times);
-
-  for (const day of days) {
-    const column = createElement("div", day === today ? "week-day is-today" : "week-day");
+  for (let offset = 0; offset < dayCount; offset++) {
+    const day = Planner.addDays(timetable.weekStart, offset);
+    const column = createElement("div", `week-day${day === now.slice(0, 10) ? " is-today" : ""}`);
+    column.dataset.date = day;
     const head = createElement("div", "week-day-head");
-    head.appendChild(createElement("strong", null, formatDay(day, { weekday: "short" })));
-    head.appendChild(createElement("span", null, formatDay(day, { day: "numeric", month: "short" })));
-    column.appendChild(head);
+    head.append(createElement("strong", null, formatDay(day, { weekday: "short" })), createElement("span", null, formatDay(day, { day: "numeric", month: "short" })));
     const body = createElement("div", "week-body");
-    for (const { session, lane, lanes } of layoutDay(sessions.filter((s) => s.dateKey === day))) {
+    for (const { session, lane, lanes } of layoutDay(sessions.filter(s => s.dateKey === day))) {
       const block = createElement("button", "week-block");
       block.type = "button";
       block.style.top = `${((hourOf(session.start) - first) / span) * 100}%`;
@@ -165,89 +202,114 @@ function renderWeek() {
       block.style.left = `${(lane / lanes) * 100}%`;
       block.style.width = `${100 / lanes}%`;
       block.style.setProperty("--course-color", courseColorOf(session));
-      block.appendChild(createElement("strong", null, sessionLabel(session, timetable.index)));
-      block.appendChild(createElement("span", null, session.time));
-      if (session.room) block.appendChild(createElement("span", "week-room", session.room.split(",")[0]));
+      block.append(createElement("strong", null, sessionLabel(session, timetable.index)), createElement("span", null, session.time),
+        createElement("span", "week-room", session.online ? "Online" : session.room.split(",")[0] || "Room TBC"));
       block.setAttribute("aria-label", `${sessionLabel(session, timetable.index)}, ${formatDay(day)}, ${session.time}`);
       block.addEventListener("click", () => showSessionDetails(session));
       body.appendChild(block);
     }
-    // Red line at the current time
-    if (day === today) {
-      const now = new Date();
-      const hour = now.getHours() + now.getMinutes() / 60;
-      if (hour >= first && hour <= last) {
-        const line = createElement("div", "week-now");
-        line.style.top = `${((hour - first) / span) * 100}%`;
-        body.appendChild(line);
-      }
-    }
-    column.appendChild(body);
+    column.append(head, body);
     grid.appendChild(column);
   }
   const scroller = createElement("div", "week-scroller");
+  scroller.tabIndex = 0;
+  scroller.setAttribute("role", "region");
+  scroller.setAttribute("aria-label", "Weekly class calendar; scroll horizontally to see all days");
   scroller.appendChild(grid);
   scheduleList.appendChild(scroller);
+  updateCurrentLine(now);
 }
 
-// ----- View switch and page -----
-
-function renderViewSwitch() {
-  const box = document.getElementById("view-switch");
-  box.innerHTML = "";
-  for (const [key, label, icon] of [["week", "Week", "grid"], ["list", "List", "list"]]) {
-    const button = iconButton(label, icon, {
-      className: "segment",
-      onClick: () => {
-        timetable.view = key;
-        writeStorage(VIEW_KEY, key);
-        render();
-      },
-    });
-    button.setAttribute("aria-pressed", String(timetable.view === key));
-    box.appendChild(button);
+function updateCurrentLine(now) {
+  const grid = scheduleList.querySelector(".week-grid");
+  if (!grid) return;
+  grid.querySelectorAll(".week-now").forEach(line => line.remove());
+  const column = [...grid.querySelectorAll(".week-day")].find(day => day.dataset.date === now.slice(0, 10));
+  const hour = hourOf(now), first = Number(grid.dataset.first), span = Number(grid.dataset.span);
+  if (column && hour >= first && hour <= first + span) {
+    const line = createElement("div", "week-now");
+    line.setAttribute("aria-hidden", "true");
+    line.style.top = `${((hour - first) / span) * 100}%`;
+    column.querySelector(".week-body").appendChild(line);
   }
 }
 
 function render() {
-  renderViewSwitch();
-  renderNowNext();
+  if (!timetable.ready) return;
+  const now = Planner.clock();
+  document.querySelectorAll("#view-switch [data-view]").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.view === timetable.view)));
   document.getElementById("week-nav").hidden = timetable.view !== "week";
+  document.getElementById("week-picker-label").hidden = timetable.view !== "week";
   document.getElementById("show-past-label").hidden = timetable.view !== "list";
-  if (timetable.view === "week") renderWeek();
-  else renderList();
-  scheduleList.classList.remove("fade-in");
-  void scheduleList.offsetWidth; // restart the fade-in animation
-  scheduleList.classList.add("fade-in");
+  const sessions = timetable.view === "week" ? weekSessions() : listSessions(now);
+  renderNowNext(now);
+  renderSummary(sessions);
+  if (timetable.view === "week") renderWeek(sessions, now);
+  else renderList(sessions, now);
+  timetable.lastClock = now;
 }
 
 async function loadTimetable() {
-  scheduleList.appendChild(skeleton(4, "card"));
+  timetable.ready = false;
+  scheduleList.replaceChildren(skeleton(4, "card"));
+  scheduleList.setAttribute("aria-busy", "true");
+  scheduleStatus.textContent = "Loading classes from UniBo…";
+  document.querySelectorAll(".planning-toolbar input, .planning-toolbar select, .planning-toolbar button").forEach(control => { control.disabled = true; });
   try {
-    timetable.programme = await getProgramme();
+    timetable.programme = timetable.programme || await loadProgramme();
     timetable.index = programmeIndex(timetable.programme);
     const cohort = currentCohort(timetable.programme);
+    const source = document.getElementById("timetable-source");
+    source.href = cohort.sources.timetableFeed.split("/@@")[0];
     timetable.sessions = await fetchTimetable(cohort.sources.timetableFeed);
-    timetable.view = readStorage(VIEW_KEY, window.innerWidth < 640 ? "list" : "week") === "list" ? "list" : "week";
-    timetable.weekStart = weekStartOf(defaultWeekDay());
-
+    courseFilter.replaceChildren(new Option("All courses", ""));
     for (const course of currentTerm(timetable.programme).courses) {
-      const codes = course.modules.map((m) => m.code);
-      if (timetable.sessions.some((s) => codes.includes(s.moduleCode))) courseFilter.appendChild(new Option(course.name, course.id));
+      if (timetable.sessions.some(s => course.modules.some(m => m.code === s.moduleCode))) courseFilter.appendChild(new Option(course.name, course.id));
     }
-    if (loadPlan(timetable.programme).saved) {
+    if (loadPlan(timetable.programme).saved && !document.querySelector(".my-courses-switch")) {
       document.querySelector(".toolbar-filters").appendChild(myCoursesSwitch(timetable.programme, render));
     }
+    timetable.ready = true;
+    Planner.checked(document.getElementById("timetable-checked"));
     render();
-    setInterval(renderNowNext, 60 * 1000); // keep "Now / Next" up to date
   } catch (error) {
-    console.error("Could not load timetable:", error);
-    scheduleList.innerHTML = "";
-    scheduleStatus.textContent = "Sorry, the timetable could not be loaded right now. Please use the official timetable link above.";
+    scheduleStatus.textContent = "The official schedule is unavailable right now.";
+    document.getElementById("timetable-checked").textContent = "Could not load UniBo schedule";
+    document.getElementById("now-next").replaceChildren(createElement("p", "planning-next-meta", "Check the official timetable while we reconnect."));
+    Planner.empty(scheduleList, { title: "Let’s reconnect to your schedule.", text: "We couldn’t load UniBo’s classes. Try again, or open the official timetable.", retry: loadTimetable, source: document.getElementById("timetable-source").href });
+    document.getElementById("timetable-summary").replaceChildren();
+  } finally {
+    scheduleList.setAttribute("aria-busy", "false");
+    document.querySelectorAll(".planning-toolbar input, .planning-toolbar select, .planning-toolbar button").forEach(control => { control.disabled = !timetable.ready; });
   }
 }
 
+document.querySelectorAll("#view-switch [data-view]").forEach(button => button.addEventListener("click", () => {
+  timetable.view = button.dataset.view;
+  writeStorage(VIEW_KEY, timetable.view);
+  render();
+}));
+document.getElementById("week-prev").addEventListener("click", () => { timetable.weekStart = Planner.addDays(timetable.weekStart, -7); render(); });
+document.getElementById("week-next").addEventListener("click", () => { timetable.weekStart = Planner.addDays(timetable.weekStart, 7); render(); });
+document.getElementById("week-today").addEventListener("click", () => { timetable.weekStart = weekStartOf(Planner.clock().slice(0, 10)); render(); });
+document.getElementById("week-picker").addEventListener("change", event => { if (event.target.value) { timetable.weekStart = weekStartOf(event.target.value); render(); } });
+document.getElementById("timetable-reset").addEventListener("click", resetTimetableFilters);
 courseFilter.addEventListener("change", render);
 showPastCheckbox.addEventListener("change", render);
-
+classSearch.addEventListener("input", render);
+function refreshTimetableClock() {
+  if (!timetable.ready || document.hidden || document.getElementById("session-dialog")?.open) return;
+  const now = Planner.clock(), previous = timetable.lastClock;
+  const changed = now.slice(0, 10) !== previous.slice(0, 10) || (timetable.view === "list" &&
+    timetable.sessions.some(s => [s.start, s.end].some(time => time > previous && time <= now)));
+  renderNowNext(now);
+  updateCurrentLine(now);
+  // Defer replacing agenda/calendar actions until keyboard focus leaves the schedule.
+  if (changed && scheduleList.contains(document.activeElement)) return;
+  if (changed) render();
+  else timetable.lastClock = now;
+}
+setInterval(refreshTimetableClock, 60000);
+document.addEventListener("visibilitychange", refreshTimetableClock);
+document.addEventListener("focusout", () => setTimeout(refreshTimetableClock, 0));
 loadTimetable();

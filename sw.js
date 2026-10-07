@@ -8,12 +8,15 @@
 //   "Update available · Reload", and old saved copies are deleted.
 // Nothing personal is stored here: only public site files and public data.
 
-const VERSION = "df6d9000";
+const VERSION = "ef220949";
 const SITE_CACHE = `site-${VERSION}`;
 const DATA_CACHE = "data"; // kept across versions, so offline data survives an update
 
 const SITE_FILES = [
-  "fund-statistics.html", "fund-statistics.css", "fund-statistics.js", "fund-statistics-math.js", "fund-statistics-activities.js", "fund-statistics-practice.js",
+  "studyplan.css", "studyplan-data.js",
+  "planning.css", "planning.js",
+  "fund-course.css", "fund-course.js",
+  "fund-statistics.html", "fund-statistics.css", "fund-statistics.js", "fund-statistics-math.js", "fund-statistics-activities.js", "fund-statistics-practice.js", "fund-statistics-labs.js",
   "quant-methods.css", "quant-methods.js", "health-econ-management.css", "health-econ-management.js", "fhem-exam.css", "fhem-exam.js",
   "statistics.html", "statistics.css", "statistics.js", "statistics-study.js", "statistics-calculations.js",
   "./", "index.html", "home.css", "studyplan.html", "timetable.html", "exams.html", "calendar.html",
@@ -22,6 +25,7 @@ const SITE_FILES = [
   "universities.html", "university.html", "universities.css", "universities-data.js", "universities.js",
   "join.css", "directory-config.js", "directory-options.js", "join.js",
   "students.css", "students-config.js", "students-data.js", "countries.js", "assets/map/world-countries.svg",
+  "assets/flags/country-flags.css", "assets/flags/countries.png",
   "roadmap.html", "roadmap.css", "roadmap.js", "roadmap-data.js",
   "academic-rules.html", "academic-rules.js", "journey.html", "journey.js",
   "support.html", "support.js",
@@ -38,7 +42,7 @@ const SITE_FILES = [
   "timetable.js", "exams.js", "calendar.js", "guide.js", "students.js",
   "notes-data.js", "notes-progress.js", "notes-render.js", "notes-landing.js", "notes-course.js",
   "notes-practice.js", "notes-quiz.js", "notes-create.js",
-  "tracks-data.js", "tracks.js", "thesis-enrichment.js", "thesis-data.js", "thesis.js", "guide-data.js",
+  "tracks-data.js", "tracks.js", "thesis-enrichment.js", "thesis-data.js", "thesis.js", "thesis-guide.css", "thesis-guide-data.js", "thesis-guide.js", "guide-data.js",
 ];
 
 // Data: always try the internet first

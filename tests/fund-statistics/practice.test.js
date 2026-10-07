@@ -15,10 +15,10 @@ for(const c of extension.cases){
     for(const value of ['bad','Infinity','1e999','1e13'])assert.equal(p.grade(value,field),'invalid');
   }
 }
-assert.equal(cards.length,84);
+assert.equal(cards.length,100);
 for(const topic of new Set(extension.cases.map(c=>c.topic))){
   assert.equal(extension.cases.filter(c=>c.topic===topic).length,2);
-  assert.equal(cards.filter(c=>c.topic===topic).length,14);
+  assert.equal(cards.filter(c=>c.topic===topic&&Number(c.id.split('.').at(-1))<=84).length,14);
 }
 // Independent hand/scipy oracles substantiate the answer keys and plotted/calculator reuse.
 const expected={
@@ -74,4 +74,4 @@ assert.equal(p.method(independent).ready,true);assert.match(p.method(independent
 assert.equal(p.method({...independent,n2:20}).ready,false);
 assert.match(p.method({...independent,target:'paired'}).warning,/illustrative/);
 assert.equal(p.method({...independent,target:'paired'}).ready,false);
-console.log('Extended practice passed: 12 independent answer keys, 36 grading checks, repaired progress, count/design guards and 84 review cards.');
+console.log('Extended practice passed: 12 independent answer keys, 36 grading checks, repaired progress, count/design guards and 100 review cards.');

@@ -20,6 +20,8 @@ const thesis = {
 const THESIS_PAGE_SIZE = 20;
 const THESIS_NARROW = "(max-width: 760px)";
 const THESIS_THEMES_ON_CARD = 2;
+let thesisLoading = false;
+let thesisInitialised = false;
 
 function trackLabel(code) {
   return `${code} · ${thesis.config.legacyTracks[code]}`;
@@ -59,7 +61,7 @@ function draftLabel() {
 // ----- Address (URL) <-> state -----
 
 function writeUrl(push) {
-  const url = `thesis.html${paramsFromState(thesis.state)}`;
+  const url = `thesis.html${paramsFromState(thesis.state)}#guide-archive`;
   if (push) history.pushState(null, "", url);
   else history.replaceState(null, "", url);
 }
@@ -95,10 +97,10 @@ function renderIntro(records) {
   const { texts } = thesis.config;
   const cohorts = cohortsNewestFirst(records);
   const section = document.getElementById("thesis-intro");
-  const h1 = createElement("h1", null, texts.title);
-  h1.id = "thesis-title";
+  const heading = createElement("h2", null, texts.title);
+  heading.id = "thesis-title";
   section.appendChild(createElement("p", "section-eyebrow", "Resources · Thesis archive"));
-  section.appendChild(h1);
+  section.appendChild(heading);
   section.appendChild(createElement("p", "thesis-tagline", fill(texts.tagline, { count: records.length })));
   section.appendChild(createElement("p", "thesis-intro-text", texts.intro));
 
@@ -796,7 +798,12 @@ function allowedValues() {
 }
 
 async function initThesisPage() {
+  if (thesisLoading || thesisInitialised) return;
+  thesisLoading = true;
   const status = document.getElementById("thesis-status");
+  status.hidden = false;
+  status.textContent = "Loading the thesis archive…";
+  document.getElementById("tg-panel-archive").setAttribute("aria-busy", "true");
   try {
     const files = loadThesisFiles();
     const { archive, config } = await files.source;
@@ -828,7 +835,7 @@ async function initThesisPage() {
     document.getElementById("thesis-explorer").hidden = false;
     syncControls();
     renderResults();
-    status.remove();
+    status.hidden = true;
     // Let the browser show the top of the page before drawing the sections further down
     // (smaller pieces of work keep the page responsive on slow phones)
     await new Promise((resolve) => setTimeout(resolve, 0));
@@ -874,10 +881,37 @@ async function initThesisPage() {
       toggle?.scrollIntoView({ block: "center" });
       toggle?.focus({ preventScroll: true });
     }
+    thesisInitialised = true;
   } catch (error) {
-    console.error("Thesis:", error);
-    status.textContent = "Sorry, the thesis archive could not be loaded right now. Please try again later.";
+    console.warn("Thesis archive unavailable:", error);
+    status.hidden = false;
+    status.textContent = "The past thesis archive could not be loaded. You can still use the research guide. ";
+    const retry = createElement("button", "button button-quiet", "Retry archive");
+    retry.id = "thesis-retry"; retry.type = "button";
+    retry.addEventListener("click", () => {
+      for (const id of ["thesis-intro", "thesis-browse", "thesis-examples", "thesis-notes"]) {
+        const section = document.getElementById(id); section.replaceChildren(); section.hidden = true;
+      }
+      document.getElementById("thesis-explorer").hidden = true;
+      initThesisPage();
+    });
+    status.appendChild(retry);
+  } finally {
+    thesisLoading = false;
+    document.getElementById("tg-panel-archive").setAttribute("aria-busy", "false");
   }
 }
 
-if (typeof document !== "undefined" && document.getElementById("thesis-status")) initThesisPage();
+if (typeof document !== "undefined" && document.getElementById("thesis-status")) {
+  // The guide can explore a related historical topic without reloading local drafts.
+  window.ThesisArchive = {
+    show(changes = {}) {
+      if (!thesisInitialised) return false;
+      window.ThesisGuide?.showView("archive");
+      showInExplorer(changes);
+      document.getElementById("thesis-search")?.focus({ preventScroll: true });
+      return true;
+    },
+  };
+  initThesisPage();
+}

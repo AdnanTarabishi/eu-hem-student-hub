@@ -1,0 +1,1552 @@
+{
+  "schemaVersion": 1,
+  "updated": "2026-10-07",
+  "module": "fund-statistics",
+  "note": "Original lab explanations and report-reading questions, with independently checked aggregate calculations. Obtain the official workbooks and answer keys from Virtuale.",
+  "guides": [
+    {
+      "id": "oecd-lab",
+      "category": "dataset",
+      "title": "OECD: describe countries, then investigate outliers",
+      "topics": [
+        "fund-statistics.descriptive"
+      ],
+      "files": [
+        "OECD (3).xlsx",
+        "OECD_with answers.xlsx",
+        "DESCRIPTIVE STATISTICS LAB (3).docx",
+        "DESCRIPTIVE STATISTICS LAB_answers.docx"
+      ],
+      "url": "https://virtuale.unibo.it/mod/folder/view.php?id=2424965",
+      "citation": "Descriptive Statistics LAB, data described as 2019; raw worksheet DP_LIVE_27092023160309805, rows 2–39; answer workbook Answers and Sheet1.",
+      "unit": "One country; seven variables with different units.",
+      "goal": "Build a reproducible descriptive table and explain how missing values and flagged observations affect it.",
+      "steps": [
+        {
+          "title": "Define the observations",
+          "text": "There are 38 country rows, not 38 patients. Select rows 2–39. Excel’s formatted last row is not a sample-size definition. These are unweighted country summaries, not averages for a randomly sampled person."
+        },
+        {
+          "title": "Count each variable separately",
+          "text": "COUNT ignores blank cells but keeps numerical zeros. The seven columns have n=38, 38, 32, 38, 27, 25 and 37. Do not divide every sum by 38 or replace missing data by zero."
+        },
+        {
+          "title": "Name the quartile convention",
+          "text": "Use QUARTILE.INC for the workbook comparison. Q1−1.5×IQR and Q3+1.5×IQR are fences. Whiskers are the most extreme observed values inside those fences. The slide np convention can produce different quartiles."
+        },
+        {
+          "title": "Investigate, then show sensitivity",
+          "text": "Compare the full data with a variable-specific calculation excluding values strictly outside the fences. This is a sensitivity exercise, not permission to erase observations. Removing an entire country across all variables is a different analysis."
+        }
+      ],
+      "tables": [
+        {
+          "title": "Checked full-data descriptive summaries (SD uses n)",
+          "headers": [
+            "Variable",
+            "n",
+            "Mean",
+            "Median",
+            "SDₙ",
+            "Unit"
+          ],
+          "rows": [
+            [
+              "SUICIDE",
+              "38",
+              "10.6053",
+              "10.3000",
+              "4.6111",
+              "Deaths / 100,000"
+            ],
+            [
+              "LIFEEXP",
+              "38",
+              "79.7079",
+              "80.5500",
+              "3.0782",
+              "Years"
+            ],
+            [
+              "FLUVACCIN",
+              "32",
+              "41.4406",
+              "47.4000",
+              "23.4906",
+              "% of adults aged 65+"
+            ],
+            [
+              "CHILDVACCIN",
+              "38",
+              "93.5974",
+              "94.8500",
+              "5.9690",
+              "% of children around age 1"
+            ],
+            [
+              "NURSE",
+              "27",
+              "8.3659",
+              "7.9300",
+              "4.2807",
+              "Nurses / 1,000"
+            ],
+            [
+              "MEDICALDOC",
+              "25",
+              "3.5048",
+              "3.4900",
+              "0.8244",
+              "Doctors / 1,000"
+            ],
+            [
+              "HEALTHEXP",
+              "37",
+              "8.4305",
+              "8.1980",
+              "2.3209",
+              "% of GDP"
+            ]
+          ]
+        }
+      ],
+      "formulas": [
+        {
+          "label": "Count / mean / descriptive SD of SUICIDE (column C)",
+          "formula": "=COUNT(C2:C39); =AVERAGE(C2:C39); =STDEV.P(C2:C39)"
+        },
+        {
+          "label": "Inclusive quartiles",
+          "formula": "=QUARTILE.INC(C2:C39,1); =QUARTILE.INC(C2:C39,3)"
+        },
+        {
+          "label": "Mean inside SUICIDE fences, using the answer Sheet1 layout",
+          "formula": "=AVERAGEIFS(C2:C39,C2:C39,\">=\"&$I$42,C2:C39,\"<=\"&$H$42)"
+        }
+      ],
+      "cautions": [
+        "Answer Sheet1!B42 uses >upper and <lower simultaneously, and includes summary rows C2:C100; its cached result is #DIV/0!. Use the raw rows and correctly oriented inclusive fence conditions.",
+        "CHILDVACCIN’s inclusive lower fence is 83.1375. Mexico (82), Brazil and Argentina (83) are all below it. The supplied outlier list omits Mexico. Removing all three gives n=35 and mean=94.9057%; the answer workbook retains Mexico, while the Word filtered table gives another result.",
+        "Costa Rica’s CHILDVACCIN value of 102.6% needs a definition/denominator or data-quality check even though it is inside the IQR fences. Statistical flags and plausible ranges answer different questions.",
+        "Some lower-fence inequalities in the Word answer table have an extra minus sign. For LIFEEXP, for example, the lower fence is +68.4875 years. The “largest/smallest non-outlying value” headings actually label calculated fences."
+      ],
+      "questions": [
+        {
+          "id": "oecd-count",
+          "prompt": "Why does MEDICALDOC have n=25 when there are 38 countries?",
+          "options": [
+            "Thirteen entries are missing; count numerical observations in this column",
+            "All missing values represent zero doctors",
+            "COUNT must include the country-name header"
+          ],
+          "answer": 0,
+          "explanation": "The effective n is variable-specific. Missing values are unknown, while zero is an observed numerical value."
+        },
+        {
+          "id": "oecd-fence",
+          "prompt": "CHILDVACCIN’s lower fence is 83.1375. Which treatment of Mexico’s value 82 follows the stated rule?",
+          "options": [
+            "Keep it because the answer list omits Mexico",
+            "Flag it as below the fence and investigate before deciding what to exclude",
+            "Replace it with the sample mean without reporting the change"
+          ],
+          "answer": 1,
+          "explanation": "82 < 83.1375. The omission in the supplied answer list does not change the numerical rule; outlier status still does not establish a data error."
+        }
+      ],
+      "comparison": [
+        {
+          "variable": "SUICIDE",
+          "n": 38,
+          "mean": 10.605263157894736,
+          "median": 10.3,
+          "varianceN": 21.262077562326866,
+          "varianceAdjusted": 21.83672830725462,
+          "sdN": 4.611082038125852,
+          "sdAdjusted": 4.672978526299326,
+          "sumSquares": 807.9589473684209,
+          "q1": 7.5,
+          "q3": 13.3,
+          "lowerFence": -1.200000000000001,
+          "upperFence": 22.0,
+          "outliers": [
+            "Korea",
+            "Lithuania"
+          ],
+          "filtered": {
+            "n": 36,
+            "mean": 9.872222222222222,
+            "median": 10.05,
+            "varianceN": 12.091450617283948,
+            "varianceAdjusted": 12.436920634920634,
+            "sdN": 3.477276321675335,
+            "sdAdjusted": 3.5266018537567625,
+            "sumSquares": 435.29222222222216
+          },
+          "unit": "Deaths / 100,000"
+        },
+        {
+          "variable": "LIFEEXP",
+          "n": 38,
+          "mean": 79.70789473684209,
+          "median": 80.55,
+          "varianceN": 9.475463988919675,
+          "varianceAdjusted": 9.731557610241827,
+          "sdN": 3.078224161577528,
+          "sdAdjusted": 3.1195444555642777,
+          "sumSquares": 360.0676315789476,
+          "q1": 76.69999999999999,
+          "q3": 82.175,
+          "lowerFence": 68.48749999999998,
+          "upperFence": 90.38750000000002,
+          "outliers": [],
+          "filtered": {
+            "n": 38,
+            "mean": 79.70789473684209,
+            "median": 80.55,
+            "varianceN": 9.475463988919675,
+            "varianceAdjusted": 9.731557610241827,
+            "sdN": 3.078224161577528,
+            "sdAdjusted": 3.1195444555642777,
+            "sumSquares": 360.0676315789476
+          },
+          "unit": "Years"
+        },
+        {
+          "variable": "FLUVACCIN",
+          "n": 32,
+          "mean": 41.440625,
+          "median": 47.4,
+          "varianceN": 551.807412109375,
+          "varianceAdjusted": 569.6076512096774,
+          "sdN": 23.49058134890184,
+          "sdAdjusted": 23.86645451695072,
+          "sumSquares": 17657.8371875,
+          "q1": 18.675,
+          "q3": 59.9,
+          "lowerFence": -43.162499999999994,
+          "upperFence": 121.73749999999998,
+          "outliers": [],
+          "filtered": {
+            "n": 32,
+            "mean": 41.440625,
+            "median": 47.4,
+            "varianceN": 551.807412109375,
+            "varianceAdjusted": 569.6076512096774,
+            "sdN": 23.49058134890184,
+            "sdAdjusted": 23.86645451695072,
+            "sumSquares": 17657.8371875
+          },
+          "unit": "% of adults aged 65+"
+        },
+        {
+          "variable": "CHILDVACCIN",
+          "n": 38,
+          "mean": 93.59736842105264,
+          "median": 94.85,
+          "varianceN": 35.62867728531856,
+          "varianceAdjusted": 36.59161450924609,
+          "sdN": 5.968976234273224,
+          "sdAdjusted": 6.049100305768296,
+          "sumSquares": 1353.8897368421053,
+          "q1": 91.575,
+          "q3": 97.2,
+          "lowerFence": 83.1375,
+          "upperFence": 105.6375,
+          "outliers": [
+            "Mexico",
+            "Brazil",
+            "Argentina"
+          ],
+          "filtered": {
+            "n": 35,
+            "mean": 94.90571428571428,
+            "median": 95.0,
+            "varianceN": 14.009681632653063,
+            "varianceAdjusted": 14.421731092436977,
+            "sdN": 3.742950925760724,
+            "sdAdjusted": 3.797595435593025,
+            "sumSquares": 490.3388571428572
+          },
+          "unit": "% of children around age 1"
+        },
+        {
+          "variable": "NURSE",
+          "n": 27,
+          "mean": 8.365925925925927,
+          "median": 7.93,
+          "varianceN": 18.324475994513033,
+          "varianceAdjusted": 19.029263532763533,
+          "sdN": 4.2807097535937935,
+          "sdAdjusted": 4.362254409449721,
+          "sumSquares": 494.7608518518519,
+          "q1": 5.6899999999999995,
+          "q3": 10.29,
+          "lowerFence": -1.21,
+          "upperFence": 17.189999999999998,
+          "outliers": [
+            "Finland",
+            "Switzerland"
+          ],
+          "filtered": {
+            "n": 25,
+            "mean": 7.5776,
+            "median": 7.74,
+            "varianceN": 11.395346240000002,
+            "varianceAdjusted": 11.870152333333335,
+            "sdN": 3.375699370500875,
+            "sdAdjusted": 3.4453087428173017,
+            "sumSquares": 284.88365600000003
+          },
+          "unit": "Nurses / 1,000"
+        },
+        {
+          "variable": "MEDICALDOC",
+          "n": 25,
+          "mean": 3.5048000000000004,
+          "median": 3.49,
+          "varianceN": 0.6795769600000001,
+          "varianceAdjusted": 0.7078926666666668,
+          "sdN": 0.8243645795399024,
+          "sdAdjusted": 0.8413635757903161,
+          "sumSquares": 16.989424000000003,
+          "q1": 2.95,
+          "q3": 4.16,
+          "lowerFence": 1.1350000000000002,
+          "upperFence": 5.975,
+          "outliers": [],
+          "filtered": {
+            "n": 25,
+            "mean": 3.5048000000000004,
+            "median": 3.49,
+            "varianceN": 0.6795769600000001,
+            "varianceAdjusted": 0.7078926666666668,
+            "sdN": 0.8243645795399024,
+            "sdAdjusted": 0.8413635757903161,
+            "sumSquares": 16.989424000000003
+          },
+          "unit": "Doctors / 1,000"
+        },
+        {
+          "variable": "HEALTHEXP",
+          "n": 37,
+          "mean": 8.43045945945946,
+          "median": 8.198,
+          "varianceN": 5.38637592403214,
+          "varianceAdjusted": 5.535997477477477,
+          "sdN": 2.3208567219955953,
+          "sdAdjusted": 2.3528700511242597,
+          "sumSquares": 199.2959091891892,
+          "q1": 6.817,
+          "q3": 9.958,
+          "lowerFence": 2.1055,
+          "upperFence": 14.6695,
+          "outliers": [
+            "United States"
+          ],
+          "filtered": {
+            "n": 36,
+            "mean": 8.201694444444444,
+            "median": 8.1865,
+            "varianceN": 3.599660489969136,
+            "varianceAdjusted": 3.7025079325396826,
+            "sdN": 1.897277125242682,
+            "sdAdjusted": 1.9241902017575296,
+            "sumSquares": 129.5877776388889
+          },
+          "unit": "% of GDP"
+        }
+      ]
+    },
+    {
+      "id": "food-lab",
+      "category": "dataset",
+      "title": "Food spending: from an Excel column to a 90% interval",
+      "topics": [
+        "fund-statistics.estimation",
+        "fund-statistics.confidence-intervals"
+      ],
+      "files": [
+        "Food.xlsx",
+        "INFERENTIAL STATISTICS LAB.docx"
+      ],
+      "url": "https://virtuale.unibo.it/mod/folder/view.php?id=2424967",
+      "citation": "Inferential Statistics LAB; Food.xlsx, Data!A2:D51. Checked independently from all 50 numerical rows.",
+      "unit": "One randomly sampled adult; weekly spending in pounds (£).",
+      "goal": "Estimate the population means for fruit, vegetables and meat, and the population variance of total expenditure.",
+      "steps": [
+        {
+          "title": "Keep the right range",
+          "text": "Data rows are 2–51. B is exp_Fruit, C is exp_Veg, D is exp_Meat; the task’s exp_meet spelling refers to that last column. Keep the two fruit zeros, two vegetable zeros and four meat zeros: no spending is a valid observation."
+        },
+        {
+          "title": "Separate sample spread from precision",
+          "text": "Calculate x̄ and s using STDEV.S. Use SE=s/√50 for uncertainty about the population mean, not s itself. For population variance of total expense, use VAR.S(A2:A51)."
+        },
+        {
+          "title": "Allocate the two tails",
+          "text": "For 90% confidence, α=.10 and α/2=.05. With unknown σ, use T.INV(.95,49)=1.6765509. Each interval is x̄±1.6765509×SE."
+        },
+        {
+          "title": "Write a population-level conclusion",
+          "text": "The fruit interval estimates the population mean weekly fruit spending, not the range containing 90% of adults. The lab states random sampling. Spending is right-skewed; at n=50 the t procedure is a large-sample approximation unless population normality is justified."
+        }
+      ],
+      "tables": [
+        {
+          "title": "Checked 90% mean intervals; df=49; values in £",
+          "headers": [
+            "Expense",
+            "Mean",
+            "Adjusted SD s",
+            "SE",
+            "Lower",
+            "Upper"
+          ],
+          "rows": [
+            [
+              "Fruit",
+              "7.0104",
+              "7.1908",
+              "1.0169",
+              "5.3055",
+              "8.7153"
+            ],
+            [
+              "Vegetables",
+              "6.1706",
+              "5.4866",
+              "0.7759",
+              "4.8697",
+              "7.4715"
+            ],
+            [
+              "Meat",
+              "10.7420",
+              "9.3206",
+              "1.3181",
+              "8.5321",
+              "12.9519"
+            ]
+          ]
+        },
+        {
+          "title": "Two different variance targets for total spending",
+          "headers": [
+            "Target",
+            "Value",
+            "Unit"
+          ],
+          "rows": [
+            [
+              "Describe these 50 observations (VAR.P)",
+              "2551.1906",
+              "£²"
+            ],
+            [
+              "Unbiased estimate of population variance (VAR.S)",
+              "2603.2557",
+              "£²"
+            ]
+          ]
+        }
+      ],
+      "formulas": [
+        {
+          "label": "Fruit sample mean / adjusted SD",
+          "formula": "=AVERAGE(B2:B51); =STDEV.S(B2:B51)"
+        },
+        {
+          "label": "Fruit SE",
+          "formula": "=STDEV.S(B2:B51)/SQRT(COUNT(B2:B51))"
+        },
+        {
+          "label": "90% lower / upper endpoint",
+          "formula": "=AVERAGE(B2:B51) - T.INV(0.95,49)*STDEV.S(B2:B51)/SQRT(COUNT(B2:B51)); use + for the upper endpoint"
+        },
+        {
+          "label": "Unbiased population-variance estimate, total expense",
+          "formula": "=VAR.S(A2:A51)"
+        }
+      ],
+      "cautions": [
+        "The three category intervals use the same 50 adults. They are individually 90% intervals, not a guaranteed simultaneous 90% statement about all three means.",
+        "Total expense is not defined here as just the sum of the three displayed categories. Use column A directly. Variance has squared currency units.",
+        "Do not test population variance: the lab asks for a point estimate, and variance hypothesis tests are outside this course’s stated scope."
+      ],
+      "questions": [
+        {
+          "id": "food-critical",
+          "prompt": "Which Excel critical value gives the requested two-sided 90% interval?",
+          "options": [
+            "T.INV(0.90,50)",
+            "T.INV(0.95,49)",
+            "NORM.S.INV(0.90)"
+          ],
+          "answer": 1,
+          "explanation": "Unknown σ means an estimated SE; df=n−1=49. The two tails each receive .05, so the positive critical quantile is .95."
+        },
+        {
+          "id": "food-zero",
+          "prompt": "A participant reports £0 on meat. What should happen to this row?",
+          "options": [
+            "Delete it as missing",
+            "Replace it by the mean",
+            "Keep it as a valid zero-spending observation"
+          ],
+          "answer": 2,
+          "explanation": "A numerical zero is not a missing value. Deleting it would change both the target description and n."
+        }
+      ],
+      "confidenceExplorer": [
+        {
+          "variable": "exp_Fruit",
+          "n": 50,
+          "mean": 7.010399993956089,
+          "median": 5.5975000858306885,
+          "varianceN": 50.67340063369474,
+          "varianceAdjusted": 51.707551667035446,
+          "sdN": 7.1185251726530225,
+          "sdAdjusted": 7.190796316614415,
+          "sumSquares": 2533.670031684737,
+          "se": 1.01693216752186,
+          "tCritical90": 1.6765508926168535,
+          "lower90": 5.305461460766523,
+          "upper90": 8.715338527145654,
+          "min": 0,
+          "max": 32.46500015258789,
+          "zeros": 2,
+          "skew": 1.843715688601238,
+          "label": "Fruit"
+        },
+        {
+          "variable": "exp_Veg",
+          "n": 50,
+          "mean": 6.170599962174893,
+          "median": 4.680000066757202,
+          "varianceN": 29.50092903566782,
+          "varianceAdjusted": 30.102988811905938,
+          "sdN": 5.431475769592259,
+          "sdAdjusted": 5.486619069327297,
+          "sumSquares": 1475.046451783391,
+          "se": 0.7759251099417511,
+          "tCritical90": 1.6765508926168535,
+          "lower90": 4.86972202649822,
+          "upper90": 7.471477897851566,
+          "min": 0,
+          "max": 23.780000686645508,
+          "zeros": 2,
+          "skew": 1.5029219739965691,
+          "label": "Vegetables"
+        },
+        {
+          "variable": "exp_Meat",
+          "n": 50,
+          "mean": 10.741999976634979,
+          "median": 8.349999904632568,
+          "varianceN": 85.13609793446847,
+          "varianceAdjusted": 86.87356932088619,
+          "sdN": 9.226922451959183,
+          "sdAdjusted": 9.320599193232493,
+          "sumSquares": 4256.804896723424,
+          "se": 1.3181317788513118,
+          "tCritical90": 1.6765508926168535,
+          "lower90": 8.532084966215171,
+          "upper90": 12.951914987054787,
+          "min": 0,
+          "max": 41.33000183105469,
+          "zeros": 4,
+          "skew": 1.240378880765384,
+          "label": "Meat"
+        }
+      ]
+    },
+    {
+      "id": "variance-lab",
+      "category": "dataset",
+      "title": "Variance: why n and n−1 give different answers",
+      "topics": [
+        "fund-statistics.descriptive",
+        "fund-statistics.estimation"
+      ],
+      "files": [
+        "Exercise Variance and Adjusted Variance (1).xlsx",
+        "Exercise Variance and Adjusted Variance_ with answers.xlsx"
+      ],
+      "url": "https://virtuale.unibo.it/mod/folder/view.php?id=2424966",
+      "citation": "Both workbooks, Data!B2:B9; answer sheet checks squared deviations and VAR.P / VAR.S.",
+      "unit": "Eight cholesterol measurements; the workbook does not state a measurement unit.",
+      "goal": "Reconcile manual squared deviations with Excel and choose the denominator for the question.",
+      "steps": [
+        {
+          "title": "Calculate one shared numerator",
+          "text": "For the eight measurements, x̄=170.25 and Σ(xᵢ−x̄)²=4537.5. Centre every deviation on the same mean."
+        },
+        {
+          "title": "Describe the observed data",
+          "text": "Divide by 8: Vₙ=567.1875. This is the descriptive variance of the entered observations."
+        },
+        {
+          "title": "Estimate population variance",
+          "text": "Divide by 7: S²=648.2142857. Under independent sampling, S² is unbiased for σ² across repeated samples. It is not guaranteed equal to σ² in this particular sample."
+        },
+        {
+          "title": "Check the relationship and units",
+          "text": "S²=(8/7)×Vₙ. Adjusted SD=√S²=25.4601, in the original units; variance is in squared units. s itself is generally not unbiased for σ."
+        }
+      ],
+      "tables": [
+        {
+          "title": "Independent calculation check",
+          "headers": [
+            "Quantity",
+            "Value"
+          ],
+          "rows": [
+            [
+              "n",
+              "8"
+            ],
+            [
+              "Mean",
+              "170.25"
+            ],
+            [
+              "Sum of squared deviations",
+              "4537.5"
+            ],
+            [
+              "VAR.P",
+              "567.1875"
+            ],
+            [
+              "VAR.S",
+              "648.2143"
+            ],
+            [
+              "STDEV.S",
+              "25.4601"
+            ]
+          ]
+        }
+      ],
+      "formulas": [
+        {
+          "label": "Mean in B12",
+          "formula": "=AVERAGE(B2:B9)"
+        },
+        {
+          "label": "Deviation in C2; copy down",
+          "formula": "=B2-$B$12"
+        },
+        {
+          "label": "Squared deviation in D2; copy down",
+          "formula": "=C2^2"
+        },
+        {
+          "label": "Numerator / denominators",
+          "formula": "=SUM(D2:D9); =SUM(D2:D9)/COUNT(B2:B9); =SUM(D2:D9)/(COUNT(B2:B9)-1)"
+        }
+      ],
+      "cautions": [
+        "The dollar signs lock the mean cell when the formula is copied. Without them, later rows can subtract different cells.",
+        "Excel’s names do not require that the observed eight values form a complete real population for VAR.P to describe them. The intended target determines n versus n−1."
+      ],
+      "questions": [
+        {
+          "id": "variance-ratio",
+          "prompt": "For n=8 and the same squared-deviation sum, S²/Vₙ equals…",
+          "options": [
+            "7/8",
+            "8/7",
+            "√8"
+          ],
+          "answer": 1,
+          "explanation": "S²=SS/7 and Vₙ=SS/8, giving S²/Vₙ=8/7."
+        },
+        {
+          "id": "variance-unit",
+          "prompt": "If the observations are measured in units U, VAR.S is measured in…",
+          "options": [
+            "U",
+            "No units",
+            "U²"
+          ],
+          "answer": 2,
+          "explanation": "Squaring deviations squares the unit. Taking the square root returns the original unit for SD."
+        }
+      ]
+    },
+    {
+      "id": "cholesterol-spread",
+      "category": "dataset",
+      "title": "Two cholesterol samples: same mean, different spread",
+      "topics": [
+        "fund-statistics.descriptive",
+        "fund-statistics.two-means"
+      ],
+      "files": [
+        "Cholesterol measurements_example (1).xlsx"
+      ],
+      "url": "https://virtuale.unibo.it/mod/resource/view.php?id=2488392",
+      "citation": "Sheet1!B3:B7 (sample 1) and H3:H7 (sample 2). This file differs from the Exercise Book CHOLESTEROL.xlsx.",
+      "unit": "Five measurements per sample; the workbook does not specify the cholesterol unit.",
+      "goal": "Explain why identical means do not make distributions identical.",
+      "steps": [
+        {
+          "title": "Check both centres",
+          "text": "Both means equal 200. That statement alone says nothing about their dispersion or shape."
+        },
+        {
+          "title": "Keep denominators consistent",
+          "text": "Descriptive variances are 272 and 31.6; adjusted variances are 340 and 39.5. Each adjusted result is 5/4 times its descriptive result."
+        },
+        {
+          "title": "Compare spread in original units",
+          "text": "Descriptive SDs are 16.4924 and 5.6214. Sample 1 is much more dispersed even though both means agree."
+        },
+        {
+          "title": "Ask about design before inference",
+          "text": "Equal sample sizes do not establish pairing. The workbook does not specify a before/after or matched design. With n=5 per group, do not plug these values into the course large-sample independent z recipe."
+        }
+      ],
+      "tables": [
+        {
+          "title": "Centre and spread comparison",
+          "headers": [
+            "Sample",
+            "n",
+            "Mean",
+            "VAR.P",
+            "VAR.S",
+            "STDEV.P",
+            "STDEV.S"
+          ],
+          "rows": [
+            [
+              "1",
+              "5",
+              "200.0000",
+              "272.0000",
+              "340.0000",
+              "16.4924",
+              "18.4391"
+            ],
+            [
+              "2",
+              "5",
+              "200.0000",
+              "31.6000",
+              "39.5000",
+              "5.6214",
+              "6.2849"
+            ]
+          ]
+        }
+      ],
+      "formulas": [
+        {
+          "label": "Sample 1 centre / descriptive variance",
+          "formula": "=AVERAGE(B3:B7); =VAR.P(B3:B7)"
+        },
+        {
+          "label": "Sample 2 centre / descriptive variance",
+          "formula": "=AVERAGE(H3:H7); =VAR.P(H3:H7)"
+        },
+        {
+          "label": "Adjusted spread",
+          "formula": "=VAR.S(B3:B7); =STDEV.S(B3:B7); repeat for H3:H7"
+        }
+      ],
+      "cautions": [
+        "Do not interpret the mean as a complete description of clinical variability.",
+        "Do not infer a paired design from matching row numbers, and do not infer equality of population means from equal observed means."
+      ],
+      "questions": [
+        {
+          "id": "cholesterol-mean",
+          "prompt": "Both sample means are 200. Which conclusion is supported?",
+          "options": [
+            "The samples have identical distributions",
+            "The observed centres agree, but their spreads differ",
+            "The population means must be exactly equal"
+          ],
+          "answer": 1,
+          "explanation": "Sample 1’s descriptive variance is 272 versus 31.6 for sample 2. Matching observed means cannot establish identical distributions or exact population equality."
+        },
+        {
+          "id": "cholesterol-design",
+          "prompt": "Can equal n=5 establish a paired design?",
+          "options": [
+            "Yes: equal n always means paired",
+            "Yes: all two-column workbooks are paired",
+            "No: pairing must come from how measurements are linked"
+          ],
+          "answer": 2,
+          "explanation": "Pairing is a design property, such as repeated measurements on the same people. It is not implied by equal counts."
+        }
+      ]
+    },
+    {
+      "id": "birthweight-association",
+      "category": "dataset",
+      "title": "Birthweight and estriol: preserve the pairs",
+      "topics": [
+        "fund-statistics.descriptive"
+      ],
+      "files": [
+        "Birthweight_Estriol.xlsx"
+      ],
+      "url": "https://virtuale.unibo.it/mod/resource/view.php?id=2502877",
+      "citation": "Sheet1!B2:B16 (birthweight) and C2:C16 (estriol); 15 corresponding pairs.",
+      "unit": "A linked birthweight–estriol record; birthweight in kg, estriol unit not specified.",
+      "goal": "Calculate and interpret covariance and correlation without losing the row pairing.",
+      "steps": [
+        {
+          "title": "Keep one shared set of rows",
+          "text": "Use the 15 complete paired records. Sorting one column independently would destroy the relationship between the two measurements."
+        },
+        {
+          "title": "Measure association",
+          "text": "Covariance with n is 1.2111111; with n−1 it is 1.2976190. Correlation is 0.7175049 with either consistently matched convention."
+        },
+        {
+          "title": "Interpret the direction",
+          "text": "Larger estriol values tend to accompany larger birthweights in these records. Pearson r measures linear association; it is dimensionless."
+        },
+        {
+          "title": "Keep the claim within the design",
+          "text": "Correlation does not establish that changing estriol causes a change in birthweight. A scatterplot in Excel helps check shape and influential observations before relying on a single coefficient."
+        }
+      ],
+      "tables": [
+        {
+          "title": "Checked association summaries",
+          "headers": [
+            "Quantity",
+            "Value"
+          ],
+          "rows": [
+            [
+              "Pairs",
+              "15"
+            ],
+            [
+              "Mean birthweight (kg)",
+              "1.5333"
+            ],
+            [
+              "Mean estriol (unspecified unit)",
+              "28.8667"
+            ],
+            [
+              "COVARIANCE.P",
+              "1.2111"
+            ],
+            [
+              "COVARIANCE.S",
+              "1.2976"
+            ],
+            [
+              "CORREL",
+              "0.7175"
+            ]
+          ]
+        }
+      ],
+      "formulas": [
+        {
+          "label": "Correlation",
+          "formula": "=CORREL(B2:B16,C2:C16)"
+        },
+        {
+          "label": "Covariance, descriptive / adjusted",
+          "formula": "=COVARIANCE.P(B2:B16,C2:C16); =COVARIANCE.S(B2:B16,C2:C16)"
+        },
+        {
+          "label": "Excel scatterplot",
+          "formula": "Select the two matched numeric columns → Insert → Scatter; label both axes and their stated units."
+        }
+      ],
+      "cautions": [
+        "Do not mix covariance using n with SDs using n−1 in a manual formula for r.",
+        "Do not report an estriol unit that the supplied workbook does not define. Regression inference is outside this guide’s calculation scope."
+      ],
+      "questions": [
+        {
+          "id": "birthweight-pairs",
+          "prompt": "What happens if you sort only the estriol column?",
+          "options": [
+            "The original pairs can be broken, altering the association",
+            "Correlation is always unchanged by independently sorting columns",
+            "It proves a causal relationship"
+          ],
+          "answer": 0,
+          "explanation": "Correlation uses corresponding (xᵢ,yᵢ) records. Only sorting complete rows together preserves those pairs."
+        },
+        {
+          "id": "birthweight-r",
+          "prompt": "Which reading of r≈0.7175 is justified?",
+          "options": [
+            "Estriol causes exactly 71.75% of birthweight",
+            "There is positive linear association in these 15 records",
+            "71.75% of individual birthweights equal their mean"
+          ],
+          "answer": 1,
+          "explanation": "The coefficient describes linear association. It is not a causal fraction, a percentage of equal observations, or an effect measured in kg."
+        }
+      ]
+    },
+    {
+      "id": "otitis-probability",
+      "category": "dataset",
+      "title": "Otitis counts: expected value and discrete tails",
+      "topics": [
+        "fund-statistics.distributions"
+      ],
+      "files": [
+        "Othitis.xlsx"
+      ],
+      "url": "https://virtuale.unibo.it/mod/resource/view.php?id=2506163",
+      "citation": "Sheet1!A2:A8 (counts 0–6) and B2:B8 (probabilities). Upload uses the spelling Othitis.",
+      "unit": "A discrete count X under the supplied probability model.",
+      "goal": "Check a probability distribution, calculate moments and distinguish ≥ from >.",
+      "steps": [
+        {
+          "title": "Validate the probability model",
+          "text": "The listed probabilities are nonnegative and sum to 1. This is a probability table, not seven equally weighted observations."
+        },
+        {
+          "title": "Weight each possible count",
+          "text": "E(X)=Σx×P(X=x)=2.038. An expected count need not itself be a possible individual count."
+        },
+        {
+          "title": "Compute spread using moments",
+          "text": "E(X²)=6.12; Var(X)=6.12−2.038²=1.966556. Do not square the sum as a substitute for summing squared values."
+        },
+        {
+          "title": "Respect the endpoint",
+          "text": "P(X≥3)=0.336 includes the probability at 3. P(X>3)=0.151 excludes it. Their difference is P(X=3)=0.185."
+        }
+      ],
+      "tables": [
+        {
+          "title": "Checked distribution results",
+          "headers": [
+            "Quantity",
+            "Value"
+          ],
+          "rows": [
+            [
+              "Total probability",
+              "1"
+            ],
+            [
+              "E(X)",
+              "2.038"
+            ],
+            [
+              "E(X²)",
+              "6.12"
+            ],
+            [
+              "Var(X)",
+              "1.966556"
+            ],
+            [
+              "P(X≥3)",
+              "0.336"
+            ],
+            [
+              "P(X>3)",
+              "0.151"
+            ]
+          ]
+        }
+      ],
+      "formulas": [
+        {
+          "label": "Total probability / expected value",
+          "formula": "=SUM(B2:B8); =SUMPRODUCT(A2:A8,B2:B8)"
+        },
+        {
+          "label": "Second moment",
+          "formula": "=SUMPRODUCT(A2:A8,A2:A8,B2:B8)"
+        },
+        {
+          "label": "At least / strictly above 3",
+          "formula": "=SUMIF(A2:A8,\">=3\",B2:B8); =SUMIF(A2:A8,\">3\",B2:B8)"
+        }
+      ],
+      "cautions": [
+        "AVERAGE(A2:A8) weights all counts equally; it is not E(X) for this model.",
+        "The worksheet is a model distribution, not a sample from which to calculate VAR.S or a confidence interval."
+      ],
+      "questions": [
+        {
+          "id": "otitis-tail",
+          "prompt": "Why do P(X≥3)=.336 and P(X>3)=.151 differ?",
+          "options": [
+            "The first includes P(X=3)=.185",
+            "The two probabilities should always agree",
+            "The distribution is continuous"
+          ],
+          "answer": 0,
+          "explanation": "A discrete random variable can put positive mass at a single endpoint. ≥ includes 3, while > excludes it."
+        },
+        {
+          "id": "otitis-expectation",
+          "prompt": "Can E(X)=2.038 be valid for integer-valued X?",
+          "options": [
+            "No: all expectations must be integers",
+            "Yes: the long-run weighted average need not be an individual possible value",
+            "Only if X is normally distributed"
+          ],
+          "answer": 1,
+          "explanation": "An expectation is a probability-weighted average, not a requirement that one observation equal that value."
+        }
+      ]
+    },
+    {
+      "id": "sampling-enumeration",
+      "category": "dataset",
+      "title": "All 25 samples: see bias and precision exactly",
+      "topics": [
+        "fund-statistics.distributions",
+        "fund-statistics.estimation"
+      ],
+      "files": [
+        "List of 25 independent samples from a 5 units population (2).xlsx"
+      ],
+      "url": "https://virtuale.unibo.it/mod/resource/view.php?id=2522311",
+      "citation": "Worksheet’s 25 ordered pairs, rows 2–26. Population values match the existing exact-sampling experiment.",
+      "unit": "Two independent draws with replacement from the five-value population {8,4,2,11,6}.",
+      "goal": "Read all possible samples as an exact sampling distribution, not 25 new empirical study participants.",
+      "steps": [
+        {
+          "title": "Identify the sampling design",
+          "text": "There are 5×5=25 equally likely ordered outcomes. (8,4) and (4,8) are distinct outcomes, and (8,8) is allowed because sampling is with replacement."
+        },
+        {
+          "title": "Calculate the population quantities",
+          "text": "The population has μ=6.2 and σ²=9.76. Averaging the 25 possible sample means gives 6.2: X̄ is unbiased for μ."
+        },
+        {
+          "title": "See precision improve",
+          "text": "For n=2 independent draws, Var(X̄)=9.76/2=4.88. This is the variability of possible sample means, not the spread of the five individuals."
+        },
+        {
+          "title": "Compare variance estimators",
+          "text": "Across these 25 outcomes, average descriptive sample variance Vₙ is 4.88, while average adjusted S² is 9.76. The latter matches the population variance. Without replacement, the design and resulting mean variance change."
+        }
+      ],
+      "tables": [
+        {
+          "title": "Exact repeated-sampling averages",
+          "headers": [
+            "Quantity",
+            "Value"
+          ],
+          "rows": [
+            [
+              "Ordered samples",
+              "25"
+            ],
+            [
+              "Average sample mean",
+              "6.2"
+            ],
+            [
+              "Variance of sample means",
+              "4.88"
+            ],
+            [
+              "Average Vₙ",
+              "4.88"
+            ],
+            [
+              "Average S²",
+              "9.76"
+            ]
+          ]
+        }
+      ],
+      "formulas": [
+        {
+          "label": "Sample mean for each B,C pair",
+          "formula": "=AVERAGE(B2:C2); copy down through row 26"
+        },
+        {
+          "label": "Two sample variance recipes",
+          "formula": "=VAR.P(B2:C2); =VAR.S(B2:C2); copy down"
+        },
+        {
+          "label": "Across the enumeration",
+          "formula": "AVERAGE of all 25 calculated means; VAR.P of those means; AVERAGE of each estimator column."
+        }
+      ],
+      "cautions": [
+        "The file enumerates possible samples. It does not demonstrate that 25 collected samples happened to be independent experiments.",
+        "Sampling without replacement excludes duplicate draws and changes covariance. Do not reuse σ²/n without checking the design."
+      ],
+      "questions": [
+        {
+          "id": "sampling-order",
+          "prompt": "Why are there 25 outcomes rather than 10?",
+          "options": [
+            "The draws are ordered and replacement is allowed",
+            "The population has 25 people",
+            "The second draw cannot equal the first"
+          ],
+          "answer": 0,
+          "explanation": "Five choices for the first draw and five for the second make 25 ordered outcomes. Ten is the number of unordered size-two subsets without replacement."
+        },
+        {
+          "id": "sampling-unbiased",
+          "prompt": "Which average matches the population variance 9.76 in this enumeration?",
+          "options": [
+            "Average descriptive Vₙ",
+            "Variance of the possible sample means",
+            "Average adjusted S²"
+          ],
+          "answer": 2,
+          "explanation": "Average S² equals 9.76. Average Vₙ and Var(X̄) both equal 4.88 here, for different reasons."
+        }
+      ],
+      "experiment": "fund-sampling"
+    },
+    {
+      "id": "health-centre-report",
+      "category": "report",
+      "title": "Health-centre visits: define the denominator",
+      "topics": [
+        "fund-statistics.confidence-intervals",
+        "fund-statistics.hypothesis-tests"
+      ],
+      "files": [
+        "NHSR_2024.pdf"
+      ],
+      "url": "https://virtuale.unibo.it/mod/folder/view.php?id=2424964",
+      "citation": "NCHS, National Health Statistics Reports No. 211, Visits to Health Centers Among Adults, by Selected Characteristics: United States, 2022 (22 October 2024), Table 1, PDF p. 7; methods pp. 2–3.",
+      "unit": "Percentage of adult health-centre visits in 2022, not percentage of unique people.",
+      "goal": "Read a survey percentage and interval while checking what a row and its denominator represent.",
+      "steps": [
+        {
+          "title": "Start with the statistical unit",
+          "text": "The unit is a visit. Repeat visits by one person can appear in the year’s data. The analytic file has 4,612,644 adult visits; weighting estimates 89.5 million visits."
+        },
+        {
+          "title": "Distinguish proportions from visit rates",
+          "text": "65.2% is the estimated share of adult visits made by women. It does not mean 65.2% of women attended a health centre. The report also gives visit rates per 1,000 people, a different quantity."
+        },
+        {
+          "title": "Read the method and missingness",
+          "text": "64 of 255 contacted centres participated (25.1%). Weights address selection and nonresponse; they do not by themselves guarantee absence of bias. Denominators vary with missing characteristics; marital status uses a smaller analytic subset."
+        },
+        {
+          "title": "Read the legend before the stars",
+          "text": "Asterisks in this report flag unreliable estimates. They are not ordinary p-value stars. Several condition categories overlap, so their percentages need not sum to 100%."
+        }
+      ],
+      "cautions": [
+        "Use the report’s design-based intervals. The large number of visits does not justify rebuilding them with a simple independent-binomial formula.",
+        "These rows describe visits to health centres. They cannot be generalized to all US healthcare use or all unique adult patients."
+      ],
+      "questions": [
+        {
+          "id": "health-centre-unit",
+          "prompt": "The women row is 65.2% [63.7,66.7]. What is the estimated quantity?",
+          "options": [
+            "The share of women who visited any doctor",
+            "The share of adult health-centre visits made by women",
+            "The share of all US women who are ill"
+          ],
+          "answer": 1,
+          "explanation": "The denominator is adult visits in the specified health-centre setting and year, not women in the general population."
+        },
+        {
+          "id": "health-centre-stars",
+          "prompt": "What does an asterisk mean in this report’s tables?",
+          "options": [
+            "An unreliable estimate under the reporting standard",
+            "Always p<.05",
+            "A causal effect"
+          ],
+          "answer": 0,
+          "explanation": "The legend defines the symbol. Star conventions must be checked in each source."
+        }
+      ],
+      "formulas": [],
+      "tables": [],
+      "intervals": [
+        {
+          "label": "Women",
+          "estimate": 65.2,
+          "lower": 63.7,
+          "upper": 66.7,
+          "meaning": "An estimated 65.2% of adult health-centre visits were made by women; the 95% interval is 63.7%–66.7%."
+        },
+        {
+          "label": "Men",
+          "estimate": 34.8,
+          "lower": 33.3,
+          "upper": 36.3,
+          "meaning": "An estimated 34.8% of adult visits were made by men; this is a visit share, not the chance that a man attends."
+        },
+        {
+          "label": "Age 18–44",
+          "estimate": 42.8,
+          "lower": 39.9,
+          "upper": 45.8,
+          "meaning": "An estimated 42.8% of adult visits were in the 18–44 age group."
+        },
+        {
+          "label": "Age 65+",
+          "estimate": 19.9,
+          "lower": 17.1,
+          "upper": 23,
+          "meaning": "An estimated 19.9% of adult visits were in the age-65-and-older group."
+        }
+      ],
+      "axis": {
+        "min": 0,
+        "max": 100,
+        "unit": "% of adult visits"
+      },
+      "intervalNote": "Selected Table 1 rows; sex and age are separate classifications, so do not add all four rows. Published 95% endpoints are retained."
+    },
+    {
+      "id": "medication-report",
+      "category": "report",
+      "title": "Medication use: proportions in a complex survey",
+      "topics": [
+        "fund-statistics.confidence-intervals",
+        "fund-statistics.hypothesis-tests"
+      ],
+      "files": [
+        "NHSR_2024_bis.pdf"
+      ],
+      "url": "https://virtuale.unibo.it/mod/folder/view.php?id=2424964",
+      "citation": "NCHS, National Health Statistics Reports No. 209, Prescription Medication Use, Coverage, and Nonadherence Among Adults Age 65 and Older: United States, 2021–2022 (5 September 2024), Table 1, PDF p. 8; methods pp. 2–3.",
+      "unit": "Percentage of US civilian noninstitutionalized adults aged 65+ reporting prescription use in the past 12 months.",
+      "goal": "Interpret a population proportion and recognize why its survey interval differs from a classroom Wald interval.",
+      "steps": [
+        {
+          "title": "Define eligibility and time",
+          "text": "The estimate concerns adults 65+ and use during the past 12 months. The pooled 2021–2022 NHIS sample has 17,706 such adults; it excludes institutionalized adults."
+        },
+        {
+          "title": "Separate related outcomes",
+          "text": "Prescription use (88.6% overall) is not prescription coverage or a cost-related nonadherence measure. Read the outcome definition before comparing percentages."
+        },
+        {
+          "title": "Use the reported uncertainty",
+          "text": "The 95% intervals use Korn–Graubard methods; SUDAAN accounts for the complex survey design. A classroom Wald interval based only on n=17,706 does not reproduce this calculation."
+        },
+        {
+          "title": "Check comparison policy",
+          "text": "Individual tests use p<.05 without adjustment for multiple comparisons. Several comparisons therefore need more cautious reading than a single pre-specified test."
+        }
+      ],
+      "cautions": [
+        "Intervals concern a proportion, not average doses or the share of all US adults using medicines.",
+        "Association of nonadherence with food insecurity in this observational survey does not alone establish causation."
+      ],
+      "questions": [
+        {
+          "id": "medication-ci",
+          "prompt": "What does [88.1%,89.2%] estimate?",
+          "options": [
+            "The population proportion of eligible older adults reporting prescription use",
+            "A range containing 95% of individual medication doses",
+            "A 95% probability that any selected individual takes medicine"
+          ],
+          "answer": 0,
+          "explanation": "This is uncertainty about a population proportion under the survey procedure, not a distribution of doses or an individual prediction."
+        },
+        {
+          "id": "medication-design",
+          "prompt": "Why should you keep the published interval instead of rebuilding a simple Wald one?",
+          "options": [
+            "Survey weighting always removes all bias",
+            "Its variance and endpoints account for a complex survey design",
+            "A confidence interval has no connection to sampling"
+          ],
+          "answer": 1,
+          "explanation": "The report uses design-aware variance and Korn–Graubard intervals. The simple independent-sample course formula is not the reported method."
+        }
+      ],
+      "formulas": [],
+      "tables": [],
+      "intervals": [
+        {
+          "label": "All aged 65+",
+          "estimate": 88.6,
+          "lower": 88.1,
+          "upper": 89.2,
+          "meaning": "Estimated prescription use is 88.6%; the reported 95% interval for that population proportion is 88.1%–89.2%."
+        },
+        {
+          "label": "Age 65–74",
+          "estimate": 86.9,
+          "lower": 86.2,
+          "upper": 87.7,
+          "meaning": "The estimated proportion reporting use among ages 65–74 is 86.9%."
+        },
+        {
+          "label": "Age 75–84",
+          "estimate": 91.3,
+          "lower": 90.4,
+          "upper": 92.2,
+          "meaning": "The estimated proportion among ages 75–84 is 91.3%."
+        },
+        {
+          "label": "Age 85+",
+          "estimate": 91.2,
+          "lower": 89.5,
+          "upper": 92.7,
+          "meaning": "The estimated proportion among ages 85+ is 91.2%; its interval is wider than the overall interval."
+        }
+      ],
+      "axis": {
+        "min": 80,
+        "max": 100,
+        "unit": "% reporting prescription use"
+      },
+      "intervalNote": "Selected Table 1 rows; the overall row contains the age subgroups. The axis starts at 80% to make interval widths readable; it is not a zero-based percentage bar chart."
+    },
+    {
+      "id": "pisa-report",
+      "category": "report",
+      "title": "PISA: mean, SE and a dependent comparison",
+      "topics": [
+        "fund-statistics.confidence-intervals",
+        "fund-statistics.two-means"
+      ],
+      "files": [
+        "PISA-2022_Canadian_Report_EN.pdf"
+      ],
+      "url": "https://virtuale.unibo.it/mod/folder/view.php?id=2424964",
+      "citation": "Measuring Up: Canadian Results of the OECD PISA 2022 Study, Box 1 PDF p. 27 (printed p. 13), Table B.1.2 PDF p. 126 (printed p. 112), Appendix A PDF pp. 115–120.",
+      "unit": "Mean mathematics score for participating populations of 15-year-old students; education example for reading mean CIs.",
+      "goal": "Distinguish individual spread from uncertainty in a mean and inspect a comparison whose groups overlap.",
+      "steps": [
+        {
+          "title": "Recognize the sample design",
+          "text": "Around 23,000 Canadian students participated. School/student sampling and weights differ from a simple random sample of independent patients. Appendix A identifies possible student nonresponse bias; estimates for Canada and seven provinces need caution."
+        },
+        {
+          "title": "Separate SD from SE",
+          "text": "The report describes individual-score SD around 100, but Canada’s mean has SE=1.6. Individual variability and uncertainty in a weighted mean answer different questions."
+        },
+        {
+          "title": "Read the rounded interval",
+          "text": "Canada’s mean is 497 with published 95% CI [494,500]. The rounded arithmetic 497±1.96×1.6 gives about [493.864,500.136], consistent after rounding. Published SEs also account for measurement uncertainty."
+        },
+        {
+          "title": "Identify an overlapping comparison",
+          "text": "Canada includes Quebec, so these means are not independent. Table B.1.2 reports Quebec−Canada=17 with SE=3.6. Use the reported contrast SE, rather than √(3.9²+1.6²)."
+        }
+      ],
+      "cautions": [
+        "The report’s tables use stars to distinguish reference comparisons (OECD or Canada). Read the specific legend; three stars are not automatically p<.001 here.",
+        "Nonresponse adjustment does not establish representativeness without limitations. The report accepts the data with explicit caution; observed changes do not establish a causal COVID effect."
+      ],
+      "questions": [
+        {
+          "id": "pisa-se",
+          "prompt": "Canada has mean=497 and SE=1.6. Which interpretation is correct?",
+          "options": [
+            "Individual scores mostly lie within 1.6 points of 497",
+            "SE describes uncertainty in the estimated mean",
+            "SE is the largest observed student score"
+          ],
+          "answer": 1,
+          "explanation": "SE concerns the estimator’s variability; individual scores have much larger dispersion."
+        },
+        {
+          "id": "pisa-overlap",
+          "prompt": "Why is the course independent-groups SE unsuitable for Quebec minus Canada?",
+          "options": [
+            "Quebec is part of Canada, so the two means share observations",
+            "The mean of Quebec is larger",
+            "Both results have three digits"
+          ],
+          "answer": 0,
+          "explanation": "Overlapping observations induce dependence. The table provides a design-appropriate contrast SE=3.6."
+        }
+      ],
+      "formulas": [],
+      "tables": [],
+      "intervals": [
+        {
+          "label": "Canada",
+          "estimate": 497,
+          "lower": 494,
+          "upper": 500,
+          "meaning": "The estimated Canadian population mean mathematics score is 497; its reported 95% interval is 494–500.",
+          "se": 1.6
+        },
+        {
+          "label": "Alberta",
+          "estimate": 504,
+          "lower": 492,
+          "upper": 515,
+          "meaning": "Alberta’s mean is 504 with a wider interval, 492–515. The highest point estimate alone does not settle a comparison.",
+          "se": 5.7
+        },
+        {
+          "label": "Quebec",
+          "estimate": 514,
+          "lower": 506,
+          "upper": 521,
+          "meaning": "Quebec’s mean is 514. For Quebec−Canada, read the separately reported difference 17 and SE 3.6.",
+          "se": 3.9
+        },
+        {
+          "label": "Ontario",
+          "estimate": 495,
+          "lower": 489,
+          "upper": 501,
+          "meaning": "Ontario’s mean is 495 with interval 489–501.",
+          "se": 3
+        }
+      ],
+      "axis": {
+        "min": 480,
+        "max": 530,
+        "unit": "Mathematics score points"
+      },
+      "intervalNote": "Selected Table B.1.2 rows. Endpoints, means and SEs are rounded in the source. Province-versus-Canada comparisons are dependent."
+    },
+    {
+      "id": "oecd-performance-report",
+      "category": "report",
+      "title": "Health systems: intervals do not make a league table",
+      "topics": [
+        "fund-statistics.confidence-intervals",
+        "fund-statistics.hypothesis-tests",
+        "fund-statistics.two-means"
+      ],
+      "files": [
+        "OECD_2025.pdf"
+      ],
+      "url": "https://doi.org/10.1787/7b877762-en",
+      "citation": "OECD / The Health Foundation (2025), How Do Health System Features Influence Health System Performance?, Table 2.1 PDF p. 23 (printed p. 21); Figure 2.6 p. 24; Table 2.3 p. 26. DOI: 10.1787/7b877762-en. Selected numerical rows and original teaching plot; source CC BY 4.0, no endorsement implied.",
+      "unit": "Mean DEA efficiency score across countries in each institutional cluster, where 1 is the highest score.",
+      "goal": "Read interval uncertainty and formal contrasts before comparing clusters or claiming causation.",
+      "steps": [
+        {
+          "title": "Identify the level of analysis",
+          "text": "The observations are countries grouped by institutional features, not patient groups. DEA efficiency scores and clustering are report context, beyond the course’s required calculations."
+        },
+        {
+          "title": "Compare precision as well as estimates",
+          "text": "Cluster 2 has a point estimate .71 [ .59,.84 ]; cluster 6 has .58 [ .24,.92 ]. Wide intervals signal substantial uncertainty. A ranking of point estimates is not a proven ranking of population performance."
+        },
+        {
+          "title": "Use the comparison actually tested",
+          "text": "Figure 2.6 gives Tukey 95% family-wise intervals for pairwise differences. Under that procedure, cluster 5 is significantly below clusters 1, 2, 3 and 8. Overlap of two individual mean CIs is not the formal comparison rule."
+        },
+        {
+          "title": "Read the limits of the model",
+          "text": "The report describes associations, with lifestyle and contextual confounding and model choices. Its regression output is not a simple unadjusted patient-mean comparison. In Table 2.3, stars do refer to stated p-value thresholds; a displayed p=0 is rounding, not literal zero."
+        }
+      ],
+      "cautions": [
+        "Multiple comparisons need their stated family-wise procedure. Do not replace a Tukey difference interval with two unrelated 95% mean intervals.",
+        "No institutional configuration is established as universally best. An observational country association is not evidence that changing that feature alone causes the outcome."
+      ],
+      "questions": [
+        {
+          "id": "oecd-ranking",
+          "prompt": "Cluster 2 has the highest displayed mean (.71). What can you conclude from that alone?",
+          "options": [
+            "It is proven superior to every cluster",
+            "Its point estimate is largest; superiority needs appropriate comparisons and design",
+            "Its institutional features cause high efficiency"
+          ],
+          "answer": 1,
+          "explanation": "A point estimate does not express comparison uncertainty or establish causality. Read the reported difference procedure."
+        },
+        {
+          "id": "oecd-contrast",
+          "prompt": "Which source supports a formal pairwise cluster comparison?",
+          "options": [
+            "Whether separate mean intervals overlap",
+            "The order of rows in Table 2.1",
+            "The reported Tukey family-wise intervals for differences"
+          ],
+          "answer": 2,
+          "explanation": "The report uses Tukey contrasts to address the family of comparisons. Individual mean CI overlap is not that test."
+        }
+      ],
+      "formulas": [],
+      "tables": [],
+      "intervals": [
+        {
+          "label": "Cluster 1",
+          "estimate": 0.65,
+          "lower": 0.48,
+          "upper": 0.82,
+          "meaning": "Mean efficiency score .65, with published 95% CI [.48,.82]."
+        },
+        {
+          "label": "Cluster 2",
+          "estimate": 0.71,
+          "lower": 0.59,
+          "upper": 0.84,
+          "meaning": "Mean .71 has the largest point estimate here, without by itself proving superiority."
+        },
+        {
+          "label": "Cluster 3",
+          "estimate": 0.67,
+          "lower": 0.49,
+          "upper": 0.85,
+          "meaning": "Mean .67 with considerable interval uncertainty."
+        },
+        {
+          "label": "Cluster 4",
+          "estimate": 0.62,
+          "lower": 0.51,
+          "upper": 0.73,
+          "meaning": "Mean .62; inspect difference intervals to compare clusters."
+        },
+        {
+          "label": "Cluster 5",
+          "estimate": 0.21,
+          "lower": 0.01,
+          "upper": 0.41,
+          "meaning": "Mean .21; reported Tukey contrasts identify specific significant differences."
+        },
+        {
+          "label": "Cluster 6",
+          "estimate": 0.58,
+          "lower": 0.24,
+          "upper": 0.92,
+          "meaning": "Mean .58 has a wide interval [.24,.92]."
+        },
+        {
+          "label": "Cluster 7",
+          "estimate": 0.64,
+          "lower": 0.56,
+          "upper": 0.71,
+          "meaning": "Mean .64 with interval [.56,.71]."
+        },
+        {
+          "label": "Cluster 8",
+          "estimate": 0.64,
+          "lower": 0.56,
+          "upper": 0.71,
+          "meaning": "The same rounded mean/interval as cluster 7 does not establish identical groups."
+        }
+      ],
+      "axis": {
+        "min": 0,
+        "max": 1,
+        "unit": "Mean efficiency score"
+      },
+      "intervalNote": "Selected Table 2.1 mean intervals; these are not the Tukey intervals for differences in Figure 2.6. Plot is an original redraw of the selected numerical summaries."
+    }
+  ]
+}

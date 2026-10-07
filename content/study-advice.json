@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-10-07",
+  "disclaimer": "Authored planning guidance based on official course outcomes and EU-HEM track descriptions. Track connections are our interpretation, not an official recommendation or a student testimonial. Choose by your preparation and interests; the official study-plan rules remain authoritative.",
+  "sources": [
+    {
+      "id": "structure-2026",
+      "title": "UniBo: course structure for the 2026/27 cohort",
+      "url": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/course-structure-diagram/piano/2026/6759/000/000/2026"
+    },
+    {
+      "id": "intro-economics-2026",
+      "title": "UniBo: Introduction to Economics, 2026/27",
+      "url": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518755"
+    },
+    {
+      "id": "health-economics-2026",
+      "title": "UniBo: Fundamentals in Health Economics, 2026/27",
+      "url": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518742"
+    },
+    {
+      "id": "healthcare-management-2026",
+      "title": "UniBo: Fundamentals in Healthcare Management, 2026/27",
+      "url": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518743"
+    },
+    {
+      "id": "right-to-health-2026",
+      "title": "UniBo: Our Right to Health, 2026/27",
+      "url": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518699"
+    },
+    {
+      "id": "fund-statistics-2026",
+      "title": "UniBo: Fundamentals of Statistics for Healthcare, 2026/27",
+      "url": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518697"
+    },
+    {
+      "id": "fund-econometrics-2026",
+      "title": "UniBo: Fundamentals of Econometrics, 2026/27",
+      "url": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518698"
+    },
+    {
+      "id": "statistics-2026",
+      "title": "UniBo: Statistics for Healthcare, 2026/27",
+      "url": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518721"
+    },
+    {
+      "id": "econometrics-2026",
+      "title": "UniBo: Econometrics, 2026/27",
+      "url": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518722"
+    },
+    {
+      "id": "health-systems-2026",
+      "title": "UniBo: Health Systems, 2026/27",
+      "url": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/558081"
+    },
+    {
+      "id": "international-law-2026",
+      "title": "UniBo: International Law and Health, 2026/27",
+      "url": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518666"
+    },
+    {
+      "id": "track-eeh",
+      "title": "EU-HEM: Economic Evaluation in Healthcare",
+      "url": "https://eu-hem.eu/economic-evaluation-in-healthcare/"
+    },
+    {
+      "id": "track-ep",
+      "title": "EU-HEM: Health Economics & Policy",
+      "url": "https://eu-hem.eu/health-economics-policy/"
+    },
+    {
+      "id": "track-mhi",
+      "title": "EU-HEM: Management of Healthcare Institutions",
+      "url": "https://eu-hem.eu/management-of-healthcare-institutions/"
+    },
+    {
+      "id": "track-phm",
+      "title": "EU-HEM: Population Health Management",
+      "url": "https://eu-hem.eu/population-health-management/"
+    }
+  ],
+  "courses": {
+    "intro-economics": {
+      "summary": "A useful refresher if opportunity cost, elasticity, incentives or market equilibrium are unfamiliar. It builds a shared economic vocabulary before the health-specific core.",
+      "skills": ["Economic reasoning", "Markets and incentives", "Resource trade-offs"],
+      "trackFits": [
+        {"trackId": "ep", "strength": "strong", "reason": "Economic reasoning supports later policy and incentive analysis."},
+        {"trackId": "eeh", "strength": "strong", "reason": "Opportunity cost helps frame choices about healthcare spending."},
+        {"trackId": "mhi", "strength": "useful", "reason": "Adds an economic perspective to resource and organisational decisions."},
+        {"trackId": "phm", "strength": "useful", "reason": "Helps connect incentives and scarce resources to population-health decisions."}
+      ],
+      "decisionTip": "Use it to fill a background gap rather than to collect degree credits. The hub's plan correctly treats crash courses as optional and outside the 120-credit degree total.",
+      "sources": ["intro-economics-2026", "structure-2026", "track-ep", "track-eeh", "track-mhi", "track-phm"]
+    },
+    "intro-management": {
+      "summary": "Consider this optional refresher if you are new to management and want an orientation before the healthcare-management core. The detailed course outcomes are not published in the linked structure.",
+      "skills": ["Management orientation", "Preparation for the management core"],
+      "trackFits": [
+        {"trackId": "mhi", "strength": "strong", "reason": "Management is central to this track's leadership and organisational focus."},
+        {"trackId": "phm", "strength": "useful", "reason": "An organisational perspective can support implementing population-health interventions."},
+        {"trackId": "ep", "strength": "useful", "reason": "Broadens your perspective on the organisations that implement policies."},
+        {"trackId": "eeh", "strength": "useful", "reason": "Adds context for how organisations act on evaluation findings."}
+      ],
+      "decisionTip": "Prioritise it if management is a gap in your previous studies. Confirm the current content with the instructor; the course title alone is not enough to infer particular teaching methods or assessment.",
+      "sources": ["structure-2026", "track-mhi", "track-phm", "track-ep", "track-eeh"]
+    },
+    "fund-health-econ-management": {
+      "summary": "The shared bridge between economics and organisations: understand healthcare incentives, insurance and resource allocation, then connect them to strategy, leadership and organisational choices.",
+      "skills": ["Health-economic reasoning", "Organisational analysis", "Strategy and resource allocation"],
+      "trackFits": [
+        {"trackId": "ep", "strength": "strong", "reason": "Health economics provides a foundation for policy and incentive analysis."},
+        {"trackId": "eeh", "strength": "strong", "reason": "Resource allocation connects to evaluating the value of healthcare interventions."},
+        {"trackId": "mhi", "strength": "strong", "reason": "Management concepts connect directly to leadership and institutional decisions."},
+        {"trackId": "phm", "strength": "strong", "reason": "Connects economic constraints to the organisations delivering population-health interventions."}
+      ],
+      "decisionTip": "This is required for everyone. Try analysing the same healthcare case twice: first as an economist asking about incentives, then as a manager asking about implementation.",
+      "sources": ["health-economics-2026", "healthcare-management-2026", "structure-2026", "track-ep", "track-eeh", "track-mhi", "track-phm"]
+    },
+    "right-to-health": {
+      "summary": "A shared legal and ethical foundation focused on EU health law, rights, non-discrimination and health-system models. Use it to ask whose needs and rights a policy or decision serves.",
+      "skills": ["EU health-law literacy", "Rights and equity reasoning", "Ethical reflection"],
+      "trackFits": [
+        {"trackId": "ep", "strength": "strong", "reason": "Rights and legal constraints add context to policy evaluation."},
+        {"trackId": "phm", "strength": "strong", "reason": "Equity and access connect closely to population-health interventions."},
+        {"trackId": "eeh", "strength": "useful", "reason": "Rights and ethics complement cost-and-benefit reasoning."},
+        {"trackId": "mhi", "strength": "useful", "reason": "Legal and ethical reasoning informs institutional decisions."}
+      ],
+      "decisionTip": "This is required, not the law elective. International Law and Health adds a global treaties-and-institutions perspective beyond this course's EU emphasis.",
+      "sources": ["right-to-health-2026", "international-law-2026", "structure-2026", "track-ep", "track-phm", "track-eeh", "track-mhi"]
+    },
+    "fund-quant-methods": {
+      "summary": "Consider this route when you want to build or rebuild your statistical foundations. The statistics module uses Excel to make inference concrete; econometrics then develops regression and causal reasoning.",
+      "skills": ["Statistical inference", "Interpreting evidence", "Regression and causal reasoning"],
+      "trackFits": [
+        {"trackId": "phm", "strength": "strong", "reason": "Foundational inference supports reading evidence for population-health interventions."},
+        {"trackId": "mhi", "strength": "strong", "reason": "Evidence literacy supports interpreting results for organisational decisions."},
+        {"trackId": "eeh", "strength": "useful", "reason": "Sampling and uncertainty are relevant to later evaluation methods."},
+        {"trackId": "ep", "strength": "useful", "reason": "Regression and causal reasoning contribute to policy-evidence literacy."}
+      ],
+      "decisionTip": "Choose by your current preparation, not a claim that this is the easier option. Both routes support further quantitative study. If aiming for E&P or intensive empirical research, compare the standard route's explicit Stata and regression practice with your needs. Fundamentals Econometrics also lists Stata and R materials.",
+      "sources": ["fund-statistics-2026", "fund-econometrics-2026", "statistics-2026", "econometrics-2026", "track-phm", "track-mhi", "track-eeh", "track-ep"]
+    },
+    "quant-methods": {
+      "summary": "Consider this route if you want an explicit bridge from probability and inference to regression, causal interpretation and empirical work. Statistics includes Stata workshops; econometrics develops analysis of cross-sectional and panel data.",
+      "skills": ["Empirical data analysis", "Regression interpretation", "Causal reasoning", "Stata practice"],
+      "trackFits": [
+        {"trackId": "ep", "strength": "strong", "reason": "Directly connects to Applied Micro Econometrics and empirical policy evaluation."},
+        {"trackId": "eeh", "strength": "strong", "reason": "Data analysis and uncertainty interpretation support later evaluation and research."},
+        {"trackId": "phm", "strength": "useful", "reason": "Supports evaluating evidence for population-health interventions."},
+        {"trackId": "mhi", "strength": "useful", "reason": "Useful if you want a stronger empirical component in management or thesis work."}
+      ],
+      "decisionTip": "A particularly coherent choice for E&P and a quantitative research direction. Compare both syllabi and discuss your background with the lecturers. Choosing a route does not assign your specialisation, and both alternatives carry the same degree credits.",
+      "sources": ["statistics-2026", "econometrics-2026", "structure-2026", "track-ep", "track-eeh", "track-phm", "track-mhi"]
+    },
+    "health-systems": {
+      "summary": "Choose this if your question is how healthcare is funded, organised and reformed. Comparing OECD systems gives practical context for thinking about insurers, providers, government and access to care.",
+      "skills": ["Comparative health-system analysis", "Financing and provision models", "Health-policy context"],
+      "trackFits": [
+        {"trackId": "ep", "strength": "strong", "reason": "Institutional context helps explain why health policies work differently across systems."},
+        {"trackId": "mhi", "strength": "strong", "reason": "Helps place hospitals and other providers within their funding and policy environment."},
+        {"trackId": "phm", "strength": "strong", "reason": "Supports later comparative policy and thinking about access across populations."},
+        {"trackId": "eeh", "strength": "useful", "reason": "Adds context for the systems making funding and reimbursement decisions."}
+      ],
+      "decisionTip": "Prefer this for a systems, provider or domestic-policy lens. For E&P, the official Semester 3 menu allows this course only if you did not take it in Semester 1; you can plan the other elective later. Choose based on the perspective you want first.",
+      "sources": ["health-systems-2026", "track-ep", "track-mhi", "track-phm", "track-eeh"]
+    },
+    "international-law-health": {
+      "summary": "Choose this if you are interested in global health governance: how treaties, international institutions and legal obligations shape health policy. It extends the required EU-focused law course with an international perspective.",
+      "skills": ["International health governance", "Legal-policy analysis", "Rights and institutional reasoning"],
+      "trackFits": [
+        {"trackId": "phm", "strength": "strong", "reason": "Connects to global health, governance and international public-health interests."},
+        {"trackId": "ep", "strength": "strong", "reason": "Adds a legal lens to health regulation and pharmaceutical-policy questions."},
+        {"trackId": "eeh", "strength": "useful", "reason": "Trade, intellectual property and rights add context to market-access decisions."},
+        {"trackId": "mhi", "strength": "useful", "reason": "Broadens your view of the legal environment around healthcare institutions."}
+      ],
+      "decisionTip": "Prefer this for international organisations, regulation or global-health policy interests. For E&P, Semester 3 allows it only if not taken in Semester 1. The official page currently publishes learning outcomes, but the full syllabus is still pending; confirm details before deciding.",
+      "sources": ["international-law-2026", "right-to-health-2026", "track-phm", "track-ep", "track-eeh", "track-mhi"]
+    }
+  }
+}

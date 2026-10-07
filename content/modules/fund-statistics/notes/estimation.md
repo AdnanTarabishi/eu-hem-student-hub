@@ -152,3 +152,14 @@ Four illustrative independent observations are 4, 6, 8 and 10 minutes. Compute t
 
 [Choose a method interactively](fund-statistics.html#methods).
 <!-- /Extended original practice -->
+
+
+## See the variance correction in the supplied files
+
+The eight-observation variance exercise has squared-deviation sum 4537.5. Dividing by 8 gives Vₙ=567.1875; dividing by 7 gives S²=648.2143. Use $B$12 to hold the mean fixed when copying deviation formulas.
+
+In the 25 ordered size-two samples with replacement, average X̄=6.2, Var(X̄)=4.88 and average S²=9.76. The adjusted estimator matches the population variance across the full enumeration. For Food.xlsx, VAR.S of total spending is 2603.2557 £²; this is a point estimate, not a variance test.
+
+- [Variance: why n and n−1 give different answers](fund-statistics.html?guide=variance-lab#lab-guides)
+- [All 25 samples: see bias and precision exactly](fund-statistics.html?guide=sampling-enumeration#lab-guides)
+- [Food spending: from an Excel column to a 90% interval](fund-statistics.html?guide=food-lab#lab-guides)

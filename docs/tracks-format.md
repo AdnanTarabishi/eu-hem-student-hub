@@ -11,6 +11,7 @@ that doesn't exist or a quiz answer for a track that doesn't exist.
   or linked.
 - **Course names of Oslo courses**: spelled exactly as the University of Oslo lists them, with their
   course code (e.g. `HFIN4210 Finance and Investment`).
+- **UniBo course codes and credits**: supplemented from the official 2026/27 course structure, verified on 7 October 2026. `creditsSource` records this provenance; these values describe the published curriculum and do not confirm future teaching dates or availability.
 - **Student texts** (everything inside `"student"`, the `"texts"`, the FAQ wording and the quiz):
   written by students, not official. The page says so.
 - **Never invent** a course, credit, rule or career claim. If the source doesn't say: use `null`,

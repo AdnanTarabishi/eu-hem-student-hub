@@ -153,3 +153,14 @@ Two independent random samples of quantitative patient scores have n₁=64, mean
 
 [Choose a method interactively](fund-statistics.html#methods).
 <!-- /Extended original practice -->
+
+
+## Check dependence before comparing means in a report
+
+PISA reports Quebec−Canada=17 points with SE=3.6. Quebec is part of Canada, so the two mean estimates share observations. Do not use the independent-groups formula √(SE₁²+SE₂²) for this contrast.
+
+The standalone cholesterol workbook has five observations per group, equal means and different spread. It does not state the pairing/independence design and does not meet the course large-sample independent recipe. OECD’s cluster rankings require its reported Tukey comparisons; a larger point estimate alone is not proven superiority or a causal finding.
+
+- [PISA: mean, SE and a dependent comparison](fund-statistics.html?guide=pisa-report#lab-guides)
+- [Two cholesterol samples: same mean, different spread](fund-statistics.html?guide=cholesterol-spread#lab-guides)
+- [Health systems: intervals do not make a league table](fund-statistics.html?guide=oecd-performance-report#lab-guides)

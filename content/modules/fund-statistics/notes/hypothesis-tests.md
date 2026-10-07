@@ -213,3 +213,14 @@ Among 300 randomly sampled independent eligible adults, 192 support a health pro
 
 [Choose a method interactively](fund-statistics.html#methods).
 <!-- /Extended original practice -->
+
+
+## Read the legend and the comparison family
+
+Asterisks do not have a universal meaning: NHSR 211 uses them for unreliable estimates; PISA legends distinguish reference comparisons; OECD Table 2.3 states p-value thresholds. Read the actual legend before assigning a significance level. A rounded p=0 is not a literal zero probability.
+
+NHSR 209 reports unadjusted individual comparisons; OECD Figure 2.6 uses Tukey family-wise intervals for differences. Individual mean CI overlap is not the formal comparison rule. Advanced survey and multiple-comparison methods are reading context, not extra required calculation recipes for this course.
+
+- [Health-centre visits: define the denominator](fund-statistics.html?guide=health-centre-report#lab-guides)
+- [Medication use: proportions in a complex survey](fund-statistics.html?guide=medication-report#lab-guides)
+- [Health systems: intervals do not make a league table](fund-statistics.html?guide=oecd-performance-report#lab-guides)

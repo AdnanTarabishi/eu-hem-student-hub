@@ -55,6 +55,9 @@ let results = []; // after filters and sorting
 let mapReady = false;
 let lastShownRandom = null;
 let returnFocus = null;
+let returnFocusId = null;
+let savedInTab = null; // ids only, used when this browser refuses device storage
+let mapLoading = false;
 
 function emptyFilters() {
   return { cohort: [], country: [], track: [], background: [], degree: [], membership: [], citizenship: [], visa: [], hasLinkedin: false, q: "" };
@@ -66,7 +69,7 @@ const $ = (id) => document.getElementById(id);
 const els = {
   stats: $("sx-stats"), search: $("sx-search"), filtersToggle: $("sx-filters-toggle"), filters: $("sx-filters"),
   filterCount: $("sx-filter-count"), primary: $("sx-primary-filters"), more: $("sx-more-filters"),
-  memberFilters: $("sx-member-filters"), chips: $("sx-chips"), count: $("sx-result-count"),
+  memberFilters: $("sx-member-filters"), chips: $("sx-chips"), count: $("sx-result-count"), clearAll: $("sx-clear-all"),
   profiles: $("sx-profiles"), pagination: $("sx-pagination"), sort: $("sx-sort"), random: $("sx-random"),
   savedToggle: $("sx-saved-toggle"), map: $("sx-map"), tooltip: $("sx-map-tooltip"), legend: $("sx-legend"),
   outside: $("sx-map-outside"), panel: $("sx-country-panel"), countryList: $("sx-country-list"),
@@ -82,6 +85,24 @@ function el(tag, className, text) {
 
 function plural(count, singular, pluralWord = singular + "s") {
   return `${count} ${count === 1 ? singular : pluralWord}`;
+}
+
+// Keep feedback from rapid filter/save actions from covering the mobile directory.
+function sxToast(message, options) {
+  document.querySelectorAll(".sx-feedback-toast").forEach((item) => item.remove());
+  const item = toast(message, options);
+  item.classList.add("sx-feedback-toast");
+}
+
+function restoreFocus(id) {
+  const target = id && $(id);
+  if (target) target.focus({ preventScroll: true });
+  return !!target;
+}
+
+function scrollToSection(target) {
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
 }
 
 // A save button's content: the star icon (filled look via .is-saved in CSS) and, unless icon-only, a word
@@ -101,6 +122,20 @@ function button(text, className, onClick) {
 
 function countryName(code) {
   return (EUHEM_COUNTRY_BY_CODE[code] && EUHEM_COUNTRY_BY_CODE[code].name) || code;
+}
+
+// Only decorate country fields already allowed by the profile projection.
+// Local image flags work even on systems that render flag emoji as two letters.
+function countryLabel(code, name = countryName(code)) {
+  const label = el("span", "country-label");
+  if (EUHEM_COUNTRY_BY_CODE[code]) {
+    const flag = el("span", "country-flag");
+    flag.dataset.countryFlag = code;
+    flag.setAttribute("aria-hidden", "true");
+    label.append(flag);
+  }
+  label.append(el("span", null, name));
+  return label;
 }
 
 // A track's colour: the CSS token from style.css (lighter in dark mode), or the config colour
@@ -132,17 +167,35 @@ function avatar(profile, size) {
 // ----- Saved profiles (this browser only; ids only) -----
 
 function savedIds() {
+  if (savedInTab) return savedInTab.slice();
   const list = readStorage(SX_CONFIG.savedStorageKey, []);
   return Array.isArray(list) ? list.filter((id) => typeof id === "string" && /^[a-z0-9-]{1,40}$/.test(id)).slice(0, 200) : [];
 }
 
+function storeSavedIds(ids) {
+  const persisted = writeStorage(SX_CONFIG.savedStorageKey, ids);
+  savedInTab = persisted ? null : ids.slice();
+  return persisted;
+}
+
 function toggleSaved(id) {
   const list = savedIds();
-  const next = list.includes(id) ? list.filter((x) => x !== id) : [...list, id];
-  writeStorage(SX_CONFIG.savedStorageKey, next);
-  toast(list.includes(id) ? "Removed from saved profiles" : "Saved on this device");
+  const wasSaved = list.includes(id);
+  if (!wasSaved && list.length >= 200) {
+    sxToast("You can save up to 200 profiles. Remove one before adding another.");
+    return;
+  }
+  const focusId = document.activeElement && document.activeElement.id;
+  const next = wasSaved ? list.filter((x) => x !== id) : [...list, id];
+  const persisted = storeSavedIds(next);
+  sxToast(persisted
+    ? wasSaved ? "Removed from saved profiles" : "Saved on this device"
+    : wasSaved ? "Removed for this tab; device storage is unavailable" : "Saved for this tab only; device storage is unavailable");
   render();
   if (state.profile === id) renderDrawer();
+  if (!restoreFocus(focusId) && focusId && focusId.startsWith("sx-save-")) {
+    els.savedToggle.focus({ preventScroll: true });
+  }
 }
 
 // ----- Address (URL) state: only public filter settings, never citizenship or visa -----
@@ -209,6 +262,9 @@ function update({ push = false, resetPage = true } = {}) {
 }
 
 function render() {
+  const active = document.activeElement;
+  const focusId = active && active.id;
+  const countryFocus = active && active.matches("path[data-code]") ? active.dataset.code : null;
   compute();
   renderStats();
   renderFilters();
@@ -216,18 +272,20 @@ function render() {
   renderResults();
   renderMap();
   renderInsights();
+  restoreFocus(focusId);
+  if (countryFocus && map.paths.has(countryFocus)) map.paths.get(countryFocus).focus({ preventScroll: true });
 }
 
 // ----- 3. Summary statistics -----
 
 function renderStats() {
   els.stats.replaceChildren();
-  const countries = new Set(profiles.filter((p) => p.country).map((p) => p.country.code));
-  const fields = new Set(profiles.filter((p) => p.field).map((p) => p.field.id));
+  const countries = new Set(results.filter((p) => p.country).map((p) => p.country.code));
+  const fields = new Set(results.filter((p) => p.field).map((p) => p.field.id));
   const items = [
-    [String(profiles.length), state.preview === "member" ? "profiles available to verified members in this view" : "public profiles available in this view"],
-    [String(countries.size), "countries represented"],
-    [String(fields.size), "academic backgrounds"],
+    [String(results.length), state.preview === "member" ? "matching profiles in the member preview" : "matching public profiles"],
+    [String(countries.size), "represented countries in results"],
+    [String(fields.size), "academic backgrounds in results"],
   ];
   if (IS_DEMO) items.push([String(records.length), "fictional records in this demonstration"]);
   for (const [value, label] of items) {
@@ -270,6 +328,7 @@ function checkboxGroup(key, options, { counts = true, title = FILTER_TITLES[key]
     const all = el("label", "sx-check");
     const input = el("input");
     input.type = "checkbox";
+    input.id = "sx-filter-cohort-all";
     input.checked = !selected.length;
     input.addEventListener("change", () => { state.filters.cohort = []; update({ push: true }); });
     all.append(input, " All participating cohorts");
@@ -280,13 +339,14 @@ function checkboxGroup(key, options, { counts = true, title = FILTER_TITLES[key]
     const input = el("input");
     input.type = "checkbox";
     input.value = option.value;
+    input.id = `sx-filter-${key}-${option.value}`;
     input.checked = selected.includes(option.value);
     input.addEventListener("change", () => {
       const list = state.filters[key];
       state.filters[key] = input.checked ? [...list, option.value] : list.filter((v) => v !== option.value);
       update({ push: SX.FILTER_KEYS.includes(key) });
     });
-    label.append(input, " " + option.label);
+    label.append(input, " ", key === "country" ? countryLabel(option.value, option.label) : option.label);
     if (counts) label.append(el("span", "sx-count", String(option.count)));
     fieldset.append(label);
   }
@@ -311,6 +371,7 @@ function renderFilters() {
   const linkedin = el("label", "sx-check sx-check-inline");
   const input = el("input");
   input.type = "checkbox";
+  input.id = "sx-filter-linkedin";
   input.checked = state.filters.hasLinkedin;
   input.addEventListener("change", () => { state.filters.hasLinkedin = input.checked; update(); });
   linkedin.append(input, " Has LinkedIn");
@@ -339,6 +400,7 @@ function renderFilters() {
   const n = activeFilterCount();
   els.filterCount.textContent = String(n);
   els.filterCount.hidden = n === 0;
+  if (els.clearAll) els.clearAll.disabled = n === 0 && !state.savedOnly;
 }
 
 // Removable chips for every active filter, plus "Clear all"
@@ -353,9 +415,13 @@ function renderChips() {
     const b = button(`${text} ×`, "sx-chip", onRemove);
     b.setAttribute("aria-label", `Remove filter: ${text}`);
     els.chips.append(b);
+    return b;
   };
   for (const key of SX.ALL_FILTER_KEYS) {
-    for (const v of f[key]) chip(`${FILTER_TITLES[key]}: ${labelOf[key](v)}`, () => { f[key] = f[key].filter((x) => x !== v); update({ push: SX.FILTER_KEYS.includes(key) }); });
+    for (const v of f[key]) {
+      const b = chip(`${FILTER_TITLES[key]}: ${labelOf[key](v)}`, () => { f[key] = f[key].filter((x) => x !== v); update({ push: SX.FILTER_KEYS.includes(key) }); });
+      if (key === "country") b.replaceChildren("Country: ", countryLabel(v), " ×");
+    }
   }
   if (f.hasLinkedin) chip("Has LinkedIn", () => { f.hasLinkedin = false; update(); });
   if (f.q.trim()) chip(`Search: “${f.q.trim()}”`, () => { f.q = ""; els.search.value = ""; update(); });
@@ -410,12 +476,19 @@ function emptyState(saved, visibleSaved) {
   const box = el("div", "sx-empty");
   if (state.savedOnly) {
     box.append(el("p", "sx-empty-title", visibleSaved.length ? "No saved profiles match these filters." : "No saved profiles yet."));
-    box.append(el("p", null, "Use “Save” on a profile to keep it here. Saved profiles stay on this device only."));
+    box.append(el("p", null, savedInTab
+      ? "Use “Save” on a profile to keep it here for this tab. Device storage is unavailable."
+      : "Use “Save” on a profile to keep it here. Saved profiles stay on this device only."));
     const gone = saved.length - visibleSaved.length;
     if (gone > 0) box.append(el("p", "sx-hint", `${plural(gone, "saved profile")} ${gone === 1 ? "is" : "are"} not available in this view.`));
     const row = el("div", "button-row");
     row.append(button("Show all profiles", "button", () => { state.savedOnly = false; update(); }));
-    if (saved.length) row.append(button("Clear saved", "button button-quiet", () => { writeStorage(SX_CONFIG.savedStorageKey, []); state.savedOnly = false; toast("Saved profiles cleared"); update(); }));
+    if (saved.length) row.append(button("Clear saved", "button button-quiet", () => {
+      const persisted = storeSavedIds([]);
+      state.savedOnly = false;
+      sxToast(persisted ? "Saved profiles cleared" : "Saved profiles cleared for this tab; device storage is unavailable");
+      update();
+    }));
     box.append(row);
     return box;
   }
@@ -428,7 +501,7 @@ function emptyState(saved, visibleSaved) {
       state.filters.country = [];
       update({ push: true });
       els.mapDetails.open = true;
-      $("sx-map-section").scrollIntoView({ behavior: "smooth" });
+      scrollToSection($("sx-map-section"));
     }));
   }
   const join = el("a", "button button-quiet", "Join the directory");
@@ -446,23 +519,38 @@ function profileCard(p, saved) {
   const head = el("div", "sx-card-head");
   const who = el("div", "sx-card-who");
   const name = el("h3", "sx-card-name");
-  name.append(button(p.name, "sx-name-button", (e) => openProfile(p.id, e.currentTarget)));
+  name.id = `sx-card-heading-${p.id}`;
+  card.setAttribute("aria-labelledby", name.id);
+  const opener = button(p.name, "sx-name-button", (e) => openProfile(p.id, e.currentTarget));
+  opener.id = `sx-name-${p.id}`;
+  name.append(opener);
   who.append(name, el("p", "sx-card-meta", [MEMBERSHIP_LABELS[p.membership], p.cohort && `Cohort ${p.cohort}`].filter(Boolean).join(" · ")));
+  if (p.isDemo) who.append(el("span", "sx-demo-badge", "Fictional profile"));
   head.append(avatar(p), who);
   card.append(head);
 
   const facts = el("ul", "sx-card-facts");
-  if (p.country) facts.append(el("li", "sx-fact-country", p.country.name));
-  if (p.field) facts.append(el("li", "sx-fact-field", p.field.label));
-  if (p.degree) facts.append(el("li", "sx-fact-degree", p.degree.label));
+  const fact = (label, value, type) => {
+    const li = el("li", "sx-fact");
+    const content = el("span", `sx-fact-value sx-fact-${type}`);
+    content.append(value instanceof Node ? value : document.createTextNode(value));
+    li.append(el("span", "sx-fact-label", label), content);
+    facts.append(li);
+  };
+  if (p.country) fact("Represents", countryLabel(p.country.code, p.country.name), "country");
+  if (p.field) fact("Background", p.field.label, "field");
+  if (p.degree) fact("Degree", p.degree.label, "degree");
   if (facts.children.length) card.append(facts);
   if (p.track) card.append(trackPill(p.track));
   if (p.bio) card.append(el("p", "sx-card-bio", p.bio));
 
   const actions = el("div", "sx-card-actions");
-  actions.append(button("View profile", "button button-quiet", (e) => openProfile(p.id, e.currentTarget)));
+  const view = button("View profile", "button button-quiet", (e) => openProfile(p.id, e.currentTarget));
+  view.id = `sx-view-${p.id}`;
+  actions.append(view);
   const isSaved = saved.includes(p.id);
   const save = saveContent(button("", "sx-save", () => toggleSaved(p.id)), isSaved);
+  save.id = `sx-save-${p.id}`;
   save.setAttribute("aria-pressed", String(isSaved));
   save.setAttribute("aria-label", `${isSaved ? "Unsave" : "Save"} ${p.name}`);
   actions.append(save);
@@ -474,8 +562,13 @@ function profileCard(p, saved) {
 function profileTable(items, saved) {
   const wrap = el("div", "sx-table-wrap");
   const table = el("table", "sx-table");
+  table.append(el("caption", "visually-hidden", IS_DEMO ? "Matching fictional profiles in this demo" : "Profiles matching your filters"));
   const head = el("tr");
-  for (const h of ["Name", "Country", "Academic background", "Track", "Cohort", ""]) head.append(el("th", null, h));
+  for (const h of ["Name", "Country", "Academic background", "Track", "Cohort", ""]) {
+    const cell = el("th", null, h);
+    cell.scope = "col";
+    head.append(cell);
+  }
   const thead = el("thead");
   thead.append(head);
   const tbody = el("tbody");
@@ -483,7 +576,12 @@ function profileTable(items, saved) {
     const row = el("tr");
     const nameCell = el("td", "sx-col-name");
     const box = el("div", "sx-name-box");
-    box.append(avatar(p, "sm"), button(p.name, "sx-name-button", (e) => openProfile(p.id, e.currentTarget)));
+    const identity = el("div", "sx-list-identity");
+    const opener = button(p.name, "sx-name-button", (e) => openProfile(p.id, e.currentTarget));
+    opener.id = `sx-name-${p.id}`;
+    identity.append(opener);
+    if (p.isDemo) identity.append(el("span", "sx-demo-badge", "Fictional profile"));
+    box.append(avatar(p, "sm"), identity);
     nameCell.append(box);
     const cell = (label, value) => {
       const td = el("td");
@@ -495,10 +593,11 @@ function profileTable(items, saved) {
     const actions = el("td", "sx-col-actions");
     const isSaved = saved.includes(p.id);
     const save = saveContent(button("", "sx-save sx-save-icon", () => toggleSaved(p.id)), isSaved, false);
+    save.id = `sx-save-${p.id}`;
     save.setAttribute("aria-pressed", String(isSaved));
     save.setAttribute("aria-label", `${isSaved ? "Unsave" : "Save"} ${p.name}`);
     actions.append(save);
-    row.append(nameCell, cell("Country", p.country && p.country.name), cell("Background", p.field && p.field.label),
+    row.append(nameCell, cell("Country", p.country && countryLabel(p.country.code, p.country.name)), cell("Background", p.field && p.field.label),
       cell("Track", p.track ? trackPill(p.track) : null), cell("Cohort", p.cohort), actions);
     tbody.append(row);
   }
@@ -526,7 +625,7 @@ function linkedinAction(p) {
 function renderPagination(page) {
   els.pagination.replaceChildren();
   if (page.pages <= 1) return;
-  const go = (n) => { state.page = n; render(); $("sx-results-title").parentElement.scrollIntoView({ behavior: "smooth", block: "start" }); };
+  const go = (n) => { state.page = n; render(); scrollToSection($("sx-results-title").parentElement); };
   const prev = button("← Previous", "button button-quiet", () => go(page.page - 1));
   prev.disabled = page.page === 1;
   const next = button("Next →", "button button-quiet", () => go(page.page + 1));
@@ -542,11 +641,12 @@ function openProfile(id, opener, { push = true } = {}) {
   const profile = profiles.find((p) => p.id === id);
   if (!profile) {
     // Same neutral message for hidden, members-only and non-existent ids
-    toast(NOT_AVAILABLE);
+    sxToast(NOT_AVAILABLE);
     if (state.profile) { state.profile = null; writeUrl(false); }
     return;
   }
   returnFocus = opener || document.activeElement;
+  returnFocusId = returnFocus && returnFocus.id;
   state.profile = id;
   writeUrl(push);
   renderDrawer();
@@ -600,13 +700,19 @@ function renderDrawer() {
     }
     row("Track", t);
   }
-  row("Represents", p.country && p.country.name);
-  row("Also identifies with", p.additionalCountry && p.additionalCountry.name);
+  row("Represents", p.country && countryLabel(p.country.code, p.country.name));
+  row("Also identifies with", p.additionalCountry && countryLabel(p.additionalCountry.code, p.additionalCountry.name));
   row("Academic background", p.field && p.field.label);
   row("Degree", p.degree && p.degree.label);
   row("Previous university", p.university);
-  body.append(dl);
-  if (p.bio) body.append(el("p", "sx-drawer-bio", p.bio));
+  const facts = el("section", "sx-drawer-section");
+  facts.append(el("h3", "sx-drawer-section-title", "Profile at a glance"), dl);
+  body.append(facts);
+  if (p.bio) {
+    const about = el("section", "sx-drawer-section");
+    about.append(el("h3", "sx-drawer-section-title", "About"), el("p", "sx-drawer-bio", p.bio));
+    body.append(about);
+  }
 
   // Only in the member view, and only what this person chose to share with verified members
   if (p.citizenshipGroup || p.studyVisaExperience) {
@@ -624,11 +730,15 @@ function renderDrawer() {
   const actions = el("div", "sx-drawer-actions");
   const isSaved = savedIds().includes(p.id);
   const save = saveContent(button("", "button button-quiet sx-save", () => toggleSaved(p.id)), isSaved);
+  save.id = "sx-drawer-save";
   save.setAttribute("aria-pressed", String(isSaved));
+  save.setAttribute("aria-label", `${isSaved ? "Unsave" : "Save"} ${p.name}`);
   actions.append(save, button("Copy profile link", "button button-quiet", copyProfileLink));
   if (p.linkedin) actions.append(linkedinAction(p));
   body.append(actions);
-  if (p.membersOnly) body.append(el("p", "sx-hint", "A link to a members-only profile works only for verified members."));
+  if (p.membersOnly) body.append(el("p", "sx-hint", IS_DEMO
+    ? "This fictional profile is available only in the verified-member demo preview. Shared links open in public preview."
+    : "A link to a members-only profile works only for verified members."));
 }
 
 async function copyProfileLink() {
@@ -636,9 +746,9 @@ async function copyProfileLink() {
   url.searchParams.set("profile", state.profile);
   try {
     await navigator.clipboard.writeText(url.toString());
-    toast("Profile link copied");
+    sxToast("Profile link copied");
   } catch {
-    toast(`Copy this link: ${url}`, { duration: 8000 });
+    sxToast(`Copy this link: ${url}`, { duration: 8000 });
   }
 }
 
@@ -647,8 +757,10 @@ els.drawer.addEventListener("close", () => {
     state.profile = null;
     writeUrl(false);
   }
-  if (returnFocus && document.contains(returnFocus)) returnFocus.focus();
+  if (returnFocus && document.contains(returnFocus)) returnFocus.focus({ preventScroll: true });
+  else if (returnFocusId && !restoreFocus(returnFocusId)) els.savedToggle.focus({ preventScroll: true });
   returnFocus = null;
+  returnFocusId = null;
 });
 // A click on the dark backdrop (outside the panel) closes the drawer
 els.drawer.addEventListener("click", (event) => {
@@ -660,6 +772,9 @@ els.drawer.addEventListener("click", (event) => {
 const map = { svg: null, paths: new Map(), box: null, drag: null };
 
 async function loadMap() {
+  if (mapLoading) return;
+  mapLoading = true;
+  els.map.setAttribute("aria-busy", "true");
   try {
     const response = await fetch(SX_CONFIG.map.url);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -673,6 +788,7 @@ async function loadMap() {
     svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
     els.map.replaceChildren(document.importNode(svg, true));
     map.svg = els.map.querySelector("svg");
+    map.paths.clear();
     for (const path of map.svg.querySelectorAll("path[data-code]")) map.paths.set(path.dataset.code, path);
     setMapView(state.mapView);
     wireMap();
@@ -681,9 +797,18 @@ async function loadMap() {
     renderMap();
   } catch (error) {
     console.error("Map:", error);
+    mapReady = false;
+    map.svg = null;
+    map.paths.clear();
     els.map.removeAttribute("aria-busy");
-    els.map.replaceChildren(el("p", "sx-map-status", "The map could not be loaded. You can still explore by country below and use all filters."));
+    const retry = button("Retry map", "button button-quiet", loadMap);
+    retry.id = "sx-map-retry";
+    const fallback = el("div", "sx-map-status");
+    fallback.append(el("p", null, "The map could not be loaded. You can still explore by country below and use all filters."), retry);
+    els.map.replaceChildren(fallback);
     $("sx-country-list-wrap").open = true;
+  } finally {
+    mapLoading = false;
   }
 }
 
@@ -775,7 +900,7 @@ function mapCounts() {
 
 function showTooltip(code, event) {
   const count = mapCounts()[code] || 0;
-  els.tooltip.textContent = `${countryName(code)}: ${count ? plural(count, "visible profile") : "no visible matching profiles"}`;
+  els.tooltip.replaceChildren(countryLabel(code), `: ${count ? plural(count, "visible profile") : "no visible matching profiles"}`);
   els.tooltip.hidden = false;
   const box = els.tooltip.parentElement.getBoundingClientRect(); // the map card
   let x, y;
@@ -785,7 +910,8 @@ function showTooltip(code, event) {
     x = r.left + r.width / 2 - box.left;
     y = r.top - box.top;
   }
-  els.tooltip.style.left = `${Math.min(Math.max(x, 60), box.width - 60)}px`;
+  const half = els.tooltip.getBoundingClientRect().width / 2 + 8;
+  els.tooltip.style.left = `${Math.min(Math.max(x, half), box.width - half)}px`;
   els.tooltip.style.top = `${Math.max(y, 24)}px`;
 }
 
@@ -865,7 +991,9 @@ function renderMapOutside() {
   els.outside.replaceChildren();
   els.outside.hidden = n === 0;
   if (n) {
-    els.outside.append(`${plural(n, "visible profile")} ${n === 1 ? "is" : "are"} from countries outside this map view (${outside.map(([c]) => countryName(c)).join(", ")}). `);
+    els.outside.append(`${plural(n, "visible profile")} ${n === 1 ? "is" : "are"} from countries outside this map view (`);
+    outside.forEach(([code], index) => els.outside.append(index ? ", " : "", countryLabel(code)));
+    els.outside.append("). ");
     els.outside.append(button("Show world", "sx-link-button", () => setMapView("world")));
   }
 }
@@ -882,7 +1010,9 @@ function renderCountryPanel(counts) {
       const list = el("ul", "sx-panel-list");
       for (const [code, n] of top) {
         const li = el("li");
-        li.append(button(`${countryName(code)}`, "sx-link-button", () => toggleCountry(code)), el("span", "sx-count", String(n)));
+        const link = button("", "sx-link-button", () => toggleCountry(code));
+        link.append(countryLabel(code));
+        li.append(link, el("span", "sx-count", String(n)));
         list.append(li);
       }
       panel.append(el("p", "sx-panel-sub", "Most represented in this view"), list);
@@ -892,21 +1022,25 @@ function renderCountryPanel(counts) {
   const title = selected.length === 1 ? countryName(selected[0]) : `${selected.length} countries selected`;
   const head = el("div", "sx-panel-head");
   if (selected.length === 1) head.append(el("span", "sx-code", selected[0]));
-  head.append(el("h3", null, title));
+  const heading = el("h3");
+  heading.append(selected.length === 1 ? countryLabel(selected[0]) : title);
+  head.append(heading);
   panel.append(head);
   panel.append(el("p", "sx-panel-count", results.length ? plural(results.length, "visible matching profile") : "No visible matching profiles"));
   if (results.length) {
     const list = el("ul", "sx-panel-list");
     for (const p of results.slice(0, 5)) {
       const li = el("li");
-      li.append(button(p.name, "sx-link-button", (e) => openProfile(p.id, e.currentTarget)));
+      const opener = button(p.name, "sx-link-button", (e) => openProfile(p.id, e.currentTarget));
+      opener.id = `sx-map-profile-${p.id}`;
+      li.append(opener);
       list.append(li);
     }
     panel.append(list);
     if (results.length > 5) panel.append(el("p", "sx-hint", `and ${results.length - 5} more`));
   }
   const row = el("div", "button-row");
-  row.append(button("View profiles", "button", () => $("sx-results-title").parentElement.scrollIntoView({ behavior: "smooth" })));
+  row.append(button("View profiles", "button", () => scrollToSection($("sx-results-title").parentElement)));
   row.append(button("Clear country", "button button-quiet", () => { state.filters.country = []; update({ push: true }); }));
   panel.append(row);
 }
@@ -920,7 +1054,9 @@ function renderCountryList(counts) {
     const li = el("li");
     const b = button("", "sx-country-item", () => toggleCountry(code));
     b.setAttribute("aria-pressed", String(state.filters.country.includes(code)));
-    b.append(el("span", "sx-country-name", countryName(code)), el("span", "sx-count", n ? String(n) : "0"));
+    const name = el("span", "sx-country-name");
+    name.append(countryLabel(code));
+    b.append(name, el("span", "sx-count", n ? String(n) : "0"));
     b.setAttribute("aria-label", `${countryName(code)}: ${n ? plural(n, "visible matching profile") : "no visible matching profiles"}`);
     if (!map.paths.has(code) && mapReady) b.append(el("span", "sx-hint", " (too small for the map)"));
     li.append(b);
@@ -930,7 +1066,7 @@ function renderCountryList(counts) {
 
 // ----- 9. Insights -----
 
-function bars(title, counts, labelOf, { limit = 6, total } = {}) {
+function bars(title, counts, labelOf, { limit = 6, total, countryFlags = false } = {}) {
   const box = el("div", "sx-bars");
   box.append(el("h4", null, title));
   const entries = Object.entries(counts).sort((a, b) => b[1] - a[1] || String(labelOf(a[0])).localeCompare(String(labelOf(b[0]))));
@@ -939,10 +1075,12 @@ function bars(title, counts, labelOf, { limit = 6, total } = {}) {
   const shown = entries.slice(0, limit);
   const rest = entries.slice(limit).reduce((s, [, n]) => s + n, 0);
   const list = el("ul");
-  const item = (label, n) => {
+  const item = (label, n, code) => {
     const li = el("li", "sx-bar");
     const pct = Math.round((n / sum) * 100);
-    li.append(el("span", "sx-bar-label", label), el("span", "sx-bar-value", `${n} · ${pct}%`));
+    const name = el("span", "sx-bar-label");
+    name.append(countryFlags && code ? countryLabel(code, label) : label);
+    li.append(name, el("span", "sx-bar-value", `${n} · ${pct}%`));
     const track = el("span", "sx-bar-track");
     const fill = el("span", "sx-bar-fill");
     fill.style.width = `${pct}%`;
@@ -950,7 +1088,7 @@ function bars(title, counts, labelOf, { limit = 6, total } = {}) {
     li.append(track);
     list.append(li);
   };
-  for (const [k, n] of shown) item(labelOf(k), n);
+  for (const [k, n] of shown) item(labelOf(k), n, k);
   if (rest) item("Other", rest);
   box.append(list);
   return box;
@@ -967,7 +1105,7 @@ function renderInsights() {
     out.append(
       bars("Academic background", s.fields, (id) => SX_OPTIONS.academicFields[id] || id),
       bars("Current track", s.tracks, (id) => TRACK_LABELS[id] || id),
-      bars("Country represented", s.countries, countryName),
+      bars("Country represented", s.countries, countryName, { countryFlags: true }),
       bars("Cohort", cohorts, (c) => c),
     );
     const missing = results.length - Object.values(s.fields).reduce((a, b) => a + b, 0);
@@ -1033,9 +1171,10 @@ function wireControls() {
     b.addEventListener("click", () => { state.view = b.dataset.layout; update({ push: true, resetPage: false }); });
   }
   els.savedToggle.addEventListener("click", () => { state.savedOnly = !state.savedOnly; update(); });
+  if (els.clearAll) els.clearAll.addEventListener("click", clearAll);
   els.random.addEventListener("click", (e) => {
     const pool = results.filter((p) => p.id !== lastShownRandom || results.length === 1);
-    if (!pool.length) { toast("No profiles match these filters."); return; }
+    if (!pool.length) { sxToast("No profiles match these filters."); return; }
     const pick = pool[Math.floor(Math.random() * pool.length)];
     lastShownRandom = pick.id;
     openProfile(pick.id, e.currentTarget);
@@ -1066,7 +1205,7 @@ function wireControls() {
       update({ resetPage: true });
       if (open) {
         if (profiles.some((p) => p.id === open)) renderDrawer();
-        else { closeProfile(); toast(NOT_AVAILABLE); }
+        else { closeProfile(); sxToast(NOT_AVAILABLE); }
       }
     });
   }
