@@ -1,8 +1,226 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-06",
+  "updatedAt": "2026-10-07",
   "dateBasis": "Each date is the day (Rome time) the change first went live through a successful site deployment. Only important student-facing releases are listed.",
   "items": [
+    {
+      "id": "fundamentals-of-statistics",
+      "version": "v0.9",
+      "date": "2026-10-07",
+      "title": "Fundamentals of Statistics study guides",
+      "summary": "Six topic guides with practice questions, flashcards, interactive experiments, healthcare cases and a 90-minute mock exam for Fundamentals of Statistics.",
+      "category": "learning",
+      "type": "new",
+      "status": "published",
+      "highlights": [
+        "Six original topic guides, from descriptive statistics to hypothesis testing.",
+        "Practice questions, flashcards, review cards and twelve healthcare cases.",
+        "A 90-minute mock with feedback after you submit."
+      ],
+      "links": [
+        {
+          "label": "Open Fundamentals of Statistics",
+          "url": "fund-statistics.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37553586806",
+        "deployedAt": "2026-10-07T02:45:26+02:00",
+        "commits": [
+          {
+            "sha": "627a7f5fa35c3253f791ec8cfd2f2d4aa61f3cee",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/627a7f5fa35c3253f791ec8cfd2f2d4aa61f3cee"
+          },
+          {
+            "sha": "3b5b479b93d1a6b93179d986e995bbbb5151e554",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/3b5b479b93d1a6b93179d986e995bbbb5151e554"
+          },
+          {
+            "sha": "3722a11c33378a9cdf426bbb7c55bf795505f406",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/3722a11c33378a9cdf426bbb7c55bf795505f406"
+          }
+        ]
+      }
+    },
+    {
+      "id": "notes-study-library",
+      "version": "v0.9",
+      "date": "2026-10-07",
+      "title": "Notes & Resources as a study library",
+      "summary": "Notes & Resources is now a study library: filter by content and teaching period, bookmark courses, and see what is being taught now and which exam is next.",
+      "category": "learning",
+      "type": "improved",
+      "status": "published",
+      "highlights": [
+        "Courses grouped into teaching now, coming up and completed, using each module’s real dates.",
+        "The next exam for each course, with Bologna time and a countdown.",
+        "Filters, bookmarks and grid or list view, saved on this device."
+      ],
+      "links": [
+        {
+          "label": "Browse Notes & Resources",
+          "url": "notes.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37543378557",
+        "deployedAt": "2026-10-07T00:53:46+02:00",
+        "commits": [
+          {
+            "sha": "e972ef9c15e2d1d3e132c618fac67336c2969046",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/e972ef9c15e2d1d3e132c618fac67336c2969046"
+          },
+          {
+            "sha": "79f76f0e9d883a24269260d407ea9dedb9620b3c",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/79f76f0e9d883a24269260d407ea9dedb9620b3c"
+          }
+        ]
+      }
+    },
+    {
+      "id": "easier-on-every-screen",
+      "version": "v0.9",
+      "date": "2026-10-07",
+      "title": "Easier to read and use on every screen",
+      "summary": "A full design check: clearer text in light and dark mode, bigger buttons on phones, a sharper cohort photo and a preview card when you share a link.",
+      "category": "platform",
+      "type": "improved",
+      "status": "published",
+      "highlights": [
+        "Text colours meet the accessibility contrast standard in both themes.",
+        "Buttons are at least fingertip-sized on phones, with small confirmations when you save a choice.",
+        "Links to the Hub show a preview card in WhatsApp, LinkedIn and other apps.",
+        "A higher-resolution cohort photo on the homepage."
+      ],
+      "links": [
+        {
+          "label": "Open the homepage",
+          "url": "index.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37553586806",
+        "deployedAt": "2026-10-07T02:45:26+02:00",
+        "commits": [
+          {
+            "sha": "34318e8b5912963192562cfc7d10fb95f0383efe",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/34318e8b5912963192562cfc7d10fb95f0383efe"
+          },
+          {
+            "sha": "7a70aca6d3a30484cdb6c61b4f523e823806d0fa",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/7a70aca6d3a30484cdb6c61b4f523e823806d0fa"
+          },
+          {
+            "sha": "149bcad73367e4f28b82b13336c15902d17afb45",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/149bcad73367e4f28b82b13336c15902d17afb45"
+          },
+          {
+            "sha": "8588cef0f8b21e7d65a2a55483d7b9bbe5d32e58",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/8588cef0f8b21e7d65a2a55483d7b9bbe5d32e58"
+          },
+          {
+            "sha": "5b47ae7eb2cb88d670239e748f15efd934c27a66",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/5b47ae7eb2cb88d670239e748f15efd934c27a66"
+          }
+        ]
+      }
+    },
+    {
+      "id": "getting-started-guide",
+      "version": "v0.9",
+      "date": "2026-10-06",
+      "title": "Getting started guide on the homepage",
+      "summary": "Five quick steps make the Hub yours: your study plan, calendar, the app on your phone, search and light or dark mode.",
+      "category": "platform",
+      "type": "new",
+      "status": "published",
+      "highlights": [
+        "A progress ring and the next suggested step.",
+        "Steps tick themselves as you use the site; progress stays on this device.",
+        "Hide it any time; “Getting started” at the bottom of every page brings it back."
+      ],
+      "links": [
+        {
+          "label": "Open the homepage",
+          "url": "index.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37524724151",
+        "deployedAt": "2026-10-06T22:13:13+02:00",
+        "commits": [
+          {
+            "sha": "369fd6bc50b331ca84a4d3ad90b389f277a26c1b",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/369fd6bc50b331ca84a4d3ad90b389f277a26c1b"
+          }
+        ]
+      }
+    },
+    {
+      "id": "university-photo-galleries",
+      "version": "v0.9",
+      "date": "2026-10-06",
+      "title": "Real photos for every university",
+      "summary": "Each partner university page now shows three real campus photos, with credits, in a gallery you can open full size.",
+      "category": "life",
+      "type": "improved",
+      "status": "published",
+      "highlights": [
+        "Three real photos per university, from Wikimedia Commons with credits.",
+        "Tap a photo to see it full size."
+      ],
+      "links": [
+        {
+          "label": "Explore the universities",
+          "url": "universities.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37517250334",
+        "deployedAt": "2026-10-06T21:13:19+02:00",
+        "commits": [
+          {
+            "sha": "6b75089c0188210f0f9e3370a472f158de1a5e2a",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/6b75089c0188210f0f9e3370a472f158de1a5e2a"
+          },
+          {
+            "sha": "6e308db594acffee8ac2b27ec536afd5c03feb60",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/6e308db594acffee8ac2b27ec536afd5c03feb60"
+          }
+        ]
+      }
+    },
+    {
+      "id": "fhem-exam-centre",
+      "version": "v0.9",
+      "date": "2026-10-06",
+      "title": "FHEM course hub and a 90-minute Exam Centre",
+      "summary": "Fundamentals in Health Economics and Management gets a polished course hub and a timed mock exam that covers Sessions 1–5.",
+      "category": "learning",
+      "type": "new",
+      "status": "published",
+      "highlights": [
+        "A 90-minute mock exam with balanced questions from Sessions 1–5.",
+        "Answers stay hidden until you submit, then a clear score breakdown.",
+        "Your attempt is saved on this device and works offline."
+      ],
+      "links": [
+        {
+          "label": "Open the Exam Centre",
+          "url": "fhem-exam.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37517648748",
+        "deployedAt": "2026-10-06T21:16:22+02:00",
+        "commits": [
+          {
+            "sha": "f88d1a24acdd66429101295092ca8603804b456f",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/f88d1a24acdd66429101295092ca8603804b456f"
+          }
+        ]
+      }
+    },
     {
       "id": "interactive-study-sessions",
       "version": "v0.9",
