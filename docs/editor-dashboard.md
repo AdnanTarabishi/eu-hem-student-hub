@@ -18,6 +18,11 @@ the backend is **Supabase** (a hosted PostgreSQL database with logins).
 Editors write and send for review; only admins publish. An admin can **send something back with a note**:
 the editor sees the note on the item and on their Overview, and it disappears once the item is published.
 
+**Backups (admins):** *Overview* → *Download a backup* saves everything (drafts, published and archived
+items, the team, the activity log) as one JSON file. Do it now and then, for example monthly: as far as we know, the
+free Supabase plan keeps no backups you can download, and the robot's copies on GitHub contain only published items.
+The file contains editors' emails and unpublished drafts, so keep it private.
+
 ## How it fits together
 
 ```

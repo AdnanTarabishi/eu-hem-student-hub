@@ -203,6 +203,26 @@
     ]);
   }
 
+  // ----- Backup (admins) -----
+  // Everything the team can read, as one JSON file: drafts, published and archived items, the team and the
+  // activity log. The robot's copies on GitHub only contain published items.
+
+  async function downloadBackup() {
+    const backup = { savedAt: new Date().toISOString(), cohort: config.cohort, project: config.url };
+    for (const table of ["announcements", "events", "editors", "activity_log"]) {
+      const { data, error } = await client.from(table).select("*");
+      if (error) return say(`Backup failed (${table}): ${explain(error)}`, "error");
+      backup[table] = data;
+    }
+    const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
+    const link = el("a", { href: URL.createObjectURL(blob), download: `student-hub-backup-${todayKey()}.json` });
+    document.body.append(link);
+    link.click();
+    link.remove();
+    window.setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+    say("Backup downloaded. Keep it somewhere private: it contains editors' email addresses and unpublished drafts.", "success");
+  }
+
   // ----- Activity -----
 
   async function loadActivity() {
@@ -304,6 +324,7 @@
     editor = { id: userId, ...data };
     $("admin-who").textContent = `${data.email} · ${data.role === "admin" ? "Admin" : "Editor"}`;
     buildNav();
+    $("overview-backup").hidden = !isAdmin();
     showOnly("admin-app");
     await showSection(sectionFromHash());
   }
@@ -352,6 +373,7 @@
     $("team-add-form").addEventListener("submit", addMember);
     $("activity-filter").addEventListener("change", loadActivity);
     $("overview-refresh").addEventListener("click", () => renderOverview());
+    $("overview-backup").addEventListener("click", downloadBackup);
     window.addEventListener("hashchange", () => { if (editor) showSection(sectionFromHash()); });
 
     $("admin-signout").addEventListener("click", async () => {

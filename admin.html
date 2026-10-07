@@ -95,7 +95,11 @@
         <section id="panel-overview" class="admin-panel" aria-labelledby="overview-title" hidden>
           <div class="admin-panel-head">
             <h2 id="overview-title">Overview</h2>
-            <button type="button" class="button button-quiet button-sm" id="overview-refresh">Refresh</button>
+            <div class="button-row">
+              <!-- Admins: everything in the database as one file (the free Supabase plan keeps no backups for you) -->
+              <button type="button" class="button button-secondary button-sm" id="overview-backup" hidden>Download a backup</button>
+              <button type="button" class="button button-quiet button-sm" id="overview-refresh">Refresh</button>
+            </div>
           </div>
           <div class="admin-stats" id="overview-stats"></div>
           <div class="admin-overview-grid">
@@ -202,7 +206,7 @@
   <script defer src="events.js?v=0b80fe76"></script>
   <script defer src="admin-kit.js?v=787703b8"></script>
   <script defer src="admin-content.js?v=1010732c"></script>
-  <script defer src="admin.js?v=f8cf3836"></script>
+  <script defer src="admin.js?v=9dd83dea"></script>
 
 </body>
 </html>

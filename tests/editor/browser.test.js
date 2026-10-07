@@ -169,7 +169,8 @@ const evt = (over) => ({ id: "e" + Math.random().toString(36).slice(2), cohort: 
   await page.waitForSelector(".admin-todo");
   assert.match(await text(page, "#overview-todo"), /Party poster.*Sent back: Please add the time\./);
   assert.match(await text(page, "#overview-stats"), /1Your drafts/);
-  ok("editor overview: no Team section; what was sent back (with the admin's note) is on top, with a badge");
+  assert.ok(await page.isHidden("#overview-backup"), "backups are for admins");
+  ok("editor overview: no Team section or backup; what was sent back (with the admin's note) is on top, with a badge");
 
   await page.click('.admin-section-link[data-section="announcements"]');
   await page.waitForSelector("#panel-announcements:not([hidden]) .admin-item");
@@ -253,6 +254,13 @@ const evt = (over) => ({ id: "e" + Math.random().toString(36).slice(2), cohort: 
   assert.match(await text(page, "#overview-sync"), /Announcements: 1 published not on the site yet, 1 still on the site but no longer published/);
   assert.match(await text(page, "#overview-activity"), /editor@example\.org sent for review/);
   ok("admin overview: review count and badges, site sync check, recent activity");
+
+  const [download] = await Promise.all([page.waitForEvent("download"), page.click("#overview-backup")]);
+  assert.match(download.suggestedFilename(), /^student-hub-backup-\d{4}-\d{2}-\d{2}\.json$/);
+  const backup = JSON.parse(fs.readFileSync(await download.path(), "utf8"));
+  assert.deepStrictEqual(["announcements", "events", "editors", "activity_log"].map((k) => backup[k].length), [2, 1, 2, 1]);
+  assert.match(await text(page, "#admin-status"), /Keep it somewhere private/);
+  ok("admin backup: one file with every table, and a privacy reminder");
 
   await page.click('.admin-section-link[data-section="announcements"]');
   await page.waitForSelector('#panel-announcements .admin-tab[data-status="submitted"][aria-selected="true"]');
