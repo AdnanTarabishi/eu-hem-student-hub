@@ -6,9 +6,9 @@
 // │ HOMEPAGE SETTINGS: change the values here.                                   │
 // │                                                                              │
 // │ HERO_IMAGE        The JPG behind the hero. Next to it there must be WebP     │
-// │                   copies named <name>-640.webp, <name>-960.webp and          │
-// │                   <name>-1280.webp (smaller and faster). Phones get the 640, │
-// │                   big screens the 1280. Use "" for no photo (dark background).│
+// │                   copies named <name>-640.webp, -960, -1280 and -1600.webp   │
+// │                   (smaller and faster). Phones get the 640, big and sharp    │
+// │                   screens the 1600. Use "" for no photo (dark background).   │
 // │ HERO_IMAGE_ALT    What the photo shows, for people using screen readers.     │
 // │ STUDENT_COUNT     Students in the cohort.                                    │
 // │ COUNTRY_COUNT     Countries they come from.                                  │
@@ -27,7 +27,7 @@ const COHORT_LABEL = "2026–2028";
 const PROGRAM_END_DATE = "2028-09-30";
 const DIRECTORY_IS_DEMO = true;
 
-const HERO_WEBP_WIDTHS = [640, 960, 1280];
+const HERO_WEBP_WIDTHS = [640, 960, 1280, 1600];
 
 // "assets/images/x.jpg" -> "assets/images/x-640.webp 640w, ..." (for the browser to choose a size)
 function heroSrcset(image) {
@@ -99,8 +99,8 @@ function buildHomeHero() {
     const img = document.createElement("img");
     img.src = HERO_IMAGE;
     img.alt = HERO_IMAGE_ALT;
-    img.width = 1280;
-    img.height = 960;
+    img.width = 1600;
+    img.height = 1200;
     img.decoding = "async";
     img.setAttribute("fetchpriority", "high");
     // Photo missing or broken: remove it, the dark background stays (no broken-image icon)
