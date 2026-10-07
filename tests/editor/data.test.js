@@ -104,6 +104,39 @@ t("events.json: soonest first, times without seconds, only public fields", () =>
   assert.ok(!JSON.stringify(json).includes("secret-id") && !JSON.stringify(json).includes("internal"), "no internal fields");
 });
 
+t("privacy guard: phone numbers and private emails are flagged; dates, times, rooms and the Hub's address are not", () => {
+  const kinds = (message, extra = {}) => D.contentWarnings("announcements", { title: "x", message, ...extra }).map((w) => w.kind);
+  for (const text of ["Call Marco at +39 345 678 9012", "Call 345 678 9012", "Phone 0039 051 2091234", "Write to marco.rossi@studio.unibo.it"]) {
+    assert.deepStrictEqual(kinds(text), ["personal"], text);
+  }
+  for (const text of ["Write to euhem.studenthub@gmail.com", "Exams 2026-10-26 to 2026-11-07, room 3, 18:00-20:00",
+    "Exams 26.10.2026 - 07.11.2026", "Cohort 2026-2028, 120 ECTS", "2026-10-26 2026-11-07"]) {
+    assert.deepStrictEqual(kinds(text), [], text);
+  }
+  assert.deepStrictEqual(kinds("ok", { link: "http://example.org" }), ["link"]);
+  assert.deepStrictEqual(kinds("ok", { category: "Urgent" }), ["urgent"]);
+  assert.deepStrictEqual(kinds("ok", { category: "Urgent", expires: "2026-10-09" }), []);
+  assert.deepStrictEqual(D.contentWarnings("events", { title: "Party", description: "RSVP: +39 333 123 4567", location: "Bologna" }).map((w) => w.kind), ["personal"]);
+});
+
+t("Add to calendar (.ics): timed, all-day and multi-day events; text escaped; lines folded by bytes", () => {
+  const E = require(path.join(ROOT, "events.js"));
+  const now = new Date("2026-10-07T10:00:00Z");
+  const timed = E.icsFor({ id: "e1", title: "Aperitivo; drinks, food", startsOn: "2026-11-02", startTime: "18:30", endTime: "20:00",
+    location: "Piazza Verdi, Bologna", description: "Line 1\nLine 2", postedBy: "Reps" }, now);
+  assert.match(timed, /^BEGIN:VCALENDAR\r\n/);
+  assert.match(timed, /\r\nDTSTART:20261102T183000\r\nDTEND:20261102T200000\r\n/);
+  assert.match(timed, /\r\nSUMMARY:Aperitivo\\; drinks\\, food\r\n/);
+  assert.match(timed, /\r\nLOCATION:Piazza Verdi\\, Bologna\r\n/);
+  assert.match(timed, /\r\nDTSTAMP:20261007T100000Z\r\n/);
+  assert.match(E.icsFor({ id: "e2", title: "Talk", startsOn: "2026-11-02", startTime: "09:00", description: "d", postedBy: "X" }), /DURATION:PT2H/);
+  const multi = E.icsFor({ id: "e3", title: "Ski", startsOn: "2026-12-05", endsOn: "2026-12-07", description: "d", postedBy: "X" });
+  assert.match(multi, /DTSTART;VALUE=DATE:20261205\r\nDTEND;VALUE=DATE:20261208\r\n/, "all-day: ends the day after the last day");
+  const long = E.icsFor({ id: "e4", title: "🎉 Festa di benvenuto — più caffè, città 🎉🎉🎉🎉🎉🎉", startsOn: "2026-11-02", description: "é".repeat(200), postedBy: "X" });
+  assert.ok(long.split("\r\n").every((line) => Buffer.byteLength(line) <= 75), "no line longer than 75 bytes");
+  assert.ok(long.replace(/\r\n /g, "").includes("SUMMARY:🎉 Festa di benvenuto — più caffè\\, città 🎉🎉🎉🎉🎉🎉"), "folding never breaks a character");
+});
+
 t("schema: Row Level Security on every table; editors and the log are never writable through the API", () => {
   for (const table of ["editors", "activity_log"]) assert.match(schema, new RegExp(`alter table public\\.${table} enable row level security`));
   assert.match(schema, /foreach t in array array\['announcements', 'events'\] loop\s+execute format\('alter table public\.%I enable row level security'/);

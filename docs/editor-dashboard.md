@@ -14,6 +14,19 @@ the backend is **Supabase** (a hosted PostgreSQL database with logins).
 | **Team** | admins | Add people, change role or “Posted by” name, remove. The last admin can never be removed |
 | **Activity** | everyone | Who created, edited, sent, published, sent back (with the note), archived or deleted what. Written by the database itself; nobody can edit it |
 
+**Safety nets in the form:**
+- **Privacy guard:** a phone number or a private email address in the text shows a warning next to the
+  preview, and sending or publishing then asks “anyway?”. Insecure `http://` links and Urgent without an end
+  date are flagged too. Dates, times and the Student Hub's own address are not flagged.
+- **Edit conflicts:** if someone else changed an item since you opened it, your save is refused instead of
+  silently overwriting their work (the database compares the item's last-changed time). Your text is kept.
+- **Never lose text:** Cancel and Escape ask before throwing away changes, and while you type a copy is kept in
+  this browser. After a closed tab or a crash, opening the form offers “Restore it”. The copies are removed
+  after saving and when you sign out.
+
+**For students:** every Community event has **Add to calendar**, which downloads the event as an `.ics` file
+for Google, Apple or Outlook calendars (`icsFor()` in `events.js`).
+
 **The review flow** (announcements and events): Draft → Waiting for review → Published → Archived.
 Editors write and send for review; only admins publish. An admin can **send something back with a note**:
 the editor sees the note on the item and on their Overview, and it disappears once the item is published.
@@ -64,7 +77,7 @@ Editor (admin.html) ──writes──▶ Supabase database ──every 15 min�
 - Never write phone numbers or private emails in an announcement or event: published text is public.
 
 **Tested:** `tests/editor/schema.test.mjs` runs `schema.sql` on a real PostgreSQL engine (PGlite, a
-development-only tool) and tries 41 allowed and forbidden actions as a visitor, two editors and an admin.
+development-only tool) and tries 43 allowed and forbidden actions as a visitor, two editors and an admin.
 
 ## Setup (once)
 

@@ -94,6 +94,14 @@ const d2 = r.rows[0].id;
 r = await as("editor", `delete from public.announcements where id='${d2}'`);
 check("editor deletes own draft", !r.error && r.affected === 1, r);
 
+// --- edit conflicts: the dashboard only updates a row whose updated_at it has seen ---
+r = await as("admin", `select updated_at::text as u from public.announcements where id='${mine}'`);
+const seen = r.rows[0].u;
+r = await as("admin", `update public.announcements set title='First admin' where id='${mine}' and updated_at='${seen}'`);
+check("edit conflicts: an update with the latest updated_at goes through", !r.error && r.affected === 1, r);
+r = await as("admin", `update public.announcements set title='Second admin' where id='${mine}' and updated_at='${seen}'`);
+check("edit conflicts: a second update with the old updated_at changes nothing", !r.error && r.affected === 0, r);
+
 // --- events ---
 r = await as("editor", `insert into public.events (title,category,starts_on,ends_on,description,posted_by) values ('Trip','Social','2026-11-02','2026-11-01','d','Reps')`);
 check("events: end before start refused", !!r.error, r);

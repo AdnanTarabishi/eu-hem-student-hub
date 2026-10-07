@@ -112,6 +112,35 @@
     return { value, errors };
   }
 
+  // Addresses that may appear in public text (shared mailboxes, never a person's own address)
+  const PUBLIC_EMAILS = ["euhem.studenthub@gmail.com"];
+
+  // Warnings that don't block saving but should make the editor stop and think.
+  // Above all: the site must never publish students' personal data (phone numbers, private emails).
+  // Returns [{ kind, message }]; kind "personal" asks for confirmation before sending or publishing.
+  function contentWarnings(typeName, value) {
+    const text = [value.title, value.message, value.description, value.location].filter(Boolean).join("\n");
+    const warnings = [];
+    const emails = (text.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi) || [])
+      .filter((email) => !PUBLIC_EMAILS.includes(email.toLowerCase()));
+    if (emails.length) {
+      warnings.push({ kind: "personal", message: `Contains an email address (${[...new Set(emails)].join(", ")}). Never publish private emails: link to the Contact page or an official address instead.` });
+    }
+    // 9 or more digits, possibly with spaces, dots, dashes or brackets, starting with + or 00 or a digit:
+    // phone numbers, but not dates ("2026-10-07"), times or room numbers
+    const phones = (text.match(/(?:\+|\b00|\b)\d(?:[\s().-]*\d){8,}/g) || []).filter((match) => !/\d{4}-\d{2}-\d{2}|\d{1,2}[./]\d{1,2}[./]\d{4}/.test(match)); // dates are not phones
+    if (phones.length) {
+      warnings.push({ kind: "personal", message: `Looks like a phone number (${phones[0].trim()}). Never publish students' phone numbers.` });
+    }
+    if (value.link && /^http:\/\//i.test(value.link)) {
+      warnings.push({ kind: "link", message: "The link is not secure (http://). Use https:// if the website supports it." });
+    }
+    if (typeName === "announcements" && value.category === "Urgent" && !value.expires) {
+      warnings.push({ kind: "urgent", message: "Urgent with no “Show until” date stays as a red banner on every page until it is archived." });
+    }
+    return warnings;
+  }
+
   // Kept for the import script and older callers
   const validateAnnouncement = (input) => validateItem("announcements", input);
 
@@ -193,7 +222,7 @@
 
   const api = {
     ANNOUNCEMENT_CATEGORIES, EVENT_CATEGORIES, CATEGORIES: ANNOUNCEMENT_CATEGORIES, STATUSES, CSV_COLUMNS, CONTENT_TYPES,
-    isDateKey, isTime, validateItem, validateAnnouncement, publicState, csvCell, parseCsv, announcementsToCsv, eventFromRow, eventsToJson,
+    isDateKey, isTime, validateItem, validateAnnouncement, contentWarnings, publicState, csvCell, parseCsv, announcementsToCsv, eventFromRow, eventsToJson,
   };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else root.EditorData = api;

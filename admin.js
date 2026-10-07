@@ -377,6 +377,10 @@
     window.addEventListener("hashchange", () => { if (editor) showSection(sectionFromHash()); });
 
     $("admin-signout").addEventListener("click", async () => {
+      // Forget unsaved text kept on this device (admin-content.js), so a shared computer keeps nothing
+      try {
+        for (const key of Object.keys(localStorage)) if (key.startsWith("euhem-editor-draft:")) localStorage.removeItem(key);
+      } catch (error) { /* storage unavailable: nothing was kept */ }
       await client.auth.signOut();
       say("Signed out.", "info");
     });

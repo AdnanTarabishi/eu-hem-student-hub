@@ -31,6 +31,76 @@
     return node;
   }
 
+  // ----- "Add to calendar": one event as an .ics file (the format Google, Apple and Outlook calendars read) -----
+  // Times are "floating" (no time zone): the phone shows them as written, which is right for an event in
+  // the city where the cohort is. All-day and multi-day events use whole days.
+
+  const compactDate = (key) => key.replace(/-/g, "");
+  const compactTime = (time) => time.replace(":", "") + "00";
+
+  function nextDay(key) {
+    const date = new Date(key + "T12:00:00Z");
+    date.setUTCDate(date.getUTCDate() + 1);
+    return date.toISOString().slice(0, 10);
+  }
+
+  // Calendar text: backslash, semicolon, comma and line breaks must be escaped
+  const icsText = (text) => String(text || "").replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n");
+
+  // Lines longer than 75 bytes are folded: they continue on the next line after a space (the standard says
+  // so). Counted in bytes, not letters: "é" takes 2 bytes and an emoji 4, and an emoji is never cut in half.
+  const encoder = new TextEncoder();
+  function fold(line) {
+    const parts = [];
+    let current = "", bytes = 0;
+    for (const char of line) {
+      const size = encoder.encode(char).length;
+      if (bytes + size > 74) {
+        parts.push(current);
+        current = " ";
+        bytes = 1;
+      }
+      current += char;
+      bytes += size;
+    }
+    parts.push(current);
+    return parts.join("\r\n");
+  }
+
+  function icsFor(event, now = new Date()) {
+    let start, end;
+    if (event.startTime) {
+      start = `DTSTART:${compactDate(event.startsOn)}T${compactTime(event.startTime)}`;
+      if (event.endTime) end = `DTEND:${compactDate(event.endsOn || event.startsOn)}T${compactTime(event.endTime)}`;
+      else end = "DURATION:PT2H"; // no end time given: shown as two hours
+    } else {
+      start = `DTSTART;VALUE=DATE:${compactDate(event.startsOn)}`;
+      end = `DTEND;VALUE=DATE:${compactDate(nextDay(event.endsOn || event.startsOn))}`; // the day after the last day
+    }
+    const stamp = now.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+    const description = [event.description, event.link, `Posted by ${event.postedBy} on the EU-HEM Student Hub`].filter(Boolean).join("\n\n");
+    return [
+      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//EU-HEM Student Hub//Community events//EN", "CALSCALE:GREGORIAN",
+      "BEGIN:VEVENT", `UID:${event.id}@eu-hem-student-hub`, `DTSTAMP:${stamp}`, start, end,
+      `SUMMARY:${icsText(event.title)}`,
+      event.location ? `LOCATION:${icsText(event.location)}` : null,
+      `DESCRIPTION:${icsText(description)}`,
+      event.link ? `URL:${event.link}` : null,
+      "END:VEVENT", "END:VCALENDAR",
+    ].filter(Boolean).map(fold).join("\r\n") + "\r\n";
+  }
+
+  function downloadIcs(event) {
+    const blob = new Blob([icsFor(event)], { type: "text/calendar" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `${event.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "event"}.ics`;
+    document.body.append(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+  }
+
   // One event as a card. Everything is inserted as text, never as HTML.
   function eventCard(event) {
     const card = el("article", "event-card");
@@ -56,6 +126,11 @@
       link.rel = "noopener";
       footer.append(link);
     }
+    const add = el("button", "button button-secondary button-sm event-ics", "Add to calendar");
+    add.type = "button";
+    add.setAttribute("aria-label", `Add “${event.title}” to your calendar`);
+    add.addEventListener("click", () => downloadIcs(event));
+    footer.prepend(add);
     footer.append(el("span", "posted-by", `Posted by ${event.postedBy}`));
     body.append(footer);
     card.append(body);
@@ -91,7 +166,13 @@
     }
   }
 
-  window.HubEvents = { eventCard, whenLabel, upcomingEvents };
+  const api = { eventCard, whenLabel, upcomingEvents, icsFor };
+  // In Node (tests) only the pure functions are used; in the browser the section fills itself
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = api;
+    return;
+  }
+  window.HubEvents = api;
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", showCommunityEvents);
   else showCommunityEvents();
 })();

@@ -7,7 +7,7 @@
 // those rules, so editors are not offered actions that the database would refuse anyway.
 
 (function () {
-  const { el, say, explain, todayKey, formatDate } = window.AdminKit;
+  const { el, say, explain, todayKey, formatDate, timeAgo } = window.AdminKit;
   const D = window.EditorData;
   const TABS = ["submitted", "draft", "published", "archived"];
 
@@ -44,8 +44,9 @@
   function eventPreview(value) {
     if (!value.starts_on || !window.HubEvents) return el("p", { class: "admin-small", text: "Choose a start date to see the preview." });
     const card = window.HubEvents.eventCard(D.eventFromRow({ ...value, title: value.title || "Title", description: value.description || "", posted_by: value.posted_by || "" }));
-    // Links in the preview should not leave the dashboard
+    // Links and buttons in the preview are only for looking at
     for (const link of card.querySelectorAll("a")) link.removeAttribute("href");
+    for (const button of card.querySelectorAll("button")) button.disabled = true;
     return card;
   }
 
@@ -204,10 +205,26 @@
       archived: "Archived: it disappears from the site within about 15 minutes.",
     };
 
+    // Updates one item, but only if nobody changed it since it was loaded ("optimistic locking"):
+    // the database matches on updated_at too. Without this, two admins working on the same item would
+    // silently overwrite each other. No matching row -> Supabase answers with error PGRST116.
+    function updateItem(item, change) {
+      let query = app.client.from(type.table).update(change).eq("id", item.id);
+      if (item.updated_at) query = query.eq("updated_at", item.updated_at);
+      return query.select().single();
+    }
+
+    async function conflict() {
+      say("Someone else changed this item meanwhile (or you can no longer edit it), so nothing was saved. The list now shows the latest version.", "error");
+      await load();
+      app.changed();
+    }
+
     async function changeStatus(item, status, note) {
       const change = { status };
       if (note !== undefined) change.review_note = note;
-      const { error } = await app.client.from(type.table).update(change).eq("id", item.id).select().single();
+      const { error } = await updateItem(item, change);
+      if (error && error.code === "PGRST116") return conflict();
       if (error) {
         say(explain(error), "error");
         return;
@@ -261,18 +278,29 @@
       preview = el("div", { class: "admin-preview-body" });
       const urgentNote = el("p", { class: "note admin-warning", hidden: true, "data-role": "urgent-note",
         text: "Urgent shows a red banner at the top of EVERY page until it expires. Use it only for real emergencies, and set “Show until”." });
+      const warnings = el("ul", { class: "note admin-warning admin-warnings", hidden: true, "data-role": "warnings", "aria-live": "polite" });
+      const restore = el("div", { class: "note admin-restore", hidden: true, "data-role": "restore" }, [
+        el("span", { "data-role": "restore-text" }),
+        el("div", { class: "button-row" }, [
+          el("button", { type: "button", class: "button button-secondary button-sm", text: "Restore it", onclick: restoreLocalDraft }),
+          el("button", { type: "button", class: "button button-quiet button-sm", text: "Discard", onclick: () => { forgetLocalDraft(); restore.hidden = true; } }),
+        ]),
+      ]);
       form = el("form", { novalidate: true }, [
         el("h2", { id: `${typeName}-form-title`, text: `New ${type.singular}` }),
+        restore,
         el("div", { class: "admin-form-layout" }, [
           el("div", { class: "admin-grid" }, type.fields.map(fieldControl)),
-          el("aside", { class: "admin-preview", "aria-label": "Preview" }, [
+          // The warnings sit with the preview, which stays in view while typing
+          el("aside", { class: "admin-preview", "aria-label": "Preview and checks" }, [
+            urgentNote,
+            warnings,
             el("p", { class: "section-eyebrow", text: "Preview: how students will see it" }), preview,
           ]),
         ]),
-        urgentNote,
         errorsBox,
         el("div", { class: "button-row admin-form-actions" }, [
-          el("button", { type: "button", class: "button button-quiet", text: "Cancel", onclick: () => dialog.close() }),
+          el("button", { type: "button", class: "button button-quiet", "data-role": "cancel", text: "Cancel", onclick: () => closeForm() }),
           el("button", { type: "submit", class: "button button-secondary", value: "draft", text: "Save draft" }),
           el("button", { type: "submit", class: "button button-secondary", value: "submitted", "data-role": "submit-review", text: "Send for review" }),
           el("button", { type: "submit", class: "button button-primary", value: "published", "data-role": "publish", text: "Publish" }),
@@ -281,9 +309,14 @@
       dialog = el("dialog", { class: "admin-dialog", id: `${typeName}-dialog`, "aria-labelledby": `${typeName}-form-title` }, [form]);
       document.body.append(dialog);
 
-      form.addEventListener("input", refreshForm);
-      form.addEventListener("change", refreshForm);
+      form.addEventListener("input", onEdit);
+      form.addEventListener("change", onEdit);
       form.addEventListener("submit", save);
+      // Escape key: same question as Cancel when something was typed
+      dialog.addEventListener("cancel", (event) => {
+        event.preventDefault();
+        closeForm();
+      });
     }
 
     function readForm() {
@@ -295,21 +328,73 @@
       return values;
     }
 
-    // Live preview, character counters and the Urgent warning
+    function fillForm(values) {
+      for (const field of type.fields) {
+        const control = form.querySelector(`#${typeName}-f-${field.name}`);
+        const value = values[field.name];
+        if (field.type === "checkbox") control.checked = Boolean(value);
+        else control.value = value == null ? "" : field.type === "time" ? String(value).slice(0, 5) : value;
+      }
+    }
+
+    // Live preview, character counters, the Urgent note and the warnings (personal data, insecure link)
     function refreshForm() {
       const { value } = D.validateItem(typeName, readForm());
       preview.replaceChildren(PREVIEWS[typeName](value));
       for (const field of type.fields) {
-        const box = form.querySelector(`#${typeName}-f-${field.name}`).closest(".admin-field");
-        const counter = box && box.querySelector(".admin-counter");
+        const control = form.querySelector(`#${typeName}-f-${field.name}`);
+        const counter = control.closest(".admin-field").querySelector(".admin-counter");
         if (counter) {
-          const length = form.querySelector(`#${typeName}-f-${field.name}`).value.length;
-          counter.textContent = `${length} / ${field.max}`;
-          counter.classList.toggle("is-near", length > field.max * 0.9);
+          counter.textContent = `${control.value.length} / ${field.max}`;
+          counter.classList.toggle("is-near", control.value.length > field.max * 0.9);
         }
       }
-      const urgent = form.querySelector('[data-role="urgent-note"]');
-      urgent.hidden = !(typeName === "announcements" && value.category === "Urgent");
+      form.querySelector('[data-role="urgent-note"]').hidden = !(typeName === "announcements" && value.category === "Urgent");
+      const found = D.contentWarnings(typeName, value).filter((w) => w.kind !== "urgent"); // Urgent has its own note above
+      const box = form.querySelector('[data-role="warnings"]');
+      box.replaceChildren(...found.map((w) => el("li", { text: w.message })));
+      box.hidden = !found.length;
+    }
+
+    // ----- Never lose text: unsaved-changes question + a copy on this device while typing -----
+    // The copy lives in this browser only (localStorage), per item, and is removed after saving,
+    // after "Discard", and when signing out (admin.js), so a shared computer keeps nothing behind.
+
+    const localKey = () => `euhem-editor-draft:${typeName}:${state.editing ? state.editing.id : "new"}`;
+    let snapshot = "";
+    let saveTimer = null;
+    const isDirty = () => JSON.stringify(readForm()) !== snapshot;
+
+    function onEdit() {
+      refreshForm();
+      window.clearTimeout(saveTimer);
+      saveTimer = window.setTimeout(() => {
+        try {
+          if (isDirty()) localStorage.setItem(localKey(), JSON.stringify({ savedAt: new Date().toISOString(), values: readForm() }));
+        } catch (error) { /* private mode or storage full: the form still works */ }
+      }, 400);
+    }
+
+    function localDraft() {
+      try { return JSON.parse(localStorage.getItem(localKey()) || "null"); } catch (error) { return null; }
+    }
+
+    function forgetLocalDraft() {
+      window.clearTimeout(saveTimer);
+      try { localStorage.removeItem(localKey()); } catch (error) { /* nothing to remove */ }
+    }
+
+    function restoreLocalDraft() {
+      const saved = localDraft();
+      if (saved) fillForm(saved.values);
+      form.querySelector('[data-role="restore"]').hidden = true;
+      refreshForm();
+    }
+
+    function closeForm() {
+      if (isDirty() && !window.confirm("Discard your changes?")) return;
+      forgetLocalDraft();
+      dialog.close();
     }
 
     function openForm(item, { copy = false } = {}) {
@@ -317,18 +402,23 @@
       form.reset();
       clearErrors();
       form.querySelector("h2").textContent = state.editing ? `Edit ${type.singular}` : copy ? `Copy of ${type.singular}` : `New ${type.singular}`;
+      const values = {};
       for (const field of type.fields) {
-        const control = form.querySelector(`#${typeName}-f-${field.name}`);
         let value = item ? item[field.name] : field.initial;
         if (!item && field.name === "posted_by") value = app.editor().display_name || "Student Hub team";
-        if (!item && field.name === "date") value = todayKey();
-        if (copy && (field.name === "date")) value = todayKey();
-        if (field.type === "checkbox") control.checked = Boolean(value);
-        else control.value = value == null ? "" : field.type === "time" ? String(value).slice(0, 5) : value;
+        if ((!item || copy) && field.name === "date") value = todayKey();
+        values[field.name] = value;
       }
+      fillForm(values);
+      snapshot = JSON.stringify(readForm());
       const admin = app.isAdmin();
       form.querySelector('[data-role="publish"]').hidden = !admin;
       form.querySelector('[data-role="submit-review"]').hidden = admin;
+      // Text typed earlier that was never saved (closed tab, crash, lost connection)?
+      const saved = copy ? null : localDraft();
+      const restore = form.querySelector('[data-role="restore"]');
+      restore.hidden = !(saved && JSON.stringify(saved.values) !== snapshot);
+      if (!restore.hidden) restore.querySelector('[data-role="restore-text"]').textContent = `Unsaved text from ${timeAgo(saved.savedAt)} was found on this device.`;
       refreshForm();
       dialog.showModal();
       form.querySelector(`#${typeName}-f-title`).focus();
@@ -352,16 +442,30 @@
         form.querySelector(`#${typeName}-f-${problems[0][0]}`).focus();
         return;
       }
+      // Personal data: a draft may hold it for a moment, but sending or publishing needs a clear "yes"
+      const personal = D.contentWarnings(typeName, value).filter((w) => w.kind === "personal");
+      if (status !== "draft" && personal.length &&
+        !window.confirm(`${personal.map((w) => w.message).join("\n\n")}\n\n${status === "published" ? "Publish" : "Send"} anyway?`)) return;
+
       const row = { ...value, status };
-      const request = state.editing
-        ? app.client.from(type.table).update(row).eq("id", state.editing.id).select().single()
-        : app.client.from(type.table).insert({ ...row, cohort: app.config.cohort }).select().single();
-      const { error } = await request;
+      const { error } = state.editing
+        ? await updateItem(state.editing, row)
+        : await app.client.from(type.table).insert({ ...row, cohort: app.config.cohort }).select().single();
+      if (error && error.code === "PGRST116") {
+        // Keep the typed text on this device, so it can be restored on the latest version
+        errorsBox.textContent = "Someone else changed this item meanwhile, so it was not saved. Your text is kept on this device: close the form, open the item again and choose “Restore it”.";
+        errorsBox.hidden = false;
+        try { localStorage.setItem(localKey(), JSON.stringify({ savedAt: new Date().toISOString(), values: readForm() })); } catch (e) { /* ignore */ }
+        snapshot = JSON.stringify(readForm()); // closing is fine now: the text is kept
+        await load();
+        return;
+      }
       if (error) {
         errorsBox.textContent = explain(error);
         errorsBox.hidden = false;
         return;
       }
+      forgetLocalDraft();
       dialog.close();
       say(DONE[status], "success");
       state.tab = status;

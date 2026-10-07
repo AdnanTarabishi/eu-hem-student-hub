@@ -40,13 +40,14 @@ const FAKE_SUPABASE = `
       return { data: q.one ? rows[0] || null : rows, error: null };
     }
     if (q.action === "insert") {
-      const row = { id: "new-" + (++seq), created_by: fake.session.user.id, created_at: new Date().toISOString(), review_note: null, ...q.payload };
+      const row = { id: "new-" + (++seq), created_by: fake.session.user.id, created_at: new Date().toISOString(), updated_at: new Date().toISOString(), review_note: null, ...q.payload };
       table.push(row);
       return { data: { ...row }, error: null };
     }
     if (q.action === "update") {
       const rows = table.filter(match);
-      rows.forEach((row) => Object.assign(row, q.payload));
+      rows.forEach((row) => Object.assign(row, q.payload, { updated_at: new Date(Date.now() + (++seq)).toISOString() }));
+      if (q.one && !rows.length) return { data: null, error: { code: "PGRST116", message: "JSON object requested, multiple (or no) rows returned" } };
       return { data: rows[0] ? { ...rows[0] } : null, error: null };
     }
     if (q.action === "delete") {
@@ -96,10 +97,10 @@ const today = (() => { const d = new Date(); return `${d.getFullYear()}-${String
 const shift = (days) => { const d = new Date(today + "T12:00:00"); d.setDate(d.getDate() + days); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
 const ann = (over) => ({ id: "a" + Math.random().toString(36).slice(2), cohort: "2026-2028", date: today, title: "Example", category: "Student",
   message: "Hello", link: null, pinned: false, expires: null, posted_by: "Student Hub team", status: "published", created_by: "u-admin",
-  created_at: "2026-10-07T08:00:00Z", review_note: null, ...over });
+  created_at: "2026-10-07T08:00:00Z", updated_at: "2026-10-07T08:00:00.123456+00:00", review_note: null, ...over });
 const evt = (over) => ({ id: "e" + Math.random().toString(36).slice(2), cohort: "2026-2028", title: "Aperitivo", category: "Social",
   starts_on: shift(5), start_time: "18:00:00", ends_on: null, end_time: null, location: "Piazza Verdi", description: "Meet the cohort.",
-  link: null, posted_by: "Rep team", status: "published", created_by: "u-editor", created_at: "2026-10-07T08:00:00Z", review_note: null, ...over });
+  link: null, posted_by: "Rep team", status: "published", created_by: "u-editor", created_at: "2026-10-07T08:00:00Z", updated_at: "2026-10-07T08:00:00.123456+00:00", review_note: null, ...over });
 
 (async () => {
   const site = http.createServer((req, res) => {
@@ -198,6 +199,15 @@ const evt = (over) => ({ id: "e" + Math.random().toString(36).slice(2), cohort: 
   assert.ok(await visible(page, "#announcements-dialog .admin-preview .urgent-banner"));
   await page.selectOption("#announcements-f-category", "Academic");
   assert.ok(!(await visible(page, '#announcements-dialog [data-role="urgent-note"]')));
+  await page.fill("#announcements-f-message", "Room 3 instead of Room 1.\nQuestions? Call Marco on 345 678 9012.");
+  assert.match(await text(page, '#announcements-dialog [data-role="warnings"]'), /Looks like a phone number \(345 678 9012\)/);
+  let asked = "";
+  page.once("dialog", (d) => { asked = d.message(); d.dismiss(); });
+  await page.click('#announcements-dialog [data-role="submit-review"]');
+  assert.match(asked, /Never publish students' phone numbers[\s\S]*Send anyway\?/);
+  assert.ok(await visible(page, "#announcements-dialog"), "saying no keeps the form open");
+  await page.fill("#announcements-f-message", "Room 3 instead of Room 1.\nSame time.");
+  assert.ok(await page.isHidden('#announcements-dialog [data-role="warnings"]'));
   await page.click('#announcements-dialog [data-role="submit-review"]');
   await page.waitForSelector("#announcements-dialog", { state: "hidden" });
   await page.waitForSelector('#panel-announcements .admin-item h3:text-is("Room change for Statistics")');
@@ -206,11 +216,34 @@ const evt = (over) => ({ id: "e" + Math.random().toString(36).slice(2), cohort: 
   assert.strictEqual(saved.cohort, "2026-2028");
   assert.strictEqual(saved.message, "Room 3 instead of Room 1.\nSame time.");
   assert.deepStrictEqual(await buttons(page, "#panel-announcements .admin-item .admin-actions button"), ["Edit", "Back to draft", "Duplicate"]);
-  ok("editor announcements: live preview, counter and Urgent warning; sends for review; cannot publish");
+  ok("editor announcements: live preview, counter, Urgent and personal-data warnings; sends for review; cannot publish");
 
+  // Unsaved text: Cancel asks first, and the text survives on this device
+  await page.click('#panel-announcements [data-action="new"]');
+  await page.fill("#announcements-f-title", "Half-written idea");
+  await page.waitForFunction(() => localStorage.getItem("euhem-editor-draft:announcements:new"));
+  let question = "";
+  page.once("dialog", (d) => { question = d.message(); d.dismiss(); });
+  await page.click('#announcements-dialog [data-role="cancel"]');
+  assert.strictEqual(question, "Discard your changes?");
+  assert.ok(await visible(page, "#announcements-dialog"), "No keeps the form open");
+  await page.reload(); // like a closed tab or a crash
+  await page.waitForSelector("#panel-announcements:not([hidden])");
+  await page.click('#panel-announcements [data-action="new"]');
+  await page.waitForSelector('#announcements-dialog [data-role="restore"]:not([hidden])');
+  await page.click('#announcements-dialog [data-role="restore"] button:text-is("Restore it")');
+  assert.strictEqual(await page.inputValue("#announcements-f-title"), "Half-written idea");
+  page.once("dialog", (d) => d.accept());
+  await page.keyboard.press("Escape");
+  await page.waitForSelector("#announcements-dialog", { state: "hidden" });
+  assert.strictEqual(await page.evaluate(() => localStorage.getItem("euhem-editor-draft:announcements:new")), null, "discarded text is gone");
+  ok("never lose text: Cancel/Escape ask first; unsaved text is kept on the device and can be restored");
+
+  // (the reload above also reset the fake database to its starting rows)
+  await page.click('#panel-announcements .admin-tab[data-status="published"]');
   await page.fill("#announcements-search", "nothing like this");
   assert.match(await text(page, "#panel-announcements .admin-list"), /Nothing matches your search/);
-  await page.fill("#announcements-search", "statistics");
+  await page.fill("#announcements-search", "PUBLIC");
   assert.strictEqual(await page.locator("#panel-announcements .admin-item").count(), 1);
   ok("search filters the list");
 
@@ -279,6 +312,19 @@ const evt = (over) => ({ id: "e" + Math.random().toString(36).slice(2), cohort: 
   assert.match(await text(page, "#admin-status"), /within about 15 minutes/);
   ok("admin: sends back with a note, publishes; text from editors is never treated as HTML");
 
+  // Someone else changes the item meanwhile: nothing is overwritten
+  await page.click('#panel-announcements .admin-tab[data-status="published"]');
+  await page.evaluate(() => {
+    const row = window.__fake.db.announcements.find((r) => r.id === "p1");
+    row.updated_at = "2026-10-08T09:00:00Z";
+    row.title = "Welcome (changed by someone else)";
+  });
+  await page.click('#panel-announcements .admin-item:has-text("Welcome") button:text-is("Archive")');
+  await page.waitForFunction(() => /Someone else changed this item/.test(document.getElementById("admin-status").textContent));
+  assert.strictEqual(await page.evaluate(() => window.__fake.db.announcements.find((r) => r.id === "p1").status), "published", "not overwritten");
+  await page.waitForSelector('#panel-announcements .admin-item h3:text-is("Welcome (changed by someone else)")');
+  ok("edit conflicts: a change made meanwhile by someone else is never overwritten; the list refreshes");
+
   await page.click('.admin-section-link[data-section="team"]');
   await page.waitForSelector("#panel-team .admin-member");
   assert.strictEqual(await page.locator("#panel-team .admin-member").count(), 2);
@@ -345,8 +391,13 @@ const evt = (over) => ({ id: "e" + Math.random().toString(36).slice(2), cohort: 
   await page.waitForSelector("#community-events:not([hidden]) .event-card");
   assert.deepStrictEqual(await page.$$eval("#community-events .event-title", (all) => all.map((h) => h.textContent)), ["Ski weekend", "Career talk"]); // same day: all-day first, like calendar apps
   assert.match(await text(page, "#community-events"), /Bring <b>gloves<\/b>/, "event text stays text");
+  const [ics] = await Promise.all([page.waitForEvent("download"), page.click('.event-card:has-text("Career talk") .event-ics')]);
+  assert.strictEqual(ics.suggestedFilename(), "career-talk.ics");
+  const icsText = fs.readFileSync(await ics.path(), "utf8");
+  assert.match(icsText, /BEGIN:VEVENT[\s\S]*SUMMARY:Career talk[\s\S]*END:VEVENT/);
+  assert.match(icsText, /DTSTART:\d{8}T090000/);
   assert.ok((await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)) <= 0);
-  ok("calendar page: Community events shows upcoming events only, soonest first (all-day before timed); hidden until the dashboard is connected");
+  ok("calendar page: Community events shows upcoming events only, soonest first (all-day before timed), with Add to calendar; hidden until connected");
   await page.context().close();
 
   assert.deepStrictEqual(errors, [], "no JavaScript errors");

@@ -35,6 +35,22 @@
   color: var(--warning);
 }
 
+.admin-warnings {
+  display: grid;
+  gap: 0.35rem;
+  padding-left: 2rem;
+}
+
+.admin-restore {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  background: var(--color-primary-light);
+  color: var(--text-heading);
+}
+
 .admin-small {
   color: var(--text-secondary);
   font-size: 0.875rem;
@@ -483,6 +499,11 @@
 
 .admin-preview .section-eyebrow {
   margin-top: 0;
+}
+
+.admin-preview > .note {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
 }
 
 .admin-preview-stack {
