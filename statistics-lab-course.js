@@ -6,8 +6,10 @@
 (function () {
   "use strict";
   const course = document.getElementById("course-page");
-  if (!course || new URLSearchParams(location.search).get("course") !== "quant-methods") return;
-  const url = "course.html?course=quant-methods&tab=lab";
+  const courseId = new URLSearchParams(location.search).get("course");
+  if (!course || !["quant-methods", "fund-quant-methods"].includes(courseId)) return;
+  const fundamentals = courseId === "fund-quant-methods";
+  const url = `course.html?course=${courseId}&tab=lab`;
   const panel = document.createElement("section");
   panel.id = "statistics-lab-course-panel";
   panel.hidden = true;
@@ -32,15 +34,15 @@
   }
   function enhance() {
     const active = new URLSearchParams(location.search).get("tab") === "lab";
-    const nav = course.querySelector(".qm-course-tabs");
+    const nav = course.querySelector(fundamentals ? ".fc-tabs" : ".qm-course-tabs");
     if (nav && !nav.querySelector("[data-statistics-lab-link]")) {
-      const anchor = link("Interactive Lab", "qm-course-tab");
+      const anchor = link("Interactive Lab", fundamentals ? "fc-tab" : "qm-course-tab");
       anchor.dataset.statisticsLabLink = "true";
       nav.insertBefore(anchor, nav.querySelector(".qm-library"));
     }
-    const module = course.querySelector(".qm-module");
+    const module = course.querySelector(fundamentals ? ".fc-overview" : ".qm-module");
     if (module && !module.querySelector("[data-statistics-lab-cta]")) {
-      const anchor = link("Open 7 interactive statistics tools →", "qm-button qm-secondary");
+      const anchor = link("Open 12 interactive statistics tools →", fundamentals ? "fs-button fc-utility-link" : "qm-button qm-secondary");
       anchor.dataset.statisticsLabCta = "true";
       module.appendChild(anchor);
     }
