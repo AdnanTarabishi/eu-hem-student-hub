@@ -1,0 +1,34 @@
+name: Verify Toolkit v2 candidate
+on:
+  push:
+    branches: [work/toolkit-v2-20261007]
+    paths:
+      - .github/workflows/toolkit-v2-candidate.yml
+      - scripts/toolkit-v2-candidate.py
+permissions:
+  contents: write
+jobs:
+  verify-and-integrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: work/toolkit-v2-20261007
+      - name: Apply reviewed integration with source hash guards
+        run: python3 scripts/toolkit-v2-candidate.py
+      - name: Check numerical regressions and organiser behaviour
+        run: node --test tests/toolkit.test.js tests/toolkit-organiser.test.js tests/statistics-lab-math.test.js tests/statistics-lab-tools.test.js tests/statistics-lab-inference.test.js
+      - name: Check source content and asset versions
+        run: |
+          node scripts/stamp-versions.js --check
+          node scripts/check-content.js
+          node scripts/check-contrast.js
+          git diff --check
+      - name: Commit only the reviewed integrations to the candidate branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add toolkit.html toolkit.js toolkit-data.js privacy.html sw.js tests/toolkit.test.js tests/toolkit-browser.py
+          git commit -m 'Integrate Toolkit v2 and verify exact tested source'
+          git push origin HEAD:work/toolkit-v2-20261007
