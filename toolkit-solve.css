@@ -1,0 +1,123 @@
+/* Solve a Problem: one scoped academic workspace, using the Hub's design tokens. */
+.sv-workbench {color:var(--text-primary);font-family:var(--font-sans);padding-top:8px;}
+.sv-workbench [hidden]{display:none!important;}
+.sv-workbench *{box-sizing:border-box;}
+.sv-workbench h3,.sv-workbench h4{color:var(--color-heading);}
+.sv-workbench button,.sv-workbench input,.sv-workbench select,.sv-workbench textarea{font:inherit;}
+.sv-workbench button{cursor:pointer;}
+.sv-workbench button:disabled{cursor:not-allowed;opacity:.5;}
+.sv-workbench :is(a,button,input,select,textarea,summary,[tabindex]):focus-visible{outline:3px solid var(--color-link);outline-offset:3px;}
+.sv-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin:9px 0 27px;}
+.sv-heading h2{font:600 clamp(30px,3.5vw,47px)/1.13 var(--font-serif);letter-spacing:-.035em;margin:10px 0 17px;color:var(--color-heading);}
+.sv-heading h2 em{font-style:normal;color:var(--color-link);}
+.sv-heading p:not(.tk-eyebrow){color:var(--text-secondary);font-size:14px;line-height:1.8;}
+.sv-release{font-size:11px;white-space:nowrap;padding:7px 12px;border:1px solid var(--color-primary-border);color:var(--color-link);background:var(--color-primary-light);border-radius:30px;}
+.sv-search-box{background:var(--surface-card);padding:23px 26px;border:1px solid var(--border-default);border-radius:16px;}
+.sv-search-box h3{font-size:15px;margin-bottom:16px;}
+#sv-question-form{display:flex;gap:12px;}
+#sv-question{width:100%;min-width:0;flex:1;min-height:46px;border:1px solid var(--border-input);background:var(--surface-warm);color:var(--text-primary);border-radius:9px;padding:12px 15px;font-size:13px;}
+.sv-small{font-size:11.5px;line-height:1.85;color:var(--text-secondary);margin:12px 0;}
+.sv-prompts{display:flex;gap:7px;flex-wrap:wrap;}
+.sv-prompts button{border:1px solid var(--border-default);border-radius:20px;padding:8px 12px;min-height:36px;background:var(--surface-warm);color:var(--color-link);font-size:11px;}
+.sv-match-list{display:grid;gap:6px;padding-top:7px;}
+.sv-match-list :is(a,button){text-decoration:none;padding:11px 13px;border:1px solid var(--color-primary-border);border-radius:9px;color:var(--color-link);background:var(--color-primary-light);text-align:left;font-size:12px;}
+.sv-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:25px 0 16px;}
+.sv-nav button{display:flex;gap:13px;align-items:center;text-align:left;padding:18px;border:1px solid var(--border-default);border-radius:13px;background:var(--surface-card);color:var(--text-secondary);min-width:0;}
+.sv-nav button>span{font:600 12px var(--font-sans);border:1px solid currentColor;padding:5px 8px;border-radius:7px;opacity:.7;}
+.sv-nav strong{font-size:13px;display:block;line-height:1.5;}
+.sv-nav small{font-size:10px;display:block;margin-top:5px;line-height:1.6;opacity:.85;}
+.sv-nav b{margin-left:auto;}
+.sv-nav button[aria-pressed="true"]{background:var(--action-navy);color:var(--text-on-navy);border-color:var(--action-navy);box-shadow:0 4px 13px var(--color-shadow);}
+.sv-top-actions{display:flex;gap:18px;align-items:center;margin-bottom:26px;border-bottom:1px solid var(--border-default);padding-bottom:13px;}
+.sv-top-actions p{flex:1;color:var(--text-secondary);font-size:11px;}
+.sv-top-actions button{font-size:11px!important;}
+.sv-section-title{margin-bottom:20px;}
+.sv-section-title h3{font-size:21px;letter-spacing:-.02em;line-height:1.4;margin:8px 0;}
+.sv-workspace{display:grid;grid-template-columns:minmax(270px,330px) minmax(0,1fr);gap:21px;align-items:start;}
+.sv-card{border:1px solid var(--border-default);border-radius:16px;background:var(--surface-card);padding:25px;min-width:0;}
+.sv-result>h3{font-size:21px;line-height:1.45;letter-spacing:-.02em;margin:13px 0;}
+.sv-result>h4{font-size:14px;margin-top:22px;}
+.sv-controls>.tk-button,.sv-controls>form>.tk-button{width:100%;justify-content:center;}
+.sv-field{display:flex;flex-direction:column;gap:7px;margin-bottom:17px;font-size:12px;min-width:0;}
+.sv-field>span{font-weight:650;color:var(--text-secondary);line-height:1.5;}
+.sv-field :is(input,select,textarea){width:100%;min-width:0;background:var(--surface-card);color:var(--text-primary);border:1px solid var(--border-input);border-radius:8px;padding:10px 11px;min-height:43px;font-size:12px;}
+.sv-field textarea{resize:vertical;line-height:1.9;min-height:140px;font-variant-numeric:tabular-nums;}
+.sv-field input[aria-invalid="true"]{border-color:var(--color-danger,#a82c37);}
+.sv-fields{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+.sv-route-status{display:inline-flex;border:1px solid var(--color-primary-border);padding:6px 11px;border-radius:7px;color:var(--color-link);background:var(--color-primary-light);font-size:11px;font-weight:650;}
+.sv-route-review{background:var(--surface-warm);color:var(--text-secondary);}
+.sv-reasons{margin:23px 0;}
+.sv-reasons p{display:flex;gap:15px;color:var(--text-secondary);font-size:13px;line-height:1.85;margin:12px 0;}
+.sv-reasons p span{font-size:10px;color:var(--color-link);font-weight:700;flex:0 0 22px;padding-top:4px;}
+.sv-checks{margin:13px 0 25px;padding-left:19px;color:var(--text-secondary);font-size:12px;line-height:1.85;}
+.sv-checks li{margin:8px 0;}
+.sv-error{padding:12px;border:1px solid var(--color-danger,#a82c37);color:var(--text-primary);border-radius:8px;font-size:12px;margin:12px 0;}
+.sv-note{border-left:3px solid var(--color-link);background:var(--surface-warm);border-radius:0 9px 9px 0;padding:15px 17px;margin:19px 0;font-size:12px;line-height:1.85;color:var(--text-secondary);}
+.sv-source{font-size:11px;color:var(--text-secondary);margin-top:20px;line-height:1.8;}
+.sv-source a,.sv-methods a{color:var(--color-link);text-underline-offset:3px;}
+.sv-recipe-list{max-height:680px;overflow:auto;display:grid;gap:6px;padding:3px;}
+.sv-recipe-list button{background:var(--surface-warm);border:1px solid var(--border-default);border-radius:8px;text-align:left;padding:12px;color:var(--text-secondary);}
+.sv-recipe-list button[aria-pressed="true"]{background:var(--color-primary-light);color:var(--color-link);border-color:var(--color-primary-border);}
+.sv-recipe-list strong{font-size:12px;display:block;line-height:1.65;}
+.sv-recipe-list span{display:block;font-size:10px;margin-top:5px;}
+#sv-formula-intro h3{font-size:22px;margin:11px 0;}
+#sv-formula-intro p:not(.tk-eyebrow){font-size:13px;color:var(--text-secondary);line-height:1.85;margin:15px 0 23px;}
+.sv-workbench pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.9 ui-monospace,Consolas,monospace;padding:15px 17px;background:var(--surface-warm);color:var(--text-primary);border:1px solid var(--border-default);border-radius:9px;max-width:100%;}
+.sv-workbench .sv-formula-output{border-color:var(--color-primary-border);background:var(--action-navy);color:var(--text-on-navy);font-size:14px;}
+.sv-inline-actions{display:flex;gap:19px;align-items:center;flex-wrap:wrap;margin:14px 0;}
+.sv-example{margin:23px 0;padding:20px;border:1px solid var(--border-default);border-radius:12px;}
+.sv-example p{font-size:12px;line-height:1.9;color:var(--text-secondary);}
+.sv-example strong{display:block;font-size:18px;color:var(--color-link);margin:15px 0;font-variant-numeric:tabular-nums;overflow-wrap:anywhere;}
+.sv-health-tabs{display:flex;gap:6px;margin:13px 0 23px;padding:5px;border:1px solid var(--border-default);border-radius:11px;width:fit-content;background:var(--surface-card);}
+.sv-health-tabs button{border:0;border-radius:7px;background:none;color:var(--text-secondary);padding:11px 15px;font-size:12px;min-height:41px;}
+.sv-health-tabs button[aria-pressed="true"]{background:var(--color-primary-light);color:var(--color-link);}
+.sv-plot{width:100%;display:block;margin:24px 0 8px;min-height:190px;}
+.sv-short{min-height:130px;}
+.sv-grid-bg{fill:var(--surface-warm);}
+.sv-axis{stroke:var(--border-input);stroke-width:1.5;}
+.sv-threshold{stroke:var(--text-secondary);stroke-width:2;fill:none;stroke-dasharray:6 5;}
+.sv-line{stroke:var(--color-link);stroke-width:3;fill:none;}
+.sv-dot{fill:var(--color-link);stroke:var(--surface-card);stroke-width:3;}
+.sv-axis-name{fill:var(--text-secondary);font-size:13px;font-weight:650;}
+.sv-axis-tick{fill:var(--text-primary);font-size:12px;font-variant-numeric:tabular-nums;paint-order:stroke;stroke:var(--surface-card);stroke-width:4px;}
+.sv-quad{fill:var(--text-secondary);font-size:11px;}
+.sv-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:22px 0;}
+.sv-metrics>div{padding:15px;background:var(--surface-warm);border:1px solid var(--border-default);border-radius:10px;min-width:0;}
+.sv-metrics span{font-size:11px;color:var(--text-secondary);display:block;}
+.sv-metrics strong{display:block;font-size:19px;font-weight:700;color:var(--color-link);font-variant-numeric:tabular-nums;overflow-wrap:anywhere;margin-top:8px;line-height:1.5;}
+.sv-step{display:flex;gap:15px;margin:24px 0;}
+.sv-step-number{color:var(--color-link);font-size:11px;font-weight:650;border:1px solid var(--border-default);border-radius:6px;padding:5px 8px;align-self:flex-start;}
+.sv-step>div{min-width:0;flex:1;}
+.sv-step h4{font-size:13px;margin:4px 0 12px;}
+.sv-step p{font-size:12px;color:var(--text-secondary);line-height:1.9;}
+.sv-table-scroll{overflow:auto;max-width:100%;border:1px solid var(--border-default);border-radius:9px;margin:22px 0;}
+.sv-table-scroll table{width:100%;min-width:400px;border-collapse:collapse;margin:0;font-size:11px;font-variant-numeric:tabular-nums;}
+.sv-table-scroll :is(th,td){padding:12px;text-align:left;border:0;border-bottom:1px solid var(--border-default);color:var(--text-secondary);}
+.sv-table-scroll th{background:var(--surface-warm);}
+.sv-sensitivity{margin:20px 0;}
+.sv-sensitivity summary,.sv-methods summary,.sv-practice summary{cursor:pointer;font-size:12px;font-weight:650;color:var(--color-link);padding:12px 0;}
+.sv-after{justify-content:flex-end;}
+.sv-practice{margin-top:35px;border:1px solid var(--border-default);border-radius:14px;padding:10px 22px;background:var(--surface-card);}
+.sv-quiz{padding:20px 0;border-top:1px solid var(--border-default);}
+.sv-quiz fieldset{padding:0;border:0;}
+.sv-quiz legend{font-size:13px;font-weight:650;line-height:1.85;color:var(--color-heading);margin-bottom:12px;}
+.sv-quiz label{display:flex;gap:10px;align-items:flex-start;margin:13px 0;font-size:12px;color:var(--text-secondary);}
+.sv-quiz input{accent-color:var(--color-link);margin-top:3px;}
+.sv-answer{font-size:12px;color:var(--text-secondary);line-height:1.85;}
+.sv-methods{margin-top:20px;border-top:1px solid var(--border-default);padding:10px 0;}
+.sv-methods p{font-size:11px;color:var(--text-secondary);line-height:1.85;margin:10px 0;}
+.sv-status{font-size:12px;color:var(--color-link);line-height:1.8;margin:13px 0;}
+@media(max-width:1100px){.sv-workspace{grid-template-columns:285px minmax(0,1fr);gap:16px;}.sv-card{padding:20px;}.sv-nav button{padding:14px 12px;gap:9px;}.sv-nav strong{font-size:11.5px;}.sv-nav small{font-size:9px;}.sv-nav button>span{display:none;}}
+@media(max-width:720px){
+.sv-heading{display:block;}.sv-release{margin-top:15px;display:inline-block;}.sv-heading h2{font-size:32px;}.sv-search-box{padding:19px;}
+#sv-question-form{flex-direction:column;}.sv-search-box .tk-button{justify-content:center;}.sv-nav{grid-template-columns:1fr;gap:8px;}.sv-nav button>span{display:block;}.sv-nav strong{font-size:12px;}.sv-nav small{font-size:10px;}.sv-nav button{padding:14px;}
+.sv-top-actions{flex-wrap:wrap;gap:5px 19px;}.sv-top-actions p{flex:0 0 100%;}.sv-workspace{grid-template-columns:1fr;}.sv-section-title h3{font-size:20px;}.sv-card{padding:19px;}
+.sv-recipe-list{max-height:230px;}.sv-health-tabs{width:100%;}.sv-health-tabs button{flex:1;padding:9px 5px;font-size:10px;}
+.sv-plot{min-height:150px;}.sv-quad{display:none;}.sv-axis-name{font-size:19px;}.sv-axis-tick{font-size:22px;}.sv-metrics strong{font-size:17px;}.sv-step{gap:10px;}.sv-step pre{font-size:11px;padding:12px;}.sv-example{padding:16px;}
+.sv-practice{padding:10px 17px;}.sv-short{min-height:120px;}.tk2-sections{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(prefers-reduced-motion:reduce){.sv-workbench *{transition:none!important;scroll-behavior:auto!important;}}
+@media print {
+body:has(#tk2-solve:not([hidden])) .site-header,body:has(#tk2-solve:not([hidden])) .tk-hero,body:has(#tk2-solve:not([hidden])) .tk-breadcrumb,body:has(#tk2-solve:not([hidden])) .tk2-sections,body:has(#tk2-solve:not([hidden])) .tk2-notice,body:has(#tk2-solve:not([hidden])) .tk-how,body:has(#tk2-solve:not([hidden])) .tk-maintenance,body:has(#tk2-solve:not([hidden])) .site-footer{display:none!important;}
+.sv-search-box,.sv-nav,.sv-top-actions,.sv-controls,.sv-health-tabs,.sv-inline-actions,.sv-practice,#sv-status,#sv-clipboard{display:none!important;}.sv-workspace{display:block;}.sv-card{break-inside:auto;}.sv-metrics,.sv-step{break-inside:avoid;}.sv-table-scroll{overflow:visible;}
+}

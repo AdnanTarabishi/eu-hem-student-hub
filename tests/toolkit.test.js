@@ -5,7 +5,7 @@ const D=require('../toolkit-data.js'),root=path.resolve(__dirname,'..');
 
 test('catalogue contains unique stable identifiers and honest kind totals',()=>{
   assert.equal(D.items.length,70);assert.equal(new Set(D.items.map(t=>t.id)).size,70);
-  assert.deepEqual(['builtin','external','planned'].map(k=>D.items.filter(t=>t.kind===k).length),[18,36,16]);
+  assert.deepEqual(['builtin','external','planned'].map(k=>D.items.filter(t=>t.kind===k).length),[21,36,13]);
 });
 test('each entry has a supported category, editorial summary and useful scope',()=>{
   for(const t of D.items){assert.match(t.id,/^[a-z0-9-]+$/);assert.ok(D.categories.some(c=>c.id===t.category&&c.id!=='all'));assert.ok(t.title&&t.summary&&t.note&&t.access);assert.equal(t.includes.length,3);assert.ok(t.includes.every(x=>typeof x==='string'&&x.length>15));}

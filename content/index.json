@@ -36,7 +36,8 @@
     ],
     "statistics": [
       "topics.json",
-      "questions.json"
+      "questions.json",
+      "resources.json"
     ]
   }
 }

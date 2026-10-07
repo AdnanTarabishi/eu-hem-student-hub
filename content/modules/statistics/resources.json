@@ -1,0 +1,18 @@
+[
+  {
+    "id": "statistics.r.solve-method",
+    "title": "Statistical Test Finder",
+    "type": "Website",
+    "url": "https://adnantarabishi.github.io/eu-hem-student-hub/toolkit.html?section=solve&solver=finder",
+    "date": "2026-10-08",
+    "description": "Original educational route to available Lab calculators; assumptions still need review."
+  },
+  {
+    "id": "statistics.r.solve-excel",
+    "title": "Excel Formula Assistant",
+    "type": "Website",
+    "url": "https://adnantarabishi.github.io/eu-hem-student-hub/toolkit.html?section=solve&solver=excel",
+    "date": "2026-10-08",
+    "description": "Worked formula recipes and locale separator controls. This is not an Excel execution engine."
+  }
+]
