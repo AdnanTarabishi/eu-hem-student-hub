@@ -52,7 +52,7 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   /* ----- Overview and the three stages ----- */
   let page = await open();
   assert.deepStrictEqual(await page.$$eval(".roadmap-overview-item", (all) => all.map((b) => b.textContent.replace(/\s+/g, ""))),
-    ["2Now", "6Next", "10Later", "24Released"]);
+    ["2Now", "6Next", "10Later", "30Released"]);
   assert.match(await text(page, "#roadmap-reviewed"), /Last reviewed 7 October 2026/);
   assert.deepStrictEqual(await page.$$eval(".roadmap-card.is-now .roadmap-card-title", (all) => all.map((h) => h.textContent)),
     ["Exam Prep", "Beta feedback & essential improvements"]);
@@ -61,7 +61,7 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   assert.match(await text(page, ".roadmap-lane.is-next"), /Estimated periods, not promises/);
   assert.strictEqual(await page.getAttribute("#roadmap-vision [role=progressbar]", "aria-valuenow"), "15");
   assert.match(await text(page, "#roadmap-vision"), /About 15% of the full plan built/);
-  assert.match(await text(page, "#roadmap-vision"), /24 releases shipped since 1 Oct 2026.*Full Hub: Spring 2027/s);
+  assert.match(await text(page, "#roadmap-vision"), /30 releases shipped since 1 Oct 2026.*Full Hub: Spring 2027/s);
   ok("overview counts, two Now cards, Next by period with After launch, about 15% of the full plan, releases counted, full Hub Spring 2027");
 
   // Release banner, What's in v1.0, the plan note, limitations, domain move, feedback
@@ -113,12 +113,12 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   assert.strictEqual(await page.evaluate(() => location.hash), "#updates");
   assert.strictEqual(await page.isVisible("#panel-updates"), true);
   assert.strictEqual(await page.isVisible("#panel-roadmap"), false);
-  assert.strictEqual(await page.locator(".update-entry").count(), 24);
+  assert.strictEqual(await page.locator(".update-entry").count(), 30);
   assert.ok(!(await text(page, "#updates-list")).includes("Secret upcoming feature"), "the test draft is hidden");
   await page.click('#roadmap-type .filter-chip:has-text("New")');
   const newCount = await page.locator(".update-entry").count();
   await page.click('#roadmap-type .filter-chip:has-text("Improved")');
-  assert.strictEqual(newCount + await page.locator(".update-entry").count(), 24);
+  assert.strictEqual(newCount + await page.locator(".update-entry").count(), 30);
   await page.click('#roadmap-type .filter-chip:has-text("All updates")');
   await page.focus("#tab-updates");
   await page.keyboard.press("ArrowRight");
@@ -133,20 +133,20 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   await page.click("#tab-updates");
   assert.deepStrictEqual(await page.$$eval("#roadmap-version .filter-chip", (all) => all.map((b) => b.textContent)),
     ["All versions", "v0.9", "v0.5", "v0.4", "v0.3", "v0.1"]);
-  assert.strictEqual(await page.locator(".update-entry .roadmap-version").count(), 24);
+  assert.strictEqual(await page.locator(".update-entry .roadmap-version").count(), 30);
   await page.click('#roadmap-version .filter-chip:has-text("v0.5")');
   assert.deepStrictEqual(await page.$$eval(".update-entry .roadmap-version", (all) => [...new Set(all.map((t) => t.textContent))]), ["v0.5"]);
-  assert.match(await text(page, "#roadmap-count"), /Showing 2 of 24 updates/);
+  assert.match(await text(page, "#roadmap-count"), /Showing 2 of 30 updates/);
   await page.click("#roadmap-clear");
-  assert.match(await text(page, "#roadmap-count"), /^24 updates$/);
+  assert.match(await text(page, "#roadmap-count"), /^30 updates$/);
   ok("Updates: a version tag on every release; the version filter shows one version; Clear filters resets it");
 
   await page.click("#tab-journey");
   const journey = await page.$$eval(".journey-title", (all) => all.map((h) => h.textContent));
   assert.strictEqual(journey[0], "First code");
   assert.strictEqual(journey[journey.length - 1], "Public Launch v1.0 — custom domain and dashboard");
-  // The beta (completed on 6 Oct) comes before that day's releases: completed milestones lead their day
-  assert.ok(journey.indexOf("First cohort beta") < journey.indexOf("Student Experiences"), "completed milestone leads its day");
+  // The beta (completed on 7 Oct) comes before that day's releases: completed milestones lead their day
+  assert.ok(journey.indexOf("First cohort beta") < journey.indexOf("Fundamentals of Statistics study guides"), "completed milestone leads its day");
   assert.ok(await page.locator('.journey-event:not(.is-planned) .journey-title:text-is("First cohort beta")').count() === 1, "the beta is shown as done");
   assert.ok(journey.indexOf("First academic hub") < journey.indexOf("Bologna guide, announcements & directory preview"), "same-day releases in deployment order");
   assert.strictEqual(await page.locator(".journey-event.is-planned").count(), 1); // the launch; the beta is completed
@@ -249,8 +249,8 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   assert.match(await text(page, ".roadmap-preview-now"), /Now · In progress\s*Exam Prep/);
   assert.strictEqual(await page.getAttribute(".roadmap-preview-now", "href"), "roadmap.html#feature-exam-prep");
   assert.deepStrictEqual(await page.$$eval(".roadmap-preview-latest a", (all) => all.map((a) => a.getAttribute("href"))),
-    ["roadmap.html#update-fundamentals-of-statistics", "roadmap.html#update-easier-on-every-screen", "roadmap.html#update-notes-study-library"]);
-  assert.strictEqual(await text(page, ".roadmap-preview-progress"), "Beta v0.9 · about 15% of the full plan built · 24 releases shipped since 1 Oct 2026 · full Hub: Spring 2027");
+    ["roadmap.html#update-statistics-lab", "roadmap.html#update-students-community-atlas", "roadmap.html#update-thesis-research-guide"]);
+  assert.strictEqual(await text(page, ".roadmap-preview-progress"), "Beta v0.9 · about 15% of the full plan built · 30 releases shipped since 1 Oct 2026 · full Hub: Spring 2027");
   ok("homepage: current focus, stage, releases shipped and the three latest releases, from the same data");
 
   await page.keyboard.press("Control+k");

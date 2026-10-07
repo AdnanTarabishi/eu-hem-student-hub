@@ -136,7 +136,7 @@
         "Explain the main changes in Updates, so students can see how their feedback helped."
       ],
       "dependencies": [
-        "Feedback from the first student beta (coming in since 6 October 2026)."
+        "Feedback from the first student beta (coming in since 7 October 2026)."
       ],
       "links": [
         {
@@ -543,7 +543,7 @@
     },
     {
       "id": "first-cohort-beta",
-      "date": "2026-10-06",
+      "date": "2026-10-07",
       "title": "First cohort beta",
       "summary": "EU-HEM students were invited to explore the beta. Their feedback decides the next improvements.",
       "status": "completed"

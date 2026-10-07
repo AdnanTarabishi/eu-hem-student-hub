@@ -61,10 +61,10 @@ t("accounts are planned, never presented as available", () => {
   assert.match(accounts.note, /secure sign-in and a privacy review/);
   assert.ok(!updates.items.some((u) => u.status === "published" && /account|sign-in|login/i.test(u.title + u.summary)));
 });
-t("updates: 24 published with evidence, newest first; same day ordered by deployment time; drafts stay hidden", () => {
+t("updates: 30 published with evidence, newest first; same day ordered by deployment time; drafts stay hidden", () => {
   const published = R.publishedUpdates(updates);
-  assert.strictEqual(published.length, 24);
-  assert.deepStrictEqual(published.slice(0, 4).map((u) => u.id), ["fundamentals-of-statistics", "easier-on-every-screen", "notes-study-library", "getting-started-guide"]);
+  assert.strictEqual(published.length, 30);
+  assert.deepStrictEqual(published.slice(0, 4).map((u) => u.id), ["statistics-lab", "students-community-atlas", "thesis-research-guide", "timetable-exam-planners"]);
   assert.deepStrictEqual(R.validate(roadmap, withDraft, { today, pageExists }), [], "a correct draft is valid");
   assert.ok(!R.publishedUpdates(withDraft).some((u) => u.id === "test-draft"), "draft hidden");
   for (const u of published) assert.strictEqual(R.dateInRome(u.evidence.deployedAt), u.date, u.id);
@@ -72,6 +72,8 @@ t("updates: 24 published with evidence, newest first; same day ordered by deploy
 t("the historical releases keep their verified dates", () => {
   const dates = Object.fromEntries(updates.items.filter((u) => u.status === "published").map((u) => [u.id, u.date]));
   assert.deepStrictEqual(dates, {
+    "statistics-lab": "2026-10-07", "students-community-atlas": "2026-10-07", "thesis-research-guide": "2026-10-07",
+    "four-semester-study-plan": "2026-10-07", "timetable-exam-planners": "2026-10-07", "fundamentals-labs-overview": "2026-10-07",
     "fundamentals-of-statistics": "2026-10-07", "easier-on-every-screen": "2026-10-07", "notes-study-library": "2026-10-07",
     "getting-started-guide": "2026-10-06", "fhem-exam-centre": "2026-10-06", "university-photo-galleries": "2026-10-06",
     "interactive-study-sessions": "2026-10-06", "universities-hub": "2026-10-06", "student-experiences-section": "2026-10-06",
@@ -90,8 +92,8 @@ t("progress: about 15% of the full plan (the team's estimate), releases counted 
   const vision = R.readRoadmap(roadmap).vision;
   assert.strictEqual(vision.targetLabel, "Spring 2027");
   assert.strictEqual(vision.progressPercent, 15);
-  assert.deepStrictEqual(R.releaseCount(updates), { count: 24, since: "2026-10-01", text: "24 releases shipped since 1 Oct 2026" });
-  assert.strictEqual(R.releaseCount(withDraft).count, 24, "drafts are not counted");
+  assert.deepStrictEqual(R.releaseCount(updates), { count: 30, since: "2026-10-01", text: "30 releases shipped since 1 Oct 2026" });
+  assert.strictEqual(R.releaseCount(withDraft).count, 30, "drafts are not counted");
   const bad = clone(roadmap); bad.vision.progressPercent = 150; fails(bad, updates, /whole number from 0 to 100/);
   const bad2 = clone(roadmap); delete bad2.vision.targetLabel; fails(bad2, updates, /targetLabel/);
 });
@@ -116,7 +118,7 @@ t("versions: every release has one, by release day; the newest first for the fil
 });
 t("milestones: the cohort beta is planned for today (6 Oct), the public launch planned for 15 Oct", () => {
   const ms = Object.fromEntries(roadmap.milestones.map((m) => [m.id, [m.date, m.status]]));
-  assert.deepStrictEqual(ms["first-cohort-beta"], ["2026-10-06", "completed"]); // the beta went out on 6 October 2026
+  assert.deepStrictEqual(ms["first-cohort-beta"], ["2026-10-07", "completed"]); // the beta went out on 7 October 2026
   assert.deepStrictEqual(ms["public-launch-v1"], ["2026-10-15", "planned"]);
 });
 t("known limitations, the domain move and the feedback link", () => {
@@ -185,7 +187,7 @@ t("search entries: plans lead with their status and say 'not available yet'; rel
   assert.strictEqual(plans.length, roadmap.items.length);
   for (const e of plans) assert.match(e.meta, /^(In progress|Planned|Exploring) · .* · not available yet$/);
   const released = entries.filter((e) => e.type === "update");
-  assert.strictEqual(released.length, 24);
+  assert.strictEqual(released.length, 30);
   for (const e of released) assert.match(e.meta, /^Released · \d+ \w+ 2026 · /);
   assert.ok(!entries.some((e) => /test-draft/.test(e.url)));
   assert.ok(entries.every((e) => /^roadmap\.html#(feature|update)-[a-z0-9-]+$/.test(e.url)));

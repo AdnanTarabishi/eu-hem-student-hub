@@ -4,6 +4,214 @@
   "dateBasis": "Each date is the day (Rome time) the change first went live through a successful site deployment. Only important student-facing releases are listed.",
   "items": [
     {
+      "id": "statistics-lab",
+      "version": "v0.9",
+      "date": "2026-10-07",
+      "title": "Interactive Statistics Lab",
+      "summary": "Calculators with drawn curves and worked steps: normal probabilities, a Z-table, cut-offs, confidence intervals, t-tails, descriptive statistics and a sampling (CLT) simulator.",
+      "category": "learning",
+      "type": "new",
+      "status": "published",
+      "highlights": [
+        "Move the bounds on the curve and see each calculation step.",
+        "Seven tools plus a simulator showing why sample means become normal.",
+        "Built into Quantitative Methods, and also on its own page."
+      ],
+      "links": [
+        {
+          "label": "Open the Statistics Lab",
+          "url": "statistics-lab.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37654906293",
+        "deployedAt": "2026-10-07T18:49:58+02:00",
+        "commits": [
+          {
+            "sha": "5cdf966bea5095cb6d9232a77b63608a7128e0ad",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/5cdf966bea5095cb6d9232a77b63608a7128e0ad"
+          },
+          {
+            "sha": "c38a94c4d16a32c86f394b54a2f0e92485c8340b",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/c38a94c4d16a32c86f394b54a2f0e92485c8340b"
+          }
+        ]
+      }
+    },
+    {
+      "id": "students-community-atlas",
+      "version": "v0.9",
+      "date": "2026-10-07",
+      "title": "Students explorer as a community atlas",
+      "summary": "A redesigned Students explorer with an interactive cohort map and country flags that work on every device.",
+      "category": "community",
+      "type": "improved",
+      "status": "published",
+      "highlights": [
+        "An interactive cohort map with clearer country borders, in light and dark mode.",
+        "Country flags that show on Windows, phones and offline.",
+        "Profiles are still fictional demos until real students can join safely."
+      ],
+      "links": [
+        {
+          "label": "Open the Students explorer",
+          "url": "students.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37654906293",
+        "deployedAt": "2026-10-07T18:49:58+02:00",
+        "commits": [
+          {
+            "sha": "cd95d19c3816103d7165ddf8600cc50fa158802e",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/cd95d19c3816103d7165ddf8600cc50fa158802e"
+          },
+          {
+            "sha": "80545c60278a95643153cf22fa1558fc896586af",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/80545c60278a95643153cf22fa1558fc896586af"
+          },
+          {
+            "sha": "9b69e1001367b7a705af8f5592b5803f08d4fb16",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/9b69e1001367b7a705af8f5592b5803f08d4fb16"
+          }
+        ]
+      }
+    },
+    {
+      "id": "thesis-research-guide",
+      "version": "v0.9",
+      "date": "2026-10-07",
+      "title": "Thesis Explorer becomes a research guide",
+      "summary": "Next to the archive of past theses: a step-by-step research guide, a methods toolkit, checklists and a personal planner.",
+      "category": "learning",
+      "type": "improved",
+      "status": "published",
+      "highlights": [
+        "A thesis roadmap, example questions, methods and writing guidance.",
+        "A personal planner whose drafts stay on your device, with backup files.",
+        "Official guidelines and your host university stay authoritative."
+      ],
+      "links": [
+        {
+          "label": "Open the Thesis Explorer",
+          "url": "thesis.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37606682768",
+        "deployedAt": "2026-10-07T12:20:27+02:00",
+        "commits": [
+          {
+            "sha": "dd9f20937caa858ba95c8a15e80496aaf12ff193",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/dd9f20937caa858ba95c8a15e80496aaf12ff193"
+          }
+        ]
+      }
+    },
+    {
+      "id": "four-semester-study-plan",
+      "version": "v0.9",
+      "date": "2026-10-07",
+      "title": "A four-semester Study Plan",
+      "summary": "Plan all four semesters with guidance for each track, and save or move your draft plan as a file.",
+      "category": "learning",
+      "type": "new",
+      "status": "published",
+      "highlights": [
+        "All four semesters on one page, with guidance for each track.",
+        "Your draft stays on your device; you can export and import it as a file."
+      ],
+      "links": [
+        {
+          "label": "Open the Study Plan",
+          "url": "studyplan.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37601096583",
+        "deployedAt": "2026-10-07T11:31:01+02:00",
+        "commits": [
+          {
+            "sha": "82feab90575c02a3250266243a455373fb425839",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/82feab90575c02a3250266243a455373fb425839"
+          }
+        ]
+      }
+    },
+    {
+      "id": "timetable-exam-planners",
+      "version": "v0.9",
+      "date": "2026-10-07",
+      "title": "Redesigned timetable and exam planners",
+      "summary": "The timetable and exam planner have a cleaner shared design, and the teaching timeline now shows dates and what is running today.",
+      "category": "learning",
+      "type": "improved",
+      "status": "published",
+      "highlights": [
+        "A cleaner, consistent look for the timetable and the exam planner.",
+        "The teaching timeline shows dates, current states and bars that fit any screen."
+      ],
+      "links": [
+        {
+          "label": "Open the timetable",
+          "url": "timetable.html"
+        },
+        {
+          "label": "Open the exam planner",
+          "url": "exams.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37603385513",
+        "deployedAt": "2026-10-07T11:51:30+02:00",
+        "commits": [
+          {
+            "sha": "0b765cb1f39bc232d383ec46f664f14122718dac",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/0b765cb1f39bc232d383ec46f664f14122718dac"
+          },
+          {
+            "sha": "db35385ee7fba38100316e38b079aa1d91441785",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/db35385ee7fba38100316e38b079aa1d91441785"
+          }
+        ]
+      }
+    },
+    {
+      "id": "fundamentals-labs-overview",
+      "version": "v0.9",
+      "date": "2026-10-07",
+      "title": "Fundamentals of Statistics: data labs and a new course overview",
+      "summary": "Step-by-step dataset labs, interactive report reading and a clearer course overview that suggests what to study next.",
+      "category": "learning",
+      "type": "improved",
+      "status": "published",
+      "highlights": [
+        "Seven dataset guides and four interactive report readers, with review checks and extra cards.",
+        "A new overview with six topic destinations and direct links to the study tools.",
+        "Suggestions based on the progress saved on your device."
+      ],
+      "links": [
+        {
+          "label": "Open Fundamentals of Statistics",
+          "url": "fund-statistics.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37565866690",
+        "deployedAt": "2026-10-07T05:15:30+02:00",
+        "commits": [
+          {
+            "sha": "fe547db941f10c52af02855e49d9928673290091",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/fe547db941f10c52af02855e49d9928673290091"
+          },
+          {
+            "sha": "4a0c60eff9e29f2213dff6d5bbba664b089449d3",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/4a0c60eff9e29f2213dff6d5bbba664b089449d3"
+          }
+        ]
+      }
+    },
+    {
       "id": "fundamentals-of-statistics",
       "version": "v0.9",
       "date": "2026-10-07",
