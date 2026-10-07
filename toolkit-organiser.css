@@ -1,0 +1,150 @@
+/* Toolkit organiser v2. Reuses the shared light/dark semantic design tokens. */
+.tk2-sections {display:flex;gap:6px;padding:6px;border:1px solid var(--border-default);background:var(--surface-card);border-radius:14px;margin:0 0 16px;}
+.tk2-sections button {flex:1;display:flex;align-items:center;justify-content:center;gap:9px;min-height:49px;padding:9px 13px;background:transparent;border:0;border-radius:9px;color:var(--text-secondary);font-size:13px;font-weight:650;}
+.tk2-sections button>span {font-size:10px;opacity:.72;font-variant-numeric:tabular-nums;}
+.tk2-sections button[aria-pressed="true"] {background:var(--action-navy);color:var(--text-on-navy);}
+.tk2-sections b {font-size:10px;min-width:20px;border:1px solid currentColor;border-radius:20px;padding:1px 5px;}
+.tk-page .tk2-notice {font-size:12px;color:var(--text-secondary);padding:12px 16px;background:var(--surface-warm);border-left:3px solid var(--color-brand);border-radius:0 8px 8px 0;margin-bottom:25px;line-height:1.8;}
+.tk2-notice button {margin-left:9px;}
+.tk2-card-actions,.tk2-detail-actions {display:flex;align-items:center;justify-content:space-between;gap:14px;border-top:1px solid var(--border-default);margin-top:12px;padding-top:4px;}
+.tk2-card-actions button {font-size:11px!important;}
+.tk2-detail-actions {justify-content:flex-start;padding-top:14px;margin-bottom:10px;flex-wrap:wrap;}
+.tk-page [data-compare][aria-pressed="true"] {color:var(--color-link);font-weight:750!important;}
+.tk2-new-badge {display:inline-block;vertical-align:middle;font:650 9px/1.4 var(--font-sans);border:1px solid var(--color-primary-border);background:var(--color-primary-light);color:var(--color-link);padding:2px 6px;border-radius:5px;margin-left:8px;}
+.tk-refine-fields {grid-template-columns:repeat(3,minmax(0,1fr));}
+.tk-refine-fields .tk2-fresh-filter {flex-direction:row;align-items:center;gap:9px;}
+.tk2-fresh-filter input {width:17px;height:17px;accent-color:var(--color-link);}
+.tk2-panel {padding:6px 0 25px;}
+.tk2-heading {display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin:5px 0 28px;}
+.tk2-heading h2 {font:600 clamp(27px,3vw,39px)/1.2 var(--font-serif);color:var(--color-heading);letter-spacing:-.025em;margin-bottom:13px;}
+.tk2-heading h3 {font:600 25px/1.3 var(--font-serif);color:var(--color-heading);margin-bottom:9px;}
+.tk2-heading .tk-meta {max-width:790px;}
+.tk2-pill {display:inline-block;border:1px solid var(--border-default);border-radius:20px;background:var(--surface-card);padding:7px 13px;white-space:nowrap;font-size:12px;color:var(--text-secondary);}
+.tk2-pack-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;}
+.tk2-pack {display:flex;flex-direction:column;border:1px solid var(--border-default);background:var(--surface-card);border-radius:16px;padding:24px;box-shadow:0 3px 14px var(--color-shadow);min-width:0;}
+.tk2-pack:hover {border-color:var(--color-primary-border);}
+.tk2-pack-top {display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:22px;}
+.tk2-pack:nth-child(3n+2) .tk-tool-symbol {background:var(--track-phm-soft);color:var(--track-phm-text);}
+.tk2-pack:nth-child(3n) .tk-tool-symbol {background:var(--track-ep-soft);color:var(--track-ep-text);}
+.tk2-pack h3 {color:var(--color-heading);font:650 17px/1.4 var(--font-sans);margin-bottom:11px;}
+.tk2-pack p {color:var(--text-secondary);font-size:13px;line-height:1.8;flex:1;}
+.tk2-pack-bottom {display:flex;align-items:center;justify-content:space-between;gap:8px;border-top:1px solid var(--border-default);margin-top:23px;padding-top:12px;}
+.tk2-pack-bottom>span {font-size:10px;color:var(--text-secondary);}
+.tk2-pack-bottom button {font-size:11px!important;}
+.tk2-pack-detail {margin-top:28px;border:1px solid var(--color-primary-border);padding:30px;border-radius:17px;background:var(--surface-card);scroll-margin-top:100px;}
+#tk2-pack-title {scroll-margin-top:120px;}
+.tk2-inline-actions {display:flex;align-items:center;gap:17px;flex-wrap:wrap;}
+.tk2-steps {list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:25px 0;}
+.tk2-steps li {display:flex;align-items:flex-start;gap:15px;padding:21px;background:var(--surface-warm);border-radius:12px;border:1px solid var(--border-default);min-width:0;}
+.tk2-step-number {font-size:12px;font-weight:700;color:var(--color-link);border:1px solid var(--border-input);padding:5px 8px;border-radius:7px;}
+.tk2-steps h4 {font-size:14px;color:var(--color-heading);margin:2px 0 9px;}
+.tk2-steps p {font-size:12.5px;line-height:1.8;color:var(--text-secondary);}
+.tk2-step-tools {display:flex;flex-wrap:wrap;gap:7px;margin-top:15px;}
+.tk2-step-tools button {display:inline-flex;align-items:center;gap:8px;min-height:38px;border:1px solid var(--border-input);color:var(--color-link);background:var(--surface-card);border-radius:8px;padding:7px 10px;font-size:11px;font-weight:600;text-align:left;}
+.tk2-step-tools .icon {width:14px;height:14px;}
+.tk2-my-layout {display:grid;grid-template-columns:280px minmax(0,1fr);gap:25px;align-items:start;}
+.tk2-my-sidebar,.tk2-list-editor {background:var(--surface-card);border:1px solid var(--border-default);border-radius:16px;padding:24px;min-width:0;}
+.tk2-label {display:block;font-size:12px;font-weight:650;color:var(--text-secondary);margin-bottom:8px;}
+.tk2-panel :is(input:not([type="checkbox"]),select),.tk2-modal :is(input,select,textarea) {display:block;max-width:100%;width:100%;border:1px solid var(--border-input);background:var(--surface-card);border-radius:8px;padding:10px 12px;min-height:44px;color:var(--text-primary);font:13px var(--font-sans);box-sizing:border-box;}
+.tk2-panel input[type="file"] {font-size:11px;}
+#tk2-create-form .tk-button {margin-top:12px;width:100%;}
+.tk2-my-nav {display:grid;gap:7px;margin:23px 0;}
+.tk2-my-nav button {background:transparent;border:1px solid transparent;border-radius:9px;padding:12px;color:var(--text-secondary);text-align:left;min-width:0;}
+.tk2-my-nav button[aria-pressed="true"] {border-color:var(--color-primary-border);background:var(--color-primary-light);color:var(--color-link);}
+.tk2-my-nav button span {display:block;font-size:13px;font-weight:650;overflow-wrap:anywhere;}
+.tk2-my-nav button small {display:block;font-size:10px;margin-top:5px;}
+.tk2-backups {border-top:1px solid var(--border-default);padding-top:24px;margin-top:20px;}
+.tk2-backups h3 {font-size:14px;margin-bottom:9px;}
+.tk2-backups p {font-size:11px;line-height:1.8;color:var(--text-secondary);margin-bottom:10px;}
+.tk2-backups .tk2-label {margin-top:18px;font-size:11px;}
+.tk2-list-title h3 {font:600 29px/1.3 var(--font-serif);color:var(--color-heading);margin-bottom:9px;overflow-wrap:anywhere;}
+.tk2-list-title progress {height:8px;width:100%;margin:17px 0;accent-color:var(--color-link);}
+.tk2-list-settings {display:flex;align-items:flex-end;justify-content:space-between;gap:25px;padding:15px 0 20px;border-bottom:1px solid var(--border-default);}
+.tk2-list-settings form {flex:1;}
+.tk2-list-settings form>div,.tk2-add-form>div {display:flex;align-items:center;gap:16px;}
+.tk2-list-settings input {flex:1;min-width:0;}
+.tk2-list-settings button {white-space:nowrap;}
+.tk2-add-form {padding:23px 0;}
+.tk2-add-form select {min-width:0;flex:1;}
+.tk2-list-entries {list-style:none;margin:0;padding:0;display:grid;gap:13px;}
+.tk2-list-entries li {display:flex;gap:14px;align-items:flex-start;padding:19px 15px;border:1px solid var(--border-default);border-radius:12px;background:var(--surface-warm);}
+.tk2-review-check {padding-top:4px;}
+.tk2-review-check input {width:18px;height:18px;accent-color:var(--color-link);}
+.tk2-entry-copy {min-width:0;flex:1;}
+.tk2-entry-copy h4 {font-size:14px;line-height:1.5;margin:9px 0 6px;color:var(--color-heading);}
+.tk2-entry-copy p {font-size:12px;line-height:1.7;color:var(--text-secondary);}
+.tk2-entry-copy .tk2-inline-actions {margin-top:10px;}
+.tk2-entry-copy .icon {width:14px;height:14px;}
+.tk2-entry-copy .tk-text-link {display:inline-flex;align-items:center;gap:8px;}
+.tk2-entry-controls {display:flex;gap:2px;}
+.tk2-entry-controls .tk-icon-button {width:33px;height:36px;border:1px solid var(--border-default);background:var(--surface-card);}
+.tk-page button:disabled {cursor:not-allowed;opacity:.45;}
+.tk2-list-empty {padding:42px 18px;text-align:center;}
+.tk2-list-empty>.icon {width:37px;height:37px;color:var(--color-link);margin-bottom:19px;}
+.tk2-list-empty h3 {font:600 25px var(--font-serif);color:var(--color-heading);margin-bottom:15px;}
+.tk2-list-empty p {max-width:600px;font-size:13px;line-height:1.8;color:var(--text-secondary);margin:0 auto 20px;}
+.tk2-compare-add {display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding:19px;background:var(--surface-card);border:1px solid var(--border-default);border-radius:12px;margin-bottom:24px;}
+.tk2-compare-add label {margin:0;}
+.tk2-compare-add select {width:320px;flex:1;min-width:180px;}
+.tk2-compare-scroll {overflow:auto;border:1px solid var(--border-default);border-radius:13px;background:var(--surface-card);}
+.tk2-compare-table {border-collapse:separate;border-spacing:0;width:100%;margin:0;min-width:700px;font-size:13px;}
+.tk2-compare-table th,.tk2-compare-table td {text-align:left;vertical-align:top;padding:20px;border:0;border-bottom:1px solid var(--border-default);white-space:pre-line;color:var(--text-secondary);font-size:12px;line-height:1.8;}
+.tk2-compare-table th {background:var(--surface-warm);}
+.tk2-compare-table th:first-child {width:150px;}
+.tk2-compare-table td+td,.tk2-compare-table thead th+th {border-left:1px solid var(--border-default);}
+.tk2-compare-table h3 {font-size:16px;color:var(--color-heading);margin-bottom:15px;}
+.tk2-compare-table .tk-text-link {display:flex;align-items:center;gap:9px;}
+.tk2-compare-table .icon {height:16px;width:16px;}
+.tk2-compare-table button {display:block;margin-top:12px;}
+.tk2-compare-table caption {font-size:11px;text-align:left;padding:10px 20px;border-bottom:1px solid var(--border-default);color:var(--text-secondary);}
+.tk-page .tk2-status {font-size:13px;color:var(--color-link);margin-top:20px;}
+.tk2-modal {width:min(550px,calc(100% - 32px));max-height:85dvh;overflow:auto;padding:34px;border:1px solid var(--border-input);border-radius:16px;background:var(--surface-card);color:var(--text-primary);box-shadow:0 20px 80px var(--color-shadow);}
+.tk2-modal::backdrop {background:rgba(9,24,46,.55);}
+.tk2-modal-close {position:absolute;right:10px;top:10px;}
+.tk2-modal h2 {font:600 26px/1.3 var(--font-serif);color:var(--color-heading);margin:12px 0 23px;padding-right:10px;}
+.tk2-modal form {margin:20px 0;}
+.tk2-modal form .tk-button {margin-top:12px;}
+#tk2-modal-status {font-size:12px;color:var(--text-secondary);margin-top:12px;}
+.tk2-import-preview {padding-left:20px;font-size:13px;line-height:1.8;}
+.tk2-import-preview span {color:var(--text-secondary);font-size:11px;margin-left:10px;}
+.tk-list-view .tk2-card-actions {grid-column:2 / -1;}
+@media(max-width:1050px){
+ .tk2-pack-grid {grid-template-columns:repeat(2,minmax(0,1fr));}
+ .tk2-sections button {font-size:12px;padding:10px 8px;gap:6px;}
+ .tk2-sections button>span {display:none;}
+ .tk2-my-layout {grid-template-columns:235px minmax(0,1fr);gap:17px;}
+ .tk2-my-sidebar,.tk2-list-editor {padding:19px;}
+ .tk2-entry-controls {flex-direction:column;}
+}
+@media(max-width:720px){
+ .tk2-sections {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-radius:12px;gap:4px;}
+ .tk2-sections button {font-size:11px;min-height:45px;}
+ .tk-page .tk2-notice {font-size:11px;margin-bottom:20px;}
+ .tk2-notice button {margin-left:0;}
+ .tk-refine-fields {grid-template-columns:1fr;}
+ .tk2-heading {flex-direction:column;gap:12px;}
+ .tk2-heading h2 {font-size:29px;}
+ .tk2-pack-grid {grid-template-columns:1fr;gap:13px;}
+ .tk2-pack {padding:20px;}
+ .tk2-pack-top {margin-bottom:15px;}
+ .tk2-pack-bottom {margin-top:15px;}
+ .tk2-pack-detail {padding:20px;}
+ .tk2-steps {grid-template-columns:1fr;gap:13px;}
+ .tk2-steps li {padding:16px;gap:11px;}
+ .tk2-step-tools button {min-height:42px;}
+ .tk2-my-layout {grid-template-columns:1fr;}
+ .tk2-my-nav {grid-template-columns:repeat(2,minmax(0,1fr));}
+ .tk2-list-title h3 {font-size:25px;}
+ .tk2-list-settings {flex-direction:column;align-items:stretch;gap:8px;}
+ .tk2-list-settings form>div {flex-wrap:wrap;gap:6px;}
+ .tk2-list-entries li {gap:9px;padding:14px 11px;}
+ .tk2-entry-controls .tk-icon-button {width:31px;height:36px;}
+ .tk2-entry-copy h4 {font-size:13px;}
+ .tk2-entry-copy p {font-size:11px;}
+ .tk2-compare-add {gap:12px;}
+ .tk2-compare-add select {width:100%;}
+ .tk2-modal {padding:27px 21px;}
+ .tk-list-view .tk2-card-actions {grid-column:1 / -1;}
+}
+@media(prefers-reduced-motion:reduce){.tk2-panel *{scroll-behavior:auto!important;transition:none!important;}}
+@media print { .tk2-sections,.tk2-notice,.tk2-card-actions,.tk2-my-sidebar,.tk2-list-settings,.tk2-add-form,.tk2-entry-controls,.tk2-modal{display:none!important;} .tk2-my-layout{display:block;} .tk2-pack,.tk2-list-entries li{break-inside:avoid;} }

@@ -142,6 +142,57 @@
     ['Check published routes and timetables.','Read the current ticket and pass information.','Use the provider’s notices before your journey.'],
     'The provider site is primarily Italian. Check eligibility and current conditions before buying a pass.',{icon:'route',cities:['bologna'],tags:'Bologna Italy bus transport timetable tickets'});
 
+  // v2 additions: short, original descriptions checked against the linked provider.
+  // "fresh" means added in this release, not a live availability claim.
+  external('who-gho','WHO Global Health Observatory','economics','https://www.who.int/data/gho',
+    'Find health indicators and their definitions before comparing countries.',
+    ['Explore indicators by health topic or country.','Check metadata and the years available before analysis.','A suggested use: investigate health-system or population-health measures.'],
+    'Coverage, definitions and revisions vary by indicator. Cite the source and extraction date; the Hub does not fetch live data.',{fresh:true,tags:'WHO global health data indicators metadata country comparison'});
+  external('world-bank','World Bank Open Data','economics','https://data.worldbank.org/',
+    'Explore development indicators alongside health and economic context.',
+    ['Browse indicators and country-level time series.','Find downloadable datasets and their documentation.','A suggested use: compare health measures with development indicators.'],
+    'Check units, denominators, years and reuse conditions. Some specialist or microdata access has additional conditions.',{fresh:true,tags:'World Bank WDI Data360 development data GDP health expenditure'});
+  external('openalex','OpenAlex','research','https://openalex.org/',
+    'Explore an open catalogue of scholarly works and research connections.',
+    ['Discover research records around a topic.','Follow related authors, institutions and research outputs.','A suggested use: broaden a reading list beyond a single seed paper.'],
+    'Metadata is not a quality appraisal or a guarantee of full-text access. Check records against original publications; API terms differ from browsing.',{fresh:true,tags:'scholarly discovery papers literature citations metadata'});
+  external('equator','EQUATOR Reporting Guidelines','research','https://www.equator-network.org/',
+    'Find a reporting checklist that fits the study you are writing.',
+    ['Search reporting guidance by study type.','Find PRISMA, STROBE, CHEERS and other reporting resources.','A suggested use: check a draft against the relevant reporting guideline.'],
+    'Reporting checklists are not study-design approval or risk-of-bias tools. Check the appropriate version and your assignment requirements.',{fresh:true,tags:'reporting PRISMA STROBE CHEERS economic evaluation systematic review'});
+  external('osf','Open Science Framework','research','https://osf.io/',
+    'Explore research records and document study plans transparently.',
+    ['Discover public research records and linked outputs.','Explore registration of a study or analysis plan.','A suggested use: discuss preregistration with your supervisor.'],
+    'Account and visibility settings apply to creating records. Check policies before uploading or publishing; never expose confidential participant data.',{fresh:true,source:'https://www.cos.io/products/osf',tags:'open science preregistration protocol reproducibility'});
+  external('euraxess','EURAXESS Jobs & Opportunities','career','https://euraxess.ec.europa.eu/jobs',
+    'Explore research jobs and hosting opportunities across institutions.',
+    ['Search advertised research positions.','Explore hosting offers and research-career resources.','A suggested use: shortlist roles aligned with your methods and interests.'],
+    'Listings have their own deadlines, language, degree and eligibility rules. Inclusion does not guarantee work permission or funding.',{fresh:true,tags:'research jobs PhD funding fellowship hosting career internship'});
+  external('orcid','ORCID','career','https://orcid.org/',
+    'Connect your research contributions with a persistent researcher identifier.',
+    ['Learn how an ORCID iD distinguishes researchers.','Connect relevant research contributions to your record.','A suggested use: check your researcher identity before submitting work.'],
+    'Choose record visibility carefully and verify affiliations. An ORCID iD is an identifier, not a credential or publication-quality endorsement.',{fresh:true,source:'https://info.orcid.org/what-is-orcid/',tags:'research identifier profile authors publication identity'});
+  external('cordis','CORDIS Research Projects','research','https://cordis.europa.eu/',
+    'Discover EU-funded research projects and their reported outputs.',
+    ['Search projects related to a health or policy topic.','Explore participating organisations and reported results.','A suggested use: map a research area before approaching a supervisor.'],
+    'A project record is not an open vacancy or an invitation to join. Check dates, outputs and current opportunities separately.',{fresh:true,tags:'EU projects Horizon research organisations health policy consortium'});
+  external('ruter','Ruter Journey Planner','cities','https://reise.ruter.no/en',
+    'Plan public-transport journeys for Oslo and the surrounding area.',
+    ['Search stops and routes for local journeys.','Compare public-transport travel suggestions.','A suggested use: check your journey to the Oslo campus.'],
+    'Check current departures, disruptions, ticket zones and fare eligibility with the operator. The Hub does not sell tickets.',{fresh:true,cities:['oslo'],tags:'Oslo Norway public transport metro bus tram'});
+  external('entur','Entur Travel Planner','cities','https://entur.no/',
+    'Explore public-transport travel options across Norway.',
+    ['Search journeys across public-transport modes.','Explore connections when travelling beyond your study city.','A suggested use: plan onward travel from Oslo.'],
+    'Check the operator and the exact ticket conditions. A suggested route does not by itself establish ticket validity or a guaranteed connection.',{fresh:true,cities:['oslo'],tags:'Norway Oslo train bus journey planner connections'});
+  external('ivb','IVB Innsbruck Transport','cities','https://www.ivb.at/en/',
+    'Find Innsbruck transport lines, timetables and ticket information.',
+    ['Explore local bus and tram line information.','Open timetable and ticket resources from the operator.','A suggested use: check commuting options before choosing accommodation.'],
+    'Confirm current routes, ticket conditions and student eligibility with IVB. This card is a source link, not live travel advice.',{fresh:true,cities:['innsbruck'],tags:'Innsbruck Austria bus tram public transport tickets'});
+  external('excalidraw','Excalidraw','writing','https://excalidraw.com/',
+    'Sketch a concept map or explain a process on a visual whiteboard.',
+    ['Draw diagrams and hand-drawn-style concept maps.','Sketch a process before preparing a slide.','A suggested use: map a group presentation argument together.'],
+    'Check sharing and export settings before collaboration. Avoid confidential content; hosted and paid products may have different features.',{fresh:true,tags:'whiteboard concept maps group project diagrams presentation'});
+
   const plan = (id,title,category,summary,includes,extra={}) => add(id,title,category,'planned',summary,includes,{
     access:'Not available yet',note:'Proposed scope, not a working tool. No release date is committed. Saving this idea is a private bookmark, not a vote or notification subscription.',...extra
   });
@@ -190,6 +241,8 @@
       kind:['all','builtin','external','planned'].includes(raw.kind)?raw.kind:'all',
       course:['all','fundamentals','statistics'].includes(raw.course)?raw.course:'all',
       saved:raw.saved==='1'||raw.saved===true,
+      city:['bologna','oslo','innsbruck','rotterdam'].includes(raw.city)?raw.city:'all',
+      fresh:raw.fresh==='1'||raw.fresh===true,
       sort:raw.sort==='az'?'az':'curated',
       view:raw.view==='list'?'list':'grid'
     };
@@ -198,6 +251,7 @@
     const s=cleanState(raw),words=normalise(s.q).split(/\s+/).filter(Boolean),set=new Set(saved);
     let list=items.filter(t=>(s.category==='all'||t.category===s.category)&&
       (s.kind==='all'||t.kind===s.kind)&&(s.course==='all'||(t.courses||[]).includes(s.course))&&
+      (s.city==='all'||(t.cities||[]).includes(s.city))&&(!s.fresh||t.fresh===true)&&
       (!s.saved||set.has(t.id))&&words.every(w=>normalise([t.title,t.summary,t.tags||'',t.collection||'',...(t.includes||[]),...(t.cities||[])].join(' ')).includes(w)));
     if(s.sort==='az')list=list.slice().sort((a,b)=>a.title.localeCompare(b.title,'en'));
     else list=list.slice().sort((a,b)=>Number(Boolean(b.featured))-Number(Boolean(a.featured)));

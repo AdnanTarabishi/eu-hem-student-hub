@@ -4,8 +4,8 @@ const fs=require('node:fs'),path=require('node:path');
 const D=require('../toolkit-data.js'),root=path.resolve(__dirname,'..');
 
 test('catalogue contains unique stable identifiers and honest kind totals',()=>{
-  assert.equal(D.items.length,58);assert.equal(new Set(D.items.map(t=>t.id)).size,58);
-  assert.deepEqual(['builtin','external','planned'].map(k=>D.items.filter(t=>t.kind===k).length),[18,24,16]);
+  assert.equal(D.items.length,70);assert.equal(new Set(D.items.map(t=>t.id)).size,70);
+  assert.deepEqual(['builtin','external','planned'].map(k=>D.items.filter(t=>t.kind===k).length),[18,36,16]);
 });
 test('each entry has a supported category, editorial summary and useful scope',()=>{
   for(const t of D.items){assert.match(t.id,/^[a-z0-9-]+$/);assert.ok(D.categories.some(c=>c.id===t.category&&c.id!=='all'));assert.ok(t.title&&t.summary&&t.note&&t.access);assert.equal(t.includes.length,3);assert.ok(t.includes.every(x=>typeof x==='string'&&x.length>15));}
@@ -39,10 +39,10 @@ test('external URLs require https and no credentials',()=>{
   assert.equal(D.safeHref('https://example.org/data?x=1',true),true);
 });
 test('cleanState allowlists all query-controlled fields',()=>{
-  const r=D.cleanState({category:'evil',kind:'api',course:'bad',sort:'constructor',view:'other',saved:'true',q:'x'.repeat(300)});assert.deepEqual({...r,q:''},{q:'',category:'all',kind:'all',course:'all',sort:'curated',view:'grid',saved:false});assert.equal(r.q.length,160);
+  const r=D.cleanState({category:'evil',kind:'api',course:'bad',sort:'constructor',view:'other',saved:'true',q:'x'.repeat(300)});assert.deepEqual({...r,q:''},{q:'',category:'all',kind:'all',course:'all',sort:'curated',view:'grid',saved:false,city:'all',fresh:false});assert.equal(r.q.length,160);
 });
 test('filters combine by intersection',()=>{
-  const result=D.selectItems({kind:'external',category:'cities'});assert.equal(result.length,3);assert.ok(result.every(t=>t.kind==='external'&&t.category==='cities'));
+  const result=D.selectItems({kind:'external',category:'cities'});assert.equal(result.length,6);assert.ok(result.every(t=>t.kind==='external'&&t.category==='cities'));
   assert.equal(D.selectItems({kind:'external',course:'fundamentals'}).length,0);
 });
 test('each word must match search text, including method tags',()=>{
