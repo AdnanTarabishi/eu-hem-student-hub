@@ -1,0 +1,589 @@
+/* Shared academic planning identity; scoped to the timetable and exams pages. */
+.planning-page {
+  --pl-card: var(--surface-card);
+  --pl-page: var(--surface-page);
+  --pl-text: var(--text-primary);
+  --pl-muted: var(--text-secondary);
+  --pl-line: var(--border-default);
+  --pl-ink: #17353d;
+  --pl-teal: #25675c;
+  --pl-soft: #edf3f0;
+  --pl-amber: #94531a;
+  --pl-amber-soft: #fcf1df;
+  --pl-hero: #142f3c;
+  --pl-shadow: 0 4px 24px rgb(25 49 45 / 4%);
+  background: var(--pl-page);
+  color: var(--pl-text);
+  font-family: var(--font-sans);
+}
+:root[data-theme="dark"] .planning-page {
+  --pl-ink: #e5f0ec;
+  --pl-teal: #9fd6c4;
+  --pl-soft: #203a3c;
+  --pl-amber: #f0c48e;
+  --pl-amber-soft: #382e24;
+  --pl-hero: #112a35;
+  --pl-shadow: none;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .planning-page {
+    --pl-ink: #e5f0ec;
+    --pl-teal: #9fd6c4;
+    --pl-soft: #203a3c;
+    --pl-amber: #f0c48e;
+    --pl-amber-soft: #382e24;
+    --pl-hero: #112a35;
+    --pl-shadow: none;
+  }
+}
+.planning-page main.container {
+  max-width: 1320px;
+  padding: 32px 32px 64px;
+}
+.planning-page main h1,
+.planning-page main h2,
+.planning-page main h3,
+.planning-page main h4,
+.planning-page .session-dialog h2 {
+  font-family: var(--font-sans);
+  color: var(--pl-ink);
+  line-height: 1.25;
+  letter-spacing: -0.035em;
+}
+.planning-page main a,
+.planning-page .session-dialog a { color: var(--pl-teal); }
+.planning-page main :focus-visible,
+.planning-page .session-dialog :focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 4px;
+}
+.planning-page .planning-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.85fr);
+  align-items: center;
+  gap: 36px;
+  margin: 0 0 24px;
+  padding: clamp(28px, 3.5vw, 44px);
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-radius: 22px;
+  background: var(--pl-hero);
+  color: #f5faf8;
+  overflow: hidden;
+}
+.planning-page .planning-hero-main,
+.planning-page .planning-hero-aside { min-width: 0; }
+.planning-page .planning-hero .section-eyebrow {
+  margin: 0 0 12px;
+  color: #acd6c7;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+.planning-page .planning-hero h1 {
+  display: block;
+  margin: 0 0 16px;
+  color: #f5faf8;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 650;
+  line-height: 1.12;
+  letter-spacing: -0.045em;
+}
+.planning-page .planning-hero h1 .icon {
+  display: inline-block;
+  margin-right: 8px;
+  vertical-align: -3px;
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  color: #a7d5c2;
+}
+.planning-page .planning-hero .planning-lead,
+.planning-page .planning-hero .planning-hero-lead,
+.planning-page .planning-hero-main > p:not(.section-eyebrow) {
+  max-width: 570px;
+  margin: 0;
+  color: #c5d5d7;
+  font-size: 0.93rem;
+  line-height: 1.7;
+}
+.planning-page .planning-hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 24px 0 0;
+}
+.planning-page .planning-hero-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 9px 15px;
+  border: 1px solid rgb(198 221 215 / 20%);
+  border-radius: 9px;
+  color: #d1e0dd;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.planning-page .planning-hero-links a:hover { background: rgb(255 255 255 / 8%); }
+.planning-page .planning-hero-links .is-active,
+.planning-page .planning-hero-links [aria-current="page"] {
+  border-color: #d9ebe4;
+  background: #d9ebe4;
+  color: #173a36;
+}
+.planning-page .planning-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 20px;
+  margin: 12px 0 0;
+}
+.planning-page .planning-hero-actions a,
+.planning-page .planning-hero-actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 4px 0;
+  border: 0;
+  background: transparent;
+  color: #d1e0dd;
+  font: inherit;
+  font-size: 0.77rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+.planning-page .planning-hero-actions a:hover,
+.planning-page .planning-hero-actions button:hover { color: #fff; text-decoration: underline; text-underline-offset: 4px; }
+.planning-page .planning-hero-aside {
+  padding: 22px;
+  border: 1px solid rgb(193 220 212 / 18%);
+  border-radius: 16px;
+  background: rgb(255 255 255 / 4%);
+}
+.planning-page .planning-hero-aside h2,
+.planning-page .planning-hero-aside h3,
+.planning-page .planning-hero-aside strong { color: #eff7f3; }
+.planning-page .planning-hero-aside h2,
+.planning-page .planning-hero-aside h3 { margin: 0 0 12px; font-size: 1.03rem; }
+.planning-page .planning-hero-aside p { color: #c5d5d7; font-size: 0.84rem; line-height: 1.65; }
+.planning-page .planning-hero-aside a { color: #b9dfcf; }
+.planning-page .planning-hero-aside .now-next {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  margin: 0;
+}
+.planning-page .planning-hero-aside .now-next-item {
+  padding: 0 0 0 15px;
+  border: 0;
+  border-left: 3px solid var(--course-color, #b0dacb);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  gap: 7px;
+  width: 100%;
+  color: #eff7f3;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.planning-page .planning-hero-aside button.now-next-item:hover { border-left-color: #d9ebe4; }
+.planning-page .planning-hero-aside .now-next-label,
+.planning-page .planning-next-label {
+  color: #afd6c6;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.planning-page .planning-hero-aside .now-next-item strong { font-size: 0.9rem; line-height: 1.45; }
+.planning-page .planning-hero-aside .schedule-meta,
+.planning-page .planning-next-meta { color: #c5d5d7; font-size: 0.76rem; line-height: 1.6; }
+.planning-page .planning-hero-aside .now-next-item.is-now .now-next-label { color: #f0c48e; }
+.planning-page .planning-next-exam { display: grid; gap: 10px; }
+.planning-page a.planning-next-exam { margin-top: 10px; font-size: 0.98rem; font-weight: 600; line-height: 1.6; text-decoration: none; }
+.planning-page a.planning-next-exam:hover { text-decoration: underline; text-underline-offset: 4px; }
+.planning-page .planning-next-exam h3 { margin: 0; font-size: 1.1rem; line-height: 1.45; }
+.planning-page .planning-aside-eyebrow { display: block; margin-bottom: 10px; color: #afd6c6; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.planning-page .planning-aside-title { display: block; font-size: 1.13rem; line-height: 1.5; letter-spacing: -0.025em; }
+.planning-page .planning-aside-note { margin: 10px 0 0; }
+.planning-page .planning-hero-aside .badge { justify-self: start; padding: 5px 9px; border: 1px solid rgb(193 220 212 / 25%); border-radius: 6px; background: transparent; color: #b9dfcf; font-size: 0.67rem; }
+.planning-page .planning-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0 0 28px;
+}
+.planning-page .planning-stat {
+  min-width: 0;
+  padding: 20px 24px;
+  border: 1px solid var(--pl-line);
+  border-radius: 14px;
+  background: var(--pl-card);
+  box-shadow: var(--pl-shadow);
+}
+.planning-page .planning-stat-label {
+  display: block;
+  margin: 0 0 8px;
+  color: var(--pl-muted);
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.planning-page .planning-stat-value {
+  display: block;
+  margin: 0 0 7px;
+  color: var(--pl-ink);
+  font-size: clamp(1.3rem, 2vw, 1.9rem);
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+  overflow-wrap: anywhere;
+}
+.planning-page .planning-stat-note { display: block; margin: 0; color: var(--pl-muted); font-size: 0.76rem; line-height: 1.5; }
+.planning-page .planning-panel {
+  padding: 28px;
+  border: 1px solid var(--pl-line);
+  border-radius: 18px;
+  background: var(--pl-card);
+  box-shadow: var(--pl-shadow);
+}
+.planning-page .planning-panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 20px;
+  margin-bottom: 22px;
+}
+.planning-page .planning-panel-head h2 { margin: 0; font-size: 1.35rem; font-weight: 650; }
+.planning-page .planning-panel-head p,
+.planning-page .planning-panel-head small { margin: 0; color: var(--pl-muted); font-size: 0.76rem; line-height: 1.5; }
+.planning-page .planning-panel-head h2 + p { margin-top: 8px; }
+.planning-page .planning-panel-head .section-eyebrow { margin: 0 0 7px; color: var(--pl-teal); font-size: 0.66rem; font-weight: 650; letter-spacing: 0.1em; }
+.planning-page .planning-scope { padding: 5px 9px; border: 1px solid var(--pl-line); border-radius: 6px; background: var(--pl-page); color: var(--pl-muted); font-size: 0.68rem; }
+.planning-page .planning-results-meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 16px; }
+.planning-page .planning-checked { color: var(--pl-muted); font-size: 0.68rem; line-height: 1.5; }
+.planning-page .planning-toolbar,
+.planning-page .planning-controls,
+.planning-page .planning-panel .toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 18px;
+  margin: 0 0 18px;
+}
+.planning-page .planning-toolbar .toolbar-filters,
+.planning-page .planning-panel .toolbar-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 14px 18px;
+  width: 100%;
+  margin: 0;
+}
+.planning-page .planning-toolbar label,
+.planning-page .planning-controls label,
+.planning-page .schedule-filters label {
+  min-width: 0;
+  max-width: 100%;
+  color: var(--pl-muted);
+  font-size: 0.74rem;
+  font-weight: 550;
+  line-height: 1.5;
+}
+.planning-page .planning-toolbar label:has(select),
+.planning-page .planning-toolbar label:has(input[type="search"]) { flex: 1 1 230px; }
+.planning-page .planning-toolbar label:has(input[type="date"]) { flex: 0 1 170px; }
+.planning-page .planning-toolbar select,
+.planning-page .planning-toolbar input[type="search"],
+.planning-page .planning-toolbar input[type="date"],
+.planning-page .planning-controls input[type="date"],
+.planning-page .schedule-filters select,
+.planning-page #week-picker {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  margin: 6px 0 0;
+  padding: 10px 12px;
+  border: 1px solid var(--pl-line);
+  border-radius: 8px;
+  background: var(--pl-page);
+  color: var(--pl-text);
+  font: inherit;
+  font-size: 0.82rem;
+}
+.planning-page input[type="search"]::placeholder { color: var(--pl-muted); opacity: 1; }
+.planning-page .planning-toolbar .checkbox-label,
+.planning-page .planning-controls .checkbox-label {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: var(--pl-text);
+  font-size: 0.76rem;
+}
+.planning-page .checkbox-label input[type="checkbox"] { width: 18px; height: 18px; margin: 0; accent-color: var(--pl-teal); }
+.planning-page .checkbox-label a { font-size: 0.72rem; }
+.planning-page .segmented { padding: 4px; border: 1px solid var(--pl-line); border-radius: 10px; background: var(--pl-page); }
+.planning-page .segmented .segment {
+  min-height: 44px;
+  padding: 9px 16px;
+  border-radius: 7px;
+  color: var(--pl-muted);
+  font-size: 0.8rem;
+}
+.planning-page .segmented .segment[aria-pressed="true"] { background: var(--pl-hero); color: #f5faf8; box-shadow: none; }
+.planning-page .icon-button,
+.planning-page .planning-reset,
+.planning-page .planning-panel .button,
+.planning-page .planning-empty .button {
+  min-height: 44px;
+  border: 1px solid var(--pl-line);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--pl-teal);
+  font-size: 0.76rem;
+  font-weight: 550;
+  text-decoration: none;
+}
+.planning-page .planning-reset { padding: 10px 13px; font: inherit; font-size: 0.74rem; font-weight: 550; cursor: pointer; }
+.planning-page .planning-reset:hover:not(:disabled) { background: var(--pl-soft); }
+.planning-page .planning-reset:disabled { opacity: 0.5; cursor: default; }
+.planning-page .icon-button:hover,
+.planning-page .planning-panel .button:hover { background: var(--pl-soft); border-color: var(--pl-teal); box-shadow: none; }
+.planning-page .week-nav { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0; }
+.planning-page .week-nav .icon-button { min-width: 44px; }
+.planning-page .week-label { min-width: 190px; color: var(--pl-ink); font-size: 0.85rem; font-weight: 600; }
+.planning-page .week-nav .inline-link { min-height: 44px; padding: 8px 10px; color: var(--pl-teal); font-size: 0.75rem; }
+.planning-page .planning-toolbar > .planning-controls { width: 100%; margin-bottom: 0; }
+.planning-page .planning-toolbar .inline-link { min-height: 44px; padding: 8px 10px; border: 1px solid var(--pl-line); border-radius: 8px; background: transparent; color: var(--pl-teal); font-size: 0.75rem; cursor: pointer; }
+.planning-page .planning-toolbar .inline-link:hover { background: var(--pl-soft); }
+.planning-page .planning-source-note {
+  margin: 20px 0 0;
+  padding: 14px 0 0;
+  border-top: 1px solid var(--pl-line);
+  color: var(--pl-muted);
+  font-size: 0.73rem;
+  line-height: 1.65;
+}
+.planning-page .planning-source-note .icon { width: 15px; height: 15px; margin-right: 4px; vertical-align: -3px; }
+.planning-page .schedule-meta { color: var(--pl-muted); font-size: 0.78rem; line-height: 1.6; }
+.planning-page #schedule-status,
+.planning-page #exam-status { margin: 18px 0; }
+.planning-page #schedule-list,
+.planning-page #exam-list { max-height: none; overflow: visible; }
+.planning-page .planning-legend { display: flex; flex-wrap: wrap; gap: 10px 18px; margin: 0 0 18px; }
+.planning-page .planning-legend-item { display: inline-flex; align-items: center; gap: 7px; color: var(--pl-muted); font-size: 0.68rem; line-height: 1.5; }
+.planning-page .planning-legend-item::before { content: ""; width: 8px; height: 8px; flex: 0 0 auto; border-radius: 50%; background: var(--course-color, var(--pl-teal)); }
+.planning-page .week-scroller { max-width: 100%; margin: 0; padding: 0 0 12px; overflow-x: auto; border: 1px solid var(--pl-line); border-radius: 12px; scrollbar-width: thin; }
+.planning-page .week-grid { --hour-height: 64px; grid-template-columns: 62px repeat(var(--days, 5), minmax(150px, 1fr)); min-width: calc(62px + var(--days, 5) * 150px); }
+.planning-page .week-day-head { height: 62px; gap: 4px; border-bottom: 1px solid var(--pl-line); color: var(--pl-muted); font-size: 0.74rem; }
+.planning-page .week-day-head strong { color: var(--pl-ink); font-size: 0.79rem; font-weight: 650; }
+.planning-page .week-day.is-today .week-day-head { border-radius: 0; background: var(--pl-soft); color: var(--pl-teal); }
+.planning-page .week-day.is-today .week-day-head strong { color: var(--pl-teal); }
+.planning-page .week-body { border-left-color: var(--pl-line); background-image: linear-gradient(var(--pl-line) 1px, transparent 1px); }
+.planning-page .week-times .week-body { background-image: none; }
+.planning-page .week-hour { right: 10px; color: var(--pl-muted); font-size: 0.66rem; font-variant-numeric: tabular-nums; }
+.planning-page .week-block {
+  gap: 5px;
+  min-height: 44px;
+  padding: 10px;
+  border-left-width: 3px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--course-color, var(--pl-teal)) 13%, var(--pl-card));
+  color: var(--pl-text);
+  font-size: 0.69rem;
+  line-height: 1.4;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--course-color, var(--pl-teal)) 25%, transparent);
+}
+.planning-page .week-block strong { font-size: 0.73rem; line-height: 1.4; font-weight: 650; }
+.planning-page .week-block:hover { transform: none; box-shadow: inset 0 0 0 2px var(--course-color, var(--pl-teal)); }
+.planning-page .week-room { color: var(--pl-muted); font-size: 0.67rem; }
+.planning-page .week-now { border-top-color: #b55a42; }
+.planning-page .week-now::before { background: #b55a42; }
+.planning-page .agenda-day { margin: 24px 0 0; }
+.planning-page .agenda-day:first-child { margin-top: 0; }
+.planning-page .agenda-day-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding: 0 0 12px; border-bottom: 1px solid var(--pl-line); }
+.planning-page .agenda-day-head h3 { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin: 0; font-size: 0.87rem; font-weight: 650; }
+.planning-page .agenda-day-head h3 { flex: 1; }
+.planning-page .agenda-day-head .agenda-date-badge { flex: 0 0 auto; padding: 7px 9px; border-radius: 6px; background: var(--pl-soft); color: var(--pl-teal); font-size: 0.72rem; font-weight: 650; }
+.planning-page .agenda-day-head > span,
+.planning-page .agenda-day-count { color: var(--pl-muted); font-size: 0.71rem; }
+.planning-page .agenda-day.is-today .agenda-day-head h3 { color: var(--pl-teal); }
+.planning-page .agenda-day-head .badge { background: var(--pl-soft); color: var(--pl-teal); padding: 4px 8px; border-radius: 5px; font-size: 0.65rem; font-weight: 600; }
+.planning-page .agenda-item { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 20px; align-items: start; padding: 21px 0; border-bottom: 1px solid var(--pl-line); }
+.planning-page .agenda-item:last-child { border-bottom: 0; }
+.planning-page .agenda-time { display: flex; flex-direction: column; gap: 5px; color: var(--pl-ink); font-size: 0.77rem; font-weight: 650; font-variant-numeric: tabular-nums; }
+.planning-page .agenda-time small,
+.planning-page .agenda-time span { color: var(--pl-muted); font-size: 0.69rem; font-weight: 450; }
+.planning-page .agenda-details { min-width: 0; padding-left: 13px; border-left: 3px solid var(--course-color, var(--pl-teal)); }
+.planning-page .agenda-details h4 { margin: 0 0 7px; font-size: 0.95rem; font-weight: 600; line-height: 1.45; }
+.planning-page .agenda-details h4 a { color: var(--pl-ink); text-decoration: none; }
+.planning-page .agenda-details h4 a:hover { color: var(--pl-teal); text-decoration: underline; }
+.planning-page .agenda-details p { margin: 4px 0 0; }
+.planning-page .agenda-meta { display: flex; flex-wrap: wrap; gap: 5px 16px; margin: 6px 0 0; color: var(--pl-muted); font-size: 0.73rem; line-height: 1.65; }
+.planning-page .agenda-meta .icon { width: 14px; height: 14px; }
+.planning-page .agenda-item .item-actions { justify-content: flex-end; margin: 0; }
+.planning-page .agenda-details .item-actions { justify-content: flex-start; margin: 12px 0 0; }
+.planning-page .agenda-time .badge { align-self: start; flex: 0 0 auto; width: fit-content; padding: 4px 7px; border-radius: 5px; background: var(--pl-soft); color: var(--pl-teal); font-size: 0.62rem; font-weight: 600; }
+.planning-page .agenda-item .item-actions .icon-button { padding: 8px 10px; }
+.planning-page .planning-empty { display: grid; justify-items: center; gap: 10px; padding: 46px 24px; border: 1px dashed var(--pl-line); border-radius: 12px; background: var(--pl-page); text-align: center; }
+.planning-page .planning-empty > .icon { width: 32px; height: 32px; color: var(--pl-teal); }
+.planning-page .planning-empty h3 { margin: 0; font-size: 1.03rem; }
+.planning-page .planning-empty p { max-width: 500px; margin: 0; color: var(--pl-muted); font-size: 0.81rem; line-height: 1.65; }
+.planning-page .planning-empty button,
+.planning-page .planning-empty a.button { margin-top: 8px; }
+.planning-page .session-dialog { width: min(580px, calc(100vw - 32px)); max-height: calc(100dvh - 48px); padding: 32px; border: 1px solid var(--pl-line); border-radius: 18px; background: var(--pl-card); color: var(--pl-text); box-shadow: 0 20px 80px rgb(0 0 0 / 20%); }
+.planning-page .session-dialog::backdrop { background: rgb(10 24 31 / 60%); backdrop-filter: blur(3px); }
+.planning-page .session-dialog h2 { margin: 0 36px 12px 0; font-size: 1.35rem; line-height: 1.4; }
+.planning-page .session-dialog > p { color: var(--pl-muted); font-size: 0.81rem; line-height: 1.65; }
+.planning-page .session-dialog > .section-eyebrow { margin: 0 0 9px; color: var(--pl-teal); font-size: 0.66rem; font-weight: 650; letter-spacing: 0.1em; }
+.planning-page .session-dialog .dialog-close { top: 12px; right: 12px; min-width: 44px; }
+.planning-page .session-detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; padding: 20px; margin: 20px 0; border: 1px solid var(--pl-line); border-radius: 12px; background: var(--pl-page); }
+.planning-page .session-detail { min-width: 0; display: grid; gap: 6px; }
+.planning-page .session-detail span { color: var(--pl-muted); font-size: 0.67rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+.planning-page .session-detail strong { color: var(--pl-ink); font-size: 0.79rem; font-weight: 550; line-height: 1.6; overflow-wrap: anywhere; }
+.planning-page .month-heading { display: flex; align-items: center; gap: 12px; margin: 28px 0 14px; color: var(--pl-muted); font-size: 0.7rem; font-weight: 650; letter-spacing: 0.09em; text-transform: uppercase; }
+.planning-page .month-heading:first-child { margin-top: 0; }
+.planning-page .month-heading h3 { margin: 0; color: inherit; font-size: inherit; font-weight: inherit; letter-spacing: inherit; text-transform: inherit; }
+.planning-page .month-heading span { color: var(--pl-muted); font-size: 0.66rem; font-weight: 450; letter-spacing: 0; text-transform: none; }
+.planning-page .month-heading::after { content: ""; flex: 1; border-top: 1px solid var(--pl-line); }
+.planning-page .exam-card { display: flex; align-items: start; gap: 22px; margin: 0 0 14px; padding: 24px; border: 1px solid var(--pl-line); border-left: 3px solid var(--course-color, var(--pl-teal)); border-radius: 13px; background: var(--pl-card); transition: border-color 160ms ease; }
+.planning-page .exam-card:hover { transform: none; box-shadow: none; border-color: color-mix(in srgb, var(--course-color, var(--pl-teal)) 50%, var(--pl-line)); }
+.planning-page .exam-date-block { flex: 0 0 68px; height: auto; min-height: 88px; padding: 12px 8px; gap: 5px; border-radius: 10px; background: var(--pl-soft); color: var(--pl-teal); }
+.planning-page .exam-day,
+.planning-page .exam-date-block > strong { color: var(--pl-ink); font-size: 1.9rem; font-weight: 650; line-height: 1; letter-spacing: -0.06em; }
+.planning-page .exam-month { color: var(--pl-teal); font-size: 0.69rem; font-weight: 650; letter-spacing: 0.05em; text-transform: uppercase; }
+.planning-page .exam-weekday { color: var(--pl-muted); font-size: 0.62rem; font-weight: 550; letter-spacing: 0.03em; text-transform: uppercase; }
+.planning-page .exam-card-head { align-items: start; justify-content: space-between; gap: 10px 16px; }
+.planning-page .exam-card-head h3,
+.planning-page .exam-card-head .exam-title { flex: 1 1 300px; margin: 0; font-size: 1.07rem; font-weight: 650; line-height: 1.4; }
+.planning-page .exam-title a { color: var(--pl-ink); text-decoration: none; }
+.planning-page .exam-title a:hover { color: var(--pl-teal); text-decoration: underline; text-underline-offset: 4px; }
+.planning-page .exam-card-head .badge { flex: 0 0 auto; padding: 5px 9px; border: 1px solid var(--pl-line); border-radius: 6px; background: var(--pl-page); color: var(--pl-muted); font-size: 0.67rem; font-weight: 600; line-height: 1.4; }
+.planning-page .exam-card .schedule-meta { margin: 7px 0 0; }
+.planning-page .exam-meta { display: flex; flex-wrap: wrap; gap: 14px 26px; margin: 18px 0; padding: 0; list-style: none; color: var(--pl-muted); font-size: 0.74rem; line-height: 1.6; }
+.planning-page .exam-meta > li,
+.planning-page .exam-meta > div { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.planning-page .exam-meta span,
+.planning-page .exam-meta dt { color: var(--pl-muted); font-size: 0.65rem; font-weight: 550; letter-spacing: 0.03em; }
+.planning-page .exam-meta strong,
+.planning-page .exam-meta dd { margin: 0; color: var(--pl-text); font-size: 0.76rem; font-weight: 500; overflow-wrap: anywhere; }
+.planning-page .exam-meta .icon { width: 14px; height: 14px; }
+.planning-page .exam-meta > li { flex-direction: row; align-items: start; gap: 7px; }
+.planning-page .exam-meta > li > .icon { flex: 0 0 auto; margin-top: 3px; }
+.planning-page .exam-meta > li > span { font-size: 0.74rem; font-weight: 450; letter-spacing: 0; }
+.planning-page .exam-registration { display: flex; flex-wrap: wrap; align-items: center; gap: 5px 12px; margin: 16px 0; padding: 11px 14px; border: 1px solid var(--pl-line); border-radius: 8px; background: var(--pl-page); color: var(--pl-muted); font-size: 0.73rem; line-height: 1.6; }
+.planning-page .exam-registration strong { font-weight: 650; }
+.planning-page .exam-registration p { margin: 0; font-size: 0.7rem; }
+.planning-page .registration-window { display: flex; flex-wrap: wrap; gap: 4px 12px; width: 100%; font-size: 0.68rem; }
+.planning-page .exam-registration-dates { display: flex; flex-wrap: wrap; gap: 4px 12px; width: 100%; font-size: 0.68rem; }
+.planning-page .exam-registration .reg-chip { margin: 0; padding: 0; background: transparent; color: inherit; font-size: 0.73rem; }
+.planning-page .exam-registration.is-open { border-color: color-mix(in srgb, var(--pl-teal) 25%, var(--pl-line)); background: var(--pl-soft); color: var(--pl-teal); }
+.planning-page .exam-registration.is-soon { border-color: color-mix(in srgb, var(--pl-amber) 25%, var(--pl-line)); background: var(--pl-amber-soft); color: var(--pl-amber); }
+.planning-page .exam-registration.is-urgent { border-color: color-mix(in srgb, var(--pl-amber) 35%, var(--pl-line)); background: var(--pl-amber-soft); color: var(--pl-amber); }
+.planning-page .exam-registration.is-closed,
+.planning-page .exam-registration.is-unknown { color: var(--pl-muted); }
+.planning-page .exam-card .item-actions { gap: 8px; margin-top: 16px; }
+.planning-page .exam-card .item-actions .icon-button { padding: 9px 12px; }
+.planning-page .exam-card .item-actions .exam-booking-link { border-color: var(--pl-teal); background: var(--pl-soft); color: var(--pl-teal); }
+.planning-page .exam-card .item-actions .exam-booking-link:hover { background: color-mix(in srgb, var(--pl-teal) 15%, var(--pl-card)); }
+.planning-page .exam-card .item-actions a.button { background: var(--pl-teal); border-color: var(--pl-teal); color: var(--pl-card); }
+.planning-page .reg-chip { padding: 5px 10px; border-radius: 6px; background: var(--pl-page); color: var(--pl-muted); font-size: 0.73rem; }
+.planning-page .reg-chip.is-open { background: var(--pl-soft); color: var(--pl-teal); }
+.planning-page .deadline-panel { margin: 0 0 28px; padding: 24px 28px; border: 1px solid color-mix(in srgb, var(--pl-amber) 25%, var(--pl-line)); border-radius: 16px; background: var(--pl-amber-soft); }
+.planning-page .deadline-panel h2 { margin: 0 0 8px; color: var(--pl-amber); font-size: 1.05rem; }
+.planning-page .deadline-panel > p { margin: 0 0 16px; color: var(--pl-amber); font-size: 0.78rem; line-height: 1.6; }
+.planning-page .deadline-head { margin: 0 0 16px; }
+.planning-page .deadline-head p { margin: 0; color: var(--pl-amber); font-size: 0.78rem; line-height: 1.6; }
+.planning-page .deadline-item { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; padding: 14px 0; border-top: 1px solid color-mix(in srgb, var(--pl-amber) 20%, transparent); }
+.planning-page .deadline-item > div { flex: 1 1 300px; min-width: 0; }
+.planning-page .deadline-item h3,
+.planning-page .deadline-item strong { margin: 0 0 5px; color: var(--pl-ink); font-size: 0.84rem; font-weight: 600; line-height: 1.5; }
+.planning-page .deadline-item p { margin: 0; color: var(--pl-amber); font-size: 0.74rem; line-height: 1.65; }
+.planning-page .deadline-item a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 9px 13px; border: 1px solid color-mix(in srgb, var(--pl-amber) 35%, transparent); border-radius: 8px; background: transparent; color: var(--pl-amber); font-size: 0.74rem; font-weight: 650; text-decoration: none; }
+.planning-page .deadline-item a:hover { background: color-mix(in srgb, var(--pl-amber) 8%, transparent); }
+.planning-page .open-alert { border-radius: 12px; border-color: color-mix(in srgb, var(--pl-teal) 25%, var(--pl-line)); background: var(--pl-soft); color: var(--pl-teal); }
+.planning-page .open-alert .button { min-height: 44px; background: var(--pl-teal); color: var(--pl-card); font-size: 0.77rem; }
+@media (max-width: 1050px) {
+  .planning-page .planning-hero { grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr); gap: 24px; }
+  .planning-page .agenda-item { grid-template-columns: 100px minmax(0, 1fr); gap: 16px; }
+  .planning-page .agenda-item .item-actions { grid-column: 2; justify-content: flex-start; margin-left: 16px; }
+  .planning-page .agenda-details .item-actions { margin-left: 0; }
+}
+@media (max-width: 760px) {
+  .planning-page main.container { padding: 22px 20px 48px; }
+  .planning-page .planning-hero { grid-template-columns: minmax(0, 1fr); padding: 28px; gap: 25px; border-radius: 18px; }
+  .planning-page .planning-hero h1 { font-size: 2.15rem; }
+  .planning-page .planning-hero-aside { padding: 18px; }
+  .planning-page .planning-summary { gap: 10px; }
+  .planning-page .planning-stat { padding: 16px; }
+  .planning-page .planning-stat-value { font-size: 1.3rem; }
+  .planning-page .planning-panel { padding: 22px; }
+  .planning-page .planning-toolbar .toolbar-filters { gap: 12px; }
+  .planning-page .exam-card { padding: 20px; gap: 18px; }
+  .planning-page .deadline-panel { padding: 22px; }
+}
+@media (max-width: 480px) {
+  .planning-page main.container { padding: 18px 14px 40px; }
+  .planning-page .planning-hero { padding: 24px 20px; gap: 22px; }
+  .planning-page .planning-hero h1 { gap: 10px; font-size: 1.85rem; }
+  .planning-page .planning-hero h1 .icon { width: 27px; height: 27px; }
+  .planning-page .planning-hero .planning-lead,
+  .planning-page .planning-hero-main > p:not(.section-eyebrow) { font-size: 0.84rem; }
+  .planning-page .planning-hero-links { margin-top: 20px; }
+  .planning-page .planning-hero-links a { flex: 1 1 auto; padding: 9px 12px; }
+  .planning-page .planning-hero-actions { gap: 0 14px; }
+  .planning-page .planning-hero-aside { padding: 16px; }
+  .planning-page .planning-summary { grid-template-columns: minmax(0, 1fr); gap: 8px; margin-bottom: 22px; }
+  .planning-page .planning-stat { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, auto); align-items: center; gap: 6px 14px; padding: 15px 18px; border-radius: 11px; }
+  .planning-page .planning-stat-label { margin: 0; font-size: 0.65rem; }
+  .planning-page .planning-stat-value { grid-column: 2; grid-row: 1 / span 2; margin: 0; max-width: 170px; font-size: 1.3rem; text-align: right; }
+  .planning-page .planning-stat-note { font-size: 0.7rem; }
+  .planning-page .planning-panel { padding: 20px 16px; border-radius: 14px; }
+  .planning-page .planning-panel-head { margin-bottom: 18px; }
+  .planning-page .planning-panel-head h2 { font-size: 1.15rem; }
+  .planning-page .planning-toolbar,
+  .planning-page .planning-controls { gap: 12px; }
+  .planning-page .planning-toolbar .toolbar-filters { gap: 10px; }
+  .planning-page .planning-toolbar label:has(select),
+  .planning-page .planning-toolbar label:has(input[type="search"]) { flex-basis: 100%; }
+  .planning-page .week-nav { width: 100%; justify-content: center; gap: 5px; }
+  .planning-page .week-label { min-width: 0; flex: 1; font-size: 0.74rem; }
+  .planning-page .week-nav .inline-link { flex-basis: 100%; text-align: center; }
+  .planning-page .planning-legend { gap: 8px 12px; }
+  .planning-page .agenda-item { grid-template-columns: minmax(0, 1fr); gap: 11px; padding: 18px 0; }
+  .planning-page .agenda-time { flex-direction: row; gap: 12px; font-size: 0.74rem; }
+  .planning-page .agenda-details { padding-left: 12px; }
+  .planning-page .agenda-details h4 { font-size: 0.89rem; }
+  .planning-page .agenda-item .item-actions { grid-column: 1; margin-left: 15px; }
+  .planning-page .agenda-details .item-actions { margin-left: 0; }
+  .planning-page .exam-card { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 13px; padding: 18px 14px; }
+  .planning-page .exam-date-block { width: 52px; min-height: 80px; padding: 10px 5px; border-radius: 8px; }
+  .planning-page .exam-day,
+  .planning-page .exam-date-block > strong { font-size: 1.6rem; }
+  .planning-page .exam-card-head h3,
+  .planning-page .exam-card-head .exam-title { flex-basis: 100%; font-size: 0.91rem; }
+  .planning-page .exam-card-head .badge { font-size: 0.63rem; }
+  .planning-page .exam-meta { gap: 12px 18px; }
+  .planning-page .exam-registration { padding: 10px; font-size: 0.7rem; }
+  .planning-page .exam-card .item-actions { gap: 6px; }
+  .planning-page .exam-card .item-actions .icon-button { justify-content: flex-start; padding: 8px 9px; font-size: 0.69rem; }
+  .planning-page .deadline-panel { padding: 20px; }
+  .planning-page .deadline-item a { width: 100%; }
+  .planning-page .planning-empty { padding: 32px 15px; }
+  .planning-page .session-dialog { padding: 26px 22px; }
+  .planning-page .session-dialog h2 { font-size: 1.14rem; }
+  .planning-page .session-detail-grid { grid-template-columns: minmax(0, 1fr); padding: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .planning-page *, .planning-page *::before, .planning-page *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Exams – EU-HEM Student Hub</title>
-  <meta name="description" content="Upcoming 1st-year EU-HEM exams, live from UniBo, with registration status and countdowns.">
+  <meta name="description" content="Plan your EU-HEM exams with official dates, registration deadlines, course filters and calendar reminders.">
   <!-- Social preview (scripts/social-tags.js) -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="EU-HEM Student Hub">
   <meta property="og:title" content="Exams – EU-HEM Student Hub">
-  <meta property="og:description" content="Upcoming 1st-year EU-HEM exams, live from UniBo, with registration status and countdowns.">
+  <meta property="og:description" content="Plan your EU-HEM exams with official dates, registration deadlines, course filters and calendar reminders.">
   <meta property="og:url" content="https://adnantarabishi.github.io/eu-hem-student-hub/exams.html">
   <meta property="og:image" content="https://adnantarabishi.github.io/eu-hem-student-hub/img/social-preview.png">
   <meta property="og:image:width" content="1200">
@@ -19,6 +19,7 @@
   <!-- /Social preview -->
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=b540d8a2">
+  <link rel="stylesheet" href="planning.css?v=0e4fe2a7">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -27,7 +28,7 @@
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <script src="theme.js?v=d51d4769"></script>
 </head>
-<body class="wide-page">
+<body class="wide-page planning-page exams-page">
 
   <header class="site-header">
     <div class="container">
@@ -39,31 +40,68 @@
     </div>
   </header>
 
-  <main class="container">
-    <section class="page-intro">
-      <div>
-        <p class="section-eyebrow">Academics</p>
-        <h1><svg class="icon" aria-hidden="true"><use href="icons.svg#exams"></use></svg> Exams &amp; Registration</h1>
-        <p>Upcoming 1st-year exams, loaded live from the
-          <a id="exams-source" href="https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates" target="_blank" rel="noopener">official UniBo exam dates</a>.
-          Register on <a href="https://almaesami.unibo.it/almaesami/welcome.htm" target="_blank" rel="noopener">AlmaEsami</a> or the myUniBo app.</p>
-      </div>
-    </section>
-
-    <!-- Registrations open right now (exams.js) -->
-    <div id="open-registrations"></div>
-
-    <section class="card">
-      <div class="toolbar">
-        <div class="toolbar-filters schedule-filters">
-          <label>Course
-            <select id="exam-course-filter"><option value="">All courses</option></select>
-          </label>
+  <main class="container planning-main">
+    <section class="planning-hero" aria-labelledby="exams-title">
+      <div class="planning-hero-main">
+        <p class="section-eyebrow">Academic planner</p>
+        <h1 id="exams-title">Make room for<br>your next milestone.</h1>
+        <p class="planning-hero-lead">Exam dates, registration windows and reminders. Keep the next step in sight, with your first-year UniBo sittings in one place.</p>
+        <nav class="planning-hero-links" aria-label="Academic planner">
+          <a class="planning-pill" href="timetable.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#timetable"></use></svg> Timetable</a>
+          <a class="planning-pill is-active" href="exams.html" aria-current="page"><svg class="icon" aria-hidden="true"><use href="icons.svg#exams"></use></svg> Exams &amp; registration</a>
+        </nav>
+        <div class="planning-hero-actions">
+          <a id="exams-source" href="https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates" target="_blank" rel="noopener">Official exam dates <svg class="icon" aria-hidden="true"><use href="icons.svg#external"></use></svg></a>
+          <a href="https://almaesami.unibo.it/almaesami/welcome.htm" target="_blank" rel="noopener">Open AlmaEsami <svg class="icon" aria-hidden="true"><use href="icons.svg#external"></use></svg></a>
         </div>
       </div>
-      <p id="exam-status" class="schedule-meta" aria-live="polite"></p>
-      <div id="exam-list"></div>
+      <aside class="planning-hero-aside" id="exam-highlight" aria-label="Next exam">
+        <span class="planning-aside-eyebrow">Your next milestone</span>
+        <strong class="planning-aside-title">Looking up exam dates</strong>
+        <p class="planning-aside-note">Published sittings will appear here once the official dates load.</p>
+      </aside>
     </section>
+
+    <div class="planning-summary" id="exam-summary" aria-label="Exam overview">
+      <div class="planning-stat"><span class="planning-stat-label">Upcoming sittings</span><strong class="planning-stat-value">—</strong><span class="planning-stat-note">Loading official dates</span></div>
+      <div class="planning-stat"><span class="planning-stat-label">Registration open</span><strong class="planning-stat-value">—</strong><span class="planning-stat-note">Check the booking window</span></div>
+      <div class="planning-stat"><span class="planning-stat-label">Next deadline</span><strong class="planning-stat-value">—</strong><span class="planning-stat-note">For open registrations</span></div>
+    </div>
+
+    <div id="open-registrations"></div>
+
+    <section class="planning-panel" aria-labelledby="exam-panel-title">
+      <div class="planning-panel-head">
+        <div><p class="section-eyebrow">Exam planner</p><h2 id="exam-panel-title">Upcoming sittings</h2><p>Find your course, check the window, then book on AlmaEsami.</p></div>
+        <span class="planning-scope" id="exam-scope">First-year courses</span>
+      </div>
+      <div class="planning-toolbar">
+        <div class="toolbar-filters schedule-filters" id="exam-filters">
+          <label>Course
+            <select id="exam-course-filter" disabled><option value="">All courses</option></select>
+          </label>
+          <label>Registration
+            <select id="exam-registration-filter" disabled>
+              <option value="">All statuses</option>
+              <option value="open">Open now</option>
+              <option value="soon">Not open yet</option>
+              <option value="closed">Closed</option>
+              <option value="unknown">Check AlmaEsami</option>
+            </select>
+          </label>
+          <label class="planning-search">Search exams
+            <input id="exam-search" type="search" placeholder="Course, room or teacher" autocomplete="off" disabled>
+          </label>
+          <button id="exam-reset" type="button" class="planning-reset" disabled>Reset filters</button>
+        </div>
+      </div>
+      <div class="planning-results-meta">
+        <p id="exam-status" class="schedule-meta" aria-live="polite">Loading exam dates…</p>
+        <p id="exam-checked" class="planning-checked"></p>
+      </div>
+      <div id="exam-list" aria-busy="true"></div>
+    </section>
+    <p class="planning-source-note"><svg class="icon" aria-hidden="true"><use href="icons.svg#info"></use></svg> Dates and times use Bologna time (Europe/Rome). UniBo and AlmaEsami are the official reference for changes and booking; downloading a reminder does not register you.</p>
   </main>
 
   <footer class="site-footer">
@@ -78,8 +116,10 @@
   <script defer src="pwa.js?v=c9212bf8"></script>
   <script defer src="announcements.js?v=3ecd40f0"></script>
   <script defer src="programme.js?v=92916c59"></script>
-  <script defer src="unibo-data.js?v=7939f2b4"></script>
-  <script defer src="exams.js?v=a50d5d1c"></script>
+  <script defer src="unibo-data.js?v=892a323e"></script>
+  <script defer src="notes-schedule.js?v=72ca9b39"></script>
+  <script defer src="planning.js?v=5b022301"></script>
+  <script defer src="exams.js?v=d2de1891"></script>
 
 </body>
 </html>

@@ -251,7 +251,7 @@ function plusHours(isoLocal, hours) {
   return date.toISOString().slice(0, 19);
 }
 
-function examActions(exam) {
+function examActions(exam, today = todayKey()) {
   const row = createElement("div", "item-actions");
   if (exam.place) row.appendChild(iconButton("Map", "map-pin", { href: mapUrl(`${exam.place}, Bologna`), ariaLabel: `Map: ${exam.place}` }));
   const start = `${exam.dateKey}T${exam.time || "09:00"}:00`;
@@ -263,10 +263,12 @@ function examActions(exam) {
       start,
       end: plusHours(start, 2),
       location: exam.place,
-      description: [exam.type && `Type: ${exam.type}`, exam.teachers.join(", "), "End time is an estimate. Register on AlmaEsami."].filter(Boolean).join("\n"),
+      description: [exam.type && `Type: ${exam.type}`, exam.teachers.join(", "),
+        !exam.time && "Start time is a placeholder (09:00); confirm the time on UniBo.",
+        "End time is an estimate. Register on AlmaEsami."].filter(Boolean).join("\n"),
     }),
   }));
-  if (exam.registrationCloses && exam.registrationCloses >= todayKey()) {
+  if (exam.registrationCloses && exam.registrationCloses >= today) {
     row.appendChild(iconButton("Registration reminder", "bell", {
       ariaLabel: `Registration reminder: last day to register for ${exam.title}`,
       onClick: () => {
