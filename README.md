@@ -146,6 +146,13 @@ Full guide: [docs/thesis-import.md](docs/thesis-import.md). The spreadsheet itse
 
 ## Fundamentals of Statistics for Healthcare (96498)
 `fund-statistics.html` is the study workspace for **Sara Capacci**, in `fund-quant-methods`.
+The parent course overview uses `fund-course.js` and `fund-course.css` for a dedicated
+course gateway: six topic destinations, direct study-tool links, both module facts,
+the Statistics assessment summary and a next step based on shared Notes progress.
+Its counts come from the module arrays and optional `course-study.json`; unavailable
+metadata never blocks the course. The design is scoped to `fund-course-page`, leaving
+the separate Forster course and other course renderers intact. The focused gateway
+regression is `tests/fund-statistics/course.test.js` (included in the Fundamentals suite).
 It is separate from Martin Forster's `statistics` module and study centre.
 The six syllabus topics have original guides, 90 MCQs, 100 spaced-review cards, 24 concepts,
 nine experiments and a 90-minute practice mock with self-assessed written interpretations.

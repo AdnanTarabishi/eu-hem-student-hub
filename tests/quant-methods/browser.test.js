@@ -266,8 +266,9 @@ const root = path.resolve("."),
     assert.equal(await page.locator("[data-exercise]").count(), 2);
     await context.setOffline(false);
     await page.goto(base + "course.html?course=fund-health-economics");
-    await page.locator(".course-header").waitFor();
+    await page.locator(".hem-course-header").waitFor();
     assert.equal(await page.locator("body.qm-page").count(), 0);
+    assert.equal(await page.locator("body.fund-course-page").count(), 0);
     assert.equal(await page.locator(".qm-identity").count(), 0);
     const otherTopic =
       require("../../content/modules/fund-health-economics/topics.json").find(
