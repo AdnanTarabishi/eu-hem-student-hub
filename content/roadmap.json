@@ -184,7 +184,7 @@
       "summary": "Give the Hub its own web address and an editor dashboard, so approved editors can keep content up to date.",
       "category": "platform",
       "lane": "next",
-      "status": "planned",
+      "status": "in-progress",
       "target": {
         "start": "2026-10",
         "end": "2026-10",
@@ -193,7 +193,7 @@
       "why": "Keep important information easier to find, correct and maintain as the Hub grows.",
       "details": [
         "Move to a dedicated domain while keeping existing shared links working.",
-        "Provide a dashboard for announcements, updates, useful resources and content corrections.",
+        "An editor dashboard: approved editors sign in with an emailed link and write announcements; an admin reviews them before they go public. Useful resources and updates follow.",
         "Give editors clear responsibilities and a review step before major changes are published."
       ],
       "dependencies": [

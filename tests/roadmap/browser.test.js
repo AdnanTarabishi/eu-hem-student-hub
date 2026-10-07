@@ -67,7 +67,7 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   // Release banner, What's in v1.0, the plan note, limitations, domain move, feedback
   assert.match(await text(page, "#roadmap-release"), /Beta\s*v0\.9.*Next: v1\.0 — Public Launch · target 15 October 2026.*target, not a promise/s);
   const v1 = await page.$$eval(".roadmap-v1-item", (all) => all.map((li) => [li.querySelector(".roadmap-pill").textContent, li.querySelector("button").textContent]));
-  assert.deepStrictEqual(v1, [["Planned", "Custom domain"], ["Planned", "Admin dashboard"], ["In progress", "Exam Prep"],
+  assert.deepStrictEqual(v1, [["In progress", "Custom domain"], ["In progress", "Admin dashboard"], ["In progress", "Exam Prep"],
     ["Released in v0.9", "Academic Rules"], ["Released in v0.9", "Programme Journey"], ["Released in v0.9", "Support & Contacts"]]);
   assert.match(await text(page, "#feature-student-accounts-cohort-profiles"), /Needs a secure sign-in and a privacy review first/);
   assert.match(await text(page, "#roadmap-info"), /Known limitations.*fictional demo profiles.*only on this device.*Moving to a new domain.*redirect.*will not carry over/s);
