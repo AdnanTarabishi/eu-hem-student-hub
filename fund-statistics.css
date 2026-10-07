@@ -130,8 +130,36 @@
 .fs-worked details { margin-top:20px; }
 .fs-worked summary { cursor:pointer; font-weight:600; padding:12px 0; }
 .fs-extension .table-wrap { margin-bottom:0; }
+.fs-source-guide h3 { font-family:var(--font-serif); font-size:clamp(1.5rem,3vw,2rem); margin:0 0 16px; }
+.fs-guide-goal { max-width:80ch; font-size:1.08rem; }
+.fs-source-explorer { padding:clamp(16px,2vw,24px); border:1px solid var(--border-default); border-radius:12px; background:var(--surface-subtle); margin:24px 0; }
+.fs-source-explorer h4 { margin-top:0; }
+.fs-source-guide table { font-size:.88rem; }
+.fs-source-guide table caption { text-align:left; padding:12px 0; color:var(--text-secondary); font-weight:600; }
+.fs-source-guide table td { overflow-wrap:normal; }
+.fs-source-guide table th[scope=row] { text-align:left; font-weight:600; }
+.fs-interval-plot { width:100%; min-width:540px; height:auto; display:block; color:var(--text-secondary); }
+.fs-interval-plot text { font:14px var(--font-sans); fill:currentColor; }
+.fs-plot-grid { stroke:var(--border-default); stroke-width:1; }
+.fs-plot-row path { stroke:currentColor; stroke-width:2; fill:none; }
+.fs-plot-row circle { fill:currentColor; }
+.fs-plot-selected { color:var(--color-brand-text); }
+.fs-plot-selected path { stroke-width:3; }
+.fs-plot-selected text { font-weight:700; }
+#fs-report-chart { margin:24px 0 12px; overflow-x:auto; }
+#fs-report-chart figcaption { color:var(--text-secondary); font-size:.85rem; margin-top:12px; }
+.fs-chart-hint { display:none; color:var(--text-secondary); font-size:.85rem; }
+.fs-guide-cautions, .fs-guide-citation { padding:18px 0; border-top:1px solid var(--border-default); }
+.fs-guide-cautions summary, .fs-guide-citation summary { cursor:pointer; font-weight:600; }
+.fs-guide-cautions li { margin-bottom:12px; }
+.fs-reading-checks { margin:24px 0; }
+.fs-reading-checks fieldset { margin:20px 0; padding:20px; border:1px solid var(--border-default); border-radius:12px; min-width:0; }
+.fs-reading-checks legend { font-weight:600; padding:0 8px; }
+.fs-reading-checks button { margin-top:16px; }
+.fs-guide-links { display:flex; flex-direction:column; gap:12px; border-top:1px solid var(--border-default); padding-top:20px; }
 [hidden] { display:none!important; }
 @media (max-width:760px) {
+  .fs-chart-hint { display:block; }
   .fs-hero { grid-template-columns:1fr; gap:24px; }
   .fs-hero-visual { display:none; }
   .fs-grid { grid-template-columns:1fr; }

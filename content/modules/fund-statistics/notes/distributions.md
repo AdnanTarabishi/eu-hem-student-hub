@@ -160,3 +160,14 @@ For an illustrative planning model, an individual waiting time X is normal with 
 
 [Choose a method interactively](fund-statistics.html#methods).
 <!-- /Extended original practice -->
+
+
+## Apply probabilities and inspect real sampling designs
+
+Othitis.xlsx is a probability model for counts 0–6, not a seven-person sample. E(X)=2.038 and Var(X)=1.966556. P(X≥3)=.336 differs from P(X>3)=.151 because the former includes the mass at 3.
+
+Real reports need a defined sampling unit and design. NHSR 211 summarizes weighted visits, whereas NHSR 209 estimates proportions among older adults. A probability table, a sample of people and a weighted file of visits are different objects.
+
+- [Otitis counts: expected value and discrete tails](fund-statistics.html?guide=otitis-probability#lab-guides)
+- [All 25 samples: see bias and precision exactly](fund-statistics.html?guide=sampling-enumeration#lab-guides)
+- [Health-centre visits: define the denominator](fund-statistics.html?guide=health-centre-report#lab-guides)

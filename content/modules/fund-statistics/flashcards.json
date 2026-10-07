@@ -502,5 +502,101 @@
     "topic": "fund-statistics.two-means",
     "front": "Are all Topic 6 variations assessed calculation methods?",
     "back": "No. Topic 6 is additional, time permitting. The slides label paired, pooled equal-variance and two-proportion formulas as illustrative; confirm scope with the teacher."
+  },
+  {
+    "id": "fund-statistics.fc.085",
+    "topic": "fund-statistics.descriptive",
+    "front": "Why can seven OECD variables have seven different sample sizes?",
+    "back": "COUNT measures numerical observations per column. Missing cells are unknown, not zeros; use each variable’s effective n."
+  },
+  {
+    "id": "fund-statistics.fc.086",
+    "topic": "fund-statistics.descriptive",
+    "front": "What is the difference between an IQR fence and a box-plot whisker?",
+    "back": "A fence is a computed threshold, Q1−1.5 IQR or Q3+1.5 IQR. A whisker ends at the most extreme observed value inside the fences."
+  },
+  {
+    "id": "fund-statistics.fc.087",
+    "topic": "fund-statistics.confidence-intervals",
+    "front": "For Food.xlsx, n=50 and 90% two-sided confidence: which t quantile?",
+    "back": "T.INV(.95,49): α=.10, each tail .05, df=49. Multiply by STDEV.S/√50."
+  },
+  {
+    "id": "fund-statistics.fc.088",
+    "topic": "fund-statistics.estimation",
+    "front": "What are the units of the unbiased population variance estimate for weekly food expenditure?",
+    "back": "£². VAR.S(A2:A51) gives about 2603.2557 £²; SD would have units £."
+  },
+  {
+    "id": "fund-statistics.fc.089",
+    "topic": "fund-statistics.estimation",
+    "front": "For the same observations and n=8, how are Vₙ and S² related?",
+    "back": "S²=(8/7)Vₙ. They share the squared-deviation numerator but divide by 7 versus 8."
+  },
+  {
+    "id": "fund-statistics.fc.090",
+    "topic": "fund-statistics.estimation",
+    "front": "Why does =B2-$B$12 lock the mean cell when copied?",
+    "back": "The absolute reference $B$12 keeps every deviation centred on the same computed mean; B2 changes by row."
+  },
+  {
+    "id": "fund-statistics.fc.091",
+    "topic": "fund-statistics.descriptive",
+    "front": "Two observed samples both have mean 200. Must their spreads agree?",
+    "back": "No. The cholesterol example has descriptive variances 272 and 31.6 despite identical means."
+  },
+  {
+    "id": "fund-statistics.fc.092",
+    "topic": "fund-statistics.two-means",
+    "front": "Does equal sample size establish a paired design?",
+    "back": "No. Pairing comes from linked observations, such as before/after on the same people. Equal counts or row numbers do not establish it."
+  },
+  {
+    "id": "fund-statistics.fc.093",
+    "topic": "fund-statistics.descriptive",
+    "front": "Why must birthweight and estriol be kept in corresponding rows?",
+    "back": "Covariance and correlation depend on linked pairs. Independently sorting one column can change or destroy the original association."
+  },
+  {
+    "id": "fund-statistics.fc.094",
+    "topic": "fund-statistics.descriptive",
+    "front": "What does r≈.7175 in the birthweight–estriol file establish?",
+    "back": "Positive linear association among 15 paired records. It does not establish a causal effect or an estriol measurement unit."
+  },
+  {
+    "id": "fund-statistics.fc.095",
+    "topic": "fund-statistics.distributions",
+    "front": "Why can a count have E(X)=2.038?",
+    "back": "The expected value is a probability-weighted average; it need not itself be a possible single observed count."
+  },
+  {
+    "id": "fund-statistics.fc.096",
+    "topic": "fund-statistics.distributions",
+    "front": "For discrete X, why can P(X≥3) differ from P(X>3)?",
+    "back": "The first includes the mass at 3. In the supplied otitis model, .336−.151=.185=P(X=3)."
+  },
+  {
+    "id": "fund-statistics.fc.097",
+    "topic": "fund-statistics.estimation",
+    "front": "In all 25 ordered size-two samples with replacement, which variance average equals 9.76?",
+    "back": "Average adjusted S² equals the population variance 9.76. Average descriptive Vₙ and Var(X̄) are 4.88 here."
+  },
+  {
+    "id": "fund-statistics.fc.098",
+    "topic": "fund-statistics.distributions",
+    "front": "Why does sampling twice from five values with replacement give 25 outcomes?",
+    "back": "There are five choices for each independent ordered draw. Replacement allows repeats; reversing two different draws gives another outcome."
+  },
+  {
+    "id": "fund-statistics.fc.099",
+    "topic": "fund-statistics.confidence-intervals",
+    "front": "Why not recreate an NHIS confidence interval using only n and p̂?",
+    "back": "Published complex-survey intervals use weights and design-aware variance. The simple independent-sample Wald recipe does not reproduce that method."
+  },
+  {
+    "id": "fund-statistics.fc.100",
+    "topic": "fund-statistics.hypothesis-tests",
+    "front": "Do asterisks always mean the same p-value thresholds?",
+    "back": "No. NHSR 211 stars flag unreliable estimates; PISA stars identify reference comparisons; OECD Table 2.3 gives explicit p-value thresholds. Read each legend."
   }
 ]

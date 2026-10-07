@@ -3,13 +3,15 @@
   "updated": "2026-10-07",
   "module": "fund-statistics",
   "sourceReview": {
-    "uploads": 37,
-    "uniqueFiles": 21,
+    "uploads": 53,
+    "uniqueFiles": 37,
     "slides": 274,
     "exerciseCount": 64,
-    "workbooks": 8,
-    "note": "All six topic PowerPoint decks have been reviewed. The second batch adds Topic 5 (36 slides); its other 14 files match previous uploads byte for byte.",
-    "slideDecks": 6
+    "workbooks": 17,
+    "note": "Three batches: all six decks (274 slides); 17 workbook files checked. The 16 new files supply both lab problem sets, the descriptive lab answers, workbook answer variants, standalone examples and four reports. Report methods and key confidence-interval tables were examined from their full extracted text.",
+    "slideDecks": 6,
+    "reports": 4,
+    "reportPages": 363
   },
   "lessons": [
     {
@@ -155,12 +157,8 @@
   "missing": [
     "The complete mock-test question paper; only Q7–Q9 answer explanations were supplied",
     "Nifedipine dataset referenced in mock Q9",
-    "OECD dataset and Descriptive Statistics LAB files",
-    "Food dataset and Inferential Statistics LAB files",
-    "Birthweight–Estriol and Otitis standalone datasets",
-    "The standalone file of 25 independent samples",
-    "Reports and papers in the confidence-interval practice folder",
-    "SMOKE dataset used in Topic 6"
+    "SMOKE dataset used in Topic 6",
+    "INFERENTIAL STATISTICS LAB_answers.docx and the Food workbook with calculations (marked to be uploaded in the supplied course notice)"
   ],
   "development": {
     "updated": "2026-10-07",
@@ -169,7 +167,10 @@
     "writtenReflections": 12,
     "comparisonTables": 6,
     "misconceptionExplanations": 18,
-    "reviewCards": 84,
-    "note": "Original teaching extensions grounded in the reviewed topic scope; source-review totals and exam requirements are unchanged."
+    "reviewCards": 100,
+    "note": "Original teaching extensions: 12 cases, 36 numerical case checks, 11 lab/report guides with 22 separate reading checks, and 100 review cards. All six topic guides link the new source-based practice. Exam requirements remain those of the supplied syllabus.",
+    "labGuides": 7,
+    "reportReaders": 4,
+    "labReportQuestions": 22
   }
 }

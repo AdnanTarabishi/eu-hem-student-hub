@@ -147,7 +147,7 @@ Full guide: [docs/thesis-import.md](docs/thesis-import.md). The spreadsheet itse
 ## Fundamentals of Statistics for Healthcare (96498)
 `fund-statistics.html` is the study workspace for **Sara Capacci**, in `fund-quant-methods`.
 It is separate from Martin Forster's `statistics` module and study centre.
-The six syllabus topics have original guides, 90 MCQs, 84 spaced-review cards, 24 concepts,
+The six syllabus topics have original guides, 90 MCQs, 100 spaced-review cards, 24 concepts,
 nine experiments and a 90-minute practice mock with self-assessed written interpretations.
 Each guide adds two original worked healthcare cases, a comparison table and three
 misconception explanations. The Worked cases view has 36 numerical checkpoints,
@@ -160,9 +160,16 @@ The mock is illustrative: it does not reproduce the teacher's mock paper or pred
 All six slide decks (274 slides) have been reviewed, including the 36-slide Topic 5 deck
 added on 7 October 2026. Its guide compares critical values, p-values and mean CIs,
 with an original interactive comparison of p-value and α tail areas.
-Several referenced lab datasets and the complete mock paper are still missing;
+The supplied lab files now support seven dataset guides and four interactive report readers,
+with 22 additional reading checks, exact Excel ranges and independently checked aggregates.
+`practical-study.json` stores the source-based teaching data; `fund-statistics-labs.js` handles
+row inspection, confidence-level comparisons and repaired progress under
+`statistics["fund-statistics.labs"]` in the shared Notes backup. Individual report CIs retain
+their published endpoints and design cautions; advanced methods are reading context.
+The complete mock paper, Nifedipine, SMOKE and inferential-lab answer files are still missing;
 `content/modules/fund-statistics/course-study.json` explicitly records those gaps.
-`source-review.json` documents 37 uploads across two batches (21 distinct files), checked workbook summaries
+`source-review.json` documents 53 uploads across three batches (37 distinct files), 17 checked workbooks, four reports
+(363 PDF pages extracted, methods and key tables reviewed), workbook summaries
 and source discrepancies. Official slides, datasets and answer keys stay on Virtuale.
 The heart-rate CSV is an original illustrative practice dataset.
 

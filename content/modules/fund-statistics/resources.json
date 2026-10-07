@@ -185,5 +185,50 @@
     "date": "2026-10-06",
     "description": "Official reference. Virtuale materials require your UniBo login; availability may change.",
     "topic": "fund-statistics.two-means"
+  },
+  {
+    "id": "fund-statistics.r.023",
+    "title": "Cholesterol measurements example",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/mod/resource/view.php?id=2488392",
+    "date": "2026-10-07",
+    "topic": "fund-statistics.descriptive",
+    "description": "Source for the Labs & reports study guide; official teacher files remain on Virtuale."
+  },
+  {
+    "id": "fund-statistics.r.024",
+    "title": "Birthweight–Estriol dataset",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/mod/resource/view.php?id=2502877",
+    "date": "2026-10-07",
+    "topic": "fund-statistics.descriptive",
+    "description": "Source for the Labs & reports study guide; official teacher files remain on Virtuale."
+  },
+  {
+    "id": "fund-statistics.r.025",
+    "title": "Otitis probability model",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/mod/resource/view.php?id=2506163",
+    "date": "2026-10-07",
+    "topic": "fund-statistics.distributions",
+    "description": "Source for the Labs & reports study guide; official teacher files remain on Virtuale."
+  },
+  {
+    "id": "fund-statistics.r.026",
+    "title": "25 ordered samples with replacement",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/mod/resource/view.php?id=2522311",
+    "date": "2026-10-07",
+    "topic": "fund-statistics.estimation",
+    "description": "Source for the Labs & reports study guide; official teacher files remain on Virtuale."
+  },
+  {
+    "id": "fund-statistics.r.027",
+    "title": "OECD 2025 health-system performance report",
+    "type": "Website",
+    "url": "https://doi.org/10.1787/7b877762-en",
+    "date": "2026-10-07",
+    "topic": "fund-statistics.confidence-intervals",
+    "description": "Source for the Labs & reports study guide; official teacher files remain on Virtuale."
   }
 ]

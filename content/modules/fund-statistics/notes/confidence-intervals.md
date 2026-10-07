@@ -165,3 +165,16 @@ A random sample of 250 independent eligible patients includes 175 who attend fol
 
 [Choose a method interactively](fund-statistics.html#methods).
 <!-- /Extended original practice -->
+
+
+## Calculate a lab interval, then read published intervals
+
+Food.xlsx supplies 50 adults. For fruit expenditure, x̄=7.0104 £, s=7.1908 £ and SE=1.0169 £. The 90% unknown-σ interval uses t(.95,49)=1.6766, giving [5.3055,8.7153] £. Keep observed zero spending and check the right-skewed distribution before treating a t approximation as exact.
+
+The new report readers distinguish mean scores, country efficiency scores and population/visit percentages. Published complex-survey intervals use their own weights and variance methods; a classroom independent-sample formula does not reproduce them. Choose a row to see a chart, its denominator and a population-level interpretation.
+
+- [Food spending: from an Excel column to a 90% interval](fund-statistics.html?guide=food-lab#lab-guides)
+- [Health-centre visits: define the denominator](fund-statistics.html?guide=health-centre-report#lab-guides)
+- [Medication use: proportions in a complex survey](fund-statistics.html?guide=medication-report#lab-guides)
+- [PISA: mean, SE and a dependent comparison](fund-statistics.html?guide=pisa-report#lab-guides)
+- [Health systems: intervals do not make a league table](fund-statistics.html?guide=oecd-performance-report#lab-guides)
