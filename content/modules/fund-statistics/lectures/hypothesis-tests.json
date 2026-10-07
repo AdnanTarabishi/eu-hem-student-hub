@@ -2,13 +2,14 @@
   "schemaVersion": 1,
   "topic": "fund-statistics.hypothesis-tests",
   "topicNumber": 5,
-  "updated": "2026-10-06",
+  "updated": "2026-10-07",
   "heroTitle": "State the claim.\nEvaluate the evidence.",
   "intro": "Work from hypotheses to a test statistic, p-value and decision, then explain what the result means in healthcare.",
   "guide": "lectures/hypothesis-tests.html",
   "activities": [
     "hypothesis-test",
+    "fund-evidence",
     "fund-proportion-test"
   ],
-  "attribution": "Original student study explanations based on Sara Capacci’s Fundamentals of Statistics for Healthcare (96498), AY 2026/27. Sources: Syllabus Topic 5; Formula Sheet; Exercise Book 2026/27, exercises 51–60; mock-answer document Q7–Q9. Topic 5 slides were not supplied. Teaching examples and clarifications are original; consult Virtuale for authoritative materials."
+  "attribution": "Original student study explanations based on Sara Capacci’s Fundamentals of Statistics for Healthcare (96498), AY 2026/27. Sources: Topic 5, slides 1–36 (reviewed 7 October 2026); Formula Sheet; Exercise Book 2026/27, exercises 51–60; mock-answer document Q7–Q9. The guide uses the current book numbering; the slide exercise ranges are older. Type II error/power and the proportion counterexample are clearly labelled supplementary context. Teaching examples and clarifications are original; consult Virtuale for authoritative materials."
 }

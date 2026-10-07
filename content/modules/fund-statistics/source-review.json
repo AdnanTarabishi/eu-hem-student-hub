@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-10-06",
+  "updated": "2026-10-07",
   "files": [
     {
       "name": "Hospital_stay.xlsx",
@@ -89,6 +89,81 @@
     {
       "name": "Formula Sheet (1).docx",
       "duplicate": false
+    },
+    {
+      "name": "TOPIC 5_Hypothesis testing for the population Mean and the population Proportion.pptx",
+      "duplicate": false,
+      "batch": 2
+    },
+    {
+      "name": "List of MS Excel functions (1).docx",
+      "duplicate": true,
+      "batch": 2
+    },
+    {
+      "name": "Formula Sheet (1).docx",
+      "duplicate": true,
+      "batch": 2
+    },
+    {
+      "name": "RUN.xlsx",
+      "duplicate": true,
+      "batch": 2
+    },
+    {
+      "name": "YUNNAN.xlsx",
+      "duplicate": true,
+      "batch": 2
+    },
+    {
+      "name": "HOSPITAL.xlsx",
+      "duplicate": true,
+      "batch": 2
+    },
+    {
+      "name": "PRESSURE.xlsx",
+      "duplicate": true,
+      "batch": 2
+    },
+    {
+      "name": "HealthPolicy.xlsx",
+      "duplicate": true,
+      "batch": 2
+    },
+    {
+      "name": "Hospital_stay.xlsx",
+      "duplicate": true,
+      "batch": 2
+    },
+    {
+      "name": "EX6_answers.xlsx",
+      "duplicate": true,
+      "batch": 2
+    },
+    {
+      "name": "CHOLESTEROL.xlsx",
+      "duplicate": true,
+      "batch": 2
+    },
+    {
+      "name": "Mock test_answers to Q7 Q8 Q9.docx",
+      "duplicate": true,
+      "batch": 2
+    },
+    {
+      "name": "Excercise book_2026_27 (3).docx",
+      "duplicate": true,
+      "batch": 2
+    },
+    {
+      "name": "Syllabus - Fundamentals of Statistics 2026-27 (1).docx",
+      "duplicate": true,
+      "batch": 2
+    },
+    {
+      "name": "Understandiing notation.docx",
+      "duplicate": true,
+      "batch": 2
     }
   ],
   "workbooks": [
@@ -142,7 +217,7 @@
     }
   ],
   "findings": [
-    "The syllabus and mock-answer document were each uploaded twice as byte-identical copies: 22 uploads represent 20 distinct files.",
+    "Across two batches, 37 uploads represent 21 distinct files. The second batch adds the 36-slide Topic 5 deck and repeats 14 previously reviewed files with identical byte-level hashes.",
     "The current Exercise Book contains 64 exercises. Some slide exercise references are offset; the pathway uses the current book numbering.",
     "Topic 1 percentile convention and Excel QUARTILE.INC use different definitions. A numerical difference need not be a calculation error.",
     "Topic 3 uses a rounded population variance of 9.8 for the five-unit example; exact calculation gives 9.76. Exact with-replacement mean variance is 4.88.",
@@ -153,6 +228,10 @@
     "The exercise 61 solution contains an inconsistent reported statistic: dividing its stated difference by its stated SE does not give the printed statistic.",
     "Mock Q9 contains a hypothesis-label typo and slightly different CI endpoints between calculation and prose. Its original dataset was not supplied, so row-level results cannot be checked.",
     "Topic 6 is additional, time permitting. Pooled equal-variance, paired and two-proportion formula variations on slides 15–23 are illustrative and not required for calculation according to the slides.",
-    "The statistical-table PDF includes chi-square and F tables as well as normal and t tables. Their presence alone does not add them to the assessed syllabus."
+    "The statistical-table PDF includes chi-square and F tables as well as normal and t tables. Their presence alone does not add them to the assessed syllabus.",
+    "All six topic slide decks are now supplied: 274 slides in total. The complete mock paper and referenced lab/research files listed below remain outstanding.",
+    "Topic 5 slide 35 suggests using a proportion confidence interval for the test. The usual Wald interval and null-based proportion test use different SEs and need not agree exactly; the guide includes an original numerical counterexample.",
+    "Topic 5 slides 32 and 36 reference older exercise ranges (50–55 and 56–59). The uploaded 2026/27 book places Topic 5 exercises at 51–60; use the current book numbering.",
+    "Topic 5 slide 29 displays the t(64) two-sided p-value for t=2.1 as 0.04. Its unrounded value is approximately 0.03968; make decisions before rounding."
   ]
 }

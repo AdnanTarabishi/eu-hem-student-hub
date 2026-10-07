@@ -64,6 +64,13 @@
     const p=2*M.normalCDF(-Math.abs(statistic)),critical=M.criticalValue(alpha);
     return {estimate,se,statistic,p,critical,decision:p<alpha?'Reject H₀':'Do not reject H₀'};
   }
+  function evidence({statistic,alpha=.05}) {
+    finite(statistic); probability(alpha);
+    if (Math.abs(statistic)>4) throw new Error('Use a z statistic between −4 and 4 for this plotted experiment.');
+    const p=2*M.normalCDF(-Math.abs(statistic)), critical=M.criticalValue(alpha);
+    const boundary=Math.abs(p-alpha)<1e-10;
+    return {statistic,alpha,p,critical,boundary,decision:boundary?'Boundary: p = α':p<alpha?'Reject H₀':'Do not reject H₀'};
+  }
   function twoMeans({n1,n2,mean1,mean2,sd1,sd2,alpha=.05}) {
     count(n1,30); count(n2,30); finite(mean1,mean2,sd1,sd2); probability(alpha);
     if (sd1<=0 || sd2<=0) throw new Error('Both adjusted standard deviations must be positive.');
@@ -71,7 +78,7 @@
     const p=2*M.normalCDF(-Math.abs(statistic)),critical=M.criticalValue(alpha);
     return {difference,se,statistic,p,critical,lower:difference-critical*se,upper:difference+critical*se,decision:p<alpha?'Reject H₀':'Do not reject H₀'};
   }
-  const api={quantile,describe,sampling,interval,proportionTest,twoMeans};
+  const api={quantile,describe,sampling,interval,proportionTest,evidence,twoMeans};
   if (typeof module !== 'undefined' && module.exports) module.exports=api;
   else root.FundStatsMath=api;
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -1,14 +1,15 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-10-06",
+  "updated": "2026-10-07",
   "module": "fund-statistics",
   "sourceReview": {
-    "uploads": 22,
-    "uniqueFiles": 20,
-    "slides": 238,
+    "uploads": 37,
+    "uniqueFiles": 21,
+    "slides": 274,
     "exerciseCount": 64,
     "workbooks": 8,
-    "note": "Five supplied PowerPoint decks cover Topics 1, 2, 3, 4 and 6. Topic 5 is supported by the syllabus, exercise book and formula sheet; its slides are pending."
+    "note": "All six topic PowerPoint decks have been reviewed. The second batch adds Topic 5 (36 slides); its other 14 files match previous uploads byte for byte.",
+    "slideDecks": 6
   },
   "lessons": [
     {
@@ -72,14 +73,14 @@
       "topic": "fund-statistics.hypothesis-tests",
       "title": "Hypothesis tests for one population mean and proportion",
       "intro": "Work from hypotheses to a test statistic, p-value and decision, then explain what the result means in healthcare.",
-      "slides": 0,
+      "slides": 36,
       "exercises": "51–60",
       "outcomes": [
         "Specify two-sided null and alternative hypotheses",
         "Choose the correct mean or proportion test SE",
         "Interpret p-values without claiming proof of equality"
       ],
-      "source": "Syllabus Topic 5; Formula Sheet; Exercise Book 2026/27, exercises 51–60; mock-answer document Q7–Q9. Topic 5 slides were not supplied."
+      "source": "Topic 5, slides 1–36 (reviewed 7 October 2026); Formula Sheet; Exercise Book 2026/27, exercises 51–60; mock-answer document Q7–Q9. The guide uses the current book numbering; the slide exercise ranges are older. Type II error/power and the proportion counterexample are clearly labelled supplementary context."
     },
     {
       "number": 6,
@@ -152,7 +153,6 @@
     ]
   },
   "missing": [
-    "Topic 5 PowerPoint slides",
     "The complete mock-test question paper; only Q7–Q9 answer explanations were supplied",
     "Nifedipine dataset referenced in mock Q9",
     "OECD dataset and Descriptive Statistics LAB files",

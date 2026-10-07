@@ -1,7 +1,7 @@
 ---
 topic: fund-statistics.hypothesis-tests
 author: Student Hub
-updated: 2026-10-06
+updated: 2026-10-07
 ---
 
 ## 5-minute review
@@ -16,15 +16,32 @@ updated: 2026-10-06
 
 ## Study guide
 
-Work from hypotheses to a test statistic, p-value and decision, then explain what the result means in healthcare.
+Work from hypotheses to a test statistic, p-value and decision, then explain the result in healthcare.
 
 ## Prepare a test before looking at the result
 
-Source status: the Topic 5 PowerPoint is missing. This original guide is grounded in the syllabus, formula sheet and attached Exercise Book; its coverage should be checked against the official Topic 5 slides when supplied.
+All 36 Topic 5 slides have now been reviewed, alongside the formula sheet, current Exercise Book and supplied mock-answer explanations. This guide uses original examples and clarifies the links between the lecture’s three decision approaches.
 
 For a mean, write H₀: μ=μ₀ and Hₐ: μ≠μ₀. For a proportion, write H₀: π=π₀ and Hₐ: π≠π₀. The hypotheses concern population parameters, not the observed sample mean or proportion. Choose α and the direction of the alternative before seeing the data.
 
 A two-sided test treats departures in either direction as evidence. A one-sided alternative changes the tail and critical value and must be justified in advance. The course formula sheet and practice here focus on two-sided tests.
+
+## Rejection regions: read the graph under H₀
+
+Start with the sampling distribution assuming the null is true. For a known-variance normal mean model, it is centred on μ₀ with spread σ/√n. Standardising changes the horizontal axis to z, centred on zero. The graph is a distribution of sample means or test statistics, not a histogram of individual patients.
+
+In a two-sided test, allocate α/2 to each extreme tail. Critical values mark the boundaries. An observed statistic far enough in either direction falls in the rejection region. A value inside the central region gives insufficient evidence to reject; it does not prove H₀.
+
+
+| Chosen α | Tail area on each side | Positive normal percentile | Critical values |
+| --- | --- | --- | --- |
+| 10% | 5% | 0.95 | ±1.645 |
+| 5% | 2.5% | 0.975 | ±1.960 |
+| 1% | 0.5% | 0.995 | ±2.576 |
+
+α is selected before seeing the result. Under the null model, it is the Type I error probability for this rejection rule. Reducing α makes the cutoff more demanding. Density height at a point is different from probability area in a tail.
+
+Use the Explore experiment “P-value and α: two different tail areas” to compare the observed-statistic tails with the preselected rejection tails. Both plots use the same reference curve. Slides 7–18 develop this distinction.
 
 ## A mean with known variance
 
@@ -48,9 +65,29 @@ A p-value is the probability, assuming H₀ and the sampling model, of obtaining
 
 Reject if p < α; equivalently, for a two-sided symmetric test, |statistic| > critical value
 
-A Type I error rejects a true H₀; α controls its probability under the model. A Type II error fails to reject a false H₀; power is 1−β. A non-significant result may reflect limited precision. Choose α in advance rather than selecting a favourable threshold afterwards.
+A Type I error rejects a true H₀; α controls its probability under the model. Additional context beyond this slide deck: a Type II error fails to reject a false H₀; power is 1−β. A non-significant result may reflect limited precision. Choose α in advance rather than selecting a favourable threshold afterwards.
 
 “Do not reject” means insufficient evidence of a difference at the chosen α. It does not prove equality. Statistical significance alone does not establish clinical importance or causation.
+
+## From a cumulative table to a two-sided p-value
+
+Normal reference: p = 2[1−Φ(|z observed|)] = 2Φ(−|z observed|)
+
+The normal table reports the cumulative area to the left of a value. For a two-sided test, look up the magnitude |z|, subtract its cumulative area from 1, then double. This includes both tails. The sign indicates effect direction; it does not change a two-sided p-value.
+
+Original example: z=−1.50. The normal table gives Φ(1.50)≈0.9332, so p≈2×(1−0.9332)=0.1336. At α=0.05, do not reject. The result is compatible with the null under the model, rather than evidence that the null is certainly true.
+
+
+| Task | Excel expression | Interpretation |
+| --- | --- | --- |
+| Normal cumulative area | =NORM.S.DIST(ABS(z),TRUE) | Area left of |z| |
+| Normal two-sided p | =2*NORM.S.DIST(-ABS(z),TRUE) | Both tails beyond ±|z| |
+| Positive t critical value | =T.INV(1−α/2,n−1) | Cutoff for the chosen α |
+| t two-sided p | =T.DIST.2T(ABS(t),n−1) | Both tails under the t reference |
+
+A t percentile table helps retrieve cutoffs or bound a p-value, but usually does not provide the exact p-value for an arbitrary observed t. Use Excel for that calculation. For example, t=2.1 with df=64 gives p≈0.03968, which rounds to 0.04; it is not exactly 0.04. Read the function’s argument as a statistic, not a cumulative probability.
+
+Compare unrounded p with α before rounding for presentation. z and t in these expressions stand for your calculated cell references; Excel argument separators depend on your settings. See slides 23–29.
 
 ## A proportion uses the null in its test SE
 
@@ -62,7 +99,27 @@ Check nπ₀ and n(1−π₀) are at least 5 (a conservative check is 10). Requi
 
 The mean-test confidence interval and two-sided test agree when they use the same model, SE and critical value. A Wald proportion CI and the null-based proportion test use different SEs, so their decisions need not agree exactly.
 
+## Three approaches for a mean—and a proportion caveat
+
+For a two-sided mean test, use the same model, standard error and reference distribution for all three approaches. Then the critical-value rule, p-value rule and matching confidence interval give equivalent decisions away from the equality boundary.
+
+
+| Approach | Reject H₀ when | Check |
+| --- | --- | --- |
+| Critical values | |z|>z* or |t|>t* | Use the correct reference and degrees of freedom |
+| P-value | p<α | Use both tails for a two-sided test |
+| Mean confidence interval | μ₀ is outside the matching interval | Confidence is 100(1−α)%; use the same SE and cutoff |
+
+For example, α=0.05 pairs with a 95% interval. If α is entered as the fraction 0.05, calculate 100×(1−α), rather than 100−0.05. At p=α or an endpoint exactly equal to μ₀, state the boundary and follow the specified convention; avoid making a decision from rounded displays. Slides 22 and 30–31 compare the three mean-test approaches.
+
+Slide 35 also mentions a proportion-interval approach. The usual Wald proportion CI uses p̂ in its SE, while the null-based test uses π₀. They are not an exact test/interval pair, so the mean-test equivalence cannot be applied automatically. This is a clarification of the supplied sources.
+
+An original counterexample: the two proportion SEs matter
+
+Take n=100, successes=22 and H₀:π=0.31. The null-based test gives SE₀≈0.04625, z≈−1.94597 and p≈0.05166, so do not reject at 5%. The usual Wald 95% CI uses SE≈0.04142 and is approximately [0.13881,0.30119], excluding 0.31. Both success/failure checks are adequate; the different SEs cause the mismatch. Use the null-based test when answering the course hypothesis-test question.
+
 ## Interpret a published output
+
 
 | Reported result | Defensible reading | Avoid |
 | --- | --- | --- |
@@ -71,17 +128,18 @@ The mean-test confidence interval and two-sided test agree when they use the sam
 | p printed as 0.000 | Smaller than the output’s precision | Exactly zero probability |
 | p=1 for equal observed means | The statistic is zero under this test | Proof the populations are identical |
 
-
 A complete comment names the groups or population, outcome, direction and size of the estimate, α and decision, plus the limits of the study design. Read the legend before translating significance stars into thresholds.
 
 ## Practise an equation and a conclusion
 
-A structured exam answer 1. Define the population parameter. 2. State H₀ and Hₐ. 3. Specify the model, statistic and null distribution. 4. Report n, estimate, σ or s, and SE. 5. Substitute to get the statistic. 6. Give critical values or the p-value. 7. State the decision at α and a population-level conclusion with units and limitations.
+A structured exam answer
+
+1. Define the population parameter. 2. State H₀ and Hₐ. 3. Specify the model, statistic and null distribution. 4. Report n, estimate, σ or s, and SE. 5. Substitute to get the statistic. 6. Give critical values or the p-value. 7. State the decision at α and a population-level conclusion with units and limitations.
 
 Write equations in Word’s equation editor and upload the Word answer to EOL as instructed. These study tools support revision before the exam. During the exam only the teacher-provided formula sheet, Excel-function list and statistical tables are permitted.
 
 ## Sources
 
-Syllabus Topic 5; Formula Sheet; Exercise Book 2026/27, exercises 51–60; mock-answer document Q7–Q9. Topic 5 slides were not supplied.
+Topic 5, slides 1–36 (reviewed 7 October 2026); Formula Sheet; Exercise Book 2026/27, exercises 51–60; mock-answer document Q7–Q9. The guide uses the current book numbering; the slide exercise ranges are older. Type II error/power and the proportion counterexample are clearly labelled supplementary context.
 
 [Official course materials](https://virtuale.unibo.it/course/view.php?id=83042).

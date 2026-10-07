@@ -19,7 +19,8 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     await page.goto(base+'course.html?course=fund-quant-methods');
     await page.locator('a[href="fund-statistics.html"]').first().waitFor();
     await open();assert.equal(await page.locator('.fs-grid .fs-card').count(),6);
-    assert.match(await page.locator('#fs-view').innerText(),/Topic 5 slides pending/);
+    assert.match(await page.locator('.fs-card').nth(4).innerText(),/36 slides reviewed/);
+    assert.doesNotMatch(await page.locator('#fs-view').innerText(),/Topic 5 slides pending/);
     // Every topic guide and quiz is wired to its own 15 questions, and progress survives reload.
     for(const topic of [...new Set(bank.map(q=>q.topic))]) {
       await page.goto(base+'lecture.html?topic='+topic+'#practice');
@@ -30,6 +31,13 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
       assert.match(await page.locator('#answer-feedback').innerText(),/That’s right/);
       await page.reload();await page.waitForSelector('#answer-feedback');
       assert.equal(await page.locator('input[name="answer"]:checked').inputValue(),String(q.answer.charCodeAt(0)-65));
+      if(topic==='fund-statistics.hypothesis-tests') {
+        assert.equal(await page.locator('#lecture-guide section').count(),10);
+        assert.match(await page.locator('#lecture-guide').textContent(),/All 36 Topic 5 slides/);
+        assert.match(await page.locator('#lecture-guide').textContent(),/0.05166/);
+        await page.locator('.lecture-toolbar [data-view="explore"]').click();
+        assert.equal(await page.locator('[data-activity="fund-evidence"] svg').count(),2);
+      }
     }
     await open();assert.match(await page.locator('.fs-stats').innerText(),/6 \/ 90/);
     await nav('cards');await page.getByRole('button',{name:'Reveal answer',exact:true}).click();
@@ -40,7 +48,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     await page.locator('#fs-values').fill('1, 2, 3, 4');assert.match(await page.locator('.fund-result').innerText(),/1.5 \/ 3.5/);
     await page.locator('#fs-quartiles').selectOption('excel');assert.match(await page.locator('.fund-result').innerText(),/1.75 \/ 3.25/);
     await page.locator('#fs-values').fill('1, oops');assert.match(await page.locator('.fund-result').innerText(),/Use numeric/);
-    for(const id of ['normal-distribution','fund-table','fund-sampling','fund-confidence','hypothesis-test','fund-proportion-test','fund-two-means']) {
+    for(const id of ['normal-distribution','fund-table','fund-sampling','fund-confidence','hypothesis-test','fund-evidence','fund-proportion-test','fund-two-means']) {
       await page.locator('#fs-lab-choice').selectOption(id);assert.equal(await page.locator('#fs-lab [data-activity]').getAttribute('data-activity'),id);
       assert.ok((await page.locator('#fs-lab').innerText()).length>150);
     }
@@ -52,7 +60,26 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     await page.locator('#fs-ci-normal').check();assert.match(await page.locator('.fund-result').innerText(),/Unknown-σ t interval/);
     await page.locator('#fs-ci-mode').selectOption('proportion');await page.locator('#fs-ci-n').fill('200');await page.locator('#fs-ci-k').fill('120');
     assert.match(await page.locator('.fund-result').innerText(),/0.532, 0.668/);
+    await page.locator('#fs-lab-choice').selectOption('fund-evidence');
+    assert.equal(await page.locator('.fund-result svg').count(),2);
+    await page.locator('#fs-evidence-z').fill('2.5');
+    assert.match(await page.locator('.fund-result').innerText(),/0.012419/);
+    assert.match(await page.locator('.fund-result').innerText(),/Reject H₀/);
+    await page.locator('#fs-evidence-z').fill('-2.5');
+    assert.match(await page.locator('.fund-result').innerText(),/0.012419/);
+    await page.locator('#fs-evidence-alpha').selectOption('.01');
+    assert.match(await page.locator('.fund-result').innerText(),/Do not reject H₀/);
+    await page.locator('#fs-evidence-z').fill('5');
+    assert.match(await page.locator('.fund-result').innerText(),/between −4 and 4/);
+    await page.locator('#fs-evidence-z').fill('2.5');
+    await page.locator('#fs-lab').screenshot({path:'/workspace/work/statistics/batch-2/evidence-desktop.png'});
+    await page.setViewportSize({width:390,height:844});
+    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+    await page.locator('#fs-lab').screenshot({path:'/workspace/work/statistics/batch-2/evidence-mobile.png'});
+    await page.setViewportSize({width:1440,height:1000});
     await nav('sources');assert.equal(await page.locator('tbody').nth(1).locator('tr').count(),8);assert.match(await page.locator('#fs-view').innerText(),/before−after/);
+    assert.match(await page.locator('.fs-stats').innerText(),/37 \/ 21/);
+    assert.match(await page.locator('.fs-stats').innerText(),/6 \/ 274/);
     await nav('reference');assert.match(await page.locator('#fs-view').innerText(),/T.DIST.2T/);
     await nav('mock');await page.getByRole('button',{name:'Start 90-minute mock'}).click();
     assert.equal(await page.locator('.fs-feedback').count(),0);assert.match(await page.locator('#fs-timer').innerText(),/^(89|90):/);
@@ -95,6 +122,6 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     const blocked=await browser.newContext();await blocked.addInitScript(()=>{Storage.prototype.setItem=function(){throw new Error('blocked');};});
     const p=await blocked.newPage();await p.goto(base+'fund-statistics.html#mock');await p.waitForSelector('#fs-content:not([hidden])');
     assert.equal(await p.locator('#fs-storage-warning').isVisible(),true);await p.locator('#fs-start-mock').click();assert.match(await p.locator('#fs-view').innerText(),/Session storage is unavailable/);
-    await blocked.close();console.log('Fundamentals browser passed: six guides, shared saved quizzes/cards, eight labs, mock submission/refresh/expiry/rubrics, mobile/dark/offline and blocked storage.');
+    await blocked.close();console.log('Fundamentals browser passed: six reviewed decks, shared saved quizzes/cards, nine labs including both p/α tail plots, mock submission/refresh/expiry/rubrics, mobile/dark/offline and blocked storage.');
   } finally {await browser.close();server.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});

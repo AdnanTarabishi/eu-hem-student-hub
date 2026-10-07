@@ -23,6 +23,36 @@
     return `<figure class="fund-chart"><svg viewBox="0 0 700 225" role="img" aria-label="Standard normal reference distribution. Critical values plus or minus ${number(critical)}; statistic ${number(statistic)}.">${shade(left,-4,Math.max(-4,-critical))}${shade(right,Math.min(4,critical),4)}<path d="${line}" fill="none" stroke="currentColor" stroke-width="2"/><path d="M50 175H650" stroke="currentColor" opacity=".3"/><path d="M${x(clipped)} 20V175" stroke="var(--fs-accent)" stroke-width="3"/>${[-4,-2,0,2,4].map(z=>`<text x="${x(z)}" y="200" text-anchor="middle" fill="currentColor" font-size="14">${z}</text>`).join('')}</svg><figcaption>Normal reference. Shaded tails are the rejection regions. Observed z = ${number(statistic)}${Math.abs(statistic)>4?' (outside the plotted range)':''}.</figcaption></figure>`;
   }
   const definitions={
+    'fund-evidence':{
+      title:'P-value and α: two different tail areas',
+      intro:'A two-sided normal-reference test. The p-value follows the observed statistic; α follows the critical values chosen before sampling. Both pictures use the same standard normal curve.',
+      build(node) {
+        node.innerHTML='<div class="activity-controls">'+input('fs-evidence-z','Observed z (−4 to 4)',1.5,-4,4,.05)+select('fs-evidence-alpha','Significance α',[['.05','5%'],['.01','1%'],['.10','10%']])+'</div>'+output;
+        function tailPlot(threshold,label,colour) {
+          const x=z=>50+(z+4)/8*600, y=z=>175-150*Math.exp(-z*z/2);
+          let curve='';
+          for(let i=0;i<=160;i++) {
+            const z=-4+i/20;
+            curve+=(i?'L':'M')+x(z)+','+y(z);
+          }
+          const tail=(a,b)=>{
+            let path=`M${x(a)},175`;
+            for(let i=0;i<=80;i++) {
+              const z=a+(b-a)*i/80;
+              path+=`L${x(z)},${y(z)}`;
+            }
+            return `<path d="${path}L${x(b)},175Z" fill="${colour}" opacity=".3"/>`;
+          };
+          return `<figure class="fund-chart"><svg viewBox="0 0 700 225" role="img" aria-label="${esc(label)}: two shaded tails beyond plus or minus ${number(threshold)}.">${tail(-4,-threshold)}${tail(threshold,4)}<path d="${curve}" fill="none" stroke="currentColor" stroke-width="2"/><path d="M50 175H650" stroke="currentColor" opacity=".3"/><path d="M${x(-threshold)} 20V175M${x(threshold)} 20V175" stroke="${colour}" stroke-width="2" stroke-dasharray="5 4"/>${[-4,-2,0,2,4].map(z=>`<text x="${x(z)}" y="200" text-anchor="middle" fill="currentColor" font-size="14">${z}</text>`).join('')}</svg><figcaption>${esc(label)} · cutoffs ±${number(threshold)}. Area is measured under the curve, rather than by its height.</figcaption></figure>`;
+        }
+        reactive(node,()=>{
+          const d=F.evidence({statistic:get(node,'fs-evidence-z'),alpha:get(node,'fs-evidence-alpha')});
+          return stats([['Two-sided p-value',number(d.p,6)],['Chosen α',number(d.alpha,2)],['Critical values','±'+number(d.critical)],['Decision',d.decision]])+
+            '<div class="fs-grid"><div><h4>P-value: tails beyond ±|z observed|</h4>'+tailPlot(Math.abs(d.statistic),'P-value tail area = '+number(d.p,6),'var(--fs-accent)')+'</div><div><h4>α: tails beyond the critical values</h4>'+tailPlot(d.critical,'Rejection-region area α = '+number(d.alpha,2),'var(--color-link)')+'</div></div>'+
+            `<p>${d.boundary?'Boundary: p=α within numerical precision. State the boundary and follow the specified equality convention.':d.p<d.alpha?'p < α: the observed statistic lies beyond a critical value, so reject H₀.':'p > α: the observed statistic is inside the critical cutoffs, so do not reject H₀.'} Try z=1.5, then z=2.5; compare α=5% with α=1%.</p><p>Changing the sign of z does not change a two-sided p-value. Neither shaded area is a probability that H₀ is true. A t test uses its t reference curve instead.</p>`;
+        });
+      }
+    },
     'fund-descriptive':{title:'Describe a sample: centre, spread and box plot',intro:'Edit these illustrative observations. Compare the course percentile convention with Excel QUARTILE.INC and separate descriptive from adjusted variance.',build(node){
       node.innerHTML='<label for="fs-values">Observations (comma or space separated; decimal point)</label><textarea id="fs-values" rows="3">2, 3, 3, 4, 8</textarea>'+select('fs-quartiles','Quartile convention',[['course','Course np rule'],['excel','Excel QUARTILE.INC']])+output;
       reactive(node,()=>{
