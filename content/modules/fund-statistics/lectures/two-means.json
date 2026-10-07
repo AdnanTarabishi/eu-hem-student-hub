@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "topic": "fund-statistics.two-means",
   "topicNumber": 6,
-  "updated": "2026-10-06",
+  "updated": "2026-10-07",
   "heroTitle": "Two groups.\nOne well-defined contrast.",
   "intro": "Recognise independent and paired designs, calculate the uncertainty of a difference and interpret a two-group result.",
   "guide": "lectures/two-means.html",

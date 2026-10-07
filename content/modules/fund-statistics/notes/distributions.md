@@ -1,7 +1,7 @@
 ---
 topic: fund-statistics.distributions
 author: Student Hub
-updated: 2026-10-06
+updated: 2026-10-07
 ---
 
 ## 5-minute review
@@ -91,3 +91,72 @@ Normal or t? Normal standardisation uses the known population SD σ. A mean with
 Topic 2, slides 1–64; Exercise Book 2026/27, exercises 13–28; Statistical Tables, tables D.1 and D.2.
 
 [Official course materials](https://virtuale.unibo.it/course/view.php?id=83042).
+
+<!-- Extended original practice -->
+
+## Probability questions have different operations
+
+| Question | Operation | Main check |
+| --- | --- | --- |
+| A left tail up to a | F(a) | Cumulative probability, not density height. |
+| A right tail beyond a | 1−F(a) | Choose the complement. |
+| Between a and b | F(b)−F(a) | For discrete X, check endpoint inclusion. |
+| A percentile at probability q | Inverse CDF | Normal xq=μ+σzq; use SD in original units. |
+
+## Two original healthcare cases
+
+### A probability model for follow-up visits
+
+An illustrative model for next-month follow-up visits has X=0,1,2,3 with probabilities 0.10,0.40,0.30,0.20. Treat these as model probabilities, not observed sample frequencies.
+
+[Try the interactive checkpoints](fund-statistics.html?case=visit-model#cases).
+
+1. **Validate the model.** All probabilities are nonnegative and their sum is 1. The possible counts are discrete; there is no outcome of 1.6 visits for a single person.
+
+2. **Weight outcomes.** E(X)=0×0.1+1×0.4+2×0.3+3×0.2=1.6 visits. This is a long-run average, not the most likely outcome.
+
+3. **Calculate spread.** E(X²)=0+0.4+4×0.3+9×0.2=3.4 visits². Var(X)=3.4−1.6²=0.84 visits²; SD≈0.9165 visits.
+
+4. **Choose the tail.** P(X≥2)=P(X=2)+P(X=3)=0.5. Here P(X>2)=0.2, so a strict versus inclusive inequality matters.
+
+**Excel:**
+- Expected value, counts A2:A5 and probabilities B2:B5: `=SUMPRODUCT(A2:A5,B2:B5)`
+- Second moment, squared counts in C2:C5: `=SUMPRODUCT(C2:C5,B2:B5)`
+
+**Interpretation:** The expectation is the probability-weighted long-run average of visit counts and need not be an individual outcome. In this discrete model, “at least 2” includes the mass at 2, giving 0.5; “more than 2” includes only 3, giving 0.2.
+
+**Watch for:** An unweighted average of the four possible counts would ignore how likely each outcome is.
+
+### Translate a normal waiting-time question
+
+For an illustrative planning model, an individual waiting time X is normal with mean 30 minutes and SD 6 minutes. Find the probability above 39 minutes, the probability between 24 and 39 minutes, and the 95th percentile. Evaluate whether a normal model is plausible before using it with real waiting-time data.
+
+[Try the interactive checkpoints](fund-statistics.html?case=normal-wait#cases).
+
+1. **Standardise individuals.** z(39)=(39−30)/6=1.5 and z(24)=(24−30)/6=−1. This question concerns individuals, so use SD=6, not a standard error.
+
+2. **Find the right tail.** P(X>39)=1−Φ(1.5)≈0.0668072, about 6.68%.
+
+3. **Subtract cumulative areas.** P(24<X<39)=Φ(1.5)−Φ(−1)≈0.7745375, about 77.45%. For this continuous model, including an endpoint does not change the probability.
+
+4. **Reverse the operation.** z0.95≈1.644854, so x0.95=30+6×1.644854≈39.8691 minutes. This is a percentile of individual waits, not a confidence limit for the mean.
+
+**Excel:**
+- Right tail: `=1-NORM.S.DIST(1.5,TRUE)`
+- Interval probability: `=NORM.S.DIST(1.5,TRUE)-NORM.S.DIST(-1,TRUE)`
+- 95th percentile: `=30+6*NORM.S.INV(0.95)`
+
+**Interpretation:** Under the stated normal model, about 95% of individual waits are at or below 39.87 minutes. This cutoff describes the distribution of individual waits; a confidence interval would instead describe uncertainty about a population parameter estimated from sample data.
+
+**Watch for:** NORM.S.DIST(z,FALSE) returns a density height, not the area needed for these probabilities.
+
+## Catch the common mistakes
+
+- **“A continuous density of 0.2 is a 20% point probability.”** Density is height. Probability is area over an interval; a point has probability zero under a continuous model.
+
+- **“Every large sample is representative.”** Volunteer selection or an incomplete sampling frame can introduce bias. More observations alone do not remove systematic selection problems.
+
+- **“The 95th percentile means use Φ(0.95).”** 0.95 is a probability. Use the inverse cumulative function to find z0.95, then translate back to the original units.
+
+[Choose a method interactively](fund-statistics.html#methods).
+<!-- /Extended original practice -->

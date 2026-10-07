@@ -1,7 +1,7 @@
 ---
 topic: fund-statistics.estimation
 author: Student Hub
-updated: 2026-10-06
+updated: 2026-10-07
 ---
 
 ## 5-minute review
@@ -82,3 +82,73 @@ To calculate P(X̄>a), standardise with the standard error: (a−μ)/(σ/√n). 
 Topic 3, slides 1–33; Understanding Notation; Exercise Book 2026/27, exercises 29–32.
 
 [Official course materials](https://virtuale.unibo.it/course/view.php?id=83042).
+
+<!-- Extended original practice -->
+
+## Separate the three levels of variation
+
+| Level | Random quantity | Relevant spread |
+| --- | --- | --- |
+| Individuals in the population | X | Population SD σ; original units. |
+| Averages from repeated samples | X̄ | SE=σ/√n under independent identically distributed sampling. |
+| A summary of observed spread | S² | Adjusted estimator of σ²; squared units. |
+| A realised set of observations | x̄, s² | Numbers from one sample; unbiasedness is a repeated-sample property. |
+
+## Two original healthcare cases
+
+### A patient and a sample mean are different
+
+Assume independent systolic blood-pressure measurements from a normal population with mean 120 mmHg and SD 15 mmHg. Draw n=25 patients. Compare the probability that their sample mean exceeds 126 mmHg with the probability that one individual exceeds 126 mmHg.
+
+[Try the interactive checkpoints](fund-statistics.html?case=mean-versus-person#cases).
+
+1. **Identify two random variables.** X represents one individual measurement. X̄ represents the average of 25 independent measurements. They share expected value 120 but do not share spread.
+
+2. **Find the sampling spread.** SE(X̄)=15/√25=3 mmHg, while SD(X)=15 mmHg. Normality of X makes the normal sampling distribution exact even though n<30.
+
+3. **Calculate the two tails.** For X̄, z=(126−120)/3=2, giving P≈0.0227501. For X, z=(126−120)/15=0.4, giving P≈0.3445783.
+
+4. **Explain precision.** An average smooths independent individual variation. Raising n to 100 would halve SE to 1.5 mmHg but would leave individual SD at 15 mmHg; it would not cure sampling bias.
+
+**Excel:**
+- Mean SE: `=15/SQRT(25)`
+- Sample-mean tail: `=1-NORM.S.DIST((126-120)/(15/SQRT(25)),TRUE)`
+- Individual tail: `=1-NORM.S.DIST((126-120)/15,TRUE)`
+
+**Interpretation:** The sample mean has SE=3 mmHg, so 126 is two standard errors above its expectation. For an individual it is only 0.4 SD above the mean. Larger independent samples narrow the sampling distribution of averages; they do not make individual blood pressures less variable.
+
+**Watch for:** The CLT is about the distribution of summaries. In this case the normal population already supplies an exact normal distribution for X̄.
+
+### Why one denominator changes the estimate
+
+Four illustrative independent observations are 4, 6, 8 and 10 minutes. Compute the descriptive variance, adjusted variance estimate and estimated SE of the mean. You are estimating spread, not performing a variance hypothesis test.
+
+[Try the interactive checkpoints](fund-statistics.html?case=adjusted-variance#cases).
+
+1. **Calculate deviations.** x̄=7, so deviations are −3,−1,1,3 and their sum is zero. Squared deviations sum to 9+1+1+9=20 minutes².
+
+2. **Choose the target.** The observed descriptive variance is 20/4=5 minutes². To estimate population variance with the course adjustment, s²=20/3≈6.666667 minutes².
+
+3. **Estimate mean uncertainty.** s=√(20/3)≈2.581989 minutes and estimated SE=s/√4≈1.290994 minutes. Neither s nor SE is a variance.
+
+4. **Interpret unbiasedness.** Under independent identically distributed sampling, S² is unbiased across repeated samples for σ². This does not mean the single realised estimate 6.666667 must equal the unknown population variance, and √S² is not generally unbiased for σ.
+
+**Excel:**
+- Descriptive variance, A2:A5: `=VAR.P(A2:A5)`
+- Adjusted variance: `=VAR.S(A2:A5)`
+- Estimated mean SE: `=STDEV.S(A2:A5)/SQRT(COUNT(A2:A5))`
+
+**Interpretation:** Estimating the mean from these same four observations forces their deviations to sum to zero, leaving three degrees of freedom. The n−1 adjustment corrects average bias in variance estimation across independent samples. This one estimate still varies from sample to sample.
+
+**Watch for:** Use STDEV.S, not VAR.S, in s/√n. The unit of SE should match the original measurement.
+
+## Catch the common mistakes
+
+- **“Unbiased means this estimate is accurate.”** Unbiasedness concerns the average over repeated samples. A particular estimate may still be far from its target.
+
+- **“Four times as many patients halves their SD.”** It halves the SE of the mean under independence and fixed population variance, while individual SD stays the same.
+
+- **“S is unbiased because S² is unbiased.”** The square-root transformation is nonlinear. Unbiasedness of the adjusted variance does not generally transfer to the adjusted SD.
+
+[Choose a method interactively](fund-statistics.html#methods).
+<!-- /Extended original practice -->

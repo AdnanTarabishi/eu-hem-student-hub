@@ -358,5 +358,149 @@
     "topic": "fund-statistics.two-means",
     "front": "A significance-star legend should be…",
     "back": "Read for that specific paper. Authors use different star thresholds and footnotes."
+  },
+  {
+    "id": "fund-statistics.fc.061",
+    "topic": "fund-statistics.descriptive",
+    "front": "A stay changes from 10 to 30 days above the sample median. Must the median change?",
+    "back": "No. It can remain unchanged when the corrected value stays above the central position. The mean changes because it uses magnitudes."
+  },
+  {
+    "id": "fund-statistics.fc.062",
+    "topic": "fund-statistics.descriptive",
+    "front": "Why can two correct IQRs differ?",
+    "back": "They may use different percentile conventions. In the original eight-stay case the slide np IQR is 6 days, while QUARTILE.INC gives 5 days."
+  },
+  {
+    "id": "fund-statistics.fc.063",
+    "topic": "fund-statistics.descriptive",
+    "front": "Is a negative box-plot fence an impossible calculation?",
+    "back": "No. A fence is a threshold derived from quartiles, not an observed clinical value. The whisker ends at a valid observed value inside it."
+  },
+  {
+    "id": "fund-statistics.fc.064",
+    "topic": "fund-statistics.descriptive",
+    "front": "What happens to variance when every measurement is multiplied by 3?",
+    "back": "Variance is multiplied by 9 and SD by 3. Adding a constant instead leaves both unchanged."
+  },
+  {
+    "id": "fund-statistics.fc.065",
+    "topic": "fund-statistics.distributions",
+    "front": "For discrete visits, why can P(X≥2) differ from P(X>2)?",
+    "back": "The inclusive event contains the probability mass at X=2. In the original visit model they are 0.5 and 0.2."
+  },
+  {
+    "id": "fund-statistics.fc.066",
+    "topic": "fund-statistics.distributions",
+    "front": "Can expected visits equal 1.6 even though nobody has 1.6 visits?",
+    "back": "Yes. Expected value is a probability-weighted long-run average, not necessarily a possible individual outcome."
+  },
+  {
+    "id": "fund-statistics.fc.067",
+    "topic": "fund-statistics.distributions",
+    "front": "How do you find a normal 95th percentile in original units?",
+    "back": "Use μ+σ×NORM.S.INV(0.95). The inverse maps a probability to a cutoff; NORM.S.DIST maps a cutoff to probability."
+  },
+  {
+    "id": "fund-statistics.fc.068",
+    "topic": "fund-statistics.distributions",
+    "front": "A cumulative table gives Φ(1.5)≈0.9332. What is the right-tail probability?",
+    "back": "1−0.9332≈0.0668. Match the event direction before using a table entry."
+  },
+  {
+    "id": "fund-statistics.fc.069",
+    "topic": "fund-statistics.estimation",
+    "front": "A normal population has SD 15 and n=25. What is the mean SE?",
+    "back": "15/√25=3, in the original units. Normality makes the sampling distribution normal even though n is below 30."
+  },
+  {
+    "id": "fund-statistics.fc.070",
+    "topic": "fund-statistics.estimation",
+    "front": "Which denominator standardises one person: σ or σ/√n?",
+    "back": "Use σ for an individual X. Use σ/√n for the average of n independent observations X̄."
+  },
+  {
+    "id": "fund-statistics.fc.071",
+    "topic": "fund-statistics.estimation",
+    "front": "Why do four observations leave three free deviations from their sample mean?",
+    "back": "Their deviations sum to zero. Once three deviations are set, the fourth is fixed; this motivates n−1 in adjusted variance."
+  },
+  {
+    "id": "fund-statistics.fc.072",
+    "topic": "fund-statistics.estimation",
+    "front": "Should VAR.S or STDEV.S appear in an estimated mean SE?",
+    "back": "STDEV.S/√n. VAR.S is a variance in squared units; taking its square root gives the adjusted SD."
+  },
+  {
+    "id": "fund-statistics.fc.073",
+    "topic": "fund-statistics.confidence-intervals",
+    "front": "Is the full width of a symmetric CI the same as its margin of error?",
+    "back": "No. Width is twice the margin: (estimate+margin)−(estimate−margin)=2×margin."
+  },
+  {
+    "id": "fund-statistics.fc.074",
+    "topic": "fund-statistics.confidence-intervals",
+    "front": "Why use a t critical value for a normal sample of 16 with unknown σ?",
+    "back": "Estimating σ with s adds uncertainty. Use df=15 and t at cumulative probability 1−α/2 for a two-sided interval."
+  },
+  {
+    "id": "fund-statistics.fc.075",
+    "topic": "fund-statistics.confidence-intervals",
+    "front": "What counts support a Wald interval for 175 successes among 250 observations?",
+    "back": "The observed counts: 175 successes and 75 failures. Both exceed 5 (course minimum) and 10 (a common more conservative guideline)."
+  },
+  {
+    "id": "fund-statistics.fc.076",
+    "topic": "fund-statistics.confidence-intervals",
+    "front": "A CI is 64.32%–75.68% around 70%. Is its margin 5.68 percentage points?",
+    "back": "Yes. It is a difference on the percentage scale. This is not a 5.68% relative increase and does not describe 95% of individuals."
+  },
+  {
+    "id": "fund-statistics.fc.077",
+    "topic": "fund-statistics.hypothesis-tests",
+    "front": "Should p≈0.04550026 be rounded to 0.05 before a 5% decision?",
+    "back": "No. Compare the unrounded value with α=0.05; here p<α, so the test rejects. Round only when reporting."
+  },
+  {
+    "id": "fund-statistics.fc.078",
+    "topic": "fund-statistics.hypothesis-tests",
+    "front": "For a test of π=0.60 with n=300, which counts check the normal approximation?",
+    "back": "Expected null counts: 300×0.60=180 successes and 120 failures. A Wald interval instead checks observed counts."
+  },
+  {
+    "id": "fund-statistics.fc.079",
+    "topic": "fund-statistics.hypothesis-tests",
+    "front": "Does an estimate of 64% against a null of 60% automatically reject?",
+    "back": "No. Divide the 4-percentage-point difference by the null SE and calculate p. In the original n=300 case p≈0.1573, so do not reject at 5%."
+  },
+  {
+    "id": "fund-statistics.fc.080",
+    "topic": "fund-statistics.hypothesis-tests",
+    "front": "What is the difference between a p-value and α?",
+    "back": "p is calculated from the observed statistic under H₀. α is chosen in advance to set the test’s Type I error level."
+  },
+  {
+    "id": "fund-statistics.fc.081",
+    "topic": "fund-statistics.two-means",
+    "front": "Why add s₁²/n₁ and s₂²/n₂ for independent sample means?",
+    "back": "Independence makes the variances of the two sample means add. Take the square root of their sum for the SE of the contrast."
+  },
+  {
+    "id": "fund-statistics.fc.082",
+    "topic": "fund-statistics.two-means",
+    "front": "If clinic 1 − clinic 2 equals −3 minutes, what is the direction?",
+    "back": "Clinic 1 has an observed mean 3 minutes lower. Reversing group order reverses signs while preserving SE and the two-sided p-value."
+  },
+  {
+    "id": "fund-statistics.fc.083",
+    "topic": "fund-statistics.two-means",
+    "front": "Does a 95% difference CI [−4.77,0.77] prove equivalence?",
+    "back": "No. It includes zero and differences in both directions. Equivalence requires a separate justified procedure and margin."
+  },
+  {
+    "id": "fund-statistics.fc.084",
+    "topic": "fund-statistics.two-means",
+    "front": "Are all Topic 6 variations assessed calculation methods?",
+    "back": "No. Topic 6 is additional, time permitting. The slides label paired, pooled equal-variance and two-proportion formulas as illustrative; confirm scope with the teacher."
   }
 ]

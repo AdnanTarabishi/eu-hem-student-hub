@@ -147,8 +147,15 @@ Full guide: [docs/thesis-import.md](docs/thesis-import.md). The spreadsheet itse
 ## Fundamentals of Statistics for Healthcare (96498)
 `fund-statistics.html` is the study workspace for **Sara Capacci**, in `fund-quant-methods`.
 It is separate from Martin Forster's `statistics` module and study centre.
-The six syllabus topics have original guides, 90 MCQs, 60 spaced-review cards, 24 concepts,
+The six syllabus topics have original guides, 90 MCQs, 84 spaced-review cards, 24 concepts,
 nine experiments and a 90-minute practice mock with self-assessed written interpretations.
+Each guide adds two original worked healthcare cases, a comparison table and three
+misconception explanations. The Worked cases view has 36 numerical checkpoints,
+hints, Excel expressions and 12 self-assessed written reflections. The Choose a method
+view checks design, normality and observed versus null counts before showing a recipe.
+Cases live in `extended-practice.json`; `fund-statistics-practice.js` handles grading,
+case state repair and method selection. Answers and reflections share the Notes backup
+under `statistics["fund-statistics.cases"]`, preserving existing quiz/card IDs and answers.
 The mock is illustrative: it does not reproduce the teacher's mock paper or predict a grade.
 All six slide decks (274 slides) have been reviewed, including the 36-slide Topic 5 deck
 added on 7 October 2026. Its guide compares critical values, p-values and mean CIs,

@@ -161,5 +161,15 @@
     "The standalone file of 25 independent samples",
     "Reports and papers in the confidence-interval practice folder",
     "SMOKE dataset used in Topic 6"
-  ]
+  ],
+  "development": {
+    "updated": "2026-10-07",
+    "originalCases": 12,
+    "numericCheckpoints": 36,
+    "writtenReflections": 12,
+    "comparisonTables": 6,
+    "misconceptionExplanations": 18,
+    "reviewCards": 84,
+    "note": "Original teaching extensions grounded in the reviewed topic scope; source-review totals and exam requirements are unchanged."
+  }
 }

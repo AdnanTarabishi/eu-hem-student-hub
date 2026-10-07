@@ -143,3 +143,73 @@ Write equations in Word’s equation editor and upload the Word answer to EOL as
 Topic 5, slides 1–36 (reviewed 7 October 2026); Formula Sheet; Exercise Book 2026/27, exercises 51–60; mock-answer document Q7–Q9. The guide uses the current book numbering; the slide exercise ranges are older. Type II error/power and the proportion counterexample are clearly labelled supplementary context.
 
 [Official course materials](https://virtuale.unibo.it/course/view.php?id=83042).
+
+<!-- Extended original practice -->
+
+## Evidence, decision and effect answer different questions
+
+| Quantity | Meaning | Cannot tell you alone |
+| --- | --- | --- |
+| Effect estimate | Observed distance from the reference, with units | Whether sampling uncertainty is small. |
+| p-value | Extremeness under H₀ and the model | Probability that H₀ is true or the clinical importance. |
+| α | Pre-specified Type I error level | The size of the observed effect. |
+| Matching mean CI | Range of parameter estimates compatible with that CI procedure | An individual prediction range. For proportions, Wald CI and the null-based test need not agree. |
+
+## Two original healthcare cases
+
+### A decision close to the 5% cutoff
+
+A random sample of 25 independent patients has a mean pulse of 84 bpm. Assume a normal population with known SD σ=10 bpm. Test H₀: μ=80 against Hₐ: μ≠80 at a pre-specified α=0.05.
+
+[Try the interactive checkpoints](fund-statistics.html?case=mean-test#cases).
+
+1. **Set the question before testing.** The parameter is the eligible population’s mean pulse. The two-sided hypotheses compare μ with 80 bpm; α=0.05 is fixed before examining the result.
+
+2. **Standardise under H₀.** Known σ and normal independent sampling justify z. SE₀=10/√25=2 bpm; z=(84−80)/2=2.
+
+3. **Calculate the evidence.** p=2[1−Φ(2)]≈0.04550026. The 5% two-sided critical value is 1.959964, so |z| exceeds it and p<0.05. Retain precision until making the decision.
+
+4. **Cross-check and interpret.** The matching 95% z CI is 84±1.959964×2≈[80.0801,87.9199] bpm, excluding 80. Reject H₀ at 5%, with an estimate above 80. A 4 bpm difference still needs clinical context.
+
+**Excel:**
+- Observed z: `= (84-80)/(10/SQRT(25))`
+- Two-sided p: `=2*NORM.S.DIST(-ABS(2),TRUE)`
+- Positive critical value: `=NORM.S.INV(0.975)`
+
+**Interpretation:** Under H₀ and the normal independent-sampling model, a result at least as extreme in either direction as z=2 has probability about 0.0455. Reject H₀ at 5%; the data provide evidence that the population mean differs from 80 bpm, with an estimated mean of 84 bpm. The p-value does not give the probability that H₀ is true.
+
+**Watch for:** Rounding 0.0455 to 0.05 can obscure the decision. Compare the unrounded result with α.
+
+### A higher observed proportion may be inconclusive
+
+Among 300 randomly sampled independent eligible adults, 192 support a health programme. Test H₀: π=0.60 against Hₐ: π≠0.60 at a pre-specified α=0.05, using the course normal approximation without continuity correction.
+
+[Try the interactive checkpoints](fund-statistics.html?case=proportion-test#cases).
+
+1. **Check the model under H₀.** Expected null successes are 300×0.6=180 and failures 120. Both are ample for the course approximation. The observed support estimate is 192/300=0.64.
+
+2. **Use the null SE.** SE₀=√(0.6×0.4/300)≈0.02828427. It uses π₀=0.6, not p̂=0.64. z=(0.64−0.60)/SE₀≈1.414214.
+
+3. **Make the decision.** Two-sided p≈0.1572992, greater than 0.05. Do not reject H₀. The observed proportion is higher than 0.60, but this test does not provide sufficient evidence of a population difference at 5%.
+
+4. **Keep claims bounded.** Non-rejection is not proof that π=0.60. The 4-percentage-point observed excess is an effect estimate; its sign alone does not determine significance.
+
+**Excel:**
+- Null SE: `=SQRT(0.6*(1-0.6)/300)`
+- Observed z: `=((192/300)-0.6)/SQRT(0.6*(1-0.6)/300)`
+- Two-sided p: `=2*NORM.S.DIST(-ABS(((192/300)-0.6)/SQRT(0.6*(1-0.6)/300)),TRUE)`
+
+**Interpretation:** The sample support proportion is 64%, which is 4 percentage points above the null value of 60%. The null-based two-sided z test gives p≈0.1573, so we do not reject at 5%. This result is insufficient evidence of a population difference at that level; it does not prove equality.
+
+**Watch for:** A numerical difference between p̂ and π₀ is expected under sampling variation. It is not by itself a test decision.
+
+## Catch the common mistakes
+
+- **“A p-value above 0.05 proves H₀.”** It means this pre-specified 5% test did not find sufficient evidence to reject. Equality or equivalence has not been established.
+
+- **“I can choose α after seeing p.”** Select the significance level before inspecting the result. A post hoc switch changes the claimed error-control procedure.
+
+- **“A tiny p-value implies a large useful effect.”** p depends on effect and uncertainty. Report magnitude, units and clinical context as well as statistical evidence.
+
+[Choose a method interactively](fund-statistics.html#methods).
+<!-- /Extended original practice -->

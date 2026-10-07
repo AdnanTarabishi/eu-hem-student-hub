@@ -1,7 +1,7 @@
 ---
 topic: fund-statistics.two-means
 author: Student Hub
-updated: 2026-10-06
+updated: 2026-10-07
 ---
 
 ## 5-minute review
@@ -83,3 +83,73 @@ A useful written comment Report the direction and magnitude of the difference, i
 Topic 6, slides 1–29; Exercise Book 2026/27, exercises 61–64. Additional topic in the syllabus, time permitting.
 
 [Official course materials](https://virtuale.unibo.it/course/view.php?id=83042).
+
+<!-- Extended original practice -->
+
+## Design controls the comparison
+
+| Design / claim | Analysis | Check before concluding |
+| --- | --- | --- |
+| Two independent groups | Add the variances s₁²/n₁+s₂²/n₂ | Group order determines the sign; use course large-sample approximation only when justified. |
+| Before and after in the same people | Analyse within-person differences | Pairing is in the design; equal sample sizes alone do not establish it. |
+| Equal-variance pooled method | A separate assumption and formula | Do not assume equal variances merely because sample sizes match. Illustrative in Topic 6. |
+| A significant observational difference | Evidence of an association | Statistical significance does not resolve confounding or establish a causal effect. |
+
+## Two original healthcare cases
+
+### Compare two independent clinic means
+
+Independent random clinic samples have n₁=144, mean₁=12 minutes, adjusted SD₁=6 minutes; n₂=100, mean₂=15 minutes, adjusted SD₂=5 minutes. Assume well-behaved sampling distributions. Use the course large-sample normal approximation for H₀: μ₁−μ₂=0 at 5%. Topic 6 is additional, time permitting.
+
+[Try the interactive checkpoints](fund-statistics.html?case=two-clinics#cases).
+
+1. **Define the contrast.** Δ=μ₁−μ₂ in minutes, so the observed estimate is 12−15=−3. Different patients in the two clinics make this an independent comparison, given the stated design.
+
+2. **Add sampling variances.** SE=√(36/144+25/100)=√(0.25+0.25)=√0.5≈0.7071068 minutes. Each group uses its own n and adjusted SD.
+
+3. **Test and attach uncertainty.** z=−3/0.7071068≈−4.242641. Two-sided normal p≈0.00002209. The 95% large-sample CI is about [−4.3859,−1.6141] minutes.
+
+4. **Explain direction, not causation.** Reject equal means at 5%. Clinic 1’s estimated population mean is 3 minutes lower. An observational comparison cannot establish that the clinic itself caused the difference; patient mix may matter.
+
+**Excel:**
+- SE: `=SQRT(6^2/144+5^2/100)`
+- Observed z: `= (12-15)/SQRT(6^2/144+5^2/100)`
+- Two-sided p: `=2*NORM.S.DIST(-ABS((12-15)/SQRT(6^2/144+5^2/100)),TRUE)`
+
+**Interpretation:** Clinic 1 has an estimated mean wait 3 minutes lower than clinic 2, with a large-sample 95% CI from about 1.61 to 4.39 minutes lower. Reversing the contrast reverses the estimate and interval signs, leaving SE and the two-sided p-value unchanged. An observed group difference alone does not establish a causal clinic effect.
+
+**Watch for:** Do not add SDs or use s/√(n₁+n₂). Independence makes the variances of the two sample means add.
+
+### An interval that includes zero
+
+Two independent random samples of quantitative patient scores have n₁=64, mean₁=45, adjusted SD₁=8; n₂=100, mean₂=47, adjusted SD₂=10. Assume well-behaved large-sample means and use the course normal approximation at 5%. Topic 6 is additional, time permitting.
+
+[Try the interactive checkpoints](fund-statistics.html?case=uncertain-difference#cases).
+
+1. **Keep the group order.** The estimated mean contrast is 45−47=−2 points. Scores vary within each group; the target is a difference of population means, not a difference for every patient.
+
+2. **Compute uncertainty.** SE=√(8²/64+10²/100)=√2≈1.414214 points. The standardised contrast is −2/√2≈−1.414214.
+
+3. **Read p and CI together.** Two-sided p≈0.1572992. The matching 95% normal CI is −2±1.959964×√2≈[−4.7718,0.7718] points. It includes zero, agreeing with non-rejection at 5%.
+
+4. **Describe what remains plausible.** The estimated difference is below zero, but the interval also includes small positive values. Statistical non-rejection does not establish equivalence or absence of an important effect. Clinical importance needs a relevant effect threshold and study context.
+
+**Excel:**
+- SE: `=SQRT(8^2/64+10^2/100)`
+- Lower endpoint: `=45-47-NORM.S.INV(0.975)*SQRT(8^2/64+10^2/100)`
+- Upper endpoint: `=45-47+NORM.S.INV(0.975)*SQRT(8^2/64+10^2/100)`
+
+**Interpretation:** The estimated mean contrast is −2 points, with p≈0.1573 and a 95% interval [−4.77,0.77] points. We do not reject equal population means at 5%. The interval includes zero and differences in both directions, so this is uncertainty rather than proof of no difference, equivalence or lack of clinical importance.
+
+**Watch for:** An interval spanning zero is not an equivalence test. Do not replace “insufficient evidence” with “the treatments are identical”.
+
+## Catch the common mistakes
+
+- **“Equal n means paired samples.”** Pairing comes from repeated or matched measurements on linked units. Two samples of 40 unrelated people remain independent.
+
+- **“Reversing groups changes significance.”** It reverses the estimate and interval signs, but leaves the SE and a two-sided p-value unchanged.
+
+- **“An interval spanning zero proves no useful effect.”** It reflects uncertainty; it may include clinically meaningful effects. Equivalence needs a separate justified procedure and margin.
+
+[Choose a method interactively](fund-statistics.html#methods).
+<!-- /Extended original practice -->

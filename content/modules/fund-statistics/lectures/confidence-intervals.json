@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "topic": "fund-statistics.confidence-intervals",
   "topicNumber": 4,
-  "updated": "2026-10-06",
+  "updated": "2026-10-07",
   "heroTitle": "Make uncertainty\nvisible.",
   "intro": "Build a point estimate plus a margin of error, choose z or t correctly, and write a confidence statement that matches the target.",
   "guide": "lectures/confidence-intervals.html",

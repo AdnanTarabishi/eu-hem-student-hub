@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "topic": "fund-statistics.estimation",
   "topicNumber": 3,
-  "updated": "2026-10-06",
+  "updated": "2026-10-07",
   "heroTitle": "The target. The rule.\nThe observed result.",
   "intro": "Understand why an estimator varies across samples, how standard error measures precision, and why variance estimation uses n−1.",
   "guide": "lectures/estimation.html",

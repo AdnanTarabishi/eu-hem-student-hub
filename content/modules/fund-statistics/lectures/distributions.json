@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "topic": "fund-statistics.distributions",
   "topicNumber": 2,
-  "updated": "2026-10-06",
+  "updated": "2026-10-07",
   "heroTitle": "Give uncertainty\na distribution.",
   "intro": "Connect sampling design to probability models, expected values, normal standardisation and the Student’s t table.",
   "guide": "lectures/distributions.html",

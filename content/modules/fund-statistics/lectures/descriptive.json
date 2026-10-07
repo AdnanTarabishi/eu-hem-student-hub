@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "topic": "fund-statistics.descriptive",
   "topicNumber": 1,
-  "updated": "2026-10-06",
+  "updated": "2026-10-07",
   "heroTitle": "Describe the data.\nChoose the right summary.",
   "intro": "Start with the statistical unit and measurement scale, then describe the centre, spread, shape and association in healthcare data.",
   "guide": "lectures/descriptive.html",

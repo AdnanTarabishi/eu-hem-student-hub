@@ -94,6 +94,42 @@
 .fund-stats-lecture .hero { grid-template-columns:1fr; }
 .fund-stats-lecture .hero .lead { max-width:78ch; }
 .fund-stats-lecture .fund-normal-table { max-height:470px; }
+.fs-practice-summary { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; padding:20px 24px; border:1px solid var(--border-default); border-radius:12px; background:var(--surface-subtle); }
+.fs-practice-summary p { margin:6px 0 0; }
+#fs-case-progress { color:var(--text-heading); font-weight:600; font-variant-numeric:tabular-nums; }
+.fs-case-top { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:24px; font-size:.85rem; }
+.fs-case h3 { margin-bottom:18px; font-family:var(--font-serif); font-size:clamp(1.5rem,3vw,2rem); }
+.fs-case-scenario { max-width:86ch; line-height:1.7; }
+.fs-checkpoints { margin:28px 0; }
+.fs-checkpoint { display:grid; grid-template-columns:40px minmax(0,1fr); gap:16px; padding:24px 0; border-top:1px solid var(--border-default); }
+.fs-check-number { display:grid; place-items:center; width:36px; height:36px; border-radius:50%; background:var(--color-info-soft); color:var(--text-heading); font-weight:700; }
+.fs-answer-row { display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin:8px 0; }
+.fs-answer-row input { flex:1; max-width:320px; margin:0!important; min-width:min(100%,180px)!important; }
+.fs-check-help { display:flex; align-items:center; flex-wrap:wrap; gap:16px; }
+.fs-hint-button { background:transparent; color:var(--color-link); border:0; font:inherit; font-weight:600; padding:8px 0; min-height:44px; cursor:pointer; text-decoration:underline; text-underline-offset:3px; }
+.fs-case-feedback { margin:10px 0 0!important; font-size:.9rem; min-height:1.5em; }
+.fs-case-feedback[data-result=correct] { color:var(--color-success-text); font-weight:600; }
+.fs-case-feedback[data-result=revisit], .fs-case-feedback[data-result=invalid], .fs-case-feedback[data-result=empty] { color:var(--color-brand-text); }
+.fs-hint { padding:14px; margin:8px 0 0!important; background:var(--color-info-soft); border-radius:8px; font-size:.9rem; }
+.fs-reflection { padding:20px; background:var(--surface-subtle); border-radius:12px; margin:0 0 24px; }
+.fs-reflection h4 { margin-top:0; }
+.fs-solution-steps { list-style:none; padding:0; margin:24px 0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+.fs-solution-steps li { border:1px solid var(--border-default); border-radius:12px; padding:20px; background:var(--surface-subtle); }
+.fs-solution-steps h4 { margin:8px 0 12px; }
+.fs-step-label { color:var(--color-brand-text); font-size:.75rem; text-transform:uppercase; letter-spacing:.07em; font-weight:700; }
+.fs-case code, .fs-worked code { overflow-wrap:anywhere; word-break:break-word; }
+.fs-case-footer { display:flex; align-items:center; flex-wrap:wrap; gap:24px; margin:24px 0; }
+.fs-method-recipe > * + * { margin-top:18px; }
+.fs-answer-sequence { padding-left:24px; }
+.fs-answer-sequence li { padding:6px 0 6px 6px; }
+.fs-worked { padding:24px 0; border-bottom:1px solid var(--border-default); }
+.fs-worked:last-child { border-bottom:0; }
+.fs-worked h3 { margin-top:0; }
+.fs-worked-steps { padding-left:24px; }
+.fs-worked-steps li { padding-left:6px; margin-bottom:18px; }
+.fs-worked details { margin-top:20px; }
+.fs-worked summary { cursor:pointer; font-weight:600; padding:12px 0; }
+.fs-extension .table-wrap { margin-bottom:0; }
 [hidden] { display:none!important; }
 @media (max-width:760px) {
   .fs-hero { grid-template-columns:1fr; gap:24px; }
@@ -104,5 +140,10 @@
   .fs-breadcrumb span { display:none; }
   .fs-button { font-size:.88rem; }
   .fs-stats dd, .activity-stats dd { font-size:1.25rem; }
+  .fs-solution-steps { grid-template-columns:1fr; }
+  .fs-checkpoint { grid-template-columns:30px minmax(0,1fr); gap:10px; }
+  .fs-check-number { width:28px; height:28px; }
+  .fs-answer-row input { max-width:none; width:100%; flex-basis:100%; }
+  .fs-answer-row .fs-button { width:100%; }
 }
 @media (prefers-reduced-motion:reduce) { .fund-stats-page * { scroll-behavior:auto!important; } }

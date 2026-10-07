@@ -1,6 +1,6 @@
 const http=require('node:http'),fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const {chromium}=require('playwright');
-const root=path.resolve('.'),bank=require('../../content/modules/fund-statistics/questions.json');
+const root=path.resolve('.'),bank=require('../../content/modules/fund-statistics/questions.json'),extension=require('../../content/modules/fund-statistics/extended-practice.json');
 const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.md':'text/markdown','.svg':'image/svg+xml','.png':'image/png','.woff2':'font/woff2','.webmanifest':'application/manifest+json','.csv':'text/csv'};
 (async()=>{
   const server=http.createServer((req,res)=>{
@@ -26,13 +26,15 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
       await page.goto(base+'lecture.html?topic='+topic+'#practice');
       await page.waitForSelector('#lecture-content:not([hidden])');
       assert.equal(await page.locator('#question-map button').count(),15);
+      assert.equal(await page.locator('#lecture-guide .fs-extension').count(),3);
+      assert.equal(await page.locator('#lecture-guide .fs-worked').count(),2);
       const q=bank.find(q=>q.topic===topic);
       await page.locator(`input[name="answer"][value="${q.answer.charCodeAt(0)-65}"]`).check();await page.locator('#check-answer').click();
       assert.match(await page.locator('#answer-feedback').innerText(),/That’s right/);
       await page.reload();await page.waitForSelector('#answer-feedback');
       assert.equal(await page.locator('input[name="answer"]:checked').inputValue(),String(q.answer.charCodeAt(0)-65));
       if(topic==='fund-statistics.hypothesis-tests') {
-        assert.equal(await page.locator('#lecture-guide section').count(),10);
+        assert.equal(await page.locator('#lecture-guide section').count(),13);
         assert.match(await page.locator('#lecture-guide').textContent(),/All 36 Topic 5 slides/);
         assert.match(await page.locator('#lecture-guide').textContent(),/0.05166/);
         await page.locator('.lecture-toolbar [data-view="explore"]').click();
@@ -44,6 +46,45 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     await page.getByRole('button',{name:/Good/}).click();
     const progress=await page.evaluate(()=>JSON.parse(localStorage.getItem('euhem-progress-v1')));
     assert.equal(Object.keys(progress.cards).filter(k=>k.startsWith('fund-statistics.')).length,1);
+    // New cases check all 36 answers, preserve old quiz/card state and save written drafts.
+    await nav('cases');assert.equal(await page.locator('#fs-case-solution').isVisible(),false);
+    await page.getByRole('button',{name:'Check answer 1',exact:true}).click();
+    assert.match(await page.locator('#fs-case-feedback-0').innerText(),/Enter a numerical/);
+    await page.locator('#fs-case-answer-0').fill('0');await page.locator('[data-check="0"]').click();
+    assert.match(await page.locator('#fs-case-feedback-0').innerText(),/Revisit/);
+    await page.locator('[data-hint="0"]').click();assert.equal(await page.locator('#fs-case-hint-0').isVisible(),true);
+    await page.locator('[data-hint="0"]').click();assert.equal(await page.locator('#fs-case-hint-0').isVisible(),false);
+    for(const c of extension.cases){
+      await page.locator('#fs-case-choice').selectOption(c.id);
+      for(let i=0;i<3;i++){
+        await page.locator('#fs-case-answer-'+i).fill(String(c.fields[i].answer));await page.locator(`[data-check="${i}"]`).click();
+        assert.match(await page.locator('#fs-case-feedback-'+i).innerText(),/Correct within/);
+      }
+      await page.locator('#fs-case-reflection').fill('Interpretation for '+c.id+' <script>bad()</script>');
+      await page.locator('#fs-case-reveal').click();assert.equal(await page.locator('#fs-case-solution').isVisible(),true);
+      assert.equal(await page.locator('.fs-solution-steps li').count(),4);await page.locator('[data-case-rubric="0"]').check();
+    }
+    assert.match(await page.locator('#fs-case-progress').innerText(),/36 \/ 36/);
+    const backup=await page.evaluate(()=>JSON.parse(exportProgressText()));
+    assert.equal(Object.keys(backup.progress.statistics['fund-statistics.cases'].cases).length,12);
+    assert.deepEqual(backup.progress.lectures,progress.lectures);assert.deepEqual(backup.progress.cards,progress.cards);
+    await page.reload();await page.waitForSelector('#fs-case-choice');
+    assert.equal(await page.locator('#fs-case-choice').inputValue(),'uncertain-difference');
+    assert.match(await page.locator('#fs-case-reflection').inputValue(),/<script>/);
+    assert.equal(await page.locator('#fs-case-solution').isVisible(),true);
+    await page.locator('#fs-case-topic').selectOption('1');assert.equal(await page.locator('#fs-case-choice option').count(),2);
+    assert.equal(await page.locator('#fs-case-answer-0').inputValue(),'5');
+    await page.locator('#fs-case-next').click();assert.equal(await page.locator('#fs-case-choice').inputValue(),'extreme-stay');
+    await nav('methods');assert.match(await page.locator('#fs-method-output').innerText(),/Check the design first/);
+    await page.locator('#fs-method-independent').check();assert.match(await page.locator('#fs-method-output').innerText(),/unknown-σ t/);
+    await page.locator('#fs-method-n').fill('16');assert.match(await page.locator('#fs-method-output').innerText(),/small-sample/);
+    await page.locator('#fs-method-normal').check();assert.match(await page.locator('#fs-method-output').innerText(),/df=15/);
+    await page.locator('#fs-method-known').check();assert.match(await page.locator('#fs-method-output').innerText(),/known-σ z/);
+    await page.locator('#fs-method-target').selectOption('proportion');await page.locator('#fs-method-n').fill('100');await page.locator('#fs-method-k').fill('1');
+    assert.match(await page.locator('#fs-method-output').innerText(),/5 observed/);
+    await page.locator('#fs-method-goal').selectOption('test');assert.match(await page.locator('#fs-method-output').innerText(),/null-based z/);
+    await page.locator('#fs-method-null').fill('0.99');assert.match(await page.locator('#fs-method-output').innerText(),/5 expected/);
+    await page.locator('#fs-method-target').selectOption('paired');assert.match(await page.locator('#fs-method-output').innerText(),/illustrative in Topic 6/);
     await nav('explore');assert.equal(await page.locator('[data-activity="fund-descriptive"]').count(),1);
     await page.locator('#fs-values').fill('1, 2, 3, 4');assert.match(await page.locator('.fund-result').innerText(),/1.5 \/ 3.5/);
     await page.locator('#fs-quartiles').selectOption('excel');assert.match(await page.locator('.fund-result').innerText(),/1.75 \/ 3.25/);
@@ -103,13 +144,16 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     // Responsive light and dark views have no page-width overflow.
     for(const width of [390,768,1440]) {
       await page.setViewportSize({width,height:900});
-      for(const hash of ['learn','cards','explore','mock','reference','sources']) {
+      for(const hash of ['learn','cases','methods','cards','explore','mock','reference','sources']) {
         await open(hash);
         assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${width}px overflow in ${hash}`);
       }
     }
     await page.evaluate(()=>document.documentElement.setAttribute('data-theme','dark'));
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+    await open('cases');await page.locator('#fs-case-workspace').screenshot({path:'/workspace/work/statistics/expansion/cases-dark-desktop.png'});
+    await page.setViewportSize({width:390,height:844});await page.locator('#fs-case-workspace').screenshot({path:'/workspace/work/statistics/expansion/cases-dark-mobile.png'});
+    await page.evaluate(()=>document.documentElement.setAttribute('data-theme','light'));await page.locator('#fs-case-workspace').screenshot({path:'/workspace/work/statistics/expansion/cases-light-mobile.png'});
     await open();await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot({path:'/workspace/work/statistics/workspace-desktop.png'});
     await page.setViewportSize({width:390,height:844});await open();await page.evaluate(()=>window.scrollTo(0,0));
     assert.equal(await page.locator('body.drawer-open').count(),0);
@@ -117,11 +161,13 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     // After a first online visit the new shell, data and registered activities work offline.
     await page.evaluate(()=>navigator.serviceWorker.ready);await page.reload();await page.waitForSelector('#fs-content:not([hidden])');
     await ctx.setOffline(true);await page.reload();await page.waitForSelector('#fs-content:not([hidden])');await nav('explore');
-    assert.equal(await page.locator('#fs-lab [data-activity]').count(),1);await ctx.setOffline(false);
+    assert.equal(await page.locator('#fs-lab [data-activity]').count(),1);await nav('cases');assert.equal(await page.locator('#fs-case-choice').count(),1);await nav('methods');assert.equal(await page.locator('#fs-method-target').count(),1);await ctx.setOffline(false);
     assert.deepEqual(errors,[]);await ctx.close();
     const blocked=await browser.newContext();await blocked.addInitScript(()=>{Storage.prototype.setItem=function(){throw new Error('blocked');};});
     const p=await blocked.newPage();await p.goto(base+'fund-statistics.html#mock');await p.waitForSelector('#fs-content:not([hidden])');
     assert.equal(await p.locator('#fs-storage-warning').isVisible(),true);await p.locator('#fs-start-mock').click();assert.match(await p.locator('#fs-view').innerText(),/Session storage is unavailable/);
-    await blocked.close();console.log('Fundamentals browser passed: six reviewed decks, shared saved quizzes/cards, nine labs including both p/α tail plots, mock submission/refresh/expiry/rubrics, mobile/dark/offline and blocked storage.');
+    await p.locator('.fs-nav a[href="#cases"]').click();await p.locator('#fs-case-answer-0').fill('5');await p.locator('[data-check="0"]').click();assert.match(await p.locator('#fs-case-feedback-0').innerText(),/Correct within/);
+    await p.locator('#fs-case-choice').selectOption('extreme-stay');await p.locator('#fs-case-choice').selectOption('stay-summary');assert.equal(await p.locator('#fs-case-answer-0').inputValue(),'5');
+    await blocked.close();console.log('Fundamentals browser passed: expanded six guides, 36 checked case answers/saved reflections/backups, method/design guards, shared quizzes/cards, nine labs, timed mock, mobile/dark/offline and blocked storage.');
   } finally {await browser.close();server.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});

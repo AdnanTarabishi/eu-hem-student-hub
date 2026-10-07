@@ -3,11 +3,11 @@
   'use strict';
   const $=id=>document.getElementById(id);
   const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const views=['learn','cards','explore','mock','reference','sources'];
-  const titles={learn:'Your topic pathway',cards:'Make the concepts stick',explore:'Change a number. See the idea.',mock:'Practise the exam format',reference:'Keep the essentials together',sources:'The materials behind your study guides'};
-  const intros={learn:'Six syllabus topics across 11 lectures and four exercise sessions. Each guide connects an explanation, an experiment and 15 original questions.',cards:'Recall before you reveal. Review due cards with the same schedule used in your course Notes page.',explore:'Use original examples to investigate descriptive statistics, probability, sampling, confidence intervals and tests.',mock:'An original 90-minute rehearsal with six questions, two output interpretations and two applied tasks. It is separate from the teacher’s mock paper.',reference:'Original summaries of notation, method selection and Excel functions. Open the teacher’s printed-reference files to practise using what is permitted in the exam.',sources:'Every uploaded file has been reviewed, including repeated copies. Official files are linked on Virtuale; the explanations and questions here are original student material.'};
+  const views=['learn','cases','methods','cards','explore','mock','reference','sources'];
+  const titles={learn:'Your topic pathway',cases:'Solve it. Then explain it.',methods:'Choose the method from the question',cards:'Make the concepts stick',explore:'Change a number. See the idea.',mock:'Practise the exam format',reference:'Keep the essentials together',sources:'The materials behind your study guides'};
+  const intros={learn:'Six syllabus topics across 11 lectures and four exercise sessions. Each guide connects explanations, comparisons, experiments, two worked cases and 15 original questions.',cases:'Twelve original cases connect calculations with healthcare interpretation. Use hints, check your numbers, then compare your explanation with the worked solution and rubric.',methods:'Identify the parameter, goal and design before selecting a formula. This interactive guide covers the course mean, proportion and independent-group recipes.',cards:'Recall before you reveal. Review due cards with the same schedule used in your course Notes page.',explore:'Use original examples to investigate descriptive statistics, probability, sampling, confidence intervals and tests.',mock:'An original 90-minute rehearsal with six questions, two output interpretations and two applied tasks. It is separate from the teacher’s mock paper.',reference:'Original summaries of notation, method selection and Excel functions. Open the teacher’s printed-reference files to practise using what is permitted in the exam.',sources:'Every uploaded file has been reviewed, including repeated copies. Official files are linked on Virtuale; the explanations and questions here are original student material.'};
   const MOCK_KEY='euhem-fund-mock-v1';
-  let data, moduleData, study, sourceReview, active='learn', lab='fund-descriptive', mock=null, mockStorage=true;
+  let data, moduleData, study, sourceReview, extension, active='learn', lab='fund-descriptive', mock=null, mockStorage=true;
   const mockQuestionIds=['012','026','040','053','074','088'].map(id=>'fund-statistics.q.'+id);
   const interpretations=[
     {title:'Two groups, one reported contrast',html:'<p>An observational study compares independent groups. Group 1: n=160, mean=125 mmHg, adjusted SD=12. Group 2: n=180, mean=129 mmHg, adjusted SD=15.</p><div class="table-wrap"><table><thead><tr><th>Contrast</th><th>SE</th><th>z</th><th>Two-sided p</th><th>95% CI</th></tr></thead><tbody><tr><td>Group 1 − group 2: −4 mmHg</td><td>1.4663</td><td>−2.7280</td><td>0.00637</td><td>[−6.8739, −1.1261] mmHg</td></tr></tbody></table></div><p>Interpret the direction, decision at 5%, confidence interval and limits of the study design.</p>',answer:'Group 1 has an estimated population mean 4 mmHg lower than group 2. Reject H₀: μ₁−μ₂=0 at 5% (p≈0.00637). The interval estimates a difference from approximately −6.87 to −1.13 mmHg. It excludes zero. Observational group differences alone do not establish causation or clinical importance.',rubric:['Names the contrast and interprets the −4 mmHg direction and units','Rejects at 5% and interprets the CI as uncertainty about the population mean difference','Mentions observational design/confounding and distinguishes statistical from clinical importance']},
@@ -33,7 +33,9 @@
     let html=header('learn')+`<dl class="fs-stats"><div><dt>Questions checked in the topic quizzes</dt><dd>${checked} / 90</dd></div><div><dt>Flashcards due today</dt><dd>${due}</dd></div><div><dt>Official exercise book</dt><dd>64 exercises</dd></div></dl><div class="fs-grid">`;
     for(const l of study.lessons) {
       const count=(progress.lectures[l.topic]?.checked||[]).filter(Boolean).length;
-      html+=`<article class="fs-card"><div class="fs-topic-top"><span class="fs-number">${String(l.number).padStart(2,'0')}</span><span class="fs-tag ${!l.slides?'fs-pending':''}">${!l.slides?'Slides pending':l.number===6?'Additional topic, time permitting':l.slides+' slides reviewed'}</span></div><h3>${esc(l.title)}</h3><p>${esc(l.intro)}</p><ul>${l.outcomes.map(x=>'<li>'+esc(x)+'</li>').join('')}</ul><p class="fs-meta">Exercise Book: ${esc(l.exercises)} · 15 original questions · 10 cards</p><progress max="15" value="${count}" aria-label="${count} of 15 questions checked in Topic ${l.number}"></progress><p class="fs-meta">${count}/15 questions checked</p><div class="button-row"><a class="fs-button" href="${link(l.topic)}">Open topic guide →</a><a class="fs-button fs-secondary" href="${link(l.topic,'#practice')}">Practise</a></div></article>`;
+      const cards=moduleData.flashcards.filter(c=>c.topic===l.topic).length;
+      const firstCase=extension?.cases.find(c=>c.topic===l.topic);
+      html+=`<article class="fs-card"><div class="fs-topic-top"><span class="fs-number">${String(l.number).padStart(2,'0')}</span><span class="fs-tag ${!l.slides?'fs-pending':''}">${!l.slides?'Slides pending':l.number===6?'Additional topic, time permitting':l.slides+' slides reviewed'}</span></div><h3>${esc(l.title)}</h3><p>${esc(l.intro)}</p><ul>${l.outcomes.map(x=>'<li>'+esc(x)+'</li>').join('')}</ul><p class="fs-meta">Exercise Book: ${esc(l.exercises)} · 15 original questions · ${cards} cards${firstCase?' · 2 worked cases':''}</p><progress max="15" value="${count}" aria-label="${count} of 15 questions checked in Topic ${l.number}"></progress><p class="fs-meta">${count}/15 questions checked</p><div class="button-row"><a class="fs-button" href="${link(l.topic)}">Open topic guide →</a><a class="fs-button fs-secondary" href="${link(l.topic,'#practice')}">Practise</a>${firstCase?`<a href="fund-statistics.html?case=${firstCase.id}#cases">Work a case →</a>`:''}</div></article>`;
     }
     return html+'</div><p class="fs-notice">All six topic slide decks have been reviewed. Topics describe syllabus sections, not individual class dates. The Materials &amp; review tab lists other referenced resources that have not yet been supplied.</p>';
   }
@@ -41,6 +43,22 @@
     $('fs-view').innerHTML=header('cards');
     const ctx={course:moduleData,params:{},topicTitle:id=>moduleData.topics.find(t=>t.id===id)?.title||id,topicLink:id=>{const a=createElement('a',null,moduleData.topics.find(t=>t.id===id)?.title||id);a.href=link(id);return a;}};
     $('fs-view').appendChild(flashcardSection(ctx));
+  }
+  function cases() {
+    $('fs-view').innerHTML=header('cases')+'<div id="fs-case-workspace"></div>';
+    if(!extension){$('fs-case-workspace').textContent='The extended cases are unavailable in this saved copy. Reconnect and refresh to load them.';return;}
+    FundStudyPractice.mountCases($('fs-case-workspace'),extension,study.lessons,{
+      read:()=>loadProgress().statistics[FundStudyPractice.KEY],
+      save:(value,activity)=>{
+        const progress=loadProgress();progress.statistics[FundStudyPractice.KEY]=value;
+        if(activity)recordActivity(progress,todayKey());
+        if(!saveProgress(progress))$('fs-storage-warning').hidden=false;
+      }
+    });
+  }
+  function methods() {
+    $('fs-view').innerHTML=header('methods')+'<div id="fs-method-workspace"></div>';
+    FundStudyPractice.mountMethods($('fs-method-workspace'));
   }
   function explore() {
     const options=[['fund-descriptive','1 · Centre, spread and box plot'],['normal-distribution','2 · Normal probabilities'],['fund-table','2 · Cumulative normal table'],['fund-sampling','3 · Exact sampling distributions'],['fund-confidence','4 · Mean and proportion confidence intervals'],['hypothesis-test','5 · One population mean test'],['fund-evidence','5 · P-value versus α: compare both tail areas'],['fund-proportion-test','5 · One population proportion test'],['fund-two-means','6 · Two independent means']];
@@ -128,12 +146,12 @@
   function render(focus=false) {
     active=views.includes(location.hash.slice(1))?location.hash.slice(1):'learn';
     document.querySelectorAll('.fs-nav a').forEach(a=>{if(a.hash==='#'+active)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
-    if(active==='cards')cards();else if(active==='explore')explore();else if(active==='mock')renderMock();else $('fs-view').innerHTML=active==='learn'?lessons():active==='reference'?reference():sources();
+    if(active==='cases')cases();else if(active==='methods')methods();else if(active==='cards')cards();else if(active==='explore')explore();else if(active==='mock')renderMock();else $('fs-view').innerHTML=active==='learn'?lessons():active==='reference'?reference():sources();
     if(focus)$('fs-view-title')?.focus({preventScroll:true});
   }
   async function init() {
     try {
-      [data,study,sourceReview]=await Promise.all([loadAll(),readJson(fetchText,'content/modules/fund-statistics/course-study.json',null),readJson(fetchText,'content/modules/fund-statistics/source-review.json',null)]);
+      [data,study,sourceReview,extension]=await Promise.all([loadAll(),readJson(fetchText,'content/modules/fund-statistics/course-study.json',null),readJson(fetchText,'content/modules/fund-statistics/source-review.json',null),readJson(fetchText,'content/modules/fund-statistics/extended-practice.json',null)]);
       moduleData=data.modules.find(m=>m.id==='fund-statistics');
       if(!moduleData||!study||!sourceReview)throw new Error('Study files are unavailable.');
       try{const key='euhem-fund-storage-check';localStorage.setItem(key,'1');localStorage.removeItem(key);}catch(_){$('fs-storage-warning').hidden=false;}

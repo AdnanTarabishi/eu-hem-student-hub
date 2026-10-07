@@ -1,0 +1,832 @@
+{
+  "schemaVersion": 1,
+  "updated": "2026-10-07",
+  "module": "fund-statistics",
+  "note": "Original illustrative healthcare cases developed from the reviewed course scope. No teacher questions or datasets are reproduced. Topic 6 remains additional, time permitting.",
+  "cases": [
+    {
+      "id": "stay-summary",
+      "topic": "fund-statistics.descriptive",
+      "number": 1,
+      "title": "Describe a ward’s observed stays",
+      "scenario": "Eight illustrative hospital stays are 1, 2, 2, 3, 4, 6, 10 and 12 days. Describe these admissions using the slide np percentile convention. These observations are an example, not a random-sampling claim about every hospital.",
+      "focus": "Ordering, centre, quartile convention and shape",
+      "fields": [
+        {
+          "label": "Mean stay (days)",
+          "answer": 5,
+          "tolerance": 0.01,
+          "hint": "Sum all eight stays, then divide by 8."
+        },
+        {
+          "label": "Median stay (days)",
+          "answer": 3.5,
+          "tolerance": 0.01,
+          "hint": "Average the fourth and fifth ordered values."
+        },
+        {
+          "label": "IQR, slide np convention (days)",
+          "answer": 6,
+          "tolerance": 0.01,
+          "hint": "For Q1 use positions 2 and 3; for Q3 use positions 6 and 7."
+        }
+      ],
+      "steps": [
+        {
+          "title": "Define the unit",
+          "text": "The statistical unit is an admission; length of stay is a quantitative variable measured in days. Repeated admissions by the same person would need care in a later independence claim."
+        },
+        {
+          "title": "Find the centre",
+          "text": "The sum is 40, so x̄=40/8=5 days. The median is (3+4)/2=3.5 days. The mode is 2 days."
+        },
+        {
+          "title": "Name the percentile rule",
+          "text": "With the slide np rule, Q1=(2+2)/2=2 and Q3=(6+10)/2=8, giving IQR=6 days. Excel QUARTILE.INC instead gives Q1=2, Q3=7 and IQR=5."
+        },
+        {
+          "title": "Interpret shape and flags",
+          "text": "The longer stays extend the right tail. The slide-rule fences are −7 and 17 days; no observed stay is outside them. A negative lower fence is a mathematical threshold, not a possible hospital stay."
+        }
+      ],
+      "excel": [
+        {
+          "label": "Mean, values in A2:A9",
+          "formula": "=AVERAGE(A2:A9)"
+        },
+        {
+          "label": "Median",
+          "formula": "=MEDIAN(A2:A9)"
+        },
+        {
+          "label": "Excel IQR, a different convention",
+          "formula": "=QUARTILE.INC(A2:A9,3)-QUARTILE.INC(A2:A9,1)"
+        }
+      ],
+      "reflection": "Write a two-sentence summary for a ward manager. Explain why Excel may give a different IQR.",
+      "model": "Among these eight observed admissions, the mean stay is 5 days and the median is 3.5 days, with a right tail reaching 12 days. The middle-half spread is 6 days under the slide np convention; Excel’s inclusive interpolation gives 5 days. These are sample descriptions, not evidence of a population change.",
+      "rubric": [
+        "Names admissions and reports centre with units",
+        "Explains the right tail without deleting long stays",
+        "Names the quartile convention and limits the claim to observed data"
+      ],
+      "trap": "Do not mark an Excel IQR of 5 as an arithmetic error if the question uses QUARTILE.INC. State which convention answers the question.",
+      "source": "Topic 1, slides 1–79; Exercise Book 2026/27, exercises 1–12."
+    },
+    {
+      "id": "extreme-stay",
+      "topic": "fund-statistics.descriptive",
+      "number": 1,
+      "title": "One long stay changes the story",
+      "scenario": "Five observed stays are 2, 4, 4, 5 and 10 days. A corrected record changes the final stay from 10 to 30 days, giving 2, 4, 4, 5 and 30. Summarise the corrected observations, using denominator n for descriptive variance.",
+      "focus": "Sensitivity of the mean, median and variance",
+      "fields": [
+        {
+          "label": "Corrected mean (days)",
+          "answer": 9,
+          "tolerance": 0.01,
+          "hint": "The corrected total is 45 across five admissions."
+        },
+        {
+          "label": "Corrected median (days)",
+          "answer": 4,
+          "tolerance": 0.01,
+          "hint": "Reorder the corrected observations and choose the third."
+        },
+        {
+          "label": "Corrected descriptive variance (days²)",
+          "answer": 111.2,
+          "tolerance": 0.01,
+          "hint": "Square deviations from the corrected mean and divide their sum by 5."
+        }
+      ],
+      "steps": [
+        {
+          "title": "Describe the original records",
+          "text": "Originally x̄=5, median=4 and descriptive variance=36/5=7.2 days²."
+        },
+        {
+          "title": "Recalculate after the correction",
+          "text": "The new mean is 45/5=9 days. The median remains 4 days; the changed value is still above the middle observation."
+        },
+        {
+          "title": "Track the squared deviations",
+          "text": "About the new mean 9, the deviations are −7, −5, −5, −4 and 21. Their squared sum is 49+25+25+16+441=556. Descriptive variance is 556/5=111.2 days²; adjusted variance is 556/4=139 days²."
+        },
+        {
+          "title": "Keep context",
+          "text": "The mean and variance are sensitive to magnitude. Investigate whether 30 is a valid complex admission or a recording problem; neither the median’s stability nor an outlier flag justifies automatic deletion."
+        }
+      ],
+      "excel": [
+        {
+          "label": "Corrected mean, A2:A6",
+          "formula": "=AVERAGE(A2:A6)"
+        },
+        {
+          "label": "Corrected median",
+          "formula": "=MEDIAN(A2:A6)"
+        },
+        {
+          "label": "Descriptive variance",
+          "formula": "=VAR.P(A2:A6)"
+        }
+      ],
+      "reflection": "Explain which summaries changed most and what you would do before removing the 30-day stay.",
+      "model": "The mean rises from 5 to 9 days and descriptive variance from 7.2 to 111.2 days², while the median stays at 4 days. The long record has a strong influence on summaries that use its magnitude. Verify the record and clinical context before deciding how to analyse or report it.",
+      "rubric": [
+        "Compares original and corrected mean and median",
+        "Distinguishes squared variance units from days",
+        "Investigates the long stay rather than automatically deleting it"
+      ],
+      "trap": "Variance is measured in days². Report SD, the square root of variance, if you need a spread in days.",
+      "source": "Topic 1, slides 1–79; Exercise Book 2026/27, exercises 1–12."
+    },
+    {
+      "id": "visit-model",
+      "topic": "fund-statistics.distributions",
+      "number": 2,
+      "title": "A probability model for follow-up visits",
+      "scenario": "An illustrative model for next-month follow-up visits has X=0,1,2,3 with probabilities 0.10,0.40,0.30,0.20. Treat these as model probabilities, not observed sample frequencies.",
+      "focus": "Expected value, variance and a discrete tail",
+      "fields": [
+        {
+          "label": "Expected visits E(X)",
+          "answer": 1.6,
+          "tolerance": 0.01,
+          "hint": "Weight each possible visit count by its probability."
+        },
+        {
+          "label": "Variance Var(X) (visits²)",
+          "answer": 0.84,
+          "tolerance": 5e-05,
+          "hint": "Calculate E(X²) first, then subtract [E(X)]²."
+        },
+        {
+          "label": "Probability of at least 2 visits (decimal)",
+          "answer": 0.5,
+          "tolerance": 5e-05,
+          "hint": "At least 2 includes both 2 and 3."
+        }
+      ],
+      "steps": [
+        {
+          "title": "Validate the model",
+          "text": "All probabilities are nonnegative and their sum is 1. The possible counts are discrete; there is no outcome of 1.6 visits for a single person."
+        },
+        {
+          "title": "Weight outcomes",
+          "text": "E(X)=0×0.1+1×0.4+2×0.3+3×0.2=1.6 visits. This is a long-run average, not the most likely outcome."
+        },
+        {
+          "title": "Calculate spread",
+          "text": "E(X²)=0+0.4+4×0.3+9×0.2=3.4 visits². Var(X)=3.4−1.6²=0.84 visits²; SD≈0.9165 visits."
+        },
+        {
+          "title": "Choose the tail",
+          "text": "P(X≥2)=P(X=2)+P(X=3)=0.5. Here P(X>2)=0.2, so a strict versus inclusive inequality matters."
+        }
+      ],
+      "excel": [
+        {
+          "label": "Expected value, counts A2:A5 and probabilities B2:B5",
+          "formula": "=SUMPRODUCT(A2:A5,B2:B5)"
+        },
+        {
+          "label": "Second moment, squared counts in C2:C5",
+          "formula": "=SUMPRODUCT(C2:C5,B2:B5)"
+        }
+      ],
+      "reflection": "Explain why expected visits can equal 1.6 and why P(X≥2) differs from P(X>2).",
+      "model": "The expectation is the probability-weighted long-run average of visit counts and need not be an individual outcome. In this discrete model, “at least 2” includes the mass at 2, giving 0.5; “more than 2” includes only 3, giving 0.2.",
+      "rubric": [
+        "Describes expectation as a weighted long-run average",
+        "Recognises that one patient has an integer visit count",
+        "Includes the probability mass at 2 for the inclusive tail"
+      ],
+      "trap": "An unweighted average of the four possible counts would ignore how likely each outcome is.",
+      "source": "Topic 2, slides 1–64; Exercise Book 2026/27, exercises 13–28; Statistical Tables, tables D.1 and D.2."
+    },
+    {
+      "id": "normal-wait",
+      "topic": "fund-statistics.distributions",
+      "number": 2,
+      "title": "Translate a normal waiting-time question",
+      "scenario": "For an illustrative planning model, an individual waiting time X is normal with mean 30 minutes and SD 6 minutes. Find the probability above 39 minutes, the probability between 24 and 39 minutes, and the 95th percentile. Evaluate whether a normal model is plausible before using it with real waiting-time data.",
+      "focus": "Tail direction, cumulative areas and inverse probability",
+      "fields": [
+        {
+          "label": "P(X > 39), decimal",
+          "answer": 0.06680720126885807,
+          "tolerance": 5e-05,
+          "hint": "39 is 1.5 SD above 30; take one minus the cumulative probability."
+        },
+        {
+          "label": "P(24 < X < 39), decimal",
+          "answer": 0.7745375447996848,
+          "tolerance": 5e-05,
+          "hint": "Standardise both boundaries: −1 and 1.5."
+        },
+        {
+          "label": "95th percentile (minutes)",
+          "answer": 39.86912176170883,
+          "tolerance": 0.01,
+          "hint": "Start from the standard-normal 0.95 percentile, then undo standardisation."
+        }
+      ],
+      "steps": [
+        {
+          "title": "Standardise individuals",
+          "text": "z(39)=(39−30)/6=1.5 and z(24)=(24−30)/6=−1. This question concerns individuals, so use SD=6, not a standard error."
+        },
+        {
+          "title": "Find the right tail",
+          "text": "P(X>39)=1−Φ(1.5)≈0.0668072, about 6.68%."
+        },
+        {
+          "title": "Subtract cumulative areas",
+          "text": "P(24<X<39)=Φ(1.5)−Φ(−1)≈0.7745375, about 77.45%. For this continuous model, including an endpoint does not change the probability."
+        },
+        {
+          "title": "Reverse the operation",
+          "text": "z0.95≈1.644854, so x0.95=30+6×1.644854≈39.8691 minutes. This is a percentile of individual waits, not a confidence limit for the mean."
+        }
+      ],
+      "excel": [
+        {
+          "label": "Right tail",
+          "formula": "=1-NORM.S.DIST(1.5,TRUE)"
+        },
+        {
+          "label": "Interval probability",
+          "formula": "=NORM.S.DIST(1.5,TRUE)-NORM.S.DIST(-1,TRUE)"
+        },
+        {
+          "label": "95th percentile",
+          "formula": "=30+6*NORM.S.INV(0.95)"
+        }
+      ],
+      "reflection": "Describe the 95th percentile in words and explain how it differs from a 95% confidence interval.",
+      "model": "Under the stated normal model, about 95% of individual waits are at or below 39.87 minutes. This cutoff describes the distribution of individual waits; a confidence interval would instead describe uncertainty about a population parameter estimated from sample data.",
+      "rubric": [
+        "Identifies individuals and minutes",
+        "Explains the cumulative 95% cutoff",
+        "Separates a distribution percentile from parameter uncertainty"
+      ],
+      "trap": "NORM.S.DIST(z,FALSE) returns a density height, not the area needed for these probabilities.",
+      "source": "Topic 2, slides 1–64; Exercise Book 2026/27, exercises 13–28; Statistical Tables, tables D.1 and D.2."
+    },
+    {
+      "id": "mean-versus-person",
+      "topic": "fund-statistics.estimation",
+      "number": 3,
+      "title": "A patient and a sample mean are different",
+      "scenario": "Assume independent systolic blood-pressure measurements from a normal population with mean 120 mmHg and SD 15 mmHg. Draw n=25 patients. Compare the probability that their sample mean exceeds 126 mmHg with the probability that one individual exceeds 126 mmHg.",
+      "focus": "Sampling distributions and the SD/SE distinction",
+      "fields": [
+        {
+          "label": "SE of the sample mean (mmHg)",
+          "answer": 3,
+          "tolerance": 0.01,
+          "hint": "Divide the population SD by √25."
+        },
+        {
+          "label": "P(X̄ > 126), decimal",
+          "answer": 0.022750131948179195,
+          "tolerance": 5e-05,
+          "hint": "The sample-mean threshold is 2 standard errors above 120."
+        },
+        {
+          "label": "P(X > 126), decimal",
+          "answer": 0.3445782583896758,
+          "tolerance": 5e-05,
+          "hint": "The individual threshold is only 0.4 standard deviations above 120."
+        }
+      ],
+      "steps": [
+        {
+          "title": "Identify two random variables",
+          "text": "X represents one individual measurement. X̄ represents the average of 25 independent measurements. They share expected value 120 but do not share spread."
+        },
+        {
+          "title": "Find the sampling spread",
+          "text": "SE(X̄)=15/√25=3 mmHg, while SD(X)=15 mmHg. Normality of X makes the normal sampling distribution exact even though n<30."
+        },
+        {
+          "title": "Calculate the two tails",
+          "text": "For X̄, z=(126−120)/3=2, giving P≈0.0227501. For X, z=(126−120)/15=0.4, giving P≈0.3445783."
+        },
+        {
+          "title": "Explain precision",
+          "text": "An average smooths independent individual variation. Raising n to 100 would halve SE to 1.5 mmHg but would leave individual SD at 15 mmHg; it would not cure sampling bias."
+        }
+      ],
+      "excel": [
+        {
+          "label": "Mean SE",
+          "formula": "=15/SQRT(25)"
+        },
+        {
+          "label": "Sample-mean tail",
+          "formula": "=1-NORM.S.DIST((126-120)/(15/SQRT(25)),TRUE)"
+        },
+        {
+          "label": "Individual tail",
+          "formula": "=1-NORM.S.DIST((126-120)/15,TRUE)"
+        }
+      ],
+      "reflection": "Why does the mean exceed 126 much less often? What changes if sample size increases?",
+      "model": "The sample mean has SE=3 mmHg, so 126 is two standard errors above its expectation. For an individual it is only 0.4 SD above the mean. Larger independent samples narrow the sampling distribution of averages; they do not make individual blood pressures less variable.",
+      "rubric": [
+        "Uses SE for X̄ and SD for X",
+        "Compares the correct probabilities",
+        "Explains larger n without claiming reduced individual variability"
+      ],
+      "trap": "The CLT is about the distribution of summaries. In this case the normal population already supplies an exact normal distribution for X̄.",
+      "source": "Topic 3, slides 1–33; Understanding Notation; Exercise Book 2026/27, exercises 29–32."
+    },
+    {
+      "id": "adjusted-variance",
+      "topic": "fund-statistics.estimation",
+      "number": 3,
+      "title": "Why one denominator changes the estimate",
+      "scenario": "Four illustrative independent observations are 4, 6, 8 and 10 minutes. Compute the descriptive variance, adjusted variance estimate and estimated SE of the mean. You are estimating spread, not performing a variance hypothesis test.",
+      "focus": "Degrees of freedom and estimator versus estimate",
+      "fields": [
+        {
+          "label": "Descriptive variance vₙ (minutes²)",
+          "answer": 5,
+          "tolerance": 0.01,
+          "hint": "The mean is 7 and the squared-deviation sum is 20; divide by 4."
+        },
+        {
+          "label": "Adjusted variance s² (minutes²)",
+          "answer": 6.666666666666667,
+          "tolerance": 0.01,
+          "hint": "Divide the same squared-deviation sum by n−1."
+        },
+        {
+          "label": "Estimated SE of the mean (minutes)",
+          "answer": 1.2909944487358056,
+          "tolerance": 0.01,
+          "hint": "Take √s², then divide by √4."
+        }
+      ],
+      "steps": [
+        {
+          "title": "Calculate deviations",
+          "text": "x̄=7, so deviations are −3,−1,1,3 and their sum is zero. Squared deviations sum to 9+1+1+9=20 minutes²."
+        },
+        {
+          "title": "Choose the target",
+          "text": "The observed descriptive variance is 20/4=5 minutes². To estimate population variance with the course adjustment, s²=20/3≈6.666667 minutes²."
+        },
+        {
+          "title": "Estimate mean uncertainty",
+          "text": "s=√(20/3)≈2.581989 minutes and estimated SE=s/√4≈1.290994 minutes. Neither s nor SE is a variance."
+        },
+        {
+          "title": "Interpret unbiasedness",
+          "text": "Under independent identically distributed sampling, S² is unbiased across repeated samples for σ². This does not mean the single realised estimate 6.666667 must equal the unknown population variance, and √S² is not generally unbiased for σ."
+        }
+      ],
+      "excel": [
+        {
+          "label": "Descriptive variance, A2:A5",
+          "formula": "=VAR.P(A2:A5)"
+        },
+        {
+          "label": "Adjusted variance",
+          "formula": "=VAR.S(A2:A5)"
+        },
+        {
+          "label": "Estimated mean SE",
+          "formula": "=STDEV.S(A2:A5)/SQRT(COUNT(A2:A5))"
+        }
+      ],
+      "reflection": "Explain n−1 without claiming that the adjusted variance is always exactly correct.",
+      "model": "Estimating the mean from these same four observations forces their deviations to sum to zero, leaving three degrees of freedom. The n−1 adjustment corrects average bias in variance estimation across independent samples. This one estimate still varies from sample to sample.",
+      "rubric": [
+        "Links the zero-sum deviations to three degrees of freedom",
+        "Explains repeated-sample rather than guaranteed accuracy",
+        "Distinguishes adjusted variance, SD and SE"
+      ],
+      "trap": "Use STDEV.S, not VAR.S, in s/√n. The unit of SE should match the original measurement.",
+      "source": "Topic 3, slides 1–33; Understanding Notation; Exercise Book 2026/27, exercises 29–32."
+    },
+    {
+      "id": "mean-interval",
+      "topic": "fund-statistics.confidence-intervals",
+      "number": 4,
+      "title": "A small-sample interval for a mean score",
+      "scenario": "A random sample of 16 independent eligible patients has a quantitative score mean of 54 points and adjusted SD 8 points. Assume the population scores are approximately normal and population variance is unknown. Construct a 95% confidence interval for the population mean.",
+      "focus": "Unknown σ, t reference and margin versus width",
+      "fields": [
+        {
+          "label": "Margin of error (points)",
+          "answer": 4.262899091119552,
+          "tolerance": 0.01,
+          "hint": "SE=8/√16; multiply it by the t0.975 critical value with df=15."
+        },
+        {
+          "label": "95% CI lower endpoint (points)",
+          "answer": 49.73710090888045,
+          "tolerance": 0.01,
+          "hint": "Subtract the margin from 54."
+        },
+        {
+          "label": "95% CI upper endpoint (points)",
+          "answer": 58.26289909111955,
+          "tolerance": 0.01,
+          "hint": "Add the margin to 54."
+        }
+      ],
+      "steps": [
+        {
+          "title": "Choose t",
+          "text": "The SD of 8 is estimated from the sample. Use t with n−1=15 degrees of freedom, given the normality and independence assumptions."
+        },
+        {
+          "title": "Find uncertainty",
+          "text": "SE=8/√16=2 points. For 95% confidence, α=0.05 and the cumulative critical percentile is 0.975. t15,0.975≈2.1314495."
+        },
+        {
+          "title": "Build the interval",
+          "text": "Margin=2.1314495×2≈4.2628991 points. The interval is 54±4.2628991=[49.7371,58.2629] points. Its full width is 8.5258 points."
+        },
+        {
+          "title": "Explain the level",
+          "text": "This estimates the eligible population’s mean score. The method has 95% repeated-sampling coverage under the stated model; the interval does not contain 95% of patient scores."
+        }
+      ],
+      "excel": [
+        {
+          "label": "Critical value",
+          "formula": "=T.INV(0.975,15)"
+        },
+        {
+          "label": "Lower endpoint",
+          "formula": "=54-T.INV(0.975,15)*8/SQRT(16)"
+        },
+        {
+          "label": "Upper endpoint",
+          "formula": "=54+T.INV(0.975,15)*8/SQRT(16)"
+        }
+      ],
+      "reflection": "Write an interval interpretation and explain why using 1.96 here would give a different interval.",
+      "model": "We estimate the mean score in the eligible patient population to be between 49.74 and 58.26 points using a 95% t procedure under independent normal sampling. The t critical value allows for estimating population SD; substituting 1.96 gives a narrower z interval that does not use the stated small-sample unknown-variance method.",
+      "rubric": [
+        "Names the population mean and endpoints with units",
+        "Explains confidence as a property of the procedure",
+        "Justifies t with df=15 and an adjusted SD"
+      ],
+      "trap": "The confidence level is 0.95, but the two-sided cumulative critical percentile is 0.975.",
+      "source": "Topic 4, slides 1–33; Formula Sheet; Exercise Book 2026/27, exercises 33–50."
+    },
+    {
+      "id": "proportion-interval",
+      "topic": "fund-statistics.confidence-intervals",
+      "number": 4,
+      "title": "How many patients attend follow-up?",
+      "scenario": "A random sample of 250 independent eligible patients includes 175 who attend follow-up. Estimate the population attendance proportion with the course 95% Wald interval. Enter proportions and SEs as decimals, not percentages.",
+      "focus": "Observed-count checks and a proportion interval",
+      "fields": [
+        {
+          "label": "Estimated SE (decimal)",
+          "answer": 0.028982753492378877,
+          "tolerance": 5e-05,
+          "hint": "p̂=175/250=0.7. Use √[p̂(1−p̂)/250]."
+        },
+        {
+          "label": "95% CI lower endpoint (decimal)",
+          "answer": 0.6431948469821349,
+          "tolerance": 5e-05,
+          "hint": "Subtract the normal 0.975 cutoff times the estimated SE from 0.7."
+        },
+        {
+          "label": "95% CI upper endpoint (decimal)",
+          "answer": 0.756805153017865,
+          "tolerance": 5e-05,
+          "hint": "Add the same margin to 0.7."
+        }
+      ],
+      "steps": [
+        {
+          "title": "Define success and target",
+          "text": "Success means attending follow-up. The observed estimate is p̂=175/250=0.7; the target π is the proportion among all eligible patients."
+        },
+        {
+          "title": "Check observed counts",
+          "text": "There are 175 observed successes and 75 failures. Both exceed the course minimum of 5 and the common stricter guideline of 10."
+        },
+        {
+          "title": "Calculate the Wald interval",
+          "text": "Estimated SE=√(0.7×0.3/250)≈0.02898275. With z*=1.959964, margin≈0.05680515 and CI≈[0.64319485,0.75680515]."
+        },
+        {
+          "title": "Translate to percentages",
+          "text": "The attendance estimate is 70%, with an approximate 95% interval of 64.32%–75.68% for the population proportion. The margin is about 5.68 percentage points, not 5.68% relative growth."
+        }
+      ],
+      "excel": [
+        {
+          "label": "SE",
+          "formula": "=SQRT((175/250)*(1-175/250)/250)"
+        },
+        {
+          "label": "Lower endpoint",
+          "formula": "=175/250-NORM.S.INV(0.975)*SQRT((175/250)*(1-175/250)/250)"
+        },
+        {
+          "label": "Upper endpoint",
+          "formula": "=175/250+NORM.S.INV(0.975)*SQRT((175/250)*(1-175/250)/250)"
+        }
+      ],
+      "reflection": "Write the result as percentages and say which counts justify the approximation.",
+      "model": "The sample attendance estimate is 70%; the approximate 95% Wald interval estimates the population proportion as 64.32%–75.68%. The normal approximation is supported by 175 observed successes and 75 observed failures, given independent sampling. The interval’s confidence level refers to repeated-sampling coverage.",
+      "rubric": [
+        "Uses percentages correctly without confusing them with proportions",
+        "Checks observed successes and failures",
+        "Identifies the population proportion and confidence procedure"
+      ],
+      "trap": "For an interval use the observed p̂ in the SE. A proportion hypothesis test generally uses the null π₀ instead.",
+      "source": "Topic 4, slides 1–33; Formula Sheet; Exercise Book 2026/27, exercises 33–50."
+    },
+    {
+      "id": "mean-test",
+      "topic": "fund-statistics.hypothesis-tests",
+      "number": 5,
+      "title": "A decision close to the 5% cutoff",
+      "scenario": "A random sample of 25 independent patients has a mean pulse of 84 bpm. Assume a normal population with known SD σ=10 bpm. Test H₀: μ=80 against Hₐ: μ≠80 at a pre-specified α=0.05.",
+      "focus": "Known-σ z test and unrounded decisions",
+      "fields": [
+        {
+          "label": "Null SE (bpm)",
+          "answer": 2,
+          "tolerance": 0.01,
+          "hint": "Population SD is known: divide 10 by √25."
+        },
+        {
+          "label": "Observed z statistic",
+          "answer": 2,
+          "tolerance": 0.01,
+          "hint": "Subtract the null mean 80 from 84 and divide by SE."
+        },
+        {
+          "label": "Two-sided p-value (decimal)",
+          "answer": 0.04550026389635839,
+          "tolerance": 5e-05,
+          "hint": "Find 2×P(Z≥|z|)."
+        }
+      ],
+      "steps": [
+        {
+          "title": "Set the question before testing",
+          "text": "The parameter is the eligible population’s mean pulse. The two-sided hypotheses compare μ with 80 bpm; α=0.05 is fixed before examining the result."
+        },
+        {
+          "title": "Standardise under H₀",
+          "text": "Known σ and normal independent sampling justify z. SE₀=10/√25=2 bpm; z=(84−80)/2=2."
+        },
+        {
+          "title": "Calculate the evidence",
+          "text": "p=2[1−Φ(2)]≈0.04550026. The 5% two-sided critical value is 1.959964, so |z| exceeds it and p<0.05. Retain precision until making the decision."
+        },
+        {
+          "title": "Cross-check and interpret",
+          "text": "The matching 95% z CI is 84±1.959964×2≈[80.0801,87.9199] bpm, excluding 80. Reject H₀ at 5%, with an estimate above 80. A 4 bpm difference still needs clinical context."
+        }
+      ],
+      "excel": [
+        {
+          "label": "Observed z",
+          "formula": "= (84-80)/(10/SQRT(25))"
+        },
+        {
+          "label": "Two-sided p",
+          "formula": "=2*NORM.S.DIST(-ABS(2),TRUE)"
+        },
+        {
+          "label": "Positive critical value",
+          "formula": "=NORM.S.INV(0.975)"
+        }
+      ],
+      "reflection": "Write the conclusion without saying the null has a 4.55% probability of being true.",
+      "model": "Under H₀ and the normal independent-sampling model, a result at least as extreme in either direction as z=2 has probability about 0.0455. Reject H₀ at 5%; the data provide evidence that the population mean differs from 80 bpm, with an estimated mean of 84 bpm. The p-value does not give the probability that H₀ is true.",
+      "rubric": [
+        "States hypotheses about μ and the pre-specified 5% level",
+        "Uses the unrounded p-value to reject",
+        "Interprets evidence without assigning a probability to H₀ or claiming clinical importance"
+      ],
+      "trap": "Rounding 0.0455 to 0.05 can obscure the decision. Compare the unrounded result with α.",
+      "source": "Topic 5, slides 1–36 (reviewed 7 October 2026); Formula Sheet; Exercise Book 2026/27, exercises 51–60; mock-answer document Q7–Q9. The guide uses the current book numbering; the slide exercise ranges are older. Type II error/power and the proportion counterexample are clearly labelled supplementary context."
+    },
+    {
+      "id": "proportion-test",
+      "topic": "fund-statistics.hypothesis-tests",
+      "number": 5,
+      "title": "A higher observed proportion may be inconclusive",
+      "scenario": "Among 300 randomly sampled independent eligible adults, 192 support a health programme. Test H₀: π=0.60 against Hₐ: π≠0.60 at a pre-specified α=0.05, using the course normal approximation without continuity correction.",
+      "focus": "Null-based SE and a careful non-rejection",
+      "fields": [
+        {
+          "label": "Observed proportion p̂ (decimal)",
+          "answer": 0.64,
+          "tolerance": 5e-05,
+          "hint": "Divide 192 by 300."
+        },
+        {
+          "label": "Observed z statistic",
+          "answer": 1.4142135623730951,
+          "tolerance": 0.01,
+          "hint": "Use SE₀=√(0.60×0.40/300), then standardise p̂−0.60."
+        },
+        {
+          "label": "Two-sided p-value (decimal)",
+          "answer": 0.15729920705028502,
+          "tolerance": 5e-05,
+          "hint": "Use twice the normal upper tail beyond |z|."
+        }
+      ],
+      "steps": [
+        {
+          "title": "Check the model under H₀",
+          "text": "Expected null successes are 300×0.6=180 and failures 120. Both are ample for the course approximation. The observed support estimate is 192/300=0.64."
+        },
+        {
+          "title": "Use the null SE",
+          "text": "SE₀=√(0.6×0.4/300)≈0.02828427. It uses π₀=0.6, not p̂=0.64. z=(0.64−0.60)/SE₀≈1.414214."
+        },
+        {
+          "title": "Make the decision",
+          "text": "Two-sided p≈0.1572992, greater than 0.05. Do not reject H₀. The observed proportion is higher than 0.60, but this test does not provide sufficient evidence of a population difference at 5%."
+        },
+        {
+          "title": "Keep claims bounded",
+          "text": "Non-rejection is not proof that π=0.60. The 4-percentage-point observed excess is an effect estimate; its sign alone does not determine significance."
+        }
+      ],
+      "excel": [
+        {
+          "label": "Null SE",
+          "formula": "=SQRT(0.6*(1-0.6)/300)"
+        },
+        {
+          "label": "Observed z",
+          "formula": "=((192/300)-0.6)/SQRT(0.6*(1-0.6)/300)"
+        },
+        {
+          "label": "Two-sided p",
+          "formula": "=2*NORM.S.DIST(-ABS(((192/300)-0.6)/SQRT(0.6*(1-0.6)/300)),TRUE)"
+        }
+      ],
+      "reflection": "Explain the observed excess and the 5% decision in one short paragraph.",
+      "model": "The sample support proportion is 64%, which is 4 percentage points above the null value of 60%. The null-based two-sided z test gives p≈0.1573, so we do not reject at 5%. This result is insufficient evidence of a population difference at that level; it does not prove equality.",
+      "rubric": [
+        "Reports 64% and a 4-percentage-point excess",
+        "Uses the null SE and p≈0.1573 to decide",
+        "Avoids claiming the population proportion is proven equal to 60%"
+      ],
+      "trap": "A numerical difference between p̂ and π₀ is expected under sampling variation. It is not by itself a test decision.",
+      "source": "Topic 5, slides 1–36 (reviewed 7 October 2026); Formula Sheet; Exercise Book 2026/27, exercises 51–60; mock-answer document Q7–Q9. The guide uses the current book numbering; the slide exercise ranges are older. Type II error/power and the proportion counterexample are clearly labelled supplementary context."
+    },
+    {
+      "id": "two-clinics",
+      "topic": "fund-statistics.two-means",
+      "number": 6,
+      "title": "Compare two independent clinic means",
+      "scenario": "Independent random clinic samples have n₁=144, mean₁=12 minutes, adjusted SD₁=6 minutes; n₂=100, mean₂=15 minutes, adjusted SD₂=5 minutes. Assume well-behaved sampling distributions. Use the course large-sample normal approximation for H₀: μ₁−μ₂=0 at 5%. Topic 6 is additional, time permitting.",
+      "focus": "Contrast direction and adding independent variances",
+      "fields": [
+        {
+          "label": "Estimated clinic 1 − clinic 2 difference (minutes)",
+          "answer": -3,
+          "tolerance": 0.01,
+          "hint": "Keep the requested order: 12−15."
+        },
+        {
+          "label": "SE of the difference (minutes)",
+          "answer": 0.7071067811865476,
+          "tolerance": 5e-05,
+          "hint": "Compute √(6²/144+5²/100)."
+        },
+        {
+          "label": "Observed z statistic",
+          "answer": -4.242640687119285,
+          "tolerance": 0.01,
+          "hint": "Divide the estimated difference by its SE."
+        }
+      ],
+      "steps": [
+        {
+          "title": "Define the contrast",
+          "text": "Δ=μ₁−μ₂ in minutes, so the observed estimate is 12−15=−3. Different patients in the two clinics make this an independent comparison, given the stated design."
+        },
+        {
+          "title": "Add sampling variances",
+          "text": "SE=√(36/144+25/100)=√(0.25+0.25)=√0.5≈0.7071068 minutes. Each group uses its own n and adjusted SD."
+        },
+        {
+          "title": "Test and attach uncertainty",
+          "text": "z=−3/0.7071068≈−4.242641. Two-sided normal p≈0.00002209. The 95% large-sample CI is about [−4.3859,−1.6141] minutes."
+        },
+        {
+          "title": "Explain direction, not causation",
+          "text": "Reject equal means at 5%. Clinic 1’s estimated population mean is 3 minutes lower. An observational comparison cannot establish that the clinic itself caused the difference; patient mix may matter."
+        }
+      ],
+      "excel": [
+        {
+          "label": "SE",
+          "formula": "=SQRT(6^2/144+5^2/100)"
+        },
+        {
+          "label": "Observed z",
+          "formula": "= (12-15)/SQRT(6^2/144+5^2/100)"
+        },
+        {
+          "label": "Two-sided p",
+          "formula": "=2*NORM.S.DIST(-ABS((12-15)/SQRT(6^2/144+5^2/100)),TRUE)"
+        }
+      ],
+      "reflection": "Interpret the negative contrast and describe what reversing group order would change.",
+      "model": "Clinic 1 has an estimated mean wait 3 minutes lower than clinic 2, with a large-sample 95% CI from about 1.61 to 4.39 minutes lower. Reversing the contrast reverses the estimate and interval signs, leaving SE and the two-sided p-value unchanged. An observed group difference alone does not establish a causal clinic effect.",
+      "rubric": [
+        "Reports the contrast in the specified order with minutes",
+        "Explains reversed signs but unchanged SE and two-sided p",
+        "Separates observational association from a causal explanation"
+      ],
+      "trap": "Do not add SDs or use s/√(n₁+n₂). Independence makes the variances of the two sample means add.",
+      "source": "Topic 6, slides 1–29; Exercise Book 2026/27, exercises 61–64. Additional topic in the syllabus, time permitting."
+    },
+    {
+      "id": "uncertain-difference",
+      "topic": "fund-statistics.two-means",
+      "number": 6,
+      "title": "An interval that includes zero",
+      "scenario": "Two independent random samples of quantitative patient scores have n₁=64, mean₁=45, adjusted SD₁=8; n₂=100, mean₂=47, adjusted SD₂=10. Assume well-behaved large-sample means and use the course normal approximation at 5%. Topic 6 is additional, time permitting.",
+      "focus": "Non-rejection, interval uncertainty and practical importance",
+      "fields": [
+        {
+          "label": "Two-sided p-value (decimal)",
+          "answer": 0.15729920705028502,
+          "tolerance": 5e-05,
+          "hint": "Difference=−2 and SE=√(64/64+100/100)=√2; calculate the two-sided normal tail."
+        },
+        {
+          "label": "95% CI lower endpoint for μ₁−μ₂ (points)",
+          "answer": -4.771807648699356,
+          "tolerance": 0.01,
+          "hint": "Use −2−1.959964×√2."
+        },
+        {
+          "label": "95% CI upper endpoint for μ₁−μ₂ (points)",
+          "answer": 0.7718076486993559,
+          "tolerance": 5e-05,
+          "hint": "Use −2+1.959964×√2."
+        }
+      ],
+      "steps": [
+        {
+          "title": "Keep the group order",
+          "text": "The estimated mean contrast is 45−47=−2 points. Scores vary within each group; the target is a difference of population means, not a difference for every patient."
+        },
+        {
+          "title": "Compute uncertainty",
+          "text": "SE=√(8²/64+10²/100)=√2≈1.414214 points. The standardised contrast is −2/√2≈−1.414214."
+        },
+        {
+          "title": "Read p and CI together",
+          "text": "Two-sided p≈0.1572992. The matching 95% normal CI is −2±1.959964×√2≈[−4.7718,0.7718] points. It includes zero, agreeing with non-rejection at 5%."
+        },
+        {
+          "title": "Describe what remains plausible",
+          "text": "The estimated difference is below zero, but the interval also includes small positive values. Statistical non-rejection does not establish equivalence or absence of an important effect. Clinical importance needs a relevant effect threshold and study context."
+        }
+      ],
+      "excel": [
+        {
+          "label": "SE",
+          "formula": "=SQRT(8^2/64+10^2/100)"
+        },
+        {
+          "label": "Lower endpoint",
+          "formula": "=45-47-NORM.S.INV(0.975)*SQRT(8^2/64+10^2/100)"
+        },
+        {
+          "label": "Upper endpoint",
+          "formula": "=45-47+NORM.S.INV(0.975)*SQRT(8^2/64+10^2/100)"
+        }
+      ],
+      "reflection": "Comment on the estimate, p-value, interval and why “no difference” is too strong.",
+      "model": "The estimated mean contrast is −2 points, with p≈0.1573 and a 95% interval [−4.77,0.77] points. We do not reject equal population means at 5%. The interval includes zero and differences in both directions, so this is uncertainty rather than proof of no difference, equivalence or lack of clinical importance.",
+      "rubric": [
+        "Reports −2 points and both interval limits",
+        "Connects p>0.05 and inclusion of zero to non-rejection",
+        "Distinguishes non-rejection from equivalence and clinical conclusions"
+      ],
+      "trap": "An interval spanning zero is not an equivalence test. Do not replace “insufficient evidence” with “the treatments are identical”.",
+      "source": "Topic 6, slides 1–29; Exercise Book 2026/27, exercises 61–64. Additional topic in the syllabus, time permitting."
+    }
+  ]
+}

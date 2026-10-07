@@ -1,7 +1,7 @@
 ---
 topic: fund-statistics.descriptive
 author: Student Hub
-updated: 2026-10-06
+updated: 2026-10-07
 ---
 
 ## 5-minute review
@@ -92,3 +92,73 @@ Explain it in an exam Identify the variable and units, give a measure of centre 
 Topic 1, slides 1–79; Exercise Book 2026/27, exercises 1–12.
 
 [Official course materials](https://virtuale.unibo.it/course/view.php?id=83042).
+
+<!-- Extended original practice -->
+
+## Match the summary to the question
+
+| Question | Useful summary | Interpretation / limitation |
+| --- | --- | --- |
+| What is typical in skewed stays? | Median and IQR | Describe centre and middle-half spread; name the quartile convention. |
+| What is the arithmetic average? | Mean and SD | Use magnitudes of every observation; examine extreme records. |
+| What describes these observations? | Variance with n | VAR.P describes the entered data. |
+| What estimates population variance? | Adjusted variance with n−1 | VAR.S is unbiased across independent samples, not guaranteed correct in this sample. |
+
+## Two original healthcare cases
+
+### Describe a ward’s observed stays
+
+Eight illustrative hospital stays are 1, 2, 2, 3, 4, 6, 10 and 12 days. Describe these admissions using the slide np percentile convention. These observations are an example, not a random-sampling claim about every hospital.
+
+[Try the interactive checkpoints](fund-statistics.html?case=stay-summary#cases).
+
+1. **Define the unit.** The statistical unit is an admission; length of stay is a quantitative variable measured in days. Repeated admissions by the same person would need care in a later independence claim.
+
+2. **Find the centre.** The sum is 40, so x̄=40/8=5 days. The median is (3+4)/2=3.5 days. The mode is 2 days.
+
+3. **Name the percentile rule.** With the slide np rule, Q1=(2+2)/2=2 and Q3=(6+10)/2=8, giving IQR=6 days. Excel QUARTILE.INC instead gives Q1=2, Q3=7 and IQR=5.
+
+4. **Interpret shape and flags.** The longer stays extend the right tail. The slide-rule fences are −7 and 17 days; no observed stay is outside them. A negative lower fence is a mathematical threshold, not a possible hospital stay.
+
+**Excel:**
+- Mean, values in A2:A9: `=AVERAGE(A2:A9)`
+- Median: `=MEDIAN(A2:A9)`
+- Excel IQR, a different convention: `=QUARTILE.INC(A2:A9,3)-QUARTILE.INC(A2:A9,1)`
+
+**Interpretation:** Among these eight observed admissions, the mean stay is 5 days and the median is 3.5 days, with a right tail reaching 12 days. The middle-half spread is 6 days under the slide np convention; Excel’s inclusive interpolation gives 5 days. These are sample descriptions, not evidence of a population change.
+
+**Watch for:** Do not mark an Excel IQR of 5 as an arithmetic error if the question uses QUARTILE.INC. State which convention answers the question.
+
+### One long stay changes the story
+
+Five observed stays are 2, 4, 4, 5 and 10 days. A corrected record changes the final stay from 10 to 30 days, giving 2, 4, 4, 5 and 30. Summarise the corrected observations, using denominator n for descriptive variance.
+
+[Try the interactive checkpoints](fund-statistics.html?case=extreme-stay#cases).
+
+1. **Describe the original records.** Originally x̄=5, median=4 and descriptive variance=36/5=7.2 days².
+
+2. **Recalculate after the correction.** The new mean is 45/5=9 days. The median remains 4 days; the changed value is still above the middle observation.
+
+3. **Track the squared deviations.** About the new mean 9, the deviations are −7, −5, −5, −4 and 21. Their squared sum is 49+25+25+16+441=556. Descriptive variance is 556/5=111.2 days²; adjusted variance is 556/4=139 days².
+
+4. **Keep context.** The mean and variance are sensitive to magnitude. Investigate whether 30 is a valid complex admission or a recording problem; neither the median’s stability nor an outlier flag justifies automatic deletion.
+
+**Excel:**
+- Corrected mean, A2:A6: `=AVERAGE(A2:A6)`
+- Corrected median: `=MEDIAN(A2:A6)`
+- Descriptive variance: `=VAR.P(A2:A6)`
+
+**Interpretation:** The mean rises from 5 to 9 days and descriptive variance from 7.2 to 111.2 days², while the median stays at 4 days. The long record has a strong influence on summaries that use its magnitude. Verify the record and clinical context before deciding how to analyse or report it.
+
+**Watch for:** Variance is measured in days². Report SD, the square root of variance, if you need a spread in days.
+
+## Catch the common mistakes
+
+- **“Numbers always make a variable quantitative.”** Ward numbers are labels; pain category codes do not establish equal spacing. Choose a summary from the measurement scale.
+
+- **“A fence marks where a whisker ends.”** A whisker ends at an observed value inside the fence. The fence is a threshold; investigate points beyond it.
+
+- **“Changing the unit changes the underlying pattern.”** Adding a constant shifts centre but not variance. Multiplying by c multiplies SD by |c| and variance by c²; clinical interpretations must keep the new units.
+
+[Choose a method interactively](fund-statistics.html#methods).
+<!-- /Extended original practice -->
