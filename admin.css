@@ -1,0 +1,203 @@
+/* ===== Editor dashboard (admin.html) ===== */
+/* Uses the site's tokens from style.css, so light and dark mode work automatically. */
+
+.admin-page .page-intro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.admin-account {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+.admin-status[data-kind="error"] {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.admin-status[data-kind="success"] {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.admin-small {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.admin-signin {
+  max-width: 34rem;
+}
+
+.admin-signin input {
+  width: 100%;
+}
+
+/* Tabs + "New announcement" */
+.admin-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.admin-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.admin-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px; /* comfortable touch target */
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
+  background: var(--surface-card);
+  color: var(--text-primary);
+  font: inherit;
+  cursor: pointer;
+}
+
+.admin-tab[aria-selected="true"] {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  color: var(--text-heading);
+  font-weight: 600;
+}
+
+.admin-count {
+  min-width: 1.5rem;
+  padding: 0 0.4rem;
+  border-radius: var(--radius-pill);
+  background: var(--surface-subtle);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* The list */
+.admin-list {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-item h3 {
+  margin: 0.25rem 0 0.5rem;
+  overflow-wrap: anywhere;
+}
+
+.admin-meta {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.admin-excerpt {
+  white-space: pre-line; /* keep the editor's line breaks */
+  overflow-wrap: anywhere;
+}
+
+.admin-empty {
+  padding: 1.5rem;
+  border: 1px dashed var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* The form, in a dialog box */
+.admin-dialog {
+  width: min(44rem, calc(100vw - 2rem));
+  max-height: calc(100vh - 2rem);
+  padding: 1.25rem;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  color: var(--text-primary);
+}
+
+.admin-dialog::backdrop {
+  background: rgba(9, 29, 58, 0.55);
+}
+
+.admin-dialog h2 {
+  margin-top: 0;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem 1rem;
+}
+
+.admin-field {
+  display: grid;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.admin-field input,
+.admin-field select,
+.admin-field textarea {
+  width: 100%;
+}
+
+.admin-wide {
+  grid-column: 1 / -1;
+}
+
+.admin-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-check input {
+  width: auto;
+}
+
+.admin-optional {
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.admin-field [aria-invalid="true"] {
+  border-color: var(--danger);
+}
+
+.admin-errors {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.admin-form-actions {
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+  .admin-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-dialog {
+    padding: 1rem;
+  }
+}

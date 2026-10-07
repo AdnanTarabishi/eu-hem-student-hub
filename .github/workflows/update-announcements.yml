@@ -1,4 +1,5 @@
-# Copies the announcements Google Sheet into the site every 15 minutes.
+# Copies the published announcements (editor dashboard, or the Google Sheet until it is connected) into the site every 15 minutes.
+# Reading Supabase every 15 minutes also keeps the free project from pausing after a week without activity.
 # If something changed, it saves (commits) data/announcements.csv and asks GitHub Pages to republish.
 # You can also run it by hand: GitHub -> Actions -> Update announcements -> Run workflow.
 
@@ -44,7 +45,7 @@ jobs:
             echo "Announcements unchanged."
             exit 0
           fi
-          git commit -m "Update announcements from Google Sheet"
+          git commit -m "Update announcements (dashboard or Google Sheet)"
           # Another robot (the calendar) may have saved something meanwhile: get it first
           git pull --rebase
           git push

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editor dashboard – EU-HEM Student Hub</title>
+  <meta name="description" content="Editor dashboard for the volunteers who keep the EU-HEM Student Hub up to date.">
+  <!-- Social preview (scripts/social-tags.js) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="EU-HEM Student Hub">
+  <meta property="og:title" content="Editor dashboard – EU-HEM Student Hub">
+  <meta property="og:description" content="Editor dashboard for the volunteers who keep the EU-HEM Student Hub up to date.">
+  <meta property="og:url" content="https://adnantarabishi.github.io/eu-hem-student-hub/admin.html">
+  <meta property="og:image" content="https://adnantarabishi.github.io/eu-hem-student-hub/img/social-preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="EU-HEM Student Hub: less searching, more learning, living and connecting.">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- /Social preview -->
+  <!-- Not for search engines: only approved editors can use this page -->
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css?v=daabf49c">
+  <link rel="stylesheet" href="admin.css?v=2197948e">
+  <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="img/app-icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <script src="theme.js?v=d51d4769"></script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <p class="site-title"><a href="index.html">EU-HEM Student Hub</a></p>
+      <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
+      <!-- site-nav.js builds the menu here (defined once for all pages) -->
+      <nav class="site-nav" id="site-nav" data-current="admin" aria-label="Main menu"></nav>
+      <script src="site-nav.js?v=4205e4f0"></script>
+    </div>
+  </header>
+
+  <main class="container admin-page">
+    <section class="page-intro">
+      <div>
+        <p class="section-eyebrow">For editors</p>
+        <h1>Editor dashboard</h1>
+        <p>Write announcements, send them for review and publish them. Only approved editors can sign in.</p>
+      </div>
+      <div class="admin-account" id="admin-account" hidden>
+        <span id="admin-who"></span>
+        <button type="button" class="button button-secondary button-sm" id="admin-signout">Sign out</button>
+      </div>
+    </section>
+
+    <!-- One message area for the whole page: screen readers announce what happened -->
+    <p class="note admin-status" id="admin-status" role="status" aria-live="polite" hidden></p>
+
+    <!-- 1. Not connected yet (supabase-config.js is empty) -->
+    <section class="card" id="admin-offline" hidden>
+      <h2>Not connected yet</h2>
+      <p>The dashboard is ready, but the database is not connected yet.
+        Announcements are still edited in the Google Sheet. Setup steps: <code>docs/editor-dashboard.md</code>.</p>
+    </section>
+
+    <!-- 2. Sign in with an emailed link -->
+    <section class="card admin-signin" id="admin-signin" hidden>
+      <h2>Sign in</h2>
+      <p>Enter the email address the Student Hub team invited. We send you a one-time sign-in link: no password needed.</p>
+      <form id="admin-signin-form" novalidate>
+        <label for="admin-email">Email</label>
+        <input type="email" id="admin-email" name="email" autocomplete="email" required>
+        <div class="button-row">
+          <button type="submit" class="button button-primary">Email me a sign-in link</button>
+        </div>
+      </form>
+      <p class="admin-small">Open the link on this device and in this browser. It works once and expires after one hour.</p>
+    </section>
+
+    <!-- 3. Signed in, but not on the editor list -->
+    <section class="card" id="admin-not-editor" hidden>
+      <h2>No editor access yet</h2>
+      <p>You are signed in, but this account is not on the editor list. Ask the Student Hub team to add you
+        (<a href="mailto:euhem.studenthub@gmail.com">euhem.studenthub@gmail.com</a>).</p>
+    </section>
+
+    <!-- 4. The dashboard -->
+    <section id="admin-app" hidden>
+      <div class="admin-toolbar">
+        <div class="admin-tabs" role="tablist" aria-label="Announcements by status" id="admin-tabs"></div>
+        <button type="button" class="button button-primary" id="admin-new">New announcement</button>
+      </div>
+      <p class="admin-small" id="admin-tab-help"></p>
+      <ul class="admin-list" id="admin-list" aria-live="polite"></ul>
+
+      <!-- Write or edit one announcement -->
+      <dialog class="admin-dialog" id="admin-dialog" aria-labelledby="admin-form-title">
+        <form id="admin-form" novalidate>
+          <h2 id="admin-form-title">New announcement</h2>
+          <div class="admin-grid">
+            <div class="admin-field">
+              <label for="f-date">Date</label>
+              <input type="date" id="f-date" name="date" required>
+            </div>
+            <div class="admin-field">
+              <label for="f-category">Category</label>
+              <select id="f-category" name="category" required></select>
+            </div>
+            <div class="admin-field admin-wide">
+              <label for="f-title">Title</label>
+              <input type="text" id="f-title" name="title" maxlength="120" required>
+            </div>
+            <div class="admin-field admin-wide">
+              <label for="f-message">Message</label>
+              <textarea id="f-message" name="message" rows="7" maxlength="4000" required></textarea>
+              <p class="admin-small">Plain text. Line breaks are kept. Never include phone numbers or private emails.</p>
+            </div>
+            <div class="admin-field admin-wide">
+              <label for="f-link">Link <span class="admin-optional">(optional)</span></label>
+              <input type="url" id="f-link" name="link" placeholder="https://">
+            </div>
+            <div class="admin-field">
+              <label for="f-expires">Show until <span class="admin-optional">(optional)</span></label>
+              <input type="date" id="f-expires" name="expires">
+            </div>
+            <div class="admin-field">
+              <label for="f-posted-by">Posted by</label>
+              <input type="text" id="f-posted-by" name="posted_by" maxlength="60" required>
+            </div>
+            <div class="admin-field admin-wide admin-check">
+              <input type="checkbox" id="f-pinned" name="pinned">
+              <label for="f-pinned">Pin to the top</label>
+            </div>
+          </div>
+          <p class="note admin-errors" id="admin-form-errors" role="alert" hidden></p>
+          <div class="button-row admin-form-actions">
+            <button type="button" class="button button-quiet" id="admin-cancel">Cancel</button>
+            <button type="submit" class="button button-secondary" value="draft">Save draft</button>
+            <button type="submit" class="button button-secondary" value="submitted" id="admin-submit-review">Send for review</button>
+            <button type="submit" class="button button-primary" value="published" id="admin-publish" hidden>Publish</button>
+          </div>
+        </form>
+      </dialog>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>EU-HEM Student Hub &middot; Unofficial student project</p>
+    </div>
+  </footer>
+
+  <script defer src="utils.js?v=3f08bd92"></script>
+  <script defer src="ui.js?v=6d55e433"></script>
+  <script defer src="vendor/supabase/supabase.js?v=bb37eb70"></script>
+  <script defer src="supabase-config.js?v=d081f758"></script>
+  <script defer src="editor-data.js?v=30d89159"></script>
+  <script defer src="admin.js?v=4bc7e092"></script>
+
+</body>
+</html>
