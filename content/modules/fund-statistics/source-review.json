@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "updated": "2026-10-06",
+  "files": [
+    {
+      "name": "Hospital_stay.xlsx",
+      "duplicate": false
+    },
+    {
+      "name": "PRESSURE.xlsx",
+      "duplicate": false
+    },
+    {
+      "name": "YUNNAN.xlsx",
+      "duplicate": false
+    },
+    {
+      "name": "List of MS Excel functions (1).docx",
+      "duplicate": false
+    },
+    {
+      "name": "Mock test_answers to Q7 Q8 Q9.docx",
+      "duplicate": false
+    },
+    {
+      "name": "Mock test_answers to Q7 Q8 Q9.docx",
+      "duplicate": true
+    },
+    {
+      "name": "CHOLESTEROL.xlsx",
+      "duplicate": false
+    },
+    {
+      "name": "TOPIC 4_Confidence Interval for the population Mean (4).pptx",
+      "duplicate": false
+    },
+    {
+      "name": "Syllabus - Fundamentals of Statistics 2026-27 (1).docx",
+      "duplicate": false
+    },
+    {
+      "name": "TOPIC 6_Comparison of two population Means.pptx",
+      "duplicate": false
+    },
+    {
+      "name": "TOPIC 1_Fundamental concepts and Descriptive Statistics (1).pptx",
+      "duplicate": false
+    },
+    {
+      "name": "Excercise book_2026_27 (3).docx",
+      "duplicate": false
+    },
+    {
+      "name": "TOPIC 2_Random Samples Random Variables and Probabilities (4).pptx",
+      "duplicate": false
+    },
+    {
+      "name": "HealthPolicy.xlsx",
+      "duplicate": false
+    },
+    {
+      "name": "EX6_answers.xlsx",
+      "duplicate": false
+    },
+    {
+      "name": "RUN.xlsx",
+      "duplicate": false
+    },
+    {
+      "name": "Syllabus - Fundamentals of Statistics 2026-27 (1).docx",
+      "duplicate": true
+    },
+    {
+      "name": "Statistical Tables.pdf",
+      "duplicate": false
+    },
+    {
+      "name": "HOSPITAL.xlsx",
+      "duplicate": false
+    },
+    {
+      "name": "TOPIC 3_Point Estimation of the population Mean and the population Variance (4).pptx",
+      "duplicate": false
+    },
+    {
+      "name": "Understandiing notation.docx",
+      "duplicate": false
+    },
+    {
+      "name": "Formula Sheet (1).docx",
+      "duplicate": false
+    }
+  ],
+  "workbooks": [
+    {
+      "name": "YUNNAN.xlsx",
+      "n": "20 counties",
+      "example": "Mean=32.8; median=29; VAR.P=278.16; VAR.S=292.8",
+      "note": "Counts of infant deaths, not mortality rates. Rate comparisons need birth denominators."
+    },
+    {
+      "name": "HOSPITAL.xlsx",
+      "n": "25 admissions",
+      "example": "Stay mean=8.6 days; VAR.P=31.36; VAR.S=32.6667",
+      "note": "Hospital_stay.xlsx represents the same records with different column names and temperature coding."
+    },
+    {
+      "name": "Hospital_stay.xlsx",
+      "n": "25 admissions",
+      "example": "Stay median=8 days; descriptive SD=5.6 days",
+      "note": "Do not count this as a second independent sample. Check categorical normal/elevated temperature labels."
+    },
+    {
+      "name": "PRESSURE.xlsx",
+      "n": "32 paired people",
+      "example": "Mean recumbent systolic=117.40625; standing=108.59375",
+      "note": "The same people have two measurements. Mean recumbent−standing difference=8.8125; preserve pairing."
+    },
+    {
+      "name": "RUN.xlsx",
+      "n": "18 runners",
+      "example": "Mean time=12.08889; median=12.13; descriptive SD≈0.37650",
+      "note": "Each runner is the unit; verify units and choose descriptive or adjusted spread for the question."
+    },
+    {
+      "name": "HealthPolicy.xlsx",
+      "n": "40 country/record rows",
+      "example": "Mean expenditure=2166.575; mean life expectancy=78.3425",
+      "note": "Ecological associations among expenditure, life expectancy and mortality do not establish individual effects or causation."
+    },
+    {
+      "name": "CHOLESTEROL.xlsx",
+      "n": "24 paired participants",
+      "example": "Mean before=187.79167; after=168.20833; after−before=−19.58333",
+      "note": "The Data Difference column is before−after; the Answers sheet/book use after−before. Reversing direction reverses the mean sign."
+    },
+    {
+      "name": "EX6_answers.xlsx",
+      "n": "A:10; B:10; C:11 values",
+      "example": "Means A=16.6; B=27.6; C=18.72727",
+      "note": "Select observations only (rows 2–11 for A/B and 2–12 for C); answer/summary rows below are not observations."
+    }
+  ],
+  "findings": [
+    "The syllabus and mock-answer document were each uploaded twice as byte-identical copies: 22 uploads represent 20 distinct files.",
+    "The current Exercise Book contains 64 exercises. Some slide exercise references are offset; the pathway uses the current book numbering.",
+    "Topic 1 percentile convention and Excel QUARTILE.INC use different definitions. A numerical difference need not be a calculation error.",
+    "Topic 3 uses a rounded population variance of 9.8 for the five-unit example; exact calculation gives 9.76. Exact with-replacement mean variance is 4.88.",
+    "Adjusted sample variance is unbiased under independent sampling, but its square root (sample SD) is generally not unbiased for population SD.",
+    "Source statements differ at the n=120 boundary for the large-sample z approximation. A t reference remains suitable for an unknown-variance normal model.",
+    "Exercise 50 uses 366/589≈0.6214; the supplied solution contains inconsistent proportion/denominator values. Check the stated numerator and sample size before calculating.",
+    "Exercise 58 states 99% significance in the prompt but the supplied solution uses 1%. Clarify the intended significance level with the teacher.",
+    "The exercise 61 solution contains an inconsistent reported statistic: dividing its stated difference by its stated SE does not give the printed statistic.",
+    "Mock Q9 contains a hypothesis-label typo and slightly different CI endpoints between calculation and prose. Its original dataset was not supplied, so row-level results cannot be checked.",
+    "Topic 6 is additional, time permitting. Pooled equal-variance, paired and two-proportion formula variations on slides 15–23 are illustrative and not required for calculation according to the slides.",
+    "The statistical-table PDF includes chi-square and F tables as well as normal and t tables. Their presence alone does not add them to the assessed syllabus."
+  ]
+}

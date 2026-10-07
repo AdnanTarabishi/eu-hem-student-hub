@@ -302,6 +302,12 @@ function renderOverview(panel) {
     const box = createElement("section", "module-box");
     box.appendChild(createElement("h4", null, info.integrated ? `Module: ${m.name} (${m.code})` : `About this course`));
     if (m.description) box.appendChild(createElement("p", null, m.description));
+    if (module.id === "fund-statistics") {
+      const studyLink = createElement("a", "button", "Open the Fundamentals study workspace →");
+      studyLink.href = "fund-statistics.html";
+      box.appendChild(studyLink);
+      box.appendChild(createElement("p", "schedule-meta", "Six interactive topic guides · 90 original questions · 60 flashcards · exam preparation. Topic 5 slides are pending."));
+    }
     const mf = createElement("dl", "course-facts");
     const add = (label, value) => {
       if (!value) return;
@@ -404,6 +410,12 @@ function renderLectures(panel) {
       centre.href = "statistics.html";
       panel.appendChild(centre);
       panel.appendChild(createElement("p", "schedule-meta", "Review mistakes, plan today's revision, take a timed mock, solve calculations and practise explaining results."));
+    }
+    if (module.id === "fund-statistics") {
+      const centre = createElement("a", "button", "Fundamentals of Statistics workspace");
+      centre.href = "fund-statistics.html";
+      panel.appendChild(centre);
+      panel.appendChild(createElement("p", "schedule-meta", "Six topic guides, 90 original questions, 60 flashcards, Excel reference and a 90-minute practice exam. Topic 5 slides are pending; its guide uses the syllabus and exercises."));
     }
     const list = createElement("ol", "topic-list");
     for (const topic of lectures) {

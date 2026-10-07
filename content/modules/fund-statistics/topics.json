@@ -1,6 +1,38 @@
 [
-  {"id": "fund-statistics.descriptive", "title": "Descriptive statistics: centre, spread and graphs"},
-  {"id": "fund-statistics.distributions", "title": "Random variables and distributions (Normal, Student's t)"},
-  {"id": "fund-statistics.estimation", "title": "Samples, point estimates and confidence intervals"},
-  {"id": "fund-statistics.hypothesis-tests", "title": "Hypothesis tests for one mean and two means"}
+  {
+    "id": "fund-statistics.descriptive",
+    "title": "Topic 1: Fundamental concepts and descriptive statistics",
+    "notes": "notes/descriptive.md",
+    "lecture": "lectures/descriptive.json"
+  },
+  {
+    "id": "fund-statistics.distributions",
+    "title": "Topic 2: Sampling methods, random variables and probability distributions",
+    "notes": "notes/distributions.md",
+    "lecture": "lectures/distributions.json"
+  },
+  {
+    "id": "fund-statistics.estimation",
+    "title": "Topic 3: Point estimation of the population mean and variance",
+    "notes": "notes/estimation.md",
+    "lecture": "lectures/estimation.json"
+  },
+  {
+    "id": "fund-statistics.confidence-intervals",
+    "title": "Topic 4: Confidence intervals for the population mean and proportion",
+    "notes": "notes/confidence-intervals.md",
+    "lecture": "lectures/confidence-intervals.json"
+  },
+  {
+    "id": "fund-statistics.hypothesis-tests",
+    "title": "Topic 5: Hypothesis tests for one population mean and proportion",
+    "notes": "notes/hypothesis-tests.md",
+    "lecture": "lectures/hypothesis-tests.json"
+  },
+  {
+    "id": "fund-statistics.two-means",
+    "title": "Topic 6: Comparison of two population means",
+    "notes": "notes/two-means.md",
+    "lecture": "lectures/two-means.json"
+  }
 ]

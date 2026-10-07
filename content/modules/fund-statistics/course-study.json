@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "updated": "2026-10-06",
+  "module": "fund-statistics",
+  "sourceReview": {
+    "uploads": 22,
+    "uniqueFiles": 20,
+    "slides": 238,
+    "exerciseCount": 64,
+    "workbooks": 8,
+    "note": "Five supplied PowerPoint decks cover Topics 1, 2, 3, 4 and 6. Topic 5 is supported by the syllabus, exercise book and formula sheet; its slides are pending."
+  },
+  "lessons": [
+    {
+      "number": 1,
+      "topic": "fund-statistics.descriptive",
+      "title": "Fundamental concepts and descriptive statistics",
+      "intro": "Start with the statistical unit and measurement scale, then describe the centre, spread, shape and association in healthcare data.",
+      "slides": 79,
+      "exercises": "1–12",
+      "outcomes": [
+        "Classify variables and choose an appropriate graph",
+        "Calculate and interpret centre, spread and outlier fences",
+        "Distinguish association from a causal effect"
+      ],
+      "source": "Topic 1, slides 1–79; Exercise Book 2026/27, exercises 1–12."
+    },
+    {
+      "number": 2,
+      "topic": "fund-statistics.distributions",
+      "title": "Sampling methods, random variables and probability distributions",
+      "intro": "Connect sampling design to probability models, expected values, normal standardisation and the Student’s t table.",
+      "slides": 64,
+      "exercises": "13–28",
+      "outcomes": [
+        "Compare probability sampling designs",
+        "Interpret probability mass, density and cumulative probability",
+        "Standardise a normal measurement and find t percentiles"
+      ],
+      "source": "Topic 2, slides 1–64; Exercise Book 2026/27, exercises 13–28; Statistical Tables, tables D.1 and D.2."
+    },
+    {
+      "number": 3,
+      "topic": "fund-statistics.estimation",
+      "title": "Point estimation of the population mean and variance",
+      "intro": "Understand why an estimator varies across samples, how standard error measures precision, and why variance estimation uses n−1.",
+      "slides": 33,
+      "exercises": "29–32",
+      "outcomes": [
+        "Distinguish parameter, estimator and estimate",
+        "Connect sampling distribution, bias and precision",
+        "Choose the adjusted variance and explain its denominator"
+      ],
+      "source": "Topic 3, slides 1–33; Understanding Notation; Exercise Book 2026/27, exercises 29–32."
+    },
+    {
+      "number": 4,
+      "topic": "fund-statistics.confidence-intervals",
+      "title": "Confidence intervals for the population mean and proportion",
+      "intro": "Build a point estimate plus a margin of error, choose z or t correctly, and write a confidence statement that matches the target.",
+      "slides": 33,
+      "exercises": "33–50",
+      "outcomes": [
+        "Construct mean intervals with known or unknown variance",
+        "Construct and check a proportion interval",
+        "Explain repeated-sampling coverage and interval width"
+      ],
+      "source": "Topic 4, slides 1–33; Formula Sheet; Exercise Book 2026/27, exercises 33–50."
+    },
+    {
+      "number": 5,
+      "topic": "fund-statistics.hypothesis-tests",
+      "title": "Hypothesis tests for one population mean and proportion",
+      "intro": "Work from hypotheses to a test statistic, p-value and decision, then explain what the result means in healthcare.",
+      "slides": 0,
+      "exercises": "51–60",
+      "outcomes": [
+        "Specify two-sided null and alternative hypotheses",
+        "Choose the correct mean or proportion test SE",
+        "Interpret p-values without claiming proof of equality"
+      ],
+      "source": "Syllabus Topic 5; Formula Sheet; Exercise Book 2026/27, exercises 51–60; mock-answer document Q7–Q9. Topic 5 slides were not supplied."
+    },
+    {
+      "number": 6,
+      "topic": "fund-statistics.two-means",
+      "title": "Comparison of two population means",
+      "intro": "Recognise independent and paired designs, calculate the uncertainty of a difference and interpret a two-group result.",
+      "slides": 29,
+      "exercises": "61–64",
+      "outcomes": [
+        "Identify an independent or paired comparison",
+        "Calculate a large-sample two-mean test",
+        "Interpret effect direction, p-values and significance legends"
+      ],
+      "source": "Topic 6, slides 1–29; Exercise Book 2026/27, exercises 61–64. Additional topic in the syllabus, time permitting."
+    }
+  ],
+  "exam": {
+    "minutes": 90,
+    "sections": [
+      {
+        "label": "6 multiple-choice / short-answer questions",
+        "weight": 35
+      },
+      {
+        "label": "2 statistical-output interpretations",
+        "weight": 30
+      },
+      {
+        "label": "2 applied Excel exercises with a Word answer",
+        "weight": 35
+      }
+    ],
+    "dates": [
+      {
+        "date": "2026-11-04",
+        "time": "09:00",
+        "place": "LAB2–LAB3, Via Zamboni 34, Bologna"
+      },
+      {
+        "date": "2027-01-26",
+        "time": "11:00",
+        "place": "LAB2, Via Zamboni 34, Bologna"
+      },
+      {
+        "date": "2027-09-08",
+        "time": "09:00",
+        "place": "Room to be confirmed"
+      }
+    ],
+    "timezone": "Europe/Rome",
+    "source": "Syllabus 2026/27 and the Virtuale notice supplied by the student, reviewed 6 October 2026. Confirm changes and enrolment on AlmaEsami.",
+    "passMark": "18/30",
+    "permitted": [
+      "Teacher-provided printed formula sheet",
+      "Teacher-provided printed Excel-function list",
+      "Teacher-provided printed statistical tables"
+    ],
+    "prohibited": [
+      "Personal notes or printed material",
+      "Mobile phones and other personal devices",
+      "Web browsing",
+      "Communication with other people",
+      "ChatGPT and similar AI tools"
+    ],
+    "notes": [
+      "Equations are written in a Word file, not directly in EOL. Practise Word Equation Editor.",
+      "A grade below 18/30 requires a later sitting. A passing grade may be declined and the exam retaken.",
+      "The supplied notice permits remote resits at consortium universities; confirm arrangements with the teacher.",
+      "Economics & Policy students are encouraged to attend Quantitative Methods in Health and Healthcare (Statistics + Econometrics), the alternative integrated course."
+    ]
+  },
+  "missing": [
+    "Topic 5 PowerPoint slides",
+    "The complete mock-test question paper; only Q7–Q9 answer explanations were supplied",
+    "Nifedipine dataset referenced in mock Q9",
+    "OECD dataset and Descriptive Statistics LAB files",
+    "Food dataset and Inferential Statistics LAB files",
+    "Birthweight–Estriol and Otitis standalone datasets",
+    "The standalone file of 25 independent samples",
+    "Reports and papers in the confidence-interval practice folder",
+    "SMOKE dataset used in Topic 6"
+  ]
+}

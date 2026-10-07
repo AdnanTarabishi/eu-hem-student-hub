@@ -1,0 +1,108 @@
+/* Fundamentals (Sara Capacci, 96498), using the shared site's light/dark palette. */
+.fund-stats-page, .fund-stats-lecture {
+  --fs-accent: var(--color-brand-text, #a9472d);
+  --line: var(--border-default);
+  --ink: var(--text-primary);
+  --muted: var(--text-secondary);
+  --white: var(--surface-card);
+}
+.fs-main { padding-bottom: 72px; }
+.fs-breadcrumb { display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; margin:28px 0; font-size:.85rem; color:var(--text-secondary); }
+.fs-kicker { font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; font-weight:700; }
+.fs-hero { display:grid; grid-template-columns:1.5fr 1fr; gap:40px; background:var(--surface-navy); color:var(--text-on-navy); padding:clamp(24px,4vw,52px); border-radius:24px; margin-bottom:28px; }
+.fs-hero h1 { color:inherit; font-family:var(--font-serif); font-size:clamp(2.5rem,4.8vw,4.2rem); line-height:1.1; letter-spacing:-.04em; margin:18px 0 22px; }
+.fs-hero h1 em { color:#efac89; font-weight:inherit; }
+.fs-hero p { max-width:54ch; }
+.fs-button { display:inline-flex; align-items:center; justify-content:center; min-height:46px; padding:12px 19px; border:1px solid transparent; border-radius:9px; background:var(--action-navy); color:var(--text-on-navy); font-weight:600; text-decoration:none; cursor:pointer; font:inherit; }
+.fs-button:hover { background:var(--action-navy-hover); color:var(--text-on-navy); }
+.fs-secondary { background:var(--surface-card); color:var(--text-heading); border-color:var(--border-input); }
+.fs-secondary:hover { background:var(--surface-subtle); color:var(--text-heading); }
+.fs-hero .fs-button { background:#fffdf9; color:#0f2b5b; }
+.fs-hero .fs-secondary { background:transparent; color:#fff; border-color:rgba(255,255,255,.4); }
+.fs-hero-stats { display:flex; gap:24px; flex-wrap:wrap; font-size:.8rem; margin-top:28px; }
+.fs-hero-stats strong { display:block; font-size:1.6rem; line-height:1.2; }
+.fs-hero-visual { align-self:center; padding:25px; border:1px solid rgba(255,255,255,.18); border-radius:16px; background:rgba(255,255,255,.04); }
+.fs-hero-visual svg { width:100%; height:auto; display:block; }
+.fs-hero-visual p:last-child { margin-bottom:0; font-size:.85rem; opacity:.85; }
+.fs-nav { display:flex; flex-wrap:wrap; gap:8px; padding:12px; border:1px solid var(--border-default); border-radius:12px; background:var(--surface-card); margin-bottom:32px; }
+.fs-nav a { padding:10px 14px; border-radius:7px; color:var(--text-secondary); font-size:.88rem; text-decoration:none; font-weight:600; }
+.fs-nav a[aria-current="page"] { background:var(--action-navy); color:var(--text-on-navy); }
+.fs-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-bottom:24px; }
+.fs-heading h2 { margin:4px 0 8px; }
+.fs-heading p { margin-bottom:0; max-width:70ch; color:var(--text-secondary); }
+.fs-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+.fs-card, .fund-stats-page .practice-section, .fund-stats-page .extended-activity { background:var(--surface-card); border:1px solid var(--border-default); border-radius:16px; padding:clamp(20px,2.4vw,30px); margin-bottom:20px; }
+.fs-grid .fs-card { margin:0; display:flex; flex-direction:column; gap:12px; }
+.fs-topic-top { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.fs-number { display:inline-grid; place-items:center; font-family:var(--font-serif); font-size:1.5rem; width:48px; height:48px; border-radius:12px; background:var(--color-info-soft); color:var(--text-heading); }
+.fs-tag { display:inline-block; font-size:.72rem; font-weight:600; padding:5px 9px; border-radius:30px; background:var(--surface-subtle); border:1px solid var(--border-default); color:var(--text-secondary); }
+.fs-pending { color:var(--color-brand-text); background:var(--color-brand-soft); }
+.fs-card h3 { font-size:1.24rem; line-height:1.3; margin:0; }
+.fs-card p { margin:0 0 12px; }
+.fs-card ul { padding-left:20px; color:var(--text-secondary); margin:0 0 16px; }
+.fs-card .button-row { margin-top:auto; }
+.fs-card progress { width:100%; height:7px; accent-color:var(--fs-accent); }
+.fs-meta { font-size:.8rem; color:var(--text-secondary); }
+.fs-notice, .fund-warning { border-left:3px solid var(--fs-accent); padding:14px 18px; border-radius:4px; background:var(--color-brand-soft); margin:20px 0; color:var(--text-primary); }
+.fs-stats, .activity-stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr)); gap:16px; margin:24px 0; }
+.fs-stats > div, .fund-stats-page .activity-stats > div { padding:14px; background:var(--surface-subtle); border-radius:10px; }
+.fs-stats dt, .activity-stats dt { font-size:.77rem; color:var(--text-secondary); }
+.fs-stats dd, .activity-stats dd { font-size:1.45rem; font-weight:600; margin:2px 0 0; overflow-wrap:anywhere; }
+.fs-filter, .activity-controls { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,215px),1fr)); gap:16px; margin:24px 0; }
+.fund-stats-page label, .fund-stats-lecture .extended-activity label { display:block; font-size:.88rem; font-weight:600; }
+.fund-stats-page input:not([type=radio]):not([type=checkbox]), .fund-stats-page select, .fund-stats-page textarea { width:100%; color:var(--text-primary); background:var(--surface-card); border:1px solid var(--border-input); border-radius:8px; padding:11px 12px; font:inherit; margin-top:6px; min-width:0; }
+.fund-stats-page textarea, .fund-stats-lecture textarea { resize:vertical; }
+.fund-check { display:flex!important; align-items:flex-start; gap:10px; margin:12px 0; font-weight:400!important; }
+.fund-check input { width:auto!important; margin:4px 0 0; accent-color:var(--fs-accent); }
+.fund-result { margin-top:20px; }
+.fund-result.has-error { background:var(--color-brand-soft); border-radius:8px; padding:16px; color:var(--text-primary); }
+.fund-method { color:var(--fs-accent); font-weight:700; }
+.fund-chart { margin:24px 0; }
+.fund-chart svg { display:block; width:100%; height:auto; color:var(--text-heading); }
+.fund-chart figcaption { color:var(--text-secondary); font-size:.82rem; }
+.fund-interval { display:flex; align-items:center; gap:12px; margin:30px 0 50px; color:var(--text-heading); }
+.fund-interval > div { position:relative; border-top:4px solid var(--fs-accent); flex:1; }
+.fund-interval i { position:absolute; left:50%; top:-9px; background:var(--fs-accent); width:14px; height:14px; border-radius:50%; }
+.fund-interval b { position:absolute; top:14px; left:50%; transform:translateX(-50%); font-size:.85rem; }
+.fund-bars { margin:24px 0; }
+.fund-bars > div { display:grid; grid-template-columns:40px 1fr 70px; align-items:center; gap:10px; margin:5px 0; font-size:.8rem; }
+.fund-bars i { background:var(--fs-accent); height:12px; border-radius:2px; min-width:3px; }
+.table-wrap { overflow-x:auto; max-width:100%; margin:20px 0; }
+.fund-stats-page table, .fund-stats-lecture .fund-normal-table table { width:100%; border-collapse:collapse; font-size:.88rem; }
+.fund-stats-page th, .fund-stats-page td, .fund-normal-table th, .fund-normal-table td { border-bottom:1px solid var(--border-default); padding:12px; text-align:left; vertical-align:top; }
+.fund-stats-page th { background:var(--surface-subtle); }
+.fund-normal-table td, .fund-normal-table th { font-variant-numeric:tabular-nums; padding:8px!important; font-size:.8rem; }
+.fund-normal-table table { min-width:680px; }
+.fund-cell { background:var(--action-navy); color:var(--text-on-navy); font-weight:700; }
+.fund-stats-page details { margin:16px 0; }
+.fund-stats-page summary { cursor:pointer; font-weight:600; padding:12px 0; }
+.fund-stats-page details[open] summary { margin-bottom:10px; }
+.fund-stats-page .formula { padding:18px; border-radius:8px; background:var(--color-info-soft); font-family:var(--font-sans); font-size:1.05rem; overflow-wrap:anywhere; }
+.fs-mock-toolbar { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; padding:18px 24px; border:1px solid var(--border-default); border-radius:12px; background:var(--surface-card); margin-bottom:24px; }
+.fs-timer { font:600 1.6rem/1.1 var(--font-sans); font-variant-numeric:tabular-nums; color:var(--text-heading); }
+.fs-mock-question { scroll-margin-top:20px; }
+.fs-mock-options { display:grid; gap:10px; }
+.fs-mock-options label { display:flex; align-items:center; gap:12px; border:1px solid var(--border-input); border-radius:8px; padding:12px 15px; font-weight:400; cursor:pointer; }
+.fs-mock-options label:has(input:checked) { border-color:var(--color-link); background:var(--color-info-soft); }
+.fs-mock-options input { accent-color:var(--color-link); }
+.fs-correct { border-color:var(--color-success, #3b7a53)!important; }
+.fs-feedback { padding:18px; border-left:3px solid var(--color-link); background:var(--color-info-soft); margin-top:18px; font-size:.92rem; }
+.fs-feedback p:last-child { margin-bottom:0; }
+.fs-rubric { padding:16px; background:var(--surface-subtle); border-radius:8px; margin-top:16px; }
+.fs-source-list { padding-left:20px; }
+.fs-source-list li { margin-bottom:8px; }
+.fund-stats-lecture .hero { grid-template-columns:1fr; }
+.fund-stats-lecture .hero .lead { max-width:78ch; }
+.fund-stats-lecture .fund-normal-table { max-height:470px; }
+[hidden] { display:none!important; }
+@media (max-width:760px) {
+  .fs-hero { grid-template-columns:1fr; gap:24px; }
+  .fs-hero-visual { display:none; }
+  .fs-grid { grid-template-columns:1fr; }
+  .fs-nav { flex-wrap:nowrap; overflow-x:auto; padding:8px; }
+  .fs-nav a { flex:none; }
+  .fs-breadcrumb span { display:none; }
+  .fs-button { font-size:.88rem; }
+  .fs-stats dd, .activity-stats dd { font-size:1.25rem; }
+}
+@media (prefers-reduced-motion:reduce) { .fund-stats-page * { scroll-behavior:auto!important; } }

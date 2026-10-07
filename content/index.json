@@ -17,7 +17,10 @@
       "topics.json"
     ],
     "fund-statistics": [
-      "topics.json"
+      "topics.json",
+      "flashcards.json",
+      "questions.json",
+      "resources.json"
     ],
     "health-systems": [
       "topics.json"

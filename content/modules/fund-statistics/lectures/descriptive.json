@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "topic": "fund-statistics.descriptive",
+  "topicNumber": 1,
+  "updated": "2026-10-06",
+  "heroTitle": "Describe the data.\nChoose the right summary.",
+  "intro": "Start with the statistical unit and measurement scale, then describe the centre, spread, shape and association in healthcare data.",
+  "guide": "lectures/descriptive.html",
+  "activities": [
+    "fund-descriptive"
+  ],
+  "attribution": "Original student study explanations based on Sara Capacci’s Fundamentals of Statistics for Healthcare (96498), AY 2026/27. Sources: Topic 1, slides 1–79; Exercise Book 2026/27, exercises 1–12. Teaching examples and clarifications are original; consult Virtuale for authoritative materials."
+}

@@ -369,9 +369,9 @@
                   "teachingStart": "2026-09-14",
                   "teachingEnd": "2026-10-21",
                   "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518697",
-                  "virtualeUrl": "https://virtuale.unibo.it",
-                  "description": "The basics of statistical measurement and probability for health data: describing data, sampling, and a first look at inference. Practical sessions use Excel.",
-                  "assessment": "Computer-based written exam (90 minutes): multiple-choice/short questions, interpreting statistical output, and applied exercises on a dataset. A formula sheet and tables are provided.",
+                  "virtualeUrl": "https://virtuale.unibo.it/course/view.php?id=83042",
+                  "description": "Describe healthcare data, model sampling and probability, estimate population parameters, build confidence intervals, and test means and proportions. Practical work uses Excel. Six syllabus topics are covered across 11 lectures and four exercise sessions.",
+                  "assessment": "90-minute computer-based written exam: 6 multiple-choice/short questions (35%), 2 statistical-output interpretations (30%), and 2 applied Excel exercises with Word answers (35%). Teacher-provided printed formula sheet, Excel-function list and statistical tables are permitted; personal notes, devices, web browsing, communication and AI tools are prohibited. Pass mark: 18/30. Check the syllabus and AlmaEsami for current arrangements.",
                   "textbooks": [
                     "Rosner, B. (2016). Fundamentals of Biostatistics. Cengage.",
                     "Agresti, A. (2018). Statistical Methods for the Social Sciences (5th ed.). Pearson.",

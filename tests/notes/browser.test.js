@@ -21,10 +21,16 @@ const executable = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || (fs.exists
   const errors = [];
   const contexts = [];
   const open = async (url = "notes.html", options = {}) => {
-    const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, colorScheme: "light", reducedMotion: "reduce", serviceWorkers: "block", ...options });
+    const { now = "2026-10-07T10:00:00+02:00", examHtml, calendarError = false, ...contextOptions } = options;
+    const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, colorScheme: "light", reducedMotion: "reduce", serviceWorkers: "block", ...contextOptions });
     contexts.push(context);
-    await context.clock.setFixedTime(new Date("2026-10-07T10:00:00+02:00"));
-    await context.route(/^https?:\/\//, route => new URL(route.request().url()).hostname === "127.0.0.1" ? route.continue() : route.abort());
+    await context.clock.setFixedTime(new Date(now));
+    await context.route(/^https?:\/\//, route => {
+      const address = new URL(route.request().url());
+      if (address.hostname === "corsi.unibo.it" && examHtml !== undefined) return route.fulfill({ contentType: "text/html", body: examHtml });
+      if (calendarError && address.pathname.includes("/calendar/")) return route.fulfill({ status: 503, body: "unavailable" });
+      return address.hostname === "127.0.0.1" ? route.continue() : route.abort();
+    });
     const page = await context.newPage();
     page.on("pageerror", e => errors.push(e.message));
     await page.goto(base + url);
@@ -40,15 +46,76 @@ const executable = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || (fs.exists
     assert.equal(await page.getAttribute("#contribute-slot a", "href"), "contact.html");
     assert.ok((await page.getAttribute(".notes-focus-next", "href")).startsWith("lecture.html?topic="));
     for (const href of await page.locator(".course-card a").evaluateAll(all => all.map(a => a.getAttribute("href")))) {
-      assert.ok(href.startsWith("course.html?course="), href);
-      assert.ok(fs.existsSync(path.join(ROOT, href.split("?")[0])), href);
+      if (href.startsWith("https://")) assert.ok(/corsi\.unibo\.it|almaesami\.unibo\.it/.test(href), href);
+      else {
+        assert.ok(href.startsWith("course.html?course="), href);
+        assert.ok(fs.existsSync(path.join(ROOT, href.split("?")[0])), href);
+      }
     }
     ok("real course content, personal empty state, working contribution link and course/lecture destinations under the Pages subdirectory");
+    assert.equal(await page.locator('[data-teaching-group="now"] .course-card').count(), 3);
+    assert.equal(await page.locator('[data-teaching-group="upcoming"] .course-card').count(), 3);
+    assert.equal(await page.locator('[data-teaching-group="finished"] .course-card').count(), 2);
+    assert.equal(await page.locator(".notes-module-dates").count(), 11);
+    assert.match(await page.locator('[data-module="fund-healthcare-management"]').textContent(), /10 Nov 2026.*3 Dec 2026/);
+    assert.match(await page.locator('[data-module="right-to-health"]').textContent(), /8 Oct 2026.*23 Oct 2026/);
+    await page.locator('[data-course-exam="fund-health-econ-management"].has-exam').waitFor();
+    assert.match(await page.locator('[data-course-exam="fund-health-econ-management"]').textContent(), /27 Oct 2026/);
+    assert.match(await page.locator("#notes-exam-feed-status").textContent(), /saved calendar copy/);
+    assert.match(await page.locator('[data-course-exam="health-systems"]').textContent(), /No upcoming date in the calendar copy/);
+    await page.locator('[data-teaching-filter="upcoming"]').click();
+    assert.equal(await page.locator(".course-card").count(), 3);
+    assert.equal(await page.getByLabel("Filter by teaching status").inputValue(), "upcoming");
+    await page.locator('[data-teaching-filter="upcoming"]').click();
+    assert.equal(await page.locator(".course-card").count(), 8);
+    ok("current/upcoming/completed sections, dates for every module and honest calendar fallback; semester overview filters courses");
+
+    // Controlled HTML in the official parser's format, using the existing calendar's
+    // module codes/dates. Registration details below are test fixtures only.
+    const liveHtml = `<h3 role="tab" aria-controls="health-exam"><a><span class="code">97177</span>Fundamentals of Health Economics and Management</a></h3>
+      <div id="health-exam"><table class="single-item">
+      <tr><th>When</th><td>27 October 2026 at 10:00</td></tr>
+      <tr><th>Componente:</th><td>79060 - FUNDAMENTALS OF HEALTH ECONOMICS</td></tr>
+      <tr><th>Subscriptions list:</th><td><span>30 September 2026</span><span>23 October 2026</span></td></tr>
+      <tr><th>Test type:</th><td>scritto</td></tr><tr><th>Place:</th><td>Test room</td></tr>
+      </table></div>`;
+    const live = await open("notes.html", { examHtml: liveHtml, timezoneId: "America/Los_Angeles" });
+    await live.locator('[data-course-exam="fund-health-econ-management"].has-exam').waitFor();
+    const liveExam = live.locator('[data-course-exam="fund-health-econ-management"]');
+    assert.match(await liveExam.textContent(), /27 Oct 2026.*10:00 \(Bologna\)/);
+    assert.match(await liveExam.textContent(), /Module: Fundamentals in Health Economics/);
+    assert.ok(await liveExam.getByRole("link", { name: "Register on AlmaEsami" }).isVisible());
+    assert.match(await live.locator('[data-course-exam="health-systems"]').textContent(), /No upcoming exam date published/);
+    assert.match(await live.locator("#notes-exam-feed-status").textContent(), /Exam dates from UniBo/);
+    await live.locator('.course-card:has([data-course-exam="fund-health-econ-management"]) .course-card-save').click();
+    await live.locator('[data-teaching-filter="now"]').click();
+    await live.route("https://corsi.unibo.it/**/exam-dates", route => route.fulfill({ contentType: "text/html", body: "<p>No scheduled exams</p>" }));
+    await live.getByRole("button", { name: "Refresh exam dates" }).click();
+    await live.getByRole("button", { name: "Refresh exam dates" }).waitFor({ state: "visible" });
+    await live.waitForFunction(() => !document.getElementById("notes-refresh-exams").disabled);
+    assert.equal(await live.locator(".has-exam").count(), 0);
+    assert.equal(await live.getByLabel("Filter by teaching status").inputValue(), "now");
+    assert.equal(await live.textContent("#notes-saved-count"), "1");
+    assert.match(await liveExam.textContent(), /No upcoming exam date published/);
+    await live.context().clock.setFixedTime(new Date("2026-10-08T00:01:00+02:00"));
+    await live.evaluate(() => refreshLandingSchedule());
+    assert.equal(await live.locator('[data-teaching-group="now"] .course-card').count(), 4);
+    assert.match(await live.locator('[data-module="right-to-health"]').textContent(), /In progress/);
+    await live.context().close();
+    ok("official exam matching, Bologna times, registration, refresh preserving filters/bookmarks and automatic day changes while travelling");
+
+    const unavailable = await open("notes.html", { calendarError: true });
+    await unavailable.getByText("Exam dates are unavailable. Use the official UniBo link to check your next sitting.").waitFor();
+    assert.equal(await unavailable.locator(".course-card").count(), 8);
+    assert.equal(await unavailable.locator(".has-exam").count(), 0);
+    assert.match(await unavailable.locator('[data-course-exam="fund-health-econ-management"]').textContent(), /could not be loaded/);
+    await unavailable.context().close();
+    ok("when both exam sources fail, courses remain usable and no dates are invented");
 
     await page.getByRole("button", { name: "Lectures", exact: true }).click();
-    assert.equal(await page.locator(".course-card").count(), 2);
+    assert.equal(await page.locator(".course-card").count(), 3);
     await page.getByRole("button", { name: "Flashcards", exact: true }).click();
-    assert.equal(await page.locator(".course-card").count(), 1);
+    assert.equal(await page.locator(".course-card").count(), 2);
     await page.getByRole("button", { name: "All resources", exact: true }).click();
     await page.getByLabel("Filter by teaching status").selectOption("other");
     assert.equal(await page.locator(".course-card").count(), 0);
@@ -97,7 +164,7 @@ const executable = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || (fs.exists
     ok("keyboard tabs, glossary bookmarks, full-text search, topic suggestions and Escape preserve the selected library section");
 
     await page.locator(".notes-library-stat[data-filter=lectures]").click();
-    assert.equal(await page.locator(".course-card").count(), 2);
+    assert.equal(await page.locator(".course-card").count(), 3);
     assert.equal(await page.getAttribute("#notes-tab-courses", "aria-selected"), "true");
     await page.goBack();
     assert.equal(await page.getAttribute("#notes-tab-concepts", "aria-selected"), "true");
@@ -175,11 +242,14 @@ const executable = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || (fs.exists
     assert.ok(await offline.evaluate(async () => !!(await caches.match(new URL("notes-landing.css", location.href).href))));
     await offline.reload();
     await offline.locator(".course-card").first().waitFor();
+    await offline.locator('[data-course-exam="fund-health-econ-management"].has-exam').waitFor();
     await offlineContext.setOffline(true);
     await offline.reload();
     await offline.locator(".course-card").first().waitFor();
     assert.equal(await offline.locator(".course-card").count(), 8);
     assert.equal(await offline.locator(".notes-library-stat").count(), 6);
+    await offline.locator('[data-course-exam="fund-health-econ-management"].has-exam').waitFor();
+    assert.match(await offline.locator('[data-course-exam="fund-health-econ-management"]').textContent(), /27 Oct 2026/);
     ok("service worker caches the new stylesheet and the full library reloads offline under the Pages subdirectory");
     assert.deepEqual(errors, []);
     ok("no uncaught JavaScript errors");

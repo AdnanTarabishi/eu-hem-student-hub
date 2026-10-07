@@ -87,9 +87,14 @@ as JSON and Markdown files. Adding content never requires code changes.
 - Features: topic notes with formulas and diagrams, spaced-repetition flashcards, quizzes,
   progress tracking and search. Progress is saved only in each student's browser.
 - The Notes library has a personal study snapshot, filters for content and teaching period,
-  a saved-study-plan filter, course bookmarks and a remembered grid/list layout. Its styles
-  live in `notes-landing.css`; the existing shared data and progress formats are unchanged.
-- Check the library's interactions, responsive layouts and offline reload: `npm run test:notes`.
+  a saved-study-plan filter, course bookmarks and a remembered grid/list layout. Courses
+  are grouped by their actual teaching blocks: current, upcoming and teaching completed.
+  Each card shows module dates and the next exam, matched by official course codes.
+  Exam dates can be refreshed from UniBo; if unavailable, the existing generated calendar
+  is shown as a labelled copy with times to confirm. Missing dates are never inferred from
+  the term's exam period. Date calculations use Bologna time and update in an open tab.
+  Styles live in `notes-landing.css`, scheduling helpers in `notes-schedule.js`.
+- Check scheduling, library interactions, responsive layouts and offline reload: `npm run test:notes`.
 - Check content before committing: `node scripts/check-content.js`
 
 ## Announcements
@@ -138,6 +143,24 @@ Full guide: [docs/thesis-import.md](docs/thesis-import.md). The spreadsheet itse
 ## Privacy and contact pages
 `privacy.html` was written from what the code does and approved on 5 October 2026. Keep it in sync when the code changes.
 `contact.html` and the "Who is responsible" section of `privacy.html` give the Student Hub email, euhem.studenthub@gmail.com.
+
+## Fundamentals of Statistics for Healthcare (96498)
+`fund-statistics.html` is the study workspace for **Sara Capacci**, in `fund-quant-methods`.
+It is separate from Martin Forster's `statistics` module and study centre.
+The six syllabus topics have original guides, 90 MCQs, 60 spaced-review cards, 24 concepts,
+eight experiments and a 90-minute practice mock with self-assessed written interpretations.
+The mock is illustrative: it does not reproduce the teacher's mock paper or predict a grade.
+Topic 5 slides and several referenced lab datasets were not supplied; the guides and
+`content/modules/fund-statistics/course-study.json` explicitly record those gaps.
+`source-review.json` documents the 22 uploads (20 distinct files), checked workbook summaries
+and source discrepancies. Official slides, datasets and answer keys stay on Virtuale.
+The heart-rate CSV is an original illustrative practice dataset.
+
+Update content in `content/modules/fund-statistics/`; calculation methods are in
+`fund-statistics-math.js`, registered widgets in `fund-statistics-activities.js`, and the
+workspace in `fund-statistics.js`. Topic quizzes/cards share the existing Notes progress.
+The timed mock uses tab-scoped `sessionStorage`, separate from progress backups.
+Run `npm run test:fund-statistics`, then rebuild the content index and version stamps.
 
 ## City guides
 `city-guide.html` shows the index of all cities (with a comparison table and "Your next city" for

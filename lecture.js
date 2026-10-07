@@ -413,7 +413,7 @@ async function startLecture() {
     document.title = found.topic.title + " · EU-HEM Student Hub";
     $("lecture-title").textContent = config.heroTitle || found.topic.title;
     $("lecture-topic-label").textContent = found.topic.title;
-    $("lecture-class-label").textContent = config.classNumber
+    $("lecture-class-label").textContent = config.topicNumber ? "TOPIC " + String(config.topicNumber).padStart(2,"0") : config.classNumber
       ? "CLASS " + String(config.classNumber).padStart(2, "0")
       : "STUDY NOTES";
     $("lecture-module-label").textContent = found.module.info.name;
@@ -426,6 +426,7 @@ async function startLecture() {
     $("lecture-virtuale").href =
       found.module.info.virtualeUrl || data.programme.programme.virtualeUrl;
     $("lecture-guide").innerHTML = guide; // Reviewed repository content, never visitor input.
+    if (found.module.id === "fund-statistics") document.body.classList.add("fund-stats-lecture");
     $("lecture-guide").querySelectorAll(".section-intro").forEach((section, i) => { section.id = "study-section-" + (i + 1); });
     $("lecture-save").replaceWith(saveButton(id));
     $("lecture-question-count").textContent =
@@ -551,6 +552,12 @@ function renderLectureSequence(module, currentId) {
     const centre = document.createElement("a");
     centre.href = "statistics.html";
     centre.textContent = "Study Centre";
+    nav.appendChild(centre);
+  }
+  if (module.id === "fund-statistics") {
+    const centre = document.createElement("a");
+    centre.href = "fund-statistics.html";
+    centre.textContent = "Fundamentals workspace";
     nav.appendChild(centre);
   }
   module.topics.filter(t => t.lecture).forEach(topic => {
