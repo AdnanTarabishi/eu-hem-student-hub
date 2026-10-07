@@ -420,7 +420,7 @@
 .map-country:focus { outline: none; }
 .map-country.is-selected { stroke: var(--sx-map-selected); stroke-width: 2.5; stroke-dasharray: 4 2; filter: drop-shadow(0 0 1.5px #fff); }
 .map-country:focus-visible { stroke: #142840; stroke-width: 3; filter: drop-shadow(0 0 1.5px #fff); }
-.sx-map-tooltip { position: absolute; z-index: 5; transform: translate(-50%, calc(-100% - 10px)); padding: .45rem .7rem; border: 1px solid #7594a2; border-radius: 9px; background: #f4fbff; color: #142e43; font-size: .82rem; font-weight: 600; white-space: nowrap; pointer-events: none; box-shadow: 0 5px 18px #0003; }
+.sx-map-tooltip { position: absolute; z-index: 5; transform: translate(-50%, calc(-100% - 10px)); padding: .45rem .7rem; border: 1px solid #7594a2; border-radius: 9px; background: #f4fbff; color: #142e43; font-size: .82rem; font-weight: 600; width: max-content; max-width: calc(100% - 20px); white-space: normal; pointer-events: none; box-shadow: 0 5px 18px #0003; }
 .sx-map-foot { margin-top: .85rem; }
 .sx-legend { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .85rem; font-size: .75rem; color: var(--sx-muted); }
 .sx-legend-title { font-weight: 600; color: var(--sx-ink); }

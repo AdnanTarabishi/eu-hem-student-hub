@@ -8,6 +8,7 @@ const ROOT = path.resolve(process.argv[2] || ".");
 const D = require(path.join(ROOT, "students-data.js"));
 const demo = JSON.parse(fs.readFileSync(path.join(ROOT, "data/demo-students.json"), "utf8"));
 const pub = D.projectAll(demo.records, D.makeViewer("public"));
+const { EUHEM_COUNTRIES } = require(path.join(ROOT, "countries.js"));
 const MIME = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".svg": "image/svg+xml", ".woff2": "font/woff2", ".png": "image/png", ".webmanifest": "application/manifest+json" };
 let checks = 0;
 const ok = message => { checks++; console.log("  ok  " + message); };
@@ -55,6 +56,48 @@ const stressName = '<img src=x onerror="window.profileInjection=true"> ' + "Aver
     let page;
     if (!process.env.STUDENTS_LAYOUT_ONLY) {
     page = await open();
+    const flagCss = fs.readFileSync(path.join(ROOT, "assets/flags/country-flags.css"), "utf8");
+    const atlas = fs.readFileSync(path.join(ROOT, "assets/flags/countries.png"));
+    assert.strictEqual(atlas.readUInt32BE(16), 14 * 24 * 3);
+    assert.strictEqual(atlas.readUInt32BE(20), Math.ceil(EUHEM_COUNTRIES.length / 14) * 18 * 3);
+    assert.strictEqual((flagCss.match(/data-country-flag=/g) || []).length, EUHEM_COUNTRIES.length);
+    EUHEM_COUNTRIES.forEach((country, index) => {
+      assert.ok(flagCss.includes(`[data-country-flag="${country.code}"] { background-position: -${index % 14 * 24}px -${Math.floor(index / 14) * 18}px; }`), country.code);
+    });
+    for (const card of await page.locator('.sx-card').all()) {
+      // Check displayed country fields against the existing code/name mapping.
+      const fact = card.locator('.sx-fact-country');
+      if (await fact.count()) {
+        const flag = fact.locator('.country-flag');
+        assert.strictEqual(await flag.count(), 1);
+        const code = await flag.getAttribute('data-country-flag');
+        assert.strictEqual(await fact.textContent(), EUHEM_COUNTRIES.find(country => country.code === code).name);
+        assert.strictEqual(await flag.getAttribute('aria-hidden'), 'true');
+      }
+    }
+    await page.waitForFunction(async () => {
+      const flag = document.querySelector('.country-flag');
+      const url = getComputedStyle(flag).backgroundImage.slice(5, -2);
+      const image = new Image(); image.src = url;
+      try { await image.decode(); return image.naturalWidth === 1008; } catch { return false; }
+    });
+    assert.ok(await page.locator('[data-key="country"] .country-flag').count());
+    assert.ok(await page.locator('#sx-country-list .country-flag').count());
+    const privateCountry = page.locator('.sx-card').filter({ hasText: 'Håkon Lyngstad' });
+    assert.strictEqual(await privateCountry.locator('.country-flag').count(), 0, 'no flag when the country field is private');
+    assert.strictEqual(await page.evaluate(() => countryLabel('ZZ', 'Unlisted country').querySelector('.country-flag')), null, 'unknown codes keep their text without a guessed flag');
+    await page.goto(base + 'students.html?country=IT');
+    await page.locator('#sx-country-panel .country-flag[data-country-flag="IT"]').waitFor();
+    assert.strictEqual(await page.locator('#sx-chips .country-flag[data-country-flag="IT"]').count(), 1);
+    await page.locator('[data-layout="list"]').click();
+    assert.ok(await page.locator('.sx-table td[data-label="Country"] .country-flag').count());
+    await page.locator('.sx-table .sx-name-button').first().click();
+    await page.locator('#sx-drawer[open]').waitFor();
+    assert.ok(await page.locator('#sx-drawer .country-flag[data-country-flag="IT"]').count());
+    assert.strictEqual(await page.locator('#sx-chips .sx-chip').first().getAttribute('aria-label'), 'Remove filter: Country: Italy');
+    await page.goto(base + 'students.html');
+    await page.locator('#sx-profiles:not([aria-busy])').waitFor();
+    ok('all 197 atlas positions, real image decoding, flags in cards/filters/country list/panel/chips/table/profile and accessible names');
     const originalStats = await text(page, "#sx-stats");
     await page.locator('#sx-pagination button:has-text("Next")').click();
     assert.strictEqual(await text(page, "#sx-stats"), originalStats, "summary does not change on pagination");
@@ -183,6 +226,31 @@ const stressName = '<img src=x onerror="window.profileInjection=true"> ' + "Aver
       await page.context().close();
     }
     ok("long unbroken names, biographies and universities wrap on mobile and markup-like profile text remains inert in both themes");
+    if (!process.env.STUDENTS_LAYOUT_ONLY) {
+      const offlineContext = await browser.newContext({ serviceWorkers: 'allow' });
+      contexts.push(offlineContext);
+      await offlineContext.route(/^https?:\/\//, route => new URL(route.request().url()).hostname === '127.0.0.1' ? route.continue() : route.abort());
+      const offline = await offlineContext.newPage();
+      await offline.goto(base + 'students.html');
+      await offline.locator('#sx-profiles:not([aria-busy])').waitFor();
+      await offline.waitForFunction(() => !!navigator.serviceWorker.controller);
+      for (const file of ['assets/flags/countries.png', 'assets/flags/country-flags.css']) {
+        assert.ok(await offline.evaluate(async file => !!(await caches.match(new URL(file, location.href).href)), file), file + ' cached');
+      }
+      await offline.reload();
+      await offline.locator('#sx-profiles:not([aria-busy])').waitFor();
+      await offline.locator('#sx-map svg').waitFor();
+      await offlineContext.setOffline(true);
+      await offline.reload();
+      await offline.locator('.sx-fact-country .country-flag').first().waitFor();
+      assert.ok(await offline.evaluate(async () => {
+        const flag = document.querySelector('.sx-fact-country .country-flag');
+        const image = new Image(); image.src = getComputedStyle(flag).backgroundImage.slice(5, -2);
+        await image.decode(); return image.naturalWidth === 1008;
+      }));
+      await offlineContext.close();
+      ok('flags and their stylesheet are precached, decoded and shown after a true offline page reload');
+    }
     assert.deepStrictEqual(errors, []);
     ok("no JavaScript errors during the redesign and failure-recovery checks");
     console.log(checks + " students design checks passed");

@@ -124,6 +124,20 @@ function countryName(code) {
   return (EUHEM_COUNTRY_BY_CODE[code] && EUHEM_COUNTRY_BY_CODE[code].name) || code;
 }
 
+// Only decorate country fields already allowed by the profile projection.
+// Local image flags work even on systems that render flag emoji as two letters.
+function countryLabel(code, name = countryName(code)) {
+  const label = el("span", "country-label");
+  if (EUHEM_COUNTRY_BY_CODE[code]) {
+    const flag = el("span", "country-flag");
+    flag.dataset.countryFlag = code;
+    flag.setAttribute("aria-hidden", "true");
+    label.append(flag);
+  }
+  label.append(el("span", null, name));
+  return label;
+}
+
 // A track's colour: the CSS token from style.css (lighter in dark mode), or the config colour
 function trackAccent(trackId) {
   return `var(--track-${trackId}, ${SX_CONFIG.tracks[trackId].accent})`;
@@ -332,7 +346,7 @@ function checkboxGroup(key, options, { counts = true, title = FILTER_TITLES[key]
       state.filters[key] = input.checked ? [...list, option.value] : list.filter((v) => v !== option.value);
       update({ push: SX.FILTER_KEYS.includes(key) });
     });
-    label.append(input, " " + option.label);
+    label.append(input, " ", key === "country" ? countryLabel(option.value, option.label) : option.label);
     if (counts) label.append(el("span", "sx-count", String(option.count)));
     fieldset.append(label);
   }
@@ -401,9 +415,13 @@ function renderChips() {
     const b = button(`${text} ×`, "sx-chip", onRemove);
     b.setAttribute("aria-label", `Remove filter: ${text}`);
     els.chips.append(b);
+    return b;
   };
   for (const key of SX.ALL_FILTER_KEYS) {
-    for (const v of f[key]) chip(`${FILTER_TITLES[key]}: ${labelOf[key](v)}`, () => { f[key] = f[key].filter((x) => x !== v); update({ push: SX.FILTER_KEYS.includes(key) }); });
+    for (const v of f[key]) {
+      const b = chip(`${FILTER_TITLES[key]}: ${labelOf[key](v)}`, () => { f[key] = f[key].filter((x) => x !== v); update({ push: SX.FILTER_KEYS.includes(key) }); });
+      if (key === "country") b.replaceChildren("Country: ", countryLabel(v), " ×");
+    }
   }
   if (f.hasLinkedin) chip("Has LinkedIn", () => { f.hasLinkedin = false; update(); });
   if (f.q.trim()) chip(`Search: “${f.q.trim()}”`, () => { f.q = ""; els.search.value = ""; update(); });
@@ -514,10 +532,12 @@ function profileCard(p, saved) {
   const facts = el("ul", "sx-card-facts");
   const fact = (label, value, type) => {
     const li = el("li", "sx-fact");
-    li.append(el("span", "sx-fact-label", label), el("span", `sx-fact-value sx-fact-${type}`, value));
+    const content = el("span", `sx-fact-value sx-fact-${type}`);
+    content.append(value instanceof Node ? value : document.createTextNode(value));
+    li.append(el("span", "sx-fact-label", label), content);
     facts.append(li);
   };
-  if (p.country) fact("Represents", p.country.name, "country");
+  if (p.country) fact("Represents", countryLabel(p.country.code, p.country.name), "country");
   if (p.field) fact("Background", p.field.label, "field");
   if (p.degree) fact("Degree", p.degree.label, "degree");
   if (facts.children.length) card.append(facts);
@@ -577,7 +597,7 @@ function profileTable(items, saved) {
     save.setAttribute("aria-pressed", String(isSaved));
     save.setAttribute("aria-label", `${isSaved ? "Unsave" : "Save"} ${p.name}`);
     actions.append(save);
-    row.append(nameCell, cell("Country", p.country && p.country.name), cell("Background", p.field && p.field.label),
+    row.append(nameCell, cell("Country", p.country && countryLabel(p.country.code, p.country.name)), cell("Background", p.field && p.field.label),
       cell("Track", p.track ? trackPill(p.track) : null), cell("Cohort", p.cohort), actions);
     tbody.append(row);
   }
@@ -680,8 +700,8 @@ function renderDrawer() {
     }
     row("Track", t);
   }
-  row("Represents", p.country && p.country.name);
-  row("Also identifies with", p.additionalCountry && p.additionalCountry.name);
+  row("Represents", p.country && countryLabel(p.country.code, p.country.name));
+  row("Also identifies with", p.additionalCountry && countryLabel(p.additionalCountry.code, p.additionalCountry.name));
   row("Academic background", p.field && p.field.label);
   row("Degree", p.degree && p.degree.label);
   row("Previous university", p.university);
@@ -880,7 +900,7 @@ function mapCounts() {
 
 function showTooltip(code, event) {
   const count = mapCounts()[code] || 0;
-  els.tooltip.textContent = `${countryName(code)}: ${count ? plural(count, "visible profile") : "no visible matching profiles"}`;
+  els.tooltip.replaceChildren(countryLabel(code), `: ${count ? plural(count, "visible profile") : "no visible matching profiles"}`);
   els.tooltip.hidden = false;
   const box = els.tooltip.parentElement.getBoundingClientRect(); // the map card
   let x, y;
@@ -890,7 +910,8 @@ function showTooltip(code, event) {
     x = r.left + r.width / 2 - box.left;
     y = r.top - box.top;
   }
-  els.tooltip.style.left = `${Math.min(Math.max(x, 60), box.width - 60)}px`;
+  const half = els.tooltip.getBoundingClientRect().width / 2 + 8;
+  els.tooltip.style.left = `${Math.min(Math.max(x, half), box.width - half)}px`;
   els.tooltip.style.top = `${Math.max(y, 24)}px`;
 }
 
@@ -970,7 +991,9 @@ function renderMapOutside() {
   els.outside.replaceChildren();
   els.outside.hidden = n === 0;
   if (n) {
-    els.outside.append(`${plural(n, "visible profile")} ${n === 1 ? "is" : "are"} from countries outside this map view (${outside.map(([c]) => countryName(c)).join(", ")}). `);
+    els.outside.append(`${plural(n, "visible profile")} ${n === 1 ? "is" : "are"} from countries outside this map view (`);
+    outside.forEach(([code], index) => els.outside.append(index ? ", " : "", countryLabel(code)));
+    els.outside.append("). ");
     els.outside.append(button("Show world", "sx-link-button", () => setMapView("world")));
   }
 }
@@ -987,7 +1010,9 @@ function renderCountryPanel(counts) {
       const list = el("ul", "sx-panel-list");
       for (const [code, n] of top) {
         const li = el("li");
-        li.append(button(`${countryName(code)}`, "sx-link-button", () => toggleCountry(code)), el("span", "sx-count", String(n)));
+        const link = button("", "sx-link-button", () => toggleCountry(code));
+        link.append(countryLabel(code));
+        li.append(link, el("span", "sx-count", String(n)));
         list.append(li);
       }
       panel.append(el("p", "sx-panel-sub", "Most represented in this view"), list);
@@ -997,7 +1022,9 @@ function renderCountryPanel(counts) {
   const title = selected.length === 1 ? countryName(selected[0]) : `${selected.length} countries selected`;
   const head = el("div", "sx-panel-head");
   if (selected.length === 1) head.append(el("span", "sx-code", selected[0]));
-  head.append(el("h3", null, title));
+  const heading = el("h3");
+  heading.append(selected.length === 1 ? countryLabel(selected[0]) : title);
+  head.append(heading);
   panel.append(head);
   panel.append(el("p", "sx-panel-count", results.length ? plural(results.length, "visible matching profile") : "No visible matching profiles"));
   if (results.length) {
@@ -1027,7 +1054,9 @@ function renderCountryList(counts) {
     const li = el("li");
     const b = button("", "sx-country-item", () => toggleCountry(code));
     b.setAttribute("aria-pressed", String(state.filters.country.includes(code)));
-    b.append(el("span", "sx-country-name", countryName(code)), el("span", "sx-count", n ? String(n) : "0"));
+    const name = el("span", "sx-country-name");
+    name.append(countryLabel(code));
+    b.append(name, el("span", "sx-count", n ? String(n) : "0"));
     b.setAttribute("aria-label", `${countryName(code)}: ${n ? plural(n, "visible matching profile") : "no visible matching profiles"}`);
     if (!map.paths.has(code) && mapReady) b.append(el("span", "sx-hint", " (too small for the map)"));
     li.append(b);
@@ -1037,7 +1066,7 @@ function renderCountryList(counts) {
 
 // ----- 9. Insights -----
 
-function bars(title, counts, labelOf, { limit = 6, total } = {}) {
+function bars(title, counts, labelOf, { limit = 6, total, countryFlags = false } = {}) {
   const box = el("div", "sx-bars");
   box.append(el("h4", null, title));
   const entries = Object.entries(counts).sort((a, b) => b[1] - a[1] || String(labelOf(a[0])).localeCompare(String(labelOf(b[0]))));
@@ -1046,10 +1075,12 @@ function bars(title, counts, labelOf, { limit = 6, total } = {}) {
   const shown = entries.slice(0, limit);
   const rest = entries.slice(limit).reduce((s, [, n]) => s + n, 0);
   const list = el("ul");
-  const item = (label, n) => {
+  const item = (label, n, code) => {
     const li = el("li", "sx-bar");
     const pct = Math.round((n / sum) * 100);
-    li.append(el("span", "sx-bar-label", label), el("span", "sx-bar-value", `${n} · ${pct}%`));
+    const name = el("span", "sx-bar-label");
+    name.append(countryFlags && code ? countryLabel(code, label) : label);
+    li.append(name, el("span", "sx-bar-value", `${n} · ${pct}%`));
     const track = el("span", "sx-bar-track");
     const fill = el("span", "sx-bar-fill");
     fill.style.width = `${pct}%`;
@@ -1057,7 +1088,7 @@ function bars(title, counts, labelOf, { limit = 6, total } = {}) {
     li.append(track);
     list.append(li);
   };
-  for (const [k, n] of shown) item(labelOf(k), n);
+  for (const [k, n] of shown) item(labelOf(k), n, k);
   if (rest) item("Other", rest);
   box.append(list);
   return box;
@@ -1074,7 +1105,7 @@ function renderInsights() {
     out.append(
       bars("Academic background", s.fields, (id) => SX_OPTIONS.academicFields[id] || id),
       bars("Current track", s.tracks, (id) => TRACK_LABELS[id] || id),
-      bars("Country represented", s.countries, countryName),
+      bars("Country represented", s.countries, countryName, { countryFlags: true }),
       bars("Cohort", cohorts, (c) => c),
     );
     const missing = results.length - Object.values(s.fields).reduce((a, b) => a + b, 0);

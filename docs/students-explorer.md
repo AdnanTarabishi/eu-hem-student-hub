@@ -92,6 +92,11 @@ there is no student login yet, and has no fake login button.
 - Cards, compact list and the native profile dialog support both colour themes, narrow screens, keyboard
   navigation and reduced motion. If the local map fails to load, Retry map restores it without a page reload;
   the country list and filters remain usable throughout.
+- Country names have decorative local image flags in cards, the list, profile details, filters,
+  country chips, map tooltips, the selected-country panel and country statistics. They use the
+  existing country codes after visibility projection; hidden country fields gain no flag.
+  The 197-flag atlas works on Windows without flag-emoji support and is cached for offline use.
+  Source, MIT licence and rebuild instructions: [assets/flags/README.md](../assets/flags/README.md).
 - Regression coverage: `tests/students/data.test.js`, `tests/students/browser.test.js` and
   `tests/students/design.test.js` (layout, focus, storage failure, retries and unbroken profile text).
 
