@@ -23,10 +23,10 @@ const ok = name => { checks++; console.log("  ok  " + name); };
   const browser = await chromium.launch({ executablePath, args: ["--no-sandbox"] });
   const contexts = [], errors = [];
   const open = async (options = {}) => {
-    const { storage = {}, storageBlocked = false, failure = "", ...contextOptions } = options;
+    const { storage = {}, storageBlocked = false, failure = "", clockTime = "2026-10-07T08:30:00Z", ...contextOptions } = options;
     const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, colorScheme: "light", reducedMotion: "reduce", serviceWorkers: "block", acceptDownloads: true, ...contextOptions });
     contexts.push(context);
-    await context.clock.setFixedTime(new Date("2026-10-07T08:30:00Z"));
+    await context.clock.setFixedTime(new Date(clockTime));
     if (storageBlocked) await context.addInitScript(() => Object.defineProperty(window, "localStorage", { get() { throw new DOMException("Storage blocked", "SecurityError"); } }));
     if (Object.keys(storage).length) await context.addInitScript(items => { for (const [key, value] of Object.entries(items)) localStorage.setItem(key, value); }, storage);
     let failed = false;
@@ -50,6 +50,30 @@ const ok = name => { checks++; console.log("  ok  " + name); };
   const track = (page, id) => page.locator(`#sp-track-options button[data-track="${id}"]`).click();
   const stored = (page, key) => page.evaluate(key => JSON.parse(localStorage.getItem(key)), key);
   const option = (page, id, number, group, index) => page.locator(`#future-${id}-s${number}-${group}-${index}`);
+  const timelineModules = async (page, expected) => {
+    const timeline = page.locator("#sp-timeline");
+    assert.strictEqual(await timeline.isVisible(), true, "the teaching timeline is directly visible without expanding a disclosure");
+    assert.strictEqual(await timeline.evaluate(node => !!node.closest("details")), false);
+    assert.strictEqual(await page.locator("#plan-content").evaluate(node => node.firstElementChild?.id), "sp-timeline", "the timeline precedes the course cards in both S1 views");
+    assert.match(await text(page, "#sp-timeline"), /Teaching timeline/);
+    assert.match(await text(page, ".sp-timeline-summary"), /7 Oct/);
+    const rows = page.locator("#sp-timeline .timeline-module-row");
+    const codes = await rows.evaluateAll(nodes => nodes.map(node => node.dataset.module));
+    assert.deepStrictEqual(codes.sort(), expected.slice().sort(), "timeline modules follow the actual S1 choices, including optional crash courses");
+    for (const code of expected) {
+      const row = timeline.locator(`.timeline-module-row[data-module="${code}"]`);
+      assert.strictEqual(await row.locator(".timeline-label a").count(), 1, "each module name links to its course resources");
+      assert.match(await row.locator(".timeline-label a").getAttribute("href"), /course\.html\?course=/);
+      assert.match(await row.locator(".sp-timeline-dates").textContent(), /\d{1,2}\s+(Sep|Oct|Nov|Dec).*\d{1,2}\s+(Sep|Oct|Nov|Dec)/, "start and end dates are readable outside bar hover text");
+      assert.strictEqual(await row.locator(".timeline-track .timeline-now-point").count(), 1, "today's position remains available within every module track");
+    }
+    assert.strictEqual(await timeline.locator('.timeline-module-row[data-module="79060"] .sp-timeline-state').getAttribute("data-state"), "now");
+    assert.strictEqual(await timeline.locator('.timeline-module-row[data-module="96500"] .sp-timeline-state').getAttribute("data-state"), "upcoming");
+    if (expected.includes("B1076")) assert.strictEqual(await timeline.locator('.timeline-module-row[data-module="B1076"] .sp-timeline-state').getAttribute("data-state"), "finished");
+    assert.match(await text(page, ".sp-timeline-next"), /Our Right to Health.*8 Oct|8 Oct.*Our Right to Health/);
+    assert.match(await text(page, "#sp-timeline"), /teaching periods, not daily lessons or exams/i, "timeline explicitly distinguishes teaching date ranges from individual lessons and exams");
+    assert.doesNotMatch(await text(page, "#sp-timeline"), /lesson today|class today|lesson at/i);
+  };
   try {
     let page = await open();
     assert.strictEqual(await page.locator("body.study-plan-page").count(), 1);
@@ -93,6 +117,42 @@ const ok = name => { checks++; console.log("  ok  " + name); };
     await page.locator('#plan-content:not([aria-busy="true"])').waitFor();
     assert.strictEqual((await stored(page, PLAN_KEY)).statuses["97177"], "passed");
     ok("S1 choices and status persist in the legacy key, optional CFU stay separate, exact-plan calendar and timetable module matching remain compatible");
+
+    const originalTimeline = ["79060", "87428", "96500", "96498", "96499", "C8393", "B1076"];
+    await timelineModules(page, originalTimeline);
+    await choose(page);
+    await timelineModules(page, originalTimeline);
+    await page.locator("#pick-96525").check();
+    await page.locator("#pick-70125").check();
+    await page.locator("#pick-B1076").uncheck();
+    await timelineModules(page, ["79060", "87428", "96500", "74948", "32626", "70125"]);
+    await mine(page);
+    await timelineModules(page, ["79060", "87428", "96500", "74948", "32626", "70125"]);
+    await choose(page);
+    await page.locator("#pick-96496").check();
+    await page.locator("#pick-C8393").check();
+    await page.locator("#pick-B1076").check();
+    for (const boundary of [
+      { date: "2026-09-06", marker: false, notice: /starts in 1 days/i, state: "upcoming" },
+      { date: "2026-09-07", marker: true },
+      { date: "2026-12-16", marker: true, state: "finished" },
+      { date: "2026-12-17", marker: false, notice: /teaching has finished/i, state: "finished" }
+    ]) {
+      const boundaryPage = await open({ clockTime: `${boundary.date}T12:00:00Z`, viewport: { width: 360, height: 900 }, storage: { [PLAN_KEY]: JSON.stringify(SAVED_PLAN) } });
+      assert.strictEqual(await boundaryPage.locator("#sp-timeline").isVisible(), true);
+      const markerCount = await boundaryPage.locator("#sp-timeline .timeline-now-point").count();
+      assert.strictEqual(markerCount > 0, boundary.marker, `${boundary.date}: today marker is limited to the official term date range`);
+      if (boundary.notice) assert.match(await text(boundaryPage, "#sp-timeline"), boundary.notice);
+      if (boundary.state) assert.deepStrictEqual(await boundaryPage.locator("#sp-timeline .timeline-module-row .sp-timeline-state").evaluateAll(nodes => [...new Set(nodes.map(node => node.dataset.state))]), [boundary.state]);
+      assert.ok(await boundaryPage.locator("#sp-timeline .timeline-chart").evaluate(node => node.scrollWidth - node.clientWidth) <= 1, `${boundary.date}: timeline does not overflow on a phone`);
+      const outsideTrack = await boundaryPage.locator("#sp-timeline .timeline-now-point").evaluateAll(nodes => nodes.some(node => {
+        const marker = node.getBoundingClientRect(), track = node.parentElement.getBoundingClientRect();
+        return marker.left < track.left - 1 || marker.right > track.right + 1;
+      }));
+      assert.strictEqual(outsideTrack, false, `${boundary.date}: the marker remains inside its track at both term boundaries`);
+      await boundaryPage.context().close();
+    }
+    ok("the S1 teaching timeline is immediately visible in both views; dates, today/next states and course links track replacements and crash-course removal");
 
     await choose(page);
     assert.ok(await page.locator(".sp-fit").count(), "course advice exposes track connections");
@@ -276,6 +336,26 @@ const ok = name => { checks++; console.log("  ok  " + name); };
           assert.ok(overflow <= 1, `${width}px ${colorScheme}, S${number}: no horizontal page overflow (${overflow}px)`);
           assert.strictEqual(await page.locator('#plan-terms button[aria-selected="true"]').getAttribute("data-semester"), String(number));
           assert.strictEqual(await page.locator("#plan-content").getAttribute("aria-labelledby"), `semester-tab-${number}`);
+          if (number === 1) {
+            await timelineModules(page, ["79060", "87428", "96500", "96498", "96499", "C8393"]);
+            const chartOverflow = await page.locator("#sp-timeline .timeline-chart").evaluate(node => node.scrollWidth - node.clientWidth);
+            assert.ok(chartOverflow <= 1, `${width}px ${colorScheme}: timeline fits without horizontal chart scrolling (${chartOverflow}px)`);
+            const rowLayout = await page.locator('#sp-timeline .timeline-module-row[data-module="79060"]').evaluate(node => {
+              const label = node.querySelector(".timeline-label").getBoundingClientRect();
+              const track = node.querySelector(".timeline-track").getBoundingClientRect();
+              return { labelTop: label.top, labelBottom: label.bottom, trackTop: track.top, trackLeft: track.left, labelLeft: label.left };
+            });
+            if (width <= 700) assert.ok(rowLayout.trackTop >= rowLayout.labelBottom - 1, "phone labels stack above their module bars");
+            else assert.ok(rowLayout.trackLeft > rowLayout.labelLeft, "wider layouts retain a readable label column beside the bars");
+            if ([360, 1440].includes(width)) {
+              const directory = "/workspace/work/timeline-update";
+              fs.mkdirSync(directory, { recursive: true });
+              const filename = `timeline-${width === 360 ? "mobile" : "desktop"}${colorScheme === "dark" ? "-dark" : ""}.png`;
+              const screenshotChrome = await page.addStyleTag({ content: ".site-header, .back-to-top { visibility: hidden !important; }" });
+              await page.locator("#sp-timeline").screenshot({ path: path.join(directory, filename) });
+              await screenshotChrome.evaluate(node => node.remove());
+            }
+          }
         }
         await page.context().close();
       }

@@ -590,22 +590,50 @@
 .study-plan-page .plan-notice #plan-deadline { color: var(--sp-muted); font-size: 0.71rem; line-height: 1.7; }
 .study-plan-page .plan-notice .button { background: var(--sp-accent); color: var(--sp-card); }
 .study-plan-page .plan-calendar-url { min-height: 44px; padding: 10px 12px; border: 1px solid var(--sp-line); border-radius: 8px; background: var(--sp-soft); color: var(--sp-muted); font-size: 0.75rem; }
-.study-plan-page .plan-timeline { overflow-x: auto; }
-.study-plan-page .sp-timeline-disclosure { margin: 18px 0 0; padding: 0; border: 1px solid var(--sp-line); border-radius: 14px; background: var(--sp-card); overflow: hidden; }
-.study-plan-page .sp-timeline-disclosure > summary { min-height: 52px; padding: 17px 21px; color: var(--sp-accent); font-size: 0.77rem; font-weight: 600; cursor: pointer; line-height: 1.6; }
-.study-plan-page .sp-timeline-disclosure > summary::marker { font-size: 0.65rem; }
-.study-plan-page .sp-timeline-disclosure[open] > summary { border-bottom: 1px solid var(--sp-line); }
-.study-plan-page .sp-timeline-disclosure .plan-timeline { margin: 0; padding: 24px; border: 0; border-radius: 0; box-shadow: none; }
-.study-plan-page .sp-timeline-disclosure .plan-timeline > h3 { margin: 0; font-size: 1rem; }
-.study-plan-page .plan-timeline .timeline-chart { min-width: 610px; --label-width: 230px; margin-top: 34px; }
-.study-plan-page .timeline-row { min-height: 39px; gap: 12px; border-bottom: 1px solid var(--sp-line); }
-.study-plan-page .timeline-label { color: var(--sp-muted); font-size: 0.68rem; }
-.study-plan-page .timeline-track { border-left: 0; }
-.study-plan-page .timeline-months { border: 0; }
-.study-plan-page .timeline-month { font-size: 0.67rem; color: var(--sp-muted); }
-.study-plan-page .timeline-cycle { background: var(--sp-accent-soft); color: var(--sp-accent); font-size: 0.64rem; }
-.study-plan-page .timeline-bar { top: 5px; height: 12px; opacity: 0.8; }
-.study-plan-page .timeline-today-label { border-radius: 7px; font-size: 0.6rem; }
+/* Always-visible teaching windows; labels stack above their bars on phones. */
+.study-plan-page .plan-timeline { margin: 0 0 22px; padding: 24px; border: 1px solid var(--sp-line); border-radius: 16px; overflow: visible; }
+.study-plan-page .sp-timeline-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; }
+.study-plan-page .sp-timeline-head .section-eyebrow { margin: 0 0 6px; color: var(--sp-accent); font-size: 0.62rem; }
+.study-plan-page .sp-timeline-head h3 { margin: 0; font-size: 1.2rem; letter-spacing: -0.03em; }
+.study-plan-page .sp-timeline-range { margin: 8px 0 0; color: var(--sp-muted); font-size: 0.72rem; line-height: 1.7; }
+.study-plan-page .sp-timeline-link { display: inline-flex; align-items: center; min-height: 44px; flex-shrink: 0; padding: 8px 12px; border: 1px solid var(--sp-line); border-radius: 9px; color: var(--sp-accent); font-size: 0.72rem; font-weight: 600; text-decoration: none; }
+.study-plan-page .sp-timeline-link:hover { background: var(--sp-accent-soft); border-color: var(--sp-accent); }
+.study-plan-page .sp-timeline-summary { display: flex; flex-wrap: wrap; gap: 6px; margin: 17px 0 0; }
+.study-plan-page .sp-timeline-summary > span { padding: 6px 10px; border-radius: 7px; background: var(--sp-soft); color: var(--sp-muted); font-size: 0.67rem; line-height: 1.6; }
+.study-plan-page .sp-timeline-summary .sp-timeline-today { background: var(--sp-accent-soft); color: var(--sp-accent); }
+.study-plan-page .sp-timeline-next { margin: 12px 0 0; color: var(--sp-ink); font-size: 0.72rem; line-height: 1.7; }
+.study-plan-page .plan-timeline .timeline-chart { min-width: 0; --label-width: 38%; margin-top: 36px; }
+.study-plan-page .plan-timeline .timeline-row { min-height: 41px; gap: 16px; border-bottom: 1px solid var(--sp-line); }
+.study-plan-page .plan-timeline .timeline-module-row { padding: 12px 0; }
+.study-plan-page .plan-timeline .timeline-label { min-width: 0; color: var(--sp-muted); font-size: 0.72rem; white-space: normal; overflow: visible; text-overflow: clip; }
+.study-plan-page .timeline-label > a { display: inline-flex; align-items: center; min-height: 44px; color: var(--sp-ink); font-size: 0.79rem; font-weight: 600; line-height: 1.55; text-decoration: none; overflow-wrap: anywhere; }
+.study-plan-page .timeline-label > a:hover { color: var(--sp-accent); text-decoration: underline; text-underline-offset: 3px; }
+.study-plan-page .sp-timeline-module-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 5px 9px; margin-top: 3px; font-size: 0.66rem; line-height: 1.5; }
+.study-plan-page .sp-timeline-state { padding: 3px 6px; border-radius: 5px; background: var(--sp-soft); color: var(--sp-muted); }
+.study-plan-page .sp-timeline-state[data-state="now"] { color: var(--sp-mint); background: var(--sp-mint-soft); }
+.study-plan-page .sp-timeline-state[data-state="upcoming"] { color: var(--sp-accent); background: var(--sp-accent-soft); }
+.study-plan-page .plan-timeline .timeline-track { height: 28px; border: 0; background: var(--sp-soft); border-radius: 6px; }
+.study-plan-page .plan-timeline .timeline-months { border: 0; }
+.study-plan-page .plan-timeline .timeline-months .timeline-track { background: transparent; }
+.study-plan-page .plan-timeline .timeline-month { font-size: 0.68rem; color: var(--sp-muted); }
+.study-plan-page .plan-timeline .timeline-cycle { top: 4px; height: 20px; line-height: 20px; background: var(--sp-accent-soft); color: var(--sp-accent); font-size: 0.67rem; }
+.study-plan-page .plan-timeline .timeline-bar { top: 6px; height: 16px; opacity: 0.85; }
+.study-plan-page .timeline-module-row[data-state="now"] .timeline-bar { opacity: 1; box-shadow: 0 0 0 3px color-mix(in srgb, var(--course-color) 15%, transparent); }
+.study-plan-page .timeline-module-row[data-state="finished"] .timeline-bar { opacity: 0.45; }
+.study-plan-page .timeline-now-point { position: absolute; z-index: 1; top: -4px; bottom: -4px; border-left: 2px dashed var(--sp-accent); pointer-events: none; }
+.study-plan-page .timeline-now-caption { position: absolute; top: -21px; transform: translateX(-50%); padding: 2px 5px; border-radius: 5px; color: var(--sp-accent); background: var(--sp-accent-soft); font-size: 0.6rem; line-height: 1.4; }
+.study-plan-page .sp-timeline-note { margin: 17px 0 0; color: var(--sp-muted); font-size: 0.67rem; line-height: 1.8; }
+@media (max-width: 700px) {
+  .study-plan-page .sp-timeline-head { flex-wrap: wrap; gap: 8px; }
+  .study-plan-page .plan-timeline .timeline-row { grid-template-columns: minmax(0, 1fr); gap: 9px; }
+  .study-plan-page .plan-timeline .timeline-months > .timeline-label { display: none; }
+  .study-plan-page .plan-timeline .timeline-row:not(.timeline-module-row):not(.timeline-months) { padding: 8px 0 12px; }
+  .study-plan-page .plan-timeline .timeline-module-row { padding: 14px 0; }
+  .study-plan-page .timeline-label > a { font-size: 0.79rem; }
+  .study-plan-page .sp-timeline-module-meta { font-size: 0.7rem; }
+  .study-plan-page .plan-timeline .timeline-track { height: 26px; }
+  .study-plan-page .plan-timeline .timeline-bar { top: 5px; }
+}
 .study-plan-page .sp-empty { padding: 35px 28px; border: 1px dashed var(--sp-line); border-radius: 18px; background: var(--sp-card); text-align: center; }
 .study-plan-page .sp-empty h3 { margin: 0 0 10px; font-size: 1.08rem; }
 .study-plan-page .sp-empty p { max-width: 580px; margin: 0 auto 18px; color: var(--sp-muted); font-size: 0.8rem; line-height: 1.8; }

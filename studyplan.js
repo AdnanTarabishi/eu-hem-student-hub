@@ -151,6 +151,7 @@ function adviceBox(group) {
 }
 function renderChooseView() {
   const { term, plan } = planPage;
+  appendTimeline();
   const order = ["core", "quant", "elective", "crash"];
   for (const group of [...term.groups].sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id))) {
     const section = createElement("section", "card plan-group"); section.id = `group-${group.id}`;
@@ -185,20 +186,18 @@ function renderChooseView() {
     if (group.kind !== "required") section.appendChild(adviceBox(group));
     planContent.appendChild(section);
   }
-  appendTimeline();
 }
 function renderMyPlanView() {
   const summary = planSummary(planPage.term, planPage.plan.choices);
+  appendTimeline();
   if (!summary.complete) planContent.appendChild(createElement("p", "sp-unknown-note", "Your Semester 1 choices are still open. Choose one quantitative route and one elective to complete the 30-CFU plan."));
   const section = createElement("section", "card plan-group");
   section.appendChild(createElement("h3", null, "Your Semester 1 courses"));
   for (const course of s1Courses()) section.appendChild(courseCard(course, groupOfCourse(planPage.term, course.code), null, true));
-  planContent.append(section, calendarSection(summary)); appendTimeline();
+  planContent.append(section, calendarSection(summary));
 }
 function appendTimeline() {
-  const details = createElement("details", "sp-timeline-disclosure"); details.id = "sp-timeline-disclosure";
-  details.append(createElement("summary", null, "Teaching timeline · see how your Semester 1 modules fit together"), timelineSection());
-  planContent.appendChild(details);
+  planContent.appendChild(timelineSection());
 }
 
 function futureCourseCard(course, selected, required = false) {
@@ -358,13 +357,45 @@ function calendarSection(summary) {
 
 function timelineSection() {
   const { term, plan } = planPage;
-  const box = createElement("section", "card plan-timeline");
-  box.appendChild(createElement("h3", null, "Timeline"));
+  const box = createElement("section", "card plan-timeline"); box.id = "sp-timeline";
+  box.setAttribute("aria-labelledby", "sp-timeline-title");
   const start = term.cycles.map((c) => c.start).sort()[0];
   const end = term.cycles.map((c) => c.end).sort().pop();
   const total = daysBetween(start, end) || 1;
   const position = (dateKey) => Math.min(100, Math.max(0, (daysBetween(start, dateKey) / total) * 100));
   const today = NotesSchedule.clock().slice(0, 10);
+  const selected = selectedCourseCodes(term, plan.choices)
+    .map(code => courseByCode(term, code))
+    .flatMap(course => course.modules.map(module => ({ course, module, state: NotesSchedule.moduleStatus(module, today) })));
+  const modules = selected.filter(item => item.state !== "other")
+    .sort((a, b) => a.module.teachingStart.localeCompare(b.module.teachingStart));
+  const active = modules.filter(item => item.state === "now");
+  const upcoming = modules.filter(item => item.state === "upcoming");
+
+  const head = createElement("div", "sp-timeline-head");
+  const intro = createElement("div");
+  intro.appendChild(createElement("p", "section-eyebrow", "Your semester in time"));
+  const title = createElement("h3", null, "Teaching timeline"); title.id = "sp-timeline-title";
+  intro.append(title, createElement("p", "sp-timeline-range", `${shortDate(start)} – ${shortDate(end)} ${end.slice(0, 4)} · selected Semester 1 modules`));
+  const timetable = createElement("a", "sp-timeline-link", "Open timetable →"); timetable.href = "timetable.html";
+  head.append(intro, timetable); box.appendChild(head);
+  const summary = createElement("div", "sp-timeline-summary");
+  summary.append(createElement("span", "sp-timeline-today", `Today · ${shortDate(today)} · Europe/Rome`),
+    createElement("span", null, `${active.length} teaching now`), createElement("span", null, `${upcoming.length} upcoming`));
+  box.appendChild(summary);
+  if (upcoming.length) box.appendChild(createElement("p", "sp-timeline-next", `Next teaching start · ${shortDate(upcoming[0].module.teachingStart)} · ${upcoming[0].module.name}`));
+
+  // A marker within each track keeps the date aligned even when phone rows stack.
+  function markToday(track, caption = false) {
+    if (today < start || today > end) return;
+    const point = createElement("span", "timeline-now-point"); point.style.left = `clamp(0px, ${position(today)}%, calc(100% - 2px))`;
+    point.setAttribute("aria-hidden", "true"); track.appendChild(point);
+    if (caption) {
+      const label = createElement("span", "timeline-now-caption", "Today");
+      label.style.left = `clamp(22px, ${position(today)}%, calc(100% - 22px))`;
+      label.setAttribute("aria-hidden", "true"); track.appendChild(label);
+    }
+  }
 
   const chart = createElement("div", "timeline-chart");
   // Month labels
@@ -378,6 +409,7 @@ function timelineSection() {
     label.style.left = `${position(key)}%`;
     monthTrack.appendChild(label);
   }
+  markToday(monthTrack, true);
   months.appendChild(monthTrack);
   chart.appendChild(months);
 
@@ -392,40 +424,41 @@ function timelineSection() {
     bar.title = `${cycle.label}: ${shortDate(cycle.start)} – ${shortDate(cycle.end)}`;
     cycleTrack.appendChild(bar);
   }
+  markToday(cycleTrack);
   cycles.appendChild(cycleTrack);
   chart.appendChild(cycles);
 
-  // One row per module of the selected courses, in date order
-  const modules = selectedCourseCodes(term, plan.choices)
-    .map((code) => courseByCode(term, code))
-    .flatMap((course) => course.modules.map((module) => ({ course, module })))
-    .filter(({ module }) => module.teachingStart && module.teachingEnd)
-    .sort((a, b) => a.module.teachingStart.localeCompare(b.module.teachingStart));
-  for (const { course, module } of modules) {
-    const row = createElement("div", "timeline-row");
-    row.appendChild(createElement("span", "timeline-label", module.name));
+  for (const { course, module, state } of modules) {
+    const row = createElement("div", "timeline-row timeline-module-row");
+    row.dataset.module = module.code; row.dataset.state = state;
+    const label = createElement("div", "timeline-label");
+    const link = createElement("a", null, module.name); link.href = `course.html?course=${encodeURIComponent(course.id)}`;
+    label.appendChild(link);
+    const meta = createElement("div", "sp-timeline-module-meta");
+    const dates = createElement("span", "sp-timeline-dates");
+    const from = createElement("time", null, shortDate(module.teachingStart)); from.dateTime = module.teachingStart;
+    const to = createElement("time", null, shortDate(module.teachingEnd)); to.dateTime = module.teachingEnd;
+    dates.append(from, " – ", to);
+    const status = createElement("span", "sp-timeline-state", { now: "Teaching now", upcoming: "Upcoming", finished: "Teaching ended" }[state]);
+    status.dataset.state = state; meta.append(dates, status); label.appendChild(meta); row.appendChild(label);
     const track = createElement("div", "timeline-track");
     const bar = createElement("span", "timeline-bar");
     bar.style.left = `${position(module.teachingStart)}%`;
     bar.style.width = `${Math.max(1.5, position(module.teachingEnd) - position(module.teachingStart))}%`;
     bar.style.setProperty("--course-color", course.color || "var(--color-primary)");
     bar.title = `${module.name}: ${shortDate(module.teachingStart)} – ${shortDate(module.teachingEnd)}`;
+    bar.setAttribute("aria-hidden", "true");
     track.appendChild(bar);
+    markToday(track);
     row.appendChild(track);
     chart.appendChild(row);
   }
 
-  // "You are here"
-  if (today >= start && today <= end) {
-    const marker = createElement("div", "timeline-today");
-    marker.style.setProperty("--today", String(position(today))); // a plain number (0-100)
-    marker.appendChild(createElement("span", "timeline-today-label", `You are here · ${shortDate(today)}`));
-    chart.appendChild(marker);
-  }
   box.appendChild(chart);
+  if (selected.length > modules.length) box.appendChild(createElement("p", "schedule-meta", `${selected.length - modules.length} selected module(s) have teaching dates to confirm.`));
   if (today < start) box.appendChild(createElement("p", "schedule-meta", `${term.label} starts in ${daysBetween(today, start)} days.`));
   if (today > end) box.appendChild(createElement("p", "schedule-meta", `${term.label} teaching has finished.`));
-  box.appendChild(createElement("p", "schedule-meta", "Built automatically from the official cycles and each module's teaching dates."));
+  box.appendChild(createElement("p", "sp-timeline-note", `Bars show official teaching periods, not daily lessons or exams.${today >= start && today <= end ? " The dashed line marks today." : ""} Your chosen modules update automatically; use the timetable for individual sessions.`));
   return box;
 }
 
