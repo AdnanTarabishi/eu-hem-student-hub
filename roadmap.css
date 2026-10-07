@@ -1247,3 +1247,8 @@
   border-radius: inherit;
   background: linear-gradient(90deg, var(--color-brand), var(--terracotta-700));
 }
+
+/* Touch targets: a plan title is at least 44px tall on phones and touch screens (the text stays centred) */
+@media (pointer: coarse), (max-width: 600px) {
+  .roadmap-open { min-height: 44px; }
+}

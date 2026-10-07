@@ -76,12 +76,24 @@ function myTrackBanner(cohort) {
 }
 
 // ----- Index: city cards and the comparison table -----
+
+// The page header of the index, like every other page: eyebrow, icon + title, intro (above the card)
+function cityIndexHeader() {
+  document.querySelector(".page-intro")?.remove(); // drawn once, even if the index is shown again
+  const intro = createElement("section", "page-intro");
+  const box = createElement("div");
+  const title = createElement("h1");
+  if (typeof siteIcon === "function") title.appendChild(siteIcon("guide"));
+  title.appendChild(document.createTextNode(" City Guides"));
+  box.append(createElement("p", "section-eyebrow", "Life"), title,
+    createElement("p", null, "Practical guides to the cities of EU-HEM, written by students: what to do before you move, permits, healthcare, housing, transport and daily life."));
+  intro.appendChild(box);
+  return intro;
+}
 async function showCityIndex(cohort) {
   document.title = "City Guides – EU-HEM Student Hub";
   guideArticle.innerHTML = "";
-  guideArticle.appendChild(createElement("h1", null, "City Guides"));
-  guideArticle.appendChild(createElement("p", "guide-intro",
-    "Practical guides to the cities of EU-HEM, written by students: what to do before you move, permits, healthcare, housing, transport and daily life."));
+  guideArticle.before(cityIndexHeader());
   const banner = myTrackBanner(cohort);
   if (banner) guideArticle.appendChild(banner);
 

@@ -81,7 +81,8 @@ function brandLockup(make) {
   const mark = make("span", "brand-mark");
   mark.appendChild(siteIcon("graduation"));
   const words = make("span", "brand-words");
-  words.append(make("span", "brand-name", "EU-HEM"), make("span", "brand-product", "Student Hub"));
+  // The space keeps the text "EU-HEM Student Hub" (for screen readers and the link's name); the column layout hides it
+  words.append(make("span", "brand-name", "EU-HEM"), " ", make("span", "brand-product", "Student Hub"));
   box.append(mark, words);
   return box;
 }

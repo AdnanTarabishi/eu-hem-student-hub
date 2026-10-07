@@ -1875,11 +1875,6 @@ button:hover .arrow,
   font-size: 0.9rem;
 }
 
-.guide-intro {
-  margin-top: 0;
-  color: var(--color-muted);
-}
-
 .guide-notice .guide-checked {
   font-weight: 700;
 }
@@ -1934,6 +1929,9 @@ button:hover .arrow,
   padding: 0;
   list-style: none;
 }
+
+/* First thing in the card (the title is in the page header above): no extra gap */
+.guide > .guide-city-cards:first-child { margin-top: 0; }
 
 .guide-city-card {
   display: flex;

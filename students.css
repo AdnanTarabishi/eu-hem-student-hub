@@ -1352,3 +1352,8 @@
     color: var(--surface-page);
   }
 }
+
+/* Touch targets: a profile name is at least 44px tall on phones and touch screens (the text stays centred) */
+@media (pointer: coarse), (max-width: 600px) {
+  .sx-name-button { min-height: 44px; }
+}
