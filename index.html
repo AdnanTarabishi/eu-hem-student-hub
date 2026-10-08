@@ -19,12 +19,12 @@
   <meta name="twitter:card" content="summary_large_image">
   <!-- /Social preview -->
 
-  <!-- style.css: the whole site. home.css: this page only (editorial homepage design, scoped to .eh-home) -->
+  <!-- style.css: the whole site. home.css: this page only (scoped to .eh-home) -->
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/source-serif-4-latin-600.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=daabf49c">
   <link rel="stylesheet" href="assets/flags/country-flags.css?v=6127599e">
-  <link rel="stylesheet" href="home.css?v=9f60c43a">
+  <link rel="stylesheet" href="home.css?v=38be907f">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -35,7 +35,7 @@
   <!-- Aggregate cohort data is available synchronously when home.js builds the hero stats. -->
   <script src="cohort-data.js?v=c8bdd77c"></script>
   <!-- Homepage settings and early photo download -->
-  <script src="home.js?v=dee0e0b9"></script>
+  <script src="home.js?v=9427efae"></script>
 </head>
 <body class="home-page eh-home">
 
@@ -52,20 +52,22 @@
 
   <main class="home">
 
-    <!-- 1. Hero: navy text panel and the cohort photo (HERO_IMAGE in home.js) -->
+    <!-- 1. Hero: the student-run identity and real cohort photo (HERO_IMAGE in home.js) -->
     <section class="eh-hero eh-wrap" aria-labelledby="hero-title">
       <div class="eh-hero-copy">
-        <p class="eh-hero-badge"><span></span> Independent · Student-run</p>
+        <p class="eh-hero-badge"><svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#sparkles"></use></svg> Independent · Student-run</p>
         <h1 id="hero-title">Your EU-HEM<br>journey,<br><em>in one place.</em></h1>
         <p class="eh-hero-lead">Learn, connect and find your way.<br>A shared home for the people behind EU-HEM.</p>
         <div class="eh-hero-actions">
           <a href="#explore" class="eh-button eh-button-brand">Explore the Hub <svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
           <a href="timetable.html" class="eh-button eh-button-glass"><svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#clock"></use></svg> View timetable</a>
         </div>
+        <div class="eh-hero-values" aria-label="A hub for study, community and student life"><span><svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#book"></use></svg> Learn</span><span><svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#students"></use></svg> Connect</span><span><svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#globe"></use></svg> Explore</span></div>
         <p class="eh-hero-note">European Master in Health Economics &amp; Management · not affiliated with the University of Bologna</p>
       </div>
       <div id="hero-media" class="eh-hero-media"></div>
-      <p class="eh-photo-caption"><svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#map-pin"></use></svg> Bologna <span>Where the journey begins</span></p>
+      <div class="eh-hero-community"><svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#globe"></use></svg><p><strong><span data-setting="COUNTRY_COUNT">—</span> countries of origin</strong><span>One shared beginning.</span></p></div>
+      <p class="eh-photo-caption"><svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#map-pin"></use></svg> Bologna <span>Where it all begins</span></p>
     </section>
     <!-- Adds the photo now, before the page is drawn -->
     <script>buildHomeHero();</script>
@@ -92,7 +94,7 @@
     </nav>
 
     <!-- 4. Your Week: live cards (dashboard.js fills them; nothing here is example data) -->
-    <section class="eh-section eh-week" id="your-week" aria-labelledby="week-title">
+    <section data-home-reveal class="eh-section eh-week" id="your-week" aria-labelledby="week-title">
       <div class="eh-wrap">
         <div class="eh-section-head">
           <div>
@@ -138,43 +140,44 @@
           <p class="eh-section-description">Practical help for the decisions, the learning and everything in between. Built by students, for students.</p>
         </div>
         <div class="eh-resource-grid">
-          <article class="eh-resource eh-resource-tracks">
+          <article data-home-reveal class="eh-resource eh-resource-tracks">
             <div class="eh-resource-top"><span class="eh-eyebrow">01 / Find your direction</span><svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#route"></use></svg></div>
-            <h3>Four tracks. Your path.</h3>
+            <h3>Four tracks.<br>Your path.</h3>
+            <ul id="home-track-preview" class="eh-track-preview" aria-label="Specialisation tracks" hidden></ul>
             <p>Compare what you study, where you go and the questions you want to explore.</p>
             <a href="tracks.html" class="eh-text-link">Explore the tracks <svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
           </article>
-          <article class="eh-resource">
+          <article data-home-reveal class="eh-resource eh-resource-universities">
             <div class="eh-resource-top"><span class="eh-eyebrow">02 / Know your universities</span><svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#library"></use></svg></div>
             <h3>Four universities. One programme.</h3>
             <p>Explore each partner university, your study route, campus services, research, rankings and first-week essentials.</p>
             <a href="universities.html" class="eh-text-link">Explore the universities <svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
           </article>
-          <article class="eh-resource">
+          <article data-home-reveal class="eh-resource eh-resource-learn">
             <div class="eh-resource-top"><span class="eh-eyebrow">03 / Learn &amp; revise</span><svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#notes"></use></svg></div>
             <h3>Make room for learning.</h3>
             <p>Student-made notes, flashcards and practice questions, organised around your courses. Official lectures stay on Virtuale.</p>
             <a href="notes.html" class="eh-text-link">Browse resources <svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
           </article>
-          <article class="eh-resource">
+          <article data-home-reveal class="eh-resource eh-resource-research">
             <div class="eh-resource-top"><span class="eh-eyebrow">04 / Ask better questions</span><svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#library"></use></svg></div>
             <h3>Your research starts here.</h3>
             <p>Explore past thesis topics and find inspiration for the research you want to do.</p>
             <a href="thesis.html" class="eh-text-link">Explore thesis topics <svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
           </article>
-          <article class="eh-resource">
+          <article data-home-reveal class="eh-resource eh-resource-rules">
             <div class="eh-resource-top"><span class="eh-eyebrow">05 / Know the rules</span><svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#scale"></use></svg></div>
             <h3>Exams without surprises.</h3>
             <p>Re-sits, grading scales, plagiarism and AI at all four universities, side by side.</p>
             <a href="academic-rules.html" class="eh-text-link">Read the academic rules <svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
           </article>
-          <article class="eh-resource">
+          <article data-home-reveal class="eh-resource eh-resource-journey">
             <div class="eh-resource-top"><span class="eh-eyebrow">06 / See the whole route</span><svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#graduation"></use></svg></div>
             <h3>Two years, step by step.</h3>
             <p>Your track's cities, the Summer School, the thesis, the joint degree, grants and fees.</p>
             <a href="journey.html" class="eh-text-link">Follow your journey <svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
           </article>
-          <article class="eh-resource">
+          <article data-home-reveal class="eh-resource eh-resource-support">
             <div class="eh-resource-top"><span class="eh-eyebrow">07 / Find the right person</span><svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#phone"></use></svg></div>
             <h3>Help, when you need it.</h3>
             <p>Who to contact at each university, wellbeing and safety support, and emergency numbers.</p>
@@ -185,7 +188,7 @@
     </section>
 
     <!-- 6. Community: aggregate countries of origin and the fictional profile preview -->
-    <section class="eh-section eh-community" aria-labelledby="cohort-title">
+    <section data-home-reveal class="eh-section eh-community" aria-labelledby="cohort-title">
       <div class="eh-wrap">
         <div class="eh-section-head">
           <div>
@@ -241,7 +244,7 @@
     </section>
 
     <!-- 7. Life across EU-HEM: the city guides -->
-    <section class="eh-section eh-cities" aria-labelledby="cities-title">
+    <section data-home-reveal class="eh-section eh-cities" aria-labelledby="cities-title">
       <div class="eh-wrap">
         <div class="eh-section-head">
           <div>
@@ -298,7 +301,7 @@
     </section>
 
     <!-- 9. Invitation to the directory -->
-    <section class="eh-wrap eh-join-banner" aria-labelledby="join-title">
+    <section data-home-reveal class="eh-wrap eh-join-banner" aria-labelledby="join-title">
       <div>
         <p class="eh-eyebrow">Built by students. Better together.</p>
         <h2 id="join-title">There's a place for you here.</h2>

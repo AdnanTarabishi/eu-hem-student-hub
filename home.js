@@ -31,6 +31,8 @@ const PROGRAM_END_DATE = "2028-09-30";
 const DIRECTORY_IS_DEMO = true;
 
 const HERO_WEBP_WIDTHS = [640, 960, 1280, 1600];
+// Tablet portrait crops need a wider source to keep the photo sharp.
+const HERO_IMAGE_SIZES = "(max-width: 720px) 100vw, (max-width: 900px) 720px, 51vw";
 
 // "assets/images/x.jpg" -> "assets/images/x-640.webp 640w, ..." (for the browser to choose a size)
 function heroSrcset(image) {
@@ -79,7 +81,7 @@ function homeStats(today = null) {
     preload.as = "image";
     preload.type = "image/webp";
     preload.setAttribute("imagesrcset", heroSrcset(HERO_IMAGE));
-    preload.setAttribute("imagesizes", "100vw");
+    preload.setAttribute("imagesizes", HERO_IMAGE_SIZES);
     preload.setAttribute("fetchpriority", "high");
     document.head.appendChild(preload);
   }
@@ -100,7 +102,7 @@ function buildHomeHero() {
     const source = document.createElement("source");
     source.type = "image/webp";
     source.srcset = heroSrcset(HERO_IMAGE);
-    source.sizes = "100vw";
+    source.sizes = HERO_IMAGE_SIZES;
     const img = document.createElement("img");
     img.src = HERO_IMAGE;
     img.alt = HERO_IMAGE_ALT;
@@ -192,6 +194,50 @@ function fillHomeSettings() {
   if (dots && !dots.children.length) {
     for (let i = 0; i < PEOPLE_COUNT; i++) dots.appendChild(document.createElement("span"));
   }
+}
+
+// A small visual preview of the same tracks shown in the Tracks Explorer.
+// Abbreviations and full names always come from the shared programme data.
+async function fillHomeTrackPreview() {
+  const list = document.getElementById("home-track-preview");
+  if (!list || typeof loadTracksFile !== "function" || typeof tracksCohort !== "function") return;
+  try {
+    const cohort = tracksCohort(await loadTracksFile());
+    const tracks = cohort.tracks.filter((track) => /^[a-z0-9-]+$/.test(track.id) && track.abbr && track.name);
+    if (!tracks.length) return;
+    list.replaceChildren(...tracks.map((track) => {
+      const node = createElement("li", "eh-track-node");
+      node.style.setProperty("--eh-track-color", `var(--track-${track.id})`);
+      const dot = createElement("span", "eh-track-dot");
+      dot.setAttribute("aria-hidden", "true");
+      const abbreviation = createElement("span", "eh-track-abbr", track.abbr);
+      abbreviation.title = track.name;
+      node.append(dot, abbreviation, createElement("span", "visually-hidden", `: ${track.name}`));
+      return node;
+    }));
+    list.hidden = false;
+  } catch {
+    // Keep the existing Tracks Explorer link when this optional preview cannot load.
+  }
+}
+
+// Progressive enhancement: all content stays visible without these entrance animations.
+function prepareHomeReveals() {
+  if (!("IntersectionObserver" in window) || typeof Element.prototype.animate !== "function") return;
+  const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
+  if (reduceMotion && reduceMotion.matches) return;
+  const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      observer.unobserve(entry.target);
+      if (reduceMotion && reduceMotion.matches) continue;
+      entry.target.animate([
+        { opacity: .84, transform: "translateY(14px)" },
+        { opacity: 1, transform: "translateY(0)" },
+      ], { duration: 480, easing: "cubic-bezier(.22, 1, .36, 1)" });
+    }
+  }, { threshold: .08 });
+  for (const element of document.querySelectorAll("[data-home-reveal]")) observer.observe(element);
 }
 
 // ----- "Life Across EU-HEM": the city cards, from the same data as the City Guide -----
@@ -387,6 +433,8 @@ async function fillRoadmapPreview() {
 if (typeof document !== "undefined") {
   document.addEventListener("DOMContentLoaded", fillRoadmapPreview);
   document.addEventListener("DOMContentLoaded", fillHomeSettings);
+  document.addEventListener("DOMContentLoaded", fillHomeTrackPreview);
+  document.addEventListener("DOMContentLoaded", prepareHomeReveals);
   document.addEventListener("DOMContentLoaded", fillCommunityMap);
   document.addEventListener("DOMContentLoaded", fillCommunityPeople);
   document.addEventListener("DOMContentLoaded", fillCityCards);
