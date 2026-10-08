@@ -8,11 +8,12 @@
 //   "Update available · Reload", and old saved copies are deleted.
 // Nothing personal is stored here: only public site files and public data.
 
-const VERSION = "662d35f0";
+const VERSION = "df40f47f";
 const SITE_CACHE = `site-${VERSION}`;
 const DATA_CACHE = "data"; // kept across versions, so offline data survives an update
 
 const SITE_FILES = [
+  "right-to-health.js", "right-to-health.css",
   "assets/announcements/election-results.svg", "assets/announcements/hub-beta.svg",
   "assets/announcements/track-journey.svg", "assets/announcements/community-update.svg",
   "announcements-newsroom.js", "announcements-newsroom.css", "announcements-election.css", "announcement-media.js", "home-news.js",

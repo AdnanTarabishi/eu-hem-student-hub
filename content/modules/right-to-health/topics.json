@@ -1,8 +1,52 @@
 [
-  {"id": "right-to-health.economic-rights", "title": "Economic rights: the fundamental freedoms"},
-  {"id": "right-to-health.human-rights", "title": "Human rights and the EU Charter"},
-  {"id": "right-to-health.non-discrimination", "title": "Non-discrimination"},
-  {"id": "right-to-health.values-ethics", "title": "EU values and ethics"},
-  {"id": "right-to-health.health-systems", "title": "Beveridge and Bismarck systems (Italy, Norway, Netherlands, Austria)"},
-  {"id": "right-to-health.european-health-union", "title": "The future: a European Health Union"}
+  {
+    "id": "right-to-health.economic-rights",
+    "title": "Economic rights & patient mobility",
+    "notes": "notes/economic-rights.md"
+  },
+  {
+    "id": "right-to-health.human-rights",
+    "title": "Human rights & the right to health care",
+    "notes": "notes/human-rights.md"
+  },
+  {
+    "id": "right-to-health.non-discrimination",
+    "title": "Non-discrimination: analyse the difference",
+    "notes": "notes/non-discrimination.md"
+  },
+  {
+    "id": "right-to-health.values-ethics",
+    "title": "Ethics, EU values & health values",
+    "notes": "notes/values-ethics.md"
+  },
+  {
+    "id": "right-to-health.health-systems",
+    "title": "Bismarck & Beveridge: a comparison framework",
+    "notes": "notes/health-systems.md"
+  },
+  {
+    "id": "right-to-health.netherlands",
+    "title": "The Netherlands: managed competition",
+    "notes": "notes/netherlands.md"
+  },
+  {
+    "id": "right-to-health.italy",
+    "title": "Italy: universal coverage, regional delivery",
+    "notes": "notes/italy.md"
+  },
+  {
+    "id": "right-to-health.norway",
+    "title": "Norway: incentives, priorities & accountability",
+    "notes": "notes/norway.md"
+  },
+  {
+    "id": "right-to-health.austria",
+    "title": "Austria: access, fragmentation & reform",
+    "notes": "notes/austria.md"
+  },
+  {
+    "id": "right-to-health.european-health-union",
+    "title": "European Health Union: from analysis to proposals",
+    "notes": "notes/european-health-union.md"
+  }
 ]

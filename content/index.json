@@ -32,7 +32,10 @@
       "topics.json"
     ],
     "right-to-health": [
-      "topics.json"
+      "topics.json",
+      "flashcards.json",
+      "questions.json",
+      "resources.json"
     ],
     "statistics": [
       "topics.json",
