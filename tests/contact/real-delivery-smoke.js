@@ -148,8 +148,8 @@ async function main() {
     cdp.on("Network.requestWillBeSent", (event) => {
       if (event.request.url !== ENDPOINT && !deliveryRequests.has(event.requestId)) return;
       if (event.redirectResponse) record("redirect-response", responseMetadata(event.redirectResponse.url, event.redirectResponse.status, event.redirectResponse.headers, event.redirectResponse.mimeType));
-      deliveryRequests.set(event.requestId, safeUrl(event.request.url()));
-      record("network-request", { method: event.request.method, ...safeUrl(event.request.url()) });
+      deliveryRequests.set(event.requestId, safeUrl(event.request.url));
+      record("network-request", { method: event.request.method, ...safeUrl(event.request.url) });
     });
     cdp.on("Network.responseReceived", (event) => {
       if (deliveryRequests.has(event.requestId)) record("network-response", responseMetadata(event.response.url, event.response.status, event.response.headers, event.response.mimeType));

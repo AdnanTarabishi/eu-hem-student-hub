@@ -53,6 +53,13 @@ const labelFor = (id) => {
   const errors = [], forbiddenRequests = [];
   const ok = (name) => { count++; console.log(`  ok  ${name}`); };
   try {
+    // These existing mail/Privacy checks exercise the unconfigured fallback.
+    // Keep it explicit after production activation; configured form coverage
+    // uses its own mocked receiver in tests/contact/browser.test.js.
+    const contactConfigSource = fs.readFileSync(path.join(ROOT, "contact-config.js"), "utf8");
+    const contactEndpointSetting = /\bendpoint:\s*"(?:[^"\\]|\\.)*"/g;
+    assert.strictEqual([...contactConfigSource.matchAll(contactEndpointSetting)].length, 1, "the Support fixture must replace exactly one Contact endpoint setting");
+    const contactFallbackConfig = contactConfigSource.replace(contactEndpointSetting, 'endpoint: ""');
     browser = await chromium.launch();
     const waitReady = async (page, file, scripts = true) => {
       await page.locator("body.academic-page").waitFor();
@@ -89,6 +96,9 @@ const labelFor = (id) => {
         if (!request.url().startsWith(base) || request.method() !== "GET" || request.postData() !== null) {
           forbiddenRequests.push(`${url}: ${request.method()} ${request.url()}`);
           return route.abort();
+        }
+        if (new URL(request.url()).pathname.endsWith("/contact-config.js")) {
+          return route.fulfill({ contentType: "text/javascript", body: contactFallbackConfig });
         }
         return route.continue();
       });

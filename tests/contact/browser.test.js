@@ -31,6 +31,8 @@ const response = (route, value, status = 200) => route.fulfill({ status, content
   const ok = (name) => { count++; console.log(`  ok  ${name}`); };
   try {
     const configSource = fs.readFileSync(path.join(ROOT, "contact-config.js"), "utf8");
+    const endpointSetting = /\bendpoint:\s*"(?:[^"\\]|\\.)*"/g;
+    assert.strictEqual([...configSource.matchAll(endpointSetting)].length, 1, "the Contact fixture must replace exactly one endpoint setting");
     const backendSource = fs.readFileSync(path.join(ROOT, "integrations/contact-apps-script/Code.gs"), "utf8");
     assert.strictEqual(configSource.match(/noticeVersion:\s*["']([^"']+)["']/)?.[1], VERSION);
     assert.strictEqual(backendSource.match(/NOTICE_VERSION:\s*["']([^"']+)["']/)?.[1], VERSION, "frontend and backend notice versions stay synchronized");
@@ -69,10 +71,9 @@ const response = (route, value, status = 200) => route.fulfill({ status, content
           forbidden.push(`${request.method()} ${url}`); return route.abort();
         }
         if (new URL(url).pathname.endsWith("/contact-config.js")) {
-          // Exercise the real configuration validator with an isolated fixture value.
-          const source = fs.readFileSync(path.join(ROOT, "contact-config.js"), "utf8");
-          assert.match(source, /endpoint:\s*""/, "the committed endpoint stays empty");
-          const changed = source.replace(/endpoint:\s*""/, `endpoint: ${JSON.stringify(endpoint)}`);
+          // Preserve the real validator, but always isolate tests from the deployed
+          // receiver. Empty/invalid cases and the mocked URL are explicit fixtures.
+          const changed = configSource.replace(endpointSetting, `endpoint: ${JSON.stringify(endpoint)}`);
           return route.fulfill({ contentType: "text/javascript", body: changed });
         }
         return route.continue();
