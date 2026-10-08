@@ -101,7 +101,7 @@ function availableTabs() {
     const tabs = TABS.filter((tab) => has[tab.key]);
     const at = tabs.findIndex((tab) => tab.key === "practice");
     tabs.splice(at < 0 ? tabs.length : at, 0,
-      { key: "explore", label: "Explore" }, { key: "workshop", label: "Workshop" });
+      { key: "casebook", label: "Casebook" }, { key: "explore", label: "Explore" }, { key: "workshop", label: "Workshop" });
     return tabs;
   }
   return TABS.filter((tab) => has[tab.key]);
@@ -799,7 +799,7 @@ async function loadUniboData() {
   }
   // Do not erase an in-progress local activity when the independent UniBo request finishes.
   if (page.course.id === "right-to-health" &&
-      ["explore", "workshop", "concepts", "topics", "practice", "resources"].includes(currentParams().tab)) return;
+      ["casebook", "explore", "workshop", "concepts", "topics", "practice", "resources"].includes(currentParams().tab)) return;
   const y = window.scrollY;
   renderPage();
   window.scrollTo(0, y);

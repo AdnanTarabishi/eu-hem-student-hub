@@ -888,5 +888,585 @@
     "question": "Draft the outline of a proposal that links a health value to a practical improvement, while separating existing rules from proposed change.",
     "answer": "State the affected group and problem. Identify the source-based value and whether the proposed measure changes or works within the existing framework. Explain who would act, which resources are needed, possible disadvantages, safeguards and how progress would be assessed. The choice of proposal is open; this is not an official scoring rubric.",
     "explanation": "An original answer scaffold, not the lecturer’s marking scheme. Source: Frischhut — European Health Union workshop (2026/27); PDF pp. 3–10, 12–13, 17–26."
+  },
+  {
+    "id": "right-to-health.q.061",
+    "topic": "right-to-health.economic-rights",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which statement best reflects the lecture’s competence chart?",
+    "options": [
+      "Different health-related activities may engage different competence categories",
+      "All health activities are exclusively EU competences",
+      "A patient’s entitlement automatically decides which level may legislate",
+      "Any national health responsibility removes all relevance of EU law"
+    ],
+    "answer": "A",
+    "explanation": "The chart distinguishes support for health from shared common safety concerns and other relevant fields. Source: Frischhut — Economic rights (2026/27); PDF pp. 11, 21–25 and 29. Original study question; not an official exam item.",
+    "source": "Frischhut — Economic rights (2026/27)"
+  },
+  {
+    "id": "right-to-health.q.062",
+    "topic": "right-to-health.economic-rights",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "In the case-law chart, why is an administrative place on a waiting list insufficient by itself?",
+    "options": [
+      "The analysis must consider the patient’s medical circumstances",
+      "Any wait guarantees full reimbursement abroad",
+      "Administrative rules never apply to healthcare",
+      "Waiting lists are always forbidden"
+    ],
+    "answer": "A",
+    "explanation": "The lecture links the Watts waiting-list analysis with a medical rather than merely administrative assessment. Source: Frischhut — Economic rights (2026/27); PDF pp. 11, 21–25 and 29. Original study question; not an official exam item.",
+    "source": "Frischhut — Economic rights (2026/27)"
+  },
+  {
+    "id": "right-to-health.q.063",
+    "topic": "right-to-health.economic-rights",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which part of the Directive outline concerns institutional cooperation rather than only reimbursement?",
+    "options": [
+      "A guarantee that all national packages are identical",
+      "An unlimited refund for all travel expenses",
+      "A single European hospital budget",
+      "National contact points, prescription recognition and reference networks"
+    ],
+    "answer": "D",
+    "explanation": "The lecture’s outline includes information, responsibilities and cooperation beyond the cost-reimbursement chapter. Source: Frischhut — Economic rights (2026/27); PDF pp. 11, 21–25 and 29. Original study question; not an official exam item.",
+    "source": "Frischhut — Economic rights (2026/27)"
+  },
+  {
+    "id": "right-to-health.q.064",
+    "topic": "right-to-health.economic-rights",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Explain how the lecture’s three legal bases and its coverage–procedure–waiting distinctions would organise a cross-border treatment problem.",
+    "answer": "Identify the route before applying its conditions. Separate the covered treatment, general conditions, any authorisation process, clinically acceptable delay and reimbursement limits. State which facts are missing and avoid promising a particular entitlement.",
+    "explanation": "Identify the route before applying its conditions. Separate the covered treatment, general conditions, any authorisation process, clinically acceptable delay and reimbursement limits. State which facts are missing and avoid promising a particular entitlement. Source: Frischhut — Economic rights (2026/27); PDF pp. 11, 21–25 and 29. This is a reasoning scaffold, not an official marking scheme.",
+    "source": "Frischhut — Economic rights (2026/27)"
+  },
+  {
+    "id": "right-to-health.q.065",
+    "topic": "right-to-health.human-rights",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "What is the main lesson of the Široká discussion in these slides?",
+    "options": [
+      "Check the EU-law connection and Charter scope before substantive rights analysis",
+      "The ECHR and CFR have identical jurisdictional rules",
+      "The CJEU decided every vaccination policy is proportionate",
+      "Article 35 eliminates every national condition"
+    ],
+    "answer": "A",
+    "explanation": "The lecture presents a jurisdictional obstacle, not a blanket merits ruling. Source: Frischhut — Human rights (2026/27); PDF pp. 23–24, 33–36 and 41–46. Original study question; not an official exam item.",
+    "source": "Frischhut — Human rights (2026/27)"
+  },
+  {
+    "id": "right-to-health.q.066",
+    "topic": "right-to-health.human-rights",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "What distinction is highlighted in the Padova discussion?",
+    "options": [
+      "A national dispute always implements EU law",
+      "An authorised product must be administered to everyone",
+      "Marketing authorisation is not itself an obligation to receive a vaccine",
+      "A recital automatically creates a national vaccination duty"
+    ],
+    "answer": "C",
+    "explanation": "The slides separate authorisation of a product, national duties and the relevance of EU law to the reference. Source: Frischhut — Human rights (2026/27); PDF pp. 23–24, 33–36 and 41–46. Original study question; not an official exam item.",
+    "source": "Frischhut — Human rights (2026/27)"
+  },
+  {
+    "id": "right-to-health.q.067",
+    "topic": "right-to-health.human-rights",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which statement best explains the relationship between AAAQ and respect–protect–fulfil?",
+    "options": [
+      "One describes service dimensions; the other structures state obligations",
+      "They are alternative names for the same four categories",
+      "Each AAAQ dimension can involve only one type of obligation",
+      "AAAQ identifies a court while the three duties identify countries"
+    ],
+    "answer": "A",
+    "explanation": "The frameworks address related but different questions and can be used together. Source: Frischhut — Human rights (2026/27); PDF pp. 23–24, 33–36 and 41–46. Original study question; not an official exam item.",
+    "source": "Frischhut — Human rights (2026/27)"
+  },
+  {
+    "id": "right-to-health.q.068",
+    "topic": "right-to-health.human-rights",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Compare a court’s inability to decide a reference with a substantive justification of interference with physical integrity.",
+    "answer": "Identify the court and instrument. Distinguish jurisdiction or admissibility from the merits. For a substantive Article 8 analysis use scope, interference and justification, including context and safeguards. Do not derive a universal vaccination rule from a procedural outcome.",
+    "explanation": "Identify the court and instrument. Distinguish jurisdiction or admissibility from the merits. For a substantive Article 8 analysis use scope, interference and justification, including context and safeguards. Do not derive a universal vaccination rule from a procedural outcome. Source: Frischhut — Human rights (2026/27); PDF pp. 23–24, 33–36 and 41–46. This is a reasoning scaffold, not an official marking scheme.",
+    "source": "Frischhut — Human rights (2026/27)"
+  },
+  {
+    "id": "right-to-health.q.069",
+    "topic": "right-to-health.non-discrimination",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "What is missing when a full-time priority rule is immediately labelled indirect sex discrimination?",
+    "options": [
+      "Evidence that every part-time worker is a woman",
+      "A requirement that all different treatment be intentional",
+      "Evidence connecting the rule’s effects with the relevant protected group",
+      "Proof that the rule explicitly says “women”"
+    ],
+    "answer": "C",
+    "explanation": "The short summary makes its staff-event explanation conditional on the statistical pattern. Source: Frischhut — Non-discrimination: short summary; PDF pp. 1–4. Original study question; not an official exam item.",
+    "source": "Frischhut — Non-discrimination: short summary"
+  },
+  {
+    "id": "right-to-health.q.070",
+    "topic": "right-to-health.non-discrimination",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which is the most accurate account of the language example?",
+    "options": [
+      "Perfect proficiency is always required in a hospital",
+      "The required proficiency must be assessed against the actual work",
+      "Nationality alone establishes the appropriate language level",
+      "Any language requirement is necessarily unlawful"
+    ],
+    "answer": "B",
+    "explanation": "The summary distinguishes sufficient command for a job from an exaggerated requirement. Source: Frischhut — Non-discrimination: short summary; PDF pp. 1–4. Original study question; not an official exam item.",
+    "source": "Frischhut — Non-discrimination: short summary"
+  },
+  {
+    "id": "right-to-health.q.071",
+    "topic": "right-to-health.non-discrimination",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Why can identical treatment still raise a discrimination question in the summary?",
+    "options": [
+      "The law never permits uniform rules",
+      "Relevant situations may not be comparable",
+      "Identical treatment always proves discriminatory intent",
+      "The summary rejects objective comparison"
+    ],
+    "answer": "B",
+    "explanation": "The definition includes applying the same rule to relevantly different situations, alongside different rules for comparable situations. Source: Frischhut — Non-discrimination: short summary; PDF pp. 1–4. Original study question; not an official exam item.",
+    "source": "Frischhut — Non-discrimination: short summary"
+  },
+  {
+    "id": "right-to-health.q.072",
+    "topic": "right-to-health.non-discrimination",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Analyse a neutral-looking admission rule using the sequence in the short summary, and identify what evidence you would need.",
+    "answer": "Define the comparator and criterion, identify the relevant ground and legal route, examine direct or indirect effects, and consider objective justification and proportionality where the framework permits it. State missing facts rather than treating possible disadvantage as demonstrated.",
+    "explanation": "Define the comparator and criterion, identify the relevant ground and legal route, examine direct or indirect effects, and consider objective justification and proportionality where the framework permits it. State missing facts rather than treating possible disadvantage as demonstrated. Source: Frischhut — Non-discrimination: short summary; PDF pp. 1–4. This is a reasoning scaffold, not an official marking scheme.",
+    "source": "Frischhut — Non-discrimination: short summary"
+  },
+  {
+    "id": "right-to-health.q.073",
+    "topic": "right-to-health.values-ethics",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which claim confuses a survey with a legal source?",
+    "options": [
+      "Survey waves need their dates",
+      "Respondents may distinguish personal values from values associated with the EU",
+      "Answer-category changes matter for comparison",
+      "The most popular survey answer automatically changes Article 2 TEU"
+    ],
+    "answer": "D",
+    "explanation": "The lecture treats survey responses and the legal statement of values as different types of material. Source: Frischhut — Values and ethics (2026/27); PDF pp. 8–9, 17–21 and 26–30. Original study question; not an official exam item.",
+    "source": "Frischhut — Values and ethics (2026/27)"
+  },
+  {
+    "id": "right-to-health.q.074",
+    "topic": "right-to-health.values-ethics",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "In the lecture’s conceptual diagram, which is more operational than a broad commitment to equity?",
+    "options": [
+      "Repeating the word equity more prominently",
+      "A reasoned non-discrimination process connected to service access",
+      "Assuming every service user has identical circumstances",
+      "Treating trust as an already measured outcome"
+    ],
+    "answer": "B",
+    "explanation": "The diagram moves from abstract commitments to principles that guide decision-making and action. Source: Frischhut — Values and ethics (2026/27); PDF pp. 8–9, 17–21 and 26–30. Original study question; not an official exam item.",
+    "source": "Frischhut — Values and ethics (2026/27)"
+  },
+  {
+    "id": "right-to-health.q.075",
+    "topic": "right-to-health.values-ethics",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "How does the lecture distinguish the 2006 health conclusions from Article 2 TEU?",
+    "options": [
+      "The former are non-binding soft law; the latter is primary law",
+      "The former automatically replaces the Treaty",
+      "Both are identical individual reimbursement rights",
+      "Both are survey questionnaires"
+    ],
+    "answer": "A",
+    "explanation": "The distinction concerns legal status, not whether health values can inform a useful discussion. Source: Frischhut — Values and ethics (2026/27); PDF pp. 8–9, 17–21 and 26–30. Original study question; not an official exam item.",
+    "source": "Frischhut — Values and ethics (2026/27)"
+  },
+  {
+    "id": "right-to-health.q.076",
+    "topic": "right-to-health.values-ethics",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Use the values–principles–action structure to analyse a fictional digital health service without attributing your design proposal to the lecturer.",
+    "answer": "Name the value, connect an operational principle, describe an actor and action, identify a possible excluded group and safeguard, and propose evidence for assessment. Label the design as your application and keep legal compliance separate from the wider ethical argument.",
+    "explanation": "Name the value, connect an operational principle, describe an actor and action, identify a possible excluded group and safeguard, and propose evidence for assessment. Label the design as your application and keep legal compliance separate from the wider ethical argument. Source: Frischhut — Values and ethics (2026/27); PDF pp. 8–9, 17–21 and 26–30. This is a reasoning scaffold, not an official marking scheme.",
+    "source": "Frischhut — Values and ethics (2026/27)"
+  },
+  {
+    "id": "right-to-health.q.077",
+    "topic": "right-to-health.health-systems",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which inference from tax financing is not warranted by the Italy report?",
+    "options": [
+      "All clinicians must be salaried public employees",
+      "Public and accredited private providers can coexist",
+      "Revenue and provider payment are different questions",
+      "Regions have delivery responsibilities"
+    ],
+    "answer": "A",
+    "explanation": "The report describes independent GPs, multiple provider forms and mixed payment arrangements. Source: De Belvis et al. — Italy: Health System Summary (2024); PDF pp. 3–8. Original study question; not an official exam item.",
+    "source": "De Belvis et al. — Italy: Health System Summary (2024)"
+  },
+  {
+    "id": "right-to-health.q.078",
+    "topic": "right-to-health.health-systems",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "What does a population-coverage rate alone fail to establish?",
+    "options": [
+      "That a benefits package can be defined",
+      "That public financing exists in any system",
+      "That a covered service is timely, locally available and affordable to use",
+      "That inclusion in a scheme is a meaningful concept"
+    ],
+    "answer": "C",
+    "explanation": "Coverage is distinct from the practical and financial barriers discussed in the country reports. Source: De Belvis et al. — Italy: Health System Summary (2024); PDF pp. 3–8. Original study question; not an official exam item.",
+    "source": "De Belvis et al. — Italy: Health System Summary (2024)"
+  },
+  {
+    "id": "right-to-health.q.079",
+    "topic": "right-to-health.health-systems",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which pair compares the same system function?",
+    "options": [
+      "Hospital ownership in one country and average age in the other",
+      "Tax revenue in one country and patient satisfaction in the other",
+      "A benefits package in one country and a publication date in the other",
+      "How providers receive payment in each of two countries"
+    ],
+    "answer": "D",
+    "explanation": "A disciplined comparison examines like functions before considering their relationships. Source: De Belvis et al. — Italy: Health System Summary (2024); PDF pp. 3–8. Original study question; not an official exam item.",
+    "source": "De Belvis et al. — Italy: Health System Summary (2024)"
+  },
+  {
+    "id": "right-to-health.q.080",
+    "topic": "right-to-health.health-systems",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Build a comparison outline that separates revenue, pooling, purchasing, delivery, coverage and practical access.",
+    "answer": "Define each function, examine the same function in each country and identify the sources and their dates. Explain how a shared entitlement can coexist with unequal access. Do not infer a ranking from one structural label or one aggregate indicator.",
+    "explanation": "Define each function, examine the same function in each country and identify the sources and their dates. Explain how a shared entitlement can coexist with unequal access. Do not infer a ranking from one structural label or one aggregate indicator. Source: De Belvis et al. — Italy: Health System Summary (2024); PDF pp. 3–8. This is a reasoning scaffold, not an official marking scheme.",
+    "source": "De Belvis et al. — Italy: Health System Summary (2024)"
+  },
+  {
+    "id": "right-to-health.q.081",
+    "topic": "right-to-health.netherlands",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "An invented subgroup has predicted mean expenditure €2,400 and actual mean €3,000. What is its predictive ratio?",
+    "options": [
+      "1.25",
+      "600",
+      "0.80",
+      "0.20"
+    ],
+    "answer": "C",
+    "explanation": "The article’s ratio is predicted divided by actual expenditure: 2,400/3,000 = 0.80. These are invented numbers. Source: van de Ven, van Kleef & van Vliet — Risk selection threatens quality of care (2015); PDF pp. 4–5. Original study question; not an official exam item.",
+    "source": "van de Ven, van Kleef & van Vliet — Risk selection threatens quality of care (2015)"
+  },
+  {
+    "id": "right-to-health.q.082",
+    "topic": "right-to-health.netherlands",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Why may a ratio of one for a model-defined group be uninformative?",
+    "options": [
+      "All ratios are unrelated to expenditure",
+      "The article proves every model is equally accurate",
+      "A ratio of one always means a financial loss",
+      "The grouping and estimation method can make the ratio hold by construction"
+    ],
+    "answer": "D",
+    "explanation": "The article warns about evaluation groups already represented in the model rather than meaningful tests of residual subgroup gaps. Source: van de Ven, van Kleef & van Vliet — Risk selection threatens quality of care (2015); PDF pp. 4–5. Original study question; not an official exam item.",
+    "source": "van de Ven, van Kleef & van Vliet — Risk selection threatens quality of care (2015)"
+  },
+  {
+    "id": "right-to-health.q.083",
+    "topic": "right-to-health.netherlands",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "What does a large reduction in undercompensation demonstrate?",
+    "options": [
+      "That all selection incentives have necessarily vanished",
+      "That actual selection by every insurer is proven",
+      "Improvement that may still leave a residual selection incentive",
+      "That the table describes current Dutch insurers"
+    ],
+    "answer": "C",
+    "explanation": "The article distinguishes the reduction achieved from the remaining gap and keeps incentives separate from conduct. Source: van de Ven, van Kleef & van Vliet — Risk selection threatens quality of care (2015); PDF pp. 4–5. Original study question; not an official exam item.",
+    "source": "van de Ven, van Kleef & van Vliet — Risk selection threatens quality of care (2015)"
+  },
+  {
+    "id": "right-to-health.q.084",
+    "topic": "right-to-health.netherlands",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Explain why a model evaluation can look reassuring while risk-selection incentives remain.",
+    "answer": "Define the predictive ratio, identify how the subgroup was constructed and distinguish explained variation from remaining predictable variation. Explain the potential effect on incentives without claiming that incentive proves conduct. Keep the 2015 evaluation and its underlying data years visible.",
+    "explanation": "Define the predictive ratio, identify how the subgroup was constructed and distinguish explained variation from remaining predictable variation. Explain the potential effect on incentives without claiming that incentive proves conduct. Keep the 2015 evaluation and its underlying data years visible. Source: van de Ven, van Kleef & van Vliet — Risk selection threatens quality of care (2015); PDF pp. 4–5. This is a reasoning scaffold, not an official marking scheme.",
+    "source": "van de Ven, van Kleef & van Vliet — Risk selection threatens quality of care (2015)"
+  },
+  {
+    "id": "right-to-health.q.085",
+    "topic": "right-to-health.italy",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which division of responsibilities is described in the report?",
+    "options": [
+      "All services are delivered by one national hospital",
+      "Only the EU sets local provider budgets",
+      "National benefits framework with substantial regional organisation and delivery",
+      "Each local clinic independently defines the entire national package"
+    ],
+    "answer": "C",
+    "explanation": "The SSN description separates national commitments and regional implementation. Source: De Belvis et al. — Italy: Health System Summary (2024); PDF pp. 3–8. Original study question; not an official exam item.",
+    "source": "De Belvis et al. — Italy: Health System Summary (2024)"
+  },
+  {
+    "id": "right-to-health.q.086",
+    "topic": "right-to-health.italy",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "What does a specific budget line help address in the report’s payment account?",
+    "options": [
+      "Activities not well captured by standard service or case payments",
+      "A guarantee that every service is free at use",
+      "A replacement for every capitation payment",
+      "An automatic end to all regional differences"
+    ],
+    "answer": "A",
+    "explanation": "The report gives additional budget funding a distinct role in its mix of payment mechanisms. Source: De Belvis et al. — Italy: Health System Summary (2024); PDF pp. 3–8. Original study question; not an official exam item.",
+    "source": "De Belvis et al. — Italy: Health System Summary (2024)"
+  },
+  {
+    "id": "right-to-health.q.087",
+    "topic": "right-to-health.italy",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which statement is appropriately cautious about recovery-plan investment?",
+    "options": [
+      "Investment targets do not alone establish later staffing and service outcomes",
+      "Every target is proof of completed implementation",
+      "All regional access differences disappear when funding is announced",
+      "Facilities automatically create enough trained staff"
+    ],
+    "answer": "A",
+    "explanation": "A plan, its implementation and its outcomes are separate stages; the report’s dates matter. Source: De Belvis et al. — Italy: Health System Summary (2024); PDF pp. 3–8. Original study question; not an official exam item.",
+    "source": "De Belvis et al. — Italy: Health System Summary (2024)"
+  },
+  {
+    "id": "right-to-health.q.088",
+    "topic": "right-to-health.italy",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Explain a situation in which a nationally included service remains difficult to obtain locally, using the report’s organisation and access sections.",
+    "answer": "Distinguish LEA inclusion from regional delivery, and discuss waiting, workforce or geography only to the extent supported. Explain the likely level of the problem and the evidence needed for a remedy. Do not describe a local delay as proof that a national benefit has been abolished.",
+    "explanation": "Distinguish LEA inclusion from regional delivery, and discuss waiting, workforce or geography only to the extent supported. Explain the likely level of the problem and the evidence needed for a remedy. Do not describe a local delay as proof that a national benefit has been abolished. Source: De Belvis et al. — Italy: Health System Summary (2024); PDF pp. 3–8. This is a reasoning scaffold, not an official marking scheme.",
+    "source": "De Belvis et al. — Italy: Health System Summary (2024)"
+  },
+  {
+    "id": "right-to-health.q.089",
+    "topic": "right-to-health.norway",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Why should the coordination reform be evaluated component by component?",
+    "options": [
+      "The reform concerned only a change of hospital name",
+      "The chapter reports different mechanisms and mixed results",
+      "All components changed the same payment in the same way",
+      "Every component was evaluated as fully successful"
+    ],
+    "answer": "B",
+    "explanation": "Municipal wards, co-financing and discharge payments had distinct mechanisms and reported outcomes. Source: Hagen & Feiring — Health Policy Reforms for Three Decades: Then Returning to Square One? (2025); PDF pp. 7–9. Original study question; not an official exam item.",
+    "source": "Hagen & Feiring — Health Policy Reforms for Three Decades: Then Returning to Square One? (2025)"
+  },
+  {
+    "id": "right-to-health.q.090",
+    "topic": "right-to-health.norway",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "What does the chapter state about the health communities initiative?",
+    "options": [
+      "It was the same policy as the 1997 financing reform",
+      "It conclusively eliminated all fragmentation",
+      "It replaced all municipal primary care",
+      "It had not yet been evaluated in the authors’ account"
+    ],
+    "answer": "D",
+    "explanation": "Retain the source’s explicit absence of evaluation rather than inferring success. Source: Hagen & Feiring — Health Policy Reforms for Three Decades: Then Returning to Square One? (2025); PDF pp. 7–9. Original study question; not an official exam item.",
+    "source": "Hagen & Feiring — Health Policy Reforms for Three Decades: Then Returning to Square One? (2025)"
+  },
+  {
+    "id": "right-to-health.q.091",
+    "topic": "right-to-health.norway",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which statement matches the chapter’s priority-setting distinction?",
+    "options": [
+      "QALYs replace all institutions and accountability",
+      "Severity is excluded at the group level",
+      "Clinical-level criteria allow discretion; group-level assessments use quantified measures",
+      "Every individual decision is determined only by the lowest price"
+    ],
+    "answer": "C",
+    "explanation": "The chapter distinguishes clinical judgment from quantified group-level assessment and identifies multiple criteria. Source: Hagen & Feiring — Health Policy Reforms for Three Decades: Then Returning to Square One? (2025); PDF pp. 7–9. Original study question; not an official exam item.",
+    "source": "Hagen & Feiring — Health Policy Reforms for Three Decades: Then Returning to Square One? (2025)"
+  },
+  {
+    "id": "right-to-health.q.092",
+    "topic": "right-to-health.norway",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Evaluate a reported reduction in hospital stays without assuming that overall coordination has improved.",
+    "answer": "Identify the payment mechanism and the measured hospital outcome, then examine municipal burden, follow-up care and rehabilitation. Distinguish evidence the chapter reports from evidence still needed. Explain who is responsible across the care boundary.",
+    "explanation": "Identify the payment mechanism and the measured hospital outcome, then examine municipal burden, follow-up care and rehabilitation. Distinguish evidence the chapter reports from evidence still needed. Explain who is responsible across the care boundary. Source: Hagen & Feiring — Health Policy Reforms for Three Decades: Then Returning to Square One? (2025); PDF pp. 7–9. This is a reasoning scaffold, not an official marking scheme.",
+    "source": "Hagen & Feiring — Health Policy Reforms for Three Decades: Then Returning to Square One? (2025)"
+  },
+  {
+    "id": "right-to-health.q.093",
+    "topic": "right-to-health.austria",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "In the profile’s non-contracted-doctor discussion, which base matters to the stated reimbursement percentage?",
+    "options": [
+      "The hospital’s average operating budget",
+      "The equivalent SHI tariff",
+      "Every private invoice without qualification",
+      "The patient’s total annual income"
+    ],
+    "answer": "B",
+    "explanation": "The tariff base explains why a remaining household burden can be larger than expected. Source: OECD/European Observatory — Austria: Country Health Profile (2025); PDF pp. 14–20. Original study question; not an official exam item.",
+    "source": "OECD/European Observatory — Austria: Country Health Profile (2025)"
+  },
+  {
+    "id": "right-to-health.q.094",
+    "topic": "right-to-health.austria",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Why is national physician density insufficient for judging insured local access?",
+    "options": [
+      "All physicians have identical contracts",
+      "Density already measures every waiting list",
+      "Specialty, location and insurance-contract status also matter",
+      "Geography is excluded from healthcare access"
+    ],
+    "answer": "C",
+    "explanation": "The profile describes geographic and contractual imbalances despite high overall supply. Source: OECD/European Observatory — Austria: Country Health Profile (2025); PDF pp. 14–20. Original study question; not an official exam item.",
+    "source": "OECD/European Observatory — Austria: Country Health Profile (2025)"
+  },
+  {
+    "id": "right-to-health.q.095",
+    "topic": "right-to-health.austria",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which distinction is central to the digital-health discussion?",
+    "options": [
+      "Investment proves universal use",
+      "Electronic records cannot have governance problems",
+      "The number of committees is itself a patient outcome",
+      "Investment and actual uptake are different measures"
+    ],
+    "answer": "D",
+    "explanation": "The profile contrasts substantial investment with uptake and implementation gaps. Source: OECD/European Observatory — Austria: Country Health Profile (2025); PDF pp. 14–20. Original study question; not an official exam item.",
+    "source": "OECD/European Observatory — Austria: Country Health Profile (2025)"
+  },
+  {
+    "id": "right-to-health.q.096",
+    "topic": "right-to-health.austria",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Explain how broad coverage and high physician supply can coexist with the profile’s wait-or-pay dilemma.",
+    "answer": "Identify contracted versus non-contracted provision, the tariff basis of reimbursement and geographical or specialty gaps. Distinguish national aggregate supply from practical access for a particular group. Preserve the report’s date and do not predict an individual bill.",
+    "explanation": "Identify contracted versus non-contracted provision, the tariff basis of reimbursement and geographical or specialty gaps. Distinguish national aggregate supply from practical access for a particular group. Preserve the report’s date and do not predict an individual bill. Source: OECD/European Observatory — Austria: Country Health Profile (2025); PDF pp. 14–20. This is a reasoning scaffold, not an official marking scheme.",
+    "source": "OECD/European Observatory — Austria: Country Health Profile (2025)"
+  },
+  {
+    "id": "right-to-health.q.097",
+    "topic": "right-to-health.european-health-union",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "How are the proposed core values described in the workshop?",
+    "options": [
+      "As six mutually exclusive policy options",
+      "As cumulative and non-hierarchical",
+      "As an official grading scale",
+      "As a new insurance premium formula"
+    ],
+    "answer": "B",
+    "explanation": "The deck presents a coherent proposed framework rather than a menu for selecting a single value. Source: Frischhut — European Health Union workshop (2026/27); PDF pp. 3–10 and 24–26. Original study question; not an official exam item.",
+    "source": "Frischhut — European Health Union workshop (2026/27)"
+  },
+  {
+    "id": "right-to-health.q.098",
+    "topic": "right-to-health.european-health-union",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which statement best preserves the status of the final values diagram?",
+    "options": [
+      "It presents proposals for future development",
+      "It establishes the same health service in every state",
+      "It replaces all existing EU competences",
+      "It proves every proposal has been enacted"
+    ],
+    "answer": "A",
+    "explanation": "The agenda separates de lege lata from de lege ferenda, and the final slides concern the proposed framework. Source: Frischhut — European Health Union workshop (2026/27); PDF pp. 3–10 and 24–26. Original study question; not an official exam item.",
+    "source": "Frischhut — European Health Union workshop (2026/27)"
+  },
+  {
+    "id": "right-to-health.q.099",
+    "topic": "right-to-health.european-health-union",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "What should follow the statement that a group has an unmet health need?",
+    "options": [
+      "An account of resources, responsible actors, practical action and trade-offs",
+      "A declaration that only hospitals affect health",
+      "A conclusion that the proposal is already binding",
+      "An assumption that all resources are financial"
+    ],
+    "answer": "A",
+    "explanation": "The course-title diagram asks whose needs, which resources, where and at which level, and how society is affected. Source: Frischhut — European Health Union workshop (2026/27); PDF pp. 3–10 and 24–26. Original study question; not an official exam item.",
+    "source": "Frischhut — European Health Union workshop (2026/27)"
+  },
+  {
+    "id": "right-to-health.q.100",
+    "topic": "right-to-health.european-health-union",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Construct a source-led workshop argument while distinguishing the existing framework from your proposal.",
+    "answer": "Define the affected group and need, identify the current framework, explain the proposed change and its value–principle connection, then identify actors, resources, trade-offs and evaluation evidence. Label unresolved points and do not claim the deck supplies an official final answer.",
+    "explanation": "Define the affected group and need, identify the current framework, explain the proposed change and its value–principle connection, then identify actors, resources, trade-offs and evaluation evidence. Label unresolved points and do not claim the deck supplies an official final answer. Source: Frischhut — European Health Union workshop (2026/27); PDF pp. 3–10 and 24–26. This is a reasoning scaffold, not an official marking scheme.",
+    "source": "Frischhut — European Health Union workshop (2026/27)"
   }
 ]

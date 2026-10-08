@@ -6,6 +6,9 @@
   const DRAFT_KEY = "euhem-rth-workshop-v1";
   let data = null;
   let refs = new Map();
+  // Temporary study notes: page-lifetime memory only, never browser or remote storage.
+  const caseSessions = new Map();
+  let lastCaseId = "";
   const el = (tag, cls, text) => {
     const node = document.createElement(tag);
     if (cls) node.className = cls;
@@ -67,9 +70,9 @@
     add(title, "p", "rth-subtitle", "Needs, Resources and Society");
     const meta = add(top, "div", "rth-header-meta");
     add(meta, "span", "rth-pill", ctx.course.info.cfu + " CFU · " + ctx.course.modules[0].info.professors.join(", "));
-    add(meta, "span", "rth-meta", "Source-led study edition · " + data.updated);
+    add(meta, "span", "rth-meta", "Expanded study edition · " + data.updated);
     meta.append(saveButton(ID));
-    const labels = { overview: "Course hub", lectures: "Study guides", topics: "Reader", concepts: "Glossary", explore: "Explore", workshop: "Workshop", practice: "Practice", schedule: "Schedule", exam: "Exam", resources: "Sources" };
+    const labels = { overview: "Course hub", lectures: "Study guides", topics: "Reader", concepts: "Glossary", casebook: "Casebook", explore: "Explore", workshop: "Workshop", practice: "Practice", schedule: "Schedule", exam: "Exam", resources: "Sources" };
     const nav = add(box, "nav", "rth-tabs"); nav.setAttribute("aria-label", "Right to Health sections");
     for (const t of tabs) {
       const a = ctx.pageLink(labels[t.key] || t.label, { tab: t.key }, "rth-tab");
@@ -105,7 +108,7 @@
     const row=add(panel,"div","rth-overview-row");
     const start=section(row,"YOUR STUDY PATH","Understand. Apply. Reflect.","Read a guide, explore a scenario, then use active recall. Suggested times are planning estimates, not official class durations.");
     const steps=add(start,"div","rth-steps");
-    [["Read","Source-led explanations and seven-point reviews.","lectures"],["Apply","AAAQ, patient-mobility routes, systems and incentives.","explore"],["Reflect","Build a policy proposal for the workshop.","workshop"]].forEach(([t,d,k])=>{
+    [["Read","Source-led explanations and seven-point reviews.","lectures"],["Apply","Reason through 12 cases, then test the course explorers.","casebook"],["Reflect","Build a policy proposal for the workshop.","workshop"]].forEach(([t,d,k])=>{
       const step=add(steps,"div");step.append(ctx.pageLink(t+" →",{tab:k},"rth-step-link"));add(step,"p",null,d);
     });
     const tracker=section(row,"ON THIS DEVICE","Your progress",p.read+" of "+data.units.length+" guides marked read; "+p.understood+" understood.");
@@ -115,6 +118,9 @@
     const path=section(panel,"THE FOUR PERSPECTIVES","Build the foundations","");cards(path,ctx,data.units.slice(0,4));
     const bottom=section(panel,"CONNECT THE IDEAS","Four countries. Different choices.","Move from the legal and ethical foundations to financing, service delivery, access and accountability.");
     bottom.append(ctx.pageLink("Compare the systems →",{tab:"explore"},"button button-light"),ctx.pageLink("Browse all 10 guides →",{tab:"lectures"},"button button-light"));
+    const casesBox=section(panel,"NEW · CASEBOOK","Practise the argument, not just the answer.","Twelve source-linked cases: make a first choice, build your analysis and uncover the reasoning one step at a time. Hypothetical examples and reading-based cases are clearly labelled.");
+    casesBox.classList.add("rth-casebook-banner");
+    casesBox.append(ctx.pageLink("Open the casebook →",{tab:"casebook"},"button"));
     notice(panel,data.editorialStatus+" "+data.scope);
     const notes=add(panel,"details","rth-sources");add(notes,"summary",null,"Course organisation & using this edition");organisation(notes);
   }
@@ -127,7 +133,12 @@
   }
   function learningPath(panel,ctx) {
     section(panel,"10 ORIGINAL GUIDES","A structured path through the course", "Study explanations based on the supplied files. Country readings keep their historical dates; supplementary clarifications are explicitly identified.");
-    cards(panel,ctx);
+    const label=add(panel,"label","rth-field","Find a study guide");
+    const input=add(label,"input");input.type="search";input.placeholder="Try waiting, proportionality or financing";
+    const count=add(panel,"p","rth-meta");count.setAttribute("role","status");
+    const host=add(panel,"div");
+    function draw(){const q=input.value.trim().toLocaleLowerCase();const units=data.units.filter(u=>[u.title,u.intro,...u.sections.map(x=>x.title)].join(" ").toLocaleLowerCase().includes(q));host.replaceChildren();count.textContent=units.length+" of "+data.units.length+" guides · "+data.units.reduce((n,u)=>n+u.sections.length,0)+" explanation sections in this edition";if(units.length)cards(host,ctx,units);else notice(host,"No matching guide. Try a broader word.");}
+    input.addEventListener("input",draw);draw();
     notice(panel,"The guides are not official lecture transcripts or a statement that future sessions have already taken place. Check Virtuale for full slides and announcements.");
   }
   function reader(panel,ctx) {
@@ -142,7 +153,20 @@
     add(article,"p","rth-eyebrow",u.kicker);add(article,"h2",null,u.title);add(article,"p","rth-lead",u.intro);
     add(article,"p","rth-meta",u.minutes+" min suggested study time · Original, AI-assisted explanation · Not lecturer-reviewed");
     const review=add(article,"details","rth-review");review.open=true;add(review,"summary",null,"5-minute review");const ul=add(review,"ul");u.review.forEach(t=>add(ul,"li",null,t));
-    for(const s of u.sections){const box=add(article,"section","rth-reading-section");add(box,"h3",null,s.title);s.paragraphs.forEach(t=>add(box,"p",null,t));sources(box,s.sources);}
+    const jump=labelledSelect(article,"Jump to a section",[["","Choose one of "+u.sections.length+" sections"],...u.sections.map((x,i)=>[String(i),x.title])]);
+    jump.classList.add("rth-section-jump");
+    const headings=[];
+    for(const [i,s] of u.sections.entries()){
+      const box=add(article,"section","rth-reading-section");box.id="rth-chapter-"+i;
+      if(s.edition)add(box,"p","rth-eyebrow",s.edition);
+      const heading=add(box,"h3",null,s.title);heading.tabIndex=-1;headings.push(heading);
+      s.paragraphs.forEach(t=>add(box,"p",null,t));
+      if(s.locator)add(box,"p","rth-locator","Reading location: "+s.locator);
+      sources(box,s.sources);
+    }
+    jump.addEventListener("change",()=>{if(jump.value!==""){const h=headings[Number(jump.value)];if(h){h.focus({preventScroll:true});h.scrollIntoView({block:"start"});}}});
+    const casesForTopic=(data.cases||[]).filter(c=>c.topic===u.id);
+    if(casesForTopic.length){const related=add(article,"aside","rth-related-cases");add(related,"h3",null,"Put this guide to work");add(related,"p",null,casesForTopic.length+" related case"+(casesForTopic.length===1?"":"s")+" with step-by-step reasoning. Select a case in the Casebook to begin.");related.append(ctx.pageLink("Practise this topic in the Casebook →",{tab:"casebook",topic:u.id},"button button-light"));}
     const actions=add(article,"div","rth-study-actions");
     const status=add(actions,"p","rth-meta");status.setAttribute("role","status");
     const draw=()=>{const s=getTopicStatus(loadProgress(),u.id);status.textContent=s==="understood"?"✓ Marked understood on this device":s==="read"?"◐ Marked read on this device":"Not marked yet";};
@@ -227,6 +251,73 @@
     const select=labelledSelect(panel,"Choose an activity",tools.map(([k,t])=>[k,t]));const host=add(panel,"div","rth-tool");
     const draw=()=>{host.replaceChildren();tools.find(t=>t[0]===select.value)[2](host,ctx);};select.addEventListener("change",draw);draw();
   }
+
+  function casebook(panel,ctx) {
+    const cases=Array.isArray(data.cases)?data.cases:[];
+    section(panel,"CASEBOOK · THINK BEFORE REVEALING","From a case to a defensible answer","Choose a first answer, examine the reasoning, then state what the evidence does—and does not—establish. This is an original study exercise, not a lecturer’s answer key or individual legal advice.");
+    if(!cases.length){notice(panel,"The casebook is unavailable in this saved content version. The guides and practice tools remain available.");return;}
+    const controls=add(panel,"div","rth-casebook-filters");
+    const filter=labelledSelect(controls,"Casebook topic",[["all","All topics"],...data.units.map(u=>[u.id,u.title])]);
+    if(data.units.some(u=>u.id===ctx.params.topic))filter.value=ctx.params.topic;
+    const count=add(controls,"p","rth-meta");count.setAttribute("role","status");
+    add(panel,"p","rth-casebook-hint rth-meta","On a small screen, swipe the case cards sideways or use the topic filter to find a case.");
+    const layout=add(panel,"div","rth-casebook-layout");
+    const list=add(layout,"nav","rth-casebook-list");list.setAttribute("aria-label","Choose a case");
+    const host=add(layout,"article","rth-casebook-detail");
+    let active=null;
+    function session(c){if(!caseSessions.has(c.id))caseSessions.set(c.id,{draft:"",answer:null,revealed:0});return caseSessions.get(c.id);}
+    function selectCase(c,focus=false){
+      active=c;lastCaseId=c.id;const state=session(c);host.replaceChildren();
+      list.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-current",String(b.dataset.caseId===c.id));});
+      add(host,"p","rth-eyebrow",c.kind);
+      const title=add(host,"h3",null,c.title);title.tabIndex=-1;
+      add(host,"p","rth-case-scenario",c.scenario);
+      add(host,"p","rth-locator","Reading location: "+c.locator);
+      const question=add(host,"fieldset","rth-case-question");add(question,"legend",null,"First, make a choice");
+      add(question,"p",null,c.check.question);
+      const choices=add(question,"div","rth-case-choices");
+      const feedback=add(question,"p","rth-feedback");feedback.setAttribute("role","status");
+      const choiceButtons=[];
+      function updateChoice(){choiceButtons.forEach((b,i)=>b.setAttribute("aria-pressed",String(i===state.answer)));feedback.textContent=state.answer===null?"Choose an answer to see feedback.":(state.answer===c.check.answer?"Correct. ":"Reconsider this choice. ")+c.check.explanation;}
+      c.check.options.forEach((option,i)=>{const b=button(String.fromCharCode(65+i)+". "+option,()=>{state.answer=i;updateChoice();},"rth-case-choice");b.setAttribute("aria-pressed","false");choiceButtons.push(b);choices.append(b);});updateChoice();
+      const draftLabel=add(host,"label","rth-field","Your analysis (optional)");
+      add(draftLabel,"span","rth-meta","Use a hypothetical example. No patient or sensitive personal details. This note stays only in page memory, including when switching cases or tabs. Refreshing or closing the page loses it. Export to keep a copy.");
+      const draft=add(draftLabel,"textarea");draft.rows=4;draft.maxLength=3000;draft.value=state.draft;draft.placeholder="Issue → source → application → limitation";
+      const draftStatus=add(host,"p","rth-meta");draftStatus.setAttribute("role","status");
+      function countWords(){const n=state.draft.trim()?state.draft.trim().split(/\s+/).length:0;draftStatus.textContent=n+" words · Not saved to browser storage or submitted · No automatic grading";}
+      draft.addEventListener("input",()=>{state.draft=draft.value.slice(0,3000);countWords();});countWords();
+      const exportButton=button("Export my analysis (.txt)",()=>{const text="EU-HEM · Right to Health · Original case exercise\n"+c.title+"\n"+c.kind+"\n\n"+c.scenario+"\n\nMy analysis\n"+state.draft+"\n\nReading location: "+c.locator+"\nNot an official submission or grade.\n";const url=URL.createObjectURL(new Blob([text],{type:"text/plain;charset=utf-8"}));const a=el("a");a.href=url;a.download=c.id+"-analysis.txt";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);draftStatus.textContent="Analysis export prepared. The browser controls where it is saved.";});host.append(exportButton);
+      const reasoning=add(host,"section","rth-case-reasoning");add(reasoning,"h4",null,"Build the reasoning");
+      const stepStatus=add(reasoning,"p","rth-meta");stepStatus.setAttribute("role","status");
+      const steps=add(reasoning,"div","rth-case-steps");
+      const reveal=button("Reveal the first step",()=>{if(state.revealed<c.steps.length)state.revealed++;drawSteps(true);},"button");
+      const reset=button("Hide reasoning",()=>{state.revealed=0;drawSteps(false);reveal.focus();});
+      const actions=add(reasoning,"div","button-row");actions.append(reveal,reset);
+      const conclusion=add(reasoning,"div","rth-case-conclusion");
+      function drawSteps(focus){
+        steps.replaceChildren();conclusion.replaceChildren();
+        c.steps.slice(0,state.revealed).forEach((step,i)=>{const box=add(steps,"section","rth-case-step");add(box,"span","rth-case-step-number",String(i+1).padStart(2,"0"));const t=add(box,"h5",null,step.title);t.tabIndex=-1;add(box,"p",null,step.text);});
+        stepStatus.textContent=state.revealed+" of "+c.steps.length+" reasoning steps revealed";
+        reveal.hidden=state.revealed===c.steps.length;reveal.textContent=state.revealed?"Reveal the next step":"Reveal the first step";reset.hidden=!state.revealed;
+        conclusion.hidden=state.revealed<c.steps.length;
+        if(!conclusion.hidden){add(conclusion,"h5",null,"A bounded conclusion");add(conclusion,"p",null,c.conclusion);add(conclusion,"h5",null,"Common trap");add(conclusion,"p",null,c.trap);}
+        if(focus){const h=steps.querySelector(".rth-case-step:last-child h5");h?.focus({preventScroll:true});h?.scrollIntoView({block:"nearest"});}
+      }
+      drawSteps(false);sources(host,c.sources);
+      const related=add(host,"div","button-row");const unit=data.units.find(u=>u.id===c.topic);if(unit)related.append(guideLink(ctx,unit,"Read the related guide →"));
+      related.append(ctx.pageLink("Practice this topic →",{tab:"practice",practiceTopic:c.topic},"button button-light"));
+      if(focus){title.focus({preventScroll:true});title.scrollIntoView({block:"start"});}
+    }
+    function drawList(){
+      const visible=cases.filter(c=>filter.value==="all"||c.topic===filter.value);
+      list.replaceChildren();count.textContent=visible.length+" of "+cases.length+" cases";
+      visible.forEach(c=>{const b=button("",()=>selectCase(c,true),"rth-case-select");b.dataset.caseId=c.id;add(b,"span","rth-eyebrow",c.id.replace("rth-case-","CASE "));add(b,"strong",null,c.title);add(b,"span","rth-meta",c.kind);list.append(b);});
+      if(visible.length)selectCase(visible.find(c=>c.id===active?.id)||visible.find(c=>c.id===lastCaseId)||visible[0]);
+      else{host.replaceChildren();notice(host,"No cases for this topic in this edition.");}
+    }
+    filter.addEventListener("change",drawList);drawList();
+  }
+
   const FIELDS=[
     ["need","1. Whose need?","Define a group and a concrete access or health-system problem."],
     ["framework","2. What is the existing framework?","State what the sources establish; distinguish it from a proposal or a point still needing verification."],
@@ -261,9 +352,9 @@
   }
   function render(panel,tab,ctx) {
     if(!data)return false;panel.classList.add("rth-panel");
-    const handlers={overview,lectures:learningPath,topics:reader,concepts:glossary,explore,workshop,resources:sourceLibrary};
+    const handlers={overview,lectures:learningPath,topics:reader,concepts:glossary,casebook,explore,workshop,resources:sourceLibrary};
     if(handlers[tab]){handlers[tab](panel,ctx);return true;}
-    if(tab==="practice") {section(panel,"ACTIVE RECALL","Practice with explanations","50 original multiple-choice questions, 10 open-answer scaffolds and 40 flashcards. Every answer includes its source. Not past papers or predictions of the exam.");notice(panel,"Course sources are the basis; invented scenarios are labelled. The shared practice tools below keep their existing local-progress, topic filters and review controls.");}
+    if(tab==="practice") {section(panel,"ACTIVE RECALL","Practice with explanations",ctx.course.questions.filter(q=>q.type==="mcq").length+" original multiple-choice questions, "+ctx.course.questions.filter(q=>q.type==="short-answer").length+" open-answer scaffolds and "+ctx.course.flashcards.length+" flashcards. Every answer includes its source. Not past papers or predictions of the exam.");notice(panel,"Course sources are the basis; invented scenarios are labelled. The shared practice tools below keep their existing local-progress, topic filters and review controls.");}
     if(tab==="exam") {section(panel,"PREPARATION, NOT PREDICTION","Exam information","Use the official exam feed for dates and registration. The organizational material states the assessment format but does not independently confirm an exam date.");organisation(panel);}
     if(tab==="schedule")scheduleNotes(panel);
     return false;

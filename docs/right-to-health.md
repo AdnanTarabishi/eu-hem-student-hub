@@ -4,6 +4,64 @@ Course 96500, at the existing `course.html?course=right-to-health` address.
 This is an unofficial, AI-assisted original study edition, not lecturer-approved
 content, legal advice, an exam prediction, or a replacement for Virtuale.
 
+## Expanded edition — 8 October 2026
+
+The original ten guides now contain **70 explanation sections** (40 existing +
+30 expanded), with precise PDF page locators on each addition. Existing topic,
+question and flashcard identifiers are retained. The current practice collection
+contains **80 MCQs, 20 open-answer scaffolds and 60 flashcards**. There remain
+24 glossary entries and 24 source records. These counts describe the current
+edition; the initial edition and its tests are documented below.
+
+### Casebook and reading improvements
+
+The Casebook has **12 source-linked cases covering all ten topics**. Each case
+includes a labelled scenario, a first-choice check with explanation, three
+progressively revealed reasoning steps, a bounded conclusion, a misconception
+warning, and links to the associated guide, practice and source. It distinguishes
+hypothetical applications from comparisons of cases discussed in the lectures.
+No case response is represented as the lecturer's answer or an official grade.
+
+Optional analysis is held in JavaScript memory for this open page only. Switching
+cases or course tabs retains it; refresh or closing the page loses it. Export to
+plain text is provided. The Casebook neither writes to localStorage nor submits
+anything over the network. Workshop and native study-progress storage retain
+their existing, separate behaviour and keys. A late timetable response does not
+redraw the Casebook and erase an in-progress response.
+
+Study guides can be filtered by title, description and section headings. The
+reader has a keyboard-accessible chapter jump control, visibly labelled expanded
+sections, precise reading locations and topic-filtered Casebook links.
+`scripts/build-right-to-health-notes.js` deterministically regenerates the native
+Markdown notes from workspace.json so search and the course reader agree.
+
+### Content boundaries
+
+The additions retain the lectures' four perspectives, judicial-procedure versus
+merits distinctions, AAAQ and duty frameworks, the ground–field–instrument
+approach to non-discrimination, and the values/principles diagrams. Country
+readings preserve their years and separate reform mechanisms from results and
+proposals. The final EHU values diagram remains a proposal attributed to the
+workshop, not enacted law. The cited article or complete books are not claimed
+to have been independently reviewed. Numerical cases use explicitly invented
+values and do not determine real reimbursement or insurance eligibility.
+
+### Expanded-edition validation
+
+22 Node tests and 131 adapted inline Chromium checks pass locally, including
+12-case coverage, section-to-Markdown parity, retention of old identifiers,
+choice feedback, progressive reveal, temporary draft behaviour, export content,
+source/topic navigation, blocked storage, late timetable responses, fallback and
+unrelated-course regression. Layout checks cover 320, 390, 768 and 1440 pixels
+in both themes. Content integrity, shared colour pairs and syntax checks pass.
+The existing empty contribution/report-form and directory-endpoint warnings
+remain unrelated and unchanged. Inline tests are not proof of live HTTP,
+genuine browser persistence or service-worker delivery; localhost navigation was
+blocked by the execution environment. The additional `http-browser.py` test uses real HTTP and browser storage in CI,
+with external feeds blocked and service workers disabled. It is not run locally
+because navigation is blocked. Deployment checks are recorded separately in
+GitHub Actions rather than inferred from these local tests.
+
 ## Scope and provenance
 
 The source review covers the fourteen different documents supplied for the
@@ -38,7 +96,7 @@ No slides, recordings, article PDFs, report figures, student data or photos are
 republished. Link to Virtuale/DOI/public sources instead. Source text was
 paraphrased into a study aid rather than reproduced as slide-by-slide copies.
 
-## Files and integration
+## Initial-edition files and integration
 
 - `content/modules/right-to-health/workspace.json`: 10 guides, 24 glossary
   entries and a 24-record source register, with locators and limitations.
@@ -79,7 +137,7 @@ Offline assets are registered in the existing service worker. Content requires
 an online visit before a saved data response can be used offline. Real offline
 and persistent-browser behaviour need a deployed-browser check.
 
-## Validation (8 October 2026)
+## Initial-edition validation (8 October 2026)
 
 ```
 node --test tests/right-to-health/content.test.js

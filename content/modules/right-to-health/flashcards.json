@@ -238,5 +238,125 @@
     "topic": "right-to-health.european-health-union",
     "front": "What makes a useful original workshop proposal?",
     "back": "A defined need and group, a relevant value, a practical measure, an accountable actor, a trade-off and a way to examine implementation. Source: Frischhut — European Health Union workshop (2026/27); PDF pp. 3–10, 12–13, 17–26."
+  },
+  {
+    "id": "right-to-health.fc.041",
+    "topic": "right-to-health.economic-rights",
+    "front": "Why distinguish legislative competence from an individual right?",
+    "back": "The power to adopt a measure and the right a person can invoke are different legal questions; the lecture analyses both. Source: Frischhut — Economic rights (2026/27); PDF pp. 11, 21–25 and 29."
+  },
+  {
+    "id": "right-to-health.fc.042",
+    "topic": "right-to-health.economic-rights",
+    "front": "What does the Directive outline add beyond reimbursement?",
+    "back": "Responsibilities of treatment and affiliation states, contact points, and cooperation including prescriptions, reference networks and related health-policy fields. Source: Frischhut — Economic rights (2026/27); PDF pp. 11, 21–25 and 29."
+  },
+  {
+    "id": "right-to-health.fc.043",
+    "topic": "right-to-health.human-rights",
+    "front": "Why does a finding of no jurisdiction not settle proportionality?",
+    "back": "It concerns whether the court may address the questions presented, not whether the interference is substantively justified. Source: Frischhut — Human rights (2026/27); PDF pp. 23–24, 33–36 and 41–46."
+  },
+  {
+    "id": "right-to-health.fc.044",
+    "topic": "right-to-health.human-rights",
+    "front": "What safeguards should accompany a Vavřička summary?",
+    "back": "Retain the source’s discussion of medical exceptions, sanctions, remedies, safety monitoring and absence of forced administration to the applicants. Source: Frischhut — Human rights (2026/27); PDF pp. 23–24, 33–36 and 41–46."
+  },
+  {
+    "id": "right-to-health.fc.045",
+    "topic": "right-to-health.non-discrimination",
+    "front": "What should precede a direct/indirect discrimination label?",
+    "back": "Identify the relevant comparator, criterion, protected ground and legal framework; explain the evidence for any indirect effect. Source: Frischhut — Non-discrimination: short summary; PDF pp. 1–4."
+  },
+  {
+    "id": "right-to-health.fc.046",
+    "topic": "right-to-health.non-discrimination",
+    "front": "What are the two proportionality questions emphasised in the summary’s approach?",
+    "back": "Can the measure achieve the legitimate aim, and is there a less restrictive way of doing so? Apply them within the relevant legal framework. Source: Frischhut — Non-discrimination: short summary; PDF pp. 1–4."
+  },
+  {
+    "id": "right-to-health.fc.047",
+    "topic": "right-to-health.values-ethics",
+    "front": "Why is trust not a substitute for implementing a principle?",
+    "back": "The diagram frames trust as an overarching goal; the argument must still explain the concrete practices meant to support it. Source: Frischhut — Values and ethics (2026/27); PDF pp. 8–9, 17–21 and 26–30."
+  },
+  {
+    "id": "right-to-health.fc.048",
+    "topic": "right-to-health.values-ethics",
+    "front": "What are the four biomedical ethics principles named in the diagram?",
+    "back": "Respect for autonomy, nonmaleficence, beneficence and justice. The slide lists them without providing a universal numerical balancing rule. Source: Frischhut — Values and ethics (2026/27); PDF pp. 8–9, 17–21 and 26–30."
+  },
+  {
+    "id": "right-to-health.fc.049",
+    "topic": "right-to-health.health-systems",
+    "front": "Can private delivery coexist with public financing?",
+    "back": "Yes. The Italy report describes public and accredited private providers within the SSN; financing and ownership are different dimensions. Source: De Belvis et al. — Italy: Health System Summary (2024); PDF pp. 3–8."
+  },
+  {
+    "id": "right-to-health.fc.050",
+    "topic": "right-to-health.health-systems",
+    "front": "Why compare entitlement separately from practical access?",
+    "back": "A service can be included while waiting, geography, cost or local capacity still prevents timely use. Source: De Belvis et al. — Italy: Health System Summary (2024); PDF pp. 3–8."
+  },
+  {
+    "id": "right-to-health.fc.051",
+    "topic": "right-to-health.netherlands",
+    "front": "What is the article’s predictive-ratio definition?",
+    "back": "Average predicted healthcare expenditure divided by average actual expenditure for the selected group; group construction matters to interpretation. Source: van de Ven, van Kleef & van Vliet — Risk selection threatens quality of care (2015); PDF pp. 4–5."
+  },
+  {
+    "id": "right-to-health.fc.052",
+    "topic": "right-to-health.netherlands",
+    "front": "Why does reducing a compensation gap not necessarily eliminate selection?",
+    "back": "A residual predictable gap can remain even after a large percentage reduction; improvement and elimination are different claims. Source: van de Ven, van Kleef & van Vliet — Risk selection threatens quality of care (2015); PDF pp. 4–5."
+  },
+  {
+    "id": "right-to-health.fc.053",
+    "topic": "right-to-health.italy",
+    "front": "What does LEA identify in the Italy report?",
+    "back": "The nationally guaranteed package of services; it does not itself show identical local capacity or waiting times. Source: De Belvis et al. — Italy: Health System Summary (2024); PDF pp. 3–8."
+  },
+  {
+    "id": "right-to-health.fc.054",
+    "topic": "right-to-health.italy",
+    "front": "Why should the financing source not replace an account of provider payment?",
+    "back": "The report combines taxation with different methods of paying local authorities, GPs, specialists and hospitals. Source: De Belvis et al. — Italy: Health System Summary (2024); PDF pp. 3–8."
+  },
+  {
+    "id": "right-to-health.fc.055",
+    "topic": "right-to-health.norway",
+    "front": "Which three priority criteria does the supplied chapter describe?",
+    "back": "Expected benefit, severity and cost-effectiveness, with differences in how they are used at clinical and group levels. Source: Hagen & Feiring — Health Policy Reforms for Three Decades: Then Returning to Square One? (2025); PDF pp. 7–9."
+  },
+  {
+    "id": "right-to-health.fc.056",
+    "topic": "right-to-health.norway",
+    "front": "Why is a shorter hospital stay not a complete coordination outcome?",
+    "back": "The chapter also reports concerns about municipal burden, premature discharge and rehabilitation after leaving hospital. Source: Hagen & Feiring — Health Policy Reforms for Three Decades: Then Returning to Square One? (2025); PDF pp. 7–9."
+  },
+  {
+    "id": "right-to-health.fc.057",
+    "topic": "right-to-health.austria",
+    "front": "What does the wait-or-pay dilemma describe?",
+    "back": "The profile’s contrast between waiting for covered contracted care and paying for potentially faster non-contracted care, with reimbursement limits. Source: OECD/European Observatory — Austria: Country Health Profile (2025); PDF pp. 14–20."
+  },
+  {
+    "id": "right-to-health.fc.058",
+    "topic": "right-to-health.austria",
+    "front": "Why do digital investment, provider adoption and patient use need separate indicators?",
+    "back": "They describe different stages of implementation; high spending alone does not establish widespread usable access. Source: OECD/European Observatory — Austria: Country Health Profile (2025); PDF pp. 14–20."
+  },
+  {
+    "id": "right-to-health.fc.059",
+    "topic": "right-to-health.european-health-union",
+    "front": "What are the four connected components of the workshop’s proposed update?",
+    "back": "An EHU framing, a purpose-driven preamble, a cumulative set of core values, and principles that operationalise those values. Source: Frischhut — European Health Union workshop (2026/27); PDF pp. 3–10 and 24–26."
+  },
+  {
+    "id": "right-to-health.fc.060",
+    "topic": "right-to-health.european-health-union",
+    "front": "What does de lege ferenda signal in the workshop?",
+    "back": "Future-oriented proposals for development, distinct from describing the existing framework under de lege lata. Source: Frischhut — European Health Union workshop (2026/27); PDF pp. 3–10 and 24–26."
   }
 ]
