@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-07",
+  "updatedAt": "2026-10-08",
   "release": {
     "stage": "Beta",
     "version": "v0.9",
-    "note": "The launch date is a target, not a promise.",
+    "note": "Release dates are targets, not promises. The public beta stays available while the next releases are prepared.",
     "next": {
       "version": "v1.0",
       "name": "Public Launch",
@@ -35,15 +35,42 @@
           "update": "academic-rules-journey-support"
         }
       ]
+    },
+    "following": {
+      "version": "v2.0",
+      "name": "Study, Connect & Prepare",
+      "summary": "A more personal and collaborative Hub: bring your study tools together, expand reviewed learning resources and prepare for the next destination.",
+      "target": {
+        "start": "2026-11",
+        "end": "2026-11",
+        "label": "Early November 2026"
+      },
+      "includes": [
+        {
+          "label": "Personal study dashboard",
+          "item": "student-hub-v2"
+        },
+        {
+          "label": "Expanded learning resources",
+          "item": "student-hub-v2"
+        },
+        {
+          "label": "Reviewed student contributions",
+          "item": "student-hub-v2"
+        },
+        {
+          "label": "Mobility preparation",
+          "item": "mobility-checklists"
+        }
+      ]
     }
   },
   "vision": {
     "title": "Towards the full Student Hub",
-    "progressPercent": 15,
     "targetLabel": "Spring 2027",
-    "note": "About 15% of the full plan is built: our own estimate. Releases are counted from the published updates. Spring 2027 is the original plan for the full Hub, not a promise."
+    "note": "The release count records improvements already published. The full Hub remains a longer-term plan for Spring 2027; upcoming dates may change with student feedback."
   },
-  "planningNote": "Dates are estimates, not promises: several Next items may progress together, and their order can change with student feedback. Items marked “After launch” and Later ideas have no dates yet.",
+  "planningNote": "Dates are estimates, not promises. v2.0 targets early November, with further improvements released in stages. Next items may progress together; After launch and Later ideas do not yet have a delivery date.",
   "categories": [
     {
       "id": "platform",
@@ -92,7 +119,7 @@
     {
       "id": "exam-prep",
       "title": "Exam Prep",
-      "summary": "Exam-style practice questions and timed mock tests for the semester 1 courses, ready before the exam period that starts on 26 October.",
+      "summary": "Expand and review exam-style practice across semester 1, building on the live FHEM Exam Centre, statistics practice and existing question banks.",
       "category": "learning",
       "lane": "now",
       "status": "in-progress",
@@ -103,24 +130,28 @@
       },
       "why": "Practise in the format of the real exams, at your own pace, before the first exam period.",
       "details": [
-        "Build on the existing notes, flashcards and question banks for each semester 1 course.",
-        "Timed mock tests with explanations after each answer.",
-        "Your progress stays on your own device."
+        "Add reviewed practice for courses and topics that still need broader coverage before the exam period that starts on 26 October.",
+        "Build on the live timed mocks, flashcards and question banks, with explanations and correction reporting.",
+        "Keep revision progress on the student's own device."
       ],
       "dependencies": [
         "Reviewed questions for each course, written by students."
       ],
       "links": [
         {
-          "label": "Practise with the current question banks",
+          "label": "Use the current course practice",
           "url": "notes.html"
+        },
+        {
+          "label": "Open the exam planner",
+          "url": "exams.html"
         }
       ]
     },
     {
       "id": "beta-feedback-improvements",
       "title": "Beta feedback & essential improvements",
-      "summary": "Use the first student feedback to fix confusing steps and improve the sections people use most.",
+      "summary": "Turn cohort feedback into focused improvements to navigation, accessibility and the study workflows students use most.",
       "category": "platform",
       "lane": "now",
       "status": "in-progress",
@@ -131,9 +162,9 @@
       },
       "why": "Spend development time on the problems students meet in real use.",
       "details": [
-        "Collect short comments about finding classes, choosing courses and reaching useful resources.",
-        "Group repeated problems, then release a focused set of high-priority improvements.",
-        "Explain the main changes in Updates, so students can see how their feedback helped."
+        "Review feedback on the redesigned Announcements bulletin, the supplied-data cohort atlas and the expanded Student Toolkit.",
+        "Fix confusing steps and prioritise practical improvements for mobile and keyboard use.",
+        "Keep the public release history and planned feature states aligned with what students can actually use."
       ],
       "dependencies": [
         "Feedback from the first student beta (coming in since 7 October 2026)."
@@ -181,7 +212,7 @@
     {
       "id": "domain-admin-dashboard",
       "title": "Custom domain & admin dashboard",
-      "summary": "Give the Hub its own web address and an editor dashboard, so approved editors can keep content up to date.",
+      "summary": "Complete the custom-domain move and activate the prepared editor dashboard, so approved editors can maintain announcements and events.",
       "category": "platform",
       "lane": "next",
       "status": "in-progress",
@@ -192,27 +223,63 @@
       },
       "why": "Keep important information easier to find, correct and maintain as the Hub grows.",
       "details": [
-        "Move to a dedicated domain while keeping existing shared links working.",
-        "An editor dashboard: approved editors sign in with an emailed link and write announcements; an admin reviews them before they go public. Useful resources and updates follow.",
-        "Give editors clear responsibilities and a review step before major changes are published."
+        "The editor screens are built, including review tools, events, team administration and backups; live publishing is still being prepared.",
+        "Choose and connect the custom domain, with redirects and clear guidance for existing saved settings.",
+        "Complete editor access, review responsibilities and a live publishing check before activation."
       ],
       "dependencies": [
-        "A domain decision and suitable access controls for editors."
+        "A domain decision, a working publishing service and verified editor access."
       ],
-      "links": []
+      "links": [],
+      "note": "Editor tools are prepared; live activation and the custom domain remain in progress."
+    },
+    {
+      "id": "student-hub-v2",
+      "title": "v2.0 — Study, Connect & Prepare",
+      "summary": "An initial November release that brings personal study tools together, expands reviewed learning content and makes student contributions easier.",
+      "category": "platform",
+      "lane": "next",
+      "status": "planned",
+      "target": {
+        "start": "2026-11",
+        "end": "2026-11",
+        "label": "November 2026"
+      },
+      "why": "Help students move from finding information to organising their studies and sharing useful knowledge with the cohort.",
+      "details": [
+        "A personal study overview connecting selected courses, upcoming deadlines, saved resources and learning progress on this device.",
+        "A first batch of additional student-made worked examples, summaries and revision activities, guided by feedback.",
+        "An easier route for classmates to submit original notes, experiences and corrections for review before publication.",
+        "Connect the study overview with destination preparation and the first mobility checklists.",
+        "Target the initial v2 release for early November; further content and refinements can follow during the month."
+      ],
+      "dependencies": [
+        "Prioritised student feedback, reviewed contributions and integration with the existing public study tools."
+      ],
+      "links": [
+        {
+          "label": "Explore current study resources",
+          "url": "notes.html"
+        },
+        {
+          "label": "Share an idea or contribution",
+          "url": "contact.html"
+        }
+      ],
+      "note": "Initial target: early November. Accounts and cross-device sync are separate later rollouts."
     },
     {
       "id": "expanded-notes-interactive-lessons",
       "title": "More notes, summaries & interactive lessons",
-      "summary": "A major content expansion: student-made notes, summaries, worked examples and interactive lessons for more courses.",
+      "summary": "Continue expanding reviewed notes, summaries, worked examples and interactive lessons across courses, beyond the first v2 content batch.",
       "category": "learning",
       "lane": "next",
       "status": "planned",
       "target": null,
       "why": "Give students more ways to understand difficult topics and revise at their own pace.",
       "details": [
-        "Extend coverage beyond the Fundamentals in Health Economics pilot, starting with the topics students request.",
-        "Add summaries, worked examples, diagrams and short interactive lessons, including interactive walk-throughs of lectures where that helps.",
+        "Fill remaining course and topic gaps identified by students, building on the existing health economics, statistics and quantitative methods material.",
+        "Add student-made summaries, worked examples, diagrams and short interactive explanations where they help.",
         "Keep official lectures and course materials on Virtuale, and link to them."
       ],
       "dependencies": [
@@ -228,16 +295,16 @@
     {
       "id": "expanded-practice-bank",
       "title": "More quizzes, flashcards & question banks",
-      "summary": "Build on the existing practice tools with more student-made revision content for every course.",
+      "summary": "Continue growing the existing flashcards, quizzes and mock exams with reviewed revision content for more courses and topics.",
       "category": "learning",
       "lane": "next",
       "status": "planned",
       "target": null,
       "why": "Help students check their understanding and practise the topics that need another look.",
       "details": [
-        "Expand flashcard sets and question banks, organised by course and topic.",
-        "Add explanations for answers and short quizzes linked to learning goals.",
-        "Offer a simple way to report an unclear question or suggest a correction."
+        "Build on the current course question banks and timed practice with further sets after the first v2 batch.",
+        "Add clear explanations and short quizzes linked to the learning goals of each topic.",
+        "Use student feedback to correct unclear questions and prioritise gaps."
       ],
       "dependencies": [
         "Reviewed questions and explanations for each topic added."
@@ -293,28 +360,9 @@
       "links": []
     },
     {
-      "id": "student-digital-toolkit",
-      "title": "Student Digital Toolkit",
-      "summary": "A curated guide to digital tools for studying, AI-assisted learning, research, writing, statistics and everyday student life.",
-      "category": "learning",
-      "lane": "later",
-      "status": "exploring",
-      "target": null,
-      "why": "Help students choose a good tool for the task in front of them.",
-      "details": [
-        "Browse tools by task: learning, AI, research, writing, presentations, statistics, languages, careers, budgeting or travel.",
-        "Explain what each tool is best for, its limits, and any checked free plan or student offer, with a review date.",
-        "Start small and grow through student suggestions."
-      ],
-      "dependencies": [
-        "Time to keep plans, offers and links current."
-      ],
-      "links": []
-    },
-    {
       "id": "mobility-checklists",
       "title": "Personal mobility checklists",
-      "summary": "Turn each move between EU-HEM cities into clear steps before departure and after arrival.",
+      "summary": "Build destination-specific checklists for the next EU-HEM move, with practical steps before departure and after arrival.",
       "category": "life",
       "lane": "next",
       "status": "planned",
@@ -325,9 +373,9 @@
       },
       "why": "Keep track of practical tasks during a busy move.",
       "details": [
-        "Choose a destination and keep a personal checklist for housing, travel and arrival.",
-        "Link each administrative step to official guidance, with the date it was checked.",
-        "Mark progress on your own device."
+        "Start with housing, travel and arrival tasks for each destination, with a first set targeted for v2.",
+        "Link each administrative step to official guidance and show when it was checked.",
+        "Save checklist progress on this device; the current Toolkit mobility collection already provides a useful starting set of links."
       ],
       "dependencies": [
         "Reviewed destination guidance that is kept current."
@@ -336,6 +384,10 @@
         {
           "label": "Explore the city guides",
           "url": "city-guide.html"
+        },
+        {
+          "label": "Browse the existing Student Toolkit",
+          "url": "toolkit.html"
         }
       ]
     },
@@ -427,24 +479,24 @@
     },
     {
       "id": "thesis-planning-companion",
-      "title": "Thesis planning companion",
-      "summary": "Plan your thesis semester: topic ideas, supervisor meetings, milestones and deadlines in one personal timeline.",
+      "title": "Thesis timeline & supervisor meeting planner",
+      "summary": "Extend the existing Thesis Explorer planner with a dated milestone timeline and a structured record of supervisor meetings.",
       "category": "learning",
       "lane": "later",
       "status": "exploring",
       "target": null,
       "why": "The thesis is the biggest piece of independent work in EU-HEM; a clear plan makes it calmer.",
       "details": [
-        "Start from the Past Thesis Explorer and save topic ideas to compare.",
-        "Keep a personal timeline of milestones and notes from supervisor meetings.",
-        "Link to official deadlines and rules, which stay authoritative."
+        "Build on the research guide, checklists, personal drafts and backups already available in the Thesis Explorer.",
+        "Explore a dated timeline for agreed milestones, next actions and supervisor meeting notes.",
+        "Link each planning step to the relevant official deadlines and rules."
       ],
       "dependencies": [
-        "Confirmed thesis timelines for each track and student feedback."
+        "Confirmed thesis timelines and feedback on the existing planner."
       ],
       "links": [
         {
-          "label": "Explore past thesis topics",
+          "label": "Use the current thesis guide and planner",
           "url": "thesis.html"
         }
       ]
@@ -465,25 +517,6 @@
       ],
       "dependencies": [
         "The Beyond EU-HEM section and private storage for personal notes."
-      ],
-      "links": []
-    },
-    {
-      "id": "methods-health-economics-labs",
-      "title": "Methods & health economics practice labs",
-      "summary": "Interactive exercises that connect quantitative methods and health economics to practical examples.",
-      "category": "learning",
-      "lane": "later",
-      "status": "exploring",
-      "target": null,
-      "why": "Understand abstract ideas by changing assumptions and watching the results change.",
-      "details": [
-        "Start with focused activities such as sampling, confidence intervals or cost-effectiveness calculations.",
-        "Use worked solutions, transparent assumptions and clearly labelled example data.",
-        "Build labs around the topics students ask for, and review them before publication."
-      ],
-      "dependencies": [
-        "Reviewed learning goals, example data and worked solutions."
       ],
       "links": []
     },
@@ -554,20 +587,32 @@
       "title": "Public Launch v1.0 — custom domain and dashboard",
       "summary": "The Hub opens to everyone at its own web address, with an editor dashboard. A target date, not a promise.",
       "status": "planned"
+    },
+    {
+      "id": "student-hub-v2",
+      "target": {
+        "start": "2026-11",
+        "end": "2026-11",
+        "label": "Early November 2026"
+      },
+      "title": "v2.0 — Study, Connect & Prepare",
+      "summary": "Targeting a more personal study overview, additional reviewed learning content, student contributions and mobility preparation.",
+      "status": "planned"
     }
   ],
   "limitations": {
     "title": "Known limitations",
     "items": [
-      "The Students directory shows fictional demo profiles until real students can join safely.",
-      "Personal settings (your study plan, My track, saved plans and learning progress) are stored only on this device and browser."
+      "The country-of-origin atlas uses the supplied aggregate class counts: 105 people from 24 countries. Individual directory profiles are still fictional demos.",
+      "Personal settings, saved tools and lists, study plans and learning progress stay on this device and browser. Accounts and cross-device sync are not live.",
+      "Editors cannot yet publish through the dashboard. Announcements continue to come from the existing class Sheet."
     ]
   },
   "domainMove": {
     "title": "Moving to a new domain",
     "items": [
-      "Old links to the Hub will redirect to the new address, so shared links keep working.",
-      "Saved settings (My track, your study plan, checklists and learning progress) will not carry over: browsers keep them separately for each web address. You may need to set them again once."
+      "A custom domain is planned. Redirects and existing shared links will be checked as part of that move.",
+      "Saved settings belong to each web address. Use the available backup or export options for study plans, personal lists and drafts before moving; some settings may need to be set again."
     ]
   },
   "feedback": {

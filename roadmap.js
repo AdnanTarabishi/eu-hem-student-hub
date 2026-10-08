@@ -247,7 +247,25 @@
     box.replaceChildren(...parts);
   }
 
-  // Release stage (Beta · v0.9) and the next release with its target date
+  // A release can have an exact target date or a labelled target period.
+  function releaseTarget(release) {
+    return release.targetDate
+      ? { label: R.dayLabel(release.targetDate), dateTime: release.targetDate }
+      : { label: release.target.label, dateTime: release.target.start };
+  }
+
+  function releaseLine(release, label, className) {
+    const line = el("p", `roadmap-release-next${className ? " " + className : ""}`);
+    line.append(document.createTextNode(`${label}: `), el("strong", null, `${release.version} — ${release.name}`),
+      document.createTextNode(" · target "));
+    const target = releaseTarget(release);
+    const time = el("time", null, target.label);
+    time.dateTime = target.dateTime;
+    line.appendChild(time);
+    return line;
+  }
+
+  // Keep the current stage separate from the next and following planned releases.
   function renderRelease() {
     const box = $("roadmap-release");
     const release = state.roadmap && state.roadmap.release;
@@ -255,28 +273,25 @@
     if (!release) return;
     const stage = el("p", "roadmap-release-stage");
     stage.append(el("span", "roadmap-release-badge", release.stage), el("strong", null, release.version));
-    const next = el("p", "roadmap-release-next");
-    next.append(document.createTextNode("Next: "), el("strong", null, `${release.next.version} — ${release.next.name}`),
-      document.createTextNode(" · target "));
-    const date = el("time", null, R.dayLabel(release.next.targetDate));
-    date.dateTime = release.next.targetDate;
-    next.appendChild(date);
-    box.replaceChildren(stage, next, el("p", "roadmap-release-note", release.note));
+    const parts = [stage, releaseLine(release.next, "Next")];
+    if (release.following) parts.push(releaseLine(release.following, "Following", "roadmap-release-following"));
+    parts.push(el("p", "roadmap-release-note", release.note));
+    box.replaceChildren(...parts);
   }
 
-  // "What's in v1.0": each part with its real status (planned / in progress / released in a version)
-  function renderV1() {
-    const box = $("roadmap-v1");
-    const release = state.roadmap && state.roadmap.release;
-    const includes = release ? release.next.includes : [];
+  // Reuse the same card for both releases; included features retain their actual status.
+  function renderReleaseContents(release, sectionId) {
+    const box = $(sectionId);
+    if (!box) return;
+    const includes = release ? release.includes : [];
     box.hidden = !includes.length || hasFilters();
     if (box.hidden) return;
     const head = el("div", "roadmap-v1-head");
-    const title = el("h2", "roadmap-v1-title", `What's in ${release.next.version}`);
-    title.id = "roadmap-v1-title";
-    head.append(title, el("p", "roadmap-estimate", `${release.next.name} · target ${R.dayLabel(release.next.targetDate)}`));
+    const title = el("h2", "roadmap-v1-title", `What's in ${release.version}`);
+    title.id = `${sectionId}-title`;
+    head.append(title, el("p", "roadmap-estimate", `${release.name} · target ${releaseTarget(release).label}`));
     const list = el("ul", "roadmap-v1-list");
-    for (const entry of includes) {
+    for (const [index, entry] of includes.entries()) {
       const li = el("li", "roadmap-v1-item");
       const plan = entry.item && state.roadmap.items.find((i) => i.id === entry.item);
       const update = entry.update && (state.updates || []).find((u) => u.id === entry.update);
@@ -288,10 +303,19 @@
       } else {
         continue; // points to something not on the page (e.g. an unpublished update): leave it out
       }
-      li.lastChild.dataset.focusKey = `v1-${entry.label}`;
+      li.lastChild.dataset.focusKey = `${sectionId}-include-${index}`;
       list.appendChild(li);
     }
-    box.replaceChildren(head, list);
+    const parts = [head];
+    if (release.summary) parts.push(el("p", "roadmap-v1-summary", release.summary));
+    parts.push(list);
+    box.replaceChildren(...parts);
+  }
+
+  function renderPlannedReleases() {
+    const release = state.roadmap && state.roadmap.release;
+    renderReleaseContents(release && release.next, "roadmap-v1");
+    renderReleaseContents(release && release.following, "roadmap-v2");
   }
 
   // Known limitations, the domain move and the feedback button
@@ -501,14 +525,15 @@
     list.replaceChildren();
     if (!state.roadmap) return;
     const events = [
-      ...state.roadmap.milestones.map((m) => ({ kind: "milestone", date: m.date, item: m })),
+      ...state.roadmap.milestones.map((m) => ({ kind: "milestone", date: R.milestoneSortDate(m), item: m })),
       ...(state.updates || []).map((u) => ({ kind: "release", date: u.date, item: u })),
     ].sort((a, b) => a.date.localeCompare(b.date) || dayOrder(a) - dayOrder(b));
     for (const event of events) {
       const planned = event.kind === "milestone" && event.item.status === "planned";
       const li = el("li", `journey-event is-${event.kind}${planned ? " is-planned" : ""}`);
-      const date = el("time", "journey-date", R.dayLabel(event.date));
-      date.dateTime = event.date;
+      const period = event.kind === "milestone" && !event.item.date && event.item.target;
+      const date = el("time", "journey-date", period ? period.label : R.dayLabel(event.date));
+      date.dateTime = period ? period.start : event.date;
       const body = el("div", "journey-body");
       const tag = event.kind === "milestone"
         ? el("span", `roadmap-pill is-${planned ? "planned" : "milestone"}`, planned ? "Planned" : "Milestone")
@@ -538,7 +563,7 @@
     renderOverview();
     renderRelease();
     renderToolbar();
-    renderV1();
+    renderPlannedReleases();
     renderRoadmap();
     renderInfo();
     renderUpdates();
