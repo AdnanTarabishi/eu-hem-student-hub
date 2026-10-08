@@ -14,7 +14,7 @@ A free, volunteer website for students of the EU-HEM master's program (European 
 - Calendar subscription (Google, Apple, Outlook): one calendar with every course, or one with exactly your study plan
 - One page per course: Overview, Schedule, Exam, Topics, Key Concepts, Practice, Resources
 - Notes & Resources: student-made notes, flashcards, practice questions and a shared glossary (pilot: Fundamentals in Health Economics)
-- City guides for Bologna, Oslo, Rotterdam and Innsbruck (permits, housing, healthcare, transport, study places and more)
+- **City guides** for Bologna, Oslo, Rotterdam and Innsbruck: illustrated covers, eight practical topics, within-guide search, saved sections on your device, contextual facts and a city comparison.
 - **Roadmap & Updates** (`roadmap.html`): current work, next and following release targets, later ideas and deployment-backed releases, from `content/roadmap.json` and `content/updates.json`. Planned release windows stay separate from what is already available ([docs/roadmap.md](docs/roadmap.md)).
 - **Students explorer** (`students.html`): a country-of-origin atlas from the supplied 2026–2028 aggregate counts, plus profile cards, list, filters and privacy-aware directory statistics. Individual profiles remain a **demo with 40 fictional people** (`data/demo-students.json`)
 - **Editor dashboard** (`admin.html`, not in the menu): approved editors sign in with an emailed link and write announcements and events (shown as Community events on the Calendar page); admins review, publish and manage the team; an activity log records every change. Backend: Supabase (first Phase 2 piece); a robot copies published announcements into `data/announcements.csv` ([docs/editor-dashboard.md](docs/editor-dashboard.md)). Not connected yet: until then announcements still come from the Google Sheet
@@ -232,3 +232,16 @@ Run `npm run test:fund-statistics`, then rebuild the content index and version s
 students who saved a track); `city-guide.html?city=oslo` shows one city. Each guide is a Markdown file
 in `docs/content/`, listed in `guide-data.js`. Which tracks study in a city always comes from
 `content/tracks.json`. How to update a price, add a student tip or add a city: `docs/city-guides.md`.
+
+Each city uses an illustrated cover and a fact strip, followed by eight topics: Overview, Arriving,
+Housing, Transport, Everyday life, Study & social, Health & safety, and Sources. The complete
+Markdown sections, original deep links, source labels and photograph credits remain available.
+Search finds sections across the current guide; Saved shows its bookmarked sections together,
+while the sidebar links to saved sections across all four cities. Bookmarks use
+`euhem.guide.saved.v1` in local storage, with a session-only fallback when storage is blocked.
+Read all and print expose the complete guide. The layout is scoped to `city-guide.css` and
+supports narrow screens, light/dark themes, reduced motion and keyboard navigation.
+
+The **Check city guides** workflow runs content validation and `tests/guide/browser.test.js`
+in Chromium. It checks navigation, search, saved sections, sources, programme routes,
+photograph credits, comparison data, mobile layouts and printing, and saves visual checks.
