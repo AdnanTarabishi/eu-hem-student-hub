@@ -9247,16 +9247,32 @@ main.home {
   stroke-width: 1.75;
 }
 
-/* The original Student Hub mark follows the text colour in each theme. */
-.hub-brand-icon { --hub-accent: var(--color-brand-text); }
-.site-footer .hub-brand-icon { --hub-accent: #f1b59b; }
+/* Pulse to Growth: navy, white and terracotta, reversed on dark surfaces. */
+.hub-brand-icon {
+  --hub-badge: var(--navy-900);
+  --hub-pulse: var(--white);
+  --hub-accent: var(--terracotta-600);
+}
+
+:root[data-theme="dark"] .hub-brand-icon,
+.site-footer .hub-brand-icon {
+  --hub-badge: var(--ivory-page);
+  --hub-pulse: var(--navy-900);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .hub-brand-icon {
+    --hub-badge: var(--ivory-page);
+    --hub-pulse: var(--navy-900);
+  }
+}
 
 .brand-lockup {
   gap: 10px;
 }
 
 .brand-name {
-  font-family: var(--font-heading);
+  font-family: var(--font-sans);
   font-size: 1.55rem;
   font-weight: 700;
   letter-spacing: -0.01em;

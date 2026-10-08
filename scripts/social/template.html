@@ -33,12 +33,10 @@
   .brand { display: flex; align-items: center; gap: 18px; }
   .brand-mark {
     display: grid; place-items: center;
-    width: 76px; height: 76px; border-radius: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    width: 76px; height: 76px;
   }
-  .brand-mark svg { width: 46px; height: 46px; }
-  .brand-name { font-family: "Source Serif 4", serif; font-weight: 600; font-size: 40px; line-height: 1; }
+  .brand-mark svg { width: 76px; height: 76px; }
+  .brand-name { font-weight: 700; font-size: 40px; line-height: 1; letter-spacing: -0.02em; }
   .brand-product { font-weight: 700; font-size: 24px; margin-top: 4px; color: var(--text-soft); }
 
   h1 {
@@ -80,18 +78,11 @@
   <div class="brand">
     <span class="brand-mark">
       <!-- hub-mark:start -->
-      <svg viewBox="0 0 48 48" style="color:#ffffff;--hub-accent:#f1b59b">
-    <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-      <path d="m9 12 4 6m26-6-4 6M9 37l4-5m26 5-4-5"/>
-    </g>
-    <g fill="currentColor">
-      <circle cx="7.5" cy="10" r="3"/>
-      <circle cx="40.5" cy="10" r="3"/>
-      <circle cx="7.5" cy="39" r="3"/>
-      <circle cx="40.5" cy="39" r="3"/>
-      <path d="M12 17c4.8-1.3 8.4.3 11 3.2v16.4c-2.6-2.8-6.2-4.4-11-3.1z"/>
-    </g>
-    <path d="M36 17c-4.8-1.3-8.4.3-11 3.2v16.4c2.6-2.8 6.2-4.4 11-3.1z" fill="var(--hub-accent,#a9472d)"/>
+      <svg viewBox="0 0 64 64" style="--hub-badge:#f7f5f1;--hub-pulse:#0f2b5b">
+    <rect width="64" height="64" rx="16" fill="var(--hub-badge,#0f2b5b)"/>
+    <polyline points="9,40 19,40 24,27 30,49 35,37 41,37 54,19" fill="none"
+      stroke="var(--hub-pulse,#ffffff)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="54" cy="19" r="5.5" fill="var(--hub-accent,#c75b3a)"/>
   </svg>
       <!-- hub-mark:end -->
     </span>

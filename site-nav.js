@@ -76,16 +76,16 @@ function siteIcon(name, className = "icon") {
   return svg;
 }
 
-// The independent Student Hub mark: an open book connected to four community nodes.
+// The independent Student Hub mark: the user-selected Pulse to Growth design.
 function brandLockup(make) {
   const box = make("span", "brand-lockup");
   const mark = make("span", "brand-mark");
   const symbol = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   symbol.setAttribute("class", "icon hub-brand-icon");
-  symbol.setAttribute("viewBox", "0 0 48 48");
+  symbol.setAttribute("viewBox", "0 0 64 64");
   symbol.setAttribute("aria-hidden", "true");
   const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-  use.setAttribute("href", "img/student-hub-mark.svg#hub-mark");
+  use.setAttribute("href", "img/student-hub-mark.svg?v=328a0786#hub-mark");
   symbol.appendChild(use);
   mark.appendChild(symbol);
   const words = make("span", "brand-words");
