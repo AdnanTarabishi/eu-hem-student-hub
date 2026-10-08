@@ -21,7 +21,7 @@
   <link rel="preload" href="fonts/source-serif-4-latin-600.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=6ef75792">
   <link rel="stylesheet" href="academic-pages.css?v=b9c9a801">
-  <link rel="stylesheet" href="contact.css?v=776036a7">
+  <link rel="stylesheet" href="contact.css?v=793757f5">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -51,10 +51,21 @@
           Get in touch with the student volunteers who look after the Hub.
           Your feedback helps us make it more useful for everyone.</p>
         <nav class="contact-hero-links" aria-label="Related pages">
+          <a id="contact-write-link" class="contact-write-link" href="#contact-form-section" hidden>Write a message <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
           <a href="support.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#graduation"></use></svg> University support <svg class="icon contact-link-arrow" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
           <a href="privacy.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#lock"></use></svg> Privacy notice <svg class="icon contact-link-arrow" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
         </nav>
       </div>
+      <aside id="contact-process" class="academic-hero__aside contact-process" aria-labelledby="contact-process-title" hidden>
+        <p class="academic-eyebrow">A direct conversation</p>
+        <h2 id="contact-process-title">A few details.<br>A useful next step.</h2>
+        <ol>
+          <li><span aria-hidden="true">01</span><div><strong>Choose your topic</strong><p>We’ll show the fields that fit your request.</p></div></li>
+          <li><span aria-hidden="true">02</span><div><strong>Tell us what matters</strong><p>A short explanation is a good place to start.</p></div></li>
+          <li><span aria-hidden="true">03</span><div><strong>Send to the Hub</strong><p>Submit here and look for your receipt.</p></div></li>
+        </ol>
+        <p class="contact-process-note">Student volunteers look after this inbox. For university services or urgent help, use <a href="support.html">Support &amp; Contacts</a>.</p>
+      </aside>
       <aside class="academic-hero__aside contact-email-panel" aria-labelledby="contact-email-title">
         <div class="contact-email-panel__top">
           <p class="academic-eyebrow">The Student Hub inbox</p>
@@ -76,6 +87,76 @@
         <p class="contact-volunteer-note"><svg class="icon" aria-hidden="true"><use href="icons.svg#students"></use></svg> We are volunteers and reply as soon as we can.</p>
       </aside>
     </header>
+
+    <section id="contact-form-section" class="contact-form-section" aria-labelledby="contact-form-title" hidden>
+      <header class="contact-section-heading">
+        <div><p class="academic-eyebrow">Write to the student team</p><h2 id="contact-form-title">What’s on your mind?</h2></div>
+        <p>Choose a topic, add your message, and send it here. Your name and reply email are optional.</p>
+      </header>
+      <!-- Disabled until JavaScript has attached its submit handler and verified the configuration.
+           No-JavaScript visitors keep the complete email options below. -->
+      <form id="contact-form" method="post" action="contact.html" novalidate>
+        <div id="contact-errors" class="contact-errors" role="alert" tabindex="-1" hidden>
+          <h3>Please check these details</h3><ul></ul>
+        </div>
+        <fieldset id="contact-form-fields" class="contact-form-frame" disabled>
+          <legend class="sr-only">Your message to the Student Hub</legend>
+          <div class="contact-compose-layout">
+            <fieldset class="contact-topic-selector" aria-describedby="contact-error-topic">
+              <legend><span class="contact-step-number" aria-hidden="true">01</span> Choose a topic</legend>
+              <div class="contact-topic-options">
+                <label class="contact-topic-option"><input type="radio" name="topic" value="correction" required><span><svg class="icon" aria-hidden="true"><use href="icons.svg#exams"></use></svg><span class="contact-topic-option__title">Correction</span><span class="contact-topic-option__hint">Something needs a fix</span></span></label>
+                <label class="contact-topic-option"><input type="radio" name="topic" value="idea" required><span><svg class="icon" aria-hidden="true"><use href="icons.svg#sparkles"></use></svg><span class="contact-topic-option__title">An idea</span><span class="contact-topic-option__hint">Make the Hub more useful</span></span></label>
+                <label class="contact-topic-option"><input type="radio" name="topic" value="privacy" required><span><svg class="icon" aria-hidden="true"><use href="icons.svg#lock"></use></svg><span class="contact-topic-option__title">Privacy or removal</span><span class="contact-topic-option__hint">Your information, your request</span></span></label>
+                <label class="contact-topic-option"><input type="radio" name="topic" value="contribution" required><span><svg class="icon" aria-hidden="true"><use href="icons.svg#notes"></use></svg><span class="contact-topic-option__title">A contribution</span><span class="contact-topic-option__hint">Share something helpful</span></span></label>
+              </div>
+              <p id="contact-error-topic" class="contact-field-error" hidden></p>
+              <p class="contact-draft-note">Drafts are not saved by the Hub. Keep a copy before leaving or reloading this page.</p>
+            </fieldset>
+
+            <div class="contact-writing">
+              <header class="contact-writing-heading"><p class="academic-eyebrow">02 · Add the details</p><h3 id="contact-writing-title">Your message</h3><p id="contact-writing-help">Choose the topic that best fits, then tell us how we can help.</p></header>
+              <fieldset class="contact-conditional" data-contact-topics="privacy" hidden disabled>
+                <legend class="sr-only">Privacy request</legend>
+                <div class="contact-field"><label for="contact-request-type">What would you like to request? <span class="contact-required">Required</span></label><select id="contact-request-type" name="requestType" data-contact-field="requestType" required aria-describedby="contact-error-requestType"><option value="">Choose a request</option><option value="question">Ask a privacy question</option><option value="access">Access or get a copy</option><option value="correction">Correct information</option><option value="removal">Remove information</option><option value="other">Another privacy request</option></select><p id="contact-error-requestType" class="contact-field-error" hidden></p></div>
+              </fieldset>
+              <div class="contact-field"><label for="contact-message"><span id="contact-message-label">Your message</span><span class="contact-required">Required</span></label><textarea id="contact-message" name="message" data-contact-field="message" rows="7" minlength="10" maxlength="5000" required aria-describedby="contact-message-help contact-message-count contact-error-message"></textarea><div class="contact-message-meta"><p id="contact-message-help" class="contact-field-help">Please use at least 10 characters. Include only what we need to understand your request.</p><span id="contact-message-count">0 / 5,000</span></div><p id="contact-error-message" class="contact-field-error" hidden></p></div>
+              <fieldset class="contact-conditional" data-contact-topics="correction privacy" hidden disabled>
+                <legend class="sr-only">Page concerned</legend>
+                <div class="contact-field"><label for="contact-page-url">Page link <span>Optional</span></label><input id="contact-page-url" name="pageUrl" data-contact-field="pageUrl" type="url" maxlength="2048" inputmode="url" autocomplete="off" placeholder="https://…" aria-describedby="contact-page-help contact-error-pageUrl"><p id="contact-page-help" class="contact-field-help">A link helps us find the page or item you mean.</p><p id="contact-error-pageUrl" class="contact-field-error" hidden></p></div>
+              </fieldset>
+              <fieldset class="contact-conditional" data-contact-topics="correction" hidden disabled>
+                <legend class="sr-only">Source for the correction</legend>
+                <div class="contact-field"><label for="contact-source-url">Source or replacement link <span>Optional</span></label><input id="contact-source-url" name="sourceUrl" data-contact-field="sourceUrl" type="url" maxlength="2048" inputmode="url" autocomplete="off" placeholder="https://…" aria-describedby="contact-error-sourceUrl"><p id="contact-error-sourceUrl" class="contact-field-error" hidden></p></div>
+              </fieldset>
+              <fieldset class="contact-conditional" data-contact-topics="contribution" hidden disabled>
+                <legend class="sr-only">Contribution details</legend>
+                <div class="contact-field"><label for="contact-resource-url">Resource link <span>Optional</span></label><input id="contact-resource-url" name="resourceUrl" data-contact-field="resourceUrl" type="url" maxlength="2048" inputmode="url" autocomplete="off" placeholder="https://…" aria-describedby="contact-resource-help contact-error-resourceUrl"><p id="contact-resource-help" class="contact-field-help">Link only to material you can share with the team for review. Attachments are not needed.</p><p id="contact-error-resourceUrl" class="contact-field-error" hidden></p></div>
+                <div class="contact-field"><label for="contact-preferred-credit">Preferred credit <span>Optional</span></label><input id="contact-preferred-credit" name="preferredCredit" data-contact-field="preferredCredit" type="text" maxlength="120" autocomplete="off" aria-describedby="contact-credit-help contact-error-preferredCredit"><p id="contact-credit-help" class="contact-field-help">For example, your name, a group name, or “anonymous”. Sending a contribution starts a review; it does not publish it.</p><p id="contact-error-preferredCredit" class="contact-field-error" hidden></p></div>
+              </fieldset>
+              <div class="contact-sender-fields">
+                <div class="contact-field"><label for="contact-name">Your name <span>Optional</span></label><input id="contact-name" name="name" data-contact-field="name" type="text" maxlength="80" autocomplete="name" aria-describedby="contact-error-name"><p id="contact-error-name" class="contact-field-error" hidden></p></div>
+                <div class="contact-field"><label for="contact-email-input">Reply email <span>Optional</span></label><input id="contact-email-input" name="email" data-contact-field="email" type="email" maxlength="254" autocomplete="email" inputmode="email" aria-describedby="contact-reply-help contact-error-email"><p id="contact-reply-help" class="contact-field-help">Add this if you’d like a reply or follow-up.</p><p id="contact-error-email" class="contact-field-error" hidden></p></div>
+              </div>
+              <div class="contact-trap" aria-hidden="true"><label for="contact-website">Leave this field empty</label><input id="contact-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+              <p class="contact-submit-note">Your message and any contact details you include will be sent to the Hub team to handle this request. Read the <a href="privacy.html#messages">Privacy notice</a>.</p>
+              <button id="contact-submit" class="button button-primary" type="submit">Send to the Hub <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></button>
+              <p class="contact-reply-note">We are volunteers and reply as soon as we can. This form is for the Student Hub; <a href="support.html">university support is here</a>.</p>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+      <p id="contact-send-status" class="contact-send-status" role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></p>
+      <div id="contact-success" class="contact-success" tabindex="-1" hidden>
+        <span class="contact-success-icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg></span>
+        <p class="academic-eyebrow">Submission confirmed</p><h3>Message received.</h3>
+        <p>Your request was saved in the private Hub inbox. An administrator will review it.</p>
+        <dl><div><dt>Reference</dt><dd id="contact-receipt"></dd></div><div><dt>Received</dt><dd id="contact-received-at"></dd></div></dl>
+        <p id="contact-success-reply"></p>
+        <button id="contact-new-message" class="button button-secondary" type="button">Write another message</button>
+      </div>
+    </section>
+    <div id="contact-email-destination" class="contact-email-destination"></div>
 
     <section class="contact-topics" id="contact-topics" aria-labelledby="contact-topics-title">
       <header class="contact-section-heading">
@@ -188,7 +269,8 @@
   <script defer src="search.js?v=691c11a5"></script>
   <script defer src="pwa.js?v=c9212bf8"></script>
   <script defer src="announcements.js?v=5ec8eef9"></script>
-  <script defer src="contact.js?v=b3569a70"></script>
+  <script defer src="contact-config.js?v=853c1a3c"></script>
+  <script defer src="contact.js?v=d9c9c05c"></script>
 
 </body>
 </html>

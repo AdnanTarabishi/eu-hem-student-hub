@@ -1,6 +1,12 @@
 # Setting up the two Google Forms
 
-The site has two form buttons that show "form coming soon" until a link is added to
+These are legacy instructions for optional standalone Google Forms. The requested on-site
+Contact workflow now has its own topic-aware form and a separate private Apps Script receiver;
+see [contact-forms.md](contact-forms.md). Keep the existing settings empty if those buttons
+should continue to open Contact. Creating these two Forms is not required to activate the
+on-site Contact form, and no Form has been created by the implementation.
+
+The site has two optional form buttons that open Contact until a link is added to
 `content/settings.json`:
 
 | Setting | Button | Where it appears |

@@ -1,0 +1,65 @@
+name: Check Contact forms
+
+on:
+  push:
+    branches:
+      - "codex/contact-form-*"
+      - "codex/contact-forms-*"
+  pull_request:
+    paths:
+      - "contact.html"
+      - "contact.css"
+      - "contact.js"
+      - "contact-config.js"
+      - "privacy.html"
+      - "privacy.js"
+      - "privacy.css"
+      - "style.css"
+      - "academic-pages.css"
+      - "site-nav.js"
+      - "utils.js"
+      - "integrations/contact-apps-script/**"
+      - "tests/contact/**"
+      - "tests/support-pages/browser.test.js"
+      - ".github/workflows/contact-form-checks.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: contact-forms-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  contact-forms:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install existing test dependencies
+        run: npm ci
+      - name: Install Chromium for browser checks
+        run: npx playwright install --with-deps chromium
+      - name: Check content and colour contrast
+        run: |
+          node scripts/check-content.js
+          node scripts/check-contrast.js
+      - name: Check private Contact persistence and validation
+        run: node tests/contact/backend.test.js
+      - name: Check Contact form and failure recovery
+        env:
+          SCREENSHOT_DIR: ${{ runner.temp }}/contact-form-screenshots
+        run: node tests/contact/browser.test.js .
+      - name: Save visual checks
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: contact-form-visual-checks
+          path: ${{ runner.temp }}/contact-form-screenshots
+          if-no-files-found: ignore
+          retention-days: 7

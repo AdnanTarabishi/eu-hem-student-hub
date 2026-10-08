@@ -210,9 +210,11 @@ the shared header and existing academic pages are unchanged.
 
 - Support and Privacy use the same sticky contents rail and focused deep links. Support keeps
   emergency information visible and presents university contacts as native disclosures.
-- Contact has a shorter two-column layout: a navy inbox panel, four topic links, message tips
-  and a university-support route. Every email action works without JavaScript; copying adds
-  a status announcement and a manual fallback when clipboard access fails.
+- Contact pairs a navy introduction with a topic-aware form workspace. Native radio cards choose
+  the topic; relevant fields appear in the writing area without moving keyboard focus. The choices
+  become a compact grid on phones. Inline errors, an error summary and confirmed-receipt states
+  share the existing palette. Until reception is connected, the email cards remain available.
+  Every email action works without JavaScript; copying adds a status announcement and manual fallback.
 - Privacy groups storage and service requests into readable definition lists. It separates
   current features from prepared registration terms, which can be opened individually or together.
   The full notice prints, including normally closed terms, and restores the prior reading state.

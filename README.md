@@ -70,7 +70,7 @@ demo data and are independent of these supplied aggregate counts.
 
 **Design system:** the brand palette (terracotta, ink, warm paper) is at the top of `style.css` as
 `--brand-…` variables; every other colour, size, corner and shadow variable builds on it (light and dark mode).
-Fonts: Inter for text and Source Serif 4 for big titles, stored in `fonts/` (no Google Fonts, so no visitor data goes to Google).
+Fonts: Inter for text and Source Serif 4 for big titles, stored in `fonts/` (loading them does not make a Google Fonts request).
 Icons: `icons.svg` (from Lucide), used as `<svg class="icon"><use href="icons.svg#calendar"></use></svg>`.
 The Student Hub's own logo is `img/student-hub-mark.svg`: the user-selected **Pulse to Growth**
 design, a rising pulse inside a rounded square, adapted to navy, white and terracotta.
@@ -200,19 +200,33 @@ Its six-section contents rail, native university disclosures and compact source 
 `academic-pages.css` and `academic-pages.js`; `support.css` holds the page-specific presentation.
 All questionnaire answers stay in memory. Emergency numbers still come from the City Guides.
 
-`contact.html` gives the dedicated inbox, `euhem.studenthub@gmail.com`, and topic-specific email
-links. `contact.js` only copies that address after a click, with a selectable manual fallback.
-Email links prepare a message in the visitor's own app; the page neither submits nor sends it.
+`contact.html` includes a topic-aware on-site form for corrections, ideas, privacy requests and
+contributions. Topic and message are required; name and reply email are optional. Fields and drafts
+stay in page memory until Send, and only the selected topic's fields are submitted. A receipt is
+shown only after a matching acknowledgement of private storage; interrupted attempts keep the text.
+
+The separate `contact-config.js` endpoint is initially empty. Until a real receiver is deployed and
+verified, the form stays hidden and the existing email routes work, including without JavaScript.
+The prepared receiver uses a restricted Google Sheet owned by `euhem.studenthub@gmail.com`; its
+public endpoint can accept requests but cannot read the inbox. There is no automatic email sending.
+It does not activate Directory, Supabase, editor sign-in or announcement publishing. Setup and the
+actual-delivery checks are in [integrations/contact-apps-script/README.md](integrations/contact-apps-script/README.md).
+Interaction details are in [docs/contact-forms.md](docs/contact-forms.md).
 
 `privacy.html` was reviewed against the current code and updated on 8 October 2026. It distinguishes
 the inactive Directory and editor connections, supplied origins totals, fictional demo profiles,
-on-device tools, offline copies, service requests and voluntary email. Its seven native Directory
+on-device tools, offline copies, service requests, voluntary email and the separate Contact form's
+prepared handling. Contact availability is derived from the same public configuration as the form.
+Its seven native Directory
 disclosures preserve consent v3, the existing fields/visibility and every retention value. A rollout
 or substantive processing change needs a new review; see [docs/support-contact-privacy.md](docs/support-contact-privacy.md).
 
 The **Check support and privacy pages** workflow checks the three pages in Chromium: complete
 Support content and outcomes, section/history/focus, disclosures and printing, Contact mailto and
-clipboard behavior, privacy-state/retention consistency and mobile light/dark layouts. It saves screenshots.
+clipboard fallback, privacy-state/retention consistency and mobile light/dark layouts. The separate
+**Check Contact forms** workflow tests private-receiver logic with fictional services and browser
+submission states with an intercepted endpoint. Both save screenshots; mocked checks do not replace
+the real deployment's private-storage and browser/CORS checks.
 
 ## Fundamentals of Statistics for Healthcare (96498)
 `fund-statistics.html` is the study workspace for **Sara Capacci**, in `fund-quant-methods`.

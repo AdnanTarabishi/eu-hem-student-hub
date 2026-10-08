@@ -1,15 +1,17 @@
 # Support, Contact and Privacy
 
 Reviewed against the public site's source on **8 October 2026**, starting from
-`e5dd21ad418f30dcd886936fcf3589ad7f98c924`. These pages stay within the existing static-site architecture.
+`e5dd21ad418f30dcd886936fcf3589ad7f98c924`. The separate Contact form addition starts from
+`e8b1740d215560fdbb4845b3274166ef6d07d167`. Pages keep the static-site architecture;
+Contact's optional private receiver is documented separately in [contact-forms.md](contact-forms.md).
 
 ## Files and behavior
 
 | Page | Presentation | Behavior |
 |---|---|---|
 | `support.html` | Existing shared `academic-pages.css` plus `support.css` | Existing `support.js` renders `content/people.json`, official sources, shared university names and City Guide emergency facts. Native questions, university disclosures, progress and deep links. |
-| `contact.html` | Existing shared hero plus `contact.css` | `contact.js` copies only the public inbox on a user click. Ordinary topic-specific mailto links work without JavaScript. No form POST, automatic email, persistent input or tracking. |
-| `privacy.html` | Existing shared reading layout plus `privacy.css` | `privacy.js` opens/closes prepared terms together and opens native printing. Shared `academic-pages.js` handles focused navigation and full printing with state restoration. |
+| `contact.html` | Existing shared hero plus `contact.css` | A topic-aware native form sends only when its separate receiver is configured and the visitor submits. With an empty connection or no JavaScript, ordinary email routes remain available. No automatic email, persistent drafts or tracking. |
+| `privacy.html` | Existing shared reading layout plus `privacy.css` | `privacy.js` states the configured Contact route, opens/closes prepared terms and opens native printing. Shared `academic-pages.js` handles focused navigation and full printing with state restoration. |
 
 The Support and Privacy section IDs are stable. Existing `contacts-*`, `student-directory`,
 `mobility-experience` and `responsible` links remain usable; nested targets open their native disclosure.
@@ -32,7 +34,7 @@ that an inactive backend has been deployed or that private account settings were
 | Calendar/feed and exported files can be shared deliberately | `calendar.js`; feature export handlers | No absolute promise that local data can never be shared; clarify visitor-selected destinations and URL/history behavior. |
 | Public browser makes limited provider requests | `unibo-data.js`, CDN tags in Notes/Course/Create/City Guide, `universities.js` image loading | Explain UniBo, cdnjs, Wikimedia and GitHub requests, without describing them as Hub analytics. |
 | Announcements are copied into site files | `announcements.js`; `scripts/fetch-announcements.js` | Browsers do not contact the source Google Sheet to read announcements. |
-| Contact is a voluntary email channel | `contact.html`, `contact.js` | Explain sender address, message/attachments, purpose, relevant follow-up retention and rights; do not claim the website automatically sends or deletes mail. |
+| Contact has a separate, initially unconnected private form receiver | `contact-config.js`, `contact.html`, `contact.js`, `integrations/contact-apps-script/` | State actual availability; explain optional details, private Sheet receipt, selected-topic fields, in-memory drafts, manual retention and email fallback. No claim of a deployed service from code or a configured URL alone. |
 
 The existing group-photo removal route and named controller/contact remain accessible. Public election
 announcements, programme role contacts and attributed published experiences are not described as fictional.
@@ -76,3 +78,8 @@ source/prose preservation, all contact-guide cases, native disclosure and print 
 and history/focus, mailto and clipboard fallback without sending email, static privacy rollout assertions,
 unchanged retention/consent, narrow layouts in both themes, and no new browser-data writes or external posts.
 Screenshots are retained as a workflow artifact. No private registration or mailbox data is used in tests.
+
+The separate `Check Contact forms` workflow exercises the configured form against an intercepted
+fictional endpoint, including validation, matching receipts, interrupted sends and retries. Its
+receiver tests use stubbed private Sheets and Apps Script services. The empty production configuration
+keeps collection inactive; successful mock tests do not establish real delivery or deployed sharing.
