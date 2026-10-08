@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Announcements – EU-HEM Student Hub</title>
-  <meta name="description" content="News and announcements for EU-HEM students.">
+  <meta name="description" content="Programme news, student voices and Hub updates. The EU-HEM cohort bulletin, all in one place.">
   <!-- Social preview (scripts/social-tags.js) -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="EU-HEM Student Hub">
   <meta property="og:title" content="Announcements – EU-HEM Student Hub">
-  <meta property="og:description" content="News and announcements for EU-HEM students.">
+  <meta property="og:description" content="Programme news, student voices and Hub updates. The EU-HEM cohort bulletin, all in one place.">
   <meta property="og:url" content="https://adnantarabishi.github.io/eu-hem-student-hub/announcements.html">
   <meta property="og:image" content="https://adnantarabishi.github.io/eu-hem-student-hub/img/social-preview.png">
   <meta property="og:image:width" content="1200">
@@ -19,7 +19,8 @@
   <!-- /Social preview -->
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=daabf49c">
-  <link rel="stylesheet" href="announcements-election.css?v=20261008">
+  <link rel="stylesheet" href="announcements-election.css?v=a74bf8bf">
+  <link rel="stylesheet" href="announcements-newsroom.css?v=21db401f">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -28,7 +29,7 @@
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <script src="theme.js?v=d51d4769"></script>
 </head>
-<body>
+<body class="announcements-hub">
 
   <header class="site-header">
     <div class="container">
@@ -40,28 +41,78 @@
     </div>
   </header>
 
-  <main class="container">
-    <section class="page-intro">
-      <div>
-        <p class="section-eyebrow">Resources</p>
-        <h1><svg class="icon" aria-hidden="true"><use href="icons.svg#announcements"></use></svg> Announcements</h1>
-        <p>News and practical updates for the EU-HEM cohort, shared by the student team.</p>
+  <main class="container" id="newsroom">
+    <section class="news-hero" aria-labelledby="news-heading">
+      <div class="news-hero-copy">
+        <p class="news-eyebrow"><span aria-hidden="true"></span> THE COHORT BULLETIN</p>
+        <h1 id="news-heading">Announcements<span class="news-hero-dot">.</span></h1>
+        <p class="news-hero-lead">Your cohort. In the loop.</p>
+        <p class="news-hero-description">Programme news, student voices and everything moving the Hub forward. Find the updates that matter, all in one place.</p>
+        <a class="news-hero-link" href="contact.html">Have something to share? <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+      </div>
+      <div class="news-glance" aria-label="Announcement overview">
+        <p class="news-glance-label">ON THE NOTICEBOARD</p>
+        <dl class="news-stats">
+          <div><dt>Active updates</dt><dd id="news-total">—</dd></div>
+          <div><dt>New in 3 days</dt><dd id="news-new">—</dd></div>
+          <div><dt>Pinned</dt><dd id="news-pinned">—</dd></div>
+        </dl>
+        <p class="news-latest-date" id="news-latest-date">Loading the latest updates…</p>
+        <p class="news-glance-note">Student-run. Always check official sources.</p>
       </div>
     </section>
 
-    <section class="card announcements-page" aria-label="All announcements">
+    <section class="news-workspace" aria-label="Browse announcements">
+      <p id="announcement-demo-note" class="demo-note" hidden><strong>Demo announcements</strong> — these are examples only, not real news.</p>
+      <div class="news-toolbar">
+        <div class="news-search">
+          <svg class="icon" aria-hidden="true"><use href="icons.svg#search"></use></svg>
+          <label for="news-search" class="visually-hidden">Search announcements</label>
+          <input id="news-search" type="search" placeholder="Search updates, topics or people…" autocomplete="off" maxlength="200">
+        </div>
+        <div class="news-sort-field">
+          <label for="news-sort">Sort by</label>
+          <select id="news-sort"><option value="priority">Pinned first</option><option value="newest">Newest first</option><option value="oldest">Oldest first</option></select>
+        </div>
+        <div class="news-views" role="group" aria-label="Announcement layout">
+          <button type="button" data-news-view="grid" aria-label="Grid view" aria-pressed="true" title="Grid view"><svg class="icon" aria-hidden="true"><use href="icons.svg#grid"></use></svg></button>
+          <button type="button" data-news-view="list" aria-label="List view" aria-pressed="false" title="List view"><svg class="icon" aria-hidden="true"><use href="icons.svg#list"></use></svg></button>
+        </div>
+      </div>
+      <div class="news-filter-row">
+        <div id="news-filters" class="news-filters" role="group" aria-label="Filter announcements by category"></div>
+        <label class="news-new-switch"><input id="news-new-only" type="checkbox"> <span>New only</span></label>
+      </div>
+      <div class="news-result-line">
+        <p id="news-status" role="status" aria-live="polite" aria-atomic="true">Loading announcements…</p>
+        <button id="news-reset" type="button" class="news-text-button" hidden>Clear filters</button>
+      </div>
 
-      <!-- announcements.js shows this only while the sample (fake) data is used -->
-      <p id="announcement-demo-note" class="demo-note" hidden>
-        <strong>Demo announcements</strong> — these are examples only, not real news.
-      </p>
-
-      <!-- announcements.js adds one button per category -->
-      <div id="announcement-filters" class="track-tabs announcement-filters" role="tablist" aria-label="Filter by category"></div>
-
-      <p id="announcement-status" class="placeholder">Loading announcements...</p>
-      <div id="announcement-list" class="announcement-list"></div>
+      <div id="news-loading" class="news-loading" aria-hidden="true"><div></div><div></div><div></div></div>
+      <section id="news-feature" class="news-feature" aria-label="Featured announcement" hidden></section>
+      <section aria-labelledby="news-feed-heading">
+        <div class="news-section-heading"><div><p class="news-section-kicker">FROM THE COHORT</p><h2 id="news-feed-heading">All updates</h2></div><span class="news-section-rule" aria-hidden="true"></span></div>
+        <div id="news-feed" class="news-feed" aria-busy="true"></div>
+      </section>
+      <div id="news-empty" class="news-empty" hidden>
+        <svg class="icon" aria-hidden="true"><use href="icons.svg#search"></use></svg>
+        <h2 id="news-empty-title">No matching updates</h2>
+        <p id="news-empty-message">Try a different keyword or clear your filters.</p>
+        <button id="news-empty-action" class="button button-secondary" type="button">Clear filters</button>
+      </div>
+      <noscript><p class="demo-note">JavaScript is needed to load the noticeboard. Please enable it to read the announcements.</p></noscript>
     </section>
+
+    <aside class="news-bottom-note" aria-label="About this noticeboard">
+      <span class="news-note-icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#announcements"></use></svg></span>
+      <div><h2>A noticeboard built around you.</h2><p>Have an update, a useful opportunity or a correction? Help keep the cohort in the loop.</p></div>
+      <a class="button button-secondary" href="contact.html">Share an update <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+    </aside>
+
+    <dialog id="news-reader" class="news-reader" aria-labelledby="news-reader-title">
+      <div class="news-reader-top"><span>THE COHORT BULLETIN</span><button id="news-reader-close" type="button" aria-label="Close announcement"><svg class="icon" aria-hidden="true"><use href="icons.svg#close"></use></svg></button></div>
+      <div id="news-reader-content" class="news-reader-content"></div>
+    </dialog>
   </main>
 
   <footer class="site-footer">
@@ -74,7 +125,8 @@
   <script defer src="ui.js?v=6d55e433"></script>
   <script defer src="search.js?v=65002110"></script>
   <script defer src="pwa.js?v=c9212bf8"></script>
-  <script defer src="announcements.js?v=20261008"></script>
+  <script defer src="announcements.js?v=6aff396f"></script>
+  <script defer src="announcements-newsroom.js?v=cfb8bfa0"></script>
 
 </body>
 </html>
