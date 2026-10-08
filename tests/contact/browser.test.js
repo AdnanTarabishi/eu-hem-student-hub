@@ -37,7 +37,7 @@ const response = (route, value, status = 200) => route.fulfill({ status, content
     assert.strictEqual(configSource.match(/noticeVersion:\s*["']([^"']+)["']/)?.[1], VERSION);
     assert.strictEqual(backendSource.match(/NOTICE_VERSION:\s*["']([^"']+)["']/)?.[1], VERSION, "frontend and backend notice versions stay synchronized");
     browser = await chromium.launch();
-    const open = async ({ endpoint = ENDPOINT, scripts = true, viewport = { width: 1440, height: 1000 }, scheme = "light", handler, networkFailure = false, clock = false } = {}) => {
+    const open = async ({ endpoint = ENDPOINT, scripts = true, viewport = { width: 1440, height: 1000 }, scheme = "light", handler, networkFailure = false, httpErrorStatus = null, clock = false } = {}) => {
       const context = await browser.newContext({ viewport, colorScheme: scheme, javaScriptEnabled: scripts, reducedMotion: "reduce", serviceWorkers: "block" });
       context.setDefaultTimeout(12000);
       const posts = [], pending = [];
@@ -85,6 +85,7 @@ const response = (route, value, status = 200) => route.fulfill({ status, content
       page.on("console", (message) => {
         if (message.type() !== "error") return;
         if (networkFailure && /Failed to load resource: net::ERR_(FAILED|INTERNET_DISCONNECTED|ABORTED)/.test(message.text())) return;
+        if (httpErrorStatus && message.location().url === ENDPOINT && message.text().includes(`server responded with a status of ${httpErrorStatus}`)) return;
         errors.push(message.text());
       });
       page.on("response", (result) => {
@@ -352,6 +353,31 @@ const response = (route, value, status = 200) => route.fulfill({ status, content
     }
     ok("incomplete/mismatched/malformed receipts and server rejection never show success and preserve the typed message");
 
+    fixture = await open({ handler: (route, entry, number) => response(route, number < 3
+      ? { ok: false, code: "SAVE_FAILED" }
+      : acknowledgment(entry.payload)) }); page = fixture.page;
+    await fill(page); await page.locator("#contact-submit").click(); await waitPosts(fixture, 1); await errorState(page);
+    assert.strictEqual(await page.locator("#contact-send-status").getAttribute("data-state"), "uncertain");
+    assert.match(await page.locator("#contact-send-status").textContent(), /may have reached the Hub/);
+    await page.locator("#contact-submit").click(); await waitPosts(fixture, 2); await errorState(page);
+    assert.strictEqual(fixture.posts[1].raw, fixture.posts[0].raw, "a saved-but-unconfirmed retry retains the exact body and request ID");
+    await page.locator("#contact-message").fill(MESSAGE + " An edited detail after an unconfirmed save.");
+    assert.match(await page.locator("#contact-send-status").textContent(), /separate submission/i);
+    await page.locator("#contact-submit").click(); await sent(page);
+    assert.notStrictEqual(fixture.posts[2].payload.requestId, fixture.posts[1].payload.requestId);
+    await close(fixture);
+    ok("a saved-but-unconfirmed response preserves uncertainty, exact retries, and the edited-message warning before a new request");
+
+    for (const [code, statusCode] of [["UNRECOGNIZED_FIXTURE_ERROR", 200], ["BUSY", 503]]) {
+      fixture = await open({ httpErrorStatus: statusCode >= 400 ? statusCode : null, handler: (route) => response(route, { ok: false, code }, statusCode) }); page = fixture.page;
+      await fill(page); await page.locator("#contact-submit").click(); await waitPosts(fixture, 1); await errorState(page);
+      assert.strictEqual(await page.locator("#contact-send-status").getAttribute("data-state"), "uncertain");
+      await page.locator("#contact-message").fill(MESSAGE + " An edited detail.");
+      assert.match(await page.locator("#contact-send-status").textContent(), /separate submission/i);
+      await close(fixture);
+    }
+    ok("unknown error codes and non-success HTTP responses cannot imply a confirmed rejection");
+
     fixture = await open({ handler: (route) => response(route, { ok: false, code: "VALIDATION_ERROR", fieldErrors: { message: "The fictional review service asks for a clearer message." } }) }); page = fixture.page;
     await fill(page); await page.locator("#contact-submit").click(); await waitPosts(fixture, 1);
     await page.locator("#contact-errors").waitFor({ state: "visible" });
@@ -382,6 +408,26 @@ const response = (route, value, status = 200) => route.fulfill({ status, content
     await fixture.context.setOffline(false); await page.locator("#contact-submit").click(); await sent(page);
     await close(fixture);
     ok("offline submission keeps the message and makes no POST; reconnecting allows an explicit successful retry");
+
+    fixture = await open({ networkFailure: true, handler: (route, entry, number) => number === 1 ? route.abort("failed") : response(route, acknowledgment(entry.payload)) }); page = fixture.page;
+    await fill(page); await page.locator("#contact-submit").click(); await waitPosts(fixture, 1); await errorState(page);
+    await fixture.context.setOffline(true);
+    for (const message of [MESSAGE, MESSAGE + " An edited detail while offline."]) {
+      await page.locator("#contact-message").fill(message);
+      await page.locator("#contact-submit").click(); await errorState(page);
+      assert.strictEqual(fixture.posts.length, 1, "an offline retry makes no new POST, including after editing");
+      assert.strictEqual(await page.locator("#contact-message").inputValue(), message);
+      assert.strictEqual(await page.locator("#contact-send-status").getAttribute("data-state"), "uncertain");
+      const offlineStatus = await page.locator("#contact-send-status").textContent();
+      assert.match(offlineStatus, /offline.*No new request was sent.*earlier message may already have reached the Hub/);
+      assert.doesNotMatch(offlineStatus, /This message has not been submitted/);
+      assert.match(offlineStatus, message === MESSAGE ? /retry the same message/ : /separate submission/);
+    }
+    await page.locator("#contact-message").fill(MESSAGE);
+    await fixture.context.setOffline(false); await page.locator("#contact-submit").click(); await sent(page);
+    assert.strictEqual(fixture.posts[1].raw, fixture.posts[0].raw, "reconnecting and restoring the original message reuses its receipt lookup");
+    await close(fixture);
+    ok("offline retries retain the earlier delivery uncertainty for unchanged and edited messages without sending another request");
 
     fixture = await open({ networkFailure: true, clock: true, handler: (route, entry, number, pending) => { pending.push({ route, payload: entry.payload }); } }); page = fixture.page;
     await fill(page); await page.locator("#contact-submit").click(); await waitPosts(fixture, 1);

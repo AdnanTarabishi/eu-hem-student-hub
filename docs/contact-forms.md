@@ -77,9 +77,14 @@ and recognises exact retries by the UUID and a fingerprint of the normalised pay
 - **Confirmed receipt:** accept only a structurally valid success response matching this
   request and notice version. A receipt confirms storage, not administrator reading or a reply.
 - **Validation rejection:** explain the field error and retain the text.
-- **Offline before send:** do not initiate a request; keep the draft.
-- **Lost response or timeout:** say that receipt could not be confirmed. The earlier
-  attempt may have arrived. Retrying the unchanged message reuses its request identifier.
+- **Offline before send:** do not initiate a request; keep the draft. If an earlier
+  attempt was unconfirmed, explain that this retry was not sent without claiming that
+  the earlier message never arrived.
+- **Unconfirmed receipt:** a lost response, timeout or `SAVE_FAILED` can follow a saved
+  request. Keep that uncertainty visible, including when the message is edited.
+  Retrying unchanged text reuses its request identifier; edited text is a separate
+  submission and may duplicate the earlier request. Unexpected or non-successful
+  HTTP responses do not establish a confirmed rejection either.
 - **Unavailable service:** keep the draft and offer retry and email.
 
 No private message appears in a URL, browser log, public GitHub issue, site search, public
