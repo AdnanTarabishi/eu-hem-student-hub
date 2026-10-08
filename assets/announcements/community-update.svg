@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" fill="none">
+  <title>News from the student community</title>
+  <desc>An original geometric bulletin illustration with a megaphone and overlapping news cards.</desc>
+  <defs>
+    <pattern id="lines" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M0 32 32 0" stroke="#D2DFD4" stroke-opacity=".1"/>
+    </pattern>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="175%">
+      <feDropShadow dx="0" dy="13" stdDeviation="13" flood-color="#153C37" flood-opacity=".15"/>
+    </filter>
+    <clipPath id="frame"><rect width="800" height="500"/></clipPath>
+  </defs>
+  <g clip-path="url(#frame)">
+    <path fill="#2C6159" d="M0 0h800v500H0z"/>
+    <path fill="url(#lines)" d="M0 0h800v500H0z"/>
+    <circle cx="400" cy="250" r="209" stroke="#A9C5B5" stroke-opacity=".3"/>
+    <circle cx="400" cy="250" r="168" stroke="#A9C5B5" stroke-opacity=".15"/>
+    <circle cx="805" cy="42" r="180" fill="#386D5D"/>
+    <circle cx="-31" cy="491" r="162" fill="#356C63"/>
+    <g filter="url(#shadow)" transform="rotate(-9 308 251)">
+      <rect x="182" y="105" width="247" height="290" rx="17" fill="#DDC0A5"/>
+      <rect x="201" y="126" width="209" height="130" rx="10" fill="#C7815D"/>
+      <path d="M225 285h119m-119 21h154m-154 21h142m-142 21h77" stroke="#AC8B6C" stroke-width="7" stroke-linecap="round"/>
+      <path d="m231 215 30-36 32 25 47-56 39 58" stroke="#F3DFC4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="373" cy="155" r="12" fill="#E8B58D"/>
+    </g>
+    <g filter="url(#shadow)" transform="rotate(7 490 241)">
+      <rect x="356" y="69" width="253" height="322" rx="18" fill="#F3F1E6"/>
+      <path d="M380 94h66" stroke="#7B9A85" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="581" cy="94" r="4" fill="#C78360"/>
+      <rect x="379" y="118" width="207" height="161" rx="12" fill="#DEE8D9"/>
+      <path d="M379 301h178m-178 20h140m-140 20h159" stroke="#A8B5A5" stroke-width="6" stroke-linecap="round"/>
+      <rect x="379" y="358" width="60" height="9" rx="4.5" fill="#658879"/>
+      <path d="m549 356 9 6-9 6m-12-6h21" stroke="#658879" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="m419 187 39-1 65-33v87l-65-31h-39a10 10 0 0 1-10-10v-2a10 10 0 0 1 10-10Z" fill="#214E4E"/>
+      <path d="M458 186v23l17 34a10 10 0 0 1-7 14l-8 2-22-50" fill="#B77353"/>
+      <path d="M523 153v87" stroke="#C57F5C" stroke-width="7" stroke-linecap="round"/>
+      <path d="m542 176 11-9m-12 29h16m-15 19 10 8" stroke="#668F79" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <g transform="rotate(-8 604 376)">
+      <rect x="572" y="344" width="65" height="65" rx="17" fill="#D59470"/>
+      <path d="M589 362h30v22h-15l-8 7v-7h-7v-22Z" stroke="#FFF7E7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M596 370h16m-16 7h10" stroke="#FFF7E7" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <path d="M116 169v23m-11-11h22m557 105v18m-9-9h18" stroke="#A8C4B0" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="689" cy="154" r="5" fill="#D3A483"/>
+    <circle cx="148" cy="341" r="4" fill="#B7CBB0"/>
+  </g>
+</svg>

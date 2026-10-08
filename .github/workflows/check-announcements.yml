@@ -1,0 +1,45 @@
+name: Check announcements
+
+on:
+  pull_request:
+    paths:
+      - "announcements.html"
+      - "announcements*.js"
+      - "search.js"
+      - "announcements*.css"
+      - "assets/announcements/**"
+      - "tests/announcements/**"
+      - ".github/workflows/check-announcements.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bulletin:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install existing test dependencies
+        run: npm ci
+      - name: Install Chromium for the browser checks
+        run: npx playwright install --with-deps chromium
+      - name: Check announcement data and browser behavior
+        env:
+          SCREENSHOT_DIR: ${{ runner.temp }}/announcements-screenshots
+        run: |
+          node tests/announcements/data.test.js
+          node tests/announcements/browser.test.js
+      - name: Save visual checks
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: announcements-visual-checks
+          path: ${{ runner.temp }}/announcements-screenshots
+          if-no-files-found: ignore
+          retention-days: 7

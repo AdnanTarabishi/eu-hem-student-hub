@@ -13,6 +13,17 @@
   const feature = $("news-feature");
   const reader = $("news-reader");
   const state = { all: [], active: [], today: "", category: "", query: "", newOnly: false, sort: "priority", view: "grid", openedId: "", loading: true, failed: false };
+  const coverFiles = Object.freeze({
+    "2026-10-07-student-representatives-election-results": "election-results.svg",
+    "2026-10-06-welcome-to-the-eu-hem-student-hub-beta": "hub-beta.svg",
+    "2026-10-06-track-preferences-first-choices-approved": "track-journey.svg",
+  });
+  const categoryTones = Object.freeze({
+    "Student Community": "community", Student: "community", Programme: "programme",
+    "Student Hub": "hub", Academic: "academic", University: "university", Social: "social", Urgent: "urgent",
+  });
+  let readerOpener = null;
+  let fetching = false;
 
   function icon(name) {
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -26,6 +37,8 @@
 
   // Calendar dates are interpreted in the programme's Bologna timezone.
   function todayInBologna() {
+    if (typeof announcementTodayKey === "function") return announcementTodayKey();
+    // Compatibility if an older cached shared script is still being refreshed.
     const parts = new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Rome", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date());
     const part = (type) => parts.find((p) => p.type === type).value;
     return `${part("year")}-${part("month")}-${part("day")}`;
@@ -100,7 +113,7 @@
 
   function meta(item) {
     const box = el("div", "news-meta");
-    box.append(badge(item.category, item.category === "Urgent" ? "urgent" : ""));
+    box.append(badge(item.category, categoryTones[item.category] || "other"));
     if (item.pinned) box.append(badge("Pinned", "pin", "bookmark"));
     if (isNewAnnouncement(item, state.today)) box.append(badge("New", "new"));
     return box;
@@ -137,6 +150,21 @@
       for (const name of ["EEH", "E&P", "MHI", "PHM"]) chips.append(el("span", "news-art-chip", name));
       box.append(chips);
     }
+    // Trusted artwork paths are defined in code, separately from the optional
+    // photo paths validated from the Sheet. Keep every news fact in adjacent text.
+    const addIllustration = () => {
+      const image = el("img", "news-art-illustration");
+      image.alt = "";
+      image.loading = "lazy";
+      image.decoding = "async";
+      image.width = 800; image.height = 500;
+      box.classList.add("news-art--illustrated");
+      image.addEventListener("error", () => {
+        image.remove(); box.classList.remove("news-art--illustrated");
+      }, { once: true });
+      image.src = "assets/announcements/" + (coverFiles[item.id] || "community-update.svg");
+      box.prepend(image);
+    };
     if (item.image) {
       const image = el("img");
       image.alt = item.imageAlt;
@@ -150,10 +178,11 @@
       image.addEventListener("error", () => {
         image.remove(); if (credit) credit.remove();
         box.classList.remove("news-art--photo"); box.setAttribute("aria-hidden", "true");
+        addIllustration();
       }, { once: true });
       image.src = item.image;
       box.prepend(image);
-    }
+    } else addIllustration();
     return box;
   }
 
@@ -182,7 +211,8 @@
       toast("Announcement link copied.");
     } catch {
       // A selectable fallback also works with denied clipboard permission or offline.
-      const host = button.parentElement.parentElement;
+      const host = button.parentElement?.parentElement;
+      if (!button.isConnected || !host?.isConnected || (reader.contains(button) && !reader.open)) return;
       let box = host.querySelector(".news-share-box");
       if (!box) {
         box = el("div", "news-share-box");
@@ -205,13 +235,25 @@
     const copy = el("div", spotlight ? "news-spotlight-copy" : "news-card-copy");
     if (spotlight) {
       const label = el("p", "news-focus-label");
-      label.append(icon("star"), document.createTextNode(item.pinned ? "IN FOCUS · PINNED UPDATE" : "IN FOCUS · LATEST UPDATE"));
+      const reason = item.category === "Urgent" ? "URGENT UPDATE" : item.pinned ? "PINNED UPDATE" : "LATEST UPDATE";
+      label.append(icon("star"), document.createTextNode("IN FOCUS · " + reason));
       copy.append(label);
     }
     copy.append(meta(item));
     const heading = el(spotlight ? "h2" : "h3", "news-title");
     heading.append(openLink(item, displayTitle(item), ""));
-    copy.append(heading, el("p", "news-excerpt", excerpt(item)), byline(item));
+    copy.append(heading, el("p", "news-excerpt", excerpt(item)));
+    if (spotlight && isElectionResultsAnnouncement(item)) {
+      const winners = el("div", "news-election-highlights");
+      winners.setAttribute("aria-label", "Elected representatives");
+      for (const winner of ELECTION_RESULTS_2026.flatMap((group) => group.elected)) {
+        const chip = el("span");
+        chip.append(el("strong", "", winner.percentage), el("span", "", winner.name));
+        winners.append(chip);
+      }
+      copy.append(winners);
+    }
+    copy.append(byline(item));
     const actions = el("div", "news-card-actions");
     const link = openLink(item, isElectionResultsAnnouncement(item) ? "View full results" : "Read update");
     link.append(icon("arrow-right")); actions.append(link, copyButton(item));
@@ -248,7 +290,7 @@
     if (state.loading || state.failed) return;
     const visible = filteredItems();
     const unfiltered = !state.category && !state.query.trim() && !state.newOnly;
-    const featured = unfiltered && state.sort === "priority" && visible.length > 1
+    const featured = unfiltered && state.sort === "priority" && state.view === "grid" && visible.length > 1
       ? visible.find((item) => item.category === "Urgent") || visible[0] : null;
     feature.replaceChildren(); feature.hidden = !featured;
     if (featured) feature.append(card(featured, true));
@@ -256,7 +298,7 @@
     feed.classList.toggle("is-list", state.view === "list");
     feed.setAttribute("aria-busy", "false");
     $("news-feed-heading").textContent = featured ? "More updates" : "All updates";
-    $("news-reset").hidden = unfiltered;
+    $("news-reset").hidden = unfiltered && state.sort === "priority";
     $("news-status").textContent = `Showing ${visible.length} of ${state.active.length} updates` + (featured ? " · 1 in focus" : "");
     for (const button of $("news-filters").children) button.setAttribute("aria-pressed", String(button.dataset.newsCategory === state.category));
     for (const button of root.querySelectorAll("[data-news-view]")) button.setAttribute("aria-pressed", String(button.dataset.newsView === state.view));
@@ -279,8 +321,9 @@
   }
 
   function resetFilters() {
-    state.query = ""; state.category = ""; state.newOnly = false;
+    state.query = ""; state.category = ""; state.newOnly = false; state.sort = "priority";
     $("news-search").value = ""; $("news-new-only").checked = false;
+    $("news-sort").value = "priority";
     draw(); $("news-search").focus();
   }
 
@@ -293,7 +336,7 @@
     const body = el("div", "news-reader-body");
     if (isElectionResultsAnnouncement(item)) {
       // Reuse the approved full candidate lists and results, not a screenshot.
-      const election = el("div", "announcement"); election.append(renderElectionResults(item)); body.append(election);
+      const election = el("div", "announcement"); election.append(renderElectionResults(item, 3)); body.append(election);
     } else {
       for (const paragraph of item.message.split(/\r?\n\s*\r?\n/).filter((p) => p.trim())) body.append(el("p", "", paragraph));
     }
@@ -308,19 +351,50 @@
     actions.append(copyButton(item)); content.append(actions);
     content.append(el("p", "news-reader-source-note", "Shared on an unofficial, student-run noticeboard. For authoritative information, refer to the original university or programme communication."));
     if (!reader.open) reader.showModal();
+    document.body.classList.add("news-reader-open");
     reader.scrollTop = 0;
-    $("news-reader-close").focus();
+    $("news-reader-close").focus({ preventScroll: true });
+  }
+
+  function hashId() {
+    try { return decodeURIComponent(window.location.hash.slice(1)); }
+    catch { return ""; }
+  }
+
+  function closeReader() {
+    const wasOpen = reader.open;
+    const previousId = state.openedId;
+    state.openedId = "";
+    if (wasOpen) reader.close();
+    document.body.classList.remove("news-reader-open");
+    if (wasOpen) {
+      const fallback = document.getElementById(previousId)?.querySelector("[data-news-open]") || $("news-search");
+      (readerOpener?.isConnected ? readerOpener : fallback).focus({ preventScroll: true });
+    }
+  }
+
+  function requestClose() {
+    const previousId = state.openedId;
+    closeReader();
+    if (previousId && hashId() === previousId) {
+      if (history.state?.newsroomReader) history.back();
+      else history.replaceState(history.state, "", window.location.pathname + window.location.search);
+    }
   }
 
   function syncHash() {
-    const id = window.location.hash.slice(1);
+    const id = hashId();
     const item = state.active.find((a) => a.id === id);
     if (item) showReader(item);
-    else if (reader.open) reader.close();
-    else if (id && state.all.some((a) => a.id === id)) toast("This announcement is not currently active.");
+    else {
+      closeReader();
+      if (id && state.all.some((a) => a.id === id)) toast("This announcement is not currently active.");
+    }
   }
 
   async function load() {
+    if (fetching) return;
+    fetching = true;
     state.loading = true; state.failed = false;
     $("news-empty").hidden = true; $("news-loading").hidden = false;
     $("news-status").textContent = "Loading announcements…"; feed.setAttribute("aria-busy", "true");
@@ -338,7 +412,7 @@
       $("news-latest-date").textContent = "Updates temporarily unavailable";
       showEmpty("Unable to load updates", "Check your connection and try again. Previously cached announcements may still be available in the installed app.", "Try again");
       console.warn("Newsroom:", error.message);
-    } finally { clearTimeout(timeout); $("news-loading").hidden = true; }
+    } finally { fetching = false; clearTimeout(timeout); $("news-loading").hidden = true; }
   }
 
   $("news-search").addEventListener("input", (event) => { state.query = event.target.value; draw(); });
@@ -353,18 +427,20 @@
     const item = state.active.find((a) => a.id === link.dataset.newsOpen);
     if (!item) return;
     event.preventDefault();
-    if (window.location.hash !== "#" + item.id) history.pushState(null, "", "#" + item.id);
+    readerOpener = link;
+    if (hashId() !== item.id) history.pushState({ ...history.state, newsroomReader: true }, "", "#" + item.id);
     showReader(item);
   });
-  $("news-reader-close").addEventListener("click", () => reader.close());
+  $("news-reader-close").addEventListener("click", requestClose);
+  reader.addEventListener("cancel", (event) => { event.preventDefault(); requestClose(); });
   reader.addEventListener("close", () => {
-    if (window.location.hash === "#" + state.openedId) history.replaceState(null, "", window.location.pathname + window.location.search);
-    state.openedId = "";
+    // A queued close event from an earlier story must not clear a newly opened one.
+    if (!reader.open) document.body.classList.remove("news-reader-open");
   });
   reader.addEventListener("click", (event) => {
     if (event.target !== reader) return;
     const bounds = reader.getBoundingClientRect();
-    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) reader.close();
+    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) requestClose();
   });
   window.addEventListener("hashchange", syncHash);
   window.addEventListener("popstate", syncHash);

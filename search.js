@@ -94,7 +94,8 @@
       if (typeof rowsToAnnouncements === "function") {
         const response = await fetch(ANNOUNCEMENTS_URL);
         if (response.ok) {
-          const active = activeAnnouncements(rowsToAnnouncements(parseCsv(await response.text())), todayKey());
+          const day = typeof announcementTodayKey === "function" ? announcementTodayKey() : todayKey();
+          const active = activeAnnouncements(rowsToAnnouncements(parseCsv(await response.text())), day);
           for (const a of active) add("announcement", a.title, `announcements.html#${a.id}`, a.message, a.category);
         }
       }

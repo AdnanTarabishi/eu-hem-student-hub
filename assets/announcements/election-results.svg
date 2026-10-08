@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" fill="none">
+  <title>Ballot and check marks</title>
+  <desc>An original editorial illustration for the student representative election results.</desc>
+  <defs>
+    <pattern id="dots" x="16" y="16" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#D9E8EC" opacity=".13"/>
+    </pattern>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%">
+      <feDropShadow dx="0" dy="15" stdDeviation="13" flood-color="#06152F" flood-opacity=".25"/>
+    </filter>
+    <clipPath id="frame"><rect width="800" height="500"/></clipPath>
+  </defs>
+  <g clip-path="url(#frame)">
+    <path fill="#102E50" d="M0 0h800v500H0z"/>
+    <path fill="url(#dots)" d="M0 0h800v500H0z"/>
+    <circle cx="418" cy="251" r="223" stroke="#98BCBB" stroke-opacity=".21"/>
+    <circle cx="418" cy="251" r="180" stroke="#98BCBB" stroke-opacity=".13"/>
+    <path d="M-43 470c151-123 193-249 303-339S509 28 591-41" stroke="#90B8B4" stroke-opacity=".13" stroke-width="58"/>
+    <path d="M683 393v55m-27-28h55M144 120v22m-11-11h22" stroke="#A0BCBC" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="626" cy="130" r="5" fill="#D98565"/>
+    <circle cx="201" cy="370" r="4" fill="#E2CAB0"/>
+    <path d="m613 298 9-15 9 15h-18Z" stroke="#9CBCB6" stroke-width="2"/>
+    <g filter="url(#shadow)" transform="rotate(9 412 216)">
+      <rect x="282" y="69" width="266" height="318" rx="17" fill="#F8F4EB"/>
+      <rect x="282" y="69" width="266" height="55" rx="17" fill="#E2EBDD"/>
+      <path d="M282 104h266v20H282z" fill="#E2EBDD"/>
+      <circle cx="306" cy="96" r="5" fill="#447466"/>
+      <path d="M323 96h58" stroke="#447466" stroke-width="5" stroke-linecap="round"/>
+      <path d="M502 89h16m-8-8v16" stroke="#447466" stroke-width="2" stroke-linecap="round"/>
+      <rect x="311" y="155" width="42" height="42" rx="8" fill="#D9E7DE"/>
+      <path d="m322 177 8 8 15-18" stroke="#386B56" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M374 166h124M374 184h83" stroke="#A2ACA6" stroke-width="6" stroke-linecap="round"/>
+      <rect x="311" y="224" width="42" height="42" rx="8" fill="#ECDACE"/>
+      <path d="m322 246 8 8 15-18" stroke="#B95F41" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M374 235h124M374 253h101" stroke="#A2ACA6" stroke-width="6" stroke-linecap="round"/>
+      <rect x="311" y="293" width="42" height="42" rx="8" fill="#D9E7DE"/>
+      <path d="m322 315 8 8 15-18" stroke="#386B56" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M374 304h124M374 322h72" stroke="#A2ACA6" stroke-width="6" stroke-linecap="round"/>
+    </g>
+    <path d="m237 356 58-34h230l51 34v18H237v-18Z" fill="#D78B6C"/>
+    <path d="M315 347h188" stroke="#793C2F" stroke-width="8" stroke-linecap="round"/>
+    <path d="M237 356h339v88a16 16 0 0 1-16 16H253a16 16 0 0 1-16-16v-88Z" fill="#C86A4C"/>
+    <path d="M263 382v43a10 10 0 0 0 10 10h36" stroke="#F8D1BC" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+    <circle cx="411" cy="407" r="26" fill="#F7EEE1"/>
+    <path d="m399 407 8 8 16-18" stroke="#245746" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <g transform="rotate(-13 179 220)">
+      <rect x="139" y="180" width="80" height="80" rx="18" fill="#739C87"/>
+      <path d="m158 221 14 14 30-34" stroke="#F9F4E8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <path d="m600 205 8-19m-2 24 19-4m-34-11-4-13" stroke="#DB9578" stroke-width="3" stroke-linecap="round"/>
+  </g>
+</svg>
