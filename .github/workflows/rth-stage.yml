@@ -13,17 +13,22 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           fetch-depth: 0
-      - name: Decode and verify the exact reviewed patch
-        run: python3 .rth-stage/apply.py apply
-      - name: Validate content and JavaScript
+      - name: Integrate exact course files onto updated main
         run: |
+          python3 .rth-stage/rebase.py prepare
+          cd "$RUNNER_TEMP/rth-release"
+          node scripts/build-content-index.js
+          node scripts/stamp-versions.js
+      - name: Validate the combined site
+        run: |
+          cd "$RUNNER_TEMP/rth-release"
           node --test tests/right-to-health/content.test.js
           node scripts/check-content.js
           node scripts/check-contrast.js
           node --check right-to-health.js
           node --check notes-course.js
-          git diff --cached --check
-      - name: Run the 93 adapted inline browser checks
+          git diff --check
+      - name: Re-run 93 adapted inline browser checks on the combined site
         run: |
           python3 -m pip install playwright==1.57.0
           CHROME=$(command -v google-chrome || command -v chromium || true)
@@ -31,11 +36,7 @@ jobs:
             python3 -m playwright install chromium
             CHROME=$(python3 -c 'from playwright.sync_api import sync_playwright; p=sync_playwright().start(); print(p.chromium.executable_path); p.stop()')
           fi
+          cd "$RUNNER_TEMP/rth-release"
           EUHEM_SITE_ROOT=. CHROMIUM_BINARY="$CHROME" EUHEM_TEST_OUTPUT="$RUNNER_TEMP/rth-browser" python3 tests/right-to-health/browser.py
-      - name: Confirm generated index and versions are reproducible
-        run: |
-          node scripts/build-content-index.js
-          node scripts/stamp-versions.js
-          python3 .rth-stage/apply.py verify
-      - name: Publish a clean candidate branch, not main
-        run: python3 .rth-stage/apply.py candidate
+      - name: Publish clean candidate without modifying main
+        run: python3 .rth-stage/rebase.py publish
