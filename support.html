@@ -19,6 +19,8 @@
   <!-- /Social preview -->
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=6ef75792">
+  <link rel="stylesheet" href="academic-pages.css?v=b9c9a801">
+  <link rel="stylesheet" href="support.css?v=e7c50055">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -27,7 +29,7 @@
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=6074bd3c">
   <script src="theme.js?v=d51d4769"></script>
 </head>
-<body class="support-page">
+<body class="support-page academic-page">
 
   <header class="site-header">
     <div class="container">
@@ -39,69 +41,129 @@
     </div>
   </header>
 
-  <main class="container">
-    <section class="page-intro">
-      <div>
-        <p class="section-eyebrow">About</p>
-        <h1><svg class="icon" aria-hidden="true"><use href="icons.svg#phone"></use></svg> Support &amp; Contacts</h1>
+  <main class="container academic-main">
+    <header class="academic-hero">
+      <div class="academic-hero__copy">
+        <p class="academic-eyebrow">Student life · Here to help</p>
+        <h1>Support &amp; <span>Contacts</span></h1>
         <p id="support-intro">Who to ask, at every EU-HEM university.</p>
+        <div class="academic-hero__actions">
+          <a href="#contact-guide">Find the right contact <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+          <a href="#emergency"><svg class="icon" aria-hidden="true"><use href="icons.svg#alert"></use></svg> Emergency numbers</a>
+        </div>
       </div>
-    </section>
+      <aside class="academic-hero__aside support-start" aria-labelledby="support-start-title">
+        <p class="academic-eyebrow">A useful place to start</p>
+        <h2 id="support-start-title">The right support.<br>A clearer next step.</h2>
+        <div class="support-start__links">
+          <a href="#universities"><span><strong>University support</strong><small>Coordinators, safety and wellbeing</small></span><svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+          <a href="contact.html"><span><strong>Help with the Student Hub</strong><small>Feedback, corrections and ideas</small></span><svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+        </div>
+      </aside>
+    </header>
 
-    <!-- Emergency numbers: read from the City Guides (docs/content/<city>-guide.md), not typed here -->
-    <aside id="emergency" class="support-emergency" aria-labelledby="emergency-title" hidden>
-      <h2 id="emergency-title"><svg class="icon" aria-hidden="true"><use href="icons.svg#alert"></use></svg> In an emergency</h2>
-      <ul class="support-emergency-list"></ul>
-    </aside>
+    <div class="academic-layout">
+      <nav class="academic-nav" aria-label="On this page">
+        <p class="academic-nav__label">Find your next step</p>
+        <ol>
+          <li><a href="#emergency"><span class="academic-nav__number" aria-hidden="true">01</span> Emergency numbers</a></li>
+          <li><a href="#contact-guide"><span class="academic-nav__number" aria-hidden="true">02</span> Who should I contact?</a></li>
+          <li><a href="#universities"><span class="academic-nav__number" aria-hidden="true">03</span> Each university</a></li>
+          <li><a href="#leave"><span class="academic-nav__number" aria-hidden="true">04</span> Leave and withdrawal</a></li>
+          <li><a href="#software"><span class="academic-nav__number" aria-hidden="true">05</span> Software</a></li>
+          <li><a href="#community"><span class="academic-nav__number" aria-hidden="true">06</span> Community</a></li>
+        </ol>
+        <div class="academic-nav__footer">
+          <p>Looking for a university rule?</p>
+          <a href="academic-rules.html">Academic Rules <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+        </div>
+      </nav>
 
-    <nav class="rules-contents card" aria-label="On this page">
-      <a href="#contact-guide">Who should I contact?</a>
-      <a href="#universities">Contacts per university</a>
-      <a href="#leave">Leave and withdrawal</a>
-      <a href="#software">Software</a>
-      <a href="#community">Community</a>
-    </nav>
+      <div class="academic-content">
+        <!-- support.js reads people.json and sources.json; emergency numbers come from the City Guides. -->
+        <p id="support-status" class="placeholder" aria-live="polite">Loading contacts…</p>
 
-    <!-- support.js fills every section from content/people.json (sources: content/sources.json) -->
-    <p id="support-status" class="placeholder" aria-live="polite">Loading contacts…</p>
+        <aside id="emergency" class="support-emergency academic-section" aria-labelledby="emergency-title" hidden>
+          <div class="support-emergency__heading">
+            <svg class="icon" aria-hidden="true"><use href="icons.svg#alert"></use></svg>
+            <div>
+              <h2 id="emergency-title">In an emergency</h2>
+              <p>If you or someone else is in danger right now, call the emergency number for your city.</p>
+            </div>
+          </div>
+          <ul class="support-emergency-list"></ul>
+        </aside>
 
-    <section id="contact-guide" class="card rules-section" aria-labelledby="guide-title" hidden>
-      <h2 id="guide-title">Who should I contact?</h2>
-      <p class="schedule-meta support-guide-intro"></p>
-      <div class="support-questions"></div>
-      <div class="support-outcome" aria-live="polite"></div>
-    </section>
+        <section id="contact-guide" class="rules-section academic-section" aria-labelledby="guide-title" hidden>
+          <header class="academic-section__heading">
+            <p class="academic-eyebrow">02 · Let's find your next step</p>
+            <h2 id="guide-title">Who should I contact?</h2>
+            <p class="support-guide-intro"></p>
+          </header>
+          <div class="support-progress">
+            <span class="support-progress-label" id="support-progress-label">Choose your answers</span>
+            <progress value="0" max="1" aria-labelledby="support-progress-label"></progress>
+          </div>
+          <div class="support-questions"></div>
+          <div class="support-outcome" aria-live="polite"></div>
+        </section>
 
-    <section id="universities" class="rules-section" aria-labelledby="universities-title" hidden>
-      <h2 id="universities-title">Contacts per university</h2>
-      <p class="schedule-meta support-privacy"></p>
-      <div class="rules-unis"></div>
-      <p class="rules-links support-staff-page"></p>
-    </section>
+        <section id="universities" class="rules-section academic-section" aria-labelledby="universities-title" hidden>
+          <header class="academic-section__heading">
+            <p class="academic-eyebrow">03 · Four universities, one community</p>
+            <h2 id="universities-title">Contacts per university</h2>
+            <p class="support-privacy"></p>
+          </header>
+          <div class="support-university-toolbar academic-print-hide">
+            <nav class="support-university-jumps" aria-label="Jump to a university"></nav>
+            <button class="button button-secondary support-toggle-all" type="button" aria-expanded="false" aria-controls="contacts-unibo contacts-uio contacts-mci contacts-eur">Expand all universities</button>
+          </div>
+          <div class="rules-unis"></div>
+          <p class="rules-links support-staff-page"></p>
+        </section>
 
-    <section id="leave" class="card rules-section" aria-labelledby="leave-title" hidden>
-      <h2 id="leave-title">Leave and withdrawal</h2>
-      <h3>Taking a break (temporary leave)</h3>
-      <ul class="rules-list support-leave"></ul>
-      <h3>Leaving the programme (withdrawal)</h3>
-      <ul class="rules-list support-withdrawal"></ul>
-    </section>
+        <section id="leave" class="rules-section academic-section" aria-labelledby="leave-title" hidden>
+          <header class="academic-section__heading">
+            <p class="academic-eyebrow">04 · When your plans change</p>
+            <h2 id="leave-title">Leave and withdrawal</h2>
+          </header>
+          <div class="support-leave-panels">
+            <section class="support-leave-panel" aria-labelledby="leave-temporary-title">
+              <span class="support-panel-number" aria-hidden="true">01</span>
+              <h3 id="leave-temporary-title">Taking a break (temporary leave)</h3>
+              <ul class="rules-list support-leave"></ul>
+            </section>
+            <section class="support-leave-panel" aria-labelledby="leave-withdrawal-title">
+              <span class="support-panel-number" aria-hidden="true">02</span>
+              <h3 id="leave-withdrawal-title">Leaving the programme (withdrawal)</h3>
+              <ul class="rules-list support-withdrawal"></ul>
+            </section>
+          </div>
+        </section>
 
-    <div class="journey-pair">
-      <section id="software" class="card rules-section" aria-labelledby="software-title" hidden>
-        <h2 id="software-title">Software for students</h2>
-        <ul class="rules-list"></ul>
-      </section>
+        <section id="software" class="rules-section academic-section" aria-labelledby="software-title" hidden>
+          <header class="academic-section__heading">
+            <p class="academic-eyebrow">05 · Practical essentials</p>
+            <h2 id="software-title">Software for students</h2>
+          </header>
+          <ul class="rules-list"></ul>
+          <a class="support-section-link academic-print-hide" href="toolkit.html">Explore the Student Toolkit <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+        </section>
 
-      <section id="community" class="card rules-section" aria-labelledby="community-title" hidden>
-        <h2 id="community-title">Community</h2>
-        <ul class="rules-list"></ul>
-      </section>
+        <section id="community" class="rules-section academic-section" aria-labelledby="community-title" hidden>
+          <header class="academic-section__heading">
+            <p class="academic-eyebrow">06 · Stay connected</p>
+            <h2 id="community-title">Community</h2>
+          </header>
+          <ul class="rules-list"></ul>
+          <a class="support-section-link academic-print-hide" href="announcements.html">Latest announcements <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+        </section>
+
+        <p class="rules-disclaimer">A student-made summary, not an official contact list. Contacts change; the
+          official pages linked here are authoritative. This Hub is run by students: for questions about the Hub itself,
+          use the <a href="contact.html">Contact page</a>.</p>
+      </div>
     </div>
-
-    <p class="schedule-meta rules-disclaimer">A student-made summary, not an official contact list. Contacts change; the
-      official pages linked here are authoritative. This Hub is run by students: for questions about the Hub itself,
-      use the <a href="contact.html">Contact page</a>.</p>
   </main>
 
   <footer class="site-footer">
@@ -117,7 +179,8 @@
   <script defer src="announcements.js?v=5ec8eef9"></script>
   <script defer src="tracks-data.js?v=629a5538"></script>
   <script defer src="guide-data.js?v=4c2fbe41"></script>
-  <script defer src="support.js?v=e9c90443"></script>
+  <script defer src="academic-pages.js?v=4c240b6f"></script>
+  <script defer src="support.js?v=90e318f8"></script>
 
 </body>
 </html>

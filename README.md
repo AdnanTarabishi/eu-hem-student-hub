@@ -40,9 +40,12 @@ live UniBo timetable with `node scripts/check-programme.js`.
 calendar plus one calendar per possible study plan. To rebuild them yourself:
 `node scripts/build-calendar.js` (needs Node.js 18 or newer).
 
-**Saved in the browser only (localStorage):** study plan choices and statuses, Notes progress,
-My Study List, Toolkit bookmarks/lists and explicitly saved workbench planners, theme,
-timetable view, welcome checklist. Nothing is sent anywhere.
+**Saved in the browser only (localStorage):** study plans and course statuses, Notes progress,
+My Study List, chosen track, Thesis workspace, Toolkit lists and explicitly saved planners,
+saved guide sections/stories, feature-specific drafts and display preferences. The Hub does not
+automatically upload these choices. Exports, email and calendar actions use the destinations
+chosen by the visitor; backups are specific to each feature. The Privacy page describes the
+current local, tab-only and in-memory cases.
 
 The header, main menu and footer are drawn on every page by `site-nav.js`.
 
@@ -190,9 +193,26 @@ as such. `check-content.js` validates the file, including sanity checks on key f
 `content/thesis-overrides.json`; synonyms, names and repository links in `content/thesis-config.json`.
 Full guide: [docs/thesis-import.md](docs/thesis-import.md). The spreadsheet itself is not committed.
 
-## Privacy and contact pages
-`privacy.html` was written from what the code does and approved on 5 October 2026. Keep it in sync when the code changes.
-`contact.html` and the "Who is responsible" section of `privacy.html` give the Student Hub email, euhem.studenthub@gmail.com.
+## Support, Contact and Privacy
+
+`support.html` keeps its source-backed contact guide and university contacts in `content/people.json`.
+Its six-section contents rail, native university disclosures and compact source labels reuse
+`academic-pages.css` and `academic-pages.js`; `support.css` holds the page-specific presentation.
+All questionnaire answers stay in memory. Emergency numbers still come from the City Guides.
+
+`contact.html` gives the dedicated inbox, `euhem.studenthub@gmail.com`, and topic-specific email
+links. `contact.js` only copies that address after a click, with a selectable manual fallback.
+Email links prepare a message in the visitor's own app; the page neither submits nor sends it.
+
+`privacy.html` was reviewed against the current code and updated on 8 October 2026. It distinguishes
+the inactive Directory and editor connections, supplied origins totals, fictional demo profiles,
+on-device tools, offline copies, service requests and voluntary email. Its seven native Directory
+disclosures preserve consent v3, the existing fields/visibility and every retention value. A rollout
+or substantive processing change needs a new review; see [docs/support-contact-privacy.md](docs/support-contact-privacy.md).
+
+The **Check support and privacy pages** workflow checks the three pages in Chromium: complete
+Support content and outcomes, section/history/focus, disclosures and printing, Contact mailto and
+clipboard behavior, privacy-state/retention consistency and mobile light/dark layouts. It saves screenshots.
 
 ## Fundamentals of Statistics for Healthcare (96498)
 `fund-statistics.html` is the study workspace for **Sara Capacci**, in `fund-quant-methods`.
