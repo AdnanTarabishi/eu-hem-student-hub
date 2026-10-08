@@ -1,0 +1,55 @@
+# Temporary one-commit delivery check. Never merge this workflow into main.
+# Build the complete temporary commit (including this file and the reviewed
+# smoke script) BEFORE creating refs/heads/codex/contact-delivery-recovery-20261008.
+# A later push to an already-created branch deliberately cannot send anything.
+name: One-shot Contact delivery
+
+on:
+  push:
+    branches:
+      - "codex/contact-delivery-recovery-20261008"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: contact-delivery-recovery-20261008
+  cancel-in-progress: false
+
+jobs:
+  delivery:
+    # Only the initial branch-creation push, on the exact branch, first attempt.
+    # Do not delete/recreate the branch or authorize another delivery run before
+    # reconciling any uncertain request with its attempt-summary.json and Sheet.
+    if: ${{ github.event_name == 'push' && github.event.created == true && github.ref == 'refs/heads/codex/contact-delivery-recovery-20261008' && github.run_attempt == 1 }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install existing test dependencies
+        run: npm ci
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Verify the fictional message and its exact retry
+        env:
+          # Root replaces this public URL placeholder before creating the branch.
+          CONTACT_ENDPOINT: "https://script.google.com/macros/s/AKfycbzGrn6m15IQqpdNoexlQdRzrG478D6njpQPZWlOffUGQASB992nZDxbta14JYaSF2RM4Q/exec"
+          CONTACT_SMOKE_EXECUTE: "true"
+          CONTACT_SMOKE_REQUEST_ID: "7503a71c-bdb8-46c6-afda-bdede2cf12ed"
+          CONTACT_SMOKE_OUTPUT: ${{ runner.temp }}/contact-real-delivery
+        run: node tests/contact/real-delivery-smoke.js .
+      - name: Save sanitized delivery evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: contact-real-delivery
+          path: ${{ runner.temp }}/contact-real-delivery
+          if-no-files-found: ignore
+          retention-days: 3
