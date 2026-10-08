@@ -154,11 +154,11 @@ const labelFor = (id) => {
       } catch (error) {
         const reading = await page.evaluate(() => ({
           active: document.querySelector(".academic-nav a[aria-current]")?.hash,
+          url: location.href, width: innerWidth, height: innerHeight,
           scrollY, headerHeight: document.querySelector(".site-header")?.offsetHeight,
           sections: [...document.querySelectorAll(".academic-section")].map((section) => ({ id: section.id, top: section.getBoundingClientRect().top, hidden: section.hidden })),
         }));
-        error.message += `\nExpected active section ${id}; reading position: ${JSON.stringify(reading)}`;
-        throw error;
+        throw new Error(`Expected active section ${id}; reading position: ${JSON.stringify(reading)}`, { cause: error });
       }
       assert.strictEqual(await page.locator(".academic-nav a[aria-current='location']").count(), 1);
     };
@@ -479,8 +479,24 @@ const labelFor = (id) => {
       }
       page = await open(`${config.file}#${last}`);
       await assertAnchor(page, last, last);
+      const beforeResize = await page.evaluate(() => ({ hash: location.hash, focus: document.activeElement.id }));
       await page.setViewportSize({ width: 390, height: 844 });
       await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+      // Reflow can change which section is being read. The contents rail should
+      // reveal that section without forcing a vertical jump back to the old hash.
+      const reading = await page.evaluate(() => {
+        const nav = document.querySelector(".academic-nav");
+        const active = nav.querySelector("a[aria-current='location']")?.hash.slice(1);
+        const section = active && document.getElementById(active)?.getBoundingClientRect();
+        return { active, top: section?.top, bottom: section?.bottom, navBottom: nav.getBoundingClientRect().bottom, viewportHeight: innerHeight };
+      });
+      assert.ok(config.sections.includes(reading.active), `resize has a known active section: ${JSON.stringify(reading)}`);
+      await navVisible(page, reading.active);
+      assert.ok(reading.bottom > reading.navBottom && reading.top < reading.viewportHeight,
+        `the active section intersects the reading viewport below the sticky navigation: ${JSON.stringify(reading)}`);
+      assert.deepStrictEqual(await page.evaluate(() => ({ hash: location.hash, focus: document.activeElement.id })), beforeResize, "resizing preserves the shared link and keyboard focus");
+      await page.locator(`.academic-nav a[href='#${last}']`).click();
+      await assertAnchor(page, last, last);
       await navVisible(page, last);
       await noSideways(page, `${config.file}: desktop-to-phone resize`);
       await page.context().close();
