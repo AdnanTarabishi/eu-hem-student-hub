@@ -182,6 +182,9 @@ const labelFor = (id) => {
           active: document.querySelector(".academic-nav a[aria-current]")?.hash,
           url: location.href, width: innerWidth, height: innerHeight,
           scrollY, headerHeight: document.querySelector(".site-header")?.offsetHeight,
+          navHeight: document.querySelector(".academic-nav")?.offsetHeight,
+          documentHeight: document.documentElement.scrollHeight,
+          documentReady: document.readyState, fonts: document.fonts?.status,
           sections: [...document.querySelectorAll(".academic-section")].map((section) => ({ id: section.id, top: section.getBoundingClientRect().top, hidden: section.hidden })),
         }));
         throw new Error(`Expected active section ${id}; reading position: ${JSON.stringify(reading)}`, { cause: error });
