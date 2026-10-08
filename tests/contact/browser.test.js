@@ -109,8 +109,21 @@ const response = (route, value, status = 200) => route.fulfill({ status, content
     const capture = async (page, name, fullPage = false) => {
       if (!SHOTS) return;
       await page.evaluate(async () => { await document.fonts.ready; });
+      if (fullPage) await page.evaluate(() => window.scrollTo({ top: 0, left: 0, behavior: "instant" }));
       await settle(page);
       await page.screenshot({ path: path.join(SHOTS, name + ".png"), fullPage, animations: "disabled" });
+    };
+    const captureForm = async (page, name) => {
+      if (!SHOTS) return;
+      await page.evaluate(async () => {
+        await document.fonts.ready;
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      });
+      await settle(page);
+      // Capture the locator's original document region directly. Locator.screenshot()
+      // may scroll a tall form first and place the sticky header across its content.
+      const clip = await page.locator("#contact-form-section").boundingBox();
+      await page.screenshot({ path: path.join(SHOTS, name + ".png"), fullPage: true, clip, animations: "disabled" });
     };
     const choose = (page, value) => page.locator(`input[name='topic'][value='${value}']`).check();
     const fill = async (page, topic = "idea") => {
@@ -184,6 +197,9 @@ const response = (route, value, status = 200) => route.fulfill({ status, content
         }
         assert.strictEqual(await page.locator("#contact-send-status").getAttribute("role"), "status");
         await capture(page, `contact-form-${size}-${scheme}`, size === "desktop" && scheme === "light");
+        if ((size === "desktop" && scheme === "light") || size === "phone") {
+          await captureForm(page, `contact-form-section-${size}-${scheme}`);
+        }
         if (size === "desktop" && scheme === "light") {
           await page.goto(base + "privacy.html");
           await page.waitForFunction(() => document.getElementById("contact-privacy-state")?.textContent.includes("offers an on-site form"));
