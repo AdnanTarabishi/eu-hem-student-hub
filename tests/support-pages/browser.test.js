@@ -411,7 +411,7 @@ const labelFor = (id) => {
     page = await open("privacy.html");
     const privacyText = await text(page, "main");
     assert.match(privacyText, /registration.{0,35}(not open|closed|not active)|not open.{0,35}registration/i);
-    for (const number of ["105", "24", "40"]) assert.match(privacyText, new RegExp(`\\b${number}\\b`), `current origins/demo distinction includes ${number}`);
+    assert.deepStrictEqual(await page.locator(".privacy-provenance h3").allTextContents(), ["105 people · 24 countries", "40 demo profiles"], "current supplied origins and fictional profiles remain separate");
     assert.match(privacyText, /fictional/i);
     assert.match(privacyText, /8 October 2026|8 Oct 2026/);
     assert.match(privacyText, /editor dashboard.{0,30}(not connected|unconnected|inactive)/i);
