@@ -3,6 +3,7 @@
   "private": true,
   "description": "Unofficial EU-HEM Student Hub (static site). This file only lists the tools used to test it; the website itself needs no installation.",
   "scripts": {
+    "test:toolkit": "node scripts/check-content.js && node --test tests/toolkit.test.js tests/toolkit-organiser.test.js tests/toolkit-solve.test.js tests/toolkit-academic.test.js tests/toolkit-planning.test.js tests/toolkit-life.test.js tests/toolkit-career.test.js tests/toolkit-workbench.test.js && node tests/toolkit-workbench-browser.test.js .",
     "test:thesis-guide": "node scripts/check-content.js && node tests/thesis-guide/data.test.js && node tests/thesis-guide/browser.test.js .",
     "test:studyplan": "node scripts/check-content.js && node tests/studyplan/data.test.js && node tests/studyplan/browser.test.js .",
     "test:planning": "node scripts/check-content.js && node tests/notes/schedule.test.js && node tests/planning/browser.test.js .",

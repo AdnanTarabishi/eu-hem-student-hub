@@ -76,7 +76,7 @@ with sync_playwright() as pw:
         page.evaluate('document.fonts.ready');return ctx,page,errors
     ctx,p,errors=load(query='?section=solve&solver=finder')
     ok('Solve section restores from URL',p.locator('#tk2-solve').is_visible() and not p.locator('#tk2-browse').is_visible())
-    ok('five main views have independent controls',p.locator('#tk2-sections button').count()==5)
+    ok('six main views have independent controls',p.locator('#tk2-sections button').count()==6)
     ok('default route is one-sample Student t', 'One-sample t' in p.locator('#sv-finder-result').inner_text())
     ok('matching link uses Fundamentals and t preset','course=fund-quant-methods' in p.locator('#sv-open-lab').get_attribute('href') and 'sl3_mean-test_method=t' in p.locator('#sv-open-lab').get_attribute('href'))
     p.locator('#sv-course').select_option('statistics')

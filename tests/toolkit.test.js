@@ -5,7 +5,7 @@ const D=require('../toolkit-data.js'),root=path.resolve(__dirname,'..');
 
 test('catalogue contains unique stable identifiers and honest kind totals',()=>{
   assert.equal(D.items.length,70);assert.equal(new Set(D.items.map(t=>t.id)).size,70);
-  assert.deepEqual(['builtin','external','planned'].map(k=>D.items.filter(t=>t.kind===k).length),[21,36,13]);
+  assert.deepEqual(['builtin','external','planned'].map(k=>D.items.filter(t=>t.kind===k).length),[28,36,6]);
 });
 test('each entry has a supported category, editorial summary and useful scope',()=>{
   for(const t of D.items){assert.match(t.id,/^[a-z0-9-]+$/);assert.ok(D.categories.some(c=>c.id===t.category&&c.id!=='all'));assert.ok(t.title&&t.summary&&t.note&&t.access);assert.equal(t.includes.length,3);assert.ok(t.includes.every(x=>typeof x==='string'&&x.length>15));}
@@ -21,8 +21,13 @@ test('all live internal paths exist without duplicating calculator implementatio
 test('planned records have no fake launch URL or release date',()=>{
   for(const t of D.items.filter(t=>t.kind==='planned')){assert.equal(t.href,undefined);assert.equal(t.access,'Not available yet');assert.match(t.note,/No release date/);assert.ok(t.includes.every(x=>x.startsWith('Could')));}
 });
-test('budget planner names the four correct programme cities',()=>{
-  const t=D.byId.get('four-city-budget');assert.deepEqual(t.cities,['bologna','oslo','innsbruck','rotterdam']);assert.match(t.includes.join(' '),/Bologna, Oslo, Innsbruck and Rotterdam/);assert.equal(t.kind,'planned');
+test('budget planner names the four correct programme cities and opens the working tool',()=>{
+  const t=D.byId.get('four-city-budget');assert.deepEqual(t.cities,['bologna','oslo','innsbruck','rotterdam']);assert.match(t.includes.join(' '),/Bologna, Oslo, Innsbruck and Rotterdam/);assert.equal(t.kind,'builtin');assert.equal(t.href,'toolkit.html?section=workbench&planner=four-city-budget');
+});
+test('the seven promoted IDs remain usable in older bookmarks and recent history',()=>{
+  const ids=['economics-graphs','sample-size','study-session-planner','four-city-budget','moving-checklist','document-deadlines','career-tracker'];
+  const saved=D.cleanPreferences({saved:ids,rememberRecent:true,recent:ids});assert.deepEqual(saved.saved,ids);assert.deepEqual(saved.recent,ids.slice(0,6));
+  for(const id of ids){const tool=D.byId.get(id);assert.equal(tool.kind,'builtin',id);assert.equal(tool.href,'toolkit.html?section=workbench&planner='+id);}
 });
 test('every external service has a safe provider source and dated editorial review',()=>{
   for(const t of D.items.filter(t=>t.kind==='external')){assert.ok(D.safeHref(t.href,true));assert.ok(D.safeHref(t.source,true));assert.equal(t.reviewed,'2026-10-07');assert.equal(t.access,'Check provider access');}
@@ -65,7 +70,7 @@ test('recent history is off by default and only explicit boolean true enables it
   for(const raw of [null,[],{},'bad',{rememberRecent:'true',recent:['normal']}])assert.equal(D.cleanPreferences(raw).rememberRecent,false);
 });
 test('recent history contains at most six available IDs, never future plans',()=>{
-  const r=D.cleanPreferences({rememberRecent:true,recent:['four-city-budget','normal','normal',...D.items.map(t=>t.id)]});assert.equal(r.recent.length,6);assert.equal(new Set(r.recent).size,6);assert.ok(r.recent.every(id=>D.byId.get(id).kind!=='planned'));
+  const r=D.cleanPreferences({rememberRecent:true,recent:['travel-budget','normal','normal',...D.items.map(t=>t.id)]});assert.equal(r.recent.length,6);assert.equal(new Set(r.recent).size,6);assert.ok(r.recent.every(id=>D.byId.get(id).kind!=='planned'));
 });
 test('navigation, Resources landing and privacy documentation include the feature',()=>{
   assert.match(fs.readFileSync(path.join(root,'site-nav.js'),'utf8'),/key: "toolkit"/);assert.match(fs.readFileSync(path.join(root,'notes.html'),'utf8'),/href="toolkit.html"/);assert.match(fs.readFileSync(path.join(root,'privacy.html'),'utf8'),/Toolkit/);

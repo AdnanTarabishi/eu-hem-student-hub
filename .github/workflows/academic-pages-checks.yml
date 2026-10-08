@@ -1,6 +1,10 @@
 name: Check academic pages
 
 on:
+  # Keep branch checks running while unrelated main updates are being integrated.
+  push:
+    branches:
+      - "codex/academic-pages-redesign-*"
   pull_request:
     paths:
       - "academic-rules.html"
@@ -24,6 +28,10 @@ on:
 
 permissions:
   contents: read
+
+concurrency:
+  group: academic-pages-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
 
 jobs:
   academic-pages:
