@@ -76,11 +76,18 @@ function siteIcon(name, className = "icon") {
   return svg;
 }
 
-// The brand lockup: graduation cap + "EU-HEM" + "Student Hub". No official logos.
+// The independent Student Hub mark: an open book connected to four community nodes.
 function brandLockup(make) {
   const box = make("span", "brand-lockup");
   const mark = make("span", "brand-mark");
-  mark.appendChild(siteIcon("graduation"));
+  const symbol = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  symbol.setAttribute("class", "icon hub-brand-icon");
+  symbol.setAttribute("viewBox", "0 0 48 48");
+  symbol.setAttribute("aria-hidden", "true");
+  const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+  use.setAttribute("href", "img/student-hub-mark.svg#hub-mark");
+  symbol.appendChild(use);
+  mark.appendChild(symbol);
   const words = make("span", "brand-words");
   // The space keeps the text "EU-HEM Student Hub" (for screen readers and the link's name); the column layout hides it
   words.append(make("span", "brand-name", "EU-HEM"), " ", make("span", "brand-product", "Student Hub"));

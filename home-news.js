@@ -124,7 +124,6 @@
     let index = 0;
     let timer = null;
     let userPaused = !!(media && media.matches);
-    let hovered = false;
     let focused = false;
     // An observer must confirm that the carousel is on screen before rotation.
     let inView = !("IntersectionObserver" in window);
@@ -136,7 +135,7 @@
 
     function syncTimer() {
       clearTimer();
-      if (items.length < 2 || userPaused || hovered || focused || document.hidden || !inView || !box.isConnected) return;
+      if (items.length < 2 || userPaused || focused || document.hidden || !inView || !box.isConnected) return;
       timer = window.setTimeout(() => {
         timer = null;
         show(index + 1, false);
@@ -160,9 +159,7 @@
       count.textContent = `${index + 1} / ${items.length}`;
       count.setAttribute("aria-label", `Update ${index + 1} of ${items.length}`);
       if (manual) {
-        userPaused = true;
-        updateToggle();
-        status.textContent = `Update ${index + 1} of ${items.length}. Automatic rotation paused.`;
+        status.textContent = `Update ${index + 1} of ${items.length}. ${userPaused ? "Automatic rotation paused." : "Automatic rotation continues."}`;
         syncTimer();
       }
     }
@@ -175,11 +172,11 @@
       status.textContent = userPaused ? "Automatic rotation paused." : "Automatic rotation enabled.";
       syncTimer();
     });
-    carousel.addEventListener("mouseenter", () => { hovered = true; syncTimer(); });
-    carousel.addEventListener("mouseleave", () => { hovered = false; syncTimer(); });
-    carousel.addEventListener("focusin", () => { focused = true; syncTimer(); });
+    // Rotation can continue while hovering or using the stable controls. Hold
+    // the story still when its reading link is focused, so that link stays usable.
+    carousel.addEventListener("focusin", (event) => { focused = slides.contains(event.target); syncTimer(); });
     carousel.addEventListener("focusout", (event) => {
-      focused = carousel.contains(event.relatedTarget);
+      focused = slides.contains(event.relatedTarget);
       syncTimer();
     });
     const visibility = () => syncTimer();

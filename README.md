@@ -67,6 +67,10 @@ demo data and are independent of these supplied aggregate counts.
 `--brand-…` variables; every other colour, size, corner and shadow variable builds on it (light and dark mode).
 Fonts: Inter for text and Source Serif 4 for big titles, stored in `fonts/` (no Google Fonts, so no visitor data goes to Google).
 Icons: `icons.svg` (from Lucide), used as `<svg class="icon"><use href="icons.svg#calendar"></use></svg>`.
+The Student Hub's own logo is `img/student-hub-mark.svg`: an open book and four connected community
+nodes. It is original artwork for this unofficial project. The shared header, drawer and footer use
+that vector; `node scripts/make-app-icons.js` rebuilds the app/browser icons and social-card mark,
+then `node scripts/make-social-image.js` renders the updated sharing image.
 Shared helpers (toasts, skeletons, add-to-calendar files, map links) are in `ui.js`.
 Check colour contrast (WCAG AA, light and dark): `node scripts/check-contrast.js`.
 

@@ -9205,7 +9205,7 @@ main.home {
 
 
 /* =====================================================================
-   Header (2026 mockup): graduation-cap lockup, direct links, filled Join button, white bar
+   Shared header: Student Hub lockup, direct links, filled Join button, white bar
    ===================================================================== */
 :root {
   --color-header-bg: #ffffff;
@@ -9246,6 +9246,10 @@ main.home {
   height: 44px;
   stroke-width: 1.75;
 }
+
+/* The original Student Hub mark follows the text colour in each theme. */
+.hub-brand-icon { --hub-accent: var(--color-brand-text); }
+.site-footer .hub-brand-icon { --hub-accent: #f1b59b; }
 
 .brand-lockup {
   gap: 10px;

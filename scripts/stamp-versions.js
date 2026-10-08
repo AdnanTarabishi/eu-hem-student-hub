@@ -21,21 +21,22 @@ function fingerprint(text) {
 
 // Fingerprint without line-ending differences (Windows vs. GitHub), so it is the same everywhere
 function fileFingerprint(file) {
+  if (file.endsWith(".png")) return fingerprint(fs.readFileSync(path.join(ROOT, file)));
   return fingerprint(fs.readFileSync(path.join(ROOT, file), "utf8").replace(/\r\n/g, "\n"));
 }
 
 const htmlFiles = () => fs.readdirSync(ROOT).filter((f) => f.endsWith(".html")).sort();
 
-// Adds or updates ?v= on every local stylesheet and script in one page
+// Adds or updates ?v= on local stylesheets, scripts and linked browser/app icons.
 function stampHtml(html) {
-  return html.replace(/(<(?:script|link)\b[^>]*\b(?:src|href)=")([\w./-]+\.(?:js|css))(?:\?v=[0-9a-f]*)?"/g,
+  return html.replace(/(<(?:script|link)\b[^>]*\b(?:src|href)=")([\w./-]+\.(?:js|css|svg|png))(?:\?v=[0-9a-f]*)?"/g,
     (all, start, file) => (fs.existsSync(path.join(ROOT, file)) ? `${start}${file}?v=${fileFingerprint(file)}"` : all));
 }
 
 // One fingerprint for the whole site (pages + files they use + icons), for the service worker
 function siteVersion(stampedPages) {
   const parts = Object.keys(stampedPages).sort().map((file) => stampedPages[file].replace(/\r\n/g, "\n"));
-  for (const file of ["icons.svg", "manifest.webmanifest"]) parts.push(fileFingerprint(file));
+  for (const file of ["icons.svg", "img/student-hub-mark.svg", "manifest.webmanifest"]) parts.push(fileFingerprint(file));
   const sw = fs.readFileSync(path.join(ROOT, "sw.js"), "utf8").replace(/\r\n/g, "\n").replace(/const VERSION = "[^"]*";/, "");
   parts.push(sw);
   return fingerprint(parts.join("\n"));

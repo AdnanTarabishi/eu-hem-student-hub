@@ -103,35 +103,36 @@ async function test(name, options, run) {
       assert.equal(await p.page.locator(".eh-news-cover img").first().getAttribute("alt"), "");
     });
 
-    await test("manual arrows wrap, retain button focus, announce the count, and pause until Play is chosen", {}, async (p) => {
+    await test("manual arrows wrap, retain focus and reset the automatic delay; only Pause stops rotation", {}, async (p) => {
       await p.page.locator(".eh-news-prev").focus();
       await p.page.keyboard.press("Enter");
       assert.equal(await p.title(), "Fictional study checklist");
       assert.equal(await p.page.locator(".eh-news-count").textContent(), "4 / 4");
       assert.equal(await p.page.evaluate(() => document.activeElement.className), "eh-news-prev");
       assert.match(await p.page.locator(".eh-news-status").textContent(), /Update 4 of 4/);
-      assert.equal(await p.page.locator(".eh-news-toggle").textContent(), "Play");
-      await p.page.locator("#outside").focus();
-      await p.step(18000);
+      assert.equal(await p.page.locator(".eh-news-toggle").textContent(), "Pause");
+      await p.step(5999);
       assert.equal(await p.title(), "Fictional study checklist");
-      await p.page.locator(".eh-news-next").focus();
-      await p.page.keyboard.press("Enter");
+      await p.step(1);
       assert.equal(await p.title(), "Pinned workshop update");
+      assert.equal(await p.page.evaluate(() => document.activeElement.className), "eh-news-prev");
       await p.page.locator(".eh-news-toggle").focus();
       await p.page.keyboard.press("Enter");
-      await p.step(12000);
-      assert.equal(await p.title(), "Pinned workshop update", "focus on Play holds the story still");
-      await p.page.locator("#outside").focus();
-      await p.step();
+      assert.equal(await p.page.locator(".eh-news-toggle").textContent(), "Play");
+      await p.page.locator(".eh-news-next").focus();
+      await p.page.keyboard.press("Enter");
       assert.equal(await p.title(), "Fictional reading circle");
-      assert.equal(await p.page.evaluate(() => document.activeElement.id), "outside", "automatic changes never move focus");
+      await p.step(18000);
+      assert.equal(await p.title(), "Fictional reading circle", "browsing does not undo an explicit Pause");
+      await p.page.locator(".eh-news-toggle").focus();
+      await p.page.keyboard.press("Enter");
+      await p.step();
+      assert.equal(await p.title(), "Fictional campus welcome", "Play starts rotation with focus on its stable button");
+      assert.equal(await p.page.evaluate(() => document.activeElement.className), "eh-news-toggle", "automatic changes never move focus");
     });
 
-    await test("hover, focused story, hidden document and out-of-view state suspend rotation with a fresh delay on return", {}, async (p) => {
+    await test("a resting pointer allows rotation; focused story, hidden tab and off-screen content hold it still", {}, async (p) => {
       await p.page.locator(".eh-news-carousel").hover();
-      await p.step(12000);
-      assert.equal(await p.title(), "Pinned workshop update");
-      await p.page.mouse.move(2, 2);
       await p.step();
       assert.equal(await p.title(), "Fictional reading circle");
       await p.page.locator(".eh-news-slide:not([hidden]) .eh-news-title a").focus();

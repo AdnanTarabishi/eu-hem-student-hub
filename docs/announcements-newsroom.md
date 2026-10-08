@@ -41,8 +41,10 @@ available. The editor dashboard backend is not connected by this design update.
 Current posts use original local SVG illustrations in `assets/announcements/`, selected through
 a shared registry in `announcement-media.js` using the story's stable ID. The homepage carousel uses
 the same artwork and the existing shared loader, without a second CSV request. It rotates every six
-seconds while visible, with previous/next and Pause/Play controls. Hover, keyboard focus, hidden tabs,
-off-screen content and reduced-motion preferences pause rotation. Covers are decorative;
+seconds while visible, with previous/next and Pause/Play controls. Hover and the stable controls allow
+rotation to continue; arrow browsing gives the selected story a fresh six seconds. Focusing a story
+link, hidden tabs, off-screen content and reduced-motion preferences pause rotation. Explicit Pause
+stays paused until Play is chosen, including while browsing with the arrows. Covers are decorative;
 the adjacent title and accessible text hold the news facts. They do not depict real people or
 document events. A general decorative cover is available for other updates and failed images.
 
