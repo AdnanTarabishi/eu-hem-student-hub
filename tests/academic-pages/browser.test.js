@@ -149,7 +149,17 @@ const labelFor = (id) => {
       }
     };
     const activeNav = async (page, id) => {
-      await page.waitForFunction((key) => document.querySelector(`.academic-nav a[href='#${key}']`)?.getAttribute("aria-current") === "location", id);
+      try {
+        await page.waitForFunction((key) => document.querySelector(`.academic-nav a[href='#${key}']`)?.getAttribute("aria-current") === "location", id);
+      } catch (error) {
+        const reading = await page.evaluate(() => ({
+          active: document.querySelector(".academic-nav a[aria-current]")?.hash,
+          scrollY, headerHeight: document.querySelector(".site-header")?.offsetHeight,
+          sections: [...document.querySelectorAll(".academic-section")].map((section) => ({ id: section.id, top: section.getBoundingClientRect().top, hidden: section.hidden })),
+        }));
+        error.message += `\nExpected active section ${id}; reading position: ${JSON.stringify(reading)}`;
+        throw error;
+      }
       assert.strictEqual(await page.locator(".academic-nav a[aria-current='location']").count(), 1);
     };
     const assertAnchor = async (page, id, section) => {
@@ -280,6 +290,7 @@ const labelFor = (id) => {
     assert.match(await text(page, ".resit-result"), /three days before/);
     assert.match(await text(page, ".resit-result"), /online proctoring/);
     await page.locator(".resit-result").scrollIntoViewIfNeeded();
+    await activeNav(page, "resit-guide");
     await capture(page, "academic-rules-resit-result-desktop");
     ok("keyboard-only re-sit flow preserves focus and conditional progress, announces the outcome and retains the distinct one-month/two-week/three-day deadlines");
 
@@ -322,7 +333,13 @@ const labelFor = (id) => {
     await page.goBack(); await assertAnchor(page, "grading", "grading");
     await page.goForward(); await assertAnchor(page, "integrity", "integrity");
     const previous = await page.evaluate(() => ({ hash: location.hash, focus: document.activeElement.id }));
-    await page.locator("#more").evaluate((node) => node.scrollIntoView({ block: "start", behavior: "instant" }));
+    await page.locator("#more").evaluate((node) => {
+      // Simulate an ordinary scroll to a reading position. scrollIntoView would
+      // add both the site's scroll-padding and this section's anchor margin,
+      // leaving the section below the reading line instead of scrolling into it.
+      const readingTop = document.querySelector(".site-header").getBoundingClientRect().bottom + 20;
+      window.scrollTo({ top: window.scrollY + node.getBoundingClientRect().top - readingTop, behavior: "instant" });
+    });
     await activeNav(page, "more");
     assert.deepStrictEqual(await page.evaluate(() => ({ hash: location.hash, focus: document.activeElement.id })), previous, "ordinary scrolling must not rewrite the URL or move focus");
     await page.context().close();
