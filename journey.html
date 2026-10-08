@@ -18,7 +18,10 @@
   <meta name="twitter:card" content="summary_large_image">
   <!-- /Social preview -->
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/source-serif-4-latin-600.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=6ef75792">
+  <link rel="stylesheet" href="academic-pages.css?v=b9c9a801">
+  <link rel="stylesheet" href="journey.css?v=8af08120">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -27,7 +30,7 @@
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=6074bd3c">
   <script src="theme.js?v=d51d4769"></script>
 </head>
-<body class="journey-page">
+<body class="journey-page academic-page">
 
   <header class="site-header">
     <div class="container">
@@ -39,72 +42,120 @@
     </div>
   </header>
 
-  <main class="container">
-    <section class="page-intro">
-      <div>
-        <p class="section-eyebrow">Academics</p>
-        <h1><svg class="icon" aria-hidden="true"><use href="icons.svg#route"></use></svg> Programme Journey</h1>
+  <main class="container academic-main">
+    <header class="academic-hero">
+      <div class="academic-hero__copy">
+        <p class="academic-eyebrow">Your academic companion</p>
+        <h1>Programme <br><span class="journey-title-accent">Journey</span></h1>
         <p id="journey-intro">From your first week in Bologna to graduation.</p>
+        <div class="academic-hero__actions">
+          <a href="#timeline">Explore your route <svg class="icon journey-arrow-down" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+          <a href="tracks.html">Compare the four tracks <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+        </div>
       </div>
-    </section>
+      <aside class="academic-hero__aside journey-overview" aria-labelledby="journey-overview-title">
+        <p class="academic-eyebrow journey-hero-cohort">EU-HEM at a glance</p>
+        <h2 id="journey-overview-title">From Bologna<br>to what’s next.</h2>
+        <dl class="journey-summary" hidden></dl>
+        <p class="journey-overview-note">A shared beginning, a specialised path and one joint degree.</p>
+      </aside>
+    </header>
 
-    <nav class="rules-contents card" aria-label="On this page">
-      <a href="#timeline">Your two years</a>
-      <a href="#degree">The joint degree</a>
-      <a href="#numbers">Cohort in numbers</a>
-      <a href="#history">History</a>
-      <a href="#erasmus">Erasmus+ grant</a>
-      <a href="#fees">Fees</a>
-    </nav>
+    <div class="academic-layout">
+      <nav class="academic-nav" aria-label="On this page">
+        <p class="academic-nav__label">In this guide</p>
+        <ol>
+          <li><a href="#timeline"><span class="academic-nav__number" aria-hidden="true">01</span> Your two years</a></li>
+          <li><a href="#degree"><span class="academic-nav__number" aria-hidden="true">02</span> The joint degree</a></li>
+          <li><a href="#numbers"><span class="academic-nav__number" aria-hidden="true">03</span> Cohort snapshot</a></li>
+          <li><a href="#history"><span class="academic-nav__number" aria-hidden="true">04</span> Programme history</a></li>
+          <li><a href="#erasmus"><span class="academic-nav__number" aria-hidden="true">05</span> Erasmus+ grant</a></li>
+          <li><a href="#fees"><span class="academic-nav__number" aria-hidden="true">06</span> Participation fee</a></li>
+        </ol>
+        <div class="academic-nav__footer">
+          <p>Exams, grades or re-sits?</p>
+          <a href="academic-rules.html">Open Academic Rules <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+        </div>
+      </nav>
 
-    <!-- journey.js fills every section from content/programme-events.json; cities come from content/tracks.json -->
-    <p id="journey-status" class="placeholder" aria-live="polite">Loading the journey…</p>
+      <div class="academic-content">
+        <!-- Programme facts come from programme-events.json; route cities come from tracks.json. -->
+        <p id="journey-status" class="placeholder" aria-live="polite">Loading the journey…</p>
 
-    <section id="timeline" class="card rules-section" aria-labelledby="timeline-title" hidden>
-      <h2 id="timeline-title">Your two years</h2>
-      <fieldset class="journey-track-picker">
-        <legend>Show the cities for your track</legend>
-        <div class="choice-options"></div>
-        <p class="schedule-meta journey-track-note"></p>
-      </fieldset>
-      <ol class="journey-timeline"></ol>
-    </section>
+        <section id="timeline" class="rules-section academic-section journey-timeline-section" aria-labelledby="timeline-title" hidden>
+          <header class="academic-section__heading">
+            <p class="academic-eyebrow">01 · Your route</p>
+            <h2 id="timeline-title">Your two years</h2>
+            <p>Choose a track to see where each semester takes you. Follow the stages below for the details.</p>
+          </header>
+          <fieldset class="journey-track-picker" aria-describedby="journey-track-note">
+            <legend>Show the cities for your track</legend>
+            <div class="choice-options"></div>
+            <p id="journey-track-note" class="schedule-meta journey-track-note"></p>
+          </fieldset>
+          <div class="journey-route" aria-labelledby="journey-route-title">
+            <div class="journey-route-heading">
+              <h3 id="journey-route-title">Your semester route</h3>
+              <p class="journey-route-selected" aria-live="polite" aria-atomic="true"></p>
+            </div>
+            <ol class="journey-route-stops"></ol>
+            <p class="journey-route-hint">Select a semester to jump to its details. Summer School and graduation are included below.</p>
+          </div>
+          <ol class="journey-timeline"></ol>
+        </section>
 
-    <section id="degree" class="card rules-section" aria-labelledby="degree-title" hidden>
-      <h2 id="degree-title">One diploma, four titles</h2>
-      <p class="journey-degree-intro"></p>
-      <ul class="journey-titles"></ul>
-      <ul class="rules-list"></ul>
-    </section>
+        <section id="degree" class="rules-section academic-section" aria-labelledby="degree-title" hidden>
+          <header class="academic-section__heading">
+            <p class="academic-eyebrow">02 · The qualification</p>
+            <h2 id="degree-title">One diploma, four titles</h2>
+          </header>
+          <p class="journey-degree-intro"></p>
+          <ul class="journey-titles"></ul>
+          <ul class="rules-list"></ul>
+        </section>
 
-    <div class="journey-pair">
-      <section id="numbers" class="card rules-section" aria-labelledby="numbers-title" hidden>
-        <h2 id="numbers-title">Cohort in numbers</h2>
-        <dl class="journey-figures"></dl>
-      </section>
+        <div class="journey-pair">
+          <section id="numbers" class="rules-section academic-section" aria-labelledby="numbers-title" hidden>
+            <header class="academic-section__heading">
+              <p class="academic-eyebrow">03 · A historical snapshot</p>
+              <h2 id="numbers-title">Welcome Days snapshot</h2>
+            </header>
+            <dl class="journey-figures"></dl>
+          </section>
 
-      <section id="history" class="card rules-section" aria-labelledby="history-title" hidden>
-        <h2 id="history-title">How EU-HEM grew</h2>
-        <ol class="journey-history"></ol>
-      </section>
+          <section id="history" class="rules-section academic-section" aria-labelledby="history-title" hidden>
+            <header class="academic-section__heading">
+              <p class="academic-eyebrow">04 · The story so far</p>
+              <h2 id="history-title">How EU-HEM grew</h2>
+            </header>
+            <ol class="journey-history"></ol>
+          </section>
+        </div>
+
+        <section id="erasmus" class="rules-section academic-section" aria-labelledby="erasmus-title" hidden>
+          <header class="academic-section__heading">
+            <p class="academic-eyebrow">05 · Planning your mobility</p>
+            <h2 id="erasmus-title">Erasmus+ mobility grant</h2>
+          </header>
+          <p class="journey-erasmus-intro"></p>
+          <div class="table-wrapper"><table class="journey-erasmus-table"></table></div>
+          <p class="rules-note journey-erasmus-caveat"></p>
+          <ul class="rules-list"></ul>
+        </section>
+
+        <section id="fees" class="rules-section academic-section" aria-labelledby="fees-title" hidden>
+          <header class="academic-section__heading">
+            <p class="academic-eyebrow">06 · Budgeting for study</p>
+            <h2 id="fees-title">Participation fee</h2>
+          </header>
+          <div class="journey-fees"></div>
+        </section>
+
+        <p class="schedule-meta rules-disclaimer">A student-made summary of the EU-HEM Student Handbook and the Welcome Days
+          slides, not an official document. Plans can change; the <a href="https://corsi.unibo.it/2cycle/euHealthEconomicsManagement"
+          target="_blank" rel="noopener">official EU-HEM pages</a> are authoritative. Something outdated? <a href="contact.html">Tell us</a>.</p>
+      </div>
     </div>
-
-    <section id="erasmus" class="card rules-section" aria-labelledby="erasmus-title" hidden>
-      <h2 id="erasmus-title">Erasmus+ mobility grant</h2>
-      <p class="journey-erasmus-intro"></p>
-      <div class="table-wrapper"><table class="journey-erasmus-table"></table></div>
-      <p class="rules-note journey-erasmus-caveat"></p>
-      <ul class="rules-list"></ul>
-    </section>
-
-    <section id="fees" class="card rules-section" aria-labelledby="fees-title" hidden>
-      <h2 id="fees-title">Participation fee</h2>
-      <div class="journey-fees"></div>
-    </section>
-
-    <p class="schedule-meta rules-disclaimer">A student-made summary of the EU-HEM Student Handbook and the Welcome Days
-      slides, not an official document. Plans can change; the <a href="https://corsi.unibo.it/2cycle/euHealthEconomicsManagement"
-      target="_blank" rel="noopener">official EU-HEM pages</a> are authoritative. Something outdated? <a href="contact.html">Tell us</a>.</p>
   </main>
 
   <footer class="site-footer">
@@ -120,7 +171,8 @@
   <script defer src="announcements.js?v=5ec8eef9"></script>
   <script defer src="tracks-data.js?v=629a5538"></script>
   <script defer src="guide-data.js?v=4c2fbe41"></script>
-  <script defer src="journey.js?v=0723763c"></script>
+  <script defer src="academic-pages.js?v=4c240b6f"></script>
+  <script defer src="journey.js?v=e479d8df"></script>
 
 </body>
 </html>

@@ -50,8 +50,8 @@ function universityName(id) {
 
 // One rule: its text, then its source label
 function ruleItem(item) {
-  const li = createElement("li", "rules-item", `${item.text} `);
-  li.appendChild(sourceLabel(item.source, rulesPage.sources));
+  const li = createElement("li", "rules-item");
+  li.append(createElement("span", "rules-item__text", item.text), " ", sourceLabel(item.source, rulesPage.sources));
   return li;
 }
 
@@ -67,13 +67,12 @@ function officialLinks(sourceIds, label = "Official rules") {
   if (!links.length) return null;
   const box = createElement("p", "rules-links");
   box.appendChild(createElement("span", "rules-links-label", `${label}: `));
-  links.forEach((source, i) => {
+  links.forEach((source) => {
     const a = createElement("a", null, source.link.label);
     a.href = source.link.url;
     a.target = "_blank";
     a.rel = "noopener";
     box.appendChild(a);
-    if (i < links.length - 1) box.appendChild(document.createTextNode(" · "));
   });
   return box;
 }
@@ -85,28 +84,77 @@ function showSection(id) {
 }
 
 function renderJoint() {
-  showSection("joint").querySelector(".rules-list").replaceWith(ruleList(rulesPage.rules.joint));
+  const list = ruleList(rulesPage.rules.joint, "rules-list rules-principles");
+  Array.from(list.children).forEach((item, index) => {
+    const number = createElement("span", "rules-principle__number", String(index + 1).padStart(2, "0"));
+    number.setAttribute("aria-hidden", "true");
+    const body = createElement("div", "rules-principle__body");
+    body.append(...item.childNodes);
+    item.append(number, body);
+  });
+  showSection("joint").querySelector(".rules-list").replaceWith(list);
 }
 
 function renderUniversities() {
-  const box = showSection("universities").querySelector(".rules-unis");
+  const section = showSection("universities");
+  const box = section.querySelector(".rules-unis");
+  const jumps = section.querySelector(".rules-university-jumps");
+  box.replaceChildren();
+  jumps.replaceChildren();
   for (const id of UNIVERSITY_ORDER) {
     const university = rulesPage.rules.universities[id];
-    const card = createElement("article", "card rules-uni");
+    const city = rulesPage.names[id]?.city;
+    const jump = createElement("a", "rules-university-jump", city || universityName(id));
+    jump.href = `#uni-${id}`;
+    jumps.appendChild(jump);
+    // Native details keep every rule in the document, with keyboard disclosure built in.
+    const card = createElement("details", "rules-uni");
     card.id = `uni-${id}`;
-    card.style.setProperty("--city-accent", `var(--city-${(rulesPage.names[id]?.city || "").toLowerCase()})`);
-    const head = createElement("h3", null, universityName(id));
-    if (rulesPage.names[id]) head.appendChild(createElement("span", "rules-uni-city", rulesPage.names[id].city));
-    card.appendChild(head);
+    card.open = id === UNIVERSITY_ORDER[0];
+    if (city) card.style.setProperty("--city-accent", `var(--city-${city.toLowerCase()})`);
+    const summary = createElement("summary", "rules-uni-summary");
+    const head = createElement("h3");
+    head.appendChild(createElement("span", "rules-uni-name", universityName(id)));
+    if (city) head.appendChild(createElement("span", "rules-uni-city", city));
+    const toggleLabel = createElement("span", "rules-uni-toggle");
+    toggleLabel.setAttribute("aria-hidden", "true");
+    toggleLabel.append(createElement("span", "rules-uni-toggle__closed", "View rules"), createElement("span", "rules-uni-toggle__open", "Hide rules"));
+    head.appendChild(toggleLabel);
+    summary.appendChild(head);
+    card.appendChild(summary);
+    const body = createElement("div", "rules-uni-body");
+    const topics = createElement("div", "rules-uni-topics");
     for (const [topic, label] of UNIVERSITY_TOPICS) {
       if (!university[topic] || !university[topic].length) continue;
-      card.appendChild(createElement("h4", null, label));
-      card.appendChild(ruleList(university[topic]));
+      const block = createElement("section", "rules-uni-topic");
+      const heading = createElement("h4", null, label);
+      heading.id = `uni-${id}-${topic}`;
+      block.setAttribute("aria-labelledby", heading.id);
+      block.append(heading, ruleList(university[topic]));
+      topics.appendChild(block);
     }
+    body.appendChild(topics);
     const links = officialLinks(university.links);
-    if (links) card.appendChild(links);
+    if (links) body.appendChild(links);
+    card.appendChild(body);
+    card.addEventListener("toggle", updateUniversityControl);
     box.appendChild(card);
   }
+  section.querySelector(".rules-expand-all").addEventListener("click", () => {
+    const cards = Array.from(box.querySelectorAll(".rules-uni"));
+    const expand = cards.some((card) => !card.open);
+    cards.forEach((card) => { card.open = expand; });
+    updateUniversityControl();
+  });
+  updateUniversityControl();
+}
+
+function updateUniversityControl() {
+  const cards = Array.from(document.querySelectorAll(".rules-uni"));
+  const button = document.querySelector(".rules-expand-all");
+  const allOpen = cards.length > 0 && cards.every((card) => card.open);
+  button.textContent = allOpen ? "Collapse all universities" : "Expand all universities";
+  button.setAttribute("aria-expanded", String(allOpen));
 }
 
 function renderGrading() {
@@ -124,6 +172,7 @@ function renderGrading() {
   const body = table.createTBody();
   for (const scale of grading.scales) {
     const row = body.insertRow();
+    row.dataset.university = scale.university;
     const th = createElement("th", null, universityName(scale.university));
     th.scope = "row";
     row.appendChild(th);
@@ -131,6 +180,7 @@ function renderGrading() {
       const cell = row.insertCell();
       cell.dataset.label = label;
       cell.textContent = value;
+      if (label === "Pass mark") cell.className = "rules-grade-pass";
     }
     const extra = row.insertCell();
     extra.dataset.label = "Good to know";
@@ -149,8 +199,16 @@ function renderGuideQuestions() {
   const guide = rulesPage.rules.resitGuide;
   const box = document.querySelector("#resit-guide .resit-questions");
   box.replaceChildren();
-  visibleQuestions(guide, rulesPage.answers).forEach((question, index) => {
+  const questions = visibleQuestions(guide, rulesPage.answers);
+  const answered = questions.filter((question) => rulesPage.answers[question.id]).length;
+  document.querySelector(".resit-progress-label").textContent = `${answered} of ${questions.length} answered`;
+  const progress = document.querySelector(".resit-progress progress");
+  progress.max = questions.length;
+  progress.value = answered;
+  questions.forEach((question, index) => {
     const fieldset = createElement("fieldset", "resit-question");
+    fieldset.dataset.question = question.id;
+    if (rulesPage.answers[question.id]) fieldset.classList.add("is-answered");
     fieldset.appendChild(createElement("legend", null, `${index + 1}. ${question.text}`));
     const options = createElement("div", "choice-options");
     for (const option of questionOptions(question)) {
@@ -185,8 +243,13 @@ function renderGuideOutcome() {
   const box = document.querySelector("#resit-guide .resit-outcome");
   box.replaceChildren();
   const outcome = resitOutcome(rulesPage.rules, rulesPage.answers);
-  if (!outcome) return;
+  if (!outcome) {
+    const empty = createElement("p", "resit-empty", "Your guidance will appear here once you have answered the questions above.");
+    box.appendChild(empty);
+    return;
+  }
   const card = createElement("div", `resit-result is-${outcome.key}`);
+  card.appendChild(createElement("p", "academic-eyebrow", "Your re-sit guidance"));
   card.appendChild(createElement("h3", null, outcome.title));
   card.appendChild(ruleList(outcome.items));
   if (outcome.universityItems.length) {
@@ -195,7 +258,7 @@ function renderGuideOutcome() {
   }
   const links = officialLinks(rulesPage.rules.universities[rulesPage.answers.university].links);
   if (links) card.appendChild(links);
-  const reset = createElement("button", "button button-secondary resit-reset", "Start again");
+  const reset = createElement("button", "button button-secondary resit-reset academic-print-hide", "Start again");
   reset.type = "button";
   reset.addEventListener("click", () => {
     rulesPage.answers = {};
@@ -211,15 +274,17 @@ function renderGuide() {
   const section = showSection("resit-guide");
   section.querySelector(".rules-guide-intro").textContent = rulesPage.rules.resitGuide.intro;
   renderGuideQuestions();
+  renderGuideOutcome();
 }
 
 function renderIntegrity() {
   const { integrity } = rulesPage.rules;
   const section = showSection("integrity");
-  section.querySelector(".rules-integrity-joint").replaceWith(ruleList(integrity.joint));
+  section.querySelector(".rules-integrity-joint").replaceWith(ruleList(integrity.joint, "rules-list rules-integrity-joint"));
   const box = section.querySelector(".rules-integrity-unis");
   for (const id of UNIVERSITY_ORDER) {
     const card = createElement("div", "rules-integrity-uni");
+    if (rulesPage.names[id]?.city) card.appendChild(createElement("p", "rules-card-eyebrow", rulesPage.names[id].city));
     card.appendChild(createElement("h3", null, universityName(id)));
     card.appendChild(ruleList(integrity.universities[id] || []));
     box.appendChild(card);
@@ -230,10 +295,22 @@ function renderIntegrity() {
 
 function renderMore() {
   const box = showSection("more").querySelector(".rules-more");
+  const icons = { internship: "briefcase", "research-assignment": "search", "extra-courses": "notes", "special-provisions": "students" };
   for (const topic of rulesPage.rules.more) {
     const block = createElement("div", "rules-more-topic");
     block.id = topic.id;
-    block.appendChild(createElement("h3", null, topic.title));
+    const header = createElement("div", "rules-more-topic__heading");
+    if (icons[topic.id]) {
+      const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      icon.setAttribute("class", "icon");
+      icon.setAttribute("aria-hidden", "true");
+      const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+      use.setAttribute("href", `icons.svg#${icons[topic.id]}`);
+      icon.appendChild(use);
+      header.appendChild(icon);
+    }
+    header.appendChild(createElement("h3", null, topic.title));
+    block.appendChild(header);
     block.appendChild(ruleList(topic.items));
     box.appendChild(block);
   }
@@ -259,11 +336,15 @@ async function initRulesPage() {
     renderIntegrity();
     renderMore();
     status.remove();
-    // A link to a section (#grading) works once the section exists
-    if (window.location.hash) document.getElementById(window.location.hash.slice(1))?.scrollIntoView();
+    // Shared navigation can now restore a deep link, including a closed university dossier.
+    document.dispatchEvent(new CustomEvent("academic:ready"));
   } catch (error) {
     console.error("Academic rules:", error);
     status.textContent = "Sorry, the rules could not be loaded right now. Please try again later.";
+    const retry = createElement("button", "button button-secondary", "Try again");
+    retry.type = "button";
+    retry.addEventListener("click", () => window.location.reload());
+    status.append(" ", retry);
   }
 }
 

@@ -254,3 +254,22 @@ supports narrow screens, light/dark themes, reduced motion and keyboard navigati
 The **Check city guides** workflow runs content validation and `tests/guide/browser.test.js`
 in Chromium. It checks navigation, search, saved sections, sources, programme routes,
 photograph credits, comparison data, mobile layouts and printing, and saves visual checks.
+
+## Academic Rules and Programme Journey
+
+`academic-rules.html` reads `content/academic-rules.json`; `journey.html` reads
+`content/programme-events.json` and the shared track data. Both retain their existing deep links,
+full source labels and official-source qualifications. See `docs/sources.md` for source handling.
+
+The two pages share the editorial layout, sticky section navigation and compact source badges in
+`academic-pages.css` and `academic-pages.js`. Page-specific presentation is in `academic-rules.css`
+and `journey.css`. University dossiers can be opened individually or together, and old university
+links open the right dossier automatically. The re-sit guide remains an in-memory questionnaire.
+Journey's track picker uses the existing on-device track preference and updates both the route
+and grant comparison. The Welcome Days numbers are a historical snapshot, linked to the current
+cohort overview; the documented fees retain their academic-year scope.
+
+The **Check academic pages** workflow runs content and contrast validation, the existing handbook
+data tests and `tests/academic-pages/browser.test.js` in Chromium. It checks source preservation,
+navigation and keyboard focus, university disclosures, re-sit outcomes, track persistence, mobile
+layouts and the light/dark themes, and saves screenshots for visual review.

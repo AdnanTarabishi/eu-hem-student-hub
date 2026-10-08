@@ -180,6 +180,28 @@ lighter blue / terracotta / green / purple, and lighter track colours.
 `<meta name="theme-color">` is #0F2B5B (light) / #091D3A (dark) on every page.
 `manifest.webmanifest`: theme #0F2B5B, background #F7F5F1.
 
+## Academic companion pages
+
+Academic Rules and Programme Journey share `academic-pages.css` and `academic-pages.js`.
+Their page-specific details live in `academic-rules.css` and `journey.css`; the global shell and
+colour tokens still come from `style.css`.
+
+- An editorial serif heading sits beside one navy overview panel. Terracotta marks section
+  numbers and the active location, while blue remains the interaction colour.
+- A sticky contents rail sits beside the reading column on desktop. At 860px and below it
+  becomes a horizontally scrollable rail beneath the site header. The active item stays visible
+  without moving the page away from the reader's section.
+- Choosing a section updates its deep link and moves keyboard focus to the destination.
+  Scrolling updates the active location only. Back/Forward and old nested deep links still work.
+- University rules use native disclosures with an expand/collapse-all control. Deep links open
+  the required dossier. Printing temporarily opens all dossiers and restores their prior state.
+- Source badges use 11px text, a smaller dot and restrained padding. Full source names and
+  verification dates remain visible and wrap naturally; they are never truncated or tooltip-only.
+- Journey keeps the shared native track choice and shows the four-semester city route alongside
+  the detailed timeline. Its Welcome Days figures remain explicitly labelled as a historical snapshot.
+- All interactions retain visible keyboard focus, comfortable touch targets, both themes and
+  reduced-motion support. These pages do not introduce a new storage system or remote tracking.
+
 ## Accessibility notes
 
 Contrast was checked for the main pairs (WCAG AA 4.5:1 for text):

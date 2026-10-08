@@ -1,0 +1,215 @@
+/* Programme Journey: programme geography, a readable timeline and practical comparisons.
+   Shared academic layout and compact source labels live in academic-pages.css. */
+
+.journey-page .journey-title-accent { color: var(--color-brand-text); }
+.journey-page .journey-arrow-down { transform: rotate(90deg); }
+.journey-page .journey-overview { overflow: hidden; }
+.journey-page .journey-overview h2 { margin: 0; font-family: var(--font-serif); font-size: clamp(1.7rem, 2.5vw, 2.25rem); line-height: 1.15; }
+.journey-page .journey-summary { display: grid; grid-template-columns: 1.2fr 1fr 1.3fr; gap: 16px; margin: 28px 0 20px; }
+.journey-page .journey-summary > div { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 6px; min-width: 0; }
+.journey-page .journey-summary dt { color: var(--text-on-navy-muted); font-size: .7rem; line-height: 1.45; }
+.journey-page .journey-summary dd { margin: 0; color: var(--text-on-navy); font-family: var(--font-serif); font-size: 2.25rem; line-height: 1; font-variant-numeric: lining-nums; }
+.journey-page .journey-overview-note { margin: 0; padding-top: 17px; border-top: 1px solid rgb(255 255 255 / 20%); color: var(--text-on-navy-muted); font-size: .77rem; line-height: 1.65; }
+
+/* Native radios preserve familiar keyboard selection and the existing saved track choice. */
+.journey-page .journey-track-picker { min-width: 0; margin: 0 0 22px; padding: 0; border: 0; }
+.journey-page .journey-track-picker legend { margin: 0 0 12px; padding: 0; color: var(--text-heading); font-size: .88rem; font-weight: 650; }
+.journey-page .journey-track-picker .choice-options { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.journey-page .journey-track-picker .choice-option {
+  --journey-track-color: var(--color-link);
+  --journey-track-soft: var(--color-info-soft);
+  --journey-track-text: var(--text-heading);
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  min-width: 0;
+  min-height: 44px;
+  padding: 14px 11px;
+  border: 1px solid var(--border-input);
+  border-radius: 10px;
+  background: var(--surface-card);
+  font-weight: 400;
+  transition: border-color 160ms, background 160ms;
+}
+.journey-page .journey-track-picker [data-track="eeh"] { --journey-track-color: var(--track-eeh); --journey-track-soft: var(--track-eeh-soft); --journey-track-text: var(--track-eeh-text); }
+.journey-page .journey-track-picker [data-track="ep"] { --journey-track-color: var(--track-ep); --journey-track-soft: var(--track-ep-soft); --journey-track-text: var(--track-ep-text); }
+.journey-page .journey-track-picker [data-track="mhi"] { --journey-track-color: var(--track-mhi); --journey-track-soft: var(--track-mhi-soft); --journey-track-text: var(--track-mhi-text); }
+.journey-page .journey-track-picker [data-track="phm"] { --journey-track-color: var(--track-phm); --journey-track-soft: var(--track-phm-soft); --journey-track-text: var(--track-phm-text); }
+.journey-page .journey-track-picker .choice-option:hover { border-color: var(--journey-track-color); background: var(--surface-warm); }
+.journey-page .journey-track-picker .choice-option:has(input:checked) { border-color: var(--journey-track-color); background: var(--journey-track-soft); box-shadow: inset 0 0 0 1px var(--journey-track-color); }
+.journey-page .journey-track-picker .choice-option:has(input:focus-visible) { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+.journey-page .journey-track-picker input { flex: none; width: 16px; height: 16px; margin: 2px 0 0; accent-color: var(--journey-track-color); }
+.journey-page .journey-track-copy { display: grid; gap: 5px; min-width: 0; }
+.journey-page .journey-track-code { color: var(--journey-track-text); font-size: .81rem; line-height: 1.4; }
+.journey-page .journey-track-name { color: var(--text-secondary); font-size: .73rem; line-height: 1.5; }
+.journey-page .journey-track-picker .choice-option[data-track="none"] { grid-column: 1 / -1; align-items: center; justify-content: flex-start; padding: 9px 12px; border-color: transparent; background: transparent; box-shadow: none; }
+.journey-page .journey-track-picker .choice-option[data-track="none"]:has(input:checked) { border-color: var(--border-default); background: var(--surface-subtle); }
+.journey-page .journey-track-picker [data-track="none"] .journey-track-copy { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; }
+.journey-page .journey-track-note { margin: 12px 0 0; font-size: .73rem; line-height: 1.65; }
+
+/* Route links are a geographical overview of the four semesters, not a second set of tabs. */
+.journey-page .journey-route { margin: 0 0 32px; padding: 20px; border: 1px solid var(--border-default); border-radius: 13px; background: var(--surface-warm); }
+.journey-page .journey-route-heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; margin: 0 0 16px; }
+.journey-page .journey-route-heading h3 { margin: 0; color: var(--text-heading); font-family: inherit; font-size: .84rem; font-weight: 650; }
+.journey-page .journey-route-selected { margin: 0; color: var(--text-secondary); font-size: .7rem; line-height: 1.5; }
+.journey-page .journey-route-stops { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.journey-page .journey-route-stop { position: relative; min-width: 0; }
+.journey-page .journey-route-stop:not(:last-child)::after { content: ""; position: absolute; z-index: 1; top: 24px; right: -12px; width: 12px; height: 1px; background: var(--border-input); pointer-events: none; }
+.journey-page .journey-route-stop > a { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; height: 100%; min-height: 112px; padding: 13px 12px; border: 1px solid var(--border-default); border-radius: 9px; background: var(--surface-card); color: var(--text-primary); text-decoration: none; }
+.journey-page .journey-route-stop > a:hover { border-color: var(--color-link); background: var(--color-info-soft); }
+.journey-page .journey-route-stop > a:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+.journey-page .journey-route-stop.is-current > a { border-top: 3px solid var(--color-brand); padding-top: 11px; }
+.journey-page .journey-route-term { color: var(--text-secondary); font-size: .67rem; font-weight: 650; letter-spacing: .035em; text-transform: uppercase; }
+.journey-page .journey-route-city { color: var(--text-heading); font-size: .9rem; line-height: 1.35; }
+.journey-page .journey-route-detail { margin-top: auto; color: var(--text-secondary); font-size: .67rem; line-height: 1.5; }
+.journey-page .journey-route-current { color: var(--color-brand-text); font-size: .64rem; font-weight: 650; line-height: 1.45; }
+.journey-page .journey-route-hint { margin: 14px 0 0; color: var(--text-secondary); font-size: .7rem; line-height: 1.6; }
+
+/* Six chronological stages. Completed stages stay fully legible. */
+.journey-page .journey-timeline { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+.journey-page .journey-timeline::before { display: none; }
+.journey-page .journey-stop { display: grid; grid-template-columns: 38px minmax(0, 1fr); align-items: start; gap: 16px; position: relative; padding: 0 0 22px; opacity: 1; }
+.journey-page .journey-stop:last-child { padding-bottom: 0; }
+.journey-page .journey-stop::before { content: ""; position: absolute; left: 18px; top: 41px; bottom: 0; width: 1px; height: auto; border: 0; border-radius: 0; background: var(--border-default); box-shadow: none; }
+.journey-page .journey-stop:last-child::before { display: none; }
+.journey-page .journey-stage-marker { display: grid; place-items: center; width: 38px; height: 38px; margin-top: 2px; border: 1px solid var(--border-input); border-radius: 50%; background: var(--surface-card); color: var(--text-secondary); font-size: .73rem; font-weight: 650; font-variant-numeric: tabular-nums; }
+.journey-page .journey-stop.is-current .journey-stage-marker { border-color: var(--action-navy); background: var(--action-navy); color: #fff; }
+.journey-page .journey-stage-content { min-width: 0; padding: 20px 22px; border: 1px solid var(--border-default); border-radius: 12px; background: var(--surface-card); }
+.journey-page .journey-stop.is-current .journey-stage-content { border-top: 3px solid var(--color-brand); padding-top: 18px; background: var(--surface-warm); }
+.journey-page .journey-stop-head { display: flex; align-items: center; gap: 7px 12px; }
+.journey-page .journey-stop-head h3 { flex-basis: 100%; margin: 3px 0 0; color: var(--text-heading); font-family: var(--font-serif); font-size: clamp(1.2rem, 1.9vw, 1.45rem); font-weight: 600; line-height: 1.3; }
+.journey-page .journey-stop-meta { margin: 0; color: var(--text-secondary); font-size: .71rem; line-height: 1.5; }
+.journey-page :is(.journey-here, .journey-done) { padding: 3px 8px; font-size: .65rem; font-weight: 650; line-height: 1.4; }
+.journey-page .journey-place { margin: 12px 0 16px; color: var(--text-secondary); font-size: .78rem; line-height: 1.65; }
+.journey-page .journey-place strong { color: var(--text-heading); font-weight: 600; }
+.journey-page .journey-place.is-unknown { color: var(--text-secondary); font-style: normal; }
+.journey-page .journey-stage-content .rules-list { gap: 11px; }
+.journey-page .journey-stage-content .rules-item { font-size: .84rem; line-height: 1.8; }
+.journey-page .journey-stop-head + .rules-list { margin-top: 16px; }
+
+/* One qualification, expressed by four university titles. */
+.journey-page .journey-degree-intro { max-width: 74ch; margin: 0 0 20px; }
+.journey-page .journey-titles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 0 0 12px; }
+.journey-page .journey-titles > li { display: flex; flex-direction: column; gap: 13px; min-width: 0; padding: 22px; border: 1px solid var(--border-default); border-top: 3px solid var(--journey-city-accent); border-radius: 11px; background: var(--surface-warm); }
+.journey-page .journey-titles .journey-degree-country { color: var(--text-secondary); font-size: .65rem; font-weight: 650; letter-spacing: .12em; line-height: 1.5; text-transform: uppercase; }
+.journey-page .journey-titles strong { color: var(--text-heading); font-family: var(--font-serif); font-size: 1.2rem; font-weight: 600; line-height: 1.4; }
+.journey-page .journey-titles .journey-degree-university { margin-top: auto; padding-top: 2px; color: var(--text-secondary); font-size: .73rem; line-height: 1.6; }
+.journey-page .journey-titles + .source-badge { margin-bottom: 22px; }
+
+/* A clearly labelled historical snapshot, followed by the programme's milestones. */
+.journey-page .journey-pair { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; margin: 0 0 30px; }
+.journey-page .journey-pair > .academic-section { margin: 0; }
+.journey-page .journey-figure { justify-content: flex-end; }
+.journey-page .journey-snapshot-note { margin: 0 0 20px; color: var(--text-secondary); font-size: .8rem; line-height: 1.75; }
+.journey-page #numbers .journey-figures { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 0 0 18px; border-top: 1px solid var(--border-default); border-bottom: 1px solid var(--border-default); }
+.journey-page #numbers .journey-figure { gap: 10px; padding: 23px 16px; border-radius: 0; background: transparent; }
+.journey-page #numbers .journey-figure:not(:last-child) { border-right: 1px solid var(--border-default); }
+.journey-page #numbers .journey-figure dd { font-family: var(--font-serif); font-size: clamp(2rem, 3vw, 2.7rem); font-weight: 600; }
+.journey-page #numbers .journey-figure dt { font-size: .73rem; line-height: 1.55; }
+.journey-page .journey-snapshot-link { margin: 18px 0 0; padding: 0; background: transparent; }
+.journey-page .journey-snapshot-link a { display: inline-flex; align-items: center; min-height: 44px; font-size: .79rem; font-weight: 600; text-underline-offset: 4px; }
+.journey-page .journey-history { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; margin: 0 0 18px; }
+.journey-page .journey-history li { grid-template-columns: 3.1rem minmax(0, 1fr); align-items: start; gap: 12px; padding: 18px 0; border-top: 1px solid var(--border-default); }
+.journey-page .journey-year { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 600; line-height: 1.45; }
+.journey-page .journey-history li > span { color: var(--text-secondary); font-size: .79rem; line-height: 1.75; }
+
+/* A semantic grant table on desktop, labelled track rows on a phone. */
+.journey-page #erasmus .table-wrapper { margin: 22px 0 18px; border: 1px solid var(--border-default); border-radius: 12px; overflow: hidden; }
+.journey-page .journey-erasmus-table { table-layout: fixed; margin: 0; font-size: .81rem; line-height: 1.7; }
+.journey-page .journey-erasmus-table thead { background: var(--surface-warm); }
+.journey-page .journey-erasmus-table thead th { padding: 13px 18px; color: var(--text-secondary); font-size: .65rem; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; }
+.journey-page .journey-erasmus-table thead th:first-child { width: 46%; }
+.journey-page .journey-erasmus-table tbody th { font-weight: 400; }
+.journey-page .journey-erasmus-table :is(th, td) { padding: 18px; overflow-wrap: break-word; }
+.journey-page .journey-erasmus-table tbody tr:last-child :is(th, td) { border-bottom: 0; }
+.journey-page .journey-erasmus-table tr.is-mine { background: var(--color-info-soft); }
+.journey-page .journey-grant-code { display: inline-flex; padding: 2px 7px; border-radius: 5px; font-size: .67rem; line-height: 1.6; }
+.journey-page .journey-grant-name { display: block; margin-top: 6px; color: var(--text-heading); font-size: .78rem; line-height: 1.6; }
+.journey-page .journey-mine { display: inline-flex; align-items: center; gap: 5px; margin: 5px 0 0; padding: 0; color: var(--color-link); background: transparent; font-size: .66rem; }
+.journey-page .journey-mine::before { content: "✓"; font-size: .8rem; }
+.journey-page .journey-erasmus-caveat { margin: 0 0 22px; padding: 13px 16px; border-left: 2px solid var(--border-input); border-radius: 0; background: var(--surface-warm); font-size: .76rem; line-height: 1.75; }
+.journey-page #erasmus > .rules-list > .rules-item:first-child { font-weight: 600; }
+
+.journey-page .journey-fee-year { margin: 0 0 16px; color: var(--text-secondary); font-size: .8rem; line-height: 1.65; }
+.journey-page .journey-fees .journey-figures { gap: 16px; margin-bottom: 22px; }
+.journey-page .journey-fees .journey-figure { gap: 12px; padding: 24px; border: 1px solid var(--border-default); border-radius: 12px; background: var(--surface-warm); }
+.journey-page .journey-fees .journey-figure dt { font-size: .78rem; line-height: 1.55; }
+.journey-page .journey-fees .journey-figure dd { font-family: var(--font-serif); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 600; font-variant-numeric: lining-nums; }
+.journey-page .journey-fee-scope { margin: 18px 0 0; padding-top: 16px; border-top: 1px solid var(--border-default); color: var(--text-secondary); font-size: .76rem; line-height: 1.7; }
+
+@media (max-width: 1160px) and (min-width: 861px) {
+  .journey-page .journey-track-picker .choice-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .journey-page .journey-route-stops { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .journey-page .journey-route-stop:nth-child(2)::after { display: none; }
+}
+
+@media (max-width: 680px) {
+  .journey-page .journey-track-picker .choice-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .journey-page .journey-track-picker .choice-option { gap: 8px; padding: 12px 10px; }
+  .journey-page .journey-track-name { font-size: .73rem; }
+  .journey-page .journey-route { padding: 16px; }
+  .journey-page .journey-route-stops { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .journey-page .journey-route-stop:nth-child(2)::after { display: none; }
+  .journey-page .journey-stop { grid-template-columns: 28px minmax(0, 1fr); gap: 10px; padding-bottom: 18px; }
+  .journey-page .journey-stop::before { left: 13px; top: 31px; }
+  .journey-page .journey-stage-marker { width: 28px; height: 28px; font-size: .63rem; }
+  .journey-page .journey-stage-content { padding: 16px; }
+  .journey-page .journey-stop.is-current .journey-stage-content { padding-top: 14px; }
+  .journey-page .journey-stop-head { gap: 8px; }
+  .journey-page .journey-stop-head h3 { font-size: 1.15rem; }
+  .journey-page .journey-stage-content .rules-item { font-size: .81rem; }
+  .journey-page .journey-titles { grid-template-columns: minmax(0, 1fr); }
+  .journey-page .journey-titles > li { padding: 18px; }
+  .journey-page #numbers .journey-figures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .journey-page #numbers .journey-figure:nth-child(2) { border-right: 0; }
+  .journey-page #numbers .journey-figure:nth-child(-n + 2) { border-bottom: 1px solid var(--border-default); }
+  .journey-page #numbers .journey-figure { padding: 20px 12px; }
+  .journey-page .journey-history { grid-template-columns: minmax(0, 1fr); }
+  .journey-page .journey-history li { padding: 15px 0; }
+  .journey-page .journey-fees .journey-figures { gap: 10px; }
+  .journey-page .journey-fees .journey-figure { padding: 18px 13px; }
+  .journey-page .journey-fees .journey-figure dd { font-size: 1.9rem; }
+  .journey-page .journey-fees .journey-figure dt { font-size: .72rem; }
+  .journey-page .journey-erasmus-table thead { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+  .journey-page .journey-erasmus-table :is(tbody, tr, th, td) { display: block; width: 100%; }
+  .journey-page .journey-erasmus-table tbody tr { padding: 17px; border-bottom: 1px solid var(--border-default); }
+  .journey-page .journey-erasmus-table tbody tr:last-child { border-bottom: 0; }
+  .journey-page .journey-erasmus-table tbody :is(th, td) { padding: 0; border: 0; }
+  .journey-page .journey-erasmus-table tbody td { margin-top: 12px; }
+  .journey-page .journey-erasmus-table tbody td::before { content: attr(data-label); display: block; margin-bottom: 4px; color: var(--text-secondary); font-size: .63rem; font-weight: 650; letter-spacing: .05em; text-transform: uppercase; }
+}
+
+@media (max-width: 380px) {
+  .journey-page .journey-track-picker .choice-options { grid-template-columns: minmax(0, 1fr); }
+  .journey-page .journey-track-picker .choice-option { align-items: center; }
+  .journey-page .journey-track-copy { gap: 2px; }
+  .journey-page .journey-route { padding: 12px; }
+  .journey-page .journey-route-stops { gap: 8px; }
+  .journey-page .journey-route-stop > a { padding-inline: 10px; }
+  .journey-page .journey-route-stop:not(:last-child)::after { right: -8px; width: 8px; }
+  .journey-page .journey-route-city { font-size: .8rem; }
+  .journey-page .journey-stop { grid-template-columns: minmax(0, 1fr); gap: 9px; }
+  .journey-page .journey-stage-marker { display: none; }
+  .journey-page .journey-stop::before { display: none; }
+  .journey-page .journey-fees .journey-figures { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .journey-page .journey-track-picker .choice-option { transition: none; }
+}
+
+@media print {
+  .journey-page .journey-overview { color: #000; background: #fff; border: 1px solid #999; }
+  .journey-page .journey-overview :is(h2, p, dt, dd) { color: #000; }
+  .journey-page .journey-track-picker { display: none; }
+  .journey-page .journey-route { break-inside: avoid; }
+  .journey-page .journey-route-stop > a { min-height: 0; padding: 9px; }
+  .journey-page .journey-route-stops { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .journey-page :is(.journey-stop, .journey-degree-title, .journey-figure, .journey-history li) { break-inside: avoid; }
+  .journey-page .journey-stop { grid-template-columns: 28px minmax(0, 1fr); }
+  .journey-page .journey-stage-marker { display: grid; width: 28px; height: 28px; }
+  .journey-page .journey-stage-content { padding: 12px 16px; background: #fff; }
+  .journey-page .journey-stop.is-current .journey-stage-content { background: #fff; padding-top: 10px; }
+  .journey-page .journey-stage-content .rules-item { font-size: 10pt; }
+}

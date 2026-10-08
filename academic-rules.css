@@ -1,0 +1,324 @@
+/* Academic Rules: handbook dossiers, a guided re-sit form and a readable comparison.
+   The shared academic shell and compact source labels live in academic-pages.css. */
+
+.rules-page .rules-start__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.rules-page .rules-start__top .academic-eyebrow { max-width: 190px; }
+.rules-page .rules-start__icon { flex: none; width: 32px; height: 32px; color: #f1aa8b; }
+.rules-page .rules-start h2 { margin: 12px 0 22px; font-size: clamp(1.5rem, 2.1vw, 1.9rem); }
+
+.rules-page .rules-start__steps {
+  display: grid;
+  gap: 17px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rules-page .rules-start__steps li {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.rules-page .rules-start__steps li > span {
+  padding-top: 3px;
+  color: var(--text-on-navy-muted);
+  font-size: 11px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.rules-page .rules-start__steps strong { display: block; color: var(--text-on-navy); font-size: 13px; font-weight: 600; }
+.rules-page .rules-start__steps p { margin: 3px 0 0; color: var(--text-on-navy-muted); font-size: 12px; line-height: 1.6; }
+
+/* Essentials: a leading principle, then a quiet two-column reading list. */
+.rules-page .rules-list { gap: 12px; }
+.rules-page .rules-item { min-width: 0; font-size: 14px; line-height: 1.75; }
+.rules-page .rules-item::marker { color: var(--color-brand-text); }
+.rules-page .rules-item .source-badge { vertical-align: baseline; }
+
+.rules-page .rules-principles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rules-page .rules-principles > .rules-item {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  align-content: start;
+  gap: 12px;
+  max-width: none;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.rules-page .rules-principles > .rules-item:first-child {
+  grid-column: 1 / -1;
+  margin-bottom: 4px;
+  padding: 20px;
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--color-brand);
+  border-radius: var(--radius-md);
+  background: var(--surface-warm);
+}
+
+.rules-page .rules-principles > .rules-item:nth-child(even) { padding-right: 20px; }
+.rules-page .rules-principles > .rules-item:nth-child(odd):not(:first-child) { padding-left: 20px; border-left: 1px solid var(--border-subtle); }
+.rules-page .rules-principles > .rules-item:nth-last-child(-n+2) { border-bottom: 0; padding-bottom: 0; }
+
+.rules-page .rules-principle__number {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: var(--color-primary-light);
+  color: var(--text-heading);
+  font-size: 10px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.rules-page .rules-principles > .rules-item:first-child .rules-principle__number {
+  background: var(--color-brand-soft);
+  color: var(--color-brand-text);
+}
+
+.rules-page .rules-principle__body { min-width: 0; }
+
+/* Re-sit guide: a small progress line and large, native radio choices. */
+.rules-page #resit-guide { border-top: 3px solid var(--color-brand); }
+.rules-page .resit-workspace { min-width: 0; }
+
+.rules-page .resit-progress {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 0 0 26px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.rules-page .resit-progress-label { color: var(--text-secondary); font-size: 12px; font-weight: 600; }
+.rules-page .resit-progress progress { appearance: none; width: 132px; max-width: 42%; height: 5px; border: 0; border-radius: var(--radius-pill); overflow: hidden; background: var(--border-subtle); accent-color: var(--color-brand); }
+.rules-page .resit-progress progress::-webkit-progress-bar { background: var(--border-subtle); border-radius: var(--radius-pill); }
+.rules-page .resit-progress progress::-webkit-progress-value { background: var(--color-brand); border-radius: var(--radius-pill); }
+.rules-page .resit-progress progress::-moz-progress-bar { background: var(--color-brand); border-radius: var(--radius-pill); }
+
+.rules-page .resit-question { min-width: 0; margin: 0 0 25px; padding: 0; }
+.rules-page .resit-question legend { margin-bottom: 12px; font-size: 15px; line-height: 1.55; letter-spacing: -0.01em; }
+.rules-page .resit-question .choice-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.rules-page .resit-question[data-question="attempt"] .choice-options { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.rules-page .resit-question .choice-option {
+  position: relative;
+  min-width: 0;
+  min-height: 58px;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 14px;
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-md);
+  background: var(--surface-warm);
+  font-size: 13px;
+  line-height: 1.6;
+  transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+
+.rules-page .resit-question .choice-option input { flex: none; width: 16px; height: 16px; accent-color: var(--color-link); }
+.rules-page .resit-question .choice-option:hover { border-color: var(--color-link); background: var(--color-primary-light); }
+.rules-page .resit-question .choice-option:has(input:checked) { border-color: var(--color-link); background: var(--color-primary-light); color: var(--text-heading); box-shadow: inset 0 0 0 1px var(--color-link); }
+.rules-page .resit-question .choice-option:has(input:focus-visible) { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+
+.rules-page .resit-empty {
+  max-width: none;
+  margin: 4px 0 0;
+  padding: 16px 18px;
+  border: 1px dashed var(--border-input);
+  border-radius: var(--radius-md);
+  background: var(--surface-subtle);
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.rules-page .resit-result { margin-top: 8px; padding: 24px; border: 1px solid var(--border-default); border-left: 3px solid var(--color-link); background: var(--color-primary-light); }
+.rules-page .resit-result > .academic-eyebrow { margin-bottom: 7px; color: var(--color-link); }
+.rules-page .resit-result h3 { margin: 0 0 17px; font-family: var(--font-serif); font-size: clamp(1.2rem, 2vw, 1.5rem); line-height: 1.3; }
+.rules-page .resit-result h4 { margin-top: 24px; font-size: 12px; letter-spacing: 0.04em; }
+.rules-page .resit-reset { margin-top: 20px; font-size: 12px; }
+
+/* University dossiers: individual native disclosures and direct city links. */
+.rules-page .rules-university-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 18px; }
+.rules-page .rules-university-jumps { display: flex; flex-wrap: wrap; gap: 5px; }
+
+.rules-page .rules-university-jump {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
+  background: var(--surface-warm);
+  color: var(--color-link);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.rules-page .rules-university-jump:hover { border-color: var(--color-link); background: var(--color-primary-light); }
+.rules-page .rules-expand-all { padding: 9px 13px; min-height: 44px; font-size: 11px; }
+.rules-page .rules-unis { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+
+.rules-page .rules-uni {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-xs);
+}
+
+.rules-page .rules-uni-summary {
+  position: relative;
+  display: block;
+  min-height: 88px;
+  padding: 21px 25px 21px 28px;
+  border-radius: inherit;
+  background: var(--surface-warm);
+  cursor: pointer;
+  list-style: none;
+}
+
+.rules-page .rules-uni-summary::-webkit-details-marker { display: none; }
+.rules-page .rules-uni-summary::before { content: ""; position: absolute; top: 23px; bottom: 23px; left: 0; width: 3px; border-radius: 0 3px 3px 0; background: var(--city-accent, var(--color-brand)); }
+.rules-page .rules-uni-summary:hover { background: var(--color-primary-light); }
+.rules-page .rules-uni-summary:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+.rules-page .rules-uni[open] > .rules-uni-summary { border-bottom: 1px solid var(--border-subtle); border-bottom-right-radius: 0; border-bottom-left-radius: 0; }
+
+.rules-page .rules-uni h3 { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 22px; margin: 0; font-family: var(--font-serif); font-size: clamp(1.1rem, 1.6vw, 1.3rem); line-height: 1.35; }
+.rules-page .rules-uni-name { grid-column: 1; grid-row: 2; }
+.rules-page .rules-uni-city { grid-column: 1; grid-row: 1; color: var(--text-secondary); font-family: var(--font-sans); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.11em; }
+.rules-page .rules-uni-toggle { display: inline-flex; align-items: center; align-self: center; grid-column: 2; grid-row: 1 / 3; gap: 12px; color: var(--color-link); font-family: var(--font-sans); font-size: 11px; font-weight: 500; white-space: nowrap; }
+.rules-page .rules-uni-toggle::after { content: ""; display: block; width: 7px; height: 7px; margin-top: -4px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); }
+.rules-page .rules-uni-toggle__open { display: none; }
+.rules-page .rules-uni[open] .rules-uni-toggle__open { display: inline; }
+.rules-page .rules-uni[open] .rules-uni-toggle__closed { display: none; }
+.rules-page .rules-uni[open] .rules-uni-toggle::after { margin-top: 4px; transform: rotate(225deg); }
+
+.rules-page .rules-uni-body { padding: 24px 26px; }
+.rules-page .rules-uni-topics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 25px 30px; }
+.rules-page .rules-uni-topic { min-width: 0; }
+.rules-page .rules-uni-topic:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.rules-page .rules-uni h4 { margin: 0 0 10px; font-size: 11px; color: var(--text-heading); letter-spacing: 0.06em; line-height: 1.65; }
+.rules-page .rules-uni .rules-item { font-size: 14px; }
+
+.rules-page .rules-links { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; max-width: none; margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--border-subtle); font-size: 12px; }
+.rules-page .rules-links-label { width: 100%; margin-bottom: 2px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; }
+.rules-page .rules-links a { display: inline-flex; align-items: center; min-height: 44px; padding: 6px 0; text-underline-offset: 4px; }
+
+/* Grading keeps native table semantics, becoming four complete cards on a phone. */
+.rules-page .rules-note { max-width: none; margin: 0 0 22px; padding: 14px 17px; border: 1px solid var(--border-default); border-left: 3px solid var(--color-link); border-radius: var(--radius-md); background: var(--color-primary-light); font-size: 13px; line-height: 1.7; }
+.rules-page #grading .table-wrapper { overflow: visible; margin: 0; border: 1px solid var(--border-default); border-radius: var(--radius-md); }
+.rules-page .rules-grades { table-layout: fixed; border-collapse: separate; border-spacing: 0; font-size: 12px; line-height: 1.65; }
+.rules-page .rules-grades th, .rules-page .rules-grades td { padding: 17px 13px; overflow-wrap: anywhere; }
+.rules-page .rules-grades thead th { padding-top: 12px; padding-bottom: 12px; background: var(--surface-warm); color: var(--text-secondary); font-size: 10px; font-weight: 600; letter-spacing: 0.03em; }
+.rules-page .rules-grades thead th:first-child { width: 20%; border-top-left-radius: var(--radius-md); }
+.rules-page .rules-grades thead th:nth-child(2) { width: 12%; }
+.rules-page .rules-grades thead th:nth-child(3) { width: 15%; }
+.rules-page .rules-grades thead th:nth-child(4) { width: 19%; }
+.rules-page .rules-grades thead th:last-child { border-top-right-radius: var(--radius-md); }
+.rules-page .rules-grades tbody th { color: var(--text-heading); font-size: 12px; font-weight: 600; }
+.rules-page .rules-grades .rules-grade-pass { color: var(--text-heading); font-weight: 700; }
+.rules-page .rules-grades tbody tr:last-child > * { border-bottom: 0; }
+.rules-page .rules-grades .source-badge { margin-top: 5px; }
+
+/* Integrity and the extra topics share light, well-spaced reading cards. */
+.rules-page .rules-integrity-joint { padding: 20px 22px 20px 38px; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); background: var(--surface-warm); }
+.rules-page .rules-integrity-unis { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 22px; }
+.rules-page .rules-integrity-uni { min-width: 0; padding: 22px; border: 1px solid var(--border-default); border-radius: var(--radius-md); background: var(--surface-card); }
+.rules-page .rules-card-eyebrow { margin: 0 0 8px; color: var(--text-secondary); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+.rules-page .rules-integrity-uni h3 { margin: 0 0 16px; font-family: var(--font-serif); font-size: 19px; line-height: 1.35; }
+.rules-page .rules-integrity-uni .rules-item { font-size: 14px; }
+.rules-page .rules-more { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.rules-page .rules-more-topic { min-width: 0; padding: 22px; border: 1px solid var(--border-default); border-radius: var(--radius-md); background: var(--surface-warm); }
+.rules-page .rules-more-topic__heading { display: grid; gap: 14px; margin-bottom: 17px; }
+.rules-page .rules-more-topic__heading > .icon { width: 21px; height: 21px; color: var(--color-brand-text); }
+.rules-page .rules-more-topic h3 { margin: 0; font-family: var(--font-serif); font-size: 20px; line-height: 1.4; }
+.rules-page .rules-more-topic .rules-item { font-size: 14px; }
+.rules-page #special-provisions { border-top: 3px solid var(--color-brand); }
+
+.rules-page .rules-closing { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px 15px; align-items: start; padding: 24px 0 8px; }
+.rules-page .rules-closing > .icon { width: 19px; height: 19px; margin-top: 2px; color: var(--text-secondary); }
+.rules-page .rules-disclaimer { margin: 0; padding: 0; border: 0; color: var(--text-secondary); font-size: 12px; line-height: 1.8; }
+.rules-page .rules-closing__link { display: inline-flex; align-items: center; justify-self: start; gap: 8px; grid-column: 2; min-height: 44px; color: var(--color-link); font-size: 12px; font-weight: 600; text-underline-offset: 4px; }
+.rules-page .rules-closing__link .icon { width: 15px; height: 15px; }
+
+@media (max-width: 1100px) and (min-width: 801px) {
+  .rules-page .resit-question[data-question="attempt"] .choice-options { grid-template-columns: minmax(0, 1fr); }
+  .rules-page .rules-uni-topics { grid-template-columns: minmax(0, 1fr); }
+  .rules-page .rules-grades th, .rules-page .rules-grades td { padding-left: 9px; padding-right: 9px; }
+}
+
+@media (max-width: 680px) {
+  .rules-page .rules-principles { grid-template-columns: minmax(0, 1fr); }
+  .rules-page .rules-principles > .rules-item { padding: 18px 0; }
+  .rules-page .rules-principles > .rules-item:first-child { padding: 16px; }
+  .rules-page .rules-principles > .rules-item:nth-child(even) { padding-right: 0; }
+  .rules-page .rules-principles > .rules-item:nth-child(odd):not(:first-child) { padding-left: 0; border-left: 0; }
+  .rules-page .rules-principles > .rules-item:nth-last-child(2) { padding-bottom: 18px; border-bottom: 1px solid var(--border-subtle); }
+  .rules-page .resit-question .choice-options, .rules-page .resit-question[data-question="attempt"] .choice-options { grid-template-columns: minmax(0, 1fr); }
+  .rules-page .resit-question .choice-option { min-height: 50px; }
+  .rules-page .resit-result { padding: 18px 16px; }
+  .rules-page .rules-uni-summary { min-height: 84px; padding: 18px 18px 18px 22px; }
+  .rules-page .rules-uni h3 { gap: 4px 15px; }
+  .rules-page .rules-uni-toggle { width: 11px; font-size: 0; }
+  .rules-page .rules-uni-toggle::after { flex: none; }
+  .rules-page .rules-uni-body { padding: 20px 18px; }
+  .rules-page .rules-uni-topics { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+  .rules-page .rules-university-jumps { width: 100%; }
+  .rules-page .rules-university-jump { flex: 1 1 auto; }
+  .rules-page .rules-integrity-unis, .rules-page .rules-more { grid-template-columns: minmax(0, 1fr); }
+  .rules-page .rules-integrity-uni, .rules-page .rules-more-topic { padding: 20px; }
+  .rules-page #grading .table-wrapper { border: 0; }
+  .rules-page .rules-grades thead { display: none; }
+  .rules-page .rules-grades, .rules-page .rules-grades tbody, .rules-page .rules-grades tr, .rules-page .rules-grades th, .rules-page .rules-grades td { display: block; }
+  .rules-page .rules-grades { table-layout: auto; }
+  .rules-page .rules-grades tbody { display: grid; gap: 14px; }
+  .rules-page .rules-grades tr { min-width: 0; margin: 0; border: 1px solid var(--border-default); border-radius: var(--radius-md); background: var(--surface-card); }
+  .rules-page .rules-grades th, .rules-page .rules-grades td { padding: 13px 17px; font-size: 13px; }
+  .rules-page .rules-grades tbody th { border-radius: var(--radius-md) var(--radius-md) 0 0; border-bottom: 1px solid var(--border-default); background: var(--surface-warm); font-family: var(--font-serif); font-size: 18px; }
+  .rules-page .rules-grades tbody tr:last-child > * { border-bottom: 1px solid var(--border-subtle); }
+  .rules-page .rules-grades td::before { margin-bottom: 4px; color: var(--text-secondary); font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; }
+  .rules-page .rules-grades tbody tr > :last-child { border-bottom: 0; }
+  .rules-page .rules-grades .rules-grade-pass { color: var(--text-heading); font-size: 15px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rules-page .resit-question .choice-option { transition: none; }
+}
+
+@media print {
+  .rules-page .resit-progress, .rules-page .resit-empty, .rules-page .rules-uni-toggle, .rules-page .rules-closing__link { display: none !important; }
+  .rules-page .rules-uni, .rules-page .rules-integrity-uni, .rules-page .rules-more-topic { box-shadow: none; break-inside: avoid; }
+  .rules-page .rules-uni-summary { padding: 16px; }
+  .rules-page .rules-uni-body { padding: 16px; }
+  .rules-page .rules-uni-topics { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .rules-page .rules-links a { min-height: 0; }
+  .rules-page .resit-question .choice-option { min-height: 0; padding: 6px 10px; }
+  .rules-page .rules-principles > .rules-item, .rules-page .rules-grades tr { break-inside: avoid; }
+}
