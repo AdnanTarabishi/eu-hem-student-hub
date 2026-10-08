@@ -1,0 +1,48 @@
+# Temporary one-commit deployment gate. Never merge this script/workflow into main.
+# Prepare the complete commit before creating the exact branch ref below.
+name: One-shot Contact contract delivery
+
+on:
+  push:
+    branches:
+      - "codex/contact-contract-20261008"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: contact-contract-20261008
+  cancel-in-progress: false
+
+jobs:
+  contract:
+    if: ${{ github.event_name == 'push' && github.event.created == true && github.ref == 'refs/heads/codex/contact-contract-20261008' && github.run_attempt == 1 }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install existing test dependencies
+        run: npm ci
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Verify the remaining fixed fictional contract cases
+        env:
+          CONTACT_ENDPOINT: "https://script.google.com/macros/s/AKfycbzGrn6m15IQqpdNoexlQdRzrG478D6njpQPZWlOffUGQASB992nZDxbta14JYaSF2RM4Q/exec"
+          CONTACT_SMOKE_EXECUTE: "true"
+          CONTACT_SMOKE_OUTPUT: ${{ runner.temp }}/contact-contract-delivery
+        run: node tests/contact/contract-smoke.js .
+      - name: Save sanitized contract evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: contact-contract-delivery
+          path: ${{ runner.temp }}/contact-contract-delivery
+          if-no-files-found: ignore
+          retention-days: 3
