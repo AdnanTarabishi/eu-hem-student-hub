@@ -18,7 +18,10 @@
   <meta name="twitter:card" content="summary_large_image">
   <!-- /Social preview -->
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/source-serif-4-latin-600.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=6ef75792">
+  <link rel="stylesheet" href="academic-pages.css?v=b9c9a801">
+  <link rel="stylesheet" href="academic-rules.css?v=9f5509db">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -27,7 +30,7 @@
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=6074bd3c">
   <script src="theme.js?v=d51d4769"></script>
 </head>
-<body class="rules-page">
+<body class="rules-page academic-page">
 
   <header class="site-header">
     <div class="container">
@@ -39,63 +42,123 @@
     </div>
   </header>
 
-  <main class="container">
-    <section class="page-intro">
-      <div>
-        <p class="section-eyebrow">Academics</p>
-        <h1><svg class="icon" aria-hidden="true"><use href="icons.svg#scale"></use></svg> Academic Rules</h1>
+  <main class="container academic-main">
+    <header class="academic-hero">
+      <div class="academic-hero__copy">
+        <p class="academic-eyebrow">Academics · Your handbook companion</p>
+        <h1>Academic Rules</h1>
         <p id="rules-intro">Exams, re-sits, grades, plagiarism and AI at the four EU-HEM universities.</p>
+        <div class="academic-hero__actions">
+          <a class="button" href="#resit-guide">Find your re-sit rules <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+          <a class="button button-secondary" href="#grading">Compare grading scales</a>
+        </div>
       </div>
-    </section>
+      <aside class="academic-hero__aside rules-start" aria-labelledby="rules-start-title">
+        <div class="rules-start__top">
+          <p class="academic-eyebrow">A little clarity goes a long way</p>
+          <svg class="icon rules-start__icon" aria-hidden="true"><use href="icons.svg#scale"></use></svg>
+        </div>
+        <h2 id="rules-start-title">Know where to start.</h2>
+        <ol class="rules-start__steps">
+          <li><span aria-hidden="true">01</span><div><strong>Your course</strong><p>Start with the university that teaches it.</p></div></li>
+          <li><span aria-hidden="true">02</span><div><strong>Your situation</strong><p>Find the exam or re-sit rules you need.</p></div></li>
+          <li><span aria-hidden="true">03</span><div><strong>Your next step</strong><p>Follow the official source for the full details.</p></div></li>
+        </ol>
+      </aside>
+    </header>
 
-    <nav class="rules-contents card" aria-label="On this page">
-      <a href="#joint">Shared rules</a>
-      <a href="#resit-guide">Re-sit guide</a>
-      <a href="#universities">Each university</a>
-      <a href="#grading">Grading scales</a>
-      <a href="#integrity">Plagiarism and AI</a>
-      <a href="#more">Internship and more</a>
-    </nav>
+    <div class="academic-layout">
+      <nav class="academic-nav" aria-label="On this page">
+        <p class="academic-nav__label">Explore the rules</p>
+        <ol>
+          <li><a href="#joint"><span class="academic-nav__number" aria-hidden="true">01</span> Shared rules</a></li>
+          <li><a href="#resit-guide"><span class="academic-nav__number" aria-hidden="true">02</span> Re-sit guide</a></li>
+          <li><a href="#universities"><span class="academic-nav__number" aria-hidden="true">03</span> Each university</a></li>
+          <li><a href="#grading"><span class="academic-nav__number" aria-hidden="true">04</span> Grading scales</a></li>
+          <li><a href="#integrity"><span class="academic-nav__number" aria-hidden="true">05</span> Plagiarism and AI</a></li>
+          <li><a href="#more"><span class="academic-nav__number" aria-hidden="true">06</span> Internship and more</a></li>
+        </ol>
+        <div class="academic-nav__footer">
+          <p>Looking at the bigger picture?</p>
+          <a href="journey.html">Programme Journey <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+        </div>
+      </nav>
 
-    <!-- academic-rules.js fills every section from content/academic-rules.json (sources: content/sources.json) -->
-    <p id="rules-status" class="placeholder" aria-live="polite">Loading the rules…</p>
+      <div class="academic-content">
+        <!-- All rules and source labels come from the existing handbook data. -->
+        <p id="rules-status" class="placeholder" aria-live="polite">Loading the rules…</p>
 
-    <section id="joint" class="card rules-section" aria-labelledby="joint-title" hidden>
-      <h2 id="joint-title">Exams and re-sits: the shared EU-HEM rules</h2>
-      <ul class="rules-list"></ul>
-    </section>
+        <section id="joint" class="rules-section academic-section" aria-labelledby="joint-title" hidden>
+          <header class="academic-section__heading">
+            <p class="academic-eyebrow">01 · The essentials</p>
+            <h2 id="joint-title">Exams and re-sits: the shared EU-HEM rules</h2>
+          </header>
+          <ul class="rules-list"></ul>
+        </section>
 
-    <section id="resit-guide" class="card rules-section" aria-labelledby="resit-title" hidden>
-      <h2 id="resit-title">Re-sit guide</h2>
-      <p class="schedule-meta rules-guide-intro"></p>
-      <div class="resit-questions"></div>
-      <div class="resit-outcome" aria-live="polite"></div>
-    </section>
+        <section id="resit-guide" class="rules-section academic-section" aria-labelledby="resit-title" hidden>
+          <header class="academic-section__heading">
+            <p class="academic-eyebrow">02 · Find what applies to you</p>
+            <h2 id="resit-title">Re-sit guide</h2>
+            <p class="rules-guide-intro"></p>
+          </header>
+          <div class="resit-workspace">
+            <div class="resit-progress">
+              <span class="resit-progress-label" id="resit-progress-label">Choose your answers</span>
+              <progress value="0" max="2" aria-labelledby="resit-progress-label"></progress>
+            </div>
+            <div class="resit-questions"></div>
+            <div class="resit-outcome" aria-live="polite"></div>
+          </div>
+        </section>
 
-    <section id="universities" class="rules-section" aria-labelledby="universities-title" hidden>
-      <h2 id="universities-title">How each university does it</h2>
-      <div class="rules-unis"></div>
-    </section>
+        <section id="universities" class="rules-section academic-section" aria-labelledby="universities-title" hidden>
+          <header class="academic-section__heading">
+            <p class="academic-eyebrow">03 · Your university, your rules</p>
+            <h2 id="universities-title">How each university does it</h2>
+            <p>Open a university to browse its exams, re-sits and grade procedures.</p>
+          </header>
+          <div class="rules-university-toolbar academic-print-hide">
+            <nav class="rules-university-jumps" aria-label="Jump to a university"></nav>
+            <button class="button button-secondary rules-expand-all" type="button" aria-expanded="false" aria-controls="uni-unibo uni-uio uni-mci uni-eur">Expand all universities</button>
+          </div>
+          <div class="rules-unis"></div>
+        </section>
 
-    <section id="grading" class="card rules-section" aria-labelledby="grading-title" hidden>
-      <h2 id="grading-title">Grading scales</h2>
-      <p class="rules-note"></p>
-      <div class="table-wrapper"><table class="rules-grades"></table></div>
-    </section>
+        <section id="grading" class="rules-section academic-section" aria-labelledby="grading-title" hidden>
+          <header class="academic-section__heading">
+            <p class="academic-eyebrow">04 · A side-by-side reference</p>
+            <h2 id="grading-title">Grading scales</h2>
+          </header>
+          <p class="rules-note" id="grading-note"></p>
+          <div class="table-wrapper"><table class="rules-grades" aria-labelledby="grading-title" aria-describedby="grading-note"></table></div>
+        </section>
 
-    <section id="integrity" class="card rules-section" aria-labelledby="integrity-title" hidden>
-      <h2 id="integrity-title">Plagiarism and AI</h2>
-      <ul class="rules-list rules-integrity-joint"></ul>
-      <div class="rules-integrity-unis"></div>
-    </section>
+        <section id="integrity" class="rules-section academic-section" aria-labelledby="integrity-title" hidden>
+          <header class="academic-section__heading">
+            <p class="academic-eyebrow">05 · Academic integrity</p>
+            <h2 id="integrity-title">Plagiarism and AI</h2>
+          </header>
+          <ul class="rules-list rules-integrity-joint"></ul>
+          <div class="rules-integrity-unis"></div>
+        </section>
 
-    <section id="more" class="card rules-section" aria-labelledby="more-title" hidden>
-      <h2 id="more-title">Internship, extra courses and special provisions</h2>
-      <div class="rules-more"></div>
-    </section>
+        <section id="more" class="rules-section academic-section" aria-labelledby="more-title" hidden>
+          <header class="academic-section__heading">
+            <p class="academic-eyebrow">06 · Beyond exams</p>
+            <h2 id="more-title">Internship, extra courses and special provisions</h2>
+          </header>
+          <div class="rules-more"></div>
+        </section>
 
-    <p class="schedule-meta rules-disclaimer">A student-made summary, not the official rules. Rules change; the official
-      pages linked here are authoritative. Something outdated? <a href="contact.html">Tell us</a>.</p>
+        <div class="rules-closing">
+          <svg class="icon" aria-hidden="true"><use href="icons.svg#info"></use></svg>
+          <p class="schedule-meta rules-disclaimer">A student-made summary, not the official rules. Rules change; the official
+            pages linked here are authoritative. Something outdated? <a href="contact.html">Tell us</a>.</p>
+          <a class="rules-closing__link" href="support.html">Find support <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+        </div>
+      </div>
+    </div>
   </main>
 
   <footer class="site-footer">
@@ -110,7 +173,8 @@
   <script defer src="pwa.js?v=c9212bf8"></script>
   <script defer src="announcements.js?v=5ec8eef9"></script>
   <script defer src="tracks-data.js?v=629a5538"></script>
-  <script defer src="academic-rules.js?v=a757a19d"></script>
+  <script defer src="academic-pages.js?v=4c240b6f"></script>
+  <script defer src="academic-rules.js?v=a443b5e3"></script>
 
 </body>
 </html>

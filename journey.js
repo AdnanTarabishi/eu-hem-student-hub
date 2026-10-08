@@ -62,12 +62,30 @@ function currentTrack() {
   return journey.trackId ? trackById(journey.cohort, journey.trackId) : null;
 }
 
+function renderOverview() {
+  document.querySelector(".journey-hero-cohort").textContent = `EU-HEM · ${journey.cohort.label}`;
+  const list = document.querySelector(".journey-summary");
+  const semesters = journey.events.stages.filter((stage) => stage.semester);
+  const facts = [
+    ["ECTS", semesters.reduce((total, stage) => total + (stage.ects || 0), 0)],
+    ["semesters", semesters.length],
+    ["partner universities", Object.keys(journey.cohort.universities).length]
+  ];
+  list.replaceChildren(...facts.map(([label, value]) => {
+    const item = createElement("div");
+    item.append(createElement("dt", null, label), createElement("dd", null, String(value)));
+    return item;
+  }));
+  list.hidden = false;
+}
+
 function renderTrackPicker() {
   const box = document.querySelector(".journey-track-picker .choice-options");
   box.replaceChildren();
-  const options = [...journey.cohort.tracks.map((t) => ({ value: t.id, label: `${t.abbr} · ${t.name}` })), { value: "", label: "Not chosen yet" }];
+  const options = [...journey.cohort.tracks.map((t) => ({ value: t.id, label: t.abbr, detail: t.name })), { value: "", label: "Not chosen yet", detail: "See the shared programme" }];
   for (const option of options) {
     const label = createElement("label", "choice-option");
+    label.dataset.track = option.value || "none";
     const input = createElement("input");
     input.type = "radio";
     input.name = "journey-track";
@@ -80,7 +98,9 @@ function renderTrackPicker() {
       renderTimeline();
       renderErasmusRows();
     });
-    label.append(input, createElement("span", null, option.label));
+    const copy = createElement("span", "journey-track-copy");
+    copy.append(createElement("strong", "journey-track-code", option.label), createElement("span", "journey-track-name", option.detail));
+    label.append(input, copy);
     box.appendChild(label);
   }
   const note = document.querySelector(".journey-track-note");
@@ -90,31 +110,61 @@ function renderTrackPicker() {
   note.append(link, ".");
 }
 
+// A short route above the full timeline. It uses the same stagePlace() result as the details.
+function renderRoute(stops) {
+  const list = document.querySelector(".journey-route-stops");
+  list.replaceChildren();
+  const track = currentTrack();
+  document.querySelector(".journey-route-selected").textContent = track ? `${track.abbr} route selected` : "Choose a track to see your cities";
+  for (const stop of stops.filter((stage) => stage.semester)) {
+    const item = createElement("li", `journey-route-stop is-${stop.status}`);
+    const link = createElement("a");
+    link.href = `#stage-${stop.id}`;
+    const cities = stop.place.universities.map((id) => journey.cohort.universities[id].city);
+    const city = cities.length ? cities.join(" or ") : stop.place.text;
+    link.append(createElement("span", "journey-route-term", `Semester ${stop.semester}`), createElement("strong", "journey-route-city", city));
+    link.appendChild(createElement("span", "journey-route-detail", `${stop.semester === 4 ? "Master’s thesis · " : ""}${stop.ects} ECTS`));
+    if (stop.status === "current") {
+      link.appendChild(createElement("span", "journey-route-current", "Current stage"));
+      link.setAttribute("aria-current", "step");
+    }
+    link.setAttribute("aria-label", `Semester ${stop.semester}: ${city}. ${stop.ects} ECTS. Jump to stage details.`);
+    item.appendChild(link);
+    list.appendChild(item);
+  }
+}
+
 function renderTimeline() {
   const list = document.querySelector(".journey-timeline");
   list.replaceChildren();
-  for (const stop of journeyStops(journey.events, journey.cohort, currentTrack(), todayKey(), semesterTiming)) {
+  const stops = journeyStops(journey.events, journey.cohort, currentTrack(), todayKey(), semesterTiming);
+  renderRoute(stops);
+  stops.forEach((stop, index) => {
     const item = createElement("li", `journey-stop is-${stop.status}`);
     item.id = `stage-${stop.id}`;
     if (stop.status === "current") item.setAttribute("aria-current", "step");
+    const marker = createElement("span", "journey-stage-marker", String(index + 1).padStart(2, "0"));
+    marker.setAttribute("aria-hidden", "true");
+    const content = createElement("div", "journey-stage-content");
     const head = createElement("div", "journey-stop-head");
-    head.appendChild(createElement("h3", null, stop.title));
     const meta = [stop.whenLabel, stop.ects ? `${stop.ects} ECTS` : null].filter(Boolean).join(" · ");
     head.appendChild(createElement("p", "journey-stop-meta", meta));
     if (stop.status === "current") head.appendChild(createElement("span", "journey-here", "You are here"));
     if (stop.status === "done") head.appendChild(createElement("span", "journey-done", "Done"));
-    item.appendChild(head);
+    head.appendChild(createElement("h3", null, stop.title));
+    content.appendChild(head);
     if (stop.place) {
       const place = createElement("p", "journey-place");
       place.append(createElement("strong", null, "Where: "), stop.place.text);
       if (stop.place.text === "Depends on your track") place.classList.add("is-unknown");
-      item.appendChild(place);
+      content.appendChild(place);
     }
     const items = createElement("ul", "rules-list");
     fillList(items, stop.items);
-    item.appendChild(items);
+    content.appendChild(items);
+    item.append(marker, content);
     list.appendChild(item);
-  }
+  });
 }
 
 function renderDegree() {
@@ -123,8 +173,10 @@ function renderDegree() {
   section.querySelector(".journey-degree-intro").textContent = jointDegree.intro;
   const titles = section.querySelector(".journey-titles");
   for (const entry of jointDegree.titles) {
-    const li = createElement("li");
-    li.append(createElement("strong", null, entry.title), createElement("span", null, journey.cohort.universities[entry.university].name));
+    const university = journey.cohort.universities[entry.university];
+    const li = createElement("li", "journey-degree-title");
+    li.style.setProperty("--journey-city-accent", `var(--city-${university.city.toLowerCase()})`);
+    li.append(createElement("span", "journey-degree-country", university.country), createElement("strong", null, entry.title), createElement("span", "journey-degree-university", university.name));
     titles.appendChild(li);
   }
   titles.after(sourceLabel(jointDegree.source, journey.sources));
@@ -136,7 +188,7 @@ function renderNumbers() {
   const { cohortNumbers } = journey.events;
   section.querySelector("h2").textContent = `${cohortNumbers.title} (${cohortNumbers.cohortLabel})`;
   const list = section.querySelector(".journey-figures");
-  if (cohortNumbers.note) list.before(createElement("p", "schedule-meta", cohortNumbers.note));
+  if (cohortNumbers.note) list.before(createElement("p", "schedule-meta journey-snapshot-note", cohortNumbers.note));
   for (const figure of cohortNumbers.figures) {
     const box = createElement("div", "journey-figure");
     box.append(createElement("dt", null, figure.label), createElement("dd", null, figure.value));
@@ -145,7 +197,7 @@ function renderNumbers() {
   section.appendChild(sourceLabel(cohortNumbers.source, journey.sources));
   if (cohortNumbers.updatedOverview) {
     const { label, href } = cohortNumbers.updatedOverview;
-    const note = createElement("p", "rules-note");
+    const note = createElement("p", "rules-note journey-snapshot-link");
     const link = createElement("a", null, label);
     link.href = href;
     note.appendChild(link);
@@ -167,6 +219,9 @@ function renderHistory() {
 function renderErasmusRows() {
   const table = document.querySelector(".journey-erasmus-table");
   table.replaceChildren();
+  const caption = table.createCaption();
+  caption.className = "sr-only";
+  caption.textContent = "Erasmus+ grant-paying university by track. See the qualifications below the table.";
   const head = table.createTHead().insertRow();
   for (const text of ["Track", "Who pays the grant"]) {
     const th = createElement("th", null, text);
@@ -178,11 +233,15 @@ function renderErasmusRows() {
     const track = trackById(journey.cohort, entry.track);
     const row = body.insertRow();
     if (entry.track === journey.trackId) row.className = "is-mine";
-    const th = createElement("th", null, `${track.abbr} · ${track.name}`);
+    row.dataset.track = track.id;
+    const th = createElement("th");
     th.scope = "row";
+    th.append(createElement("strong", `journey-grant-code track-pill-${track.id}`, track.abbr), createElement("span", "journey-grant-name", track.name));
     if (entry.track === journey.trackId) th.appendChild(createElement("span", "journey-mine", "your track"));
     row.appendChild(th);
-    row.insertCell().textContent = `${entry.text}*`;
+    const payer = row.insertCell();
+    payer.dataset.label = "Who pays the grant";
+    payer.textContent = `${entry.text}*`;
   }
 }
 
@@ -205,7 +264,7 @@ function renderFees() {
     box.appendChild(createElement("p", null, fees.missing));
     return;
   }
-  box.appendChild(createElement("p", "schedule-meta", `Cohort ${journey.events.cohort}, academic year ${fee.academicYear}:`));
+  box.appendChild(createElement("p", "schedule-meta journey-fee-year", `Cohort ${journey.events.cohort}, academic year ${fee.academicYear}:`));
   const list = createElement("dl", "journey-figures");
   for (const [label, amount] of [["Programme country students", fee.programmeCountries], ["Partner country students", fee.partnerCountries]]) {
     const item = createElement("div", "journey-figure");
@@ -216,7 +275,7 @@ function renderFees() {
   const note = createElement("p", null, `${fee.note} `);
   note.appendChild(sourceLabel(fee.source, journey.sources));
   box.appendChild(note);
-  box.appendChild(createElement("p", "schedule-meta", fees.missing));
+  box.appendChild(createElement("p", "schedule-meta journey-fee-scope", fees.missing));
 }
 
 async function initJourney() {
@@ -231,6 +290,7 @@ async function initJourney() {
     journey.trackId = saved && saved.cohort === journey.cohort.id && trackById(journey.cohort, saved.track) ? saved.track : null;
 
     document.getElementById("journey-intro").textContent = journey.events.intro;
+    renderOverview();
     showPart("timeline");
     renderTrackPicker();
     renderTimeline();
@@ -240,10 +300,14 @@ async function initJourney() {
     renderErasmus();
     renderFees();
     status.remove();
-    if (window.location.hash) document.getElementById(window.location.hash.slice(1))?.scrollIntoView();
+    document.dispatchEvent(new CustomEvent("academic:ready"));
   } catch (error) {
     console.error("Programme journey:", error);
     status.textContent = "Sorry, the programme journey could not be loaded right now. Please try again later.";
+    const retry = createElement("button", "button button-secondary", "Try again");
+    retry.type = "button";
+    retry.addEventListener("click", () => window.location.reload());
+    status.append(" ", retry);
   }
 }
 
