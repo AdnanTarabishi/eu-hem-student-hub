@@ -102,6 +102,17 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
       assert.strictEqual(await page.getAttribute(`#tab-${other.id}`, 'aria-selected'), 'false');
       assert.strictEqual(await page.isVisible(`#panel-${other.id}`), false, `${other.id}: inactive panel hidden`);
     }
+    const bounds = await page.locator(`#tab-${id}`).evaluate((tab) => {
+      const edges = (node) => {
+        const rect = node.getBoundingClientRect();
+        return { left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom };
+      };
+      return { selected: edges(tab), scroller: edges(tab.closest('.cg-topic-tabs')) };
+    });
+    const { selected, scroller } = bounds;
+    assert.ok(selected.left >= scroller.left - 2 && selected.right <= scroller.right + 2 &&
+      selected.top >= scroller.top - 2 && selected.bottom <= scroller.bottom + 2,
+    `${id}: selected tab must be wholly visible within its topic scroller: ${JSON.stringify(bounds)}`);
   };
   const chooseTopic = async (page, id) => {
     await page.click(`#tab-${id}`);
@@ -508,11 +519,19 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
           assert.strictEqual(await page.$eval('#housing-body table thead', (head) => getComputedStyle(head).position), 'absolute');
           assert.strictEqual(await page.getAttribute('#housing-body td', 'data-label'), 'Type');
         }
+        if (width === 1440) {
+          // The last tab fits on desktop, but must be revealed within the scroller after narrowing.
+          await page.setViewportSize({ width: 390, height: 844 });
+          await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+          await assertTopic(page, 'sources');
+          assert.strictEqual(await page.evaluate(() => location.hash), '#sources');
+          assert.ok(await sideways(page) <= 0, 'resizing the selected Sources topic does not widen the page');
+        }
       }
       await page.context().close();
     }
   }
-  ok('index and city topics fit 320, 390, 768 and 1440px; housing tables become labelled cards on phones');
+  ok('index and city topics fit 320, 390, 768 and 1440px; tables become mobile cards and the selected tab stays visible after desktop-to-phone resizing');
 
   // ----- Homepage cards and site-wide search keep their existing city deep links -----
   page = await open('index.html');

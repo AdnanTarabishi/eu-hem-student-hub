@@ -733,6 +733,7 @@ function renderGuideView() {
     tab.setAttribute("aria-selected", String(active));
     tab.tabIndex = active ? 0 : -1;
   }
+  revealActiveGuideTab();
   for (const panel of state.panels) panel.hidden = !state.readAll && panel.dataset.topic !== state.activeTopic;
   if (filtering) {
     const words = simplify(state.query).split(/\s+/).filter(Boolean);
@@ -819,11 +820,24 @@ function revealHashTarget() {
   }
 }
 
+// A deep link may select a tab beyond the phone's viewport. Reveal it within its own scroller
+// without moving the page away from the linked heading or source.
+function revealActiveGuideTab() {
+  const tab = cityGuideState?.tabs.find((item) => item.dataset.topic === cityGuideState.activeTopic);
+  if (!tab) return;
+  const scroller = tab.parentElement;
+  const bounds = scroller.getBoundingClientRect();
+  const selected = tab.getBoundingClientRect();
+  if (selected.left < bounds.left) scroller.scrollLeft += selected.left - bounds.left - 4;
+  else if (selected.right > bounds.right) scroller.scrollLeft += selected.right - bounds.right + 4;
+}
+
 function placeGuideNavigation(bar) {
   const header = document.querySelector(".site-header");
   const place = () => {
     document.documentElement.style.setProperty("--guide-sticky-top", (header ? header.offsetHeight : 0) + "px");
     document.documentElement.style.setProperty("--cg-topic-height", bar.offsetHeight + "px");
+    revealActiveGuideTab();
   };
   place();
   if (typeof ResizeObserver === "function") {
