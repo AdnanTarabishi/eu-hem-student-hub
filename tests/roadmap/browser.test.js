@@ -118,7 +118,9 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   assert.match(await text(page, "#roadmap-count"), /Showing 2 of 17 plans/);
   await page.click("#roadmap-clear");
   await page.fill("#roadmap-search", "MOBILITY chécklists");
-  assert.match(await text(page, "#roadmap-count"), /Showing 1 of 17 plans/);
+  assert.match(await text(page, "#roadmap-count"), /Showing 2 of 17 plans/);
+  assert.deepStrictEqual(await page.$$eval("#roadmap-board .roadmap-card", (all) => all.map((card) => card.id)),
+    ["feature-student-hub-v2", "feature-mobility-checklists"]);
   assert.match(await text(page, "#roadmap-board"), /Personal mobility checklists/);
   await page.fill("#roadmap-search", "zebra unicorn");
   assert.match(await text(page, ".empty-state"), /No plans match these filters/);
