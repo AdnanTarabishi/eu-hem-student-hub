@@ -1,0 +1,31 @@
+name: Assemble reviewed Right to Health workspace
+on:
+  push:
+    branches: [codex/right-to-health-20261008]
+permissions:
+  contents: write
+jobs:
+  assemble:
+    if: startsWith(github.event.head_commit.message, 'Assemble Right to Health')
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Build reviewed content and integrate only course files
+        run: |
+          python3 .rth-stage/rebuild.py
+          python3 .rth-stage/integrate.py
+          node scripts/build-content-index.js
+          node tests/right-to-health/content.test.js
+          node scripts/check-content.js
+          node scripts/check-contrast.js
+          node --check right-to-health.js
+          node --check notes-course.js
+          python3 .rth-stage/verify.py
+      - name: Commit candidate files on the isolated branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add content/modules/right-to-health content/index.json course.html notes-course.js sw.js right-to-health.js right-to-health.css tests/right-to-health
+          git commit -m 'Build reviewed Right to Health learning workspace'
+          git push origin HEAD:${GITHUB_REF_NAME}
