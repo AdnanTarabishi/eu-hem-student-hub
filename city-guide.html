@@ -18,7 +18,9 @@
   <meta name="twitter:card" content="summary_large_image">
   <!-- /Social preview -->
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/source-serif-4-latin-600.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=5183febf">
+  <link rel="stylesheet" href="city-guide.css?v=65d3f510">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -27,7 +29,7 @@
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=5fef68f1">
   <script src="theme.js?v=d51d4769"></script>
 </head>
-<body>
+<body class="city-guide-page">
 
   <!-- Same header as the home page; menu links point back to the home page sections -->
   <header class="site-header">
@@ -40,11 +42,11 @@
     </div>
   </header>
 
-  <main class="container">
+  <main class="cg-main">
     <!-- guide.js puts the guide here. city-guide.html shows the index of all cities;
          city-guide.html?city=oslo shows one city (list of cities in guide-data.js). -->
-    <article id="guide" class="card guide">
-      <p id="guide-status" class="placeholder">Loading guide...</p>
+    <article id="guide" class="guide cg-guide" aria-label="City guide" aria-busy="true">
+      <p id="guide-status" class="placeholder" role="status">Loading your city guide…</p>
     </article>
   </main>
 
@@ -66,7 +68,7 @@
   <script defer src="announcements.js?v=5ec8eef9"></script>
   <script defer src="tracks-data.js?v=629a5538"></script>
   <script defer src="guide-data.js?v=4c2fbe41"></script>
-  <script defer src="guide.js?v=1e5a8c24"></script>
+  <script defer src="guide.js?v=76aa8b70"></script>
 
 </body>
 </html>

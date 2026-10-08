@@ -5,12 +5,51 @@ headings and `-` for bullet points). You never need to touch the code to change 
 
 | City | File | Status |
 |---|---|---|
-| Bologna | `docs/content/bologna-guide.md` | full format with photos, checked 5 October 2026 |
+| Bologna | `docs/content/bologna-guide.md` | full format with photos, checked 6 October 2026 |
 | Oslo | `docs/content/oslo-guide.md` | full format with photos, checked 5 October 2026 |
 | Rotterdam | `docs/content/rotterdam-guide.md` | full format with photos, checked 5 October 2026 |
 | Innsbruck | `docs/content/innsbruck-guide.md` | full format with photos, checked 5 October 2026 |
 
 The page `city-guide.html` shows the index of all cities; `city-guide.html?city=oslo` shows one city.
+
+## Browsing the guides
+
+The visual refresh on 8 October 2026 changes the presentation, not the factual review dates above.
+The sixteen Markdown sections are grouped into eight topics on the page:
+
+| Topic | Original sections |
+|---|---|
+| Overview | At a glance |
+| Arriving | Before you move; Residence and registration |
+| Housing | Housing |
+| Transport | Getting around |
+| Everyday life | Money and phone; Cost of living; Food and daily life; Weather and what to pack |
+| Study & social | Study places and campus; Sport, social life and student organisations; Useful apps and websites; Student tips |
+| Health & safety | Healthcare; Emergency numbers |
+| Sources | Sources |
+
+All original section and source IDs remain usable in shared links, site search and browser history.
+Numbered references in the Markdown, such as "see section 3", become links with the target section's
+name so they remain clear within the topic layout.
+Following a section or citation opens its topic and focuses the target, including repeated clicks
+on the same link. Empty sections remain hidden. Read all shows the complete guide; printing
+also reveals every populated section even when a topic, search or Saved filter is active.
+
+Search works across all populated sections of the current city. The Saved filter lists that
+city's saved sections across topics and can be combined with search. The sidebar links to saved
+sections in all four cities. Bookmarks stay on the device under `euhem.guide.saved.v1`, with
+the shape `{ "version": 1, "items": [{ "city": "oslo", "section": "housing" }] }`.
+Only known city/section pairs are accepted; duplicate or invalid entries are ignored. If the
+browser blocks storage, saving still works for the current visit and the sidebar explains this.
+
+The fact strip and contextual sidebar reuse the facts block below. Keep the complete text and
+its source tags: prices may depend on age, contract length or eligibility, and a transport
+discount subscription is not necessarily an unlimited pass. Never extract a number and drop
+these qualifications. Track presence still comes from `content/tracks.json`.
+
+The layout lives in `city-guide.css`, scoped to the guide page. AI covers have a visible label
+on city detail pages, and every real photo retains its photographer, licence and source link.
+The sidebar repeats a real gallery photo with its complete credit.
 
 ## How a guide file is built
 
@@ -40,7 +79,7 @@ Sections 3 and 4 always have two parts: `### EU/EEA students` and `### Non-EU st
 **What you don't write**, because the page adds it by itself:
 - which tracks study in the city and in which semester (from `content/tracks.json`)
 - the disclaimer, "follow EU-HEM's instructions first" and the "Report something outdated" link
-- the contents menu, and the "Last checked" line at the top
+- the topic menu, contextual sidebar, and the "Last checked" line at the top
 
 ## The rules for facts
 - **Every price needs a source tag**, like `NOK 393 [S16]`. The tag points to a line in
@@ -105,7 +144,11 @@ Keep real photos in every gallery too.
 ## Checks
 - `node scripts/check-content.js` checks every guide: the facts block, the 16 sections, the EU/EEA
   and non-EU parts, a source on every price, well-formed sources, and no typed track names.
-- `node tests/guide/browser.test.js .` opens the guide pages in Chrome (needs `npm install` once).
+- `node tests/guide/browser.test.js .` opens the guide pages in Playwright's bundled Chromium.
+  Install the test dependencies with `npm ci` and, if needed, the browser with
+  `npx playwright install --with-deps chromium`.
+- The **Check city guides** GitHub workflow runs those checks in Chromium and saves screenshots
+  for the directory, all four cities, mobile layouts and dark theme.
 - `npm test` runs everything.
 - After changing a `.js`, `.css` or `.html` file, run `node scripts/stamp-versions.js`. Guide files
   (`.md`) don't need it: the site always fetches them fresh.

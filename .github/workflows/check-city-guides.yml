@@ -1,0 +1,45 @@
+name: Check city guides
+
+on:
+  pull_request:
+    paths:
+      - "city-guide.html"
+      - "city-guide.css"
+      - "guide.js"
+      - "guide-data.js"
+      - "docs/content/*-guide.md"
+      - "tests/guide/**"
+      - ".github/workflows/check-city-guides.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  city-guides:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install existing test dependencies
+        run: npm ci
+      - name: Install Chromium for the browser checks
+        run: npx playwright install --with-deps chromium
+      - name: Check city guide content and browser behavior
+        env:
+          SCREENSHOT_DIR: ${{ runner.temp }}/city-guide-screenshots
+        run: |
+          node scripts/check-content.js
+          node tests/guide/browser.test.js .
+      - name: Save visual checks
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: city-guide-visual-checks
+          path: ${{ runner.temp }}/city-guide-screenshots
+          if-no-files-found: ignore
+          retention-days: 7
