@@ -205,7 +205,7 @@
       "title": "Economic rights & patient mobility",
       "kicker": "01 / THE MARKET PERSPECTIVE",
       "intro": "Start with the legal route, not with a promise of reimbursement. This guide follows the lecture from EU integration to the moving patient.",
-      "minutes": 18,
+      "minutes": 28,
       "review": [
         "The lecture presents two economic paths: removing barriers and harmonising national rules.",
         "Primary and secondary EU law are different levels, not competing synonyms.",
@@ -257,6 +257,42 @@
             "mobility",
             "ehic"
           ]
+        },
+        {
+          "title": "Competence is not the same question as a patient’s right",
+          "paragraphs": [
+            "The lecture asks two different questions: which level may adopt legislation, and what rights a person can invoke in a cross-border situation. Its competence chart distinguishes exclusive EU fields, shared fields, and support, coordination or supplementation. Health appears in more than one part of that chart: protection and improvement of human health is distinguished from common safety concerns in public health. Internal-market powers are also relevant. A useful answer therefore identifies the particular activity rather than treating every health-related measure as belonging to one undifferentiated competence.",
+            "The two economic paths then explain different mechanisms of change. Challenging a national barrier can remove an obstacle in a particular legal setting; harmonisation actively establishes common standards through legislation. Neither mechanism, as presented here, means that all national health systems have been replaced. Study task: explain which mechanism is being used before discussing its consequences for patients, providers or national planning. This is a reading framework, not an independent determination that a proposed policy has a valid legal basis."
+          ],
+          "sources": [
+            "economic"
+          ],
+          "locator": "Economic rights, PDF pp. 4, 8, 11 and 17",
+          "edition": "Expanded reading"
+        },
+        {
+          "title": "Turn the case-law chart into a structured analysis",
+          "paragraphs": [
+            "The patient-mobility chart brings several questions together. Start with the treatment that the home system covers, then identify any relevant referral or other general conditions. Next separate the possibility of requiring prior authorisation from the reasons for granting or refusing it. The lecture associates hospital care and major medical equipment with planning concerns, while its non-hospital example is treated differently. That contrast should be read within the chart’s case-law setting rather than turned into an unconditional promise about every contemporary treatment abroad.",
+            "For waiting lists, the Watts discussion directs attention to a medical assessment of the patient’s circumstances, not merely an administrative place in the queue. The chart also connects authorisation procedures with accessibility, objectivity and review, and distinguishes treatment costs from travel and accommodation. A strong short answer keeps these questions separate: coverage, procedure, clinically acceptable delay, and the relevant reimbursement limit. The examples do not supply an individual patient’s clinical record, national rules or insurer decision, so those facts must remain unresolved rather than invented."
+          ],
+          "sources": [
+            "economic"
+          ],
+          "locator": "Economic rights, PDF pp. 21–26, especially p. 25",
+          "edition": "Expanded reading"
+        },
+        {
+          "title": "What the Directive adds beyond paying a bill",
+          "paragraphs": [
+            "The lecture’s outline of Directive 2011/24/EU contains more than reimbursement provisions. It separates responsibilities of the Member State of treatment from those of the Member State of affiliation, identifies national contact points, and presents cooperation concerning prescriptions, European reference networks, rare diseases, eHealth and health technology assessment. This organisation is useful: patient mobility requires usable information and coordination as well as a route for paying for treatment. A reimbursement answer alone would miss those institutional dimensions of the lecture.",
+            "The later slide on selected topics also shows why the date and version of an instrument matter. It annotates the original outline with later instruments concerning health technology assessment, health data and reporting. Treat the earlier outline as a guide to the development of the framework, not a guarantee that every provision remains unchanged. The EEA discussion is a further distinct layer: the course introduces EEA relevance and EFTA case law, but it does not make EU membership, EEA participation and every individual entitlement interchangeable."
+          ],
+          "sources": [
+            "economic"
+          ],
+          "locator": "Economic rights, PDF pp. 28–33",
+          "edition": "Expanded reading"
         }
       ],
       "sources": [
@@ -272,7 +308,7 @@
       "title": "Human rights & the right to health care",
       "kicker": "02 / RIGHTS AND DUTIES",
       "intro": "Separate the institution, the protected right and the justification for interference. Then connect rights to services through AAAQ.",
-      "minutes": 18,
+      "minutes": 28,
       "review": [
         "Human rights, fundamental rights and citizenship rights are related but not interchangeable terms.",
         "The EU Charter and the ECHR belong to different institutional systems.",
@@ -324,6 +360,42 @@
           "sources": [
             "human"
           ]
+        },
+        {
+          "title": "Široká and Padova: why the court may not reach the merits",
+          "paragraphs": [
+            "In Široká, the lecture describes a challenge connected with a parent’s refusal to vaccinate a child. The important lesson is jurisdiction: the Charter applies to Member States when they implement Union law, and the Court did not obtain a sufficient EU-law basis to answer the questions presented. That procedural result is not a substantive judgment that every vaccination duty is justified. First establish the legal connection; only then examine the relevant right and any interference with it.",
+            "The Padova discussion concerns a nurse suspended after refusing a national vaccination requirement. The slides stress inadequacies in the referring court’s information and the link between the questions and the dispute. They also distinguish an authorisation to market a vaccine from a legal obligation to receive it. When comparing these cases, explain the procedural issue separately from the public-health controversy. Do not combine a jurisdictional limit, an inadmissible reference and a full proportionality analysis into the single statement that the court approved mandatory vaccination."
+          ],
+          "sources": [
+            "human"
+          ],
+          "locator": "Human rights, PDF pp. 33–36",
+          "edition": "Expanded reading"
+        },
+        {
+          "title": "Vavřička: reconstruct the sequence, not just the outcome",
+          "paragraphs": [
+            "The Vavřička slides organise Article 8 analysis as scope, interference and justification. Physical integrity falls within private life; recognising an interference begins the analysis rather than ending it. Justification is then considered through legal accessibility and foreseeability, a legitimate aim, and necessity in a democratic society. The protection of others includes children unable to receive a vaccine themselves. The margin of appreciation concerns the space for national decision-making, but the slides also emphasise continuing judicial review.",
+            "The specific safeguards matter to that assessment: no vaccination was forcibly administered to the applicants, medical contraindications were considered, sanctions were discussed, and administrative and judicial remedies existed. The source also addresses safety monitoring and the relevance of compensation. These facts should accompany any summary of the reasoning. A different disease, population, sanction or implementation method would require its own analysis. Finally, distinguish the legal question of whether a measure may be justified from the ethical question of whether it should be the preferred policy."
+          ],
+          "sources": [
+            "human"
+          ],
+          "locator": "Human rights, PDF pp. 41–46",
+          "edition": "Expanded reading"
+        },
+        {
+          "title": "Use AAAQ alongside respect, protect and fulfil",
+          "paragraphs": [
+            "AAAQ describes dimensions of the service or health system: sufficient provision, practical accessibility, cultural and ethical acceptability, and scientific and medical quality. Respect, protect and fulfil instead organise the duties of the responsible authority. They are complementary frameworks, not rival lists. The lecture describes respect as refraining from interference, protection as addressing interference by others, and fulfilment as taking measures towards realisation. Do not classify a problem under one heading and assume that this already identifies every required action.",
+            "Original application: a functioning clinic may still be unaffordable, hard to reach and unable to provide information patients can use. These are different accessibility barriers, not proof that the clinic does not exist. A separate question is which actor can change fees, transport, communication or provider behaviour. This example illustrates how to link a barrier to an obligation; it is not a case from the lecturer. The broad WHO framing of health also explains why a discussion limited to the hospital building would omit social and other determinants identified in the course."
+          ],
+          "sources": [
+            "human"
+          ],
+          "locator": "Human rights, PDF pp. 20–25",
+          "edition": "Expanded reading"
         }
       ],
       "sources": [
@@ -339,7 +411,7 @@
       "title": "Non-discrimination: analyse the difference",
       "kicker": "03 / EQUALITY IN PRACTICE",
       "intro": "Begin with comparability, then identify the ground, the field and the relevant legal framework. Avoid jumping directly to a verdict.",
-      "minutes": 18,
+      "minutes": 28,
       "review": [
         "Different treatment of comparable situations can raise a discrimination issue.",
         "Identical treatment of relevantly different situations can also raise an issue.",
@@ -391,6 +463,43 @@
             "non-discrimination",
             "nd-summary"
           ]
+        },
+        {
+          "title": "The ground–field–instrument test",
+          "paragraphs": [
+            "A claim needs more precision than “two people were treated differently”. The lecture links nationality and product origin to economic freedoms, distinguishes the Treaty’s nationality provision from other protected grounds, and presents several non-discrimination directives. For each problem, write down the proposed ground, the field of activity, and the instrument being invoked. A rule about employment does not automatically govern every service, and the existence of a broad Charter list does not remove the need to establish its scope of application.",
+            "The source distinguishes racial or ethnic origin under Directive 2000/43, employment-related protection under Directive 2000/78, sex equality in goods and services under Directive 2004/113, and sex equality in employment under Directive 2006/54. It specifically identifies healthcare in the racial-equality framework. These distinctions make a useful reading map, not an exhaustive account of every applicable rule. Where a slide lists a reform or a proposal, retain that status and consult the original instrument before asserting that the entire legal framework has changed."
+          ],
+          "sources": [
+            "non-discrimination",
+            "nd-summary"
+          ],
+          "locator": "Non-discrimination, PDF pp. 15–22; short summary, PDF p. 2",
+          "edition": "Expanded reading"
+        },
+        {
+          "title": "Why evidence and a comparator change the answer",
+          "paragraphs": [
+            "The short summary’s staff-event example uses full-time work as an apparently neutral priority rule. Its explanation is conditional: evidence that the rule disproportionately affects women can support an indirect sex-discrimination analysis. The text does not say that all full-time/part-time distinctions have the same effect. Identify who is disadvantaged, why the comparison is relevant, and what information supports the claimed connection. Intent to discriminate and the effects of a rule are different evidential questions.",
+            "The language example likewise asks whether the required level is necessary for the actual job. Some command of a language may be needed; a demand for perfect fluency may be excessive for the tasks described. The summary then considers objective justification and proportionality. A useful answer tests whether the measure can achieve the legitimate aim and whether a less restrictive alternative could do so. This is an original organisation of the supplied reasoning, not a general permission to justify every form of direct discrimination on any convenient ground."
+          ],
+          "sources": [
+            "nd-summary"
+          ],
+          "locator": "Non-discrimination short summary, PDF pp. 1–4",
+          "edition": "Expanded reading"
+        },
+        {
+          "title": "Keep reproductive and migration examples legally distinct",
+          "paragraphs": [
+            "The reproductive examples show why the right claimed and the applicable definition matter. The Mayr discussion distinguishes protection under the pregnant-workers framework from possible sex-equality protection. The D and Z discussions concern the position of a commissioning mother and particular maternity-leave or equality claims. These are not presented as one general decision about whether assisted reproduction is morally acceptable. Study the issue, the relevant instrument and the limited conclusion separately; the source does not provide a current country-by-country guide to reproductive rights.",
+            "The migration section also distinguishes legal categories. The slides on beneficiaries of international protection describe healthcare under the same eligibility conditions as nationals; the reception-conditions slide separately addresses applicants, children and special reception needs. Other slides concern temporary protection, long-term residence and return. The deck’s final summary is much more compressed than these detailed provisions. Preserve both the existence of that broad summary and the specific distinctions: it would be misleading to turn the entire section into a single emergency-care entitlement for all migrants."
+          ],
+          "sources": [
+            "non-discrimination"
+          ],
+          "locator": "Non-discrimination, PDF pp. 24–29 (printed slide labels 27–35)",
+          "edition": "Expanded reading"
         }
       ],
       "sources": [
@@ -405,7 +514,7 @@
       "title": "Ethics, EU values & health values",
       "kicker": "04 / FROM PRINCIPLE TO DECISION",
       "intro": "Understand the vocabulary before using a value to defend a policy. Then ask what practical duties and safeguards follow.",
-      "minutes": 15,
+      "minutes": 25,
       "review": [
         "Ethics is reflective inquiry; morality includes norms of conduct shared in a social setting.",
         "Values are more abstract than action-guiding principles.",
@@ -457,6 +566,42 @@
           "sources": [
             "ethics"
           ]
+        },
+        {
+          "title": "Read the values diagram from abstract commitments to action",
+          "paragraphs": [
+            "The diagram on page 29 places common EU values and health-specific values above more concrete ethical, legal and operational principles, with trust as an overarching goal. It separately names autonomy, nonmaleficence, beneficence and justice, alongside legal principles such as transparency, proportionality and responsibility. This is a conceptual arrangement: it helps explain why stating a broad value is not the same as describing what a service should actually do. The diagram does not supply a numerical formula for balancing all principles.",
+            "Original application: a proposed digital appointment system could claim to promote equity, but the claim needs an operational explanation. Accessible information, a non-digital alternative and a way to challenge an error are possible design responses to analyse, not requirements asserted by the slide itself. Name the value, identify the practical principle, explain the action, and disclose a remaining conflict. The purpose is to develop reasoning that a classmate can question, rather than decorate a policy with a list of values that never influence its design."
+          ],
+          "sources": [
+            "ethics"
+          ],
+          "locator": "Values and ethics, PDF pp. 8–9 and 29–30",
+          "edition": "Expanded reading"
+        },
+        {
+          "title": "Ethical disagreement does not disappear at the border",
+          "paragraphs": [
+            "The lecture opens its ethics discussion by revisiting sensitive issues and the distribution of competence. It then uses recitals from the patient-mobility directive to show legal references to ethical choices and professional duties. The example is not that economic integration has erased all moral disagreement. Rather, the course places law and ethics in a relationship mediated by values and human rights. The same healthcare activity can therefore raise an internal-market question and an ethical question without those questions being identical.",
+            "The repetition of human obligations adds a further perspective. A rights-based statement asks what a person should receive or be allowed to do; a duty-focused statement asks who must act and how. In an original seminar answer, follow a claim such as “patients should be involved” with an account of who provides information, who makes the decision, and how the patient’s contribution can matter. The lecture provides this distinction in orientation; it does not give an official answer to every ethical controversy raised in discussion."
+          ],
+          "sources": [
+            "ethics"
+          ],
+          "locator": "Values and ethics, PDF pp. 3–5 and 11–15",
+          "edition": "Expanded reading"
+        },
+        {
+          "title": "Surveys, legal commitments and recommendations are different evidence",
+          "paragraphs": [
+            "The Eurobarometer slides distinguish values respondents personally hold from values they associate with the EU. A survey finding describes answers to a question; it is not itself the legal source of the Union’s values. The charts also use historical waves and flag the introduction of “respect for the planet” as a response category in 2019. When comparing bars, preserve the survey question, wave, population and available answer categories. Do not interpret a newly introduced category as evidence that nobody cared about it in earlier years.",
+            "The legal-status distinction is equally important. The lecture presents Article 2 TEU as binding primary law and the 2006 health-values conclusions as non-binding soft law. Soft law can still structure discussion and expectations, but its status should not be silently upgraded. A defensible paragraph can therefore distinguish three statements: what people report valuing, what a legal text establishes, and what policymakers are urged to pursue. These may support each other, but they require different evidence and do not answer the same question."
+          ],
+          "sources": [
+            "ethics"
+          ],
+          "locator": "Values and ethics, PDF pp. 17–21 and 24–27",
+          "edition": "Expanded reading"
         }
       ],
       "sources": [
@@ -472,7 +617,7 @@
       "title": "Bismarck & Beveridge: a comparison framework",
       "kicker": "05 / SYSTEMS, NOT STEREOTYPES",
       "intro": "Use the models as a first map. The assigned country readings then explain the real institutions, incentives and access barriers.",
-      "minutes": 14,
+      "minutes": 24,
       "review": [
         "The course groups the Netherlands and Austria under Bismarck, and Italy and Norway under Beveridge.",
         "The teaching models contrast social insurance and taxation as organising ideas.",
@@ -533,6 +678,46 @@
             "austria24",
             "austria25"
           ]
+        },
+        {
+          "title": "Follow money, decisions and services separately",
+          "paragraphs": [
+            "The Bismarck/Beveridge table provides an organising model, but the country reports let you separate the actual functions. Revenue raising concerns where funds originate. Pooling concerns how resources are brought together. Purchasing and payment concern how money reaches providers. Delivery concerns who actually supplies services. An organisation can be privately owned while providing publicly financed care; similarly, tax-based finance does not establish that every clinician is a salaried public employee. The Italy and Austria reports contain mixed provider and payment arrangements that illustrate these distinctions.",
+            "Original comparison method: trace one treatment through the system and ask who sets entitlement, who pays, who provides the service and who can address a complaint or capacity gap. Then compare the same functions in the other country. This avoids comparing a financing label in one country with an ownership label in another. It also helps identify fragmentation: different bodies can each fulfil their own task while coordination between those tasks remains weak. This framework organises the readings; it does not rank the four countries."
+          ],
+          "sources": [
+            "org",
+            "italy",
+            "austria24"
+          ],
+          "locator": "Organizational issues, PDF p. 14; Italy 2024, PDF pp. 3–7; Austria 2024, PDF pp. 3–7",
+          "edition": "Expanded reading"
+        },
+        {
+          "title": "Coverage, access and financial protection are not synonyms",
+          "paragraphs": [
+            "Population coverage identifies who is included in a scheme. The benefits package identifies which services are included. Practical access asks whether covered people can obtain those services when and where they need them. Financial protection asks what burden remains for households. The Italian report discusses waiting and geographical barriers alongside nationally specified benefits, while the Austrian profile describes the choice between waiting for contracted care and paying for quicker private care. A high coverage figure therefore cannot by itself settle all four questions.",
+            "Original application: two patients may have the same formal entitlement yet face different travel distances, waiting times or ability to pay upfront. That observation supports an investigation of access, not an automatic conclusion that their legal entitlements differ. In a comparison answer, specify the outcome being evaluated and the population affected. A policy that improves an average may still leave a subgroup behind. The course’s rights, non-discrimination and values perspectives supply questions to ask of these system descriptions rather than a shortcut to a single “best system”."
+          ],
+          "sources": [
+            "italy",
+            "austria25"
+          ],
+          "locator": "Italy 2024, PDF pp. 6–7; Austria 2025, PDF pp. 14–15",
+          "edition": "Expanded reading"
+        },
+        {
+          "title": "Read a reform as problem, mechanism, evidence and trade-off",
+          "paragraphs": [
+            "The Norwegian chapter makes it possible to distinguish an intended mechanism from an observed result. Activity-based financing was introduced in a setting of long waiting times, but the chapter also describes additional funding, deficits and later coordination problems. The Dutch paper similarly explains the conditions needed for managed competition and calls the reform a work in progress. In both cases, “the reform aimed to improve efficiency” is not equivalent to “the reform achieved every intended outcome”.",
+            "A practical reading template is: identify the problem, describe which actor’s incentives or responsibilities changed, state what evidence the authors report, and retain the limitation or trade-off. For example, shorter hospital stays may coexist with a greater care burden outside the hospital in the Norwegian account. Do not treat a before-and-after line as proof of one causal mechanism, or a proposed adjustment as an implemented result. This method is an original study aid for comparing the assigned accounts without replacing their different findings."
+          ],
+          "sources": [
+            "norway",
+            "nl08"
+          ],
+          "locator": "Hagen & Feiring 2025, PDF pp. 4–9; van de Ven & Schut 2008, PDF pp. 5–6 and 16",
+          "edition": "Expanded reading"
         }
       ],
       "sources": [
@@ -550,7 +735,7 @@
       "title": "The Netherlands: managed competition",
       "kicker": "06 / COUNTRY READING",
       "intro": "Read the 2007 overview, the 2008 design paper and the 2015 critique together. They tell a story about the conditions for competition—not an unqualified success claim.",
-      "minutes": 17,
+      "minutes": 27,
       "review": [
         "These are historical readings, not a description of every current Dutch rule.",
         "The 2006 reform combines mandatory basic insurance with regulated insurer choice.",
@@ -603,6 +788,43 @@
           "sources": [
             "risk"
           ]
+        },
+        {
+          "title": "The three waves explain why reform took time",
+          "paragraphs": [
+            "The historical paper describes three broad waves: expansion towards universal coverage, government-led cost containment, and efficiency through managed competition. The sequence matters because the third wave responded to criticism of the incentives under earlier supply and price controls; it was not the first attempt to make care accessible. The authors describe a long transition rather than a one-day move from government to an unregulated market. Keep the approximate periods in the paper separate from claims about the Dutch system today.",
+            "The preconditions they identify include risk equalisation, workable product classification and pricing, quality and outcome measurement, usable consumer information and effective governance. These components perform different tasks. A choice of insurer is less useful without information; a low price is ambiguous without quality; accepting all applicants does not by itself remove incentives to avoid predictably costly groups. The lesson is about the interaction of institutions. The paper’s US comparison is a policy argument by its authors, not proof that an identical model can be transferred successfully to every country."
+          ],
+          "sources": [
+            "nl08"
+          ],
+          "locator": "van de Ven & Schut, 24 January 2008 draft, PDF pp. 3–6",
+          "edition": "Expanded reading"
+        },
+        {
+          "title": "Basic insurance, supplementary cover and selection incentives",
+          "paragraphs": [
+            "The historical design distinguishes compulsory basic insurance from voluntary supplementary cover. Acceptance obligations and community rating for a basic product differ from the underwriting flexibility described for supplementary insurance. The paper also distinguishes income-related contributions, premiums paid to insurers, household subsidies and risk-equalisation transfers. These are not four names for the same payment. Subsidies address affordability for households; risk equalisation addresses the predicted cost composition of an insurer’s members.",
+            "The authors explain why supplementary products, group contracts and provider networks can interact with selection incentives. That is a mechanism to understand, not evidence that every insurer uses every possible strategy. The paper explicitly reports that some expected selection was not observed in the early transition period. Keep the distinction between possible incentives and demonstrated conduct. Its numerical premiums, deductibles, discounts and forecasts belong to the 2007/2008 setting and must not become practical advice about purchasing Dutch insurance now."
+          ],
+          "sources": [
+            "nl08",
+            "nl07"
+          ],
+          "locator": "van de Ven & Schut 2008, PDF pp. 7–9 and 12–14; Going Dutch 2007, PDF pp. 2–3",
+          "edition": "Expanded reading"
+        },
+        {
+          "title": "Predictive ratios: what a value close to one can hide",
+          "paragraphs": [
+            "The article defines a group’s predictive ratio as average predicted expenditure divided by average actual expenditure. Below one indicates undercompensation in that evaluation; above one indicates overcompensation. However, the group’s definition matters. The authors warn that ratios for groups already represented by binary variables in an ordinary-least-squares model can be close to one by construction. Such a result does not show that unmodelled subgroups are adequately compensated. It is possible to report reassuring model statistics while important selection incentives remain.",
+            "The tables on PDF page 5 examine selected groups and distinguish the amount of under- or overcompensation from the reduction achieved by risk equalisation. A large reduction can coexist with a residual gap: improvement is not elimination. The table’s title, years and notes must remain attached to any discussion of its figures. Our numerical practice uses invented amounts rather than treating the table as current insurer data. It also keeps the article’s predictive ratio separate from the simpler expected-claims-margin calculator already available in Explore."
+          ],
+          "sources": [
+            "risk"
+          ],
+          "locator": "Risk Selection 2015, PDF pp. 4–5 (journal pp. 1715–1716)",
+          "edition": "Expanded reading"
         }
       ],
       "sources": [
@@ -617,7 +839,7 @@
       "title": "Italy: universal coverage, regional delivery",
       "kicker": "07 / COUNTRY READING",
       "intro": "A source-dated guide to the 2024 Health System Summary. Focus on how a national entitlement is implemented across regional systems.",
-      "minutes": 14,
+      "minutes": 24,
       "review": [
         "The 2024 report describes a decentralised National Health Service, the SSN.",
         "The central level defines the national benefits package while regions organise delivery.",
@@ -668,6 +890,42 @@
             "italy",
             "human"
           ]
+        },
+        {
+          "title": "LEA and regional implementation: two levels of the same system",
+          "paragraphs": [
+            "The report describes a national benefits package, the Livelli essenziali di assistenza (LEA), alongside regional responsibility for organisation and delivery. National pooling and regional allocation support that structure, while regions may provide additional services from their own resources. The distinction matters: common benefits do not imply identical local capacity or service arrangements. The report also describes local health authorities, hospital trusts, accredited private providers and independent GPs or paediatricians acting as gatekeepers.",
+            "An original way to read this structure is to separate a national commitment from the chain of decisions needed to fulfil it locally. Funding must be allocated, staff must be available and a provider must actually deliver the service. The report identifies interregional patient mobility as part of the financing picture. Do not assume that crossing a regional boundary within Italy and receiving care in another Member State are the same legal issue; one concerns the report’s domestic system account, while the other invokes the course’s cross-border framework."
+          ],
+          "sources": [
+            "italy"
+          ],
+          "locator": "Italy: Health System Summary 2024, PDF pp. 3–7",
+          "edition": "Expanded reading"
+        },
+        {
+          "title": "Provider payment is more varied than a tax-financed label",
+          "paragraphs": [
+            "The report separates how the SSN raises revenue from how providers are paid. Its payment overview includes capitation for local health authorities, combinations of capitation and fee-for-service for GPs, case-based hospital payments, and budget lines for activities not well captured by standard activity payments. These arrangements can coexist within one tax-financed system. Explaining only the revenue source would therefore miss the mechanisms by which organisations receive resources.",
+            "For study purposes, ask what unit triggers payment: an enrolled population, a service, a case or an allocated budget. Then ask which relevant work that payment unit might fail to describe. This second question is an analytical prompt, not a measured effect established for every Italian provider by the report. The reading notes that some activities use specific budget lines. It does not establish that one payment method always produces better quality, nor does it justify attributing all waiting-list differences to a single financial incentive."
+          ],
+          "sources": [
+            "italy"
+          ],
+          "locator": "Italy: Health System Summary 2024, PDF pp. 4 and 7",
+          "edition": "Expanded reading"
+        },
+        {
+          "title": "A service can be included but still difficult to obtain",
+          "paragraphs": [
+            "The report discusses dental and mental-health gaps, substantial variation in waiting lists and limited local availability in some areas. It also describes workforce pressures, including nursing shortages and uneven distribution. These findings should not be reduced to the claim that the SSN either covers everything or offers no protection. They identify different limitations affecting different services and populations within a broadly universal framework.",
+            "Original policy-reading exercise: consider a proposal to reduce waiting times by investing in community care. Separate the proposed facilities from the workforce, coordination and operating resources needed to use them. The report’s recovery-plan discussion supplies the context for investment, not a guarantee of future completion or equal benefit everywhere. A useful evaluation question would specify a service, a region, the relevant patient group and a time period. Do not present national reform targets or anticipated workforce changes as verified 2026 outcomes."
+          ],
+          "sources": [
+            "italy"
+          ],
+          "locator": "Italy: Health System Summary 2024, PDF pp. 7–8 and 14–15",
+          "edition": "Expanded reading"
         }
       ],
       "sources": [
@@ -681,7 +939,7 @@
       "title": "Norway: incentives, priorities & accountability",
       "kicker": "08 / COUNTRY READING",
       "intro": "Follow the 2025 chapter’s argument: expand activity and access, coordinate services, and make the allocation of scarce resources explicit.",
-      "minutes": 16,
+      "minutes": 26,
       "review": [
         "The chapter describes a tax-financed, semi-decentralised system.",
         "Municipalities and the state-owned regional specialist-care structures have different responsibilities.",
@@ -731,6 +989,42 @@
           "sources": [
             "norway"
           ]
+        },
+        {
+          "title": "Activity and budgets: two sides of the financing story",
+          "paragraphs": [
+            "The chapter links activity-based financing from 1997 to increased treatment activity and later reductions in waiting, while also identifying increased budgets, supplementary funding and deficits. It reports costs of the arrangement as well as gains: dependence on central funding, demands for additional resources and disputes about responsibility. This balanced account prevents the simplified conclusion that paying for more cases automatically solves a capacity problem without creating another challenge.",
+            "The later discussion describes criticism of economic management and a proposal to return more strongly to global budgets, followed by a more limited change in the activity-based component. Preserve the difference between a commission’s proposal and the government response described by the authors. The chapter’s question about returning to earlier problems is an analytical concern, not a prediction that must have come true. When writing an answer, identify both the incentives for activity and the mechanisms for controlling total expenditure."
+          ],
+          "sources": [
+            "norway"
+          ],
+          "locator": "Hagen & Feiring 2025, PDF pp. 4 and 7",
+          "edition": "Expanded reading"
+        },
+        {
+          "title": "Coordination reform: evaluate each component separately",
+          "paragraphs": [
+            "The 2012 coordination package is presented as a response to fragmented services, insufficient prevention and changing needs. The chapter distinguishes investment incentives for municipal acute wards, municipal co-financing of hospital treatment, and municipal payment for patients ready for discharge. These instruments targeted different behaviours. Their results should not be merged into a single verdict about whether “coordination reform worked”.",
+            "The authors report a reduction in some acute admissions associated with municipal acute wards, no significant admissions effect from the co-financing initiative, and shorter stays accompanied by concerns about the burden of early discharge. They also describe health communities and explicitly note that this initiative had not yet been evaluated in their account. An original evaluation should retain that absence of evidence. Reduced hospital use is one outcome; appropriate rehabilitation and municipal capacity are separate questions rather than benefits that can be assumed from the same statistic."
+          ],
+          "sources": [
+            "norway"
+          ],
+          "locator": "Hagen & Feiring 2025, PDF pp. 7–8",
+          "edition": "Expanded reading"
+        },
+        {
+          "title": "Priority setting: clinical judgment versus group decisions",
+          "paragraphs": [
+            "The chapter describes expected benefit, severity and cost-effectiveness as three main criteria. It distinguishes textually expressed criteria and discretion at the clinical level from quantified assessment at the group level. In the latter setting, benefit is described using QALYs and severity through absolute shortfall. The use of these measures does not mean that the lowest-cost option automatically wins, or that one metric replaces the other criteria.",
+            "The technology-introduction system also involves institutions, roles and decisions: health technology assessment informs the process, while the described Decision Forum has authority over introduction or disinvestment. The authors connect this structure with safety, equality, transparency and accountability, but note limited knowledge about some outcomes. A strong answer therefore explains both the evidence and who makes the decision. Avoid inventing a willingness-to-pay threshold or a patient-level entitlement that the supplied extract does not establish."
+          ],
+          "sources": [
+            "norway"
+          ],
+          "locator": "Hagen & Feiring 2025, PDF pp. 8–9",
+          "edition": "Expanded reading"
         }
       ],
       "sources": [
@@ -743,7 +1037,7 @@
       "title": "Austria: access, fragmentation & reform",
       "kicker": "09 / COUNTRY READING",
       "intro": "Use the 2024 structure report and the 2025 profile as complementary snapshots. Keep their underlying years and indicator definitions visible.",
-      "minutes": 15,
+      "minutes": 25,
       "review": [
         "The reports describe shared responsibilities across federal, regional and social-insurance actors.",
         "Financing combines social-insurance contributions and taxation.",
@@ -795,6 +1089,42 @@
             "austria24",
             "austria25"
           ]
+        },
+        {
+          "title": "Fragmentation is a relationship between responsibilities",
+          "paragraphs": [
+            "The report describes responsibilities distributed across the federal government, Länder, insurance funds and provider bodies. Its financing overview combines contributions, taxation and private payments, while its provider overview separates hospital and ambulatory arrangements. Fragmentation here concerns the way these responsibilities interact; it is not simply a count of institutions. A reform involving one payer or one service sector may depend on decisions made elsewhere in the system.",
+            "Target-based governance is presented as an attempt to improve joint planning and coordination, bringing the principal actors into a common process. The report also describes consolidation of insurance funds without claiming that every benefit and regional payment difference disappeared. Read organisational change and service change separately. A new structure can create a mechanism for cooperation, but the existence of that structure alone is not evidence that every problem of continuity, financing or resource allocation has been resolved."
+          ],
+          "sources": [
+            "austria24"
+          ],
+          "locator": "Austria: Health System Summary 2024, PDF pp. 3–7 and 13–14",
+          "edition": "Expanded reading"
+        },
+        {
+          "title": "Wait or pay: interpret the household’s actual choice",
+          "paragraphs": [
+            "The profile describes broad coverage alongside growth in non-contracted private practice and uneven availability of publicly contracted doctors. It links this with a choice between waiting for a covered appointment and paying for potentially quicker access. A reimbursement percentage must be read against its base: the report describes reimbursement relative to an SHI tariff for an equivalent contracted service, not automatically a fixed fraction of the private invoice. This distinction matters when explaining why a financial burden can remain.",
+            "The workforce discussion reinforces the same point. A high national physician density does not establish that the right specialty is available locally under an insurance contract. The profile describes geographic and contractual imbalances, so an access argument should identify which providers and which population it concerns. This is a reading of the 2025 report, not personalised reimbursement advice. Do not use the report’s figures to estimate what a student will pay for a current appointment without checking the relevant service and institution."
+          ],
+          "sources": [
+            "austria25"
+          ],
+          "locator": "Austria: Country Health Profile 2025, PDF pp. 9–11 and 14–15",
+          "edition": "Expanded reading"
+        },
+        {
+          "title": "Investment, uptake and outcomes: three different measures",
+          "paragraphs": [
+            "The digital-health discussion contrasts substantial investment with implementation and uptake difficulties. Spending on infrastructure, the presence of records in ELGA, use by providers and use by residents are different measures. One cannot substitute for another. The profile discusses governance and information gaps, which explains why buying technology alone is not the entire implementation problem. A later mandate or plan in the report should retain its reported status rather than being treated as proof that adoption subsequently became complete.",
+            "The pharmaceutical section offers another useful comparison within the system: nationally coordinated outpatient reimbursement and pricing are contrasted with more fragmented hospital procurement of expensive medicines. The report discusses a new appraisal board and the limits of generic and biosimilar uptake. These observations support questions about governance and coordination, not a claim that every medicine is managed through one identical process. Keep policy descriptions, reported performance and reform ambitions in separate sentences so the evidence for each remains visible."
+          ],
+          "sources": [
+            "austria25"
+          ],
+          "locator": "Austria: Country Health Profile 2025, PDF pp. 17–20",
+          "edition": "Expanded reading"
         }
       ],
       "sources": [
@@ -808,7 +1138,7 @@
       "title": "European Health Union: from analysis to proposals",
       "kicker": "10 / THE SYNTHESIS WORKSHOP",
       "intro": "Bring the four legal and ethical perspectives into a policy discussion. Keep the present framework separate from the future you are proposing.",
-      "minutes": 16,
+      "minutes": 26,
       "review": [
         "The workshop connects the course title to groups, needs, resources and levels of responsibility.",
         "The European Health Union is presented as a collection of related initiatives, not one insurance scheme.",
@@ -860,6 +1190,42 @@
           "sources": [
             "ehu"
           ]
+        },
+        {
+          "title": "History explains the workshop’s institutional question",
+          "paragraphs": [
+            "The workshop traces gradual development rather than presenting European health cooperation as beginning with COVID-19. It contrasts early ambitious proposals, including the White Pool, with the later step-by-step development of public-health competences, institutions and instruments. Its timeline connects crises and institutional responses, but the sequence alone is not evidence that each crisis uniquely caused each legal change. Some examples are explicitly unsuccessful proposals or historical instruments.",
+            "The diagram also mixes legal categories: a treaty, a regulation, a communication, an agency and a policy initiative are not interchangeable. An original revision exercise is to classify an item before explaining its role. This preserves the lecture’s difference between institutional change and a substantive programme such as cancer policy. It also prevents the phrase “European Health Union” from being mistaken for a single law that establishes one uniform national service across all participating countries."
+          ],
+          "sources": [
+            "ehu"
+          ],
+          "locator": "European Health Union workshop, PDF pp. 3–8",
+          "edition": "Expanded reading"
+        },
+        {
+          "title": "Read the four proposals as a coherent package",
+          "paragraphs": [
+            "The workshop’s proposed update has four connected components: reframing values around a European Health Union, adding a purpose-driven preamble, articulating a concise set of core values, and linking values to operational principles. The proposed values include dignity, freedom and autonomy, universal access, equity, resilience and solidarity. The deck presents them as cumulative and non-hierarchical, not a menu from which a policymaker chooses whichever value is most convenient.",
+            "The accompanying diagram links principles such as patient engagement, privacy, quality and safety, accountability and redress, non-discrimination, and evidence- and ethics-based care. The deck treats dignity and solidarity as having overarching importance rather than assigning them a single narrow operational link. These are the proposals as presented in the slides, not a claim that they have become binding law. The article cited on the slide has not been reviewed independently here; attribution remains to the supplied workshop material."
+          ],
+          "sources": [
+            "ehu"
+          ],
+          "locator": "European Health Union workshop, PDF pp. 24–26",
+          "edition": "Expanded reading"
+        },
+        {
+          "title": "Build an argument across needs, resources and society",
+          "paragraphs": [
+            "The course-title diagram asks whose needs matter, which resources are needed, where they are supplied and at what level, and how health relates to society. It includes digital and non-digital resources and social and commercial determinants. The later One Health diagram links humans, animals and environment. These prompts broaden the policy discussion beyond the immediate treatment bill without supplying a single preferred answer to every question.",
+            "Original workshop method: define a problem for a specific group, distinguish the existing framework from the proposed change, explain the relevant value and principle, identify the responsible actor and resources, and anticipate a trade-off. Finish with evidence that would help assess the proposal and a limitation you cannot resolve from the readings. A student may reasonably defend different policies if the reasoning is transparent. Signing a manifesto is separate from understanding it; this study aid does not require agreement with the initiative or manufacture a lecturer-approved position."
+          ],
+          "sources": [
+            "ehu"
+          ],
+          "locator": "European Health Union workshop, PDF pp. 10 and 17–26",
+          "edition": "Expanded reading"
         }
       ],
       "sources": [
@@ -989,6 +1355,454 @@
       "term": "One Health",
       "definition": "The interconnected human, animal and environmental perspective used in the workshop.",
       "source": "ehu"
+    }
+  ],
+  "edition": 2,
+  "cases": [
+    {
+      "id": "rth-case-01",
+      "topic": "right-to-health.economic-rights",
+      "title": "A waiting-list refusal is not the whole answer",
+      "kind": "Hypothetical application",
+      "scenario": "A fictional patient is told that planned surgery abroad cannot be authorised because everyone must wait their turn at home. The administrator supplies no individual medical assessment. Analyse which questions the lecture’s patient-mobility chart would require you to separate.",
+      "locator": "Economic rights, PDF pp. 21 and 25; original scenario, not the facts of Watts",
+      "sources": [
+        "economic"
+      ],
+      "steps": [
+        {
+          "title": "Identify the legal route",
+          "text": "The scenario does not say whether the patient seeks an S2 authorisation, reimbursement under the Directive or a Treaty-based remedy. Identify the route before borrowing conditions from it."
+        },
+        {
+          "title": "Separate entitlement from waiting",
+          "text": "Ask whether the home system covers the treatment, what general conditions apply, and what the patient’s clinical circumstances are. The lecture treats waiting through a medical rather than merely administrative perspective."
+        },
+        {
+          "title": "Examine the procedure",
+          "text": "Ask whether the decision is reasoned, accessible to the patient and open to review. The chart’s procedural protections are distinct from its reimbursement discussion."
+        }
+      ],
+      "conclusion": "The administrator’s sentence is not a complete source-based analysis. More facts and an individual assessment are needed; this does not establish automatic authorisation or full reimbursement.",
+      "trap": "Do not promise a refund of the entire foreign bill merely because waiting exists.",
+      "check": {
+        "question": "What is the most defensible next analytical step?",
+        "options": [
+          "Assume all treatment abroad is covered",
+          "Identify the route and the individual clinical assessment",
+          "Ignore the home benefit package"
+        ],
+        "answer": 1,
+        "explanation": "The lecture distinguishes coverage, route, medical delay and procedural questions."
+      }
+    },
+    {
+      "id": "rth-case-02",
+      "topic": "right-to-health.human-rights",
+      "title": "Three cases, not one vaccination verdict",
+      "kind": "Case-reading comparison",
+      "scenario": "Compare the supplied discussion of Široká, Padova and Vavřička. A classmate writes: “The European courts approved compulsory vaccination in all three cases.” Explain why this statement loses important distinctions.",
+      "locator": "Human rights, PDF pp. 33–36 and 41–46",
+      "sources": [
+        "human"
+      ],
+      "steps": [
+        {
+          "title": "Read the procedural outcome",
+          "text": "Široká is used to teach the Charter’s scope and the absence of jurisdiction in the questions presented. Padova is used to highlight an inadequately supported reference and its connection to EU law."
+        },
+        {
+          "title": "Identify the rights framework",
+          "text": "Vavřička is the lecture’s detailed Article 8 ECHR analysis. It is not a CFR judgment by the same court as the CJEU cases."
+        },
+        {
+          "title": "Keep reasoning and facts together",
+          "text": "The Article 8 sequence considers interference, legal basis, legitimate aim, necessity and safeguards. The absence of forced administration and the other specific safeguards matter."
+        }
+      ],
+      "conclusion": "A procedural obstacle is not a merits ruling. The comparison should identify the court, instrument, question reached and limited conclusion in each source account.",
+      "trap": "Do not turn inadmissibility or lack of jurisdiction into a universal endorsement of a public-health policy.",
+      "check": {
+        "question": "Which finding differs from a substantive proportionality assessment?",
+        "options": [
+          "A conclusion on the applicable safeguards",
+          "A conclusion on necessity in a democratic society",
+          "A finding that the Court lacks jurisdiction"
+        ],
+        "answer": 2,
+        "explanation": "Jurisdiction determines whether the court can address the questions; it is not the same as deciding their substantive justification."
+      }
+    },
+    {
+      "id": "rth-case-03",
+      "topic": "right-to-health.non-discrimination",
+      "title": "Who loses out under a neutral-looking rule?",
+      "kind": "Hypothetical application",
+      "scenario": "A fictional hospital gives an optional training opportunity only to full-time employees. Its review team has not yet examined the composition of the excluded group. Apply the structure of the short summary without assuming facts that are not supplied.",
+      "locator": "Non-discrimination short summary, PDF pp. 1–4; original training scenario",
+      "sources": [
+        "nd-summary"
+      ],
+      "steps": [
+        {
+          "title": "Name the criterion and comparator",
+          "text": "The rule explicitly distinguishes working hours. Identify the relevant comparison and the protected ground that might be indirectly affected; do not simply rename working hours as sex."
+        },
+        {
+          "title": "Ask for evidence",
+          "text": "The short summary conditions its staff-event analysis on statistics about differential impact. Here, the group composition and effect must be established rather than asserted."
+        },
+        {
+          "title": "Examine the aim and alternatives",
+          "text": "What is the actual purpose of the full-time requirement? Could another arrangement meet that purpose with less exclusion? Apply the appropriate framework rather than assuming every distinction is prohibited."
+        }
+      ],
+      "conclusion": "An indirect-discrimination concern is plausible, but the scenario alone does not prove the necessary effect or settle justification.",
+      "trap": "“Neutral wording” does not prove equal effects, and a possible unequal effect is not a substitute for evidence.",
+      "check": {
+        "question": "What missing information is central to the analysis?",
+        "options": [
+          "The rule’s distributional effect on a relevant protected group",
+          "Only whether the rule names a protected characteristic",
+          "Only the manager’s stated lack of discriminatory intent"
+        ],
+        "answer": 0,
+        "explanation": "The supplied short summary explicitly links its example to evidence of disproportionate impact."
+      }
+    },
+    {
+      "id": "rth-case-04",
+      "topic": "right-to-health.values-ethics",
+      "title": "A digital service with an equity slogan",
+      "kind": "Hypothetical application",
+      "scenario": "A fictional health service proposes app-only appointment booking. The team claims that faster booking proves the policy respects equity. Use the lecture’s value-to-principle diagram to develop a fuller argument.",
+      "locator": "Values and ethics, PDF pp. 8 and 26–30; original digital scenario",
+      "sources": [
+        "ethics"
+      ],
+      "steps": [
+        {
+          "title": "Separate the commitment from the outcome",
+          "text": "Equity is a broad value. Faster booking is a particular outcome and does not establish that access has improved for every relevant group."
+        },
+        {
+          "title": "Make the principle operational",
+          "text": "Consider patient involvement, information, privacy and non-discrimination. An assisted or non-digital route is an original design option to assess, not a requirement quoted from the slide."
+        },
+        {
+          "title": "Identify accountability",
+          "text": "Who listens to excluded users, reviews booking errors and evaluates practical access? Explain an actual process rather than adding more value labels."
+        }
+      ],
+      "conclusion": "A stronger proposal connects the value with an action, an affected group, a safeguard and evidence. The lecture does not provide one automatic solution to the fictional design problem.",
+      "trap": "Do not treat a value as an outcome measure or treat efficient administration as proof of fairness.",
+      "check": {
+        "question": "Which addition best strengthens the reasoning?",
+        "options": [
+          "A count of registrations that excludes people unable to register",
+          "The adoption of a privacy policy without examining access",
+          "A way to evaluate access for people unable to use the app"
+        ],
+        "answer": 2,
+        "explanation": "The diagram’s move towards practical principles encourages an explanation of implementation and affected groups."
+      }
+    },
+    {
+      "id": "rth-case-05",
+      "topic": "right-to-health.health-systems",
+      "title": "Two coverage figures, two different experiences",
+      "kind": "Hypothetical comparison",
+      "scenario": "Two fictional regions report the same high insurance-coverage rate. One has long travel distances; the other has short travel distances but large household payments for the service being studied. What can and cannot be concluded?",
+      "locator": "Italy 2024, PDF pp. 6–7; Austria 2025, PDF pp. 14–15; original regions",
+      "sources": [
+        "italy",
+        "austria25"
+      ],
+      "steps": [
+        {
+          "title": "Define the metric",
+          "text": "The coverage rate concerns inclusion in the scheme. It does not tell you the exact benefit package, service availability or financial burden."
+        },
+        {
+          "title": "Separate the barriers",
+          "text": "Travel and affordability are different dimensions of access. Compare the same service, patient population and time period before drawing conclusions."
+        },
+        {
+          "title": "Choose evidence for the question",
+          "text": "Travel time, waiting, household costs and reported unmet needs would address different aspects. These are original evaluation suggestions; the scenario supplies none of their actual values."
+        }
+      ],
+      "conclusion": "Equal coverage is compatible with different practical barriers. There is not enough information to identify a single better region or calculate an overall quality score.",
+      "trap": "Do not use coverage, accessibility and financial protection as interchangeable labels.",
+      "check": {
+        "question": "Which conclusion is supported?",
+        "options": [
+          "The two regions necessarily have identical access",
+          "Different access barriers may remain despite equal coverage",
+          "The region with shorter travel must always be better"
+        ],
+        "answer": 1,
+        "explanation": "The reports distinguish formal coverage from access and remaining household burdens."
+      }
+    },
+    {
+      "id": "rth-case-06",
+      "topic": "right-to-health.netherlands",
+      "title": "The reassuring average that misses a subgroup",
+      "kind": "Hypothetical numerical example",
+      "scenario": "In an invented evaluation, one subgroup has average predicted expenditure of €3,600 and average actual expenditure of €4,000. A second reported model statistic looks strong. Interpret the ratio without claiming that either number comes from the 2015 tables.",
+      "locator": "Risk Selection 2015, PDF pp. 4–5; all euro amounts in this case are invented",
+      "sources": [
+        "risk"
+      ],
+      "steps": [
+        {
+          "title": "Calculate the stated ratio",
+          "text": "Divide predicted by actual average expenditure: 3,600 / 4,000 = 0.90. This is a dimensionless ratio, not a 90-euro reimbursement."
+        },
+        {
+          "title": "Interpret the gap",
+          "text": "In this illustration the prediction is €400 below the subgroup’s actual mean. The article associates undercompensation of identifiable groups with selection incentives; it does not equate an incentive with proven conduct."
+        },
+        {
+          "title": "Question the evaluation",
+          "text": "Ask how the subgroup was defined and whether it simply reproduces model variables. The authors warn that favourable fit measures or constructed group ratios do not exclude residual incentives elsewhere."
+        }
+      ],
+      "conclusion": "The group ratio indicates underprediction in this example. It does not identify the firm’s realised profit, prove discrimination by a named insurer or describe current Dutch expenditure.",
+      "trap": "A predictive ratio and the compensation-minus-claims calculator are different quantities.",
+      "check": {
+        "question": "What is the predictive ratio for this invented group?",
+        "options": [
+          "0.90",
+          "1.11",
+          "400.00"
+        ],
+        "answer": 0,
+        "explanation": "Average predicted expenditure divided by average actual expenditure is 3,600 / 4,000 = 0.90."
+      }
+    },
+    {
+      "id": "rth-case-07",
+      "topic": "right-to-health.italy",
+      "title": "National benefits, a local queue",
+      "kind": "Hypothetical application",
+      "scenario": "A fictional patient is entitled to a service in the national package but cannot obtain a timely local appointment. A policy memo concludes that the service is therefore absent from the national package. Use the Italy report to critique the conclusion.",
+      "locator": "Italy: Health System Summary 2024, PDF pp. 3–8; original patient scenario",
+      "sources": [
+        "italy"
+      ],
+      "steps": [
+        {
+          "title": "Identify the level of the claim",
+          "text": "The national package describes entitlement. The report gives regions and local authorities major roles in organising actual provision."
+        },
+        {
+          "title": "Locate the access problem",
+          "text": "Availability, waiting, staffing and geography can prevent timely use of a covered service. Those are implementation questions, not automatic evidence that the benefit has been removed."
+        },
+        {
+          "title": "Match the proposed remedy to the problem",
+          "text": "A change to the package is different from a change to capacity or organisation. Ask what evidence identifies the bottleneck before choosing a response."
+        }
+      ],
+      "conclusion": "The memo confuses formal inclusion with practical access. The patient’s difficulty is important, but the scenario does not establish that the national package excludes the service.",
+      "trap": "Do not infer the legal benefit package from a waiting-list observation alone.",
+      "check": {
+        "question": "Which distinction is essential?",
+        "options": [
+          "Formal entitlement versus place of insurance enrolment",
+          "Formal entitlement versus timely provision",
+          "Public financing versus the complete absence of private providers"
+        ],
+        "answer": 1,
+        "explanation": "The report separates the nationally specified package from regional delivery and practical barriers."
+      }
+    },
+    {
+      "id": "rth-case-08",
+      "topic": "right-to-health.norway",
+      "title": "A shorter stay that shifts the burden",
+      "kind": "Hypothetical reform evaluation",
+      "scenario": "A fictional reform review celebrates shorter hospital stays after changing discharge-related payments. It does not measure the care available after discharge. Apply the cautions in the Norwegian chapter.",
+      "locator": "Hagen & Feiring 2025, PDF pp. 7–8; original review scenario",
+      "sources": [
+        "norway"
+      ],
+      "steps": [
+        {
+          "title": "Identify the mechanism",
+          "text": "The chapter distinguishes discharge-ready patient payments from other coordination measures. State which actor faces a changed incentive and what outcome is being measured."
+        },
+        {
+          "title": "Look across the service boundary",
+          "text": "Shorter stays may reduce hospital use while increasing municipal responsibilities. The chapter reports concerns about premature discharge and rehabilitation."
+        },
+        {
+          "title": "Retain uncertainty",
+          "text": "Ask about subsequent care, municipal capacity and patient experience. The fictional review supplies no evidence of those outcomes, so they cannot be assumed to have improved."
+        }
+      ],
+      "conclusion": "The reported result may be one improvement, but it is not by itself a complete assessment of coordinated or appropriate care.",
+      "trap": "Do not count work moved outside a hospital as work that has disappeared from the health system.",
+      "check": {
+        "question": "Which evidence would address the missing part of the evaluation?",
+        "options": [
+          "Hospital discharge volume without measuring subsequent care",
+          "The national hospital budget alone",
+          "Availability and adequacy of follow-up care"
+        ],
+        "answer": 2,
+        "explanation": "The chapter discusses the burden on municipalities and possible rehabilitation problems alongside shorter stays."
+      }
+    },
+    {
+      "id": "rth-case-09",
+      "topic": "right-to-health.austria",
+      "title": "Eighty per cent of what?",
+      "kind": "Hypothetical numerical example",
+      "scenario": "Use an invented private fee of €150 and an invented equivalent SHI tariff of €80. A classmate applies the profile’s described 80% tariff-based reimbursement directly to the private invoice. Demonstrate the arithmetic distinction, not a real claim entitlement.",
+      "locator": "Austria: Country Health Profile 2025, PDF p. 14; invented fees, no individual reimbursement advice",
+      "sources": [
+        "austria25"
+      ],
+      "steps": [
+        {
+          "title": "Identify the base",
+          "text": "The profile describes reimbursement by reference to the SHI tariff for an equivalent contracted service, not automatically the non-contracted provider’s invoice."
+        },
+        {
+          "title": "Calculate the illustration",
+          "text": "Eighty per cent of the invented €80 tariff is €64. Against the invented €150 fee, the difference is €86. Applying 80% directly to €150 would instead produce €120 and uses the wrong base for this illustration."
+        },
+        {
+          "title": "State the limit",
+          "text": "A real reimbursement depends on the applicable institution, service and conditions. The example does not establish eligibility, supplementary-cover terms or current tariff amounts."
+        }
+      ],
+      "conclusion": "The base of a percentage is part of its meaning. A tariff-based percentage can leave more out-of-pocket spending than a reader expects from the percentage alone.",
+      "trap": "Never turn an illustrative calculation into a promise about a student’s actual appointment bill.",
+      "check": {
+        "question": "In this explicitly invented example, what is 80% of the tariff?",
+        "options": [
+          "€120",
+          "€64",
+          "€86"
+        ],
+        "answer": 1,
+        "explanation": "The stipulated tariff is €80, so 0.8 × 80 = €64; €86 is the remaining difference, not reimbursement."
+      }
+    },
+    {
+      "id": "rth-case-10",
+      "topic": "right-to-health.european-health-union",
+      "title": "A proposal is not an enacted rule",
+      "kind": "Workshop application",
+      "scenario": "A student proposes an access policy and writes that the six values on the workshop’s final diagram are already a new binding EU legal instrument. Use the deck’s organisation to improve the claim.",
+      "locator": "European Health Union workshop, PDF pp. 2, 17 and 24–26",
+      "sources": [
+        "ehu"
+      ],
+      "steps": [
+        {
+          "title": "Identify the section’s status",
+          "text": "The agenda distinguishes de lege lata from de lege ferenda. The final diagram belongs to the proposals for future development."
+        },
+        {
+          "title": "Explain the proposal faithfully",
+          "text": "The deck links an EHU framing, a preamble, cumulative core values and operational principles. It does not present six isolated alternatives from which only one should be selected."
+        },
+        {
+          "title": "Separate argument from authority",
+          "text": "The student can argue that the proposal would strengthen the policy. That argument is different from asserting that a binding instrument already requires the measure."
+        }
+      ],
+      "conclusion": "Present the proposal as a proposal, explain how it guides the policy and identify what further legal and practical work would be needed.",
+      "trap": "An academic proposal can be influential without already being enacted law.",
+      "check": {
+        "question": "Which label fits the final proposed values framework in the deck?",
+        "options": [
+          "A reform proposal presented for discussion",
+          "An already binding extension of Article 2 TEU",
+          "A replacement for every national benefits package"
+        ],
+        "answer": 0,
+        "explanation": "The deck explicitly places the final framework in the future-oriented proposal section."
+      }
+    },
+    {
+      "id": "rth-case-11",
+      "topic": "right-to-health.human-rights",
+      "title": "An AAAQ diagnosis with more than one barrier",
+      "kind": "Hypothetical application",
+      "scenario": "A fictional rural clinic exists and has competent clinicians, but appointments require a long trip, fees are unaffordable for some households, and information is not provided in a usable form. Classify the barriers without assuming that one label exhausts the case.",
+      "locator": "Human rights, PDF pp. 23–24; original clinic scenario",
+      "sources": [
+        "human"
+      ],
+      "steps": [
+        {
+          "title": "Use the dimensions precisely",
+          "text": "Travel, affordability and information correspond to physical, economic and information accessibility. The clinic’s existence alone does not settle all AAAQ dimensions."
+        },
+        {
+          "title": "Do not invent another failure",
+          "text": "The scenario describes competent clinicians; it does not establish poor scientific quality. Additional quality or acceptability problems might exist, but they have not been supplied."
+        },
+        {
+          "title": "Connect the analysis with responsibility",
+          "text": "The respect–protect–fulfil framework asks what duties and actors might address the barriers. The source provides the framework, not the clinic’s actual governance or a definitive remedy."
+        }
+      ],
+      "conclusion": "Several accessibility barriers are supported by the scenario. Use them as a starting point for a more precise investigation rather than automatically assigning every AAAQ label.",
+      "trap": "Do not infer poor quality from distance alone or assume that one barrier excludes all others.",
+      "check": {
+        "question": "Which set most directly matches the supplied facts?",
+        "options": [
+          "Only quality and nothing else",
+          "Only clinic quantity",
+          "Physical, economic and information accessibility"
+        ],
+        "answer": 2,
+        "explanation": "These are three distinct accessibility dimensions listed in the lecture’s AAAQ slide."
+      }
+    },
+    {
+      "id": "rth-case-12",
+      "topic": "right-to-health.non-discrimination",
+      "title": "Language proficiency for the actual job",
+      "kind": "Hypothetical application",
+      "scenario": "A fictional hospital advertises a role involving a fixed set of routine logistics tasks and demands native-level language proficiency. The advertisement does not explain why that level is required. Analyse the requirement using the short summary.",
+      "locator": "Non-discrimination short summary, PDF pp. 1 and 3–4; original logistics scenario",
+      "sources": [
+        "nd-summary"
+      ],
+      "steps": [
+        {
+          "title": "Separate the rule from its possible effect",
+          "text": "The condition is expressed as language proficiency, not nationality. Ask whether it may disadvantage a relevant group in practice; neutral wording alone does not settle this."
+        },
+        {
+          "title": "Test the job-related need",
+          "text": "The short summary accepts that sufficient language ability may be necessary. Identify the tasks, communication demands and safety needs before deciding whether the advertised level is excessive."
+        },
+        {
+          "title": "Consider an alternative",
+          "text": "A job-relevant proficiency assessment is an original option to examine. Its adequacy must be evaluated rather than assumed, and the relevant legal framework must still be identified."
+        }
+      ],
+      "conclusion": "The source supports scrutiny of an exaggerated requirement, not a rule that hospitals may never require language proficiency.",
+      "trap": "Do not confuse a safety-related communication need with an unexplained demand for perfect language.",
+      "check": {
+        "question": "What does the short summary most directly ask the reader to examine?",
+        "options": [
+          "Whether every language requirement is automatically unlawful",
+          "Whether the required level is necessary for the particular work",
+          "Whether nationality and language are always identical"
+        ],
+        "answer": 1,
+        "explanation": "The explanation distinguishes sufficient command for the job from an exaggerated level."
+      }
     }
   ]
 }
