@@ -6,11 +6,63 @@ const GRADE_LABELS = { again: "Again", hard: "Hard", good: "Good", easy: "Easy" 
 
 // ctx = { course, params, topicTitle, topicLink, navigate }
 function renderPractice(panel, ctx) {
+  const intro = createElement("header", "study-practice-intro");
+  intro.appendChild(createElement("p", "study-eyebrow", "YOUR NEXT STUDY SESSION"));
+  intro.appendChild(createElement("h2", null, "Recall. Practise. Understand."));
+  intro.appendChild(createElement("p", "study-intro-copy", "Start with a card, test your understanding, or work through a question with its explanation."));
+  const links = createElement("nav", "study-tool-links");
+  links.setAttribute("aria-label", "Practice tools");
+  const tools = [
+    ["flashcards", "Flashcards", ctx.course.flashcards.length, "Recall a concept"],
+    ["quiz", "Quiz", ctx.course.questions.length, "Test yourself"],
+    ["question-bank", "Question bank", ctx.course.questions.length, "Learn with explanations"]
+  ];
+  for (const [id, title, count, hint] of tools) {
+    if (!count) continue;
+    const link = createElement("a", "study-tool-link");
+    link.href = `#${id}`;
+    link.appendChild(createElement("strong", null, title));
+    link.appendChild(createElement("span", null, hint));
+    link.appendChild(createElement("span", "study-tool-count", `${count} ${id === "flashcards" ? "cards" : "questions"} →`));
+    links.appendChild(link);
+  }
+  intro.appendChild(links);
+  panel.appendChild(intro);
   if (ctx.course.flashcards.length) panel.appendChild(flashcardSection(ctx));
   if (ctx.course.questions.length) {
     panel.appendChild(quizSection(ctx));
     panel.appendChild(questionSection(ctx));
   }
+}
+
+function practiceHeading(section, number, title, description) {
+  const heading = createElement("header", "study-section-heading");
+  heading.appendChild(createElement("span", "study-section-number", number));
+  const copy = createElement("div");
+  copy.appendChild(createElement("h3", null, title));
+  copy.appendChild(createElement("p", "study-section-description", description));
+  heading.appendChild(copy);
+  section.appendChild(heading);
+}
+
+// Keep the answer letter separate so long options and formulas wrap naturally.
+function decorateChoice(button, choice) {
+  button.textContent = "";
+  const letter = typeof choice.value === "string" ? choice.value : choice.value ? "T" : "F";
+  const badge = createElement("span", "study-option-letter", letter);
+  badge.setAttribute("aria-hidden", "true");
+  const text = typeof choice.value === "string" ? choice.label.slice(3) : choice.label;
+  button.appendChild(badge);
+  button.appendChild(renderRichText("span", text, "study-option-text"));
+  button.setAttribute("aria-label", choice.label);
+  return button;
+}
+
+function markChoice(button, correct, selected) {
+  button.disabled = true;
+  button.classList.toggle("is-correct", correct);
+  button.classList.toggle("is-wrong", selected && !correct);
+  if (correct || selected) button.appendChild(createElement("span", "study-option-state", correct ? "✓ Correct answer" : "× Your answer"));
 }
 
 // A dropdown with "All topics" + the topics that have items of this kind
@@ -46,9 +98,9 @@ function intervalText(days) {
 // Browse mode: every card, with Previous / Next / Shuffle.
 
 function flashcardSection(ctx) {
-  const section = createElement("div", "practice-section");
+  const section = createElement("section", "practice-section study-practice-section");
   section.id = "flashcards";
-  section.appendChild(createElement("h3", null, "Flashcards"));
+  practiceHeading(section, "01", "Flashcards", "Recall the idea before revealing the answer. Your review schedule stays on this device.");
 
   const controls = createElement("div", "schedule-filters");
   const select = topicSelect(ctx.course.flashcards, ctx, ctx.params.practiceTopic);
@@ -66,6 +118,7 @@ function flashcardSection(ctx) {
   let position = 0;
   let revealed = false;
   let reviewedThisSession = 0;
+  let sessionTotal = 0;
 
   const cardsInTopic = () => ctx.course.flashcards.filter((card) => !select.value || card.topic === select.value);
 
@@ -73,17 +126,18 @@ function flashcardSection(ctx) {
     modes.innerHTML = "";
     const due = dueCards(loadProgress(), cardsInTopic(), todayKey()).length;
     for (const [key, label] of [["review", `Review due (${due})`], ["browse", `Browse all (${cardsInTopic().length})`]]) {
-      const chip = smallButton(label, () => { mode = key; start(); }, "filter-chip");
+      const chip = smallButton(label, () => { mode = key; start(true); }, "filter-chip");
       chip.setAttribute("aria-pressed", String(mode === key));
       modes.appendChild(chip);
     }
   };
 
-  const start = () => {
+  const start = (focus = false) => {
     revealed = false;
     position = 0;
     reviewedThisSession = 0;
     deck = mode === "review" ? dueCards(loadProgress(), cardsInTopic(), todayKey()) : cardsInTopic();
+    sessionTotal = deck.length;
     if (mode === "browse" && ctx.params.card) {
       const at = deck.findIndex((card) => card.id === ctx.params.card);
       if (at === -1) {
@@ -93,25 +147,28 @@ function flashcardSection(ctx) {
       position = Math.max(0, deck.findIndex((card) => card.id === ctx.params.card));
       ctx.params.card = ""; // only the first time
     }
-    draw();
+    draw(focus);
   };
 
   const finished = () => {
     const done = createElement("div", "flashcard-done");
-    done.appendChild(createElement("p", "flashcard-done-title",
-      reviewedThisSession ? "🎉 All due cards reviewed!" : "✓ No cards due right now."));
+    const title = createElement("h4", "flashcard-done-title", reviewedThisSession ? "All due cards reviewed!" : "No cards due right now.");
+    title.tabIndex = -1;
+    done.appendChild(title);
+    done.appendChild(createElement("p", null, reviewedThisSession ? "A little recall goes a long way. Come back for your next review." : "You’re up to date. Browse the deck or return for your next review."));
     const next = nextDueDate(loadProgress(), cardsInTopic());
     if (next) done.appendChild(createElement("p", "schedule-meta",
       `Next review: ${formatDay(next, { weekday: "short", day: "numeric", month: "short" })}`));
-    done.appendChild(smallButton("Browse all cards", () => { mode = "browse"; start(); }));
+    done.appendChild(smallButton("Browse all cards", () => { mode = "browse"; start(true); }));
     return done;
   };
 
-  const draw = () => {
+  const draw = (focus = false) => {
     drawModes();
     study.innerHTML = "";
     if (deck.length === 0) {
       study.appendChild(mode === "review" ? finished() : createElement("p", "placeholder", "No flashcards for this topic yet."));
+      if (focus) study.querySelector(".flashcard-done-title")?.focus({ preventScroll: true });
       return;
     }
     const card = deck[position];
@@ -125,13 +182,25 @@ function flashcardSection(ctx) {
     top.appendChild(right);
     study.appendChild(top);
 
+    study.appendChild(progressBar(mode === "review" ? Math.round((sessionTotal - deck.length) / sessionTotal * 100) : Math.round((position + 1) / deck.length * 100), mode === "review" ? "Cards completed in this session" : "Position in deck"));
+
     const face = createElement("div", "flashcard");
     face.id = card.id;
+    face.classList.toggle("is-revealed", revealed);
+    face.appendChild(createElement("p", "study-eyebrow flashcard-topic", ctx.topicTitle(card.topic)));
     face.appendChild(createElement("div", "flashcard-label", "Question"));
-    face.appendChild(renderRichText("p", card.front, "flashcard-front"));
+    const front = renderRichText("h4", card.front, "flashcard-front");
+    front.tabIndex = -1;
+    face.appendChild(front);
     if (revealed) {
-      face.appendChild(createElement("div", "flashcard-label", "Answer"));
-      face.appendChild(renderRichText("p", card.back, "flashcard-back"));
+      const answer = createElement("div", "flashcard-answer");
+      answer.tabIndex = -1;
+      answer.setAttribute("aria-label", "Answer");
+      answer.appendChild(createElement("div", "flashcard-label", "Answer"));
+      answer.appendChild(renderRichText("p", card.back, "flashcard-back"));
+      face.appendChild(answer);
+    } else {
+      face.appendChild(createElement("p", "flashcard-hint", "Bring the answer to mind, then check it below."));
     }
     study.appendChild(face);
     typesetMath(face);
@@ -143,7 +212,7 @@ function flashcardSection(ctx) {
     const buttons = createElement("div", "button-row flashcard-controls");
     if (mode === "review") {
       if (!revealed) {
-        buttons.appendChild(smallButton("Reveal answer", () => { revealed = true; draw(); }, "button"));
+        buttons.appendChild(smallButton("Reveal answer", () => { revealed = true; draw(true); }, "button study-primary"));
       } else {
         // Each button shows when the card would come back
         const state = loadProgress().cards[card.id];
@@ -156,7 +225,7 @@ function flashcardSection(ctx) {
             if (grade === "again") deck.push(card); // see it again later in this session
             position = 0;
             revealed = false;
-            draw();
+            draw(true);
           }, `button grade-button grade-${grade}`);
           button.appendChild(createElement("span", "grade-label", GRADE_LABELS[grade]));
           button.appendChild(createElement("span", "grade-when", grade === "again" ? "now" : intervalText(preview)));
@@ -164,15 +233,17 @@ function flashcardSection(ctx) {
         }
       }
     } else {
-      buttons.appendChild(smallButton("◀ Previous", () => { position = (position - 1 + deck.length) % deck.length; revealed = false; draw(); }));
-      buttons.appendChild(smallButton(revealed ? "Hide answer" : "Reveal answer", () => { revealed = !revealed; draw(); }, "button"));
-      buttons.appendChild(smallButton("Next ▶", () => { position = (position + 1) % deck.length; revealed = false; draw(); }));
-      buttons.appendChild(smallButton("Shuffle", () => { shuffle(deck); position = 0; revealed = false; draw(); }));
+      buttons.appendChild(smallButton("◀ Previous", () => { position = (position - 1 + deck.length) % deck.length; revealed = false; draw(true); }));
+      buttons.appendChild(smallButton(revealed ? "Hide answer" : "Reveal answer", () => { revealed = !revealed; draw(true); }, "button study-primary"));
+      buttons.appendChild(smallButton("Next ▶", () => { position = (position + 1) % deck.length; revealed = false; draw(true); }));
+      buttons.appendChild(smallButton("Shuffle", () => { shuffle(deck); position = 0; revealed = false; draw(true); }));
     }
+    if (mode === "review" && revealed) study.appendChild(createElement("p", "flashcard-grade-prompt", "How well did you recall it? Choose when to review this card again."));
     study.appendChild(buttons);
+    if (focus) (study.querySelector(".flashcard-answer") || front).focus({ preventScroll: true });
   };
 
-  select.addEventListener("change", start);
+  select.addEventListener("change", () => start(true));
   start();
   return section;
 }
@@ -189,9 +260,9 @@ function shuffle(list) {
 // ----- Quiz (the quiz itself is in notes-quiz.js) -----
 
 function quizSection(ctx) {
-  const section = createElement("div", "practice-section");
+  const section = createElement("section", "practice-section study-practice-section");
   section.id = "quiz";
-  section.appendChild(createElement("h3", null, "Quiz"));
+  practiceHeading(section, "02", "Quiz", "Build a practice session around what you want to learn next.");
   const best = loadProgress().quizzes[ctx.course.id];
   section.appendChild(createElement("p", "schedule-meta",
     "A short test from the question bank, one question at a time, with a score at the end." +
@@ -202,6 +273,9 @@ function quizSection(ctx) {
 
   const showSetup = () => {
     box.innerHTML = "";
+    box.classList.add("study-quiz");
+    box.appendChild(createElement("p", "study-eyebrow", "SET YOUR SESSION"));
+    box.appendChild(createElement("h4", "quiz-setup-title", "A few questions. A clearer picture."));
     const form = createElement("div", "schedule-filters quiz-setup");
     const topic = topicSelect(ctx.course.questions, ctx, ctx.params.practiceTopic);
     const count = createElement("select");
@@ -220,7 +294,8 @@ function quizSection(ctx) {
       const pool = ctx.course.questions.filter((q) => !topic.value || q.topic === topic.value);
       const size = count.value === "all" ? pool.length : Math.min(Number(count.value), pool.length);
       runQuiz(box, ctx, shuffle([...pool]).slice(0, size), { timed: timer.checked, onExit: showSetup });
-    }, "button"));
+    }, "button study-primary"));
+    box.appendChild(createElement("p", "study-session-note", "Answers include explanations. Your best score is saved on this device."));
   };
   showSetup();
   return section;
@@ -248,9 +323,9 @@ function questionChoices(question) {
 }
 
 function questionSection(ctx) {
-  const section = createElement("div", "practice-section");
+  const section = createElement("section", "practice-section study-practice-section");
   section.id = "question-bank";
-  section.appendChild(createElement("h3", null, "Question bank"));
+  practiceHeading(section, "03", "Question bank", "Work at your own pace. Choose an answer, then explore the reasoning.");
   section.appendChild(createElement("p", "schedule-meta",
     "Questions written by students for practice. They are not real exam questions."));
 
@@ -268,6 +343,7 @@ function questionSection(ctx) {
   section.appendChild(filters);
 
   const status = createElement("p", "student-totals");
+  status.setAttribute("role", "status");
   const list = createElement("div", "question-list");
   section.appendChild(status);
   section.appendChild(list);
@@ -279,7 +355,7 @@ function questionSection(ctx) {
       (!type.value || q.type === type.value));
     status.textContent = `Showing ${visible.length} of ${ctx.course.questions.length} questions`;
     list.innerHTML = "";
-    for (const question of visible) list.appendChild(questionCard(question, ctx));
+    for (const question of visible) list.appendChild(questionCard(question, ctx, ctx.course.questions.indexOf(question) + 1));
     if (visible.length === 0) list.appendChild(createElement("p", "placeholder", "No questions match these filters."));
     typesetMath(list);
   };
@@ -288,11 +364,12 @@ function questionSection(ctx) {
   return section;
 }
 
-function questionCard(question, ctx) {
-  const card = createElement("div", "question-card");
+function questionCard(question, ctx, number) {
+  const card = createElement("article", "question-card study-question");
   card.id = question.id;
 
   const meta = createElement("div", "announcement-meta");
+  if (number) meta.appendChild(createElement("span", "study-question-number", String(number).padStart(2, "0")));
   meta.appendChild(createElement("span", "question-type", QUESTION_TYPE_LABELS[question.type] || question.type));
   meta.appendChild(createElement("span", `difficulty difficulty-${question.difficulty}`, question.difficulty));
   if (question.sample) meta.appendChild(sampleTag());
@@ -300,22 +377,22 @@ function questionCard(question, ctx) {
   meta.appendChild(saveButton(question.id));
   card.appendChild(meta);
 
-  card.appendChild(renderRichText("p", question.question, "question-text"));
+  card.appendChild(renderRichText("h4", question.question, "question-text"));
 
   const feedback = createElement("p", "answer-feedback");
   feedback.setAttribute("aria-live", "polite");
+  feedback.tabIndex = -1;
 
   // Choices: clicking one shows right or wrong
   const choices = questionChoices(question);
   if (choices.length) {
     const box = createElement("div", question.type === "mcq" ? "choice-list" : "choice-list choice-row");
     const buttons = choices.map((choice) => {
-      const b = createElement("button", "choice", choice.label);
+      const b = decorateChoice(createElement("button", "choice"), choice);
       b.type = "button";
       b.addEventListener("click", () => {
         for (const [i, other] of buttons.entries()) {
-          other.disabled = true;
-          if (choices[i].value === question.answer) other.classList.add("is-correct");
+          markChoice(other, choices[i].value === question.answer, other === b);
         }
         const right = choice.value === question.answer;
         if (question.type === "mcq" && window.recordStatisticsAnswer) window.recordStatisticsAnswer(question, choice.value.charCodeAt(0) - 65, "course practice");
@@ -323,6 +400,7 @@ function questionCard(question, ctx) {
         feedback.textContent = right ? "✔ Correct!" : `✖ Not quite. The answer is ${correctAnswerText(question)}.`;
         feedback.className = right ? "answer-feedback is-right" : "answer-feedback is-wrong";
         typesetMath(feedback);
+        feedback.focus({ preventScroll: true });
       });
       box.appendChild(b);
       return b;
@@ -338,11 +416,13 @@ function questionCard(question, ctx) {
   card.appendChild(feedback);
 
   const explanation = explanationBox(question);
+  explanation.id = `${question.id}-explanation`;
   explanation.hidden = true;
 
   const explain = createElement("button", "button button-light", "Explain answer");
   explain.type = "button";
   explain.setAttribute("aria-expanded", "false");
+  explain.setAttribute("aria-controls", explanation.id);
   explain.addEventListener("click", () => {
     explanation.hidden = !explanation.hidden;
     explain.textContent = explanation.hidden ? "Explain answer" : "Hide explanation";
@@ -362,6 +442,7 @@ function questionCard(question, ctx) {
 // "Answer: B. ..." + the written explanation
 function explanationBox(question) {
   const box = createElement("div", "explanation");
+  box.appendChild(createElement("p", "study-eyebrow", "THE REASONING"));
   const answerLine = createElement("p");
   answerLine.appendChild(createElement("strong", null, question.type === "short-answer" ? "Model answer: " : "Answer: "));
   answerLine.appendChild(document.createTextNode(correctAnswerText(question)));

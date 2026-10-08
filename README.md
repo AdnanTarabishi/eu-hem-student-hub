@@ -126,6 +126,9 @@ as JSON and Markdown files. Adding content never requires code changes.
   the term's exam period. Date calculations use Bologna time and update in an open tab.
   Styles live in `notes-landing.css`, scheduling helpers in `notes-schedule.js`.
 - Check scheduling, library interactions, responsive layouts and offline reload: `npm run test:notes`.
+- Study tools share `study-practice.css`: course flashcards and question banks, lecture quizzes,
+  statistics practice, lab checks and mock exams. Check recall, answer feedback, keyboard focus,
+  mobile themes and offline delivery with `npm run test:practice`.
 - Check content before committing: `node scripts/check-content.js`
 
 ## Announcements

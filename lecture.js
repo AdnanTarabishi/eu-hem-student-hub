@@ -226,6 +226,9 @@ function updateSidebar() {
   $("quiz-score").textContent = done
     ? correct + " correct · " + (done - correct) + " to revisit"
     : "Take your time. You’re here to learn.";
+  $("practice-correct-count").textContent = correct;
+  $("practice-revisit-count").textContent = done - correct;
+  $("practice-remaining-count").textContent = questions.length - done;
   $("question-map").innerHTML = questions
     .map((q, i) => {
       let cls = !state.review && i === state.index ? "current " : "";
@@ -236,7 +239,12 @@ function updateSidebar() {
         : state.answers[i] !== null
           ? "selected"
           : "";
-      return `<button type="button" class="${cls}" data-question="${i}" ${!state.review && i === state.index ? 'aria-current="step"' : ""} aria-label="Question ${i + 1}: ${state.checked[i] ? (state.answers[i] === q.a ? "correct" : "incorrect") : "not checked"}">${i + 1}</button>`;
+      const marker = state.checked[i]
+        ? state.answers[i] === q.a
+          ? "✓"
+          : "↺"
+        : "";
+      return `<button type="button" class="${cls}" data-question="${i}" ${!state.review && i === state.index ? 'aria-current="step"' : ""} aria-label="Question ${i + 1}: ${state.checked[i] ? (state.answers[i] === q.a ? "correct" : "incorrect") : "not checked"}"><span class="question-map-number">${i + 1}</span>${marker ? `<span class="question-map-status" aria-hidden="true">${marker}</span>` : ""}</button>`;
     })
     .join("");
   $("question-map")
@@ -263,7 +271,33 @@ function renderQuiz(focus = false) {
     selected = state.answers[i],
     right = selected === q.a;
   $("quiz-card").innerHTML =
-    `<div class="quiz-top"><span class="question-category">${esc(q.topic)}</span><span class="pill">${i + 1} / ${questions.length}</span></div>${q.supp ? '<div class="note small" style="margin-bottom:20px">Supplementary: assume independent sampling, known population SD, and a normal or approximately normal sampling distribution.</div>' : ""}<h2 id="question-heading" class="question-title" tabindex="-1">${esc(q.q)}</h2><div class="options" role="radiogroup" aria-labelledby="question-heading">${q.o.map((o, j) => `<label class="option ${done && j === q.a ? "correct-option" : ""} ${done && selected === j && !right ? "wrong-option" : ""}"><input type="radio" name="answer" value="${j}" ${selected === j ? "checked" : ""} ${done ? "disabled" : ""}><span class="option-letter" aria-hidden="true">${optionLetter(j)}</span><span>${esc(o)}${done && j === q.a ? " <strong>(Correct)</strong>" : ""}${done && selected === j && !right ? " <strong>(Your answer)</strong>" : ""}</span></label>`).join("")}</div>${done ? `<div id="answer-feedback" class="answer-feedback ${right ? "" : "wrong"}" tabindex="-1" role="status"><strong>${right ? "That’s right." : "A useful one to revisit."}</strong>${esc(q.e)}</div>` : ""}<div class="quiz-bottom"><button class="btn secondary small-btn" type="button" id="previous-question" ${i === 0 ? "disabled" : ""}>← Previous</button><div class="right-actions">${!done ? `<button class="btn small-btn" type="button" id="check-answer" ${selected === null ? "disabled" : ""}>Check answer</button>` : ""}<button class="btn ${done ? "" : "secondary"} small-btn" type="button" id="next-question">${i === questions.length - 1 ? "See results" : done ? "Next →" : "Skip →"}</button></div></div><p class="quiz-note">${esc(q.ref)} · Checked answers are locked until you reset practice.</p>`;
+    `<div class="quiz-top">
+      <span class="question-category">${esc(q.topic)}</span>
+      <span class="pill question-position">Question ${String(i + 1).padStart(2, "0")} / ${questions.length}</span>
+    </div>
+    <p class="question-status ${done ? (right ? "correct" : "wrong") : "unanswered"}">${done ? (right ? "✓ Checked · Correct" : "↺ Checked · Revisit") : "Single-answer question"}</p>
+    ${q.supp ? '<div class="note small practice-supplementary">Supplementary: assume independent sampling, known population SD, and a normal or approximately normal sampling distribution.</div>' : ""}
+    <h2 id="question-heading" class="question-title" tabindex="-1">${esc(q.q)}</h2>
+    <p id="question-instruction" class="question-instruction">${done ? "Your answer has been checked. Read the explanation before moving on." : "Choose the one best answer, then check your reasoning."}</p>
+    <div class="options" role="radiogroup" aria-labelledby="question-heading" aria-describedby="question-instruction">
+      ${q.o.map((o, j) => `<label class="option ${done && j === q.a ? "correct-option" : ""} ${done && selected === j && !right ? "wrong-option" : ""}">
+        <input type="radio" name="answer" value="${j}" ${selected === j ? "checked" : ""} ${done ? "disabled" : ""}>
+        <span class="option-letter" aria-hidden="true">${optionLetter(j)}</span>
+        <span class="option-copy">${esc(o)}${done && j === q.a ? ' <strong class="option-state">✓ Correct answer</strong>' : ""}${done && selected === j && !right ? ' <strong class="option-state">↺ Your answer</strong>' : ""}</span>
+      </label>`).join("")}
+    </div>
+    ${done ? `<div id="answer-feedback" class="answer-feedback ${right ? "" : "wrong"}" tabindex="-1" role="status">
+      <div class="feedback-heading"><svg class="icon" aria-hidden="true"><use href="icons.svg#${right ? "check" : "info"}"></use></svg><strong>${right ? "That’s right." : "A useful one to revisit."}</strong></div>
+      <p class="feedback-copy">${esc(q.e)}</p>
+    </div>` : ""}
+    <div class="quiz-bottom">
+      <button class="btn secondary small-btn" type="button" id="previous-question" ${i === 0 ? "disabled" : ""}>← Previous</button>
+      <div class="right-actions">
+        ${!done ? `<button class="btn small-btn" type="button" id="check-answer" ${selected === null ? "disabled" : ""}>Check answer</button>` : ""}
+        <button class="btn ${done ? "" : "secondary"} small-btn" type="button" id="next-question">${i === questions.length - 1 ? "See results" : done ? "Next →" : "Skip →"}</button>
+      </div>
+    </div>
+    <div class="quiz-note practice-source"><svg class="icon" aria-hidden="true"><use href="icons.svg#notes"></use></svg><div><span>${esc(q.ref)}</span><p>Checked answers are locked until you reset practice.</p></div></div>`;
   $("quiz-card")
     .querySelectorAll("input[name=answer]")
     .forEach((r) =>
@@ -305,14 +339,40 @@ function renderResults() {
     wrong = done - correct,
     unanswered = questions.length - done;
   $("quiz-card").innerHTML =
-    `<p class="eyebrow muted">Your practice recap</p><h2 id="result-heading" tabindex="-1">${done === questions.length ? "You finished the set." : "Your progress so far."}</h2><div class="result-score">${correct}<span class="muted" style="font-size:30px"> / ${questions.length}</span></div><p class="muted">${correct} correct · ${wrong} incorrect · ${unanswered} not checked</p><p class="small">${unanswered ? "You can return to any unchecked question. " : ""}Read the explanations below and use the lab to revisit anything that felt uncertain.</p><button class="btn small-btn" type="button" id="resume-quiz">${unanswered ? "Continue practice →" : "Review questions →"}</button><div style="margin-top:25px">${questions
+    `<div class="practice-recap-head">
+      <p class="eyebrow muted"><svg class="icon" aria-hidden="true"><use href="icons.svg#trophy"></use></svg> Your practice recap</p>
+      <h2 id="result-heading" tabindex="-1">${done === questions.length ? "You finished the set." : "Your progress so far."}</h2>
+      <div class="result-score">${correct}<span class="result-score-total"> / ${questions.length}</span></div>
+      <p class="practice-score-caption">Correct answers in this set</p>
+    </div>
+    <dl class="practice-result-metrics">
+      <div class="metric-correct"><dt>Correct</dt><dd>${correct}</dd></div>
+      <div class="metric-revisit"><dt>To revisit</dt><dd>${wrong}</dd></div>
+      <div class="metric-remaining"><dt>Not checked</dt><dd>${unanswered}</dd></div>
+    </dl>
+    <p class="small practice-recap-note">${unanswered ? "You can return to any unchecked question. " : ""}Read the explanations below and use the lab to revisit anything that felt uncertain.</p>
+    <button class="btn small-btn" type="button" id="resume-quiz">${unanswered ? "Continue practice →" : "Review questions →"}</button>
+    <div class="practice-review-list"><h3>Review your reasoning</h3>${questions
       .map((q, i) => {
         const status = state.checked[i]
           ? state.answers[i] === q.a
             ? "✓ Correct"
             : "↺ Revisit"
           : "○ Not checked";
-        return `<details class="review-item"><summary>${i + 1}. ${esc(q.topic)} — ${status}</summary><p>${esc(q.q)}</p><p>${state.answers[i] === null ? "No answer selected." : "Your selection: " + esc(optionLetter(state.answers[i]) + ". " + q.o[state.answers[i]]) + (state.checked[i] ? "" : " (not checked)")}</p><p class="review-answer"><strong>Correct answer: ${optionLetter(q.a)}. ${esc(q.o[q.a])}</strong></p><p>${esc(q.e)}</p></details>`;
+        const statusClass = !state.checked[i]
+          ? "unanswered"
+          : state.answers[i] === q.a
+            ? "correct"
+            : "wrong";
+        return `<details class="review-item">
+          <summary><span class="review-number">${String(i + 1).padStart(2, "0")}</span><span class="review-topic">${esc(q.topic)}</span><span class="review-status ${statusClass}">${status}</span></summary>
+          <div class="review-copy">
+            <p class="review-question">${esc(q.q)}</p>
+            <p>${state.answers[i] === null ? "No answer selected." : "Your selection: " + esc(optionLetter(state.answers[i]) + ". " + q.o[state.answers[i]]) + (state.checked[i] ? "" : " (not checked)")}</p>
+            <p class="review-answer"><strong>Correct answer: ${optionLetter(q.a)}. ${esc(q.o[q.a])}</strong></p>
+            <div class="review-explanation"><strong>Why this answer</strong><p>${esc(q.e)}</p></div>
+          </div>
+        </details>`;
       })
       .join("")}</div>`;
   $("resume-quiz").addEventListener("click", () => {
@@ -431,6 +491,8 @@ async function startLecture() {
     $("lecture-save").replaceWith(saveButton(id));
     $("lecture-question-count").textContent =
       questions.length + " practice questions";
+    $("practice-question-count").textContent =
+      questions.length + " questions";
     $("lecture-activity-count").textContent =
       config.activities.length + " interactive " + (config.activities.length === 1 ? "activity" : "activities");
     LectureActivities.init($("lecture-extra-activities"), config.activities);
