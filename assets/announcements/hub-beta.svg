@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" fill="none">
+  <title>A student hub taking shape</title>
+  <desc>An original abstract browser illustration with study cards, a calendar and a community network.</desc>
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0v40" stroke="#1A405A" stroke-opacity=".07"/>
+    </pattern>
+    <filter id="shadow" x="-25%" y="-35%" width="150%" height="180%">
+      <feDropShadow dx="0" dy="13" stdDeviation="14" flood-color="#1E3D50" flood-opacity=".12"/>
+    </filter>
+    <clipPath id="frame"><rect width="800" height="500"/></clipPath>
+  </defs>
+  <g clip-path="url(#frame)">
+    <path fill="#EBEFEB" d="M0 0h800v500H0z"/>
+    <path fill="url(#grid)" d="M0 0h800v500H0z"/>
+    <circle cx="712" cy="430" r="188" fill="#DCE5DB"/>
+    <circle cx="96" cy="85" r="124" fill="#E8D8CA"/>
+    <path d="M53 406c53-69 97-80 140-56m401-249c49-40 117-26 147 11" stroke="#92A8A0" stroke-width="2" stroke-dasharray="4 7" stroke-linecap="round"/>
+    <g filter="url(#shadow)">
+      <rect x="137" y="78" width="531" height="343" rx="20" fill="#FDFBF5" stroke="#163B54" stroke-width="2"/>
+      <path d="M157 78h491a20 20 0 0 1 20 20v26H137V98a20 20 0 0 1 20-20Z" fill="#163B54"/>
+      <circle cx="159" cy="101" r="4" fill="#D08465"/>
+      <circle cx="175" cy="101" r="4" fill="#D5C5A3"/>
+      <circle cx="191" cy="101" r="4" fill="#88A68C"/>
+      <rect x="258" y="91" width="292" height="19" rx="6" fill="#2B4C65"/>
+      <path d="M277 100h98" stroke="#7F9AA7" stroke-width="3" stroke-linecap="round"/>
+      <path d="m628 97 5 5-5 5m-14-10-5 5 5 5" stroke="#9DB4B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="162" y="150" width="299" height="109" rx="12" fill="#214E5A"/>
+      <path d="M182 173h60" stroke="#B9CECA" stroke-width="5" stroke-linecap="round"/>
+      <path d="M182 197h144m-144 14h115" stroke="#FCF7EA" stroke-width="8" stroke-linecap="round"/>
+      <rect x="179" y="232" width="67" height="10" rx="5" fill="#D18260"/>
+      <circle cx="399" cy="204" r="35" stroke="#AFC5BC" stroke-opacity=".65"/>
+      <ellipse cx="399" cy="204" rx="18" ry="35" stroke="#AFC5BC" stroke-opacity=".65"/>
+      <path d="M364 204h70m-67-13h64m-64 26h64" stroke="#AFC5BC" stroke-opacity=".65"/>
+      <rect x="479" y="150" width="163" height="109" rx="12" fill="#E6ECE2"/>
+      <path d="M496 170h55" stroke="#668476" stroke-width="5" stroke-linecap="round"/>
+      <g fill="#ABBFA9">
+        <rect x="495" y="190" width="22" height="16" rx="4"/><rect x="529" y="190" width="22" height="16" rx="4"/>
+        <rect x="563" y="190" width="22" height="16" rx="4"/><rect x="597" y="190" width="22" height="16" rx="4"/>
+        <rect x="495" y="221" width="22" height="16" rx="4"/><rect x="529" y="221" width="22" height="16" rx="4"/>
+        <rect x="597" y="221" width="22" height="16" rx="4"/>
+      </g>
+      <rect x="563" y="221" width="22" height="16" rx="4" fill="#C86B4B"/>
+      <rect x="162" y="277" width="146" height="114" rx="12" fill="#F1E6D9"/>
+      <rect x="326" y="277" width="146" height="114" rx="12" fill="#E6ECEE"/>
+      <rect x="490" y="277" width="152" height="114" rx="12" fill="#E8E5EF"/>
+      <path d="M182 313v-16l16 4 16-4v28l-16-4-16 4v-12Zm16-12v20" stroke="#A8674D" stroke-width="2.5" stroke-linejoin="round"/>
+      <path d="M346 322v-10m9 10v-18m9 18v-26m-21 30h30" stroke="#4C7789" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="523" cy="307" r="5" stroke="#7A6B9C" stroke-width="2.5"/>
+      <circle cx="539" cy="325" r="4" stroke="#7A6B9C" stroke-width="2.5"/>
+      <circle cx="512" cy="326" r="4" stroke="#7A6B9C" stroke-width="2.5"/>
+      <path d="m520 313-6 9m13-10 9 10" stroke="#7A6B9C" stroke-width="2"/>
+      <path d="M182 347h102m-102 16h68" stroke="#B5A38F" stroke-width="5" stroke-linecap="round"/>
+      <path d="M346 347h102m-102 16h68" stroke="#A0B4BB" stroke-width="5" stroke-linecap="round"/>
+      <path d="M510 347h102m-102 16h68" stroke="#B5AAC5" stroke-width="5" stroke-linecap="round"/>
+    </g>
+    <g transform="rotate(12 683 176)">
+      <rect x="645" y="138" width="76" height="76" rx="19" fill="#C97150"/>
+      <path d="M664 170h39m-26-13v39m26-26-10-10m10 10-10 10" stroke="#FAF5EA" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g transform="rotate(-12 135 335)">
+      <rect x="102" y="302" width="66" height="66" rx="17" fill="#173E52"/>
+      <path d="m119 334 11 11 22-24" stroke="#C0D6C7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <path d="M70 235v18m-9-9h18m635 100v22m-11-11h22" stroke="#8AA297" stroke-width="2" stroke-linecap="round"/>
+  </g>
+</svg>

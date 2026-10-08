@@ -9,10 +9,13 @@ the backend is **Supabase** (a hosted PostgreSQL database with logins).
 | Section | Who | What |
 |---|---|---|
 | **Overview** | everyone | Numbers at a glance, what needs attention (waiting for review, sent back to you, Urgent banners, items about to expire), whether the public site already shows what is published, recent activity |
-| **Announcements** | everyone | Status tabs, search, category filter, form with a **live preview** (exactly the public card, including the red Urgent banner), character counters, Duplicate |
+| **Announcements** | everyone | Status tabs, search, category filter, form with a **live content preview** (title, message, category, byline and red Urgent banner), character counters, Duplicate |
 | **Events** | everyone | Student and social events (date, times, place, description, link). Published ones appear under **Community events** on `calendar.html` until they are over |
 | **Team** | admins | Add people, change role or “Posted by” name, remove. The last admin can never be removed |
 | **Activity** | everyone | Who created, edited, sent, published, sent back (with the note), archived or deleted what. Written by the database itself; nobody can edit it |
+
+The announcement preview checks the content as you write. The public Announcements page adds covers,
+feed layouts and a full-update dialog; the editor preview does not reproduce those presentation features.
 
 **Safety nets in the form:**
 - **Privacy guard:** a phone number or a private email address in the text shows a warning next to the

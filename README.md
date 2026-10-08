@@ -110,19 +110,40 @@ as JSON and Markdown files. Adding content never requires code changes.
 - Check content before committing: `node scripts/check-content.js`
 
 ## Announcements
-Announcements come from a CSV set by `ANNOUNCEMENTS_URL` at the top of `announcements.js`
-(currently fictional demo data in `data/sample-announcements.csv`).
-To use a Google Sheet, publish it as CSV (File → Share → Publish to web → CSV) and paste the link there.
+
+The public site reads `data/announcements.csv`, set by `ANNOUNCEMENTS_URL` in `announcements.js`.
+This is a local copy of the class Google Sheet, refreshed by `scripts/fetch-announcements.js`
+through the **Update announcements** GitHub Actions workflow, scheduled every 15 minutes.
+Edit announcements in the source Sheet; direct edits to the copied CSV will be replaced by the next sync.
+If a refresh fails, the last successful copy stays available. The editor dashboard backend remains
+unconnected; the newsroom redesign does not activate it or change the publishing source.
 
 Sheet columns (any order): `Date | Title | Category | Message | Link | Pinned | Expires | Posted by`
-- **Category:** University, Academic, Student, Social or Urgent. An active Urgent announcement shows a red banner on every page.
+
+- **Category:** Urgent, University, Academic, Student, Social, Programme, Student Hub or Student Community.
+  Original source labels are retained, with a general style for unknown categories. An active Urgent
+  announcement shows a red banner on every page.
 - **Dates:** format the Date and Expires columns as `yyyy-mm-dd` (Format → Number → Custom date and time). `dd/mm/yyyy` also works.
 - **Expires:** optional. The announcement is shown through that day and hidden from the next day.
   A Date in the future hides the announcement until that day (scheduled posts).
-- **Pinned:** `Yes` (or a ticked checkbox) shows it first.
+- **Pinned:** `Yes` (or a ticked checkbox) puts an item first in priority order, followed by newest date
+  and then later same-day rows. The default featured update gives active Urgent items precedence.
 - **Link:** optional, must start with `https://`.
 - **"New" badge:** posted today or in the previous 2 days.
 - Don't put personal data (phone numbers, private emails) in announcements: the published sheet is public.
+
+The page uses its own `announcements-newsroom.js` and `announcements-newsroom.css`, reusing the shared
+CSV and election helpers. Readers can search, filter by category or **New only**, sort by priority,
+newest or oldest, and switch between grid and list layouts. Announcement dates use the shared
+`announcementTodayKey()` helper in Europe/Rome for the newsroom, homepage loader and search.
+Full updates open in a native dialog, preserving the approved election
+candidate lists and results, stable announcement links, keyboard access and copy-link support.
+
+Covers use original local SVG artwork matched to specific stories in JavaScript, with a general
+decorative fallback. No image columns are required. Existing optional `Image`, `Image alt` and
+`Image credit` columns can override the illustration with an approved local photo; remote image URLs
+are not accepted. The homepage preview and site-wide search keep their existing source and links.
+See [docs/announcements-newsroom.md](docs/announcements-newsroom.md) for cover rules and validation.
 
 ## Students directory and privacy
 Individual profiles in the Students explorer (`students.html`) show **only fictional demo data** in Phase 1

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" fill="none">
+  <title>Four paths, one shared journey</title>
+  <desc>An original illustration of four programme pathways in the Hub's track colours.</desc>
+  <defs>
+    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#BFAF9E" opacity=".35"/>
+    </pattern>
+    <filter id="shadow" x="-45%" y="-45%" width="190%" height="200%">
+      <feDropShadow dx="0" dy="10" stdDeviation="11" flood-color="#584331" flood-opacity=".1"/>
+    </filter>
+    <clipPath id="frame"><rect width="800" height="500"/></clipPath>
+  </defs>
+  <g clip-path="url(#frame)">
+    <path fill="#F2EADF" d="M0 0h800v500H0z"/>
+    <path fill="url(#dots)" d="M0 0h800v500H0z"/>
+    <circle cx="400" cy="250" r="214" stroke="#D6CBBF"/>
+    <circle cx="400" cy="250" r="171" stroke="#DED4C8"/>
+    <path d="M-36 418c111-88 190-68 244 7s154 154 281 59M562-8c26 85 98 120 256 95" stroke="#E7DACB" stroke-width="39"/>
+    <path d="M399 244v-56c0-42-33-74-76-74H191" stroke="#2F6DAA" stroke-width="10" stroke-linecap="round"/>
+    <path d="M400 245v-56c0-42 34-74 76-74h133" stroke="#6B5AA6" stroke-width="10" stroke-linecap="round"/>
+    <path d="M400 255v56c0 42-34 74-76 74H191" stroke="#C75B3A" stroke-width="10" stroke-linecap="round"/>
+    <path d="M400 255v56c0 42 34 74 76 74h133" stroke="#3D7D6A" stroke-width="10" stroke-linecap="round"/>
+    <path d="M251 114h39m219 1h38M251 385h39m219 0h38" stroke="#F2EADF" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 8"/>
+    <g filter="url(#shadow)">
+      <rect x="328" y="178" width="144" height="144" rx="31" fill="#15364F"/>
+      <circle cx="400" cy="250" r="47" stroke="#B9D0C6" stroke-opacity=".55"/>
+      <circle cx="400" cy="250" r="34" stroke="#B9D0C6" stroke-opacity=".35"/>
+      <path d="m386 236 46-18-18 46-46 18 18-46Z" fill="#E5A081"/>
+      <path d="m386 236 14 14-32 32 18-46Z" fill="#F7F0E3"/>
+      <path d="m414 264-14-14 32-32-18 46Z" fill="#C97857"/>
+      <circle cx="400" cy="250" r="6" fill="#15364F" stroke="#F7F0E3" stroke-width="2"/>
+      <path d="M400 199v5m0 92v5m-51-51h5m92 0h5" stroke="#D0DDCA" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <g filter="url(#shadow)">
+      <rect x="124" y="64" width="100" height="100" rx="22" fill="#E2EBF1" stroke="#CCD9E1"/>
+      <rect x="576" y="65" width="100" height="100" rx="22" fill="#E9E2F0" stroke="#D7CBDF"/>
+      <rect x="124" y="335" width="100" height="100" rx="22" fill="#EFDBCF" stroke="#DEC5B7"/>
+      <rect x="576" y="335" width="100" height="100" rx="22" fill="#DDE9DE" stroke="#C3D8C9"/>
+    </g>
+    <g stroke="#2F6DAA" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M151 138h47m-40-7v-20m14 20v-30m14 30V89"/>
+      <path d="m152 96 18-12 14 5 15-14"/>
+    </g>
+    <g stroke="#6B5AA6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m604 104 22-18 22 18h-44Zm-2 36h48m-42-4v-24m12 24v-24m12 24v-24m12 24v-24"/>
+    </g>
+    <g stroke="#B45637" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="154" y="357" width="40" height="54" rx="4"/>
+      <path d="M168 411v-11h12v11m-12-37h12m-6-6v12m-12 11h4m16 0h4"/>
+    </g>
+    <g stroke="#3D7D6A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="626" cy="373" r="9"/>
+      <path d="M611 409v-7a15 15 0 0 1 30 0v7m-36-37a8 8 0 0 0 0 16m-7 19v-5a12 12 0 0 1 7-11m42-19a8 8 0 0 1 0 16m7 19v-5a12 12 0 0 0-7-11"/>
+    </g>
+    <circle cx="71" cy="251" r="5" fill="#C48666"/>
+    <circle cx="730" cy="250" r="4" fill="#92B49C"/>
+    <path d="M277 227v18m-9-9h18m213 20v18m-9-9h18" stroke="#C0AD98" stroke-width="2" stroke-linecap="round"/>
+  </g>
+</svg>

@@ -247,7 +247,7 @@ function isElectionResultsAnnouncement(announcement) {
     announcement.title.toLowerCase().startsWith("student representatives election results");
 }
 
-function renderElectionResults(announcement) {
+function renderElectionResults(announcement, headingLevel = 4) {
   const container = createElement("div", "election-details");
   // Keep the opening line editable in the announcements sheet.
   const openingLine = (announcement.message || "").split(/\r?\n/)[0].trim();
@@ -258,7 +258,7 @@ function renderElectionResults(announcement) {
   ELECTION_RESULTS_2026.forEach((group, index) => {
     const section = createElement("section", "election-section");
     const header = createElement("div", "election-section-header");
-    const heading = createElement("h4", "election-section-title", group.title);
+    const heading = createElement("h" + headingLevel, "election-section-title", group.title);
     heading.id = "election-results-group-" + index;
     section.setAttribute("aria-labelledby", heading.id);
     header.appendChild(heading);
@@ -268,13 +268,13 @@ function renderElectionResults(announcement) {
 
     const columns = createElement("div", "election-columns");
     const candidatesColumn = createElement("div", "election-column");
-    candidatesColumn.appendChild(createElement("h5", "election-column-heading", "Candidates"));
+    candidatesColumn.appendChild(createElement("h" + (headingLevel + 1), "election-column-heading", "Candidates"));
     const candidates = createElement("ul", "election-name-list");
     group.candidates.forEach((name) => candidates.appendChild(createElement("li", null, name)));
     candidatesColumn.appendChild(candidates);
 
     const electedColumn = createElement("div", "election-column");
-    electedColumn.appendChild(createElement("h5", "election-column-heading", "Candidates elected"));
+    electedColumn.appendChild(createElement("h" + (headingLevel + 1), "election-column-heading", "Candidates elected"));
     const electedList = createElement("ul", "election-name-list");
     group.elected.forEach((winner) => {
       const item = createElement("li", "election-winner");
@@ -384,6 +384,16 @@ function showAnnouncementsPage(active, today) {
   }
 }
 
+// The public bulletin, home preview and search share the programme's calendar day.
+// Generic study-plan and device-local date helpers are intentionally independent.
+function announcementTodayKey() {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/Rome", year: "numeric", month: "2-digit", day: "2-digit",
+  }).formatToParts(new Date());
+  const part = (type) => parts.find((item) => item.type === type).value;
+  return `${part("year")}-${part("month")}-${part("day")}`;
+}
+
 async function loadAnnouncements() {
   for (const id of ["announcement-demo-note", "home-announcement-demo-note"]) {
     const note = document.getElementById(id);
@@ -395,7 +405,7 @@ async function loadAnnouncements() {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const all = rowsToAnnouncements(parseCsv(await response.text()));
 
-    const today = todayKey();
+    const today = announcementTodayKey();
     const active = activeAnnouncements(all, today);
     showUrgentBanner(active);
     showLatestAnnouncements(active, today);
