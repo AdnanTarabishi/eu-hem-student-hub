@@ -1,8 +1,264 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-07",
+  "updatedAt": "2026-10-08",
   "dateBasis": "Each date is the day (Rome time) the change first went live through a successful site deployment. Only important student-facing releases are listed.",
   "items": [
+    {
+      "id": "homepage-visual-refresh",
+      "version": "v0.9",
+      "date": "2026-10-08",
+      "title": "A refreshed homepage identity and layout",
+      "summary": "The homepage brings clearer everyday shortcuts, a visual preview of the four tracks and a more prominent cohort photo across screen sizes.",
+      "category": "platform",
+      "type": "improved",
+      "status": "published",
+      "highlights": [
+        "A newly framed cohort photo, countries-of-origin badge and navy and terracotta colours give the homepage a consistent identity.",
+        "Redesigned shortcut tiles, cohort statistics and resource cards make the main sections easier to scan.",
+        "See all four specialisation tracks at a glance before opening the Tracks Explorer.",
+        "Layouts adapt to phones, tablets and desktops, with light and dark themes and reduced-motion support."
+      ],
+      "links": [
+        {
+          "label": "Explore the refreshed homepage",
+          "url": "index.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37708761310",
+        "deployedAt": "2026-10-08T02:38:42+02:00",
+        "commits": [
+          {
+            "sha": "742be18354fb7480c00ce13bad34a24f10f53c09",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/742be18354fb7480c00ce13bad34a24f10f53c09"
+          }
+        ]
+      }
+    },
+    {
+      "id": "announcements-newsroom",
+      "version": "v0.9",
+      "date": "2026-10-08",
+      "title": "An illustrated Announcements newsroom",
+      "summary": "Announcements now has original covers, a featured update and a full reader, with the complete semester and JQEC representative election results.",
+      "category": "platform",
+      "type": "improved",
+      "status": "published",
+      "highlights": [
+        "Browse original story covers in grid or list view, with a featured update.",
+        "Find updates with search, category and New only filters, plus priority, newest and oldest sorting.",
+        "Read the full announcement in an accessible reader and copy a direct link to share it.",
+        "The representative election announcement retains both candidate lists and the elected representatives' reported percentages in clear results tables.",
+        "Announcement dates and active-update counts follow Bologna time."
+      ],
+      "links": [
+        {
+          "label": "Open Announcements",
+          "url": "announcements.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37708124599",
+        "deployedAt": "2026-10-08T02:30:57+02:00",
+        "commits": [
+          {
+            "sha": "def5551d579ba0b15147a294e0f91b78a0291960",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/def5551d579ba0b15147a294e0f91b78a0291960"
+          },
+          {
+            "sha": "cbbff8c070f7b076794188307695b68bad22e666",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/cbbff8c070f7b076794188307695b68bad22e666"
+          },
+          {
+            "sha": "9c9d8da7e80295ed238aa46288e613dab3370877",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/9c9d8da7e80295ed238aa46288e613dab3370877"
+          },
+          {
+            "sha": "0adc4a676fcf4a733a600293ce0c5957d7adc674",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/0adc4a676fcf4a733a600293ce0c5957d7adc674"
+          },
+          {
+            "sha": "14d3d3ebb7d132187d7a4c9438d8cf405904ba27",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/14d3d3ebb7d132187d7a4c9438d8cf405904ba27"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cohort-origins-distribution",
+      "version": "v0.9",
+      "date": "2026-10-08",
+      "title": "The cohort map now shows our actual origins",
+      "summary": "The interactive map now uses the supplied cohort totals: 105 people from 24 countries across five continents, with clearer views of the class's diversity.",
+      "category": "community",
+      "type": "improved",
+      "status": "published",
+      "highlights": [
+        "Country counts and shares come from the supplied aggregate distribution of 103 + 2 people.",
+        "Search countries, filter by continent, sort the results and switch between world and Europe views.",
+        "See the breakdown across EU countries, EEA countries outside the EU and other countries.",
+        "The homepage uses the same cohort totals; the separate directory profiles remain fictional demos."
+      ],
+      "links": [
+        {
+          "label": "Explore the cohort map",
+          "url": "students.html#sx-map-section"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37702555886",
+        "deployedAt": "2026-10-08T01:29:51+02:00",
+        "commits": [
+          {
+            "sha": "5cbd64b90230161726e2f8f3b568f21ee85a07e8",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/5cbd64b90230161726e2f8f3b568f21ee85a07e8"
+          }
+        ]
+      }
+    },
+    {
+      "id": "toolkit-solve-a-problem",
+      "version": "v0.9",
+      "date": "2026-10-08",
+      "title": "Solve a Problem in the Student Toolkit",
+      "summary": "A guided method finder, 52 original Excel recipes and three health economics workbenches turn the Toolkit into a place to work through study problems.",
+      "category": "learning",
+      "type": "new",
+      "status": "published",
+      "highlights": [
+        "A question-led method finder helps you choose a suitable statistical approach and understand its assumptions.",
+        "Copy Excel formulas from 52 worked recipes, with editable cell ranges and local formula separators.",
+        "Explore cost-effectiveness comparisons, build QALY calculations and work through discounting with visible steps.",
+        "Calculator inputs stay in the current page; Excel recipes explain formulas without uploading or reading a workbook."
+      ],
+      "links": [
+        {
+          "label": "Solve a problem",
+          "url": "toolkit.html?section=solve"
+        },
+        {
+          "label": "Explore Excel recipes",
+          "url": "toolkit.html?section=solve&solver=excel"
+        },
+        {
+          "label": "Open health economics tools",
+          "url": "toolkit.html?section=solve&solver=health"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37700206045",
+        "deployedAt": "2026-10-08T01:05:52+02:00",
+        "commits": [
+          {
+            "sha": "ac93b676241a042006fc4a653f608381753824ea",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/ac93b676241a042006fc4a653f608381753824ea"
+          }
+        ]
+      }
+    },
+    {
+      "id": "toolkit-collections-and-lists",
+      "version": "v0.9",
+      "date": "2026-10-07",
+      "title": "Toolkit collections, personal lists and comparison",
+      "summary": "Eight guided collections help you start with a goal, while personal lists and side-by-side comparison make useful tools easier to organise.",
+      "category": "learning",
+      "type": "improved",
+      "status": "published",
+      "highlights": [
+        "Eight collections offer four suggested steps for study, research, group work, mobility and career preparation.",
+        "Create personal lists, reorder entries and mark what you have reviewed; lists stay on this device.",
+        "Export and import your Toolkit lists as a backup file, and compare up to three available tools.",
+        "More research, public-data, career and city services are available, with provider and city filters."
+      ],
+      "links": [
+        {
+          "label": "Explore Toolkit collections",
+          "url": "toolkit.html?section=collections"
+        },
+        {
+          "label": "Open My lists",
+          "url": "toolkit.html?section=lists"
+        },
+        {
+          "label": "Compare tools",
+          "url": "toolkit.html?section=compare"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37692095785",
+        "deployedAt": "2026-10-07T23:50:05+02:00",
+        "commits": [
+          {
+            "sha": "6d3cd66d5748ff84d89a0bf0aa4914105868eb04",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/6d3cd66d5748ff84d89a0bf0aa4914105868eb04"
+          }
+        ]
+      }
+    },
+    {
+      "id": "student-toolkit",
+      "version": "v0.9",
+      "date": "2026-10-07",
+      "title": "A Student Toolkit for study and everyday tasks",
+      "summary": "A searchable catalogue brings the Hub's study tools together with selected external resources for research, writing, data and student life.",
+      "category": "learning",
+      "type": "new",
+      "status": "published",
+      "highlights": [
+        "Search and filter by category, tool type and course, in grid or list view.",
+        "Open a tool's details to see its purpose, provider and source before using it.",
+        "Save useful tools on this device and choose whether to keep a recent-use history.",
+        "Future tool ideas are clearly marked as planned, separate from available resources."
+      ],
+      "links": [
+        {
+          "label": "Browse the Student Toolkit",
+          "url": "toolkit.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37685576512",
+        "deployedAt": "2026-10-07T22:55:12+02:00",
+        "commits": [
+          {
+            "sha": "d14ce4b347699d2b915b3cde668e67ccd933eb4b",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/d14ce4b347699d2b915b3cde668e67ccd933eb4b"
+          }
+        ]
+      }
+    },
+    {
+      "id": "statistics-lab-course-expansion",
+      "version": "v0.9",
+      "date": "2026-10-07",
+      "title": "The Statistics Lab expands across both statistics courses",
+      "summary": "The Statistics Lab now connects both statistics courses, with additional tools for hypothesis tests, proportions, two-group comparisons and discrete probability.",
+      "category": "learning",
+      "type": "improved",
+      "status": "published",
+      "highlights": [
+        "Five additional tools cover one-mean tests, proportion intervals, one-proportion tests, independent two-mean comparisons and discrete probability.",
+        "Worked calculations and p-values make the reasoning behind each result easier to follow.",
+        "Both statistics course pages connect to the shared lab; supplementary methods are distinguished from course-specific guidance."
+      ],
+      "links": [
+        {
+          "label": "Open the expanded Statistics Lab",
+          "url": "statistics-lab.html"
+        }
+      ],
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37675173370",
+        "deployedAt": "2026-10-07T21:32:42+02:00",
+        "commits": [
+          {
+            "sha": "d5586079b9c5ebd635b2032eac249aa502869be3",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/d5586079b9c5ebd635b2032eac249aa502869be3"
+          }
+        ]
+      }
+    },
     {
       "id": "statistics-lab",
       "version": "v0.9",

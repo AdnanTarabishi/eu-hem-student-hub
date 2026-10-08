@@ -40,6 +40,14 @@ function isDate(value) {
 }
 
 const isMonth = (value) => typeof value === "string" && /^\d{4}-(0[1-9]|1[0-2])$/.test(value);
+const isTargetPeriod = (target) => !!(target && isMonth(target.start) && isMonth(target.end) &&
+  target.start <= target.end && isText(target.label));
+
+// Month-only milestones use the start of their period for ordering, never as a displayed promise.
+function milestoneSortDate(milestone) {
+  if (milestone && isDate(milestone.date)) return milestone.date;
+  return milestone && milestone.target && isMonth(milestone.target.start) ? `${milestone.target.start}-01` : "";
+}
 
 // "2026-10-05" -> "5 October 2026" (a calendar date, not a moment in time)
 function dayLabel(value) {
@@ -119,7 +127,7 @@ function validate(roadmap, updates, options = {}) {
         error("roadmap.vision.progressPercent", "must be a whole number from 0 to 100");
       }
     }
-    // Release stage and the next release (optional block)
+    // Release stage, the next release and an optional following release with an estimated period
     const release = roadmap.release;
     if (release !== undefined) {
       if (!release || !isText(release.stage) || !VERSION_PATTERN.test(release.version || "") || !isText(release.note)) {
@@ -131,13 +139,26 @@ function validate(roadmap, updates, options = {}) {
         }
         const itemIds = new Set((Array.isArray(roadmap.items) ? roadmap.items : []).map((i) => i && i.id));
         const published = new Set(((updates && updates.items) || []).filter((u) => u && u.status === "published").map((u) => u.id));
-        ((next && next.includes) || []).forEach((entry, i) => {
-          const where = `roadmap.release.next.includes[${i}]`;
-          if (!entry || !isText(entry.label)) return error(where, "needs a label");
-          if (entry.item ? !itemIds.has(entry.item) : !published.has(entry.update)) {
-            error(where, "must point to a roadmap item (item) or a published update (update)");
+        const checkIncludes = (entries, where) => {
+          if (!Array.isArray(entries)) return error(where, "must be a list");
+          entries.forEach((entry, i) => {
+            if (!entry || !isText(entry.label)) return error(`${where}[${i}]`, "needs a label");
+            if (entry.item ? !itemIds.has(entry.item) : !published.has(entry.update)) {
+              error(`${where}[${i}]`, "must point to a roadmap item (item) or a published update (update)");
+            }
+          });
+        };
+        checkIncludes((next && next.includes) || [], "roadmap.release.next.includes");
+        const following = release.following;
+        if (following !== undefined) {
+          if (!following || !VERSION_PATTERN.test(following.version || "") || !isText(following.name) || !isText(following.summary)) {
+            error("roadmap.release.following", 'needs a version like "v2.0", a name and a plain-text summary');
           }
-        });
+          if (!isTargetPeriod(following && following.target)) {
+            error("roadmap.release.following.target", 'needs start and end months ("YYYY-MM", start ≤ end) and a label');
+          }
+          checkIncludes(following && following.includes, "roadmap.release.following.includes");
+        }
       }
     }
     // Known limitations and the domain move (optional blocks with a title and a list of texts)
@@ -194,7 +215,13 @@ function validate(roadmap, updates, options = {}) {
     milestones.forEach((m, i) => {
       const where = `roadmap.milestones[${i}] (${m && m.id})`;
       if (!m) return;
-      if (!isDate(m.date)) error(where, "date must be a real YYYY-MM-DD date");
+      if (m.status === "planned" && m.target !== undefined) {
+        if (m.date !== undefined) error(where, "use a date or a target period, not both");
+        if (!isTargetPeriod(m.target)) error(where, 'target needs start and end months ("YYYY-MM", start ≤ end) and a label');
+      } else {
+        if (!isDate(m.date)) error(where, "date must be a real YYYY-MM-DD date");
+        if (m.target !== undefined) error(where, "only a planned milestone may use a target period");
+      }
       if (!MILESTONE_STATUSES.includes(m.status)) error(where, "status must be completed or planned");
       if (m.status === "completed" && today && m.date > today) error(where, "a completed milestone cannot be in the future");
       if (!isText(m.title) || !isText(m.summary)) error(where, "title and summary are required");
@@ -263,8 +290,14 @@ function readRoadmap(data) {
     : null;
   const r = data.release;
   const release = r && isText(r.stage) && VERSION_PATTERN.test(r.version || "") && r.next && isDate(r.next.targetDate)
-    ? { stage: r.stage, version: r.version, note: r.note, next: { ...r.next, includes: (r.next.includes || []).filter((e) => e && isText(e.label)) } }
+    ? { stage: r.stage, version: r.version, note: r.note, next: { ...r.next,
+      includes: (Array.isArray(r.next.includes) ? r.next.includes : []).filter((e) => e && isText(e.label)) } }
     : null;
+  const following = r && r.following;
+  if (release && following && VERSION_PATTERN.test(following.version || "") && isText(following.name) &&
+    isText(following.summary) && isTargetPeriod(following.target) && Array.isArray(following.includes)) {
+    release.following = { ...following, target: { ...following.target }, includes: following.includes.filter((e) => e && isText(e.label)) };
+  }
   const block = (b) => (b && isText(b.title) && Array.isArray(b.items) ? { title: b.title, items: b.items.filter(isText) } : null);
   return {
     updatedAt: data.updatedAt,
@@ -277,7 +310,9 @@ function readRoadmap(data) {
     categories,
     lanes: data.lanes || [],
     items,
-    milestones: (data.milestones || []).filter((m) => m && isDate(m.date)).sort((a, b) => a.date.localeCompare(b.date)),
+    milestones: (data.milestones || []).filter((m) => m && MILESTONE_STATUSES.includes(m.status) &&
+      ((isDate(m.date) && m.target === undefined) || (m.status === "planned" && m.date === undefined && isTargetPeriod(m.target))))
+      .sort((a, b) => milestoneSortDate(a).localeCompare(milestoneSortDate(b))),
   };
 }
 
@@ -370,7 +405,7 @@ function searchEntries(roadmap, updates) {
 
 const EUHEM_ROADMAP = {
   ROADMAP_STATUS, RELEASED_LABEL, LANE_STATUSES, UPDATE_TYPES, MONTHS, ID_PATTERN, SHA_PATTERN, REPOSITORY,
-  isDate, isMonth, dayLabel, shortDay, dateInRome, daysUntil, safeUrl, isRunUrl, validate, readRoadmap, publishedUpdates, groupNext,
+  isDate, isMonth, dayLabel, shortDay, dateInRome, daysUntil, milestoneSortDate, safeUrl, isRunUrl, validate, readRoadmap, publishedUpdates, groupNext,
   releaseCount, updateVersions, VERSION_PATTERN, MAX_NOW, MAX_DATED_NEXT, AFTER_LAUNCH,
   matchesQuery, searchEntries, simplify,
 };

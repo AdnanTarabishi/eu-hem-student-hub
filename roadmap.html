@@ -19,7 +19,7 @@
   <!-- /Social preview -->
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=daabf49c">
-  <link rel="stylesheet" href="roadmap.css?v=dcd19e7d">
+  <link rel="stylesheet" href="roadmap.css?v=355cda99">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -51,7 +51,7 @@
         <p>What the Student Hub team is working on now, what is likely to come next, bigger ideas for later, and
           everything released so far.</p>
         <p class="roadmap-reviewed" id="roadmap-reviewed"></p>
-        <!-- Release stage and the next release (roadmap.json → release) -->
+        <!-- Current stage and the next two planned releases (roadmap.json → release) -->
         <div class="roadmap-release" id="roadmap-release" hidden></div>
         <!-- Releases shipped and the target for the full Hub (roadmap.json → vision, counted from updates.json) -->
         <div class="roadmap-vision" id="roadmap-vision" hidden></div>
@@ -87,8 +87,9 @@
 
     <section id="panel-roadmap" class="roadmap-panel" role="tabpanel" aria-labelledby="tab-roadmap" tabindex="-1">
       <p class="roadmap-status" id="roadmap-status">Loading the roadmap…</p>
-      <!-- What the next release contains, each part with its real status (roadmap.json → release.next.includes) -->
+      <!-- Planned releases: each included item keeps its real plan or released status. -->
       <section class="roadmap-v1" id="roadmap-v1" aria-labelledby="roadmap-v1-title" hidden></section>
+      <section class="roadmap-v1" id="roadmap-v2" aria-labelledby="roadmap-v2-title" hidden></section>
       <div id="roadmap-board"></div>
       <p class="roadmap-note" id="roadmap-planning-note"></p>
     </section>
@@ -124,8 +125,8 @@
   <script defer src="search.js?v=691c11a5"></script>
   <script defer src="pwa.js?v=c9212bf8"></script>
   <script defer src="announcements.js?v=4dad83f2"></script>
-  <script defer src="roadmap-data.js?v=80033201"></script>
-  <script defer src="roadmap.js?v=e01654d3"></script>
+  <script defer src="roadmap-data.js?v=e0748197"></script>
+  <script defer src="roadmap.js?v=5e946e1a"></script>
 
 </body>
 </html>

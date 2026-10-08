@@ -31,8 +31,9 @@ and the site search finds plans and releases. All of them read the same two file
 
 ## Editing `content/roadmap.json`
 
-**Release stage.** The `release` block sets the banner at the top of the Roadmap page and the version in
-the footer of every page:
+**Release stage.** The `release` block sets the current version in the footer and shows the immediate
+next release at the top of the Roadmap page. An optional `following` release gives a later target window
+without changing the current version or replacing the next release:
 
 ```json
 "release": {
@@ -53,8 +54,30 @@ the footer of every page:
 status) or a published update (`update`, shown as "Released in v0.9"), so nothing released looks planned and
 nothing planned looks released. When a release ships, change `version` and `next`.
 
+For a following release whose target is a period, add this alongside `next`:
+
+```json
+"following": {
+  "version": "v2.0",
+  "name": "Study, Connect & Prepare",
+  "summary": "Bring study tools together, expand reviewed learning content and prepare for the next destination.",
+  "target": { "start": "2026-11", "end": "2026-11", "label": "Early November 2026" },
+  "includes": [
+    { "label": "Personal study dashboard", "item": "student-hub-v2" },
+    { "label": "Mobility preparation", "item": "mobility-checklists" }
+  ]
+}
+```
+
+Both release cards use the same item/update references and show their actual statuses. A target window
+is not a release date. In the October review, the public version remains **Beta v0.9**, v1.0 still targets
+15 October, and v2.0 targets early November. The Toolkit's internal v2/v3 development stages do not change
+the Hub's release version.
+
 **Towards the full Hub.** The `vision` block shows the releases shipped (counted automatically from
-updates.json) and when the full Hub is planned, as a season:
+updates.json) and when the full Hub is planned, as a season. The reviewed public content uses the release
+count rather than retaining the earlier manual percentage estimate; publishing more notes does not
+establish a percentage of the long-term vision completed:
 
 ```json
 "vision": { "title": "Towards the full Student Hub", "targetLabel": "Spring 2027", "note": "…" }
@@ -85,6 +108,24 @@ the page, with the `feedback` button (`{ "label": …, "url": "contact.html" }`)
 - Update `updatedAt` (YYYY-MM-DD) whenever you review the roadmap; the page shows "Last reviewed …".
 - The checker warns when a Next item's period has passed: move it, re-date it or publish it.
 - Milestones (`milestones`) feed "Our journey": `completed` (with a date in the past) or `planned`.
+  A planned milestone has either a `date` or a `target` month window, never both. Period milestones
+  display the provided label (for example "Early November 2026") and a month-only `datetime`.
+  `milestoneSortDate()` derives a first-of-month key only for ordering; it is not a promised launch day.
+- Keep stable IDs for continuing plans. If part of a feature ships, narrow the remaining plan to the
+  work still outstanding and link to the available tools. Fully delivered plans leave the board.
+
+## October 2026 review
+
+The 8 October review adds seven deployment-backed records for the Statistics Lab expansion, the Toolkit
+catalogue, its collections and lists, Solve a Problem, the supplied cohort-origin distribution and the
+complete illustrated Announcements newsroom, plus the homepage visual refresh. The newsroom entry
+includes the election-results work.
+All earlier release IDs, dates, versions and evidence are retained.
+
+The generic Toolkit and starter methods-lab ideas are removed from Later because their described
+features are available. Further learning coverage, a dated thesis timeline and the editor's live
+activation remain explicitly pending. Aggregate cohort totals do not activate real student profiles,
+and manual backups do not imply cross-device synchronisation.
 
 ## Publishing an update
 

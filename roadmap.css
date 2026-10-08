@@ -1105,6 +1105,11 @@
 
 .roadmap-release-next { font-size: var(--fs-small) !important; }
 .roadmap-release-next strong { color: var(--white); }
+.roadmap-release-following {
+  flex-basis: 100%;
+  padding-top: var(--space-2);
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+}
 
 .roadmap-release-note {
   flex-basis: 100%;
@@ -1112,7 +1117,7 @@
   color: var(--text-on-navy-muted);
 }
 
-/* ----- What's in v1.0 ----- */
+/* ----- Planned release contents (shared by the next and following release) ----- */
 .roadmap-v1 {
   margin-bottom: var(--space-6);
   padding: var(--space-5);
@@ -1136,6 +1141,14 @@
 .roadmap-v1-title {
   margin: 0;
   font-size: 1.35rem;
+}
+
+.roadmap-v1-summary {
+  max-width: 75ch;
+  margin: 0 0 var(--space-4);
+  color: var(--color-muted);
+  font-size: var(--fs-small);
+  line-height: 1.7;
 }
 
 .roadmap-v1-list {

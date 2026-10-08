@@ -1,0 +1,48 @@
+name: Check roadmap
+
+on:
+  pull_request:
+    paths:
+      - "roadmap.html"
+      - "roadmap*.js"
+      - "roadmap.css"
+      - "content/roadmap.json"
+      - "content/updates.json"
+      - "tests/roadmap/**"
+      - ".github/workflows/check-roadmap.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  roadmap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install existing test dependencies
+        run: npm ci
+      - name: Install Chromium for the browser checks
+        run: npx playwright install --with-deps chromium
+      - name: Check roadmap data and browser behavior
+        env:
+          SCREENSHOT_DIR: ${{ runner.temp }}/roadmap-screenshots
+        run: |
+          node scripts/check-content.js
+          node tests/roadmap/data.test.js .
+          node tests/roadmap/browser.test.js .
+      - name: Save visual checks
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: roadmap-visual-checks
+          path: ${{ runner.temp }}/roadmap-screenshots
+          if-no-files-found: ignore
+          retention-days: 7
