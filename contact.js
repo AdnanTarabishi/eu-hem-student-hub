@@ -219,7 +219,7 @@
     if (result.code === "VALIDATION_ERROR" && result.fieldErrors && typeof result.fieldErrors === "object") {
       status.textContent = "";
       delete status.dataset.state;
-      if (showErrors(result.fieldErrors)) return;
+      if (showErrors(result.fieldErrors)) return true;
     }
     const messages = {
       INVALID_REQUEST: "The service could not accept this message. Your text is still here. Please check the details or use the email option below.",
@@ -228,10 +228,13 @@
       REQUEST_CONFLICT: "This submission reference could not be reused. Your text is still here; contact the Hub by email to check receipt.",
       BUSY: "The service is busy. Your text is still here; please wait a moment and try again.",
       NOT_CONFIGURED: "Direct messages are temporarily unavailable. Your text is still here. You can use the email option below.",
-      SAVE_FAILED: "The service could not confirm receipt. Your text is still here; retry the same message or use the email option below.",
       UNAVAILABLE: "The service is temporarily unavailable. Your text is still here; please try again later or use the email option below.",
     };
-    showStatus(messages[result.code] || "The service could not confirm receipt. Your text is still here; retry the same message or use the email option below.");
+    // SAVE_FAILED can follow a completed write. Unknown codes also do not
+    // establish rejection; both keep the same uncertainty/retry state as a timeout.
+    if (!Object.hasOwn(messages, result.code)) return false;
+    showStatus(messages[result.code]);
+    return true;
   }
 
   submitHandler = async () => {
@@ -242,11 +245,18 @@
     const values = collect();
     const problems = validate(values);
     if (Object.keys(problems).length) { showErrors(problems); updateUncertainNotice(); return; }
+    const key = JSON.stringify(values);
     if (navigator.onLine === false) {
-      showStatus("You’re offline. This message has not been submitted. Your text is still here; reconnect before sending.");
+      if (uncertainKey) {
+        const nextStep = key === uncertainKey
+          ? "Your text is still here; reconnect and retry the same message to check receipt safely."
+          : "Sending this edited message after reconnecting creates a separate submission. Your text is still here.";
+        showStatus("You’re offline. No new request was sent. Your earlier message may already have reached the Hub. " + nextStep, "uncertain");
+      } else {
+        showStatus("You’re offline. This message has not been submitted. Your text is still here; reconnect before sending.");
+      }
       return;
     }
-    const key = JSON.stringify(values);
     let attempt = attempts.get(key);
     if (!attempt) {
       try {
@@ -273,9 +283,9 @@
         body: attempt.body, signal: controller.signal,
       });
       const result = await response.json();
-      if (response.ok && isReceipt(result, attempt.payload)) received(result, attempt.payload);
-      else if (result?.ok === false && typeof result.code === "string") rejected(result);
-      else throw new Error("Unconfirmed receipt");
+      if (!response.ok) throw new Error("Unconfirmed receipt");
+      if (isReceipt(result, attempt.payload)) received(result, attempt.payload);
+      else if (result?.ok !== false || typeof result.code !== "string" || !rejected(result)) throw new Error("Unconfirmed receipt");
     } catch {
       uncertainKey = key;
       showStatus("We couldn’t confirm receipt. Your message may have reached the Hub. Your text is still here; retry the same message to check it safely.", "uncertain");
