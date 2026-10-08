@@ -1,0 +1,162 @@
+"""Inline Chromium regression for the real course template, CSS and JS.
+Network/history/storage are adapted because the sandbox disallows navigation.
+Does NOT establish live HTTP, actual persistent storage, or service-worker delivery.
+Run: EUHEM_SITE_ROOT=. python tests/right-to-health/browser.py
+"""
+from pathlib import Path
+import os,re,json,base64,mimetypes
+from playwright.sync_api import sync_playwright
+ROOT=Path(os.getenv('EUHEM_SITE_ROOT',str(Path(__file__).resolve().parents[2]))).resolve()
+OUT=Path(os.getenv('EUHEM_TEST_OUTPUT','/mnt/data/rth-browser'));OUT.mkdir(exist_ok=True,parents=True)
+checks=[]
+def ok(label,value):
+ assert value,label
+ checks.append(label);print('PASS',label,flush=True)
+def adapted(code):
+ code=code.replace('window.location.','window.__loc.')
+ return re.sub(r'(?<![\w.])location\.','window.__loc.',code)
+def asset(path):return 'data:'+(mimetypes.guess_type(str(path))[0] or 'application/octet-stream')+';base64,'+base64.b64encode(path.read_bytes()).decode()
+def css(text):
+ def sub(m):
+  f=ROOT/m.group(2).split('?')[0]
+  return 'url("'+asset(f)+'")' if f.is_file() else m.group(0)
+ return re.sub(r'url\((["\']?)([^\)"\']+)\1\)',sub,text)
+files={str(p.relative_to(ROOT)):p.read_text() for p in (ROOT/'content').rglob('*') if p.is_file() and p.suffix in ['.json','.md','.html']}
+files['data/announcements.csv']=(ROOT/'data/announcements.csv').read_text()
+with sync_playwright() as pw:
+ browser=pw.chromium.launch(executable_path=os.getenv('CHROMIUM_BINARY','/usr/bin/chromium'),headless=True,args=['--no-sandbox'])
+ def load(width=1440,theme='light',tab='',stored=None,blocked=False,fail=False,course='right-to-health',query='',delayed=False):
+  context=browser.new_context(viewport={'width':width,'height':1050},color_scheme=theme,reduced_motion='reduce')
+  context.route('**/*',lambda route:route.abort())
+  p=context.new_page();p.set_default_timeout(7000);errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
+  html=(ROOT/'course.html').read_text();styles=re.findall(r'<link[^>]+rel="stylesheet"[^>]+href="([^"]+)"',html);scripts=re.findall(r'<script[^>]+src="([^"]+)"',html)
+  p.set_content(re.sub(r'<script[\s\S]*?</script>|<link[^>]+>','',html))
+  p.evaluate(r'''({files,course,tab,stored,blocked,fail,query,delayed})=>{
+    function update(u){const v=new URL(u);window.__loc={};for(const k of ['href','search','hash','pathname','origin','host','hostname','protocol'])window.__loc[k]=v[k];window.__loc.reload=()=>{};}
+    update('https://course.example/course.html?course='+course+(tab?'&tab='+tab:'')+query);
+    history.pushState=(_s,_t,u)=>update(new URL(u,window.__loc.href).href);history.replaceState=history.pushState;
+    window.__prefs=stored||{};Object.defineProperty(window,'localStorage',{configurable:true,value:{getItem:k=>{if(blocked)throw Error('Storage denied');return window.__prefs[k]??null;},setItem:(k,v)=>{if(blocked)throw Error('Storage denied');window.__prefs[k]=String(v);},removeItem:k=>delete window.__prefs[k]}});
+    window.__requests=[];window.__unibo=[];
+    window.fetch=async input=>{const url=String(input);window.__requests.push(url);const local=url.replace(/^https:\/\/course.example\//,'').split('?')[0];if(fail&&local.endsWith('workspace.json'))return new Response('{}',{status:503});if(files[local]!==undefined)return new Response(files[local],{status:200});if(delayed&&url.includes('corsi.unibo.it'))return new Promise(r=>window.__unibo.push(()=>r(new Response('{}',{status:503}))));return new Response('{}',{status:404});};
+    window.__resolveUniBo=()=>window.__unibo.forEach(f=>f());
+    Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async t=>window.__copied=t}});
+  }''',dict(files=files,course=course,tab=tab,stored=stored,blocked=blocked,fail=fail,query=query,delayed=delayed))
+  for name in styles:
+   if not name.startswith('https:'):p.add_style_tag(content=css((ROOT/name.split('?')[0]).read_text()))
+  p.evaluate('''sprite=>{const box=document.createElement('div');box.hidden=true;box.innerHTML=sprite;document.body.prepend(box);const fix=()=>document.querySelectorAll('use[href^="icons.svg#"]').forEach(n=>n.setAttribute('href',n.getAttribute('href').replace('icons.svg','')));new MutationObserver(fix).observe(document.body,{childList:true,subtree:true});}''',(ROOT/'icons.svg').read_text())
+  for name in scripts:
+   name=name.split('?')[0]
+   if name.startswith('https:') or name=='pwa.js':continue
+   code=adapted((ROOT/name).read_text())
+   if name=='theme.js':code=code.replace('if (document.readyState === "loading")','if (true)')
+   p.add_script_tag(content=code)
+  p.evaluate('document.documentElement.dataset.theme='+json.dumps(theme))
+  p.wait_for_function('!!document.querySelector(".rth-header, .course-header, .hem-course-header, .quant-course-header, .fund-course-header")')
+  p.wait_for_timeout(80)
+  return context,p,errors
+ c,p,errors=load()
+ ok('Course initializes without page errors',not errors)
+ ok('All ten navigation sections are available',p.locator('.rth-tabs a').count()==10)
+ ok('Course identity reads from existing metadata',p.locator('h1').inner_text()=='Our Right to Health' and '5 CFU' in p.locator('.rth-pill').inner_text())
+ ok('Counts are content-derived',p.locator('.rth-stats strong').all_text_contents()==['10','50','40','4'])
+ ok('Desktop has no horizontal overflow',p.evaluate('document.documentElement.scrollWidth<=innerWidth'))
+ p.screenshot(path=str(OUT/'course-desktop.png'),full_page=True)
+ p.locator('.rth-tabs').get_by_role('link',name='Study guides',exact=True).click()
+ ok('Ten study guide cards render',p.locator('.rth-guide-card').count()==10)
+ p.locator('.rth-guide-card').first.get_by_role('link',name='Read guide').click()
+ ok('Reader preserves published economic-rights topic ID','topic=right-to-health.economic-rights' in p.evaluate('window.__loc.search'))
+ ok('Reader has seven review points and four sourced sections',p.locator('.rth-review li').count()==7 and p.locator('.rth-reading-section').count()==4 and p.locator('.rth-reading-section .rth-sources').count()==4)
+ p.get_by_role('button',name='Mark understood',exact=True).click()
+ ok('Guide mark uses existing progress object',p.evaluate('JSON.parse(window.__prefs["euhem-progress-v1"]).topics["right-to-health.economic-rights"]')=='understood')
+ p.screenshot(path=str(OUT/'reader-desktop.png'),full_page=True)
+ p.locator('.rth-tabs').get_by_role('link',name='Course hub',exact=True).click()
+ ok('Resume advances to the next un-understood guide','human-rights' in p.get_by_role('link',name='Continue studying').get_attribute('href'))
+ p.locator('.rth-tabs').get_by_role('link',name='Glossary',exact=True).click()
+ ok('24 glossary cards render',p.locator('.rth-glossary-card').count()==24)
+ p.get_by_role('searchbox').fill('AAAQ')
+ ok('Glossary search filters and updates count',p.locator('.rth-glossary-card').count()==1)
+ p.get_by_role('searchbox').fill('<img src=x onerror=alert(1)>')
+ ok('Search text is not executed as markup',p.locator('.rth-glossary-card').count()==0 and p.locator('.rth-glossary-grid img').count()==0)
+ p.locator('.rth-tabs').get_by_role('link',name='Explore',exact=True).click()
+ ok('Default comparator renders two country cards',p.locator('.rth-compare-card').count()==2)
+ p.get_by_label('First country',exact=True).select_option('norway');p.get_by_label('Second country',exact=True).select_option('austria')
+ ok('Country choices show their own source-dated texts',p.locator('.rth-compare-card h4').all_text_contents()==['Norway','Austria'] and '2025' in p.locator('.rth-compare-card').first.inner_text())
+ p.screenshot(path=str(OUT/'compare-desktop.png'),full_page=True)
+ p.get_by_label('Choose an activity',exact=True).select_option('aaaq')
+ for i,answer in enumerate(['Availability','Accessibility','Acceptability','Quality'],1):p.get_by_label('Dimension for case '+str(i),exact=True).select_option(answer)
+ p.get_by_role('button',name='Check the four cases').click()
+ ok('AAAQ cases return explanatory feedback', '4 of 4 correct' in p.locator('.rth-tool [role=status]').inner_text())
+ p.get_by_label('Choose an activity',exact=True).select_option('mobility')
+ ok('EHIC and planned-treatment distinction is explicit','not a planned-treatment authorisation' in p.locator('.rth-output').inner_text())
+ p.get_by_label('Explore a route',exact=True).select_option('s2')
+ ok('S2 route is distinct','coordination route for planned care' in p.locator('.rth-output').inner_text())
+ p.get_by_label('Choose an activity',exact=True).select_option('risk')
+ ok('Risk margin matches independent arithmetic','-€1,500.00' in p.locator('.rth-number').inner_text())
+ p.get_by_label('Total compensation',exact=False).fill('7000')
+ ok('Break-even state explained',p.locator('.rth-number').inner_text()=='€0.00')
+ p.get_by_label('Total compensation',exact=False).fill('-1')
+ ok('Negative inputs are rejected','non-negative' in p.locator('.rth-output').inner_text())
+ p.get_by_label('Total compensation',exact=False).fill('')
+ ok('Empty inputs are not treated as zero','Enter finite' in p.locator('.rth-output').inner_text())
+ p.locator('.rth-tabs').get_by_role('link',name='Workshop',exact=True).click()
+ ok('Workshop has six bounded fields',p.locator('.rth-workshop-grid textarea').count()==6 and p.locator('textarea').first.get_attribute('maxlength')=='2000')
+ p.locator('.rth-workshop-grid textarea').first.fill('Hypothetical access problem <script>alert(1)</script>')
+ ok('Workshop does not autosave or submit','euhem-rth-workshop-v1' not in p.evaluate('window.__prefs'))
+ p.get_by_role('button',name='Save on this device',exact=True).click()
+ ok('Workshop explicitly saves only its local entry','Hypothetical' in p.evaluate('JSON.parse(window.__prefs["euhem-rth-workshop-v1"]).need'))
+ prefs=p.evaluate('window.__prefs');p.screenshot(path=str(OUT/'workshop-desktop.png'),full_page=True)
+ p.get_by_role('button',name='Clear this draft',exact=True).click()
+ ok('Clearing requires an explicit second confirmation',p.locator('textarea').first.input_value()!='')
+ p.get_by_role('button',name='Confirm clear this draft',exact=True).click()
+ ok('Clear does not remove guide progress',p.locator('textarea').first.input_value()=='' and 'economic-rights' in p.evaluate('window.__prefs["euhem-progress-v1"]'))
+ p.locator('.rth-tabs').get_by_role('link',name='Practice',exact=True).click()
+ ok('Existing practice widgets render',p.locator('.rth-panel #flashcards').count()==1 and p.locator('#question-bank .question-card').count()==60)
+ p.get_by_role('button',name='Reveal answer',exact=True).click()
+ ok('Flashcard explanations include their source','Source:' in p.locator('.flashcard-back').inner_text())
+ first=p.locator('#question-bank .question-card').first
+ q=json.loads((ROOT/'content/modules/right-to-health/questions.json').read_text())[0]
+ first.locator('.choice').nth(ord(q['answer'])-65).click()
+ ok('Correct MCQ answer is graded correctly','Correct!' in first.locator('.answer-feedback').inner_text())
+ first.get_by_role('button',name='Explain answer',exact=True).click()
+ ok('MCQ explanation includes source', 'Source:' in first.locator('.explanation').inner_text())
+ p.locator('#question-bank').get_by_label('Type',exact=False).select_option('short-answer')
+ ok('Open-question filter shows ten answer scaffolds',p.locator('#question-bank .question-card').count()==10)
+ p.locator('.rth-tabs').get_by_role('link',name='Sources',exact=True).click()
+ ok('24 source records appear',p.locator('.rth-source-card').count()==24)
+ p.get_by_label('Filter sources',exact=True).select_option('Supplementary primary source')
+ ok('Supplementary sources are separately filterable',p.locator('.rth-source-card').count()==4)
+ p.locator('.rth-tabs').get_by_role('link',name='Exam',exact=True).click()
+ ok('Exam note does not turn Q&A into exam date','not an independently confirmed exam date' in p.locator('.rth-panel').inner_text())
+ p.locator('.rth-tabs').get_by_role('link',name='Schedule',exact=True).click()
+ p.locator('.rth-panel summary').first.click()
+ ok('Offline notice dates are labelled separately','not a second live timetable' in p.locator('.rth-panel').inner_text())
+ ok('No interaction caused a page error',not errors)
+ c.close()
+ c,p,e=load(tab='workshop',stored=prefs,delayed=True)
+ ok('Saved draft can be restored in the storage fixture','Hypothetical' in p.locator('textarea').first.input_value())
+ p.locator('textarea').first.fill('Unsaved edit kept during the timetable request')
+ p.evaluate('window.__resolveUniBo()');p.wait_for_timeout(150)
+ ok('Late UniBo response does not erase a workshop draft','Unsaved edit' in p.locator('textarea').first.input_value())
+ ok('Restored text is not interpreted as HTML',p.locator('.rth-panel script').count()==0)
+ c.close()
+ c,p,e=load(tab='workshop',blocked=True)
+ p.locator('textarea').first.fill('Temporary text');p.get_by_role('button',name='Save on this device',exact=True).click()
+ ok('Blocked storage gives honest feedback','Storage is unavailable' in p.locator('.rth-panel [role=status]').inner_text());c.close()
+ for width in [320,390,768,1440]:
+  for theme in ['light','dark']:
+   c,p,e=load(width=width,theme=theme)
+   ok(f'Hub {width}px {theme}: no overflow or runtime error',p.evaluate('document.documentElement.scrollWidth<=innerWidth') and not e)
+   if width in [390,1440]:p.screenshot(path=str(OUT/f'course-{width}-{theme}.png'),full_page=True)
+   for tab in ['topics','explore','workshop','practice','resources']:
+    p.evaluate('tab=>{history.pushState(null,"","course.html?course=right-to-health&tab="+tab);window.dispatchEvent(new PopStateEvent("popstate"));}',tab)
+    ok(f'{tab} {width}px {theme}: no horizontal overflow',p.evaluate('document.documentElement.scrollWidth<=innerWidth'))
+   c.close()
+ c,p,e=load(fail=True)
+ ok('Workspace failure falls back to regular course notes',p.locator('.course-header').count()==1 and p.locator('.rth-header').count()==0 and not e)
+ ok('Fallback keeps native practice tab',p.get_by_role('tab',name='Practice',exact=True).count()==1);c.close()
+ c,p,e=load(course='intro-economics')
+ ok('Unrelated course keeps its standard header',p.locator('.rth-header').count()==0 and p.locator('.course-header').count()==1 and not e)
+ ok('Right to Health styles do not activate on another course',not p.locator('body').evaluate('node=>node.classList.contains("rth-page")'));c.close()
+ browser.close()
+(OUT/'results.json').write_text(json.dumps({'passed':len(checks),'checks':checks,'limitations':'Inline tests adapt fetch, URL and storage. Live HTTP, actual persistence and service-worker delivery are not tested.'},indent=2))
+print('TOTAL',len(checks),'checks passed')

@@ -96,6 +96,14 @@ function availableTabs() {
     practice: c.flashcards.length + c.questions.length > 0,
     resources: c.resources.length > 0,
   };
+  if (c.id === "right-to-health" && window.RightToHealth?.ready()) {
+    has.schedule = has.exam = has.lectures = has.concepts = true;
+    const tabs = TABS.filter((tab) => has[tab.key]);
+    const at = tabs.findIndex((tab) => tab.key === "practice");
+    tabs.splice(at < 0 ? tabs.length : at, 0,
+      { key: "explore", label: "Explore" }, { key: "workshop", label: "Workshop" });
+    return tabs;
+  }
   return TABS.filter((tab) => has[tab.key]);
 }
 
@@ -111,6 +119,9 @@ function moduleOfTopic(topicId) {
 // ----- Header -----
 
 function renderHeader(tab, tabs) {
+  if (page.course.id === "right-to-health" && window.RightToHealth?.ready()) {
+    return RightToHealth.header({ pageLink, course: page.course }, tab, tabs);
+  }
   if (page.course.id === "fund-quant-methods" && window.FundCourse) return FundCourse.header({ pageLink, course: page.course, settings: page.settings }, tab, tabs);
   if (page.course.id === "quant-methods" && window.QuantMethods) return QuantMethods.header({ pageLink }, tab, tabs);
   if (page.course.id === "fund-health-econ-management" && window.HealthEconManagement) {
@@ -188,6 +199,11 @@ function renderPage() {
   const panel = createElement("section", "card course-panel");
   coursePage.appendChild(panel);
   const custom =
+    (page.course.id === "right-to-health" &&
+      window.RightToHealth?.ready() &&
+      RightToHealth.render(panel, tab, {
+        course: page.course, data: page.data, pageLink, params,
+      })) ||
     (page.course.id === "fund-quant-methods" &&
       window.FundCourse &&
       FundCourse.render(panel, tab, {
@@ -213,10 +229,10 @@ function renderPage() {
   if (tab === "schedule") renderSchedule(panel, params);
   if (tab === "exam") renderExam(panel);
   if (tab === "lectures" && !custom) renderLectures(panel);
-  if (tab === "topics") renderTopics(panel, params);
-  if (tab === "concepts") renderConcepts(panel);
+  if (tab === "topics" && !custom) renderTopics(panel, params);
+  if (tab === "concepts" && !custom) renderConcepts(panel);
   if (tab === "practice") renderPractice(panel, { course: page.course, params, topicTitle, topicLink, navigate });
-  if (tab === "resources") renderResources(panel);
+  if (tab === "resources" && !custom) renderResources(panel);
   highlightTarget();
 }
 
@@ -781,6 +797,9 @@ async function loadUniboData() {
   if (sessions.status === "rejected" || exams.status === "rejected") {
     console.error("UniBo data:", sessions.reason || exams.reason);
   }
+  // Do not erase an in-progress local activity when the independent UniBo request finishes.
+  if (page.course.id === "right-to-health" &&
+      ["explore", "workshop", "concepts", "topics", "practice", "resources"].includes(currentParams().tab)) return;
   const y = window.scrollY;
   renderPage();
   window.scrollTo(0, y);
@@ -837,6 +856,9 @@ async function initCoursePage() {
         page.course.modules.find((m) => m.id === "fund-health-economics"),
         read,
       );
+    }
+    if (page.course.id === "right-to-health" && window.RightToHealth) {
+      await RightToHealth.prepare(read);
     }
     renderPage();
     if (page.course.id === "quant-methods" && window.QuantMethods) QuantMethods.cacheFiles(publicFiles);
