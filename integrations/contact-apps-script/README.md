@@ -5,10 +5,12 @@ This separate service receives the four forms on `contact.html` and stores messa
 manages messages in that Sheet. It sends no emails or notifications, creates no student
 accounts, and publishes no messages. It does not connect the Directory or Supabase dashboard.
 
-The repository contains the service and fictional-service tests. **A real account deployment
-and an actual browser delivery check are still needed before enabling the website endpoint.**
-An empty `CONTACT_CONFIG.endpoint` means that the form has no receiving service configured.
-The frontend must not claim a message was sent in that state.
+The Hub account authorized and deployed the production receiver on **8 October 2026**.
+An actual browser delivery check returned the original saved receipt on exact retries, and
+the owner verified one matching private Sheet row. See the
+[activation record](../../docs/contact-forms.md#availability). Repeat the deployment checks
+below whenever changing the receiver. An empty `CONTACT_CONFIG.endpoint` disables the form;
+the frontend must not claim a message was sent in that state.
 
 ## Files and public interface
 

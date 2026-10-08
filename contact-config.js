@@ -1,7 +1,7 @@
 /* Public contact delivery configuration. An empty endpoint keeps the established
    email route visible. Never put a Sheet ID, credential or secret in this file. */
 window.CONTACT_CONFIG = Object.freeze({
-  endpoint: "",
+  endpoint: "https://script.google.com/macros/s/AKfycbzGrn6m15IQqpdNoexlQdRzrG478D6njpQPZWlOffUGQASB992nZDxbta14JYaSF2RM4Q/exec",
   noticeVersion: "contact-v1-2026-10",
 });
 

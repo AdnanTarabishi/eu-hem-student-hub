@@ -208,9 +208,10 @@ contributions. Topic and message are required; name and reply email are optional
 stay in page memory until Send, and only the selected topic's fields are submitted. A receipt is
 shown only after a matching acknowledgement of private storage; interrupted attempts keep the text.
 
-The separate `contact-config.js` endpoint is initially empty. Until a real receiver is deployed and
-verified, the form stays hidden and the existing email routes work, including without JavaScript.
-The prepared receiver uses a restricted Google Sheet owned by `euhem.studenthub@gmail.com`; its
+The separate `contact-config.js` connects the form to the Hub's verified private receiver.
+Browser delivery and an unchanged retry were verified on 8 October 2026. Clearing the endpoint
+disables the form and restores the email routes, which also work without JavaScript.
+The receiver uses a restricted Google Sheet owned by `euhem.studenthub@gmail.com`; its
 public endpoint can accept requests but cannot read the inbox. There is no automatic email sending.
 It does not activate Directory, Supabase, editor sign-in or announcement publishing. Setup and the
 actual-delivery checks are in [integrations/contact-apps-script/README.md](integrations/contact-apps-script/README.md).
@@ -219,7 +220,7 @@ Interaction details are in [docs/contact-forms.md](docs/contact-forms.md).
 `privacy.html` was reviewed against the current code and updated on 8 October 2026. It distinguishes
 the inactive Directory and editor connections, supplied origins totals, fictional demo profiles,
 on-device tools, offline copies, service requests, voluntary email and the separate Contact form's
-prepared handling. Contact availability is derived from the same public configuration as the form.
+handling. Contact availability is derived from the same public configuration as the form.
 Its seven native Directory
 disclosures preserve consent v3, the existing fields/visibility and every retention value. A rollout
 or substantive processing change needs a new review; see [docs/support-contact-privacy.md](docs/support-contact-privacy.md).

@@ -19,8 +19,9 @@ No existing shared style or navigation behavior is modified. New page assets are
 
 ## Privacy audit: current release versus prepared features
 
-The page describes observable browser behavior and the configured public release. It is not a claim
-that an inactive backend has been deployed or that private account settings were inspected.
+The page describes observable browser behavior and the configured public release. The Contact
+receiver's dedicated account, restricted Sheet and real delivery were inspected on 8 October 2026;
+that verification does not extend to the inactive Directory or editor connections.
 
 | Finding | Source in the repository | Notice treatment |
 |---|---|---|
@@ -34,7 +35,7 @@ that an inactive backend has been deployed or that private account settings were
 | Calendar/feed and exported files can be shared deliberately | `calendar.js`; feature export handlers | No absolute promise that local data can never be shared; clarify visitor-selected destinations and URL/history behavior. |
 | Public browser makes limited provider requests | `unibo-data.js`, CDN tags in Notes/Course/Create/City Guide, `universities.js` image loading | Explain UniBo, cdnjs, Wikimedia and GitHub requests, without describing them as Hub analytics. |
 | Announcements are copied into site files | `announcements.js`; `scripts/fetch-announcements.js` | Browsers do not contact the source Google Sheet to read announcements. |
-| Contact has a separate, initially unconnected private form receiver | `contact-config.js`, `contact.html`, `contact.js`, `integrations/contact-apps-script/` | State actual availability; explain optional details, private Sheet receipt, selected-topic fields, in-memory drafts, manual retention and email fallback. No claim of a deployed service from code or a configured URL alone. |
+| Contact uses its verified, separate private form receiver | `contact-config.js`, `contact.html`, `contact.js`, `integrations/contact-apps-script/`; actual browser delivery and private row verification | State actual availability; explain optional details, private Sheet receipt, selected-topic fields, in-memory drafts, manual retention and email fallback. The deployed configuration is backed by a real delivery check. |
 
 The existing group-photo removal route and named controller/contact remain accessible. Public election
 announcements, programme role contacts and attributed published experiences are not described as fictional.
@@ -81,5 +82,7 @@ Screenshots are retained as a workflow artifact. No private registration or mail
 
 The separate `Check Contact forms` workflow exercises the configured form against an intercepted
 fictional endpoint, including validation, matching receipts, interrupted sends and retries. Its
-receiver tests use stubbed private Sheets and Apps Script services. The empty production configuration
-keeps collection inactive; successful mock tests do not establish real delivery or deployed sharing.
+receiver tests use stubbed private Sheets and Apps Script services. Browser fixtures inject empty or
+mocked endpoints regardless of the production setting. Successful mock tests do not establish real
+delivery or deployed sharing; the separate [activation record](contact-forms.md#availability)
+documents the actual browser response and private-row verification.

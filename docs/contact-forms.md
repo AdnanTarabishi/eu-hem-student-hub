@@ -6,9 +6,16 @@ The inbox is a restricted Google Sheet, not a public feed or the unconnected edi
 
 ## Availability
 
-`contact-config.js` is the only public connection setting. Its endpoint starts empty.
-The existing email cards and copy-address control remain available until a valid production
-endpoint is configured. The form is hidden and disabled without JavaScript.
+`contact-config.js` is the only public connection setting. It now connects to the verified
+production receiver. Clearing its endpoint disables the form and restores the existing email
+cards and copy-address control. The form is hidden and disabled without JavaScript.
+
+On 8 October 2026 the Hub account authorized and deployed the receiver. A fictional browser
+submission from the production origin, followed by exact retries, returned the original saved
+receipt and timestamp. The owner verified exactly one matching private row with blank identity
+fields. The [delivery check](https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37760463735)
+uses the candidate Contact files at the real site origin; publishing and live-page verification
+are separate steps. No private Sheet identifier is included in source or test artifacts.
 
 A syntactically valid endpoint does **not** prove that a deployment works. Activate it only
 after the receiver is owned by `euhem.studenthub@gmail.com`, the Sheet is restricted, and a
@@ -110,7 +117,17 @@ not robust per-person rate limiting. Monitor the inbox and endpoint availability
 - `privacy.html`, `privacy.js`: notice and current availability.
 - `tests/contact/backend.test.js`: fictional Sheets/Apps Script validation and storage checks.
 - `tests/contact/browser.test.js`: intercepted submission and accessibility/layout checks.
+- `tests/contact/real-delivery-smoke.js`: explicitly enabled fictional browser delivery and retry.
 - `.github/workflows/contact-form-checks.yml`: runs those checks and retains screenshots.
+
+The registered `Check support and privacy pages` workflow offers a manual delivery option.
+Its default is off, and normal push/PR checks never contact the production receiver. Supply
+the owner-controlled public endpoint only when deliberately running a fictional delivery check.
+If an earlier attempt was unconfirmed, inspect its `attempt-summary.json` and private row before
+retrying; the optional recovery UUID reuses that exact fictional request instead of creating a
+new message. Sanitized diagnostics contain status, timing and response headers without temporary
+Google query URLs, raw response bodies or credentials. Ordinary browser tests explicitly inject
+empty or mocked endpoints, independently of the production setting.
 
 Browser checks run in GitHub Actions for this task. Mocked acknowledgements prove the
 interface's behavior, not that a real Google deployment accepts cross-origin submissions.

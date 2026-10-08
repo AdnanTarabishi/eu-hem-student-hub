@@ -46,6 +46,11 @@ on:
         required: false
         default: ""
         type: string
+      contact_delivery_request_id:
+        description: Optional UUID of the same fictional test to recover after an unconfirmed response
+        required: false
+        default: ""
+        type: string
 
 permissions:
   contents: read
@@ -84,6 +89,7 @@ jobs:
         env:
           CONTACT_ENDPOINT: ${{ inputs.contact_delivery_endpoint }}
           CONTACT_SMOKE_EXECUTE: ${{ inputs.run_contact_delivery }}
+          CONTACT_SMOKE_REQUEST_ID: ${{ inputs.contact_delivery_request_id }}
           CONTACT_SMOKE_OUTPUT: ${{ runner.temp }}/contact-real-delivery
         run: node tests/contact/real-delivery-smoke.js .
       - name: Save sanitized Contact delivery evidence
