@@ -7,6 +7,10 @@ import { chromium } from 'playwright';
 const root = path.resolve(process.argv[2] || '.');
 const out = process.env.SCREENSHOT_DIR || path.join(root, 'artifacts/behind-build');
 fs.mkdirSync(out, { recursive: true });
+// Public source only, no fonts, private records or submissions: useful for reproducing a failed layout check.
+const fixtures = path.join(out, 'public-fixture');
+fs.mkdirSync(fixtures, { recursive: true });
+for (const file of ['style.css','site-nav.js','ui.js','theme.js','utils.js','search.js','behind-build.css','behind-build.js','behind-the-build.html']) fs.copyFileSync(path.join(root,file), path.join(fixtures,file));
 const mime = { '.html':'text/html', '.css':'text/css', '.js':'text/javascript', '.json':'application/json', '.svg':'image/svg+xml', '.woff2':'font/woff2', '.png':'image/png', '.webp':'image/webp', '.jpg':'image/jpeg', '.webmanifest':'application/manifest+json' };
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, 'http://localhost');
@@ -49,17 +53,25 @@ try {
     check(await page.locator('#work-content').getAttribute('open') !== null, `${name}: keyboard details`);
     check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${name}: expanded overflow`);
     if (width <= 900) {
-      // The existing phone drawer shows all groups as non-interactive headings.
-      // Unlike desktop, its About heading must not be clicked; test the real link.
+      // On phones the existing drawer shows all groups as non-interactive headings.
       await page.getByRole('button', { name: 'Open menu', exact: true }).click();
-      await page.waitForFunction(() => document.getElementById('site-nav').getBoundingClientRect().right <= innerWidth + 1);
+      await page.waitForFunction(() => document.getElementById('site-nav').classList.contains('is-open') && document.getElementById('site-nav').getBoundingClientRect().right <= innerWidth + 1);
     } else {
       await page.locator('#site-nav button.menu-group').filter({ hasText: /^About$/ }).click();
     }
     const link = page.locator('#site-nav a[href="behind-the-build.html"]');
     await link.scrollIntoViewIfNeeded();
-    check(await link.isVisible() && await link.getAttribute('aria-current') === 'page', `${name}: shared current menu`);
     await page.screenshot({ path: path.join(out, name + '-menu.png') });
+    const diagnostic = await link.evaluate(element => {
+      const ancestors = [];
+      for (let node = element; node; node = node.parentElement) {
+        const css = getComputedStyle(node), rect = node.getBoundingClientRect();
+        ancestors.push({tag:node.tagName,id:node.id,class:node.className,current:node.getAttribute('aria-current'),display:css.display,visibility:css.visibility,position:css.position,overflow:css.overflow,rect:{x:rect.x,y:rect.y,width:rect.width,height:rect.height},scrollTop:node.scrollTop});
+      }
+      return {width:innerWidth,height:innerHeight,scrollY,ancestors};
+    });
+    fs.writeFileSync(path.join(out, name + '-menu.json'), JSON.stringify(diagnostic,null,2));
+    check(await link.isVisible() && await link.getAttribute('aria-current') === 'page', `${name}: shared current menu ${JSON.stringify(diagnostic)}`);
     await link.click();
     await page.waitForLoadState('networkidle');
     check(await page.locator('[data-total-hours]').innerText() === '60' && new URL(page.url()).pathname === '/behind-the-build.html', `${name}: real menu navigation`);
