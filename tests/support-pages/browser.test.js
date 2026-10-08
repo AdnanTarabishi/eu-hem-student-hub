@@ -493,7 +493,8 @@ const labelFor = (id) => {
     await mailLinks(page);
     assert.strictEqual(await page.locator("#contact-copy-email").isVisible(), false);
     assert.strictEqual(await page.locator("#contact-form-section").isVisible(), false, "the native form stays hidden when JavaScript is disabled");
-    assert.strictEqual(await page.locator("#contact-form-fields").isDisabled(), true, "disabled controls cannot submit an unintended native request");
+    assert.strictEqual(await page.locator("#contact-form-fields").evaluate((fieldset) => fieldset.disabled), true, "the no-JavaScript form keeps its native fieldset disabled");
+    assert.strictEqual(await page.locator("#contact-submit").isDisabled(), true, "disabled controls cannot submit an unintended native request");
     assert.strictEqual(await page.locator("#contact-topics").isVisible(), true, "ordinary email routes remain usable without JavaScript");
     await close(page, false);
     ok("all four encoded contact subjects and the main email destination work with JavaScript disabled, without following any mailto link");

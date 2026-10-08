@@ -149,7 +149,8 @@ const response = (route, value, status = 200) => route.fulfill({ status, content
     ]) {
       const fixture = await open(options), { page } = fixture;
       assert.strictEqual(await page.locator("#contact-form-section").isVisible(), false);
-      assert.strictEqual(await page.locator("#contact-form-fields").isDisabled(), true);
+      assert.strictEqual(await page.locator("#contact-form-fields").evaluate((fieldset) => fieldset.disabled), true);
+      assert.strictEqual(await page.locator("#contact-submit").isDisabled(), true, "the disabled fieldset also disables its submit control");
       assert.strictEqual(await page.locator("#contact-topics").isVisible(), true);
       assert.strictEqual(await page.locator("#contact-email").getAttribute("href"), `mailto:${EMAIL}`);
       assert.strictEqual(await page.locator(".contact-topic-link[data-topic][href^='mailto:']").count(), 4);
