@@ -61,6 +61,9 @@ try {
     }
     const link = page.locator('#site-nav a[href="behind-the-build.html"]');
     await link.scrollIntoViewIfNeeded();
+    // Shared reduced-motion rules still start a tiny inherited visibility transition
+    // on links. Wait for the actual target, not only the drawer's final geometry.
+    await link.waitFor({ state: 'visible', timeout: 10000 });
     await page.screenshot({ path: path.join(out, name + '-menu.png') });
     const diagnostic = await link.evaluate(element => {
       const ancestors = [];
