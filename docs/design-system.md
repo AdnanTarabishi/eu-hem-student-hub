@@ -202,6 +202,23 @@ colour tokens still come from `style.css`.
 - All interactions retain visible keyboard focus, comfortable touch targets, both themes and
   reduced-motion support. These pages do not introduce a new storage system or remote tracking.
 
+## Support, Contact and Privacy
+
+These pages reuse the academic companion's editorial hero, palette, local fonts and compact sources.
+`support.css`, `contact.css` and `privacy.css` keep their refinements scoped to the relevant page;
+the shared header and existing academic pages are unchanged.
+
+- Support and Privacy use the same sticky contents rail and focused deep links. Support keeps
+  emergency information visible and presents university contacts as native disclosures.
+- Contact has a shorter two-column layout: a navy inbox panel, four topic links, message tips
+  and a university-support route. Every email action works without JavaScript; copying adds
+  a status announcement and a manual fallback when clipboard access fails.
+- Privacy groups storage and service requests into readable definition lists. It separates
+  current features from prepared registration terms, which can be opened individually or together.
+  The full notice prints, including normally closed terms, and restores the prior reading state.
+- A notice of inactive registration is textually explicit; its amber rule is supplementary.
+  Main content and source references remain readable in both themes and on narrow screens.
+
 ## Accessibility notes
 
 Contrast was checked for the main pairs (WCAG AA 4.5:1 for text):

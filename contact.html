@@ -18,7 +18,10 @@
   <meta name="twitter:card" content="summary_large_image">
   <!-- /Social preview -->
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/source-serif-4-latin-600.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=6ef75792">
+  <link rel="stylesheet" href="academic-pages.css?v=b9c9a801">
+  <link rel="stylesheet" href="contact.css?v=776036a7">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -27,7 +30,7 @@
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=6074bd3c">
   <script src="theme.js?v=d51d4769"></script>
 </head>
-<body>
+<body class="contact-page academic-page">
 
   <header class="site-header">
     <div class="container">
@@ -39,29 +42,139 @@
     </div>
   </header>
 
-  <main class="container">
-    <section class="page-intro">
-      <div>
-        <p class="section-eyebrow">About</p>
-        <h1><svg class="icon" aria-hidden="true"><use href="icons.svg#mail"></use></svg> Contact</h1>
-        <p>Questions, corrections, ideas, or something you'd like changed or removed?
-          Get in touch with the student volunteers who run the Hub.</p>
+  <main class="container academic-main contact-main">
+    <header class="academic-hero contact-hero">
+      <div class="academic-hero__copy">
+        <p class="academic-eyebrow">About · Made by students</p>
+        <h1>Contact <span>the Hub.</span></h1>
+        <p>A correction, a question, or an idea for what comes next?
+          Get in touch with the student volunteers who look after the Hub.
+          Your feedback helps us make it more useful for everyone.</p>
+        <nav class="contact-hero-links" aria-label="Related pages">
+          <a href="support.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#graduation"></use></svg> University support <svg class="icon contact-link-arrow" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+          <a href="privacy.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#lock"></use></svg> Privacy notice <svg class="icon contact-link-arrow" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+        </nav>
       </div>
+      <aside class="academic-hero__aside contact-email-panel" aria-labelledby="contact-email-title">
+        <div class="contact-email-panel__top">
+          <p class="academic-eyebrow">The Student Hub inbox</p>
+          <svg class="icon contact-email-panel__icon" aria-hidden="true"><use href="icons.svg#mail"></use></svg>
+        </div>
+        <h2 id="contact-email-title">Let's hear from you.</h2>
+        <!-- Dedicated Hub address, shared with the Privacy notice and directory configuration. -->
+        <a id="contact-email" class="contact-email-address" href="mailto:euhem.studenthub@gmail.com">euhem.studenthub<wbr>@gmail.com</a>
+        <div class="contact-email-actions">
+          <a class="button button-primary" href="mailto:euhem.studenthub@gmail.com"><svg class="icon" aria-hidden="true"><use href="icons.svg#mail"></use></svg> Open email</a>
+          <button class="button contact-copy-button" id="contact-copy-email" type="button" aria-describedby="contact-copy-status" hidden>Copy email</button>
+        </div>
+        <p id="contact-copy-status" class="contact-copy-status" role="status" aria-live="polite" aria-atomic="true"></p>
+        <div id="contact-copy-fallback" class="contact-copy-fallback" hidden>
+          <label for="contact-copy-value">Email address to copy</label>
+          <input id="contact-copy-value" type="text" value="euhem.studenthub@gmail.com" readonly spellcheck="false" autocomplete="off">
+        </div>
+        <p class="contact-email-note">Opens your email app. You review the message and send it yourself.</p>
+        <p class="contact-volunteer-note"><svg class="icon" aria-hidden="true"><use href="icons.svg#students"></use></svg> We are volunteers and reply as soon as we can.</p>
+      </aside>
+    </header>
+
+    <section class="contact-topics" id="contact-topics" aria-labelledby="contact-topics-title">
+      <header class="contact-section-heading">
+        <div>
+          <p class="academic-eyebrow">Four ways to make the Hub better</p>
+          <h2 id="contact-topics-title">Choose a starting point.</h2>
+        </div>
+        <p>Each option opens an email with a suggested subject.
+          Add the details that matter, then send when you're ready.</p>
+      </header>
+
+      <div class="contact-topics-grid">
+        <article class="contact-topic" aria-labelledby="contact-correction-title">
+          <div class="contact-topic__top">
+            <span class="contact-topic__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#exams"></use></svg></span>
+            <span class="contact-topic__number" aria-hidden="true">01</span>
+          </div>
+          <h3 id="contact-correction-title">Flag a correction</h3>
+          <p>A date looks wrong, a link is broken, or something isn't working as expected.</p>
+          <div class="contact-topic__details">
+            <h4>Useful to include</h4>
+            <ul>
+              <li>The page link and what needs changing.</li>
+              <li>An official source, or what happened on your device.</li>
+            </ul>
+          </div>
+          <a class="contact-topic-link" data-topic="correction" href="mailto:euhem.studenthub@gmail.com?subject=EU-HEM%20Hub%20%7C%20Correction">Report a correction <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+        </article>
+
+        <article class="contact-topic" aria-labelledby="contact-idea-title">
+          <div class="contact-topic__top">
+            <span class="contact-topic__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#sparkles"></use></svg></span>
+            <span class="contact-topic__number" aria-hidden="true">02</span>
+          </div>
+          <h3 id="contact-idea-title">Share an idea</h3>
+          <p>A useful tool, a clearer explanation, or a small change that would make a difference.</p>
+          <div class="contact-topic__details">
+            <h4>Useful to include</h4>
+            <ul>
+              <li>What you're trying to do and where you get stuck.</li>
+              <li>How your idea would help you or other students.</li>
+            </ul>
+          </div>
+          <a class="contact-topic-link" data-topic="idea" href="mailto:euhem.studenthub@gmail.com?subject=EU-HEM%20Hub%20%7C%20Idea">Suggest an improvement <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+        </article>
+
+        <article class="contact-topic" aria-labelledby="contact-privacy-title">
+          <div class="contact-topic__top">
+            <span class="contact-topic__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#lock"></use></svg></span>
+            <span class="contact-topic__number" aria-hidden="true">03</span>
+          </div>
+          <h3 id="contact-privacy-title">Privacy or removal</h3>
+          <p>A question about your information, or something involving you that should be changed or removed.</p>
+          <div class="contact-topic__details">
+            <h4>Useful to include</h4>
+            <ul>
+              <li>A link to the page or item concerned.</li>
+              <li>The change or removal you are requesting.</li>
+            </ul>
+          </div>
+          <a class="contact-topic-link" data-topic="privacy" href="mailto:euhem.studenthub@gmail.com?subject=EU-HEM%20Hub%20%7C%20Privacy%20or%20removal%20request">Send a privacy request <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+        </article>
+
+        <article class="contact-topic" aria-labelledby="contact-contribution-title">
+          <div class="contact-topic__top">
+            <span class="contact-topic__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#notes"></use></svg></span>
+            <span class="contact-topic__number" aria-hidden="true">04</span>
+          </div>
+          <h3 id="contact-contribution-title">Contribute something</h3>
+          <p>Offer original notes, a practical tip, or a resource that other students could find useful.</p>
+          <div class="contact-topic__details">
+            <h4>Useful to include</h4>
+            <ul>
+              <li>What you've created and where it belongs.</li>
+              <li>Permission to share it and your preferred credit.</li>
+            </ul>
+          </div>
+          <a class="contact-topic-link" data-topic="contribution" href="mailto:euhem.studenthub@gmail.com?subject=EU-HEM%20Hub%20%7C%20Contribution">Offer a contribution <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+        </article>
+      </div>
+      <p class="contact-sharing-note"><svg class="icon" aria-hidden="true"><use href="icons.svg#info"></use></svg>
+        <span>Include only the details needed to understand your request. If you attach a screenshot,
+          cover unrelated personal information first. Read how messages are handled in the <a href="privacy.html">Privacy notice</a>.</span></p>
     </section>
 
-    <article class="card text-page">
+    <aside class="contact-support" aria-labelledby="contact-support-title">
+      <span class="contact-support__icon"><svg class="icon" aria-hidden="true"><use href="icons.svg#graduation"></use></svg></span>
+      <div>
+        <p class="academic-eyebrow">Find the right person</p>
+        <h2 id="contact-support-title">Need university support?</h2>
+        <p>For programme decisions, university services, wellbeing or urgent help,
+          use Support &amp; Contacts to find the appropriate official service.</p>
+      </div>
+      <a class="button button-secondary" href="support.html">Find official support <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+    </aside>
 
-      <!-- CONTACT METHOD: the dedicated Student Hub email (never a personal address or phone number).
-           The same address is on privacy.html and is the CONTACT_EMAIL of the directory backend. -->
-      <p class="note contact-email">Email: <a href="mailto:euhem.studenthub@gmail.com"><strong>euhem.studenthub@gmail.com</strong></a></p>
-      <p>Write to us for questions and corrections, to change or delete your Student Directory profile,
-        or about anything concerning you on this site. We are volunteers and answer as soon as we can.</p>
-
-      <p>Found a mistake in a timetable or exam date? The official
-        <a href="https://corsi.unibo.it/2cycle/euHealthEconomicsManagement" target="_blank" rel="noopener">EU-HEM course website</a>
-        is always right; please tell us so we can fix the Hub.</p>
-      <p><a href="index.html">← Back to the homepage</a></p>
-    </article>
+    <p class="contact-official-note">Checking a timetable or exam date? The official
+      <a href="https://corsi.unibo.it/2cycle/euHealthEconomicsManagement" target="_blank" rel="noopener">EU-HEM course website <svg class="icon" aria-hidden="true"><use href="icons.svg#external"></use></svg></a>
+      is authoritative. Please let us know if the Hub needs a correction.</p>
   </main>
 
   <footer class="site-footer">
@@ -75,6 +188,7 @@
   <script defer src="search.js?v=691c11a5"></script>
   <script defer src="pwa.js?v=c9212bf8"></script>
   <script defer src="announcements.js?v=5ec8eef9"></script>
+  <script defer src="contact.js?v=b3569a70"></script>
 
 </body>
 </html>

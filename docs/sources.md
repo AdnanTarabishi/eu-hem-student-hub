@@ -6,7 +6,7 @@ the student representatives' slides, the ESN Bologna guide) and from official we
 - **Official · EU-HEM Handbook · verified 6 Oct 2026** (blue): an official document or university page.
 - **Student tip · ESN Bologna** (amber): advice from students, useful but not official.
 
-On Academic Rules and Programme Journey, the same complete labels use a compact 11px style
+On Academic Rules, Programme Journey and Support & Contacts, the same complete labels use a compact 11px style
 with lighter weight and less padding (`academic-pages.css`). The kind, source name and verified
 date remain visible, including on narrow screens; they wrap rather than being shortened or hidden
 behind a tooltip. Official links still use the URLs in this registry. Restyling a label does not

@@ -52,7 +52,8 @@ function universityLabel(id) {
 }
 
 function supportItem(item) {
-  const li = createElement("li", "rules-item", `${item.text} `);
+  const li = createElement("li", "rules-item");
+  li.append(createElement("span", "support-item__text", item.text), " ");
   if (item.email) {
     const mail = createElement("a", "support-mail", item.email);
     mail.href = `mailto:${item.email}`;
@@ -86,12 +87,13 @@ function supportList(items) {
 // The coordinator line: role, mailbox (or the official page when there is no mailbox), source label
 function coordinatorBlock(coordinator) {
   const box = createElement("p", "support-coordinator");
-  box.appendChild(createElement("strong", null, `${coordinator.role}: `));
+  box.appendChild(createElement("strong", "support-coordinator__role", `${coordinator.role}: `));
+  const links = createElement("span", "support-coordinator__links");
   const source = support.sources[coordinator.source];
   if (coordinator.email) {
     const mail = createElement("a", "support-mail", coordinator.email);
     mail.href = `mailto:${coordinator.email}`;
-    box.appendChild(mail);
+    links.appendChild(mail);
   }
   // An official web page as the source: link it too (after the mailbox, or on its own)
   if (source && source.link && source.kind === "official" && coordinator.source !== "euhem-handbook-2026") {
@@ -99,9 +101,9 @@ function coordinatorBlock(coordinator) {
     a.href = source.link.url;
     a.target = "_blank";
     a.rel = "noopener";
-    box.append(coordinator.email ? " · " : "", a);
+    links.append(coordinator.email ? " · " : "", a);
   }
-  box.append(" ", sourceLabel(coordinator.source, support.sources));
+  box.append(links, " ", sourceLabel(coordinator.source, support.sources));
   return box;
 }
 
@@ -112,16 +114,23 @@ function showSupportSection(id) {
 }
 
 function renderEmergency() {
-  if (!support.emergency.length) return;
   const box = showSupportSection("emergency");
   const list = box.querySelector(".support-emergency-list");
   for (const entry of support.emergency) {
     const li = createElement("li");
-    li.append(createElement("strong", null, `${entry.city}: `), entry.text, " ");
+    li.append(createElement("strong", "support-emergency__city", `${entry.city}: `), createElement("span", "support-emergency__number", entry.text), " ");
     const a = createElement("a", null, "City Guide");
     a.href = `city-guide.html?city=${entry.id}`;
+    a.setAttribute("aria-label", `${entry.city} City Guide`);
     li.appendChild(a);
     list.appendChild(li);
+  }
+  if (support.emergency.length < CITY_GUIDES.filter((guide) => guide.file).length) {
+    const note = createElement("p", "support-emergency__unavailable", "Some city information could not be loaded. ");
+    const link = createElement("a", null, "Open the City Guides");
+    link.href = "city-guide.html";
+    note.appendChild(link);
+    box.appendChild(note);
   }
 }
 
@@ -135,8 +144,15 @@ function supportQuestionOptions(question) {
 function renderSupportQuestions() {
   const box = document.querySelector("#contact-guide .support-questions");
   box.replaceChildren();
-  visibleSupportQuestions(support.people.contactGuide, support.answers).forEach((question, index) => {
+  const questions = visibleSupportQuestions(support.people.contactGuide, support.answers);
+  const answered = questions.filter((question) => support.answers[question.id]).length;
+  document.querySelector(".support-progress-label").textContent = `${answered} of ${questions.length} answered`;
+  const progress = document.querySelector(".support-progress progress");
+  progress.max = questions.length;
+  progress.value = answered;
+  questions.forEach((question, index) => {
     const fieldset = createElement("fieldset", "resit-question");
+    fieldset.dataset.question = question.id;
     fieldset.appendChild(createElement("legend", null, `${index + 1}. ${question.text}`));
     const options = createElement("div", "choice-options");
     for (const option of supportQuestionOptions(question)) {
@@ -160,7 +176,7 @@ function answerSupport(questionId, value) {
   const visible = visibleSupportQuestions(support.people.contactGuide, support.answers).map((q) => q.id);
   for (const id of Object.keys(support.answers)) if (!visible.includes(id)) delete support.answers[id];
   renderSupportQuestions();
-  document.querySelector(`input[name="support-${questionId}"][value="${value}"]`)?.focus();
+  document.querySelector(`input[name="support-${questionId}"][value="${value}"]`)?.focus({ preventScroll: true });
   renderSupportOutcome();
 }
 
@@ -168,8 +184,12 @@ function renderSupportOutcome() {
   const box = document.querySelector("#contact-guide .support-outcome");
   box.replaceChildren();
   const outcome = supportOutcome(support.people, support.answers);
-  if (!outcome) return;
+  if (!outcome) {
+    box.appendChild(createElement("p", "support-empty", "Your next step and relevant contacts will appear here once you have answered the questions above."));
+    return;
+  }
   const card = createElement("div", `resit-result support-result is-${outcome.key}`);
+  card.appendChild(createElement("p", "academic-eyebrow", "Your next step"));
   card.appendChild(createElement("h3", null, outcome.title));
   card.appendChild(supportList(outcome.items));
   for (const contact of outcome.contacts) {
@@ -189,7 +209,7 @@ function renderSupportOutcome() {
     note.appendChild(a);
     card.appendChild(note);
   }
-  const reset = createElement("button", "button button-secondary resit-reset", "Start again");
+  const reset = createElement("button", "button button-secondary resit-reset academic-print-hide", "Start again");
   reset.type = "button";
   reset.addEventListener("click", () => {
     support.answers = {};
@@ -205,27 +225,59 @@ function renderContactGuide() {
   const section = showSupportSection("contact-guide");
   section.querySelector(".support-guide-intro").textContent = support.people.contactGuide.intro;
   renderSupportQuestions();
+  renderSupportOutcome();
 }
 
 function renderUniversities() {
   const section = showSupportSection("universities");
   section.querySelector(".support-privacy").textContent = support.people.privacyNote;
   const box = section.querySelector(".rules-unis");
+  const jumps = section.querySelector(".support-university-jumps");
   for (const id of SUPPORT_UNIVERSITIES) {
     const university = support.people.universities[id];
-    const card = createElement("article", "card rules-uni");
+    const name = support.names[id]?.name || id;
+    const city = support.names[id]?.city || "";
+    const jump = createElement("a", "support-university-jump", city || name);
+    jump.href = `#contacts-${id}`;
+    jumps.appendChild(jump);
+    const card = createElement("details", "rules-uni");
     card.id = `contacts-${id}`;
-    card.style.setProperty("--city-accent", `var(--city-${(support.names[id]?.city || "").toLowerCase()})`);
-    const head = createElement("h3", null, support.names[id]?.name || id);
-    if (support.names[id]) head.appendChild(createElement("span", "rules-uni-city", support.names[id].city));
-    card.appendChild(head);
-    card.appendChild(coordinatorBlock(university.coordinator));
-    card.appendChild(createElement("h4", null, "Feeling unsafe or treated unfairly"));
-    card.appendChild(supportList(university.safety));
-    card.appendChild(createElement("h4", null, "Wellbeing and counselling"));
-    card.appendChild(supportList(university.wellbeing));
+    card.open = id === "unibo";
+    if (city) card.style.setProperty("--city-accent", `var(--city-${city.toLowerCase()})`);
+    const summary = createElement("summary", "support-university-summary");
+    const head = createElement("h3");
+    head.appendChild(createElement("span", "support-university-name", name));
+    if (city) head.appendChild(createElement("span", "rules-uni-city", city));
+    const toggle = createElement("span", "support-university-toggle");
+    toggle.setAttribute("aria-hidden", "true");
+    toggle.append(createElement("span", "support-university-toggle__closed", "View contacts"), createElement("span", "support-university-toggle__open", "Hide contacts"));
+    head.appendChild(toggle);
+    summary.appendChild(head);
+    card.appendChild(summary);
+
+    const body = createElement("div", "support-university-body");
+    body.appendChild(coordinatorBlock(university.coordinator));
+    const topics = createElement("div", "support-university-topics");
+    for (const [key, title] of [["safety", "Feeling unsafe or treated unfairly"], ["wellbeing", "Wellbeing and counselling"]]) {
+      const topic = createElement("section", "support-university-topic");
+      const heading = createElement("h4", null, title);
+      heading.id = `contacts-${id}-${key}`;
+      topic.setAttribute("aria-labelledby", heading.id);
+      topic.append(heading, supportList(university[key]));
+      topics.appendChild(topic);
+    }
+    body.appendChild(topics);
+    card.appendChild(body);
+    card.addEventListener("toggle", updateSupportToggle);
     box.appendChild(card);
   }
+  section.querySelector(".support-toggle-all").addEventListener("click", () => {
+    const cards = Array.from(box.querySelectorAll(".rules-uni"));
+    const shouldOpen = !cards.every((card) => card.open);
+    for (const card of cards) card.open = shouldOpen;
+    updateSupportToggle();
+  });
+  updateSupportToggle();
   const staff = support.sources[support.people.staffPage];
   if (staff && staff.link) {
     const line = section.querySelector(".support-staff-page");
@@ -238,10 +290,21 @@ function renderUniversities() {
   }
 }
 
+function updateSupportToggle() {
+  const cards = Array.from(document.querySelectorAll("#universities .rules-uni"));
+  const allOpen = cards.length > 0 && cards.every((card) => card.open);
+  const button = document.querySelector(".support-toggle-all");
+  button.textContent = allOpen ? "Collapse all universities" : "Expand all universities";
+  button.setAttribute("aria-expanded", String(allOpen));
+}
+
 function renderLists() {
   const leave = showSupportSection("leave");
-  leave.querySelector(".support-leave").replaceWith(supportList(support.people.leave));
-  leave.querySelector(".support-withdrawal").replaceWith(supportList(support.people.withdrawal));
+  for (const key of ["leave", "withdrawal"]) {
+    const list = supportList(support.people[key]);
+    list.classList.add(`support-${key}`);
+    leave.querySelector(`.support-${key}`).replaceWith(list);
+  }
   showSupportSection("software").querySelector(".rules-list").replaceWith(supportList(support.people.software));
   showSupportSection("community").querySelector(".rules-list").replaceWith(supportList(support.people.community));
 }
@@ -275,13 +338,17 @@ async function initSupport() {
     renderContactGuide();
     renderUniversities();
     renderLists();
-    status.remove();
     support.emergency = await loadEmergencyNumbers();
     renderEmergency();
-    if (window.location.hash) document.getElementById(window.location.hash.slice(1))?.scrollIntoView();
+    status.remove();
+    document.dispatchEvent(new CustomEvent("academic:ready"));
   } catch (error) {
     console.error("Support page:", error);
-    status.textContent = "Sorry, the contacts could not be loaded right now. Please try again later.";
+    status.textContent = "Sorry, the contacts could not be loaded right now. ";
+    const retry = createElement("button", "button button-secondary", "Try again");
+    retry.type = "button";
+    retry.addEventListener("click", () => window.location.reload());
+    status.appendChild(retry);
   }
 }
 

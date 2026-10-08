@@ -18,7 +18,10 @@
   <meta name="twitter:card" content="summary_large_image">
   <!-- /Social preview -->
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/source-serif-4-latin-600.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=6ef75792">
+  <link rel="stylesheet" href="academic-pages.css?v=b9c9a801">
+  <link rel="stylesheet" href="privacy.css?v=f7f266ae">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -27,7 +30,7 @@
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=6074bd3c">
   <script src="theme.js?v=d51d4769"></script>
 </head>
-<body>
+<body class="privacy-page academic-page">
 
   <header class="site-header">
     <div class="container">
@@ -39,72 +42,146 @@
     </div>
   </header>
 
-  <main class="container">
-    <section class="page-intro">
-      <div>
-        <p class="section-eyebrow">About</p>
-        <h1><svg class="icon" aria-hidden="true"><use href="icons.svg#lock"></use></svg> Privacy</h1>
-        <p>The short version: there are no accounts, no tracking and no analytics.
-          Your study plan and progress stay on your own device. The only personal information we collect is what
-          you choose to send through the <a href="#student-directory">Student Directory form</a>.</p>
+  <main class="container academic-main">
+    <header class="academic-hero">
+      <div class="academic-hero__copy">
+        <p class="academic-eyebrow">About the Hub · Your information</p>
+        <h1>Privacy,<br><span class="privacy-title-accent">made clear.</span></h1>
+        <p>What stays on your device, when other services receive a request, and how to ask about your data.</p>
+        <div class="academic-hero__actions">
+          <a href="#on-device">Explore your choices <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+          <a href="#responsible">Ask a privacy question</a>
+        </div>
+        <p class="privacy-updated">Updated <time datetime="2026-10-08">8 October 2026</time></p>
       </div>
-    </section>
+      <aside class="academic-hero__aside privacy-overview" aria-labelledby="privacy-overview-title">
+        <p class="academic-eyebrow">The current public Hub</p>
+        <h2 id="privacy-overview-title">A little clarity.<br>More control.</h2>
+        <ul class="privacy-overview-list">
+          <li><svg class="icon" aria-hidden="true"><use href="icons.svg#book"></use></svg><span>Browse without a student account.</span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="icons.svg#lock"></use></svg><span>Study choices and saved drafts stay in your browser.</span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="icons.svg#mail"></use></svg><span>Email only what you choose to send.</span></li>
+        </ul>
+        <p class="privacy-overview-note">The Hub adds no visitor analytics or advertising trackers. Hosting and other service requests are explained below.</p>
+      </aside>
+    </header>
 
-    <article class="card text-page">
+    <div class="academic-layout">
+      <nav class="academic-nav" aria-label="On this page">
+        <p class="academic-nav__label">Understand your privacy</p>
+        <ol>
+          <li><a href="#on-device"><span class="academic-nav__number" aria-hidden="true">01</span> Saved on your device</a></li>
+          <li><a href="#connections"><span class="academic-nav__number" aria-hidden="true">02</span> External services</a></li>
+          <li><a href="#messages"><span class="academic-nav__number" aria-hidden="true">03</span> Messages you send</a></li>
+          <li><a href="#student-directory"><span class="academic-nav__number" aria-hidden="true">04</span> Student Directory</a></li>
+          <li><a href="#public-content"><span class="academic-nav__number" aria-hidden="true">05</span> Public content</a></li>
+          <li><a href="#rights"><span class="academic-nav__number" aria-hidden="true">06</span> Your rights</a></li>
+          <li><a href="#responsible"><span class="academic-nav__number" aria-hidden="true">07</span> Contact &amp; updates</a></li>
+        </ol>
+        <div class="academic-nav__footer">
+          <p>Need help with the programme?</p>
+          <a href="support.html">Support &amp; Contacts <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+        </div>
+      </nav>
 
-      <h2>What stays on your device</h2>
-      <p>Some choices are saved in your browser's own storage (called <em>localStorage</em>), on your device only.
-        They are never sent to us or to anyone else:</p>
-      <ul>
-        <li>your study plan and course statuses</li>
-        <li>Student Toolkit bookmarks and, only when you enable the option, up to six recently opened tool IDs; you can clear these separately on the Toolkit page, without deleting course progress</li>
-        <li>your progress in Notes &amp; Resources and your saved study list</li>
-        <li>Fundamentals mock-exam answers and its deadline are saved in this tab's <em>sessionStorage</em>, separate from Notes progress backups; closing the tab normally clears the session</li>
-        <li>your first-week checklist progress in the Universities guide</li>
-        <li>light or dark mode, the timetable view, the Notes library layout, "My courses only", and the welcome checklist</li>
-        <li>the roadmap plans you save on the Roadmap &amp; Updates page (only which plans you saved, as a personal shortlist: not a vote or a subscription)</li>
-        <li>the Student Experiences stories you save and any contribution draft you explicitly save or import on that page; the current Student Experiences release does not submit that draft anywhere</li>
-      </ul>
-      <p>If you install the Hub as an app, your device also keeps copies of the site's public pages and data,
-        so it works offline. To remove everything, clear this site's data in your browser settings.</p>
-      <p><strong>Toolkit personal lists:</strong> List names, catalogue IDs and reviewed checkboxes are stored in this browser only, under a separate Toolkit key. Manual JSON export/import creates a portable backup; it does not sync an account. Comparison choices are kept only for the page session. List names should not contain confidential information. My lists includes a clear action that leaves saved bookmarks, course progress and other Hub data unchanged.</p>
-      <p><strong>Toolkit workbench:</strong> Economics and sample-planning assumptions, study tasks, budgets, moving checklists, document dates and career application notes stay in the current tab until you explicitly choose Save on this device. Saved snapshots use a separate workbench storage key and are never sent to the Hub. JSON exports include your current drafts and may contain personal financial or application information; keep them private. Import requires a preview and confirmation before replacing these planners. Workbench clear controls leave bookmarks, catalogue lists and course progress alone. No identity scans, identity numbers, background notifications or automatic job applications are collected or created. Calendar files create reminders only when you import them into your own calendar.</p>
+      <div class="academic-content">
+        <section id="on-device" class="academic-section privacy-section" aria-labelledby="on-device-title">
+          <header class="academic-section__heading">
+            <p class="academic-eyebrow">01 · Your browser, your choices</p>
+            <h2 id="on-device-title">What stays on your device</h2>
+            <p>The Hub saves some choices in this browser profile, using local storage. They do not sync to a Student Hub account. The Hub does not automatically upload your saved choices or drafts.</p>
+          </header>
+          <dl class="privacy-data-list">
+            <div><dt>Study &amp; practice</dt><dd>Your course choices and statuses, four-semester study plan, chosen track, Notes and lecture progress, flashcards, quizzes, reflections and saved study list. The Health Economics mock keeps its current attempt and up to eight earlier attempts.</dd></div>
+            <div><dt>Thesis workspace</dt><dd>Your saved ideas, topic, research question, planning notes, possible supervisor and checklist. <strong>This workspace saves edits automatically on this device.</strong></dd></div>
+            <div><dt>Toolkit &amp; planners</dt><dd>Bookmarks, personal list names and reviewed items; up to six recent tool IDs only if you enable that option. Budgets, study tasks, moving checklists, document dates and career notes are saved only when you choose <strong>Save on this device</strong>.</dd></div>
+            <div><dt>Stories &amp; drafts</dt><dd>Saved Student Experiences story IDs and contribution drafts you explicitly save. Importing a draft fills the current form; it does not save it permanently until you choose Save, and it does not submit it. The Right to Health Workshop also saves preparation text only when you choose Save.</dd></div>
+            <div><dt>Places &amp; shortlists</dt><dd>Saved city-guide sections, university first-week checklists, roadmap plan IDs and fictional profile bookmarks. Saving a roadmap item is a personal shortlist, not a vote or a subscription.</dd></div>
+            <div><dt>Display preferences</dt><dd>Light or dark mode, timetable and Study Plan views, Notes library layout, “My courses only” and the welcome checklist.</dd></div>
+          </dl>
+          <div class="privacy-pair">
+            <div class="privacy-note">
+              <h3>Some work is temporary</h3>
+              <p>The Fundamentals Statistics mock uses this tab's session storage for answers and its deadline; closing the tab normally clears that session. The Right to Health casebook, support questionnaires, Toolkit comparisons and unsaved planners stay in page memory and can be lost on reload.</p>
+            </div>
+            <div class="privacy-note">
+              <h3>Offline copies</h3>
+              <p>In supported browsers, visiting the Hub can save copies of public pages, resources and data for offline use. This can happen <strong>without installing the app</strong>. These copies are separate from your personal study progress.</p>
+            </div>
+          </div>
+          <details class="privacy-explainer">
+            <summary>Backups, sharing &amp; clearing your data</summary>
+            <div>
+              <p>Use a feature's own export and clear controls where available. Notes, Study Plan, Thesis, Toolkit and Experiences have different backups; a Notes backup is not a backup of the whole Hub. Exports can include free-text notes, financial plans or application details.</p>
+              <p>To remove local storage and offline copies, clear this site's data in your browser settings. Export anything you want to keep first. Clearing browser data does not delete downloaded backups, email messages or information you have sent elsewhere.</p>
+              <p>Files you export and messages you send are shared only if you choose to share them. Some search and filter choices appear in page URLs and can enter browser history or shared links. Adding a plan-specific calendar passes the selected public calendar-feed address to your chosen calendar provider.</p>
+              <div class="privacy-inline-links"><a href="studyplan.html">Study Plan</a><a href="notes.html">Notes &amp; Resources</a><a href="thesis.html">Thesis workspace</a><a href="toolkit.html">Student Toolkit</a></div>
+            </div>
+          </details>
+        </section>
 
-      <h2>What the site loads, and from where</h2>
-      <ul>
-        <li><strong>GitHub Pages</strong> hosts the site. Like any web host, GitHub receives your IP address
-          when you visit (see GitHub's privacy statement).</li>
-        <li><strong>University of Bologna:</strong> the timetable and exam dates are loaded directly from
-          corsi.unibo.it by your browser, so UniBo's servers see that request.</li>
-        <li><strong>Announcements</strong> are written in a Google Sheet. A robot copies them to this site,
-          so your browser does not contact Google to show them.</li>
-        <li><strong>Notes and the City Guide</strong> use two small libraries (for text and formulas) from
-          cdnjs (Cloudflare), which sees that request.</li>
-        <li><strong>Fonts</strong> are stored on this site, so no font service is contacted.</li>
-        <li><strong>University gallery photos:</strong> some additional real university photographs on the Universities pages are served by Wikimedia Commons, so Wikimedia receives the image request (and therefore your IP address). Those image requests use a <code>no-referrer</code> policy, so the Student Hub page address is not sent with them.</li>
-        <li><strong>Student Directory form:</strong> only if you choose to join and press Submit, your answers
-          are sent to Google (see <a href="#student-directory">Student Directory</a> below).</li>
-        <li><strong>Links</strong> to Google Maps, Google Calendar, Outlook, Virtuale and other sites only
-          contact those services when you click them.</li>
-      </ul>
+        <section id="connections" class="academic-section privacy-section" aria-labelledby="connections-title">
+          <header class="academic-section__heading">
+            <p class="academic-eyebrow">02 · What connects, and when</p>
+            <h2 id="connections-title">External services</h2>
+            <p>A service receives an internet request when your browser loads something from it. That request can include your IP address and ordinary connection information. Each provider has its own privacy practices.</p>
+          </header>
+          <dl class="privacy-service-list">
+            <div><dt><span class="privacy-service-name">GitHub Pages</span><span class="privacy-service-when">When you visit</span></dt><dd>Hosts the Hub's pages and files. GitHub logs visitors' IP addresses for security, including visitors without a GitHub account. The Hub does not control GitHub's hosting logs.<a class="privacy-policy-link" href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages#data-collection" target="_blank" rel="noopener">GitHub Pages data collection ↗</a></dd></div>
+            <div><dt><span class="privacy-service-name">University of Bologna</span><span class="privacy-service-when">When live dates load</span></dt><dd>Timetable and exam views can request public data directly from <span class="privacy-domain">corsi.unibo.it</span>. Filtering it by your saved courses happens in your browser.<a class="privacy-policy-link" href="https://corsi.unibo.it/2cycle/euHealthEconomicsManagement" target="_blank" rel="noopener">Official programme website ↗</a></dd></div>
+            <div><dt><span class="privacy-service-name">Cloudflare cdnjs</span><span class="privacy-service-when">On some study pages</span></dt><dd>Notes, course, contribution and city-guide pages use code or formatting assets from <span class="privacy-domain">cdnjs.cloudflare.com</span>, including text rendering and mathematical notation. The main interface fonts, Inter and Source Serif 4, are hosted with the Hub.<a class="privacy-policy-link" href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Cloudflare privacy policy ↗</a></dd></div>
+            <div><dt><span class="privacy-service-name">Wikimedia</span><span class="privacy-service-when">When extra campus photos load</span></dt><dd>Some university-gallery images load from Wikimedia's image servers. Their requests use a no-referrer policy, so the Hub page address is not sent with those image requests.<a class="privacy-policy-link" href="https://foundation.wikimedia.org/wiki/Policy:Privacy_policy" target="_blank" rel="noopener">Wikimedia privacy policy ↗</a></dd></div>
+            <div><dt><span class="privacy-service-name">Announcements</span><span class="privacy-service-when">From the Hub's own files</span></dt><dd>An automated update copies published announcements from a Google Sheet into the site's files. Reading announcements does not make your browser load that source Sheet.</dd></div>
+            <div><dt><span class="privacy-service-name">Email &amp; other links</span><span class="privacy-service-when">When you choose an action</span></dt><dd>Email links open your chosen email app; sending is your separate action. Links to maps, calendars, Virtuale, Toolkit services and story sources take you to their own services. Those destinations handle what you choose to send or open under their policies.<a class="privacy-policy-link" href="https://policies.google.com/privacy?hl=en" target="_blank" rel="noopener">Google privacy policy (the Hub's Gmail inbox) ↗</a></dd></div>
+          </dl>
+          <div class="privacy-note privacy-note--wide">
+            <h3>Accounts, cookies &amp; tracking</h3>
+            <p>The public Hub needs no student login. Its code does not set its own cookies or add visitor analytics, advertising trackers or marketing pixels. Browser storage and service requests still work as described above. The prepared editor dashboard is not connected in this release, so it provides no working editor sign-in.</p>
+            <p>Providers may process requests outside the European Union; their linked policies explain their own safeguards and retention. We do not describe their services as having no logs or no data collection.</p>
+          </div>
+        </section>
 
-      <h2>Accounts, cookies and tracking</h2>
-      <p>There are no accounts or logins. The site sets no cookies, and uses no analytics, advertising
-        or tracking tools.</p>
+        <section id="messages" class="academic-section privacy-section" aria-labelledby="messages-title">
+          <header class="academic-section__heading">
+            <p class="academic-eyebrow">03 · If you get in touch</p>
+            <h2 id="messages-title">Messages you choose to send</h2>
+            <p>The Contact page offers email links and a copy-address button. It does not submit a message from the website.</p>
+          </header>
+          <div class="privacy-message-flow">
+            <div><span aria-hidden="true">01</span><h3>You prepare a message</h3><p>An email link opens your email app. A suggested subject helps route your request; you can edit it.</p></div>
+            <div><span aria-hidden="true">02</span><h3>You choose to send</h3><p>Your sender address, name if supplied, message and chosen attachments go to the Student Hub's Gmail inbox.</p></div>
+            <div><span aria-hidden="true">03</span><h3>We respond</h3><p>We use that information to answer you, correct the Hub or handle the request. An email is not a Directory registration.</p></div>
+          </div>
+          <p>We handle ordinary correspondence to respond to requests and maintain the student project (our legitimate interests, Article 6(1)(f) GDPR). We handle data-rights requests to meet our legal obligations (Article 6(1)(c)). Messages are not added to a public profile or published merely because you contacted us.</p>
+          <p>Correspondence is kept while it is needed to resolve the request and relevant follow-up, or to meet an applicable legal obligation. You can ask for deletion. The website does not operate an automatic mailbox-deletion schedule.</p>
+          <p class="privacy-gentle-tip">A page link and a short explanation are usually enough. Avoid sending passwords, identity documents or private information about other people.</p>
+          <a class="button button-secondary" href="contact.html">Choose a contact topic <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+        </section>
 
-      <!-- Rewritten for onboarding v2 (consent version directory-v2-2026-10) on 5 October 2026, from join.js and
-           integrations/directory-apps-script/Code.gs. Revised after the maintainer's review on 5 October 2026.
-           The retention values (data-retention) must equal RETENTION in Code.gs: scripts/check-content.js checks them.
-           If this section changes meaning, change the consent version in BOTH directory-config.js and
-           Code.gs (see docs/student-directory.md). -->
-      <h2 id="student-directory">Student Directory and registration</h2>
-      <p>The Students page currently shows <strong>only fictional demo profiles</strong> (invented people, clearly
-        labelled). Its "Public preview" and "Verified-member preview" switch works on that fictional data only: it
-        does not sign anyone in and gives no access to real information. With the
-        <a href="join.html">Join the Directory</a> form you can register with the Student Hub. Registering is
-        voluntary. This section explains who can register and what happens to what you send.</p>
-
-      <h3>Who can register</h3>
+        <section id="student-directory" class="academic-section privacy-section" aria-labelledby="directory-title">
+          <header class="academic-section__heading">
+            <p class="academic-eyebrow">04 · Current status &amp; prepared terms</p>
+            <h2 id="directory-title">Student Directory</h2>
+          </header>
+          <div class="privacy-current" id="directory-status">
+            <strong>Registration is not open yet.</strong>
+            <p>The submission connection is switched off. You can explore the Join form, but it cannot send a registration. The Students explorer currently displays <strong>40 fictional demo profiles</strong>; its Public and Verified-member previews do not sign anyone in or reveal real student profiles.</p>
+          </div>
+          <p>The terms below describe the prepared registration process <strong>for when registration is enabled</strong>. They retain the existing consent choices and retention schedule. They do not mean that registration, member access or profile publishing is available now.</p>
+          <div class="privacy-terms-toolbar">
+            <span>Registration terms · 7 topics</span>
+            <button id="privacy-expand-all" class="button button-secondary" type="button" aria-expanded="false" aria-controls="directory-eligibility mobility-experience directory-verification directory-visibility directory-statistics directory-retention directory-safeguards" hidden>Expand all registration terms</button>
+          </div>
+          <!-- Prepared onboarding v3 terms, consent directory-v3-2026-10.
+               Layout and current-release clarifications do not change fields, purposes, recipients,
+               visibility or retention. data-retention values remain checked against Code.gs.
+               A substantive change requires the synchronized consent-version review described in
+               docs/student-directory.md before a backend can be enabled. -->
+          <div class="privacy-terms">
+<details class="privacy-term" id="directory-eligibility">
+  <summary><span>Who can register &amp; what is requested</span></summary>
+  <div class="privacy-term__body">
+<h3>Who can register</h3>
       <ul>
         <li><strong>Current EU-HEM students</strong> and <strong>EU-HEM alumni</strong>: they can have a Student
           Directory profile.</li>
@@ -143,8 +220,12 @@
       <p>A photo is made smaller in your own browser before it is sent. This also removes hidden data stored by
         phone cameras, such as the location where it was taken. Students from another programme and staff are not
         asked for a photo.</p>
-
-      <h3 id="mobility-experience">Optional: citizenship group and study-visa experience</h3>
+  </div>
+</details>
+<details class="privacy-term" id="mobility-experience">
+  <summary><span>Optional mobility experience</span></summary>
+  <div class="privacy-term__body">
+<h3>Optional: citizenship group and study-visa experience</h3>
       <p>Current students and alumni may answer two optional questions, or skip them:</p>
       <ul>
         <li><strong>Citizenship group:</strong> EU / EEA / Swiss citizen, Non-EU / EEA / Swiss citizen, or "Prefer
@@ -166,8 +247,12 @@
         visa. Your answers do not affect whether you can register, appear in the Directory or use any part of the
         Student Hub. They are not included in the confirmation email. The same correction, deletion and retention
         rules as for the rest of your registration apply to them.</p>
-
-      <h3>Your email address</h3>
+  </div>
+</details>
+<details class="privacy-term" id="directory-verification">
+  <summary><span>Email checks &amp; private storage</span></summary>
+  <div class="privacy-term__body">
+<h3>Your email address</h3>
       <p>We use your email to confirm that the registration is really yours. It is <strong>never shown
         publicly</strong>. By default it is hidden from everyone. Current students and alumni can choose, under
         "Advanced privacy settings", to allow it to be shown to verified EU-HEM members only, once a secure login
@@ -193,17 +278,23 @@
         automatically</strong>.</p>
 
       <h3>Where your information is stored</h3>
-      <p>Your answers are stored in a <strong>private Google Sheet</strong>, and your photo in a
-        <strong>private Google Drive folder</strong>. Both belong to the Student Hub's own Google account,
+      <p>When registration opens, your answers will be stored in a <strong>private Google Sheet</strong>, and your photo in a
+        <strong>private Google Drive folder</strong>. The intended setup uses the Student Hub's own Google account,
         which also sends the confirmation email, and only the person responsible (see below) can open them.
         Google stores and processes this data for us as part of its services. The form sends your answers
         directly to a small Google program (Google Apps Script) that saves them there; the website itself never
         stores or shows them. This is a student project, not a University of Bologna service.</p>
-      <p>Google may process data on servers outside the European Union, including in the United States. Such
-        transfers are covered by Google's data protection terms, which rely on the EU–US Data Privacy Framework
-        and the European Commission's standard contractual clauses.</p>
-
-      <h3>Why we are allowed to use your information</h3>
+      <p>Google may process information on servers outside the European Union. Its
+        <a href="https://policies.google.com/privacy?hl=en" target="_blank" rel="noopener">privacy policy</a>
+        explains international processing and transfer protections. The account setup and applicable terms
+        must be reviewed before registration opens; this page does not claim that a live storage setup has
+        already been checked.</p>
+  </div>
+</details>
+<details class="privacy-term" id="directory-visibility">
+  <summary><span>Consent &amp; profile visibility</span></summary>
+  <div class="privacy-term__body">
+<h3>Why we are allowed to use your information</h3>
       <p>We only use your information because you agree to it by submitting the form (your <strong>consent</strong>,
         Article 6(1)(a) of the EU General Data Protection Regulation, GDPR). You can <strong>withdraw your consent
         at any time</strong> by asking us to delete your registration. This does not affect anything done before
@@ -231,28 +322,36 @@
         supported cohorts, whose connection has been checked by the Student Hub team (not by the university).
         Students from other programmes and staff are not included. If we ever want to widen this group, we will
         update this page and ask you first.</p>
-      <p><strong>Today, no real profile is displayed anywhere</strong>, whatever you choose, and there are no
-        accounts yet. Coming soon: registered users will have their own Student Hub account and dashboard where
-        they can update their information and privacy settings. Until then, write to us to change anything.</p>
-
-      <h3>Anonymous statistics</h3>
+      <p><strong>No real Directory profile is displayed in the current release.</strong> Student accounts,
+        secure member access and profile editing are planned features. This prepared registration process does
+        not create an account or make a profile visible. Contact the Hub to ask about your information.</p>
+  </div>
+</details>
+<details class="privacy-term" id="directory-statistics">
+  <summary><span>Choices about combined statistics</span></summary>
+  <div class="privacy-term__body">
+<h3>Anonymous statistics</h3>
       <p>Current students and alumni are asked whether their non-contact information (such as the country they
         represent, academic background, cohort and EU-HEM track) may be counted in anonymous, combined statistics
-        about the EU-HEM community (for example, "students from 23 countries"). If you answer No, you are left out.
+        about the EU-HEM community (for example, the number of countries represented). If you answer No, you are left out.
         Your name, photo, email and individual profile are never part of these statistics. Any group with
         <strong>fewer than 5 people is not shown separately</strong> (it is merged into "Other" or left out), and
         we also hide numbers that could be worked out by subtraction. This lowers the risk that someone is
-        recognised, but no rule can rule it out completely, so we only publish broad, whole-cohort figures. No
-        statistics from real registrations have been published yet; the charts on the Students page use the
-        fictional demo data.</p>
+        recognised, but no rule can rule it out completely, so we only publish broad, whole-cohort figures. These safeguards apply to statistics built from registration answers, which have not been published.
+        The separate origins map uses supplied group totals, described under
+        <a href="#public-content">Public content and the cohort map</a>.</p>
       <p><strong>Mobility statistics are a separate, optional choice.</strong> A box that is not ticked in advance
         asks whether your citizenship group and study-visa answer may be counted in anonymous, combined mobility
         statistics. Saying no does not affect your registration or profile. No individual citizenship or visa answer
         is ever published; small groups are combined or left out, and the figures count only people who agreed and
         gave one of the actual answers. Registrations made before this question existed are <strong>not
         included</strong> unless the person actively agrees later.</p>
-
-      <h3>Changing or deleting your information</h3>
+  </div>
+</details>
+<details class="privacy-term" id="directory-retention">
+  <summary><span>Changing, deleting &amp; keeping records</span></summary>
+  <div class="privacy-term__body">
+<h3>Changing or deleting your information</h3>
       <p>To change or delete your information at any time, <a href="contact.html">contact us</a> or reply to the
         confirmation email. If you withdraw your consent or ask us to delete your information, we delete your
         entry in the Sheet and your photo (and empty the Drive bin) without unnecessary delay, and at the latest
@@ -285,40 +384,66 @@
           involvement.</li>
       </ul>
       <p>We also review all registrations once a year and delete those that are no longer needed.</p>
-
-      <h3>Your rights</h3>
-      <p>Under the GDPR you can ask us to:</p>
-      <ul>
-        <li>show you the information we hold about you, and send you a copy of it;</li>
-        <li>correct anything that is wrong;</li>
-        <li>delete your information, or stop using it for a time;</li>
-        <li>stop using it altogether, by withdrawing your consent.</li>
-      </ul>
-      <p>Write to the email address under "Who is responsible" below. We answer within one month. If you think
-        we have not handled your information properly, you can also complain to the Italian data protection
-        authority, the <a href="https://www.garanteprivacy.it/" target="_blank" rel="noopener">Garante per la
-        protezione dei dati personali</a>, or to the authority in the EU country where you live.</p>
-
-      <h3>Protection against spam</h3>
+  </div>
+</details>
+<details class="privacy-term" id="directory-safeguards">
+  <summary><span>Spam protection</span></summary>
+  <div class="privacy-term__body">
+<h3>Protection against spam</h3>
       <p>The form uses a hidden field that only automated programs fill in, and checks that the form was not
         filled in impossibly fast. These checks use no cookies and no tracking.</p>
+  </div>
+</details>
+          </div>
+        </section>
 
-      <h2>The group photo</h2>
-      <p>The homepage shows a group photo of the EU-HEM cohort. If you appear in it and would like it changed
-        or removed (for example, blurred or replaced), please <a href="contact.html">contact us</a>
-        and we will act on it promptly.</p>
+        <section id="public-content" class="academic-section privacy-section" aria-labelledby="public-content-title">
+          <header class="academic-section__heading">
+            <p class="academic-eyebrow">05 · What is already public</p>
+            <h2 id="public-content-title">Public content &amp; the cohort map</h2>
+          </header>
+          <div class="privacy-provenance">
+            <div><p class="privacy-provenance-label">Supplied group totals</p><h3>105 people · 24 countries</h3><p>The origins map uses the supplied 2026–2028 distribution labelled “103+2 pax”. It contains country counts, with no names or links to individual profiles. These totals are independent of Directory registrations and do not establish anyone's citizenship or visa status.</p><a href="students.html#sx-map-section">View the origins overview <span aria-hidden="true">→</span></a></div>
+            <div><p class="privacy-provenance-label">Fictional profile data</p><h3>40 demo profiles</h3><p>The Directory cards, profile-based filters and demonstration statistics use invented people. The supplied origins map is a separate dataset; it should not be read as a map of those fictional profiles.</p><a href="students.html">Explore the labelled demo <span aria-hidden="true">→</span></a></div>
+          </div>
+          <p>Some supplied country totals are small. They are not subject to the prepared Directory's separate rules for combining small groups in future registration-based statistics. We do not promise that any published group total is impossible to associate with someone using other information.</p>
+          <p>The Hub also publishes programme information, permitted role mailboxes, election announcements and summaries attributed to their published story sources. Those named people are separate from the fictional Directory demo. Current Student Experiences cover images are locally hosted editorial illustrations, not photographs of the story authors.</p>
+          <div class="privacy-photo-note">
+            <svg class="icon" aria-hidden="true"><use href="icons.svg#students"></use></svg>
+            <div><h3>The cohort group photo</h3><p>The homepage shows a photo of the EU-HEM cohort. If you appear in it, or if something concerning you on the Hub needs correction or removal, <a href="contact.html">contact us</a>. You can ask for the image to be blurred, replaced or removed; we will act on the request promptly.</p></div>
+          </div>
+        </section>
 
-      <h2 id="responsible">Who is responsible</h2>
-      <p>This is a volunteer student project. The person responsible for the information described on this page
-        (the "data controller" under the GDPR) is <strong>Adnan Tarabishi</strong>, an EU-HEM student.
-        For any privacy question or request, write to
-        <!-- CONTACT METHOD: the same dedicated Student Hub email as on contact.html, never a personal address. -->
-        <a href="mailto:euhem.studenthub@gmail.com"><strong>euhem.studenthub@gmail.com</strong></a>, or see the
-        <a href="contact.html">Contact page</a>.</p>
+        <section id="rights" class="academic-section privacy-section" aria-labelledby="rights-title">
+          <header class="academic-section__heading">
+            <p class="academic-eyebrow">06 · Ask, correct, or remove</p>
+            <h2 id="rights-title">Your data rights</h2>
+            <p>Where the GDPR applies, you can ask about personal information the Hub holds concerning you. The rights available depend on the information and the reason it is used.</p>
+          </header>
+          <ul class="privacy-rights-list">
+            <li><strong>Access &amp; a copy</strong><span>Ask what information we hold, how it is used and for a copy.</span></li>
+            <li><strong>Correction</strong><span>Ask us to correct inaccurate or incomplete information.</span></li>
+            <li><strong>Deletion or restriction</strong><span>Ask us to remove information or limit its use where the relevant conditions are met.</span></li>
+            <li><strong>Objection &amp; portability</strong><span>Object to processing based on legitimate interests, or request a portable copy where that right applies.</span></li>
+            <li><strong>Withdrawal of consent</strong><span>Withdraw permission for consent-based processing at any time, without changing the lawfulness of earlier processing.</span></li>
+          </ul>
+          <p>Write to the contact below. We respond without unnecessary delay and normally within one month. If a lawful extension is needed for a complex request, we explain why within that first month. We may ask for only the information needed to confirm that the request is yours.</p>
+          <p>If you are dissatisfied, you can complain to Italy's <a href="https://www.garanteprivacy.it/" target="_blank" rel="noopener">Garante per la protezione dei dati personali</a> or the competent data-protection authority where you live or work. The <a href="https://commission.europa.eu/law/law-topic/data-protection/information-individuals_en" target="_blank" rel="noopener">European Commission explains these rights</a>.</p>
+          <p class="privacy-gentle-tip">We cannot see or recover study data that exists only in your browser. Use the page's local controls or your browser settings for that data; email us about information you have sent to the Hub or that appears on the site.</p>
+        </section>
 
-      <p class="text-page-updated">Last updated: 6 October 2026.</p>
-      <p><a href="index.html">← Back to the homepage</a></p>
-    </article>
+        <section id="responsible" class="academic-section privacy-section privacy-responsible" aria-labelledby="responsible-title">
+          <header class="academic-section__heading">
+            <p class="academic-eyebrow">07 · A person you can reach</p>
+            <h2 id="responsible-title">Who is responsible</h2>
+          </header>
+          <p>The EU-HEM Student Hub is an independent volunteer project. <strong>Adnan Tarabishi</strong>, an EU-HEM student, is responsible for the Hub's handling of personal information described here (the data controller under the GDPR). This is not a university service.</p>
+          <a class="privacy-contact-address" href="mailto:euhem.studenthub@gmail.com">euhem.studenthub@gmail.com <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
+          <p>For questions, corrections, access or deletion requests, use this dedicated inbox or the <a href="contact.html">Contact page</a>. No public comment or social-media post is needed.</p>
+          <div class="privacy-change-note"><div class="privacy-change-heading"><strong>Updated 8 October 2026</strong><button id="privacy-print" class="button button-secondary" type="button" hidden>Print this notice</button></div><p>This revision clarifies the inactive Directory, the separate origins map, current on-device tools, offline caching, external requests and email contact. Registration fields, visibility choices and retention periods are unchanged. We will update this notice when the relevant features or data practices change.</p></div>
+        </section>
+      </div>
+    </div>
   </main>
 
   <footer class="site-footer">
@@ -332,6 +457,9 @@
   <script defer src="search.js?v=691c11a5"></script>
   <script defer src="pwa.js?v=c9212bf8"></script>
   <script defer src="announcements.js?v=5ec8eef9"></script>
+
+  <script defer src="academic-pages.js?v=4c240b6f"></script>
+  <script defer src="privacy.js?v=68b55669"></script>
 
 </body>
 </html>

@@ -1,0 +1,74 @@
+name: Check support and privacy pages
+
+on:
+  # Continue checking this branch while concurrent main changes are integrated.
+  push:
+    branches:
+      - "codex/support-contact-privacy-*"
+  pull_request:
+    paths:
+      - "support.html"
+      - "support.js"
+      - "support.css"
+      - "contact.html"
+      - "contact.js"
+      - "contact.css"
+      - "privacy.html"
+      - "privacy.js"
+      - "privacy.css"
+      - "academic-pages.css"
+      - "academic-pages.js"
+      - "style.css"
+      - "site-nav.js"
+      - "utils.js"
+      - "content/people.json"
+      - "content/sources.json"
+      - "content/tracks.json"
+      - "guide-data.js"
+      - "docs/content/*-guide.md"
+      - "directory-config.js"
+      - "supabase-config.js"
+      - "integrations/directory-apps-script/Code.gs"
+      - "tests/support-pages/**"
+      - "tests/handbook/data.test.js"
+      - ".github/workflows/support-pages-checks.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: support-pages-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  support-pages:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install existing test dependencies
+        run: npm ci
+      - name: Install Chromium for the browser checks
+        run: npx playwright install --with-deps chromium
+      - name: Check content, sources, retention and contrast
+        run: |
+          node scripts/check-content.js
+          node scripts/check-contrast.js
+          node tests/handbook/data.test.js .
+      - name: Check support, contact and privacy in the browser
+        env:
+          SCREENSHOT_DIR: ${{ runner.temp }}/support-page-screenshots
+        run: node tests/support-pages/browser.test.js .
+      - name: Save visual checks
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: support-pages-visual-checks
+          path: ${{ runner.temp }}/support-page-screenshots
+          if-no-files-found: ignore
+          retention-days: 7
