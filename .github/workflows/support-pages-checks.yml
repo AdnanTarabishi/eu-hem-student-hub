@@ -13,6 +13,7 @@ on:
       - "contact.html"
       - "contact.js"
       - "contact.css"
+      - "contact-config.js"
       - "privacy.html"
       - "privacy.js"
       - "privacy.css"
@@ -31,15 +32,33 @@ on:
       - "integrations/directory-apps-script/Code.gs"
       - "tests/support-pages/**"
       - "tests/handbook/data.test.js"
+      - "tests/contact/real-delivery-smoke.js"
       - ".github/workflows/support-pages-checks.yml"
   workflow_dispatch:
+    inputs:
+      run_contact_delivery:
+        description: Send one fictional Contact idea and retry its identical request once
+        required: true
+        default: false
+        type: boolean
+      contact_delivery_endpoint:
+        description: Owner-controlled public Apps Script /exec URL; used only when delivery is enabled
+        required: false
+        default: ""
+        type: string
+      contact_delivery_request_id:
+        description: Optional UUID of the same fictional test to recover after an unconfirmed response
+        required: false
+        default: ""
+        type: string
 
 permissions:
   contents: read
 
 concurrency:
-  group: support-pages-${{ github.event.pull_request.head.ref || github.ref_name }}
-  cancel-in-progress: true
+  # An ordinary PR check must not interrupt a manually authorized live delivery.
+  group: support-pages-${{ github.event.pull_request.head.ref || github.ref_name }}-${{ github.event_name == 'workflow_dispatch' && inputs.run_contact_delivery && 'delivery' || 'checks' }}
+  cancel-in-progress: ${{ !(github.event_name == 'workflow_dispatch' && inputs.run_contact_delivery) }}
 
 jobs:
   support-pages:
@@ -60,10 +79,27 @@ jobs:
           node scripts/check-content.js
           node scripts/check-contrast.js
           node tests/handbook/data.test.js .
+          node --check tests/contact/real-delivery-smoke.js
       - name: Check support, contact and privacy in the browser
         env:
           SCREENSHOT_DIR: ${{ runner.temp }}/support-page-screenshots
         run: node tests/support-pages/browser.test.js .
+      - name: Verify real Contact delivery and exact retry
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_contact_delivery }}
+        env:
+          CONTACT_ENDPOINT: ${{ inputs.contact_delivery_endpoint }}
+          CONTACT_SMOKE_EXECUTE: ${{ inputs.run_contact_delivery }}
+          CONTACT_SMOKE_REQUEST_ID: ${{ inputs.contact_delivery_request_id }}
+          CONTACT_SMOKE_OUTPUT: ${{ runner.temp }}/contact-real-delivery
+        run: node tests/contact/real-delivery-smoke.js .
+      - name: Save sanitized Contact delivery evidence
+        if: ${{ always() && github.event_name == 'workflow_dispatch' && inputs.run_contact_delivery }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: contact-real-delivery
+          path: ${{ runner.temp }}/contact-real-delivery
+          if-no-files-found: ignore
+          retention-days: 3
       - name: Save visual checks
         if: always()
         uses: actions/upload-artifact@v4

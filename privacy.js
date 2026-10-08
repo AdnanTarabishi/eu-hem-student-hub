@@ -1,5 +1,5 @@
-/* The notice is complete without JavaScript. These controls only help readers
-   open the prepared terms together, navigate the page and print the full notice. */
+/* The notice is complete without JavaScript. Controls show the configured
+   Contact route, open prepared terms, navigate and print; no remote reads. */
 (function () {
   if (typeof document === "undefined") return;
   const page = document.querySelector(".privacy-page");
@@ -7,6 +7,12 @@
   const terms = [...page.querySelectorAll(".privacy-term")];
   const expand = document.getElementById("privacy-expand-all");
   const print = document.getElementById("privacy-print");
+  const contactState = document.getElementById("contact-privacy-state");
+  if (contactState) {
+    contactState.textContent = window.ContactConfig?.isConfigured()
+      ? "Contact offers an on-site form and an email alternative. A successful submission is confirmed on the Contact page."
+      : "The on-site Contact form is not connected yet. Contact currently uses email; the form terms below describe the prepared service.";
+  }
 
   function updateExpandControl() {
     const allOpen = terms.every((term) => term.open);

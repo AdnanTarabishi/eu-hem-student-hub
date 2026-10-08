@@ -53,6 +53,13 @@ const labelFor = (id) => {
   const errors = [], forbiddenRequests = [];
   const ok = (name) => { count++; console.log(`  ok  ${name}`); };
   try {
+    // These existing mail/Privacy checks exercise the unconfigured fallback.
+    // Keep it explicit after production activation; configured form coverage
+    // uses its own mocked receiver in tests/contact/browser.test.js.
+    const contactConfigSource = fs.readFileSync(path.join(ROOT, "contact-config.js"), "utf8");
+    const contactEndpointSetting = /\bendpoint:\s*"(?:[^"\\]|\\.)*"/g;
+    assert.strictEqual([...contactConfigSource.matchAll(contactEndpointSetting)].length, 1, "the Support fixture must replace exactly one Contact endpoint setting");
+    const contactFallbackConfig = contactConfigSource.replace(contactEndpointSetting, 'endpoint: ""');
     browser = await chromium.launch();
     const waitReady = async (page, file, scripts = true) => {
       await page.locator("body.academic-page").waitFor();
@@ -89,6 +96,9 @@ const labelFor = (id) => {
         if (!request.url().startsWith(base) || request.method() !== "GET" || request.postData() !== null) {
           forbiddenRequests.push(`${url}: ${request.method()} ${request.url()}`);
           return route.abort();
+        }
+        if (new URL(request.url()).pathname.endsWith("/contact-config.js")) {
+          return route.fulfill({ contentType: "text/javascript", body: contactFallbackConfig });
         }
         return route.continue();
       });
@@ -492,7 +502,10 @@ const labelFor = (id) => {
     page = await open("contact.html", { scripts: false });
     await mailLinks(page);
     assert.strictEqual(await page.locator("#contact-copy-email").isVisible(), false);
-    assert.strictEqual(await page.locator("form").count(), 0, "Contact remains ordinary email links without a web submission form");
+    assert.strictEqual(await page.locator("#contact-form-section").isVisible(), false, "the native form stays hidden when JavaScript is disabled");
+    assert.strictEqual(await page.locator("#contact-form-fields").evaluate((fieldset) => fieldset.disabled), true, "the no-JavaScript form keeps its native fieldset disabled");
+    assert.strictEqual(await page.locator("#contact-submit").isDisabled(), true, "disabled controls cannot submit an unintended native request");
+    assert.strictEqual(await page.locator("#contact-topics").isVisible(), true, "ordinary email routes remain usable without JavaScript");
     await close(page, false);
     ok("all four encoded contact subjects and the main email destination work with JavaScript disabled, without following any mailto link");
 

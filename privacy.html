@@ -132,6 +132,7 @@
             <div><dt><span class="privacy-service-name">Cloudflare cdnjs</span><span class="privacy-service-when">On some study pages</span></dt><dd>Notes, course, contribution and city-guide pages use code or formatting assets from <span class="privacy-domain">cdnjs.cloudflare.com</span>, including text rendering and mathematical notation. The main interface fonts, Inter and Source Serif 4, are hosted with the Hub.<a class="privacy-policy-link" href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Cloudflare privacy policy ↗</a></dd></div>
             <div><dt><span class="privacy-service-name">Wikimedia</span><span class="privacy-service-when">When extra campus photos load</span></dt><dd>Some university-gallery images load from Wikimedia's image servers. Their requests use a no-referrer policy, so the Hub page address is not sent with those image requests.<a class="privacy-policy-link" href="https://foundation.wikimedia.org/wiki/Policy:Privacy_policy" target="_blank" rel="noopener">Wikimedia privacy policy ↗</a></dd></div>
             <div><dt><span class="privacy-service-name">Announcements</span><span class="privacy-service-when">From the Hub's own files</span></dt><dd>An automated update copies published announcements from a Google Sheet into the site's files. Reading announcements does not make your browser load that source Sheet.</dd></div>
+            <div><dt><span class="privacy-service-name">Google Apps Script &amp; Sheets</span><span class="privacy-service-when">When you submit the Contact form</span></dt><dd>When the on-site Contact form is available, pressing <strong>Send to the Hub</strong> sends your request to Google Apps Script for validation and storage in a restricted Google Sheet owned by the Student Hub account. Opening Contact or typing a draft does not contact this service. The public website cannot read the inbox.<a class="privacy-policy-link" href="https://policies.google.com/privacy?hl=en" target="_blank" rel="noopener">Google privacy policy ↗</a></dd></div>
             <div><dt><span class="privacy-service-name">Email &amp; other links</span><span class="privacy-service-when">When you choose an action</span></dt><dd>Email links open your chosen email app; sending is your separate action. Links to maps, calendars, Virtuale, Toolkit services and story sources take you to their own services. Those destinations handle what you choose to send or open under their policies.<a class="privacy-policy-link" href="https://policies.google.com/privacy?hl=en" target="_blank" rel="noopener">Google privacy policy (the Hub's Gmail inbox) ↗</a></dd></div>
           </dl>
           <div class="privacy-note privacy-note--wide">
@@ -145,15 +146,25 @@
           <header class="academic-section__heading">
             <p class="academic-eyebrow">03 · If you get in touch</p>
             <h2 id="messages-title">Messages you choose to send</h2>
-            <p>The Contact page offers email links and a copy-address button. It does not submit a message from the website.</p>
+            <p>Contact brings corrections, ideas, privacy requests and contributions to the Hub's administrator. The page shows the available way to send your message, with email as an alternative.</p>
           </header>
+          <p id="contact-privacy-state" class="privacy-gentle-tip">The on-site form needs JavaScript and an internet connection. You can always use the email address on Contact.</p>
           <div class="privacy-message-flow">
-            <div><span aria-hidden="true">01</span><h3>You prepare a message</h3><p>An email link opens your email app. A suggested subject helps route your request; you can edit it.</p></div>
-            <div><span aria-hidden="true">02</span><h3>You choose to send</h3><p>Your sender address, name if supplied, message and chosen attachments go to the Student Hub's Gmail inbox.</p></div>
-            <div><span aria-hidden="true">03</span><h3>We respond</h3><p>We use that information to answer you, correct the Hub or handle the request. An email is not a Directory registration.</p></div>
+            <div><span aria-hidden="true">01</span><h3>Choose what to share</h3><p>When the form is available, choose a topic and describe your request. Your name and reply email are optional. Drafts stay in the open page and are not saved to browser storage.</p></div>
+            <div><span aria-hidden="true">02</span><h3>Send when you're ready</h3><p>Only pressing Send submits the selected topic's fields. A confirmed receipt means the request was saved in the private inbox; it does not mean an administrator has read it.</p></div>
+            <div><span aria-hidden="true">03</span><h3>We review your request</h3><p>The administrator uses the information to answer you, correct the Hub or handle the request. Include an email if you want a reply. A contribution starts a review and is not automatically published.</p></div>
           </div>
+          <details class="privacy-explainer">
+            <summary>What the form sends &amp; how it is kept</summary>
+            <div>
+              <p>The form sends your topic, message, optional name and email, and only the extra details for that topic: a relevant page or source link, a privacy request type, or a contribution link and preferred credit. It does not upload files or ask for a student account.</p>
+              <p>The inbox also records a random request identifier, receipt, time received, notice version and processing status. A fingerprint of the submitted text helps recognise a repeated send attempt; it stays private with the request. These records are not included in the site's public files, search or announcements. There are no automatic email notifications.</p>
+              <p>The administrator reviews unresolved form requests at least every 30 days. Closed requests and spam are scheduled for deletion 90 days after they are marked closed or spam, unless specific information is still needed for an applicable legal obligation. Deletion is a manual administrator task, not an automatic website process; Google's service history and backup retention follow its own policy. You can ask for earlier deletion, subject to any applicable exception.</p>
+              <p>The form uses a hidden spam field and overall submission limits, without tracking cookies. Google still receives the connection information associated with submitting to its service. The form's notice version is <span class="privacy-domain">contact-v1-2026-10</span>.</p>
+            </div>
+          </details>
+          <p><strong>If you use email:</strong> an email link opens your own app, and you decide whether to send it. Your sender address, name if supplied, message and chosen attachments go to <a href="mailto:euhem.studenthub@gmail.com">euhem.studenthub@gmail.com</a>. Email correspondence is kept while needed to resolve the request and relevant follow-up, or meet an applicable legal obligation. There is no automatic mailbox-deletion schedule.</p>
           <p>We handle ordinary correspondence to respond to requests and maintain the student project (our legitimate interests, Article 6(1)(f) GDPR). We handle data-rights requests to meet our legal obligations (Article 6(1)(c)). Messages are not added to a public profile or published merely because you contacted us.</p>
-          <p>Correspondence is kept while it is needed to resolve the request and relevant follow-up, or to meet an applicable legal obligation. You can ask for deletion. The website does not operate an automatic mailbox-deletion schedule.</p>
           <p class="privacy-gentle-tip">A page link and a short explanation are usually enough. Avoid sending passwords, identity documents or private information about other people.</p>
           <a class="button button-secondary" href="contact.html">Choose a contact topic <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
         </section>
@@ -440,7 +451,7 @@
           <p>The EU-HEM Student Hub is an independent volunteer project. <strong>Adnan Tarabishi</strong>, an EU-HEM student, is responsible for the Hub's handling of personal information described here (the data controller under the GDPR). This is not a university service.</p>
           <a class="privacy-contact-address" href="mailto:euhem.studenthub@gmail.com">euhem.studenthub@gmail.com <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
           <p>For questions, corrections, access or deletion requests, use this dedicated inbox or the <a href="contact.html">Contact page</a>. No public comment or social-media post is needed.</p>
-          <div class="privacy-change-note"><div class="privacy-change-heading"><strong>Updated 8 October 2026</strong><button id="privacy-print" class="button button-secondary" type="button" hidden>Print this notice</button></div><p>This revision clarifies the inactive Directory, the separate origins map, current on-device tools, offline caching, external requests and email contact. Registration fields, visibility choices and retention periods are unchanged. We will update this notice when the relevant features or data practices change.</p></div>
+          <div class="privacy-change-note"><div class="privacy-change-heading"><strong>Updated 8 October 2026</strong><button id="privacy-print" class="button button-secondary" type="button" hidden>Print this notice</button></div><p>This revision adds the separate Contact form's fields, private reception, optional reply details and manual retention process, with its availability stated above. It also clarifies the inactive Directory, separate origins map, on-device tools, offline caching and external requests. Directory registration fields, visibility choices and retention periods are unchanged. We will update this notice when the relevant features or data practices change.</p></div>
         </section>
       </div>
     </div>
@@ -459,7 +470,8 @@
   <script defer src="announcements.js?v=5ec8eef9"></script>
 
   <script defer src="academic-pages.js?v=4c240b6f"></script>
-  <script defer src="privacy.js?v=68b55669"></script>
+  <script defer src="contact-config.js?v=6ead99f6"></script>
+  <script defer src="privacy.js?v=c62dbcf4"></script>
 
 </body>
 </html>
