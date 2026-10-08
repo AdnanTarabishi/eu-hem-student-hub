@@ -311,3 +311,11 @@ The **Check academic pages** workflow runs content and contrast validation, the 
 data tests and `tests/academic-pages/browser.test.js` in Chromium. It checks source preservation,
 navigation and keyboard focus, university disclosures, re-sit outcomes, track persistence, mobile
 layouts and the light/dark themes, and saves screenshots for visual review.
+
+
+## Behind the Build
+
+`behind-the-build.html` presents the owner-reported effort estimate and an illustrative
+allocation, not tracked hours. Edit `content/build-effort.json`, then run
+`node scripts/build-behind-build.mjs --integrate` and `node scripts/stamp-versions.js`.
+See `docs/behind-the-build.md` for the data basis, update procedure and checks.

@@ -57,6 +57,7 @@ const SITE_MENU = [
     items: [
       { key: "support", label: "Support & Contacts", href: "support.html", icon: "phone", desc: "Who to ask, wellbeing, leave" },
       { key: "roadmap", label: "Roadmap & Updates", href: "roadmap.html", icon: "rocket", desc: "What is new and what is next" },
+      { key: "behind-build", label: "Behind the Build", href: "behind-the-build.html", icon: "info", desc: "The effort and people behind the Hub" },
       { key: "about", label: "About the Hub", href: "index.html#about", icon: "info", desc: "Independent and student-run" },
       { key: "privacy", label: "Privacy", href: "privacy.html", icon: "lock", desc: "What stays on your device" },
       { key: "contact", label: "Contact", href: "contact.html", icon: "mail", desc: "Questions, corrections and ideas" },
