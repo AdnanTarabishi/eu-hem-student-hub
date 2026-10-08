@@ -29,7 +29,7 @@
       if(value!==defaults[key])url.searchParams.set(key,typeof value==='boolean'?'1':value);
     }
     const current=new URL(window.location.href);
-    for(const key of ['section','collection','solver','recipe','mode'])if(current.searchParams.has(key))url.searchParams.set(key,current.searchParams.get(key));
+    for(const key of ['section','collection','solver','recipe','mode','planner'])if(current.searchParams.has(key))url.searchParams.set(key,current.searchParams.get(key));
     if(toolId)url.searchParams.set('tool',toolId);
     return url;
   }

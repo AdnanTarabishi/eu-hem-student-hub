@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Student Toolkit – EU-HEM Student Hub</title>
-  <meta name="description" content="Find a method, check Excel formulas and explore health economics. Study tools, collections, personal lists and comparisons for EU-HEM students.">
+  <meta name="description" content="Study, plan your budget, prepare a move and organise career applications. Built-in tools, statistics, Excel recipes and useful resources for EU-HEM students.">
   <!-- Social preview (scripts/social-tags.js) -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="EU-HEM Student Hub">
   <meta property="og:title" content="Student Toolkit – EU-HEM Student Hub">
-  <meta property="og:description" content="Find a method, check Excel formulas and explore health economics. Study tools, collections, personal lists and comparisons for EU-HEM students.">
+  <meta property="og:description" content="Study, plan your budget, prepare a move and organise career applications. Built-in tools, statistics, Excel recipes and useful resources for EU-HEM students.">
   <meta property="og:url" content="https://adnantarabishi.github.io/eu-hem-student-hub/toolkit.html">
   <meta property="og:image" content="https://adnantarabishi.github.io/eu-hem-student-hub/img/social-preview.png">
   <meta property="og:image:width" content="1200">
@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="style.css?v=6ef75792">
   <link rel="stylesheet" href="toolkit.css?v=c88c82db">
   <link rel="stylesheet" href="toolkit-organiser.css?v=c4e8b63c">
+  <link rel="stylesheet" href="toolkit-workbench.css?v=bde124d5">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -63,11 +64,12 @@
       <nav id="tk2-sections" class="tk2-sections" aria-label="Toolkit sections">
         <button type="button" data-section="browse" aria-pressed="true" aria-controls="tk2-browse"><span>01</span> Browse tools</button>
         <button type="button" data-section="solve" aria-pressed="false" aria-controls="tk2-solve"><span>02</span> Solve a Problem</button>
-        <button type="button" data-section="collections" aria-pressed="false" aria-controls="tk2-collections"><span>03</span> Ready-made collections</button>
-        <button type="button" data-section="lists" aria-pressed="false" aria-controls="tk2-lists"><span>04</span> My lists</button>
-        <button type="button" data-section="compare" aria-pressed="false" aria-controls="tk2-compare"><span>05</span> Compare <b id="tk2-compare-count">0</b></button>
+        <button type="button" data-section="workbench" aria-pressed="false" aria-controls="tk2-workbench"><span>03</span> Your workbench</button>
+        <button type="button" data-section="collections" aria-pressed="false" aria-controls="tk2-collections"><span>04</span> Ready-made collections</button>
+        <button type="button" data-section="lists" aria-pressed="false" aria-controls="tk2-lists"><span>05</span> My lists</button>
+        <button type="button" data-section="compare" aria-pressed="false" aria-controls="tk2-compare"><span>06</span> Compare <b id="tk2-compare-count">0</b></button>
       </nav>
-      <p id="tk2-notice" class="tk2-notice">New: choose a statistical method, explore 52 Excel recipes and calculate ICER, QALYs or discounted values. <button type="button" data-section="solve" class="tk-text-button">Solve a Problem →</button> <button type="button" id="tk2-new-resources" class="tk-text-button">Browse recent provider additions →</button></p>
+      <p id="tk2-notice" class="tk2-notice">New: seven built-in tools for coursework, your next city and your next application. <button type="button" data-section="workbench" class="tk-text-button">Open your workbench →</button> <button type="button" data-section="solve" class="tk-text-button">Statistics, Excel &amp; health economics →</button> <button type="button" id="tk2-new-resources" class="tk-text-button">Recent provider additions →</button></p>
       <div id="tk2-browse" class="tk-layout">
         <div class="tk-catalogue">
           <section id="tk-library" class="tk-discovery" aria-label="Find a tool">
@@ -78,13 +80,14 @@
             <div id="tk-categories" class="tk-chips" role="group" aria-label="Tool category"></div>
             <details class="tk-refine"><summary>Refine your search</summary><div class="tk-refine-fields">
               <label>Tool type<select id="tk-kind"><option value="all">All types</option><option value="builtin">Built-in / Hub</option><option value="external">External services</option><option value="planned">Planned tools</option></select></label>
-              <label>Course connection<select id="tk-course"><option value="all">Any course or everyday use</option><option value="fundamentals">Fundamentals of Statistics</option><option value="statistics">Statistics for Healthcare</option></select></label>
+              <label>Course connection<select id="tk-course"><option value="all">Any course or everyday use</option><option value="fundamentals">Fundamentals of Statistics</option><option value="statistics">Statistics for Healthcare</option><option value="economics">Economics &amp; health economics</option></select></label>
               <label>City-specific resources<select id="tk-city"><option value="all">Any city or general use</option><option value="bologna">Bologna-specific</option><option value="oslo">Oslo-specific</option><option value="innsbruck">Innsbruck-specific</option><option value="rotterdam">Rotterdam-specific</option></select></label>
               <label class="tk2-fresh-filter"><input id="tk-fresh" type="checkbox"> New provider additions only</label>
               <label>Order<select id="tk-sort"><option value="curated">Editor's selection</option><option value="az">Name A–Z</option></select></label>
             </div></details>
             <div class="tk-collection-bar"><div class="tk-collections" role="group" aria-label="Collection"><button id="tk-all" type="button" aria-pressed="true">Explore all</button><button id="tk-saved" type="button" aria-pressed="false">Saved <span id="tk-saved-count">0</span></button></div><div class="tk-layout-toggle" role="group" aria-label="Card layout"><button id="tk-grid" type="button" aria-pressed="true" aria-label="Grid view"><svg class="icon" aria-hidden="true"><use href="icons.svg#grid"></use></svg></button><button id="tk-list" type="button" aria-pressed="false" aria-label="List view"><svg class="icon" aria-hidden="true"><use href="icons.svg#list"></use></svg></button></div></div>
           </section>
+          <section class="tw-feature" aria-labelledby="tw-feature-title"><div><p class="tk-eyebrow">SEVEN IDEAS. NOW WORKING TOOLS.</p><h2 id="tw-feature-title">From your next exam to your next opportunity.</h2><p class="tk-meta">Plan study time, compare living costs, organise a move and prepare applications. Save only when you choose.</p></div><div class="tw-actions"><button type="button" data-section="workbench" class="tk-button">Open your workbench →</button></div></section>
           <section id="tk-lab-feature" class="tk-lab-feature" aria-labelledby="tk-lab-title">
             <div class="tk-lab-illustration" aria-hidden="true"><svg viewBox="0 0 180 125"><path class="tk-demo-grid" d="M12 25H170M12 60H170M12 95H170M45 12V107M90 12V107M135 12V107"/><path class="tk-demo-area" d="M50 100C65 92 69 28 90 24C112 28 116 91 132 100Z"/><path class="tk-demo-curve" d="M12 102C63 102 61 24 90 24S118 102 170 102"/><path class="tk-demo-bound" d="M50 48V105M132 48V105"/></svg></div>
             <div><p class="tk-eyebrow">BUILT HERE · AVAILABLE NOW</p><h2 id="tk-lab-title">One lab. Twelve ways to understand.</h2><p>Explore distributions, confidence intervals and tests, with worked steps.</p><div class="tk-lab-actions"><a class="tk-button" href="statistics-lab.html">Open Statistics Lab <span aria-hidden="true">→</span></a><button type="button" id="tk-find-calculators" class="tk-text-button">Browse the calculators</button></div></div>
@@ -94,7 +97,7 @@
           <section id="tk-available" aria-labelledby="tk-available-title"><div class="tk-subheading"><h3 id="tk-available-title">Available now</h3><span id="tk-available-count" class="tk-count"></span></div><div id="tk-results" class="tk-grid"></div><button type="button" id="tk-more" class="tk-more" hidden>Show more tools</button></section>
           <section id="tk-planned" class="tk-planned-section" aria-labelledby="tk-planned-title"><div class="tk-subheading"><h3 id="tk-planned-title"><svg class="icon" aria-hidden="true"><use href="icons.svg#clock"></use></svg> On the drawing board</h3><span id="tk-planned-count" class="tk-count"></span></div><p class="tk-meta">Useful ideas for what comes next. These tools are <strong>not available yet</strong>; scope and timing may change.</p><div id="tk-plans" class="tk-grid"></div><button type="button" id="tk-more-plans" class="tk-more" hidden>Explore all planned tools</button></section>
           <section id="tk-empty" class="tk-empty" hidden><svg class="icon" aria-hidden="true"><use href="icons.svg#search"></use></svg><h3 id="tk-empty-title">No matches yet.</h3><p id="tk-empty-copy">Try a broader word or clear the filters.</p><button type="button" id="tk-empty-reset" class="tk-button">Explore the catalogue</button></section>
-          <noscript><section class="tk-empty"><h2>Open a useful starting point</h2><p>Search, filters and local bookmarks need JavaScript. These links work without it:</p><p><a href="statistics-lab.html">Statistics Lab</a> · <a href="thesis.html">Thesis Explorer</a> · <a href="city-guide.html">City guides</a> · <a href="https://www.zotero.org/" rel="noopener noreferrer">Zotero</a></p><p>Budget planning, the Health Economics Calculator and a standalone Excel assistant are planned, not available here yet.</p></section></noscript>
+          <noscript><section class="tk-empty"><h2>Open a useful starting point</h2><p>Search, built-in calculators, planners and local bookmarks need JavaScript. These destination links work without it:</p><p><a href="statistics-lab.html">Statistics Lab</a> · <a href="thesis.html">Thesis Explorer</a> · <a href="city-guide.html">City guides</a> · <a href="https://www.zotero.org/" rel="noopener noreferrer">Zotero</a></p></section></noscript>
         </div>
         <aside class="tk-sidebar" aria-label="Quick access">
           <section class="tk-side-card tk-starter"><p class="tk-eyebrow">A GOOD PLACE TO START</p><h2>Small tools.<br>More possibilities.</h2><p class="tk-meta">An editorial selection, not a popularity ranking.</p><div id="tk-starters"></div></section>
@@ -105,6 +108,7 @@
         </aside>
       </div>
       <section id="tk2-solve" class="tk2-panel sv-workbench" aria-labelledby="tk2-solve-title" hidden></section>
+      <section id="tk2-workbench" class="tk2-panel tw-workbench" aria-labelledby="tk2-workbench-title" hidden></section>
       <section id="tk2-collections" class="tk2-panel" aria-labelledby="tk2-collections-title" hidden></section>
       <section id="tk2-lists" class="tk2-panel" aria-labelledby="tk2-lists-title" hidden></section>
       <section id="tk2-compare" class="tk2-panel" aria-labelledby="tk2-compare-title" hidden></section>
@@ -112,7 +116,7 @@
       <p id="tk2-error" class="tk-warning" role="alert" hidden></p>
       <p id="tk2-storage-warning" class="tk-warning" role="status" hidden>Browser storage is unavailable. Your lists work in this page session only; export a backup before closing it.</p>
       <section class="tk-how" id="tk-how" aria-labelledby="tk-how-title"><div><p class="tk-eyebrow">KNOW WHAT YOU'RE OPENING</p><h2 id="tk-how-title">A toolkit, not another login.</h2></div><div class="tk-how-grid"><article><span class="tk-badge tk-badge-builtin">Built-in / Hub</span><h3>Already here.</h3><p>Open existing calculators and workspaces. Educational tools support learning, not unapproved in-exam use.</p></article><article><span class="tk-badge tk-badge-external">External</span><h3>A useful next stop.</h3><p>Provider links are selected and described, not integrated with your account. Review access, costs, privacy and course rules.</p></article><article><span class="tk-badge tk-badge-planned">Planned</span><h3>A direction, not a deadline.</h3><p>Read proposed scope and why it may help. No fake launch buttons, popularity statistics or promised release dates.</p></article></div></section>
-      <details class="tk-maintenance"><summary>Sources, privacy &amp; catalogue notes</summary><p>My lists saves list names, known tool IDs and your reviewed checkboxes on this device, separately from bookmarks and course progress. Nothing is sent to the Hub. Export/import is a manual JSON backup, not account synchronisation. Compare selections last only for this page session. Avoid personal or confidential information in list names. Clear lists from the My lists section.</p><p>Provider descriptions were reviewed on <time datetime="2026-10-07">7 October 2026</time>. This is not a live availability or price monitor. Open an entry's details for the provider source. Fees, account requirements, eligibility and features may change. Inclusion is an editorial suggestion, not university endorsement or a commercial partnership.</p><p>Bookmarks and optional recent-tool IDs are saved locally in this browser. No datasets, personal profiles or usage counts are collected by this catalogue. Other pages and external providers have their own privacy practices. Avoid uploading protected teaching materials or confidential data to AI and cloud services without permission.</p><p><a href="privacy.html">Read the Hub privacy page</a> · <button type="button" id="tk-clear-device" class="tk-text-button">Clear Toolkit bookmarks and recent tools</button></p><p>Toolkit preferences are separate from your course progress. Clearing them will not remove your study plan, notes progress or other Hub data.</p></details>
+      <details class="tk-maintenance"><summary>Sources, privacy &amp; catalogue notes</summary><p>My lists saves list names, known tool IDs and your reviewed checkboxes on this device, separately from bookmarks and course progress. Nothing is sent to the Hub. Export/import is a manual JSON backup, not account synchronisation. Compare selections last only for this page session. Avoid personal or confidential information in list names. Clear lists from the My lists section.</p><p>Your workbench keeps calculation assumptions, budgets, checklist dates and application notes in the current tab until you explicitly save a tool. Its separate backup and clear controls affect only those seven tools. Workbench backups may contain personal financial or application information; store them privately. No scans or identity numbers are needed, and calendar exports do not create background alerts.</p><p>Provider descriptions were reviewed on <time datetime="2026-10-07">7 October 2026</time>. This is not a live availability or price monitor. Open an entry's details for the provider source. Fees, account requirements, eligibility and features may change. Inclusion is an editorial suggestion, not university endorsement or a commercial partnership.</p><p>Bookmarks and optional recent-tool IDs are saved locally in this browser. No datasets, personal profiles or usage counts are collected by this catalogue. Other pages and external providers have their own privacy practices. Avoid uploading protected teaching materials or confidential data to AI and cloud services without permission.</p><p><a href="privacy.html">Read the Hub privacy page</a> · <button type="button" id="tk-clear-device" class="tk-text-button">Clear Toolkit bookmarks and recent tools</button></p><p>Toolkit preferences are separate from your course progress. Clearing them will not remove your study plan, notes progress or other Hub data.</p></details>
       <details class="tk-maintenance" id="tk-photo-credits"><summary>Hero photo credits</summary><p>Existing locally hosted city photos, displayed with crops and a colour overlay: Bologna — Vanni Lazzari, 2017, <a href="https://commons.wikimedia.org/wiki/File:Due_Torri_di_Bologna_Asinelli_e_Garisenda.jpg" rel="noopener noreferrer">original</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" rel="noopener noreferrer">CC BY-SA 4.0</a>. Oslo — Øyvind Holmstad, 2014, <a href="https://commons.wikimedia.org/wiki/File:Oslo_Fjord_Oslo_Aker_Brygge_etc.JPG" rel="noopener noreferrer">original</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" rel="noopener noreferrer">CC BY-SA 3.0</a>. Innsbruck — -wuppertaler, 2022, <a href="https://commons.wikimedia.org/wiki/File:AUT_Innsbruck,_Nordkette_005.jpg" rel="noopener noreferrer">original</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" rel="noopener noreferrer">CC BY-SA 4.0</a>. Rotterdam — Trougnouf (Benoit Brummer), 2021, <a href="https://commons.wikimedia.org/wiki/File:Cube_houses_(DSC_3076).jpg" rel="noopener noreferrer">original</a>, <a href="https://creativecommons.org/licenses/by/4.0" rel="noopener noreferrer">CC BY 4.0</a>.</p></details>
       <p id="tk-storage-warning" class="tk-warning" role="status" hidden>Browser storage is unavailable. Bookmarks work for this page session but may not survive a reload.</p>
       <p id="tk-feedback" class="tk-sr-only" role="status" aria-live="polite"></p>
@@ -124,12 +128,24 @@
   <script defer src="ui.js?v=6d55e433"></script>
   <script defer src="search.js?v=691c11a5"></script>
   <script defer src="pwa.js?v=c9212bf8"></script>
-  <script defer src="toolkit-data.js?v=59ade365"></script>
-  <script defer src="toolkit-organiser-data.js?v=936cf0ff"></script>
-  <script defer src="toolkit.js?v=cef42943"></script>
+  <script defer src="toolkit-data.js?v=f939f74e"></script>
+  <script defer src="toolkit-organiser-data.js?v=1da7101d"></script>
+  <script defer src="toolkit.js?v=ed8cc80b"></script>
   <script defer src="toolkit-solve-core.js?v=6d4f9b2f"></script>
   <script defer src="toolkit-formulas.js?v=2d4b8129"></script>
-  <script defer src="toolkit-organiser.js?v=bc639ddd"></script>
+  <script defer src="toolkit-organiser.js?v=1ec848ca"></script>
   <script defer src="toolkit-solve.js?v=ec71ebf6"></script>
+  <script defer src="statistics-lab-math.js?v=3f2cab48"></script>
+  <script defer src="statistics-lab-tools-math.js?v=8a0c722b"></script>
+  <script defer src="toolkit-academic-core.js?v=56e1acaf"></script>
+  <script defer src="toolkit-academic.js?v=3e1cc0f1"></script>
+  <script defer src="toolkit-planning-core.js?v=b0b53b49"></script>
+  <script defer src="toolkit-planning.js?v=86f9e262"></script>
+  <script defer src="toolkit-life-core.js?v=77103a35"></script>
+  <script defer src="toolkit-life.js?v=d895d122"></script>
+  <script defer src="toolkit-career-core.js?v=4b5451a0"></script>
+  <script defer src="toolkit-career.js?v=9972d6df"></script>
+  <script defer src="toolkit-workbench-core.js?v=a1749476"></script>
+  <script defer src="toolkit-workbench.js?v=4312d280"></script>
 </body>
 </html>

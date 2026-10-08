@@ -7,7 +7,7 @@
   'use strict';
   const collections=[
     {id:'first-week',title:'Start your EU-HEM semester',category:'Study & life',icon:'graduation',summary:'A small set of tools for dates, course choices and settling into your city.',steps:[
-      ['Map your semester','Review your course choices and confirm important dates with official sources.',['study-plan','calendar']],
+      ['Map your semester','Review course choices and official dates, then plan realistic study capacity.',['study-plan','calendar','study-session-planner']],
       ['Choose a study home','Open the workspace for the statistics course you are taking.',['fundamentals-workspace','statistics-workspace']],
       ['Organise your reading','Keep references and a simple working outline in one place.',['zotero','notion']],
       ['Get oriented locally','Use the city guide; verify any time-sensitive detail at its original source.',['city-guides']]]},
@@ -32,20 +32,20 @@
       ['Choose a writing workflow','Pick the writing tool appropriate to your assignment; verify any language suggestions.',['overleaf','deepl']],
       ['Present the essentials','Use readable figures and confirm any reporting checklist the task requires.',['canva','equator']]]},
     {id:'group-project',title:'Organise a group project',category:'Collaboration',icon:'students',summary:'Agree a plan, assemble sources and build a shared explanation.',steps:[
-      ['Agree roles and dates','Define deliverables and arrange check-ins in tools your group already uses.',['notion','google-calendar']],
+      ['Agree roles and dates','Define deliverables, estimate workload and arrange check-ins in tools your group uses.',['study-session-planner','notion','google-calendar']],
       ['Map the problem together','Sketch the argument before dividing the writing.',['excalidraw']],
       ['Share reliable references','Keep sources and citation metadata consistent across the group.',['zotero']],
       ['Prepare the presentation','Combine the contributions, then rehearse and check the assignment requirements.',['canva']]]},
     {id:'next-city',title:'Prepare for your next programme city',category:'Cities & mobility',icon:'globe',summary:'A practical source shortlist for Bologna, Oslo, Innsbruck and Rotterdam.',steps:[
-      ['Start with the city guide','Read the relevant arrival guide and check links to official sources.',['city-guides']],
-      ['Find local transport','Choose the operator matching your destination; check routes and ticket rules there.',['tper','ruter','ivb','9292']],
-      ['Plan onward travel','Compare connections using the appropriate country planner.',['entur','oebb']],
-      ['Discuss shared costs','Agree how to track shared expenses; a discount card requires an eligibility check.',['splitwise','esncard']]]},
+      ['Prepare your move','Read the arrival guide, verify official sources and organise your personal checklist.',['city-guides','moving-checklist']],
+      ['Estimate your costs','Compare your own living costs and separate spending from deposit-held cash.',['four-city-budget']],
+      ['Plan local and onward travel','Choose the operator for your destination and check routes, ticket rules and connections.',['tper','ruter','ivb','9292','entur','oebb']],
+      ['Keep dates in view','Record the dates you have verified and manually add useful reminders to your calendar.',['document-deadlines']]]},
     {id:'research-career',title:'Explore a research or internship path',category:'Career',icon:'briefcase',summary:'Connect your interests to organisations, opportunities and a clear application.',steps:[
       ['Identify your interests','Explore thesis themes and research project records for inspiration.',['thesis','cordis']],
       ['Look for actual opportunities','Check role-specific qualifications, languages, deadlines and work eligibility.',['euraxess','eures']],
-      ['Prepare your materials','Tailor your CV; keep researcher identifiers and affiliations accurate.',['europass','orcid']],
-      ['Plan a follow-up','Track deadlines yourself; no application or notification is sent by this collection.',['google-calendar']]]}
+      ['Prepare your materials','Tailor your CV, check factual skills evidence and keep affiliations accurate.',['career-tracker','europass','orcid']],
+      ['Plan a follow-up','Record your next action and follow-up date; this workspace does not submit applications.',['career-tracker']]]}
   ].map(c=>Object.freeze({...c,items:[...new Set(c.steps.flatMap(s=>s[2]))]}));
   const packs=new Map(collections.map(c=>[c.id,c]));
   const LIMITS=Object.freeze({lists:12,items:30,title:60,bytes:100000});

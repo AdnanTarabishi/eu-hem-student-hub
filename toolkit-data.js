@@ -16,6 +16,7 @@
     ['writing','AI & writing','sparkles'], ['life','Life & budget','home'],
     ['career','Career','briefcase'], ['cities','Cities & mobility','globe']
   ].map(([id,label,icon]) => ({id,label,icon}));
+  const courseLabels = Object.freeze({fundamentals:'Fundamentals of Statistics',statistics:'Statistics for Healthcare',economics:'Economics & health economics'});
   const items = [];
   const add = (id,title,category,kind,summary,includes,extra={}) => items.push({
     id,title,category,kind,summary,includes,icon:categories.find(c=>c.id===category).icon,
@@ -202,16 +203,23 @@
     ['52 original recipes for descriptive statistics, probabilities, inference and health economics.','Change A1-style ranges, argument separators and numeric decimal style.','Read input explanations, expected example answers and official function references.'],{icon:'calculator',courses:['fundamentals','statistics'],collection:'Problem-solving tools',tags:'Excel formula spreadsheet variance probability NPV',note:'Generates formulas, not a live Excel engine. Fixed example answers do not recalculate when ranges change. English function names are not translated.'});
   hub('health-economics-calculator','Health Economics Calculator','economics','toolkit.html?section=solve&solver=health','Explore cost-effectiveness, QALYs and discounting with transparent teaching models.',
     ['Calculate incremental cost/effect, ICER and INMB on a four-quadrant plane.','Build undiscounted QALYs from constant-utility time periods for two options.','Discount explicitly dated cost/effect flows with separate illustrative annual rates.'],{icon:'scale',collection:'Problem-solving tools',tags:'ICER QALY NMB cost effectiveness discount NPV evaluation',featured:true,note:'Original supplementary educational models, not validated economic evaluation or clinical advice. No official threshold, mortality, probabilistic sensitivity or budget-impact model is assumed.'});
-  plan('economics-graphs','Economics Graph Explorer','economics','Make economic concepts easier to understand by changing the graph.',
-    ['Could explore supply, demand, elasticity and equilibrium.','Could compare baseline and changed scenarios.','Could connect visual changes to equations and course notes.'],{icon:'trending-up',tags:'supply demand elasticity graphs economics'});
-  plan('study-session-planner','Study Session Planner','study','Turn an exam date and available time into a realistic revision plan.',
-    ['Could prioritise topics and estimate study blocks.','Could combine retrieval practice, breaks and review sessions.','Could export a plan without silently creating calendar events.'],{icon:'calendar',tags:'exam revision time planning sessions'});
-  plan('four-city-budget','Four-City Budget Planner','life','Compare your own living-cost scenarios across the four programme cities.',
-    ['Could separate rent, food, transport, deposits and one-off moving costs.','Could compare Bologna, Oslo, Innsbruck and Rotterdam.','Could show EUR/NOK assumptions with a dated source or manual exchange rate.'],{icon:'calculator',cities:['bologna','oslo','innsbruck','rotterdam'],tags:'budget rent money expenses EUR NOK',featured:true});
-  plan('moving-checklist','Moving Checklist','cities','Keep track of practical steps before the next semester in a new city.',
-    ['Could separate before-departure and after-arrival tasks.','Could link to university and government instructions.','Could save checklist progress locally; requirements would still need personal verification.'],{icon:'list',tags:'mobility relocation housing registration arrival'});
-  plan('document-deadlines','Document Deadline Tracker','life','Track dates without building a store of sensitive identity documents.',
-    ['Could record a document type and expiry date, without uploading a scan.','Could show a local checklist of upcoming dates.','Could export reminder events; no background notification service is promised.'],{icon:'clock',tags:'documents expiry deadlines reminders permits insurance'});
+  const workbench = (id,title,category,summary,includes,extra={}) => hub(id,title,category,
+    `toolkit.html?section=workbench&planner=${id}`,summary,includes,{collection:'Your workbench',
+      note:'Entries stay in this tab until you explicitly save on this device. Export a private backup before changing browsers; no account or background notification service is connected.',...extra});
+  workbench('economics-graphs','Economics Graph Explorer','economics','Move supply and demand and connect equilibrium changes to surplus and elasticity.',
+    ['Change an inverse-linear demand/supply model and compare baseline and changed scenarios.','Read equilibrium, consumer/producer surplus and point elasticity beside the graph.','Connect the worked example to introductory economics and the healthcare-demand study guide.'],{icon:'trending-up',courses:['economics'],tags:'supply demand elasticity equilibrium graphs surplus introductory economics',
+      note:'A simplified competitive inverse-linear teaching model, not a fitted healthcare market or policy forecast. No positive trade is shown when demand willingness to pay is below supply cost.'});
+  workbench('study-session-planner','Study Session Planner','study','Turn a target date, task estimates and available study days into a realistic plan.',
+    ['Enter your own tasks, estimated hours, study weekdays and daily capacity.','See whether capacity covers the workload, including reserved buffer and unscheduled hours.','Export a dated plan or calendar reminders; the target day is excluded from study sessions.'],{icon:'calendar',tags:'exam revision assignment time planning thesis sessions workload deadlines'});
+  workbench('four-city-budget','Four-City Budget Planner','life','Compare your own living-cost scenarios across the four programme cities.',
+    ['Compare Bologna, Oslo, Innsbruck and Rotterdam using your own rent, food and travel figures.','Separate monthly spending, one-off moving costs and refundable deposits.','Compare EUR/NOK scenarios with your labelled, dated manual NOK-per-EUR rate.'],{icon:'calculator',cities:['bologna','oslo','innsbruck','rotterdam'],tags:'budget rent money expenses EUR NOK savings relocation',featured:true,
+      note:'All prices and exchange rates are your own assumptions, not city averages or live quotes. A refundable deposit is cash held separately from expenditure. Check your actual contract and current costs.'});
+  workbench('moving-checklist','Moving Checklist','cities','Prepare for your next city with a personal checklist and clear progress.',
+    ['Organise suggested tasks before departure, on arrival and while settling in.','Add your own tasks and dates, keeping progress when changing destination.','Open the matching Bologna, Oslo, Innsbruck or Rotterdam city guide.'],{icon:'list',cities:['bologna','oslo','innsbruck','rotterdam'],tags:'mobility relocation housing registration arrival checklist',
+      note:'Original suggested preparation steps, not a visa, registration or insurance requirements checklist. Verify the instructions that apply to you with the university and official sources in the city guide.'});
+  workbench('document-deadlines','Document Deadline Tracker','life','Keep document dates in view without uploading identity documents.',
+    ['Record a short document label and due date, without scans or identity numbers.','See overdue, today, next-30-day and later dates using calendar-day comparisons.','Export calendar reminders manually with an optional advance notice.'],{icon:'clock',tags:'documents expiry deadlines reminders permits insurance calendar',
+      note:'This is a local date organiser. It does not determine legal renewal deadlines or send alerts in the background. Add exported reminders to your own calendar and verify official deadlines.'});
   plan('language-kit','Language Survival Kit','cities','Find practical phrases for study and everyday life in each host country.',
     ['Could group Italian, Norwegian, German and Dutch phrases by situation.','Could include pronunciation guidance and common campus vocabulary.','Could connect students to official language-learning opportunities.'],{icon:'globe',tags:'Italian Norwegian German Dutch phrases language'});
   plan('research-question','Research Question Builder','research','Shape a broad interest into a question you can investigate.',
@@ -220,12 +228,14 @@
     ['Could record design, setting, sample, outcomes and limitations.','Could keep source identifiers beside each extracted claim.','Could export a matrix for a research team to review.'],{icon:'grid',tags:'review extraction evidence studies comparison'});
   plan('dataset-finder','Research Dataset Finder','research','A curated map from a health question to a suitable public data source.',
     ['Could index OECD, Eurostat and other official sources by topic.','Could explain units, coverage, missing values and reuse terms.','Could provide example questions and variable dictionaries.'],{icon:'library',tags:'data OECD Eurostat World Bank dataset metadata'});
-  plan('career-tracker','Career Application Toolkit','career','Organise applications and prepare a stronger, more focused submission.',
-    ['Could track opportunities, deadlines and follow-ups locally.','Could include CV, cover-letter and interview checklists.','Could distinguish job leads from verified eligibility requirements.'],{icon:'briefcase',tags:'career internship jobs CV interview applications'});
+  workbench('career-tracker','Career Application Toolkit','career','Organise opportunities and prepare evidence for your next application.',
+    ['Keep user-entered organisations, roles, stages, deadlines and follow-up actions together.','Work through original CV, cover-letter and interview preparation checklists.','Use coursework and projects as factual skills evidence for health-economics and management roles.'],{icon:'briefcase',tags:'career internship jobs CV interview applications health economics management portfolio',
+      note:'A private local organiser, not a job feed or application service. It does not submit applications, verify vacancy status, establish work eligibility or invent accomplishments. Check each opportunity with its original employer.'});
   plan('discount-finder','Student Discounts Finder','life','Compare relevant student offers with their conditions in view.',
     ['Could filter by country, service and eligibility.','Could show a source and last-review date for every offer.','Could distinguish free access from trials, paid cards and restricted offers.'],{icon:'bookmark',tags:'discount student offers savings eligibility'});
-  plan('sample-size','Sample Size Planner','study','Explore how design assumptions affect the amount of data needed.',
-    ['Could separate precision-based estimation from power-based planning.','Could make effect size, variability, significance and power explicit.','Could include assumption checks rather than a one-size-fits-all answer.'],{icon:'calculator',tags:'sample size power research design precision'});
+  workbench('sample-size','Sample Precision Planner','study','Explore the sample needed for a target mean or proportion interval margin.',
+    ['Choose a known-SD mean or approximate proportion precision calculation.','Set confidence, target margin and planning assumptions with a recruitment-loss allowance.','Read the worked formula and approximation checks, then export the calculation.'],{icon:'calculator',courses:['fundamentals','statistics'],tags:'sample size confidence research design precision recruitment margin estimation',
+      note:'Supplementary precision planning under simple independent sampling assumptions. This is not a power calculator, design approval, cluster-sampling plan or guarantee of interval coverage. Verify the design and assumptions with your supervisor.'});
   plan('travel-budget','Travel Budget Planner','cities','See the full cost of a journey before choosing a route.',
     ['Could include baggage, station transfers and overnight stays.','Could compare manually entered train, coach and flight scenarios.','Could keep estimates distinct from live quotes and bookings.'],{icon:'route',tags:'travel flight train budget transport'});
 
@@ -239,7 +249,7 @@
       q:String(raw.q||'').slice(0,160),
       category:categories.some(c=>c.id===raw.category)?raw.category:'all',
       kind:['all','builtin','external','planned'].includes(raw.kind)?raw.kind:'all',
-      course:['all','fundamentals','statistics'].includes(raw.course)?raw.course:'all',
+      course:['all',...Object.keys(courseLabels)].includes(raw.course)?raw.course:'all',
       saved:raw.saved==='1'||raw.saved===true,
       city:['bologna','oslo','innsbruck','rotterdam'].includes(raw.city)?raw.city:'all',
       fresh:raw.fresh==='1'||raw.fresh===true,
@@ -268,5 +278,5 @@
     if(external){try{const u=new URL(value);return u.protocol==='https:'&&!u.username&&!u.password;}catch(_){return false;}}
     return /^[a-z0-9-]+\.html(?:[?#][^<>\\]*)?$/.test(value);
   }
-  return Object.freeze({version:1,reviewed,categories,items,byId,normalise,cleanState,selectItems,cleanPreferences,safeHref});
+  return Object.freeze({version:1,reviewed,categories,courseLabels,items,byId,normalise,cleanState,selectItems,cleanPreferences,safeHref});
 });

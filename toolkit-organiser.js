@@ -8,7 +8,7 @@
   const $=id=>root.querySelector('#'+id);
   const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const icon=n=>`<svg class="icon" aria-hidden="true"><use href="icons.svg#${esc(n)}"></use></svg>`;
-  const KEY='euhem-toolkit-lists-v1',sections=['browse','solve','collections','lists','compare'];
+  const KEY='euhem-toolkit-lists-v1',sections=['browse','solve','workbench','collections','lists','compare'];
   let store=O.cleanStore({}),storageOK=true,section='browse',selectedList=null,pack=null,compared=[],pendingTool=null,pendingImport=null,modalOpener=null;
   try{const raw=window.localStorage.getItem(KEY);if(raw)store=O.cleanStore(JSON.parse(raw));}catch(e){if(e instanceof SyntaxError)store=O.cleanStore({});else storageOK=false;}
   const makeId=()=>`l-${Date.now().toString(36)}-${window.crypto?.randomUUID?window.crypto.randomUUID():Math.random().toString(36).slice(2)}`;
@@ -27,6 +27,7 @@
     const url=new URL(window.location.href);
     if(section==='browse')url.searchParams.delete('section');else url.searchParams.set('section',section);
     if(section==='collections'&&pack)url.searchParams.set('collection',pack);else url.searchParams.delete('collection');
+    if(section!=='workbench')url.searchParams.delete('planner');
     try{history.replaceState(null,'',url.href);}catch(_){/* previews may disallow history writes */}
   }
   function show(next,focus=false){
@@ -58,7 +59,7 @@
     $('tk2-compare-count').textContent=compared.length;
   }
   function renderCompare(){
-    const rows=[['Type',t=>kind(t)],['Useful for',t=>t.summary],['Possible uses',t=>t.includes.join('\n')],['Access',t=>t.access],['Limitations to check',t=>t.note],['Course connection',t=>(t.courses||[]).map(c=>c==='fundamentals'?'Fundamentals of Statistics':'Statistics for Healthcare').join(' · ')||'Not course-specific'],['Source review',t=>t.reviewed?'Provider description reviewed '+t.reviewed:'Existing Hub workspace']];
+    const rows=[['Type',t=>kind(t)],['Useful for',t=>t.summary],['Possible uses',t=>t.includes.join('\n')],['Access',t=>t.access],['Limitations to check',t=>t.note],['Course connection',t=>(t.courses||[]).map(c=>D.courseLabels[c]||c).join(' · ')||'Not course-specific'],['Source review',t=>t.reviewed?'Provider description reviewed '+t.reviewed:'Existing Hub workspace']];
     $('tk2-compare').innerHTML=`<div class="tk2-heading"><div><p class="tk-eyebrow">A SIDE-BY-SIDE LOOK, NOT A RANKING</p><h2 id="tk2-compare-title" tabindex="-1">Choose what fits your task.</h2><p class="tk-meta">Compare up to three available entries. Provider details are editorial snapshots, not live prices, quality scores or endorsements. Planned ideas cannot be compared as working tools.</p></div><button type="button" class="tk-text-button" id="tk2-clear-compare">Clear comparison</button></div><div class="tk2-compare-add"><label class="tk2-label" for="tk2-compare-choice">Add an available entry</label><select id="tk2-compare-choice"><option value="">Choose a tool…</option>${D.items.filter(t=>t.kind!=='planned'&&!compared.includes(t.id)).map(t=>`<option value="${t.id}">${esc(t.title)}</option>`).join('')}</select><button type="button" class="tk-button" id="tk2-add-compare" ${compared.length>=3?'disabled':''}>Add to comparison</button></div>${compared.length?`<div class="tk2-compare-scroll" role="region" tabindex="0" aria-label="Scrollable tool comparison"><table class="tk2-compare-table"><caption>Practical comparison of ${compared.length} selected entries</caption><thead><tr><th scope="col">What matters</th>${compared.map(id=>{const t=D.byId.get(id);return `<th scope="col"><h3>${esc(t.title)}</h3>${itemLink(t)}<button type="button" class="tk-text-button" data-compare="${id}" aria-pressed="true">Remove from comparison</button></th>`;}).join('')}</tr></thead><tbody>${rows.map(([label,get])=>`<tr><th scope="row">${label}</th>${compared.map(id=>`<td>${esc(get(D.byId.get(id)))}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`:'<div class="tk2-list-empty"><h3>Start with two tools you are considering.</h3><p>Use Compare on a card, in its details, or choose an available entry above. Your selection stays only for this page session.</p><button type="button" class="tk-button" data-section="browse">Back to the catalogue →</button></div>'}`;
   }
   function toggleCompare(id){

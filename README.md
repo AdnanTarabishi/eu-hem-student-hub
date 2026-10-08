@@ -14,6 +14,7 @@ A free, volunteer website for students of the EU-HEM master's program (European 
 - Calendar subscription (Google, Apple, Outlook): one calendar with every course, or one with exactly your study plan
 - One page per course: Overview, Schedule, Exam, Topics, Key Concepts, Practice, Resources
 - Notes & Resources: student-made notes, flashcards, practice questions and a shared glossary (pilot: Fundamentals in Health Economics)
+- **Student Toolkit** (`toolkit.html`): a curated catalogue, collections, local lists and comparisons; statistical method guidance, 52 Excel recipes and health-economics calculators; plus seven working tools for economics graphs, sample precision, study sessions, city budgets, moving, document dates and career applications ([docs/student-toolkit-v4.md](docs/student-toolkit-v4.md)).
 - **City guides** for Bologna, Oslo, Rotterdam and Innsbruck: illustrated covers, eight practical topics, within-guide search, saved sections on your device, contextual facts and a city comparison.
 - **Roadmap & Updates** (`roadmap.html`): current work, next and following release targets, later ideas and deployment-backed releases, from `content/roadmap.json` and `content/updates.json`. Planned release windows stay separate from what is already available ([docs/roadmap.md](docs/roadmap.md)).
 - **Students explorer** (`students.html`): a country-of-origin atlas from the supplied 2026–2028 aggregate counts, plus profile cards, list, filters and privacy-aware directory statistics. Individual profiles remain a **demo with 40 fictional people** (`data/demo-students.json`)
@@ -40,7 +41,8 @@ calendar plus one calendar per possible study plan. To rebuild them yourself:
 `node scripts/build-calendar.js` (needs Node.js 18 or newer).
 
 **Saved in the browser only (localStorage):** study plan choices and statuses, Notes progress,
-My Study List, theme, timetable view, welcome checklist. Nothing is sent anywhere.
+My Study List, Toolkit bookmarks/lists and explicitly saved workbench planners, theme,
+timetable view, welcome checklist. Nothing is sent anywhere.
 
 The header, main menu and footer are drawn on every page by `site-nav.js`.
 
@@ -75,6 +77,11 @@ app/browser icons and social-card mark and refreshes the shared logo's versioned
 then `node scripts/make-social-image.js` renders the updated sharing image.
 Shared helpers (toasts, skeletons, add-to-calendar files, map links) are in `ui.js`.
 Check colour contrast (WCAG AA, light and dark): `node scripts/check-contrast.js`.
+
+**Toolkit validation:** `npm run test:toolkit` checks the catalogue, planning/calculation
+helpers and a real-browser workbench workflow, including mobile themes and offline reload.
+It uses fictional entries and blocks external requests. Browser tests need installed Chromium
+or Playwright's Chromium; no website installation or account is required.
 
 **App and offline:** `manifest.webmanifest` (name, icons in `img/`) makes the site installable;
 `sw.js` (service worker) keeps copies of the site files, and of the data for offline use;
