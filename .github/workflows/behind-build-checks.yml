@@ -1,0 +1,94 @@
+name: Behind the Build checks
+
+on:
+  push:
+    branches: ["codex/behind-the-build-20261008"]
+    paths:
+      - "behind-build.*"
+      - "behind-the-build.html"
+      - "content/build-effort.json"
+      - "scripts/build-behind-build.mjs"
+      - "tests/behind-build/**"
+      - ".github/workflows/behind-build-checks.yml"
+  pull_request:
+    paths:
+      - "behind-build.*"
+      - "behind-the-build.html"
+      - "content/build-effort.json"
+      - "scripts/build-behind-build.mjs"
+      - "tests/behind-build/**"
+      - "site-nav.js"
+      - "roadmap.html"
+      - ".github/workflows/behind-build-checks.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  prepare-feature:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/codex/behind-the-build-20261008'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Generate and integrate the owner-approved feature
+        run: |
+          node scripts/build-behind-build.mjs --integrate
+          node scripts/stamp-versions.js
+          node tests/behind-build/data.test.mjs .
+          node scripts/check-content.js
+          node scripts/check-contrast.js
+      - name: Commit only generated integration and asset fingerprints to the feature branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- '*.html' site-nav.js sw.js README.md
+          if ! git diff --cached --quiet; then
+            git commit -m 'Integrate Behind the Build and refresh asset fingerprints'
+            git push origin HEAD:refs/heads/codex/behind-the-build-20261008
+          fi
+          git rev-parse HEAD
+
+  validate:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Validate content, provenance and shared design tokens
+        run: |
+          node tests/behind-build/data.test.mjs .
+          node scripts/check-content.js
+          node scripts/check-contrast.js
+      - name: Test feature and shared-page regressions
+        env:
+          SCREENSHOT_DIR: ${{ runner.temp }}/behind-build-screenshots
+        run: |
+          node tests/behind-build/browser.test.mjs .
+          node tests/site/shell.test.js .
+          node tests/roadmap/data.test.js .
+          node tests/roadmap/browser.test.js .
+      - name: Save visual previews
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: behind-build-visual-checks
+          path: ${{ runner.temp }}/behind-build-screenshots
+          if-no-files-found: ignore
+          retention-days: 7
