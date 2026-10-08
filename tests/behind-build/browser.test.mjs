@@ -48,10 +48,21 @@ try {
     await page.keyboard.press('Enter');
     check(await page.locator('#work-content').getAttribute('open') !== null, `${name}: keyboard details`);
     check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${name}: expanded overflow`);
-    if (width <= 900) await page.getByRole('button', { name: 'Open menu', exact: true }).click();
-    await page.locator('#site-nav button.menu-group').filter({ hasText: /^About$/ }).click();
+    if (width <= 900) {
+      // The existing phone drawer shows all groups as non-interactive headings.
+      // Unlike desktop, its About heading must not be clicked; test the real link.
+      await page.getByRole('button', { name: 'Open menu', exact: true }).click();
+      await page.waitForFunction(() => document.getElementById('site-nav').getBoundingClientRect().right <= innerWidth + 1);
+    } else {
+      await page.locator('#site-nav button.menu-group').filter({ hasText: /^About$/ }).click();
+    }
     const link = page.locator('#site-nav a[href="behind-the-build.html"]');
+    await link.scrollIntoViewIfNeeded();
     check(await link.isVisible() && await link.getAttribute('aria-current') === 'page', `${name}: shared current menu`);
+    await page.screenshot({ path: path.join(out, name + '-menu.png') });
+    await link.click();
+    await page.waitForLoadState('networkidle');
+    check(await page.locator('[data-total-hours]').innerText() === '60' && new URL(page.url()).pathname === '/behind-the-build.html', `${name}: real menu navigation`);
     check(errors.length === 0, `${name}: page errors ${errors.join('; ')}`);
     await context.close();
   }
@@ -71,5 +82,5 @@ try {
   await roadmap.locator('.build-teaser a').click();
   check(roadmap.url().includes('behind-the-build.html'), 'Roadmap opens page');
   await context.close();
-  console.log(`Behind the Build: ${assertions} browser assertions passed; six viewport/theme screenshots saved.`);
+  console.log(`Behind the Build: ${assertions} browser assertions passed; six viewport/theme previews and actual menu interactions checked.`);
 } finally { await browser.close(); await new Promise(resolve => server.close(resolve)); }
