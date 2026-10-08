@@ -159,7 +159,7 @@
       openGrades: {},
     };
     writeState(state);
-    render();
+    renderActive(state.active);
   }
 
   function currentQuestions(active) {
@@ -315,7 +315,7 @@
 
     const modes = el("section", "hem-exam-mode-grid");
 
-    const full = el("article", "hem-exam-mode is-primary");
+    const full = el("article", "hem-exam-mode study-exam-start is-primary");
     full.innerHTML = `
       <p class="hem-kicker">90-MINUTE MOCK / CURRENT CONTENT</p>
       <h2>Full-length timing, current-content coverage</h2>
@@ -331,7 +331,7 @@
     fullActions.appendChild(fullButton);
     full.appendChild(fullActions);
 
-    const quick = el("article", "hem-exam-mode");
+    const quick = el("article", "hem-exam-mode study-exam-start");
     quick.innerHTML = `
       <p class="hem-kicker">QUICK DRILL / 20 MINUTES</p>
       <h2>Fast objective check</h2>
@@ -411,11 +411,14 @@
     const toolbar = el("div", "hem-exam-toolbar");
     const title = el("div", "hem-exam-toolbar-title");
     title.innerHTML = `
-      <strong>${active.kind === "full" ? "90-minute mock · Sessions 1–5" : "20-minute quick drill"}</strong>
+      <p class="hem-kicker">EXAM IN PROGRESS</p>
+      <h1>${active.kind === "full" ? "90-minute mock · Sessions 1–5" : "20-minute quick drill"}</h1>
       <span>${answered} of ${questions.length} answered · objective answers stay hidden until submission</span>
     `;
     const clock = el("div", "hem-exam-clock");
     clock.id = "hem-exam-clock";
+    clock.setAttribute("role", "timer");
+    clock.setAttribute("aria-label", "Time remaining");
     clock.textContent = timeText(active.deadline - Date.now());
 
     const submit = el("button", "hem-button hem-danger-button", "Submit exam");
@@ -446,20 +449,28 @@
     nav.appendChild(legend);
 
     const main = el("div", "hem-exam-question-wrap");
-    const card = el("article", "hem-exam-question-card");
-    const meta = el("div", "hem-question-meta");
+    const card = el("article", "hem-exam-question-card study-question");
+    const header = el("div", "study-question-header");
+    const number = el("span", "study-question-number", String(active.current + 1).padStart(2, "0"));
+    number.setAttribute("aria-hidden", "true");
+    const meta = el("div", "hem-question-meta study-question-meta");
     const session = sessionForTopic(current.topic);
     meta.append(
       el("span", null, `Question ${active.current + 1} of ${questions.length}`),
-      el("span", current.type === "short-answer" ? "is-open" : "", questionTypeLabel(current)),
+      el("span", `study-question-kind${current.type === "short-answer" ? " is-open" : ""}`, questionTypeLabel(current)),
       el("span", null, session ? `Session ${session.number}` : "Health Economics"),
     );
-    card.appendChild(meta);
-    card.appendChild(el("p", "hem-exam-question", current.question));
+    header.append(number, meta);
+    card.appendChild(header);
+    const prompt = el("h2", "hem-exam-question study-question-prompt", current.question);
+    prompt.id = "hem-exam-question-prompt";
+    card.appendChild(prompt);
 
     const value = active.answers[current.id];
     if (current.type === "mcq") {
       const list = el("div", "hem-exam-options");
+      list.setAttribute("role", "radiogroup");
+      list.setAttribute("aria-labelledby", prompt.id);
       current.options.forEach((option, index) => {
         const letter = String.fromCharCode(65 + index);
         const label = el("label", "hem-exam-option");
@@ -469,12 +480,14 @@
         input.value = letter;
         input.checked = value === letter;
         input.addEventListener("change", () => persistAnswer(current, letter));
-        label.append(input, el("span", null, `${letter}. ${option}`));
+        label.append(input, el("span", "study-option-letter", letter), el("span", "study-option-text", option));
         list.appendChild(label);
       });
       card.appendChild(list);
     } else if (current.type === "true-false") {
       const list = el("div", "hem-exam-options");
+      list.setAttribute("role", "radiogroup");
+      list.setAttribute("aria-labelledby", prompt.id);
       for (const [answerValue, labelText] of [["true", "True"], ["false", "False"]]) {
         const label = el("label", "hem-exam-option");
         const input = document.createElement("input");
@@ -483,12 +496,15 @@
         input.value = answerValue;
         input.checked = value === answerValue;
         input.addEventListener("change", () => persistAnswer(current, answerValue));
-        label.append(input, el("span", null, labelText));
+        const badge = el("span", "study-option-letter", labelText.charAt(0));
+        badge.setAttribute("aria-hidden", "true");
+        label.append(input, badge, el("span", "study-option-text", labelText));
         list.appendChild(label);
       }
       card.appendChild(list);
     } else {
       const area = el("textarea", "hem-exam-textarea");
+      area.setAttribute("aria-labelledby", prompt.id);
       area.placeholder = "Write your answer as you would in a closed-book written exam. The model answer appears only after submission.";
       area.value = typeof value === "string" ? value : "";
       area.addEventListener("input", () => persistAnswer(current, area.value));
@@ -610,14 +626,14 @@
     resultHero.append(copy, ring);
     shell.appendChild(resultHero);
 
-    const metrics = el("div", "hem-result-grid");
+    const metrics = el("div", "hem-result-grid study-review-metrics");
     const values = [
       ["Time used", timeText(usedTime(active))],
       ["Questions answered", `${questions.filter((q) => isAnswered(q, active.answers[q.id])).length} / ${questions.length}`],
       ["Open answers reviewed", `${reviewed} / ${open.length}`],
     ];
     for (const [label, value] of values) {
-      const card = el("div", "hem-result-metric");
+      const card = el("div", "hem-result-metric study-review-metric");
       card.append(el("span", null, label), el("strong", null, value));
       metrics.appendChild(card);
     }
@@ -632,10 +648,11 @@
     if (wrong.length) {
       const list = el("div", "hem-review-list");
       for (const q of wrong) {
-        const card = el("article", "hem-review-card is-wrong");
+        const card = el("article", "hem-review-card study-question is-wrong");
         const session = sessionForTopic(q.topic);
-        card.innerHTML = `<p class="hem-kicker">${session ? `SESSION ${session.number}` : "HEALTH ECONOMICS"} · ${questionTypeLabel(q).toUpperCase()}</p>`;
-        card.appendChild(el("h3", null, q.question));
+        const position = questions.indexOf(q) + 1;
+        card.innerHTML = `<div class="study-question-header"><span class="study-question-number" aria-hidden="true">${String(position).padStart(2, "0")}</span><div class="study-question-meta"><p class="hem-kicker">QUESTION ${position} · ${session ? `SESSION ${session.number}` : "HEALTH ECONOMICS"}</p><span class="study-question-kind">${questionTypeLabel(q)} · ${isAnswered(q, active.answers[q.id]) ? "Revisit" : "Unanswered"}</span></div></div>`;
+        card.appendChild(el("h3", "study-question-prompt", q.question));
         card.appendChild(
           el(
             "p",
@@ -647,7 +664,7 @@
         correct.append(el("strong", null, "Correct answer: "), document.createTextNode(correctAnswerText(q)));
         card.appendChild(correct);
         if (q.explanation) {
-          const explain = el("p", "hem-review-answer");
+          const explain = el("p", "hem-review-answer study-feedback");
           explain.append(el("strong", null, "Why: "), document.createTextNode(q.explanation));
           card.appendChild(explain);
         }
@@ -663,15 +680,16 @@
       openSection.innerHTML = '<div class="hem-section-heading"><div><p class="hem-kicker">OPEN-QUESTION REVIEW</p><h2>Compare structure, not exact wording.</h2></div><p>Mark each answer only after comparing your reasoning with the model answer. This self-review is not converted into an official grade.</p></div>';
       const list = el("div", "hem-review-list");
       for (const q of open) {
-        const card = el("article", "hem-review-card");
+        const card = el("article", "hem-review-card study-question");
         const session = sessionForTopic(q.topic);
-        card.innerHTML = `<p class="hem-kicker">${session ? `SESSION ${session.number}` : "HEALTH ECONOMICS"} · OPEN QUESTION</p>`;
-        card.appendChild(el("h3", null, q.question));
+        const position = questions.indexOf(q) + 1;
+        card.innerHTML = `<div class="study-question-header"><span class="study-question-number" aria-hidden="true">${String(position).padStart(2, "0")}</span><div class="study-question-meta"><p class="hem-kicker">QUESTION ${position} · ${session ? `SESSION ${session.number}` : "HEALTH ECONOMICS"}</p><span class="study-question-kind">Open question · Self-review</span></div></div>`;
+        card.appendChild(el("h3", "study-question-prompt", q.question));
         const yours = el("div", "hem-open-model");
         const yoursStrong = el("strong", null, "Your answer");
         yours.append(yoursStrong, document.createElement("br"), document.createTextNode(active.answers[q.id] || "(no answer written)"));
         card.appendChild(yours);
-        const model = el("div", "hem-open-model");
+        const model = el("div", "hem-open-model study-feedback");
         const modelStrong = el("strong", null, "Model answer");
         model.append(modelStrong, document.createElement("br"), document.createTextNode(q.answer));
         card.appendChild(model);

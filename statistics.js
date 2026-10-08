@@ -74,7 +74,7 @@
   }
   function feedback(q, chosen, live = false) {
     const right = chosen === q.answer.charCodeAt(0) - 65;
-    return `<div class="study-feedback${right ? "" : " incorrect"}" tabindex="-1" ${live ? 'id="study-answer"' : ""}><strong>${chosen === null ? "Unanswered" : right ? "Correct" : "Try this idea again"}</strong><p>Correct answer: ${esc(q.options[q.answer.charCodeAt(0) - 65])}</p><p>${esc(q.explanation)}</p><a href="${link(q.topic, questionSection(q))}">Review the matching lecture section →</a></div>`;
+    return `<div class="study-feedback${right ? "" : " incorrect"}" tabindex="-1" ${live ? 'id="study-answer"' : ""}><div class="practice-feedback-head"><span class="practice-feedback-label">${chosen === null ? "Unanswered" : right ? "Correct" : "Try this idea again"}</span><span class="practice-kicker">Answer explained</span></div><p class="practice-feedback-answer"><strong>Correct answer:</strong> ${esc(q.options[q.answer.charCodeAt(0) - 65])}</p><p>${esc(q.explanation)}</p><a href="${link(q.topic, questionSection(q))}">Review the matching lecture section →</a></div>`;
   }
   function render(focus = false) {
     if (loading) return;
@@ -201,7 +201,7 @@
         "Turn mistakes into a revision plan.",
         "A correct retry clears a question from the current list. Its earlier mistakes remain in your history.",
       ) +
-      `<div class="study-controls"><div><label for="mistake-topic">Lecture</label><select id="mistake-topic"><option value="">All covered classes</option>${topics.map((t) => `<option value="${t.id}" ${t.id === mistakeTopic ? "selected" : ""}>${esc(topicLabel(t.id))}</option>`).join("")}</select></div><label class="study-check"><input type="checkbox" id="mistake-history" ${mistakeHistory ? "checked" : ""}> Include previously corrected mistakes</label></div><p>${qs.length} questions ${mistakeHistory ? "with a mistake in their history" : "need another try"}.</p>${qs.length ? button("retry-mistakes", "Retry this list", `data-topic="${esc(mistakeTopic)}"`) : "<p>When an answer needs work, it will appear here with its explanation.</p>"}<div class="study-actions"></div>${qs.map((q) => `<article class="study-card"><p class="study-meta">${esc(topicLabel(q.topic))} · ${esc(q.category)} · ${state.questions[q.id].misses} previous mistake(s)</p><h3>${esc(q.question)}</h3><details><summary>See the explanation and lecture link</summary>${feedback(q, state.questions[q.id].lastAnswer)}</details></article>`).join("")}`
+      `<div class="study-controls"><div><label for="mistake-topic">Lecture</label><select id="mistake-topic"><option value="">All covered classes</option>${topics.map((t) => `<option value="${t.id}" ${t.id === mistakeTopic ? "selected" : ""}>${esc(topicLabel(t.id))}</option>`).join("")}</select></div><label class="study-check"><input type="checkbox" id="mistake-history" ${mistakeHistory ? "checked" : ""}> Include previously corrected mistakes</label></div><p>${qs.length} questions ${mistakeHistory ? "with a mistake in their history" : "need another try"}.</p>${qs.length ? button("retry-mistakes", "Retry this list", `data-topic="${esc(mistakeTopic)}"`) : "<p>When an answer needs work, it will appear here with its explanation.</p>"}<div class="study-actions"></div>${qs.map((q) => `<article class="study-card practice-review-item"><div class="practice-meta"><span>${esc(topicLabel(q.topic))}</span><span>${esc(q.category)}</span><span>${state.questions[q.id].misses} previous mistake(s)</span></div><h3>${esc(q.question)}</h3><details><summary>See the explanation and lecture link</summary>${feedback(q, state.questions[q.id].lastAnswer)}</details></article>`).join("")}`
     );
   }
   function review() {
@@ -212,7 +212,7 @@
       "Questions you miss return today. Correct answers return in three days by default; Hard, Good and Easy adjust the next date. Dates use this device’s local calendar.",
     );
     if (state.active?.kind === "review") return html + runner();
-    html += `<article class="study-card"><h3>${due.length} due · ${unseen.length} new</h3><p>Start with difficult questions and older due items. Add new questions when you have room in your session.</p><label class="study-check"><input type="checkbox" id="review-new" checked> Include new questions (up to 12 questions total)</label><div class="study-actions">${button("start-review", "Start today’s review", !due.length && !unseen.length ? "disabled" : "")}</div>${active() ? "<p>Finish or discard the current session before starting another.</p>" : ""}</article>`;
+    html += `<article class="study-card practice-setup"><p class="practice-kicker">Spaced practice</p><h3>Your next review session</h3><dl class="practice-result-metrics"><div class="practice-result-metric"><dt>Due today</dt><dd>${due.length}</dd></div><div class="practice-result-metric"><dt>New questions</dt><dd>${unseen.length}</dd></div></dl><p>Start with difficult questions and older due items. Add new questions when you have room in your session.</p><label class="study-check"><input type="checkbox" id="review-new" checked> Include new questions (up to 12 questions total)</label><div class="study-actions">${button("start-review", "Start today’s review", !due.length && !unseen.length ? "disabled" : "")}</div>${active() ? "<p>Finish or discard the current session before starting another.</p>" : ""}</article>`;
     const future = focusBank()
       .filter((q) => state.questions[q.id]?.due > todayKey())
       .sort((a, b) =>
@@ -237,7 +237,7 @@
       "This original MCQ mock covers Classes 1–6. Questions are balanced across lectures and answer options are shuffled. Calculations and written interpretation have separate practice tools; this is not an official exam simulation.",
     );
     if (state.active && state.active.kind !== "review") return html + runner();
-    html += `<form id="mock-setup" class="study-card"><div class="study-controls"><div><label for="mock-mode">Feedback</label><select id="mock-mode"><option value="practice">Practice · check each answer</option><option value="exam">Exam · feedback on submission</option></select></div><div><label for="mock-size">Questions</label><select id="mock-size">${[12, 24, 60, 120].map((n) => `<option ${n === 24 ? "selected" : ""}>${n}</option>`).join("")}</select></div><div><label for="mock-minutes">Exam time (minutes)</label><select id="mock-minutes">${[10, 20, 40, 60].map((n) => `<option ${n === 20 ? "selected" : ""}>${n}</option>`).join("")}</select></div></div><p>During an exam session, the timer continues after reloads or visits to other tools. Unanswered questions count as incorrect when time ends.</p>${button("start-mock", "Start session", active() ? "disabled" : "")}</form>`;
+    html += `<form id="mock-setup" class="study-card practice-setup"><p class="practice-kicker">Mixed MCQ practice</p><h3>Set up your session</h3><div class="study-controls"><div><label for="mock-mode">Feedback</label><select id="mock-mode"><option value="practice">Practice · check each answer</option><option value="exam">Exam · feedback on submission</option></select></div><div><label for="mock-size">Questions</label><select id="mock-size">${[12, 24, 60, 120].map((n) => `<option ${n === 24 ? "selected" : ""}>${n}</option>`).join("")}</select></div><div><label for="mock-minutes">Exam time (minutes)</label><select id="mock-minutes">${[10, 20, 40, 60].map((n) => `<option ${n === 20 ? "selected" : ""}>${n}</option>`).join("")}</select></div></div><p>During an exam session, the timer continues after reloads or visits to other tools. Unanswered questions count as incorrect when time ends.</p><div class="study-actions">${button("start-mock", "Start session", active() ? "disabled" : "")}</div></form>`;
     if (active())
       html += `<p class="study-notice">A review is in progress. <a href="#review">Resume it</a> or ${button("discard", "discard this session", "", true)}.</p>`;
     return html;
@@ -246,18 +246,31 @@
     const a = state.active;
     if (a.finishedAt !== null) {
       const r = S.score(a, bank);
-      return `<article class="study-card"><h3 id="session-result" tabindex="-1">Session complete · ${r.correct} / ${r.total}</h3><p>${r.percent}% correct · ${r.answered} answered. Review the explanations below, then revisit the lecture when needed.</p><div class="study-actions">${button("new-session", "Set up another session")}<a href="#mistakes">Review mistakes →</a></div></article><article class="study-card">${a.ids
+      return `<article class="study-card practice-results"><p class="practice-kicker">Your session results</p><h3 id="session-result" tabindex="-1">Session complete · ${r.correct} / ${r.total}</h3><dl class="practice-result-metrics"><div class="practice-result-metric"><dt>Accuracy</dt><dd>${r.percent}%</dd></div><div class="practice-result-metric"><dt>Correct</dt><dd>${r.correct}<small> / ${r.total}</small></dd></div><div class="practice-result-metric"><dt>Answered</dt><dd>${r.answered}</dd></div><div class="practice-result-metric"><dt>Unanswered</dt><dd>${r.total - r.answered}</dd></div></dl><p>Review the explanations below, then revisit the lecture when needed.</p><div class="study-actions">${button("new-session", "Set up another session")}<a href="#mistakes">Review mistakes →</a></div></article><article class="study-card practice-session-review"><p class="practice-kicker">Question by question</p><h3>Review your answers</h3>${a.ids
         .map((id, i) => {
-          const q = lookup(id);
-          return `<details><summary>${i + 1}. ${esc(q.category)} — ${a.answers[i] === null ? "unanswered" : a.answers[i] === q.answer.charCodeAt(0) - 65 ? "correct" : "incorrect"}</summary><p>${esc(q.question)}</p><p>Your answer: ${a.answers[i] === null ? "none" : esc(q.options[a.answers[i]])}</p>${feedback(q, a.answers[i])}</details>`;
+          const q = lookup(id),
+            status = a.answers[i] === null
+              ? "unanswered"
+              : a.answers[i] === q.answer.charCodeAt(0) - 65
+                ? "correct"
+                : "incorrect";
+          return `<details class="practice-review-item"><summary class="practice-review-summary"><span>${i + 1}. ${esc(q.category)}</span><span class="practice-status is-${status}">${status}</span></summary><p class="practice-meta">${esc(topicLabel(q.topic))}</p><h4>${esc(q.question)}</h4><p class="practice-your-answer"><strong>Your answer:</strong> ${a.answers[i] === null ? "none" : esc(q.options[a.answers[i]])}</p>${feedback(q, a.answers[i])}</details>`;
         })
         .join("")}</article>`;
     }
     const i = a.index,
       q = lookup(a.ids[i]),
       checked = a.checked[i],
-      exam = a.kind === "exam";
-    return `<article class="study-card"><div class="study-controls"><strong>Question ${i + 1} / ${a.ids.length}</strong><span>${esc(topicLabel(q.topic))} · ${esc(q.category)}</span>${exam ? '<span class="study-timer" id="exam-timer" role="timer" aria-label="Time remaining"></span>' : ""}</div><fieldset class="study-question"><legend id="session-prompt" tabindex="-1">${esc(q.question)}</legend>${a.order[i].map((original, n) => `<label class="study-choice"><input type="radio" name="session-answer" value="${original}" ${a.answers[i] === original ? "checked" : ""} ${!exam && checked ? "disabled" : ""}><span>${String.fromCharCode(65 + n)}. ${esc(q.options[original])}</span></label>`).join("")}</fieldset>${checked && !exam ? feedback(q, a.answers[i], true) : ""}${checked && !exam && state.questions[q.id]?.lastCorrect ? `<div class="study-actions" aria-label="Review confidence">${["hard", "good", "easy"].map((grade) => button("confidence", grade[0].toUpperCase() + grade.slice(1), `data-grade="${grade}"`, true)).join("")}<span id="next-review" class="study-meta">Next review: ${state.questions[q.id].due}</span></div>` : ""}<div class="study-actions">${!exam && !checked ? button("check", "Check answer", a.answers[i] === null ? "disabled" : "") : ""}${button("previous", "← Previous", i === 0 ? "disabled" : "", true)}${button("next", "Next →", i === a.ids.length - 1 ? "disabled" : "", true)}${button("finish", exam ? "Submit exam" : "Finish session")}</div><div class="study-jump" aria-label="Jump to question">${a.ids.map((id, n) => `<button type="button" data-action="jump" data-index="${n}" ${n === i ? 'aria-current="step"' : ""} data-answered="${a.answers[n] !== null}" aria-label="Question ${n + 1}${a.answers[n] !== null ? ", answered" : ", unanswered"}">${n + 1}</button>`).join("")}</div>${button("discard", "Discard this unfinished session", "", true)}</article>`;
+      exam = a.kind === "exam",
+      correct = q.answer.charCodeAt(0) - 65,
+      answered = a.answers.filter((answer) => answer !== null).length;
+    const options = a.order[i].map((original, n) => {
+      const revealed = checked && !exam,
+        right = revealed && original === correct,
+        wrong = revealed && original === a.answers[i] && !right;
+      return `<label class="study-choice${right ? " is-correct" : wrong ? " is-incorrect" : ""}"><input type="radio" name="session-answer" value="${original}" ${a.answers[i] === original ? "checked" : ""} ${!exam && checked ? "disabled" : ""}><span class="practice-option-badge" aria-hidden="true">${String.fromCharCode(65 + n)}</span><span class="practice-option-text">${esc(q.options[original])}</span>${right || wrong ? `<span class="practice-option-state">${right ? "Correct answer" : "Your answer"}</span>` : ""}</label>`;
+    }).join("");
+    return `<article class="study-card practice-session"><div class="practice-session-top"><div><p class="practice-kicker">${exam ? "Timed mock" : a.kind === "review" ? "Daily review" : "Mixed practice"}</p><strong>Question ${i + 1} / ${a.ids.length}</strong></div>${exam ? '<span class="study-timer" id="exam-timer" role="timer" aria-label="Time remaining"></span>' : `<span class="study-meta">${answered} of ${a.ids.length} answered</span>`}</div><progress class="study-meter practice-session-progress" max="${a.ids.length}" value="${i + 1}" aria-label="Current question">${i + 1} / ${a.ids.length}</progress><div class="practice-meta"><span>${esc(topicLabel(q.topic))}</span><span>${esc(q.category)}</span><span>Choose one answer</span></div><fieldset class="study-question"><legend id="session-prompt" tabindex="-1">${esc(q.question)}</legend>${options}</fieldset>${checked && !exam ? feedback(q, a.answers[i], true) : ""}${checked && !exam && state.questions[q.id]?.lastCorrect ? `<div class="practice-confidence"><p class="practice-kicker">How did that feel?</p><div class="study-actions" aria-label="Review confidence">${["hard", "good", "easy"].map((grade) => button("confidence", grade[0].toUpperCase() + grade.slice(1), `data-grade="${grade}"`, true)).join("")}<span id="next-review" class="study-meta">Next review: ${state.questions[q.id].due}</span></div></div>` : ""}<div class="study-actions practice-session-actions">${!exam && !checked ? button("check", "Check answer", a.answers[i] === null ? "disabled" : "") : ""}${button("previous", "← Previous", i === 0 ? "disabled" : "", true)}${button("next", "Next →", i === a.ids.length - 1 ? "disabled" : "", true)}${button("finish", exam ? "Submit exam" : "Finish session")}</div><div class="practice-session-footer"><p class="practice-kicker">Jump to a question</p><div class="study-jump" aria-label="Jump to question">${a.ids.map((id, n) => `<button type="button" data-action="jump" data-index="${n}" ${n === i ? 'aria-current="step"' : ""} data-answered="${a.answers[n] !== null}" aria-label="Question ${n + 1}${a.answers[n] !== null ? ", answered" : ", unanswered"}">${n + 1}</button>`).join("")}</div>${button("discard", "Discard this unfinished session", "", true)}</div></article>`;
   }
   function calculations() {
     return (
@@ -272,7 +285,7 @@
               ? saved.variant % ex.variants.length
               : 0,
             result = C.solve(ex.kind, ex.variants[variant]);
-          return `<article class="study-card" data-exercise="${ex.id}"><p class="study-meta">${esc(topicLabel(ex.topic))} · Example ${variant + 1} of ${ex.variants.length}</p><h3>${esc(ex.title)}</h3><p>${esc(result.prompt)}</p><form data-calculation="${ex.id}"><div class="study-numeric-grid">${result.labels.map((l, i) => `<div><label for="calc-${ex.id}-${i}">${esc(l)}</label><input id="calc-${ex.id}-${i}" name="value-${i}" type="number" step="any" required><p class="study-meta">${result.tolerances[i] === 0 ? "Exact integer" : `Accepted rounding: ±${result.tolerances[i]}`}</p></div>`).join("")}</div><button class="study-button" type="submit">Check calculation</button></form><p class="calc-feedback" role="status"></p><details><summary>Hint</summary><p>${esc(ex.hint)}</p></details><details data-solution="${ex.id}"><summary>Worked solution</summary><ol>${result.steps.map((s) => `<li>${esc(s)}</li>`).join("")}</ol><a href="${link(ex.topic, ex.section)}">Review the lecture →</a></details><div class="study-actions">${button("variant", "Try the other example", `data-id="${ex.id}"`, true)}<span class="study-meta">${Number.isInteger(saved.attempts) ? saved.attempts : 0} checked attempt(s)${saved.lastCorrect === true ? " · latest answer correct" : ""}</span></div></article>`;
+          return `<article class="study-card practice-exercise" data-exercise="${ex.id}"><div class="practice-meta"><span>${esc(topicLabel(ex.topic))}</span><span>Example ${variant + 1} of ${ex.variants.length}</span><span>Calculation practice</span></div><h3>${esc(ex.title)}</h3><p>${esc(result.prompt)}</p><form data-calculation="${ex.id}"><div class="study-numeric-grid">${result.labels.map((l, i) => `<div><label for="calc-${ex.id}-${i}">${esc(l)}</label><input id="calc-${ex.id}-${i}" name="value-${i}" type="number" step="any" required><p class="study-meta">${result.tolerances[i] === 0 ? "Exact integer" : `Accepted rounding: ±${result.tolerances[i]}`}</p></div>`).join("")}</div><button class="study-button" type="submit">Check calculation</button></form><p class="calc-feedback practice-inline-feedback" role="status"></p><details><summary>Hint</summary><p>${esc(ex.hint)}</p></details><details data-solution="${ex.id}"><summary>Worked solution</summary><ol>${result.steps.map((s) => `<li>${esc(s)}</li>`).join("")}</ol><a href="${link(ex.topic, ex.section)}">Review the lecture →</a></details><div class="study-actions">${button("variant", "Try the other example", `data-id="${ex.id}"`, true)}<span class="study-meta">${Number.isInteger(saved.attempts) ? saved.attempts : 0} checked attempt(s)${saved.lastCorrect === true ? " · latest answer correct" : ""}</span></div></article>`;
         })
         .join("")
     );
@@ -286,7 +299,7 @@
       focusedTools(tools.interpretations)
         .map((ex) => {
           const r = state.explanations[ex.id] || {};
-          return `<article class="study-card"><p class="study-meta">${esc(topicLabel(ex.topic))}</p><h3>${esc(ex.title)}</h3><p>${esc(ex.prompt)}</p><label for="draft-${ex.id}">Your explanation</label><textarea id="draft-${ex.id}" data-draft="${ex.id}" maxlength="8000" placeholder="Explain it in your own words…">${esc(typeof r.text === "string" ? r.text : "")}</textarea><p class="study-meta">Saved on this device as you type.</p><details><summary>Model explanation & self-assessment</summary><p>${esc(ex.model)}</p>${ex.rubric.map((text, i) => `<label class="study-check"><input type="checkbox" data-rubric="${ex.id}" data-index="${i}" ${r.checks?.[i] === true ? "checked" : ""}>${esc(text)}</label>`).join("")}<p class="study-meta" id="rubric-${ex.id}">${ex.rubric.filter((_, i) => r.checks?.[i] === true).length} / ${ex.rubric.length} criteria you marked as met.</p><a href="${link(ex.topic, ex.section)}">Review the lecture →</a></details></article>`;
+          return `<article class="study-card practice-exercise"><div class="practice-meta"><span>${esc(topicLabel(ex.topic))}</span><span>Written interpretation</span></div><h3>${esc(ex.title)}</h3><p>${esc(ex.prompt)}</p><label for="draft-${ex.id}">Your explanation</label><textarea id="draft-${ex.id}" data-draft="${ex.id}" maxlength="8000" placeholder="Explain it in your own words…">${esc(typeof r.text === "string" ? r.text : "")}</textarea><p class="study-meta">Saved on this device as you type.</p><details><summary>Model explanation & self-assessment</summary><p>${esc(ex.model)}</p>${ex.rubric.map((text, i) => `<label class="study-check"><input type="checkbox" data-rubric="${ex.id}" data-index="${i}" ${r.checks?.[i] === true ? "checked" : ""}>${esc(text)}</label>`).join("")}<p class="study-meta" id="rubric-${ex.id}">${ex.rubric.filter((_, i) => r.checks?.[i] === true).length} / ${ex.rubric.length} criteria you marked as met.</p><a href="${link(ex.topic, ex.section)}">Review the lecture →</a></details></article>`;
         })
         .join("")
     );
@@ -334,7 +347,7 @@
             .filter((ex) => ex.workshop === number)
             .map(
               (ex) =>
-                `<section class="study-card"><h3>${esc(ex.title)}</h3><p>Hypothetical teaching example${number === 10 ? " · regression preview beyond the current Classes 1–6" : ""}.</p><pre><code>${esc(ex.command)}\n\n${esc(ex.output)}</code></pre><fieldset class="study-question"><legend>${esc(ex.question)}</legend>${ex.options.map((o, i) => `<label class="study-choice"><input type="radio" name="stata-${ex.id}" value="${i}"><span>${esc(o)}</span></label>`).join("")}</fieldset>${button("stata-check", "Check interpretation", `data-id="${ex.id}"`)}<div id="stata-feedback-${ex.id}" role="status"></div><p class="study-meta">${state.exercises["stata-" + ex.id]?.lastCorrect === true ? "Latest checked interpretation: correct" : ""}</p></section>`,
+                `<section class="study-card practice-exercise"><p class="practice-kicker">Read the output</p><h3>${esc(ex.title)}</h3><p>Hypothetical teaching example${number === 10 ? " · regression preview beyond the current Classes 1–6" : ""}.</p><pre><code>${esc(ex.command)}\n\n${esc(ex.output)}</code></pre><p class="practice-meta">Choose one interpretation</p><fieldset class="study-question"><legend>${esc(ex.question)}</legend>${ex.options.map((o, i) => `<label class="study-choice"><input type="radio" name="stata-${ex.id}" value="${i}"><span class="practice-option-badge" aria-hidden="true">${String.fromCharCode(65 + i)}</span><span class="practice-option-text">${esc(o)}</span></label>`).join("")}</fieldset><div class="study-actions">${button("stata-check", "Check interpretation", `data-id="${ex.id}"`)}</div><div id="stata-feedback-${ex.id}" role="status"></div><p class="study-meta">${state.exercises["stata-" + ex.id]?.lastCorrect === true ? "Latest checked interpretation: correct" : ""}</p></section>`,
             )
             .join("")}</details></article>`;
         })
@@ -449,6 +462,7 @@
           );
         const feedback = form.parentElement.querySelector(".calc-feedback");
         if (!result.valid) {
+          feedback.classList.add("incorrect");
           feedback.textContent = "Enter a finite number in every answer field.";
           return;
         }
@@ -463,6 +477,7 @@
           assisted,
         };
         save();
+        feedback.classList.toggle("incorrect", !result.correct);
         feedback.textContent = result.correct
           ? `Correct within the stated rounding.${assisted ? " Recorded as practice with the solution available." : ""}`
           : "At least one value needs another look. Check the sign, units and denominator; use the hint if needed.";
@@ -655,7 +670,7 @@
           lastCorrect: right,
         };
         save();
-        out.innerHTML = `<div class="study-feedback${right ? "" : " incorrect"}"><strong>${right ? "Correct" : "Review the interpretation"}</strong><p>${esc(ex.explanation)}</p><a href="${link(ex.topic, ex.section)}">Review the relevant foundation →</a></div>`;
+        out.innerHTML = `<div class="study-feedback${right ? "" : " incorrect"}"><div class="practice-feedback-head"><span class="practice-feedback-label">${right ? "Correct" : "Review the interpretation"}</span><span class="practice-kicker">Output explained</span></div><p class="practice-feedback-answer"><strong>Correct interpretation:</strong> ${esc(ex.options[ex.answer])}</p><p>${esc(ex.explanation)}</p><a href="${link(ex.topic, ex.section)}">Review the relevant foundation →</a></div>`;
         return;
       }
       default:

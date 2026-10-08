@@ -282,8 +282,10 @@ function update() {
     const face = createElement("div", "flashcard");
     face.appendChild(createElement("div", "flashcard-label", "Question"));
     face.appendChild(renderRichText("p", item.front || "…", "flashcard-front"));
-    face.appendChild(createElement("div", "flashcard-label", "Answer"));
-    face.appendChild(renderRichText("p", item.back || "…", "flashcard-back"));
+    const answer = createElement("div", "flashcard-answer");
+    answer.appendChild(createElement("div", "flashcard-label", "Answer"));
+    answer.appendChild(renderRichText("p", item.back || "…", "flashcard-back"));
+    face.appendChild(answer);
     previewBox.appendChild(face);
   } else if (form.kind === "question") {
     const preview = { ...item, options: item.options && item.options.length ? item.options : ["…", "…"] };

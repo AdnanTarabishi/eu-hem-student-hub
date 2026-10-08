@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="lecture.css?v=53fbec5c" />
     <link rel="stylesheet" href="quant-methods.css?v=d3f352c4" />
     <link rel="stylesheet" href="fund-statistics.css?v=9bd14ec3" />
+    <link rel="stylesheet" href="study-practice.css?v=8c063fac" />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" href="img/favicon-32.png?v=934f2f81" sizes="32x32" type="image/png" />
     <script src="theme.js?v=d51d4769"></script>
@@ -487,18 +488,30 @@
           aria-label="Multiple-choice practice quiz"
           hidden
         >
-          <div class="page-head">
-            <p class="eyebrow">03 / Practice</p>
-            <h1>Turn understanding into confidence.</h1>
-            <p>
-              Choose one answer, check your reasoning, and keep going. You can
-              skip a question and return to it. Progress is saved only in this
-              browser.
-            </p>
+          <div class="page-head practice-heading">
+            <div class="practice-heading-copy">
+              <p class="eyebrow"><svg class="icon" aria-hidden="true"><use href="icons.svg#exams"></use></svg> 03 / Practice</p>
+              <h1>Turn understanding into confidence.</h1>
+              <p>
+                One question at a time. Choose an answer, check your reasoning,
+                and learn from the explanation. Skip any question and return
+                when you are ready.
+              </p>
+              <div class="practice-intro-meta">
+                <span id="practice-question-count"></span>
+                <span>Single-answer MCQs</span>
+                <span>At your own pace</span>
+              </div>
+            </div>
+            <ol class="practice-steps" aria-label="How practice works">
+              <li><span aria-hidden="true">01</span><div><strong>Choose</strong><small>Think through each option.</small></div></li>
+              <li><span aria-hidden="true">02</span><div><strong>Check</strong><small>Read the explanation.</small></div></li>
+              <li><span aria-hidden="true">03</span><div><strong>Review</strong><small>Return to what needs practice.</small></div></li>
+            </ol>
           </div>
           <div class="quiz-layout">
-            <aside class="card quiz-side">
-              <p class="eyebrow">Your progress</p>
+            <aside class="card quiz-side" aria-labelledby="quiz-progress-text">
+              <p class="eyebrow practice-side-title"><svg class="icon" aria-hidden="true"><use href="icons.svg#trending-up"></use></svg> This practice set</p>
               <h3 id="quiz-progress-text">Loading questions…</h3>
               <div
                 class="progress-track"
@@ -517,25 +530,32 @@
               <p id="quiz-score" class="muted">
                 Take your time. You’re here to learn.
               </p>
+              <dl class="practice-sidebar-metrics">
+                <div><dt>Correct</dt><dd id="practice-correct-count">0</dd></div>
+                <div><dt>Revisit</dt><dd id="practice-revisit-count">0</dd></div>
+                <div><dt>Remaining</dt><dd id="practice-remaining-count">0</dd></div>
+              </dl>
+              <p class="practice-map-label">Question navigator</p>
               <div
                 id="question-map"
                 class="question-map"
+                role="group"
                 aria-label="Jump to a question"
               ></div>
-              <p class="small muted">
-                Green = correct · Peach = incorrect<br />Outline = current
-                question
-              </p>
-              <button class="btn small-btn" type="button" id="finish-quiz">
-                Finish & review</button
-              ><button
-                class="btn secondary small-btn"
-                type="button"
-                id="restart-quiz"
-              >
-                Reset practice
-              </button>
-              <p id="storage-note" class="muted" style="margin-top: 18px">
+              <ul class="question-map-legend" aria-label="Question status key">
+                <li class="legend-correct"><span aria-hidden="true">✓</span> Correct</li>
+                <li class="legend-revisit"><span aria-hidden="true">↺</span> Revisit</li>
+                <li class="legend-current"><span aria-hidden="true">○</span> Current</li>
+              </ul>
+              <div class="practice-sidebar-actions">
+                <button class="btn small-btn" type="button" id="finish-quiz">
+                  Finish & review <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg>
+                </button>
+                <button class="btn secondary small-btn" type="button" id="restart-quiz">
+                  Reset practice
+                </button>
+              </div>
+              <p id="storage-note" class="muted practice-storage-note">
                 Your answers stay on this device and are included in your Notes
                 progress backup.
               </p>
@@ -567,6 +587,6 @@
     <script defer src="fund-statistics-activities.js?v=efe18d19"></script>
     <script defer src="statistics-study.js?v=f0fe60e8"></script>
     <script defer src="quant-methods.js?v=88e12444"></script>
-    <script defer src="lecture.js?v=411267ff"></script>
+    <script defer src="lecture.js?v=a7fd3c39"></script>
   </body>
 </html>

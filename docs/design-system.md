@@ -12,6 +12,7 @@ Everything lives in plain CSS. There is no framework or build step.
 | `style.css` §13 | Homepage |
 | `style.css` (later sections) | Page styles: Study Plan, Timetable/Exams, Notes, Tracks, Thesis, City Guide… |
 | `students.css`, `join.css` | Students explorer and Join form (only loaded there) |
+| `study-practice.css` | Shared study cards, lettered choices, answer states and recaps across Notes study tools |
 | `site-nav.js` | Header, menu, phone drawer and footer for every page |
 | `theme.js` | Light/dark button (outline sun/moon icons) |
 | `icons.svg` | The icon sprite (Lucide, ISC licence): outline, 1.75 stroke, rounded ends |
