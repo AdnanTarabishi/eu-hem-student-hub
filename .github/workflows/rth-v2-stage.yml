@@ -1,0 +1,79 @@
+name: Validate expanded Right to Health edition
+on:
+  push:
+    branches: [codex/rth-v2-stage-20261008]
+permissions:
+  contents: write
+jobs:
+  review:
+    if: startsWith(github.event.head_commit.message, 'Validate Right to Health')
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Verify transport and preserve current main
+        run: python3 .rth-v2/assemble.py
+      - name: Generate native notes and validate content
+        working-directory: /tmp/rth-v2-candidate
+        run: |
+          node scripts/build-right-to-health-notes.js
+          node scripts/build-content-index.js
+          node scripts/stamp-versions.js
+          node --test tests/right-to-health/content.test.js
+          node scripts/check-content.js
+          node scripts/check-contrast.js
+          node --check right-to-health.js
+          node --check notes-course.js
+      - name: Install browser test dependency
+        run: |
+          python3 -m pip install playwright==1.57.0
+          CHROME=$(command -v google-chrome || command -v chromium)
+          test -n "$CHROME"
+          echo "CHROMIUM_BINARY=$CHROME" >> "$GITHUB_ENV"
+      - name: Run adapted interaction and responsive tests
+        working-directory: /tmp/rth-v2-candidate
+        env:
+          EUHEM_SITE_ROOT: /tmp/rth-v2-candidate
+          EUHEM_TEST_OUTPUT: /tmp/rth-v2-browser
+        run: python3 tests/right-to-health/browser.py
+      - name: Test real HTTP, downloads and browser persistence
+        working-directory: /tmp/rth-v2-candidate
+        env:
+          EUHEM_SITE_ROOT: /tmp/rth-v2-candidate
+        run: python3 tests/right-to-health/http-browser.py
+      - name: Check reproducibility and restrict changed files
+        working-directory: /tmp/rth-v2-candidate
+        run: |
+          git diff HEAD --binary > /tmp/rth-v2-before.diff
+          node scripts/build-right-to-health-notes.js
+          node scripts/build-content-index.js
+          node scripts/stamp-versions.js
+          git diff HEAD --binary > /tmp/rth-v2-after.diff
+          cmp /tmp/rth-v2-before.diff /tmp/rth-v2-after.diff
+          python3 - <<'PY'
+          import json, os, pathlib, subprocess
+          root = pathlib.Path(os.environ['GITHUB_WORKSPACE'])
+          allowed = set(json.loads((root / '.rth-v2/manifest.json').read_text()))
+          allowed.update({'course.html', 'sw.js', 'content/index.json'})
+          allowed.update('content/modules/right-to-health/notes/' + name + '.md' for name in ['economic-rights','human-rights','non-discrimination','values-ethics','health-systems','netherlands','italy','norway','austria','european-health-union'])
+          changed = subprocess.check_output(['git','diff','--name-only','HEAD'],text=True).splitlines()
+          untracked = subprocess.check_output(['git','ls-files','--others','--exclude-standard'],text=True).splitlines()
+          unexpected = set(changed + untracked) - allowed
+          assert not unexpected, 'Unexpected changed files: ' + repr(unexpected)
+          print('Reviewed scope:',len(changed),'files')
+          PY
+          git diff HEAD --check
+      - name: Publish clean candidate branch, never main
+        working-directory: /tmp/rth-v2-candidate
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add content/modules/right-to-health content/index.json course.html sw.js docs/right-to-health.md notes-course.js right-to-health.js right-to-health.css scripts/build-right-to-health-notes.js tests/right-to-health
+          git diff --cached --check
+          git commit -m 'feat: expand Right to Health guides and add interactive casebook' -m 'Add 30 source-located sections across the existing ten guides, 12 progressive cases, 30 MCQs, ten open-answer prompts and 20 flashcards. Preserve existing IDs and progress. Case drafts stay page-local with text export. Generate native notes from workspace data. Validate 22 content tests, 131 adapted browser checks and 14 real HTTP/browser storage checks; external feeds and service workers are not covered.'
+          CANDIDATE="codex/rth-v2-ready-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          git push origin "HEAD:refs/heads/$CANDIDATE"
+          echo "BASE=$(cat /tmp/rth-v2-base.txt)"
+          echo "CANDIDATE=$CANDIDATE"
+          echo "COMMIT=$(git rev-parse HEAD)"
+          printf 'Base: %s\nCandidate: %s\nCommit: %s\n' "$(cat /tmp/rth-v2-base.txt)" "$CANDIDATE" "$(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
