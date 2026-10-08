@@ -8,24 +8,34 @@ jobs:
   assemble:
     if: startsWith(github.event.head_commit.message, 'Assemble Right to Health')
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-      - name: Build reviewed content and integrate only course files
+        with:
+          fetch-depth: 0
+      - name: Decode and verify the exact reviewed patch
+        run: python3 .rth-stage/apply.py apply
+      - name: Validate content and JavaScript
         run: |
-          python3 .rth-stage/rebuild.py
-          python3 .rth-stage/integrate.py
-          node scripts/build-content-index.js
-          node tests/right-to-health/content.test.js
+          node --test tests/right-to-health/content.test.js
           node scripts/check-content.js
           node scripts/check-contrast.js
           node --check right-to-health.js
           node --check notes-course.js
-          python3 .rth-stage/verify.py
-      - name: Commit candidate files on the isolated branch
+          git diff --cached --check
+      - name: Run the 93 adapted inline browser checks
         run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add content/modules/right-to-health content/index.json course.html notes-course.js sw.js right-to-health.js right-to-health.css tests/right-to-health
-          git commit -m 'Build reviewed Right to Health learning workspace'
-          git push origin HEAD:${GITHUB_REF_NAME}
+          python3 -m pip install playwright==1.57.0
+          CHROME=$(command -v google-chrome || command -v chromium || true)
+          if [ -z "$CHROME" ]; then
+            python3 -m playwright install chromium
+            CHROME=$(python3 -c 'from playwright.sync_api import sync_playwright; p=sync_playwright().start(); print(p.chromium.executable_path); p.stop()')
+          fi
+          EUHEM_SITE_ROOT=. CHROMIUM_BINARY="$CHROME" EUHEM_TEST_OUTPUT="$RUNNER_TEMP/rth-browser" python3 tests/right-to-health/browser.py
+      - name: Confirm generated index and versions are reproducible
+        run: |
+          node scripts/build-content-index.js
+          node scripts/stamp-versions.js
+          python3 .rth-stage/apply.py verify
+      - name: Publish a clean candidate branch, not main
+        run: python3 .rth-stage/apply.py candidate
