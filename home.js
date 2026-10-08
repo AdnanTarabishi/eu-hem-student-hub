@@ -60,7 +60,7 @@ function homeStats(today = null) {
   const days = today === null ? daysUntil(PROGRAM_END_DATE) : today;
   const stats = [
     ...(HOME_COHORT ? [
-      { value: PEOPLE_COUNT, label: "People represented", caption: `Source total · ${SOURCE_NOTATION}`, icon: "students" },
+      { value: PEOPLE_COUNT, label: "People represented", icon: "students" },
       { value: COUNTRY_COUNT, label: "Countries of origin", caption: `Across ${CONTINENT_COUNT} continents`, icon: "globe" },
     ] : []),
     { value: TRACK_COUNT, label: "Tracks", caption: "Different perspectives", icon: "route" },
@@ -240,6 +240,40 @@ function prepareHomeReveals() {
   for (const element of document.querySelectorAll("[data-home-reveal]")) observer.observe(element);
 }
 
+// A slight perspective response gives the resource cards depth on mouse devices.
+// Touch, keyboard navigation and reduced-motion preferences keep the flat layout.
+function prepareHomeTilt() {
+  if (!window.matchMedia || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const cards = [...document.querySelectorAll(".eh-resource")];
+  for (const card of cards) {
+    let frame = null;
+    const reset = () => {
+      if (frame !== null) cancelAnimationFrame(frame);
+      frame = null;
+      card.style.removeProperty("--eh-tilt-x");
+      card.style.removeProperty("--eh-tilt-y");
+    };
+    card.classList.add("eh-tilt");
+    card.addEventListener("pointermove", (event) => {
+      if (reduceMotion.matches || event.pointerType !== "mouse") return;
+      if (frame !== null) cancelAnimationFrame(frame);
+      const { clientX, clientY } = event;
+      frame = requestAnimationFrame(() => {
+        frame = null;
+        const rect = card.getBoundingClientRect();
+        const x = Math.max(-1, Math.min(1, ((clientX - rect.left) / rect.width - .5) * 2));
+        const y = Math.max(-1, Math.min(1, ((clientY - rect.top) / rect.height - .5) * 2));
+        card.style.setProperty("--eh-tilt-x", `${(-y * 2).toFixed(2)}deg`);
+        card.style.setProperty("--eh-tilt-y", `${(x * 2.5).toFixed(2)}deg`);
+      });
+    });
+    card.addEventListener("pointerleave", reset);
+    card.addEventListener("pointercancel", reset);
+    reduceMotion.addEventListener("change", reset);
+  }
+}
+
 // ----- "Life Across EU-HEM": the city cards, from the same data as the City Guide -----
 // (guide-data.js lists the guides; content/tracks.json says who studies where and when)
 async function fillCityCards() {
@@ -395,6 +429,24 @@ async function fillRoadmapPreview() {
     return;
   }
   box.replaceChildren();
+  if (plan && plan.vision && plan.vision.progressPercent !== null) {
+    const percent = plan.vision.progressPercent;
+    const progress = createElement("div", "eh-roadmap-progress");
+    const heading = createElement("div", "eh-roadmap-progress-heading");
+    heading.append(createElement("span", null, "Building the full Student Hub"),
+      createElement("strong", null, `${percent}% complete`));
+    const bar = createElement("div", "eh-roadmap-progress-bar");
+    bar.setAttribute("role", "progressbar");
+    bar.setAttribute("aria-label", "Student Hub development (our estimate)");
+    bar.setAttribute("aria-valuemin", "0");
+    bar.setAttribute("aria-valuemax", "100");
+    bar.setAttribute("aria-valuenow", String(percent));
+    const fill = createElement("span", "eh-roadmap-progress-fill");
+    fill.style.width = `${percent}%`;
+    bar.appendChild(fill);
+    progress.append(heading, bar, createElement("p", "eh-roadmap-progress-note", "Our own estimate of the full plan."));
+    box.appendChild(progress);
+  }
   if (now) {
     const card = createElement("a", "roadmap-preview-now");
     card.href = `roadmap.html#feature-${now.id}`;
@@ -435,6 +487,7 @@ if (typeof document !== "undefined") {
   document.addEventListener("DOMContentLoaded", fillHomeSettings);
   document.addEventListener("DOMContentLoaded", fillHomeTrackPreview);
   document.addEventListener("DOMContentLoaded", prepareHomeReveals);
+  document.addEventListener("DOMContentLoaded", prepareHomeTilt);
   document.addEventListener("DOMContentLoaded", fillCommunityMap);
   document.addEventListener("DOMContentLoaded", fillCommunityPeople);
   document.addEventListener("DOMContentLoaded", fillCityCards);

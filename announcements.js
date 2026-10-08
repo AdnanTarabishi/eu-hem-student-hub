@@ -322,6 +322,11 @@ function showLatestAnnouncements(active, today) {
   const status = document.getElementById("latest-announcements-status");
   if (!box) return;
 
+  if (typeof renderHomeNews === "function") {
+    renderHomeNews(active, today);
+    return;
+  }
+
   if (active.length === 0) {
     status.textContent = "No announcements right now.";
     return;

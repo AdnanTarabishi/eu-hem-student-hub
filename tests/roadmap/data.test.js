@@ -97,14 +97,17 @@ t("every evidence commit exists in this repository's history", () => {
   }
 });
 
-t("progress counts verified releases without an invented percentage; the full Hub remains planned for Spring 2027", () => {
+t("progress: the explicit 25% team estimate stays separate from verified releases; the full Hub remains planned for Spring 2027", () => {
   const vision = R.readRoadmap(roadmap).vision;
   assert.strictEqual(vision.targetLabel, "Spring 2027");
-  assert.strictEqual(vision.progressPercent, null);
+  assert.strictEqual(vision.progressPercent, 25);
+  assert.match(vision.note, /25%.*estimate/);
   assert.deepStrictEqual(R.releaseCount(updates), { count: 37, since: "2026-10-01", text: "37 releases shipped since 1 Oct 2026" });
   assert.strictEqual(R.releaseCount(withDraft).count, 37, "drafts are not counted");
   const estimate = clone(roadmap); estimate.vision.progressPercent = 15;
   assert.strictEqual(R.readRoadmap(estimate).vision.progressPercent, 15, "explicit optional estimates remain supported");
+  const unspecified = clone(roadmap); delete unspecified.vision.progressPercent;
+  assert.strictEqual(R.readRoadmap(unspecified).vision.progressPercent, null, "content without an explicit estimate remains supported");
   const bad = clone(roadmap); bad.vision.progressPercent = 150; fails(bad, updates, /whole number from 0 to 100/);
   const bad2 = clone(roadmap); delete bad2.vision.targetLabel; fails(bad2, updates, /targetLabel/);
 });

@@ -39,7 +39,10 @@ available. The editor dashboard backend is not connected by this design update.
 ## Covers and optional photos
 
 Current posts use original local SVG illustrations in `assets/announcements/`, selected through
-a fixed registry in `announcements-newsroom.js` using the story's stable ID. Covers are decorative;
+a shared registry in `announcement-media.js` using the story's stable ID. The homepage carousel uses
+the same artwork and the existing shared loader, without a second CSV request. It rotates every six
+seconds while visible, with previous/next and Pause/Play controls. Hover, keyboard focus, hidden tabs,
+off-screen content and reduced-motion preferences pause rotation. Covers are decorative;
 the adjacent title and accessible text hold the news facts. They do not depict real people or
 document events. A general decorative cover is available for other updates and failed images.
 
@@ -75,6 +78,7 @@ then run:
 ```sh
 npx playwright install --with-deps chromium
 node tests/announcements/browser.test.js .
+node tests/home/news-carousel.test.js .
 ```
 
 This suite serves the actual files locally, waits for local fonts, and exercises counts, controls,

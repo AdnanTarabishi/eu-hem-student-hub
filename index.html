@@ -24,7 +24,7 @@
   <link rel="preload" href="fonts/source-serif-4-latin-600.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=daabf49c">
   <link rel="stylesheet" href="assets/flags/country-flags.css?v=6127599e">
-  <link rel="stylesheet" href="home.css?v=38be907f">
+  <link rel="stylesheet" href="home.css?v=d6fa99cf">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -35,7 +35,7 @@
   <!-- Aggregate cohort data is available synchronously when home.js builds the hero stats. -->
   <script src="cohort-data.js?v=c8bdd77c"></script>
   <!-- Homepage settings and early photo download -->
-  <script src="home.js?v=9427efae"></script>
+  <script src="home.js?v=8af32b19"></script>
 </head>
 <body class="home-page eh-home">
 
@@ -75,7 +75,7 @@
     <!-- 2. Cohort numbers (shared cohort-data.js), overlapping the bottom of the hero -->
     <div class="eh-wrap eh-stats-container">
       <ul id="home-stats" class="eh-stats" aria-label="The cohort in numbers" hidden></ul>
-      <p class="eh-stats-note"><span>Cohort overview · <span data-setting="COHORT_LABEL"></span> · Source: <span data-setting="SOURCE_NOTATION"></span></span>
+      <p class="eh-stats-note"><span>Cohort overview · <span data-setting="COHORT_LABEL"></span></span>
         <span>The graduation countdown is an estimate, not an official deadline.</span></p>
     </div>
     <script>buildHomeStats();</script>
@@ -109,12 +109,12 @@
         <script>fillWeekGreeting();</script>
         <div class="eh-week-grid">
           <section class="eh-widget eh-widget-today" aria-labelledby="dash-today-title">
-            <div class="eh-widget-heading"><span class="eh-icon-tile"><svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#clock"></use></svg></span><h3 id="dash-today-title">Today</h3></div>
+            <div class="eh-widget-heading"><span class="eh-icon-tile"><svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#clock"></use></svg></span><h3 id="dash-today-title"><span class="dash-card-title">Today</span></h3><div id="dash-day-nav" class="dash-browse-nav" hidden></div></div>
             <div id="dash-today" class="eh-widget-body"></div>
             <a class="eh-widget-footer" href="timetable.html">See your timetable <svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
           </section>
           <section class="eh-widget" aria-labelledby="dash-exam-title">
-            <div class="eh-widget-heading"><span class="eh-icon-tile eh-icon-warm"><svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#exams"></use></svg></span><h3 id="dash-exam-title">Next exam</h3></div>
+            <div class="eh-widget-heading"><span class="eh-icon-tile eh-icon-warm"><svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#exams"></use></svg></span><h3 id="dash-exam-title"><span class="dash-card-title">Next exam</span></h3><div id="dash-exam-nav" class="dash-browse-nav" hidden></div></div>
             <div id="dash-exam" class="eh-widget-body"></div>
             <a class="eh-widget-footer" href="exams.html">Dates &amp; registration <svg class="icon eh-icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a>
           </section>
@@ -283,7 +283,7 @@
           </p>
           <!-- announcements.js fills this with the latest announcements -->
           <p id="latest-announcements-status" class="placeholder">Loading announcements…</p>
-          <div id="latest-announcements" class="announcement-list"></div>
+          <div id="latest-announcements" class="announcement-list" aria-live="off"></div>
         </section>
       </div>
       <div class="eh-wrap eh-roadmap" id="home-roadmap" aria-labelledby="roadmap-preview-title">
@@ -328,12 +328,14 @@
   <script defer src="ui.js?v=6d55e433"></script>
   <script defer src="search.js?v=691c11a5"></script>
   <script defer src="pwa.js?v=c9212bf8"></script>
-  <script defer src="announcements.js?v=4dad83f2"></script>
+  <script defer src="announcement-media.js?v=b1d8e8e9"></script>
+  <script defer src="home-news.js?v=c4df863a"></script>
+  <script defer src="announcements.js?v=5ec8eef9"></script>
   <script defer src="programme.js?v=92916c59"></script>
   <script defer src="unibo-data.js?v=892a323e"></script>
   <script defer src="notes-data.js?v=0d5c488d"></script>
   <script defer src="notes-progress.js?v=23382d79"></script>
-  <script defer src="dashboard.js?v=90285251"></script>
+  <script defer src="dashboard.js?v=9fd2034d"></script>
   <script defer src="onboarding.js?v=ddaca39d"></script>
   <script defer src="tracks-data.js?v=629a5538"></script>
   <script defer src="roadmap-data.js?v=e0748197"></script>

@@ -66,10 +66,10 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   assert.deepStrictEqual(await page.$$eval(".roadmap-window-label", (all) => all.map((h) => h.textContent)),
     ["October 2026", "November 2026", "November–December 2026", "After launch"]);
   assert.match(await text(page, ".roadmap-lane.is-next"), /Estimated periods, not promises/);
-  assert.strictEqual(await page.locator("#roadmap-vision [role=progressbar]").count(), 0);
-  assert.ok(!(await text(page, "#roadmap-vision")).includes("%"), "the release count does not imply a completion percentage");
+  assert.strictEqual(await page.getAttribute("#roadmap-vision [role=progressbar]", "aria-valuenow"), "25");
+  assert.match(await text(page, "#roadmap-vision"), /About 25% of the full plan built/);
   assert.match(await text(page, "#roadmap-vision"), /37 releases shipped since 1 Oct 2026.*Full Hub: Spring 2027/s);
-  ok("overview counts, two Now cards, Next by period with After launch, verified release count, full Hub Spring 2027");
+  ok("overview counts, two Now cards, Next by period with After launch, explicit 25% estimate, verified release count, full Hub Spring 2027");
 
   // Release banner, What's in v1.0, the plan note, limitations, domain move, feedback
   assert.match(await text(page, "#roadmap-release"), /Beta\s*v0\.9.*Next: v1\.0 — Public Launch · target 15 October 2026.*targets, not promises/s);
@@ -292,8 +292,21 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   assert.strictEqual(await page.getAttribute(".roadmap-preview-now", "href"), "roadmap.html#feature-exam-prep");
   assert.deepStrictEqual(await page.$$eval(".roadmap-preview-latest a", (all) => all.map((a) => a.getAttribute("href"))),
     ["roadmap.html#update-homepage-visual-refresh", "roadmap.html#update-announcements-newsroom", "roadmap.html#update-cohort-origins-distribution"]);
-  assert.strictEqual(await text(page, ".roadmap-preview-progress"), "Beta v0.9 · 37 releases shipped since 1 Oct 2026 · full Hub: Spring 2027");
-  ok("homepage: current focus, stage, releases shipped and the three latest releases, from the same data");
+  assert.strictEqual(await text(page, ".roadmap-preview-progress"), "Beta v0.9 · about 25% of the full plan built · 37 releases shipped since 1 Oct 2026 · full Hub: Spring 2027");
+  assert.match(await text(page, ".eh-roadmap-progress"), /Building the full Student Hub\s*25% complete.*Our own estimate of the full plan\./s);
+  assert.strictEqual(await page.getAttribute(".eh-roadmap-progress-bar", "role"), "progressbar");
+  assert.match(await page.getAttribute(".eh-roadmap-progress-bar", "aria-label"), /Student Hub development.*estimate/);
+  assert.strictEqual(await page.getAttribute(".eh-roadmap-progress-bar", "aria-valuenow"), "25");
+  assert.strictEqual(await page.getAttribute(".eh-roadmap-progress-bar", "aria-valuemin"), "0");
+  assert.strictEqual(await page.getAttribute(".eh-roadmap-progress-bar", "aria-valuemax"), "100");
+  const progressWidths = await page.evaluate(() => {
+    const bar = document.querySelector(".eh-roadmap-progress-bar");
+    const fill = document.querySelector(".eh-roadmap-progress-fill");
+    return [bar.clientWidth, fill.getBoundingClientRect().width];
+  });
+  assert.ok(progressWidths[0] > 0 && Math.abs(progressWidths[1] / progressWidths[0] - 0.25) < 0.01,
+    "the visible indicator fills one quarter of the track");
+  ok("homepage: current focus, stage, releases shipped, three latest releases and an accessible 25% indicator from the same data");
 
   await page.keyboard.press("Control+k");
   await page.waitForSelector(".search-dialog .search-input");

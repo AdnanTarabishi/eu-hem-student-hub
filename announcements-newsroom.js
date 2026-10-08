@@ -13,11 +13,6 @@
   const feature = $("news-feature");
   const reader = $("news-reader");
   const state = { all: [], active: [], today: "", category: "", query: "", newOnly: false, sort: "priority", view: "grid", openedId: "", loading: true, failed: false };
-  const coverFiles = Object.freeze({
-    "2026-10-07-student-representatives-election-results": "election-results.svg",
-    "2026-10-06-welcome-to-the-eu-hem-student-hub-beta": "hub-beta.svg",
-    "2026-10-06-track-preferences-first-choices-approved": "track-journey.svg",
-  });
   const categoryTones = Object.freeze({
     "Student Community": "community", Student: "community", Programme: "programme",
     "Student Hub": "hub", Academic: "academic", University: "university", Social: "social", Urgent: "urgent",
@@ -162,7 +157,7 @@
       image.addEventListener("error", () => {
         image.remove(); box.classList.remove("news-art--illustrated");
       }, { once: true });
-      image.src = "assets/announcements/" + (coverFiles[item.id] || "community-update.svg");
+      image.src = announcementCoverPath(item);
       box.prepend(image);
     };
     if (item.image) {

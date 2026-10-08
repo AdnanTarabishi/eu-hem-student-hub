@@ -11,7 +11,7 @@ and the site search finds plans and releases. All of them read the same two file
 | Releases (drafts and published) | `content/updates.json` |
 | All rules (validation, what is public, grouping, search entries) | `roadmap-data.js` |
 | The page | `roadmap.html`, `roadmap.css`, `roadmap.js` |
-| Homepage preview | `fillRoadmapPreview()` in `home.js` (styles in `style.css`) |
+| Homepage preview | `fillRoadmapPreview()` in `home.js` (styles in `home.css`) |
 | Site search | `search.js` (uses `searchEntries()` from `roadmap-data.js`) |
 | Draft / publish helper | `scripts/updates.js` |
 | Checks | `scripts/check-content.js` (runs `validate()`), `tests/roadmap/` |
@@ -26,8 +26,9 @@ and the site search finds plans and releases. All of them read the same two file
 - Only important, student-facing releases become updates. Small fixes and visual tweaks do not.
 - Dates in Next are estimates, not promises (said on the page). At most **four** Next items have a date; the
   rest are shown as **After launch** (`"target": null`). Later ideas never have dates.
-- Progress is a **count of published releases** ("15 releases shipped since 1 Oct 2026"), never a typed
-  percentage. A release counts only once it is published with deployment evidence.
+- The **count of published releases** is calculated from updates with deployment evidence.
+  The optional `vision.progressPercent` is the team's own estimate of the full plan, labelled as an
+  estimate on the roadmap and homepage. It is separate from the release count.
 
 ## Editing `content/roadmap.json`
 
@@ -75,12 +76,12 @@ is not a release date. In the October review, the public version remains **Beta 
 the Hub's release version.
 
 **Towards the full Hub.** The `vision` block shows the releases shipped (counted automatically from
-updates.json) and when the full Hub is planned, as a season. The reviewed public content uses the release
-count rather than retaining the earlier manual percentage estimate; publishing more notes does not
-establish a percentage of the long-term vision completed:
+updates.json) and when the full Hub is planned, as a season. The optional percentage is the team's
+estimate of the full plan, shown separately from verified releases. The current estimate is 25%; it is
+not calculated from the number of published notes or releases:
 
 ```json
-"vision": { "title": "Towards the full Student Hub", "targetLabel": "Spring 2027", "note": "…" }
+"vision": { "title": "Towards the full Student Hub", "progressPercent": 25, "targetLabel": "Spring 2027", "note": "Our own estimate of the full plan." }
 ```
 
 **Good to know.** `limitations` and `domainMove` (`{ "title": …, "items": ["…"] }`) appear at the bottom of

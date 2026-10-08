@@ -65,7 +65,7 @@ async function page({ source = FIXTURE, hash = '', home = false, failFirst = fal
   };
   window.console.error = (...args) => errors.push(args.map(String).join(' '));
   const context = dom.getInternalVMContext();
-  for (const file of ['utils.js', 'ui.js', 'announcements.js', 'announcements-newsroom.js']) {
+  for (const file of ['utils.js', 'ui.js', 'announcements.js', 'announcement-media.js', 'announcements-newsroom.js']) {
     vm.runInContext(fs.readFileSync(path.join(ROOT, file), 'utf8'), context, { filename: file });
   }
   await turn();

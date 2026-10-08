@@ -67,8 +67,9 @@
   },
   "vision": {
     "title": "Towards the full Student Hub",
+    "progressPercent": 25,
     "targetLabel": "Spring 2027",
-    "note": "The release count records improvements already published. The full Hub remains a longer-term plan for Spring 2027; upcoming dates may change with student feedback."
+    "note": "About 25% of the full plan is built: our own estimate. The release count records improvements already published. The full Hub remains a longer-term plan for Spring 2027; upcoming dates may change with student feedback."
   },
   "planningNote": "Dates are estimates, not promises. v2.0 targets early November, with further improvements released in stages. Next items may progress together; After launch and Later ideas do not yet have a delivery date.",
   "categories": [

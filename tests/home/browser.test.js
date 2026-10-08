@@ -61,11 +61,13 @@ ok("no standalone-preview leftovers: one menu script, no demo dashboard text, no
     assert.ok(await page.$eval("#hero-media img", (img) => img.complete && img.naturalWidth > 0), "hero photo loads");
     const stats = await page.$$eval("#home-stats .home-stat", (all) => all.map((li) => li.textContent.replace(/\s+/g, " ").trim()));
     assert.strictEqual(stats.length, 4);
-    assert.match(stats[0], /105 ?People represented ?Source total · 103\+2 pax/);
+    assert.match(stats[0], /^105 ?People represented$/);
+    assert.strictEqual(await page.locator("#home-stats .home-stat:first-child .home-stat-caption").count(), 0);
     assert.match(stats[1], /24 ?Countries of origin ?Across 5 continents/);
     assert.match(stats[3], /Estimated days left ?30 Sep 2028 · provisional/);
     assert.match(await page.textContent(".eh-stats-note"), /Cohort overview · 2026–2028.*estimate, not an official deadline/s);
-    ok("hero photo, shared 105-person / 24-country overview with the 103+2 source notation, provisional date and estimate disclaimer");
+    assert.ok(!(await page.textContent(".eh-stats-container")).includes("103+2"));
+    ok("hero photo, clean 105-person / 24-country overview, provisional date and estimate disclaimer; source details remain in the community overview");
 
     assert.strictEqual(await page.locator("#community-people .person-card").count(), 3);
     assert.ok(await page.isVisible(".people-note"), "fictional demo label visible");

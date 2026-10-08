@@ -5,7 +5,7 @@ A free, volunteer website for students of the EU-HEM master's program (European 
 **Live site:** https://adnantarabishi.github.io/eu-hem-student-hub/
 
 ## What's on it
-- **Homepage:** a hero with the cohort photo and cohort numbers, "This Week" (today's classes, next exam, your plan, announcements), Explore, a Notes & Resources preview, Meet the Cohort, and the programme's cities; returning students (with a saved study plan) get a shorter hero
+- **Homepage:** a hero with the cohort photo and cohort numbers, day-by-day class browsing and upcoming-exam browsing within "This Week", your plan, an illustrated news carousel with pause controls, Explore, Meet the Cohort, city guides, and the roadmap's estimated progress; returning students with a saved study plan get a shorter hero. The timetable and exam cards retain the saved-course filter; pointer effects and news rotation respect reduced-motion preferences.
 - **Study Plan & Progress:** plan your courses with the official rules (CFU, required and optional groups), track each course (Studying → Exam booked → Passed) and see a timeline. A planning tool only: it does not submit anything.
 - **Tracks** (`tracks.html`): the four specialisation tracks (EEH, E&P, MHI, PHM) from the official 2026 overview: journey, courses per semester with exact elective rules, a factual comparison, "My track" (saved on this device only), cities, careers and an informal student-built quiz
 - **Past Thesis Explorer** (`thesis.html`): search and filter thesis titles from earlier cohorts (an informal list shared by a previous student, with the old six-track structure), for inspiration
@@ -48,6 +48,9 @@ The header, main menu and footer are drawn on every page by `site-nav.js`.
 top of `home.js` (`HERO_IMAGE`, `TRACK_COUNT`, `PROGRAM_END_DATE`).
 For a new photo, put the JPG in `assets/images/` with WebP copies named `<name>-640.webp`,
 `<name>-960.webp` and `<name>-1280.webp`. The photo credit is at the bottom of `index.html`.
+Check the homepage with `node tests/home/browser.test.js .`; focused browsing and carousel checks
+are `node tests/home/dashboard-nav.test.js .` and `node tests/home/news-carousel.test.js .`.
+They use fictional feeds and the project's Playwright development tool.
 
 **Cohort origins:** `cohort-data.js` is the shared aggregate source for the homepage and the
 interactive atlas on `students.html#sx-map-section`. It contains the supplied 2026–2028
