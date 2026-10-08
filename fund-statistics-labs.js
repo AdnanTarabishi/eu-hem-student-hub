@@ -51,7 +51,7 @@
         ${g.tables.map(table).join('')}
         ${g.formulas.length?table({title:'Excel workflow — English syntax; replace explanatory text by your calculated cell references',headers:['Goal / range','Expression'],rows:g.formulas.map(f=>[f.label,f.formula])}):''}
         <details class="fs-guide-cautions" open><summary>Checks that change the interpretation</summary><ul>${g.cautions.map(c=>`<li>${esc(c)}</li>`).join('')}</ul></details>
-        <section class="fs-reading-checks"><h4>Check your reasoning</h4><p>Two original review questions for this guide. Your choices and checked answers share the study-progress backup on the Notes page.</p>${g.questions.map((q,i)=>{const s=memory.answers[q.id];return `<fieldset><legend>${i+1}. ${esc(q.prompt)}</legend><div class="fs-mock-options">${q.options.map((o,j)=>`<label for="fs-reading-${i}-${j}"><input type="radio" id="fs-reading-${i}-${j}" name="fs-reading-${i}" value="${j}" ${s.choice===j?'checked':''}>${esc(o)}</label>`).join('')}</div><button type="button" class="fs-button" data-reading-check="${i}">Check reasoning ${i+1}</button><p id="fs-reading-feedback-${i}" class="fs-case-feedback" role="status"></p></fieldset>`;}).join('')}</section>
+        <section class="fs-reading-checks"><h4>Check your reasoning</h4><p>Two original review questions for this guide. Your choices and checked answers share the study-progress backup on the Notes page.</p>${g.questions.map((q,i)=>{const s=memory.answers[q.id];return `<fieldset class="fs-reading-question study-question"><legend class="sr-only">Question ${i+1}. ${esc(q.prompt)}</legend><div class="study-question-header" aria-hidden="true"><span class="study-question-number">${String(i+1).padStart(2,'0')}</span><span class="study-question-prompt">${esc(q.prompt)}</span></div><p class="study-question-kind">Reading check · Choose one answer</p><div class="fs-mock-options fs-reading-options">${q.options.map((o,j)=>`<label for="fs-reading-${i}-${j}"><input type="radio" id="fs-reading-${i}-${j}" name="fs-reading-${i}" value="${j}" ${s.choice===j?'checked':''}><span class="study-option-letter">${String.fromCharCode(65+j)}</span><span class="study-option-text">${esc(o)}</span></label>`).join('')}</div><button type="button" class="fs-button" data-reading-check="${i}">Check reasoning ${i+1}</button><p id="fs-reading-feedback-${i}" class="fs-case-feedback study-feedback" role="status"></p></fieldset>`;}).join('')}</section>
         <details class="fs-guide-citation"><summary>Files and source locations</summary><ul>${g.files.map(f=>`<li>${esc(f)}</li>`).join('')}</ul><p>${esc(g.citation)}</p><p>Original study explanations and independently checked aggregate summaries. Official teaching files remain on Virtuale. Report plots redraw only the selected numerical rows.</p></details>
         <div class="fs-guide-links">${g.topics.map(id=>`<a href="lecture.html?topic=${encodeURIComponent(id)}">${esc(topics.find(t=>t.id===id)?.title||id)} →</a>`).join('')}${g.experiment?`<a href="fund-statistics.html?lab=${g.experiment}#explore">Explore the exact sampling distribution →</a>`:''}</div></article><button class="fs-button fs-secondary" type="button" id="fs-guide-next">Next guide →</button>`;
       const $=selector=>container.querySelector(selector);
@@ -59,6 +59,11 @@
       function feedback(i) {
         const q=g.questions[i],s=memory.answers[q.id],el=$('#fs-reading-feedback-'+i);
         el.dataset.result=s.checked?(s.choice===q.answer?'correct':'revisit'):'unchecked';
+        container.querySelectorAll(`input[name="fs-reading-${i}"]`).forEach(input=>{
+          const label=input.closest('label'),choice=Number(input.value);
+          label.classList.toggle('fs-correct',s.checked&&choice===q.answer);
+          label.classList.toggle('fs-incorrect',s.checked&&choice===s.choice&&choice!==q.answer);
+        });
         el.textContent=s.checked?`${s.choice===q.answer?'✓ Correct.':'Revisit your reasoning.'} ${q.explanation}`:'';
       }
       g.questions.forEach((q,i)=>{

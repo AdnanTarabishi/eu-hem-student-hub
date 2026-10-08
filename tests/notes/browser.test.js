@@ -115,7 +115,8 @@ const executable = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || (fs.exists
     await page.getByRole("button", { name: "Lectures", exact: true }).click();
     assert.equal(await page.locator(".course-card").count(), 3);
     await page.getByRole("button", { name: "Flashcards", exact: true }).click();
-    assert.equal(await page.locator(".course-card").count(), 2);
+    const coursesWithCards = await page.evaluate(() => landingData.courses.filter(course => course.flashcards.length).length);
+    assert.equal(await page.locator(".course-card").count(), coursesWithCards);
     await page.getByRole("button", { name: "All resources", exact: true }).click();
     await page.getByLabel("Filter by teaching status").selectOption("other");
     assert.equal(await page.locator(".course-card").count(), 0);

@@ -20,6 +20,7 @@ function clockText(seconds) {
 
 // box: where to draw · questions: the chosen questions · options: { timed, onExit }
 function runQuiz(box, ctx, questions, options) {
+  box.classList.add("study-quiz");
   const answers = questions.map((question) => ({ question, correct: null, given: null }));
   const startedAt = Date.now();
   const timeLimit = options.timed ? questions.length * SECONDS_PER_QUESTION : null;
@@ -35,7 +36,7 @@ function runQuiz(box, ctx, questions, options) {
       const left = timeLimit - elapsed();
       const clock = box.querySelector(".quiz-clock");
       if (clock) {
-        clock.textContent = `⏱ ${clockText(left)}`;
+        clock.textContent = `Time left · ${clockText(left)}`;
         clock.classList.toggle("is-low", left < 30);
       }
       if (left <= 0) finish(true);
@@ -48,19 +49,25 @@ function runQuiz(box, ctx, questions, options) {
     const question = answer.question;
 
     const top = createElement("div", "quiz-top");
+    top.appendChild(createElement("span", "study-eyebrow", "YOUR PRACTICE SESSION"));
     top.appendChild(createElement("span", "flashcard-counter", `Question ${index + 1} of ${questions.length}`));
-    if (timeLimit) top.appendChild(createElement("span", "quiz-clock", `⏱ ${clockText(timeLimit - elapsed())}`));
+    if (timeLimit) top.appendChild(createElement("span", "quiz-clock", `Time left · ${clockText(timeLimit - elapsed())}`));
     box.appendChild(top);
     box.appendChild(progressBar(Math.round((index / questions.length) * 100), `Question ${index + 1} of ${questions.length}`));
 
-    const card = createElement("div", "question-card quiz-question");
+    const card = createElement("article", "question-card quiz-question study-question");
     const meta = createElement("div", "announcement-meta");
+    meta.appendChild(createElement("span", "study-question-number", String(index + 1).padStart(2, "0")));
     meta.appendChild(createElement("span", "question-type", QUESTION_TYPE_LABELS[question.type]));
     meta.appendChild(createElement("span", `difficulty difficulty-${question.difficulty}`, question.difficulty));
     card.appendChild(meta);
-    card.appendChild(renderRichText("p", question.question, "question-text"));
+    const heading = renderRichText("h4", question.question, "question-text");
+    heading.tabIndex = -1;
+    card.appendChild(heading);
+    card.appendChild(createElement("p", "study-question-instruction", question.type === "short-answer" ? "Write your answer, then compare it with the model." : "Choose one answer to check your understanding."));
     const feedback = createElement("p", "answer-feedback");
     feedback.setAttribute("aria-live", "polite");
+    feedback.tabIndex = -1;
     const after = createElement("div", "button-row quiz-after");
 
     const next = () => {
@@ -79,8 +86,7 @@ function runQuiz(box, ctx, questions, options) {
       const buttons = choices.map((choice) => {
         const b = smallButton(choice.label, () => {
           for (const [i, other] of buttons.entries()) {
-            other.disabled = true;
-            if (choices[i].value === question.answer) other.classList.add("is-correct");
+            markChoice(other, choices[i].value === question.answer, other === b);
           }
           answer.given = choice.label;
           answer.correct = choice.value === question.answer;
@@ -88,9 +94,12 @@ function runQuiz(box, ctx, questions, options) {
           if (!answer.correct) b.classList.add("is-wrong");
           feedback.textContent = answer.correct ? "✔ Correct!" : `✖ The answer is ${correctAnswerText(question)}.`;
           feedback.className = answer.correct ? "answer-feedback is-right" : "answer-feedback is-wrong";
+          card.appendChild(explanationBox(question));
           nextButton();
           typesetMath(card);
+          feedback.focus({ preventScroll: true });
         }, "choice");
+        decorateChoice(b, choice);
         list.appendChild(b);
         return b;
       });
@@ -118,9 +127,12 @@ function runQuiz(box, ctx, questions, options) {
           feedback.textContent = right ? "✔ Marked as correct" : "✖ Marked as missed";
           feedback.className = right ? "answer-feedback is-right" : "answer-feedback is-wrong";
           nextButton();
+          feedback.focus({ preventScroll: true });
         };
         after.appendChild(smallButton("✔ I got it", () => mark(true), "button grade-button grade-good"));
         after.appendChild(smallButton("✖ I missed it", () => mark(false), "button grade-button grade-again"));
+        model.tabIndex = -1;
+        model.focus({ preventScroll: true });
       }, "button"));
     }
     card.appendChild(feedback);
@@ -128,6 +140,7 @@ function runQuiz(box, ctx, questions, options) {
     box.appendChild(after);
     box.appendChild(smallButton("Quit quiz", () => { stopTimer(); options.onExit(); }, "inline-link quiz-quit"));
     typesetMath(card);
+    heading.focus({ preventScroll: true });
   }
 
   function finish(timeUp) {
@@ -137,19 +150,31 @@ function runQuiz(box, ctx, questions, options) {
     box.innerHTML = "";
 
     const result = createElement("div", "quiz-result");
+    result.appendChild(createElement("p", "study-eyebrow", "YOUR PRACTICE RECAP"));
+    const heading = createElement("h3", null, score.percent === 100 ? "Every idea, recalled." : "A clearer picture of your progress.");
+    heading.tabIndex = -1;
+    result.appendChild(heading);
     if (timeUp) result.appendChild(createElement("p", "demo-note", "⏱ Time's up! Unanswered questions count as missed."));
     result.appendChild(createElement("p", "quiz-score", `${score.percent}%`));
     result.appendChild(createElement("p", null,
       `${score.correct} of ${score.total} correct · time ${clockText(elapsed())}` +
       (saved.best === score.percent && saved.attempts > 1 ? " · 🏆 new best!" : ` · best ${saved.best}%`)));
     result.appendChild(progressBar(score.percent, `Score ${score.percent}%`));
+    const metrics = createElement("dl", "study-review-metrics");
+    for (const [label, value] of [["Correct", score.correct], ["To revisit", score.total - score.correct], ["Time taken", clockText(elapsed())]]) {
+      const metric = createElement("div", "study-review-metric");
+      metric.appendChild(createElement("dt", null, label));
+      metric.appendChild(createElement("dd", null, String(value)));
+      metrics.appendChild(metric);
+    }
+    result.appendChild(metrics);
     box.appendChild(result);
 
     const wrong = answers.filter((a) => a.correct !== true);
     if (wrong.length) {
       box.appendChild(createElement("h4", null, `Review your mistakes (${wrong.length})`));
       for (const item of wrong) {
-        const card = createElement("div", "question-card quiz-review");
+        const card = createElement("article", "question-card quiz-review study-question");
         card.appendChild(renderRichText("p", item.question.question, "question-text"));
         card.appendChild(createElement("p", "answer-feedback is-wrong", `Your answer: ${item.given || "(not answered)"}`));
         card.appendChild(explanationBox(item.question));
@@ -159,7 +184,7 @@ function runQuiz(box, ctx, questions, options) {
         box.appendChild(card);
       }
     } else {
-      box.appendChild(createElement("p", "flashcard-done-title", "🎉 Perfect score!"));
+      box.appendChild(createElement("p", "flashcard-done-title", "Perfect score!"));
     }
 
     const buttons = createElement("div", "button-row");
@@ -171,6 +196,7 @@ function runQuiz(box, ctx, questions, options) {
     box.appendChild(buttons);
     typesetMath(box);
     box.scrollIntoView({ block: "start" });
+    heading.focus({ preventScroll: true });
   }
 
   drawQuestion();
