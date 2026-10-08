@@ -60,8 +60,16 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     });
   };
   const waitGuide = (page) => page.waitForSelector('#guide[aria-busy="false"]');
+  const isolatedContext = async (options = {}) => {
+    const context = await browser.newContext({ ...options, serviceWorkers: 'block' });
+    // These checks must fetch the current files and intercepted Markdown, without a worker cache.
+    // Playwright's blocked register() returns no registration. Model an unsupported browser
+    // instead, so the production PWA takes its existing capability-detection path normally.
+    await context.addInitScript(() => { delete Navigator.prototype.serviceWorker; });
+    return context;
+  };
   const open = async (url, { viewport = { width: 1440, height: 960 }, track = null, scheme = 'light', blockStorage = false, saved = null } = {}) => {
-    const context = await browser.newContext({ viewport, colorScheme: scheme, reducedMotion: 'reduce', serviceWorkers: 'block' });
+    const context = await isolatedContext({ viewport, colorScheme: scheme, reducedMotion: 'reduce' });
     if (track) await context.addInitScript((t) => localStorage.setItem('euhem-track-v1', JSON.stringify(t)), track);
     if (saved !== null) await context.addInitScript(({ key, value }) => localStorage.setItem(key, value), { key: SAVED_KEY, value: typeof saved === 'string' ? saved : JSON.stringify(saved) });
     if (blockStorage) await context.addInitScript(() => {
@@ -72,6 +80,7 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
     await page.clock.setFixedTime(new Date(`${TODAY}T10:00:00+02:00`));
     listenForErrors(page, url);
     await page.goto(base + url);
+    assert.strictEqual(await page.evaluate(() => 'serviceWorker' in navigator), false, 'the test context models a browser without service-worker support');
     if (url.startsWith('city-guide.html')) await waitGuide(page);
     if (/^city-guide\.html(?:$|#)/.test(url)) await page.waitForSelector('.guide-compare table');
     else if (/^city-guide\.html\?city=/.test(url)) {
@@ -297,7 +306,7 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
   }
 
   // ----- Empty tips remain hidden, including from topic search -----
-  const emptied = await browser.newContext({ serviceWorkers: 'block' });
+  const emptied = await isolatedContext();
   await emptied.route(/oslo-guide\.md/, async (route) => {
     const source = fs.readFileSync(path.join(ROOT, 'docs/content/oslo-guide.md'), 'utf8').replace(/\r\n/g, '\n');
     await route.fulfill({ contentType: 'text/markdown', body: source.replace(/(## 15\. Student tips\n)[\s\S]*?(\n## 16\.)/, '$1$2') });
@@ -305,6 +314,7 @@ const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css
   const emptyPage = await emptied.newPage();
   listenForErrors(emptyPage, 'Oslo with empty tips');
   await emptyPage.goto(base + 'city-guide.html?city=oslo');
+  assert.strictEqual(await emptyPage.evaluate(() => 'serviceWorker' in navigator), false, 'the intercepted-content context has no service-worker capability');
   await waitGuide(emptyPage);
   await chooseTopic(emptyPage, 'study');
   assert.strictEqual(await emptyPage.isVisible('#student-tips'), false);
