@@ -26,8 +26,10 @@ There are exactly two public functions:
   not enable reading, searching, listing, status lookup, setup or maintenance. This response is
   **not** a check of Sheet configuration, permissions or delivery readiness.
 
-Every other function ends in `_`, including `setup_` and `retentionReport_`. Run those only
-from the Apps Script editor as the owner. There is no HTML Service page or RPC interface.
+Every other function ends in `_`, including `setup_` and `retentionReport_`. The Apps Script
+editor does not list these private helpers in its Run selector. Use the manual initialization
+below, or the temporary [owner-only helper procedure](#owner-only-helper-runs) when needed.
+There is no HTML Service page or RPC interface.
 
 ## Request contract
 
@@ -129,12 +131,15 @@ never be described as proof that nothing was saved; retry the same unchanged req
    dedicated account and code review remain important.
 4. Add the Script Property **`SPREADSHEET_ID`**, taking its value from the private Sheet URL.
    Do not put that value in source code, GitHub, frontend configuration, screenshots or chat.
-5. Run **`setup_`** from the editor and grant the requested spreadsheet permission. It creates
-   the `Contact Inbox` tab and 17 headers, freezes its first row and flushes the change. Running
-   it again preserves rows. It refuses an unfamiliar header layout instead of overwriting it.
+5. Initialize the new, empty Sheet manually: rename its tab **`Contact Inbox`**, select **A1**,
+   and paste the exact [tab-separated header row below](#manual-header-row). Check that the
+   17 headers occupy **A1:Q1**, then choose **View → Freeze → 1 row**. Do not overwrite an
+   existing inbox or its messages. The private `setup_` helper is optional; it is not a
+   selectable editor function and is not needed after this manual initialization.
 6. Deploy a **Web app**, executing as **Me** (the Hub account), accessible to **Anyone**, including
    people without a Google login. The manifest names these settings `USER_DEPLOYING` and
-   `ANYONE_ANONYMOUS`. This permits the two coded entry points; it does not make the Sheet public.
+   `ANYONE_ANONYMOUS`. Complete Google's spreadsheet authorization as the dedicated Hub account
+   during this deployment. This permits the two coded entry points; it does not make the Sheet public.
 7. Keep the resulting `/exec` URL for the deployment check. It is a public submission endpoint;
    it belongs in `CONTACT_CONFIG.endpoint` only after that check passes. Do not change the
    Directory endpoint or Supabase config.
@@ -142,6 +147,48 @@ never be described as proof that nothing was saved; retry the same unchanged req
 Do not deploy this project as an API executable or add extra public functions. All maintenance
 remains in the editor. The backend intentionally sends no notifications, so the administrator
 must check the restricted inbox regularly.
+
+### Manual header row
+
+Copy the following single tab-separated line into cell **A1** of the empty `Contact Inbox` tab.
+Preserve the spelling, spaces and order. The last header, `Payload Fingerprint`, belongs in **Q1**.
+
+```tsv
+Request ID	Receipt ID	Received At	Notice Version	Topic	Message	Name	Reply Email	Page URL	Source URL	Resource URL	Request Type	Preferred Credit	Status	Closed At	Last Reviewed At	Payload Fingerprint
+```
+
+This creates the same schema as `setup_`. The first real fictional delivery check below verifies
+that the deployed service can access this tab, validate the headers and persist the whole row.
+Freezing row 1 helps the administrator read the inbox; it does not grant access or send data.
+
+### Owner-only helper runs
+
+Private helpers ending in `_` are intentionally absent from the editor's function selector.
+Do not rename them or leave a new public maintenance function in deployed source. When the
+owner needs a helper, use this temporary editor-only procedure:
+
+1. While signed in as the dedicated Hub account, create a temporary script file named
+   `OwnerMaintenance.gs` in the Apps Script editor. Do not add it to this repository.
+2. Put only the following wrapper in that file, save, select `runOwnerMaintenance`, and run it:
+
+   ```js
+   function runOwnerMaintenance() {
+     return retentionReport_();
+   }
+   ```
+
+   For optional automated initialization instead of the manual header step, replace
+   `retentionReport_()` with `setup_()` in this temporary wrapper. Grant the requested
+   spreadsheet permission as the owner if prompted. `setup_` preserves an existing valid
+   schema and rows, and refuses unfamiliar headers instead of rewriting them.
+3. Read the maintenance report in the execution log when applicable. Then **delete the
+   entire temporary file and save**. Confirm the selector again contains only `doGet` and
+   `doPost` before creating any version or deployment.
+
+**Never create or update a deployment while the wrapper exists.** An existing `/exec`
+deployment continues to use its saved version; the temporary helper is run only from the
+owner's editor. The final deployed source must remain the reviewed `Code.gs` and manifest,
+with no extra public functions. This procedure adds no trigger or recurring automation.
 
 ## Required deployment check: real browser delivery
 
@@ -186,9 +233,11 @@ If a closed message is reopened, set its status to `in_progress`, clear `Closed 
 itself authorize disclosure of another person's information. Use the privacy process already
 described by the Hub, asking for only what is needed to handle a request.
 
-Run **`retentionReport_`** regularly, for example weekly, so unresolved requests are reviewed at
-least every **30 days**. It returns and logs only row numbers, review actions and due dates;
-it omits message content, names, email addresses, URLs, request IDs and receipt IDs.
+Generate **`retentionReport_`** regularly, for example weekly, using the
+[owner-only helper procedure](#owner-only-helper-runs); it is not directly selectable in the
+editor. This supports reviewing unresolved requests at least every **30 days**. It returns and
+logs only row numbers, review actions and due dates; it omits message content, names, email
+addresses, URLs, request IDs and receipt IDs.
 
 | Report action | Administrator action |
 |---|---|

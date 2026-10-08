@@ -15,6 +15,12 @@ after the receiver is owned by `euhem.studenthub@gmail.com`, the Sheet is restri
 fictional browser submission has been verified in that Sheet. Follow the
 [deployment guide](../integrations/contact-apps-script/README.md).
 
+Initialize the empty private Sheet with a tab named `Contact Inbox`, the guide's exact
+17 headers in `A1:Q1`, and a frozen first row, then authorize and deploy the Web App.
+The Apps Script editor hides helpers whose names end in `_`; `setup_` cannot be selected
+directly. The guide provides a manual setup path and, when needed, a temporary owner-only
+wrapper procedure that must be removed before any deployment.
+
 The expected URL is an HTTPS Google Apps Script address ending in `/exec`.
 Query strings, fragments, credentials and other hosts are rejected. The public URL is a
 write endpoint; no spreadsheet ID, credential or read token belongs in the frontend.
@@ -89,6 +95,9 @@ for deletion 90 days after closure or spam classification, subject to an applica
 retention need. The backend provides a private review report; it does not delete data
 automatically. Keep any copies, exported files and Google's service history in mind when
 handling a deletion. Never publish the response Sheet or share it with ordinary content editors.
+Generate the private report using the deployment guide's
+[owner-only helper procedure](../integrations/contact-apps-script/README.md#owner-only-helper-runs),
+then remove the temporary wrapper so deployed source still exposes only `doGet` and `doPost`.
 
 The basic honeypot, field limits and global volume limits reduce simple abuse; they are
 not robust per-person rate limiting. Monitor the inbox and endpoint availability.
