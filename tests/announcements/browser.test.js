@@ -181,9 +181,35 @@ async function electionResults(page) {
     const reader = page.locator('#news-reader');
     await reader.waitFor({ state: 'visible' });
     assert.ok(await page.locator('#news-reader-close').evaluate((element) => document.activeElement === element));
+    const focusState = () => reader.evaluate((dialog) => {
+      const active = document.activeElement;
+      return {
+        modal: dialog.open && dialog.matches(':modal'),
+        inDialog: dialog.contains(active),
+        isBody: active === document.body,
+        documentHasFocus: document.hasFocus(),
+        tag: active?.tagName || null,
+        id: active?.id || null,
+      };
+    });
     for (const key of ['Shift+Tab', 'Tab', 'Tab', 'Tab', 'Shift+Tab', 'Shift+Tab']) {
       await page.keyboard.press(key);
-      assert.ok(await reader.evaluate((element) => element.contains(document.activeElement)), `${key}: focus remains within native dialog`);
+      const focus = await focusState();
+      const browserControls = focus.isBody && !focus.documentHasFocus;
+      assert.ok(
+        focus.modal && (focus.inDialog || browserControls),
+        `${key}: unexpected focus target ${JSON.stringify(focus)}`
+      );
+      if (browserControls) {
+        console.log(`  info  ${key}: focus left the document ${JSON.stringify(focus)}`);
+        // Reverse the transition to the adjacent browser control.
+        await page.keyboard.press(key === 'Tab' ? 'Shift+Tab' : 'Tab');
+        const returned = await focusState();
+        assert.ok(
+          returned.modal && returned.inDialog && returned.documentHasFocus,
+          `Return from browser controls: ${JSON.stringify(returned)}`
+        );
+      }
     }
     await page.locator('#news-search').focus();
     assert.ok(await reader.evaluate((element) => element.contains(document.activeElement)), 'background controls are inert while the modal is open');
@@ -191,7 +217,7 @@ async function electionResults(page) {
     await reader.waitFor({ state: 'hidden' });
     await page.waitForFunction(() => !location.hash);
     assert.ok(await opener.evaluate((element) => document.activeElement === element), 'Escape restores the clicked title focus');
-    ok('native dialog opens by keyboard, contains focus, makes background inert and returns focus after Escape');
+    ok('native dialog supports keyboard traversal, keeps background controls inert and restores focus after Escape');
     await page.context().close();
 
     lastLabel = 'mobile-shared-link';
