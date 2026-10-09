@@ -173,14 +173,18 @@
         thumb = button(media.label || `View ${university.name} photo ${index + 2}`, () => openPhotoDialog(university, media, thumb), true);
         thumb.classList.add("uni-gallery-thumb");
         thumb.setAttribute("aria-label", media.label || `View another photograph of ${university.name}`);
+        thumb.setAttribute("aria-haspopup", "dialog");
         const photo = el("img");
         photo.src = D.imageUrl(media.src);
         if (/^https:\/\//.test(photo.src)) photo.referrerPolicy = "no-referrer";
         photo.alt = media.alt || "";
         photo.loading = "lazy";
         photo.decoding = "async";
+        const unavailable = el("span", "uni-image-fallback", "Photograph unavailable · Open details");
+        unavailable.hidden = true;
+        photo.addEventListener("error", () => { photo.hidden = true; unavailable.hidden = false; });
         const label = el("span", "uni-gallery-label", media.label || "Another view");
-        thumb.replaceChildren(photo, label); // the photo and its label only (the name is in aria-label)
+        thumb.replaceChildren(photo, unavailable, label); // the photo and its label only (the name is in aria-label)
         strip.appendChild(thumb);
       }
       figure.appendChild(strip);
@@ -449,22 +453,81 @@
 
   function openPhotoDialog(university, media, returnFocus) {
     if (typeof HTMLDialogElement === "undefined" || !media || !D.imageUrl(media.src)) return;
+    const photos = [university.image, ...items(university.gallery)].filter((photo) => photo && D.imageUrl(photo.src));
+    let index = Math.max(0, photos.findIndex((photo) => photo.src === media.src));
     const dialog = el("dialog", "uni-photo-dialog");
     dialog.setAttribute("aria-labelledby", "uni-photo-dialog-title");
-    const title = el("h2", null, media.label || university.name);
+    const header = el("div", "uni-photo-dialog-head");
+    const heading = el("div");
+    heading.appendChild(el("p", "uni-photo-dialog-university", university.name));
+    const title = el("h2");
     title.id = "uni-photo-dialog-title";
     const close = button("Close photograph", () => dialog.close(), true);
-    const image = el("img");
-    image.src = D.imageUrl(media.src);
-    if (/^https:\/\//.test(image.src)) image.referrerPolicy = "no-referrer";
-    image.alt = media.alt || media.caption || `${university.name} photograph`;
-    dialog.append(close, title, image);
-    paragraph(dialog, media.caption || `${university.name}, ${university.city}.`);
-    if (media.credit || media.license) paragraph(dialog, [media.credit, media.license].filter(Boolean).join(" · "));
-    if (D.externalUrl(media.sourceUrl)) dialog.appendChild(externalLink("Photo source and licence", media.sourceUrl));
-    dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
-    dialog.addEventListener("close", () => { dialog.remove(); if (returnFocus && typeof returnFocus.focus === "function") returnFocus.focus(); }, { once: true });
+    close.prepend(productIcon("close"));
+    heading.appendChild(title); header.append(heading, close);
+    const frame = el("div", "uni-photo-dialog-frame");
+    const description = el("div", "uni-photo-dialog-description");
+    const controls = el("div", "uni-photo-dialog-controls");
+    const previous = button("Previous photo", () => move(-1), true);
+    const next = button("Next photo", () => move(1), true);
+    const status = el("p", "uni-photo-dialog-status");
+    status.setAttribute("role", "status");
+    controls.append(previous, status, next);
+    previous.hidden = next.hidden = photos.length < 2;
+    dialog.append(header, frame, controls, description);
+    function draw() {
+      const photo = photos[index];
+      title.textContent = photo.label || university.name;
+      const image = el("img");
+      image.src = D.imageUrl(photo.src);
+      if (/^https:\/\//.test(image.src)) image.referrerPolicy = "no-referrer";
+      image.alt = photo.alt || photo.caption || `${university.name} photograph`;
+      const unavailable = el("p", "uni-photo-unavailable", "This photograph could not be loaded. You can open its source below.");
+      unavailable.hidden = true;
+      image.addEventListener("error", () => { image.hidden = true; unavailable.hidden = false; });
+      frame.replaceChildren(image, unavailable);
+      description.replaceChildren();
+      paragraph(description, photo.caption || `${university.name}, ${university.city}.`);
+      if (photo.usageNote) paragraph(description, photo.usageNote, null, null, "uni-photo-usage");
+      if (photo.credit) paragraph(description, `Photo: ${photo.credit}`, null, null, "uni-photo-attribution");
+      const links = el("div", "uni-actions");
+      if (D.externalUrl(photo.sourceUrl)) links.appendChild(externalLink("Photo source", photo.sourceUrl));
+      if (photo.license) links.appendChild(externalLink(photo.license, photo.licenseUrl));
+      description.appendChild(links);
+      status.textContent = `Photo ${index + 1} of ${photos.length}`;
+    }
+    function move(direction) {
+      if (description.contains(document.activeElement)) (direction < 0 ? previous : next).focus();
+      index = (index + direction + photos.length) % photos.length;
+      draw();
+    }
+    dialog.addEventListener("keydown", (event) => {
+      if (event.key === "Tab") {
+        const controls = [...dialog.querySelectorAll("button:not([disabled]), a[href]")].filter((node) => node.getClientRects().length);
+        const first = controls[0], last = controls[controls.length - 1];
+        const active = document.activeElement;
+        if (first && ((event.shiftKey && active === first) || (!event.shiftKey && active === last) || !controls.includes(active))) {
+          event.preventDefault(); (event.shiftKey ? last : first).focus();
+        }
+      }
+      if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        event.preventDefault(); move(event.key === "ArrowLeft" ? -1 : 1);
+      }
+    });
+    dialog.addEventListener("click", (event) => {
+      if (event.target !== dialog) return;
+      const bounds = dialog.getBoundingClientRect();
+      if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close();
+    });
+    const previousOverflow = document.body.style.overflow;
+    dialog.addEventListener("close", () => {
+      document.body.style.overflow = previousOverflow;
+      dialog.remove();
+      if (returnFocus && returnFocus.isConnected) returnFocus.focus({ preventScroll: true });
+    }, { once: true });
+    draw();
     document.body.appendChild(dialog);
+    document.body.style.overflow = "hidden";
     dialog.showModal();
   }
 
@@ -473,21 +536,23 @@
     let launch;
     launch = button("View campus photo", () => openPhotoDialog(university, university.image, launch), true);
     launch.classList.add("uni-photo-expand");
+    launch.setAttribute("aria-haspopup", "dialog");
     launch.prepend(productIcon("arrow"));
     figure.appendChild(launch);
   }
 
-function renderCards(parent) {
+  function renderCards(parent) {
     const grid = el("div", "uni-card-grid");
     state.file.universities.forEach((university, index) => {
       const card = el("article", "uni-card"); card.dataset.university = university.id;
-      const media = photograph(university, false, false);
+      const media = photograph(university, false, index < 2);
       const photoLink = localLink("", universityUrl(university), "uni-card-media-link"); photoLink.setAttribute("aria-label", `Explore ${university.name}`); photoLink.appendChild(media);
       card.appendChild(photoLink);
       const body = el("div", "uni-card-body");
-      const brand = el("div", "uni-card-brand"); brand.append(monogram(university), el("span", "uni-eyebrow", `${String(index + 1).padStart(2, "0")} / ${university.country}`));
+      const brand = el("div", "uni-card-brand"); brand.append(monogram(university), el("span", "uni-card-location", `${university.city} · ${university.country}`));
       const compare = button("Compare", () => {
         if (!state.compare.includes(university.id)) state.compare[1] = university.id;
+        state.comparisonInvalid = false;
         if (typeof state.compareRefresh === "function") state.compareRefresh();
         updateUrl({ compare: true }); const target = document.getElementById("compare"); if (target) { target.scrollIntoView({ block: "start", behavior: "auto" }); target.focus({ preventScroll: true }); }
       }, true); compare.classList.add("uni-card-compare"); compare.prepend(productIcon("compare")); compare.setAttribute("aria-label", `Compare ${university.name}`); brand.appendChild(compare);
@@ -500,8 +565,16 @@ function renderCards(parent) {
       }
       body.append(meta, rolesList(university));
       const actions = el("div", "uni-actions"); const more = localLink("Explore university", universityUrl(university), "button");
-      more.setAttribute("aria-label", `Explore ${university.name}`); more.appendChild(productIcon("arrow"));
-      actions.append(more, localLink(`${university.city} city guide →`, cityGuideUrl(university), "uni-text-link")); body.appendChild(actions); card.appendChild(body); grid.appendChild(card);
+      more.setAttribute("aria-label", `Explore ${university.name}`);
+      const photos = [university.image, ...items(university.gallery)].filter((photo) => photo && D.imageUrl(photo.src));
+      actions.appendChild(more);
+      if (photos.length) {
+        const gallery = button(`View photos (${photos.length})`, () => openPhotoDialog(university, photos[0], gallery), true);
+        gallery.setAttribute("aria-label", `View ${photos.length} photographs of ${university.name}`);
+        gallery.setAttribute("aria-haspopup", "dialog");
+        actions.appendChild(gallery);
+      }
+      body.append(actions, localLink(`${university.city} city guide`, cityGuideUrl(university), "uni-text-link uni-card-city-link")); card.appendChild(body); grid.appendChild(card);
     }); parent.appendChild(grid);
   }
 
@@ -628,7 +701,7 @@ function renderCards(parent) {
         }
         body.appendChild(row);
       }
-      if (state.comparisonInvalid) status.textContent = "This link contains an unavailable comparison. The first two available universities are shown.";
+      status.textContent = state.comparisonInvalid ? "This link contains an unavailable comparison. The first two available universities are shown." : "";
       shareInput.value = new URL(D.pageUrl("universities.html", { ...context(), compare: state.compare.join(","), hash: "compare" }), window.location.href).href;
     }
     state.compareRefresh = draw;
@@ -677,17 +750,26 @@ function renderCards(parent) {
     renderPhotoCredit(parent, university, profile);
   }
 
-function renderVisualTour(parent) {
-    const container = section(parent, "visual-tour", "See the universities, not just their names",
-      "A visual introduction to the four partner institutions and their university environments. Captions distinguish campus, heritage and city context from confirmed EU-HEM teaching locations.");
+  function renderVisualTour(parent) {
+    const container = section(parent, "visual-tour", "A closer look at the campuses",
+      "Explore campus and heritage photographs from each partner. Open a photo for its full caption, source and licence.");
     container.classList.add("uni-visual-tour");
     const grid = el("div", "uni-visual-grid");
     for (const university of state.file.universities) {
+      const group = el("article", "uni-visual-group");
+      const heading = el("div", "uni-visual-group-head");
+      const name = el("div"); name.append(el("h3", null, university.shortName || university.name), el("p", null, `${university.city} · ${university.country}`));
+      heading.append(monogram(university), name); group.appendChild(heading);
+      const gallery = el("div", "uni-visual-photos");
       const photos = [university.image, ...items(university.gallery)].filter((media) => media && D.imageUrl(media.src)).slice(0, 2);
       photos.forEach((media, index) => {
+        const figure = el("figure", "uni-visual-photo");
         let tile;
-        tile = button(media.label || `${university.name} photograph`, () => openPhotoDialog(university, media, tile), true);
-        tile.classList.add("uni-visual-tile");
+        tile = el("button", "uni-visual-tile");
+        tile.type = "button";
+        tile.setAttribute("aria-label", `View ${media.label || university.name + ' photograph'}`);
+        tile.setAttribute("aria-haspopup", "dialog");
+        tile.addEventListener("click", () => openPhotoDialog(university, media, tile));
         tile.dataset.university = university.id;
         const image = el("img");
         image.src = D.imageUrl(media.src);
@@ -695,52 +777,44 @@ function renderVisualTour(parent) {
         image.alt = media.alt || "";
         image.loading = "lazy";
         image.decoding = "async";
-        if (media.objectPosition) image.style.objectPosition = media.objectPosition;
-        const meta = el("span", "uni-visual-meta");
-        meta.append(
-          el("span", "uni-visual-kicker", `${university.city} · ${university.country}`),
-          el("strong", null, media.label || (index ? "Another view" : university.name)),
-          el("small", null, index ? "University photo" : "Main guide image")
-        );
-        tile.append(image, meta);
-        grid.appendChild(tile);
+        const fallback = el("span", "uni-visual-unavailable", "Photograph unavailable · Open details");
+        fallback.hidden = true;
+        image.addEventListener("error", () => { image.hidden = true; fallback.hidden = false; });
+        if (typeof media.objectPosition === "string" && /^\d{1,3}(?:\.\d+)?% \d{1,3}(?:\.\d+)?%$/.test(media.objectPosition)) image.style.objectPosition = media.objectPosition;
+        const affordance = el("span", "uni-visual-open", "View photo");
+        tile.replaceChildren(image, fallback, affordance);
+        figure.append(tile, el("figcaption", null, media.label || (index ? "Another view" : university.name)));
+        gallery.appendChild(figure);
       });
+      group.appendChild(gallery); grid.appendChild(group);
     }
     container.appendChild(grid);
-    paragraph(container, "Open any image for its caption, photographer/source and licence. Teaching rooms can change, so the timetable remains the source for where your class actually meets.", null, null, "uni-visual-note");
+    const note = el("p", "uni-visual-note", "These photographs show university environments, not confirmed EU-HEM classrooms. Check the ");
+    note.append(localLink("timetable", "timetable.html"), document.createTextNode(" for your teaching location.")); container.appendChild(note);
   }
 
-function renderDirectory() {
+  function renderDirectory() {
     document.title = "Universities – EU-HEM Student Hub";
     breadcrumb();
     const hero = el("section", "uni-hero uni-directory-hero"); hero.setAttribute("aria-labelledby", "uni-title");
-    const intro = el("div", "uni-hero-copy"); intro.appendChild(el("p", "uni-eyebrow", "THE EU-HEM UNIVERSITY GUIDE"));
-    const title = el("h1", null, "Four universities."); title.id = "uni-title"; title.appendChild(el("span", null, "One European journey.")); intro.appendChild(title);
-    paragraph(intro, "Move through four distinct academic environments across Europe. Explore each university visually, understand where it sits in your track, and find the services you will actually use.", null, null, "uni-hero-intro");
-    const actions = el("div", "uni-actions"); const start = localLink("Explore the universities", "#universities", "button"); start.appendChild(productIcon("arrow"));
-    actions.append(start, localLink("Compare two universities", "#compare", "button button-quiet")); intro.appendChild(actions);
-    const trust = el("p", "uni-hero-trust"); trust.append(productIcon("shield"), document.createTextNode("Student-built · Source-linked · Made for EU-HEM")); intro.appendChild(trust);
-    const mosaic = el("div", "uni-campus-mosaic");
-    for (const university of state.file.universities) {
-      const tile = localLink("", universityUrl(university), "uni-mosaic-tile"); tile.setAttribute("aria-label", `Explore ${university.name}`);
-      tile.appendChild(photograph(university, false, true)); const label = el("div", "uni-mosaic-label"); label.append(el("span", null, university.country), el("strong", null, university.city), productIcon("arrow")); tile.appendChild(label); mosaic.appendChild(tile);
-    }
-    hero.append(intro, mosaic); app.appendChild(hero);
+    const intro = el("div", "uni-hero-copy"); intro.appendChild(el("p", "uni-eyebrow", "EU-HEM PARTNER UNIVERSITIES"));
+    const title = el("h1", null, "Four universities."); title.id = "uni-title"; title.appendChild(el("span", null, "One shared programme.")); intro.appendChild(title);
+    paragraph(intro, "Discover your academic home in Bologna, Oslo, Rotterdam and Innsbruck. Explore the campuses, compare teaching roles and find official student services.", null, null, "uni-hero-intro");
     const proof = el("div", "uni-proof-strip"); const count = D.collectResources(state.file.universities).length;
-    const photoCount = state.file.universities.reduce((total, university) => total + 1 + items(university.gallery).length, 0);
-    for (const [number, label] of [[String(state.file.universities.length).padStart(2,"0"), "Partner institutions"], [String(new Set(state.file.universities.map(u => u.country)).size).padStart(2,"0"), "Countries to discover"], [String(count), "Official service links"], [String(photoCount).padStart(2,"0"), "University photos"]]) {
+    const photoCount = state.file.universities.reduce((total, university) => total + [university.image, ...items(university.gallery)].filter((photo) => photo && D.imageUrl(photo.src)).length, 0);
+    for (const [number, label] of [[String(state.file.universities.length).padStart(2,"0"), "Partner universities"], [String(new Set(state.file.universities.map(u => u.country)).size).padStart(2,"0"), "Countries"], [String(count), "Official service links"], [String(photoCount).padStart(2,"0"), "Campus photographs"]]) {
       const item = el("div"); item.append(el("strong", null, number), el("span", null, label)); proof.appendChild(item);
     }
-    const note = el("p", null, "Your university, beyond the timetable."); proof.appendChild(note); app.appendChild(proof);
-    renderVisualTour(app);
-    renderContext();
+    hero.append(intro, proof); app.appendChild(hero);
     const jump = el("nav", "uni-directory-nav"); jump.setAttribute("aria-label", "Explore university resources");
-    for (const [id, title, icon] of [["visual-tour","Photo tour","campus"],["universities","University guides","academic"],["journey","Your study route","pin"],["service-finder","Service finder","search"],["compare","Compare","compare"]]) {
+    for (const [id, title, icon] of [["universities","University guides","academic"],["journey","Your study route","pin"],["service-finder","Service finder","search"],["compare","Compare","compare"],["visual-tour","Photo tour","campus"]]) {
       const a = localLink(title, "#"+id); a.prepend(productIcon(icon)); jump.appendChild(a);
     }
     app.appendChild(jump);
-    const universities = section(app, "universities", "Four partners, four perspectives", "A shared programme. Distinct academic environments. Explore what each university brings to your experience.");
+    renderContext();
+    const universities = section(app, "universities", "Find your university", "Explore each partner’s academic setting, campus services and role in your selected track.");
     renderCards(universities); renderJourney(app); renderResourceFinder(app); renderComparison(app);
+    renderVisualTour(app);
     const rankings = section(app, "rankings-guide", "Reputation, with the right context"); renderMethodology(rankings, false);
     const sources = section(app, "sources", "Sources & photo credits", "Every guide links back to its sources. Check each reference’s review date and use the university’s own pages for current procedures.");
     for (const university of state.file.universities) {
