@@ -163,17 +163,21 @@
       },
       "why": "Spend development time on the problems students meet in real use.",
       "details": [
-        "Review feedback on the redesigned Announcements bulletin, the supplied-data cohort atlas and the expanded Student Toolkit.",
-        "Fix confusing steps and prioritise practical improvements for mobile and keyboard use.",
-        "Keep the public release history and planned feature states aligned with what students can actually use."
+        "Review feedback on the new monthly/day timetable, teaching-hours indicator, course workspaces, Contact forms and refreshed practical guides.",
+        "Improve reliable loading and explain source failures without presenting missing official data as a verified empty schedule.",
+        "Keep mobile and keyboard use clear, and keep released features separate from unfinished plans."
       ],
       "dependencies": [
         "Feedback from the first student beta (coming in since 7 October 2026)."
       ],
       "links": [
         {
-          "label": "Send feedback",
-          "url": "contact.html"
+          "label": "Send feedback through the Contact form",
+          "url": "contact.html#contact-form-section"
+        },
+        {
+          "label": "Try the updated timetable",
+          "url": "timetable.html?view=month"
         }
       ]
     },
@@ -249,9 +253,9 @@
       "why": "Help students move from finding information to organising their studies and sharing useful knowledge with the cohort.",
       "details": [
         "A personal study overview connecting selected courses, upcoming deadlines, saved resources and learning progress on this device.",
-        "A first batch of additional student-made worked examples, summaries and revision activities, guided by feedback.",
-        "An easier route for classmates to submit original notes, experiences and corrections for review before publication.",
-        "Connect the study overview with destination preparation and the first mobility checklists.",
+        "Expand reviewed worked examples and revision coverage, building on the redesigned course and practice workspaces already available.",
+        "Build a reviewed contribution workflow beyond the active Contact forms; messages already reach the private inbox, but automatic content publishing is not active.",
+        "Connect the overview with destination guidance and mobility checklists, building on the current local moving and document tools.",
         "Target the initial v2 release for early November; further content and refinements can follow during the month."
       ],
       "dependencies": [
@@ -425,8 +429,8 @@
     },
     {
       "id": "mobility-checklists",
-      "title": "Personal mobility checklists",
-      "summary": "Build destination-specific checklists for the next EU-HEM move, with practical steps before departure and after arrival.",
+      "title": "Destination-reviewed mobility checklists",
+      "summary": "Add reviewed, destination-specific guidance to the local moving checklist and document reminders already available in the Toolkit.",
       "category": "life",
       "lane": "next",
       "status": "planned",
@@ -437,42 +441,51 @@
       },
       "why": "Keep track of practical tasks during a busy move.",
       "details": [
-        "Start with housing, travel and arrival tasks for each destination, with a first set targeted for v2.",
-        "Link each administrative step to official guidance and show when it was checked.",
-        "Save checklist progress on this device; the current Toolkit mobility collection already provides a useful starting set of links."
+        "The personal moving checklist and document-deadline tools are already usable; this plan covers additional verified destination guidance, not their initial launch.",
+        "Link housing, arrival and administrative steps to official sources, with review dates and clear qualifications.",
+        "Connect reviewed destination guidance to the planned v2 study overview while retaining explicit on-device saving."
       ],
       "dependencies": [
         "Reviewed destination guidance that is kept current."
       ],
       "links": [
         {
-          "label": "Explore the city guides",
-          "url": "city-guide.html"
+          "label": "Use the current moving checklist",
+          "url": "toolkit.html?section=workbench&planner=moving-checklist"
         },
         {
-          "label": "Browse the existing Student Toolkit",
-          "url": "toolkit.html"
+          "label": "Use document deadline reminders",
+          "url": "toolkit.html?section=workbench&planner=document-deadlines"
+        },
+        {
+          "label": "Explore the city guides",
+          "url": "city-guide.html"
         }
       ]
     },
     {
       "id": "budget-shared-expenses",
-      "title": "Budgeting & shared expenses",
-      "summary": "A simple way to plan a student budget and keep track of shared costs.",
+      "title": "Shared trip & flat expenses",
+      "summary": "Explore shared-cost splitting and settlement on top of the personal four-city budget planner that is already available.",
       "category": "life",
       "lane": "later",
       "status": "exploring",
       "target": null,
       "why": "Understand your spending and make group costs easier to settle.",
       "details": [
-        "Plan a monthly budget with your own categories.",
-        "Track shared trip or flat expenses and who has already paid.",
-        "Keep any cost examples dated and separate from personal entries."
+        "The local four-city budget planner is already usable with your own estimates and explicit saving.",
+        "Explore recording shared trip or flat costs, who paid and how to split them.",
+        "Keep any future shared data opt-in and separate from private budget entries; collaboration is not active."
       ],
       "dependencies": [
         "Student feedback on the simplest useful version."
       ],
-      "links": []
+      "links": [
+        {
+          "label": "Use the current personal budget planner",
+          "url": "toolkit.html?section=workbench&planner=four-city-budget"
+        }
+      ]
     },
     {
       "id": "cross-device-revision-workspace",
@@ -566,25 +579,6 @@
       ]
     },
     {
-      "id": "career-application-tracker",
-      "title": "Career application tracker",
-      "summary": "A personal overview of the opportunities you apply to, with deadlines and next steps.",
-      "category": "career",
-      "lane": "later",
-      "status": "exploring",
-      "target": null,
-      "why": "Reduce the effort of following several applications at once.",
-      "details": [
-        "Save an opportunity with its source, deadline and application status.",
-        "Track next actions, interviews and follow-ups.",
-        "Link to CV, cover-letter and interview resources."
-      ],
-      "dependencies": [
-        "The Beyond EU-HEM section and private storage for personal notes."
-      ],
-      "links": []
-    },
-    {
       "id": "alumni-mentoring-skills-exchange",
       "title": "Alumni mentoring & skills exchange",
       "summary": "Connect students and alumni who want to share experience, answer questions or exchange skills.",
@@ -669,7 +663,10 @@
     "items": [
       "The country-of-origin atlas uses the supplied aggregate class counts: 105 people from 24 countries. Individual directory profiles are still fictional demos.",
       "Personal settings, saved tools and lists, study plans and learning progress stay on this device and browser. Accounts and cross-device sync are not live.",
-      "Editors cannot yet publish through the dashboard. Announcements continue to come from the existing class Sheet."
+      "Editors cannot yet publish through the dashboard. Announcements continue to come from the existing class Sheet.",
+      "Contact forms are active and send messages to a private admin inbox. This does not activate directory registration, accounts or the separate editor publishing dashboard.",
+      "Timetable colouring and monthly teaching progress depend on the published official schedule. The percentage measures finished scheduled hours, not attendance or credits; unavailable data has no assumed percentage.",
+      "Beyond EU-HEM, Events and the student Gallery currently show browsable previews. Curated opportunity/event collections, student photo uploads and member-only access are not live."
     ]
   },
   "domainMove": {
