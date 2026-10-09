@@ -41,10 +41,10 @@
 .timetable-page .planning-hero-aside .planning-aside-note { font-size: .7rem; color: #c8d5e6; border-top: 1px solid #526a8b; padding-top: 13px; }
 .timetable-page .tt-live-dot { display: inline-block; width: 7px; height: 7px; margin-left: 6px; border-radius: 50%; background: #efb59e; }
 .timetable-page .planning-summary { gap: 0; margin-bottom: 24px; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: 14px; overflow: hidden; }
-.timetable-page .planning-stat { border: 0; border-radius: 0; box-shadow: none; padding: 19px 24px; }
+.timetable-page .planning-stat { display: block; border: 0; border-radius: 0; box-shadow: none; padding: 19px 24px; }
 .timetable-page .planning-stat + .planning-stat { border-left: 1px solid var(--border-default); }
 .timetable-page .planning-stat-label { font-size: .69rem; letter-spacing: .07em; }
-.timetable-page .planning-stat-value { font-size: 1.65rem; }
+.timetable-page .planning-stat-value { font-size: 1.65rem; margin: 8px 0 7px; text-align: left; }
 .timetable-page .planning-stat-note { font-size: .73rem; }
 .timetable-page .planning-panel { padding: clamp(16px, 2.2vw, 30px); border-radius: 20px; }
 .timetable-page .planning-panel-head { align-items: center; gap: 14px; }
@@ -61,6 +61,8 @@
 .timetable-page .segmented .segment[aria-pressed="true"] { background: var(--action-navy); color: #fff; }
 .timetable-page .segmented .segment .icon { width: 16px; height: 16px; }
 .timetable-page .week-nav { flex: 1 1 280px; justify-content: center; flex-wrap: nowrap; }
+.timetable-page .week-nav .icon-button { flex: 0 0 44px; }
+.timetable-page .week-nav .inline-link { flex: 0 0 auto; }
 .timetable-page .week-label { min-width: 0; text-align: center; line-height: 1.5; font-size: .86rem; flex: 0 1 215px; }
 .timetable-page .planning-date-picker { font-size: .7rem; }
 .timetable-page #week-picker { margin-top: 4px; font-size: .76rem; }
@@ -177,7 +179,7 @@
   .timetable-page .planning-hero h1 { font-size: 2.25rem; }
   .timetable-page .planning-hero-aside .now-next { grid-template-columns: minmax(0, 1fr); }
   .timetable-page .planning-stat { padding: 14px 10px; }
-  .timetable-page .planning-stat-label { font-size: .57rem; letter-spacing: .035em; }
+  .timetable-page .planning-stat-label { font-size: .62rem; letter-spacing: .035em; }
   .timetable-page .planning-stat-value { font-size: 1.35rem; }
   .timetable-page .planning-stat-note { font-size: .65rem; }
   .timetable-page .planning-summary { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-bottom: 16px; }

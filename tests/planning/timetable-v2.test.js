@@ -114,6 +114,13 @@ const FEED = [make('96500','2026-10-07','07:00','QA Law Teacher'), make('96498',
         await mode(p,v); await p.locator('#show-teacher').check();
         assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth)<=1,`${width} ${colorScheme} ${v} overflow`);
         if(v==='month') assert.ok((await p.locator('.tt-month-table').boundingBox()).width<width,'month fits without horizontal scroll');
+        if(v !== 'list') {
+          const boxes = await p.locator('#week-nav > *').evaluateAll(nodes => nodes.map(n => {const r=n.getBoundingClientRect();return {left:r.left,right:r.right,width:r.width};}));
+          for(let i=1;i<boxes.length;i++) assert.ok(boxes[i].left >= boxes[i-1].right-1, `${width} ${v}: period controls must not overlap`);
+          assert.ok(boxes[0].width >= 43 && boxes[2].width >= 43, 'both arrow controls retain an accessible touch target');
+        }
+        const stat=await p.locator('.planning-stat').first().evaluate(n=>{const label=n.querySelector('.planning-stat-label').getBoundingClientRect();const value=n.querySelector('.planning-stat-value').getBoundingClientRect();return {labelBottom:label.bottom,valueTop:value.top};});
+        assert.ok(stat.valueTop>=stat.labelBottom, 'summary numbers remain below their labels, not squeezed alongside them');
         if((width===1440 || width===390) && ['month','day'].includes(v)) await capture(p,`timetable-${v}-${width}-${colorScheme}`);
       }
       await p.context().close();
