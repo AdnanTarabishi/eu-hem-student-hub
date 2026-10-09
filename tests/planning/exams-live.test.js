@@ -4,7 +4,7 @@ const fs=require('node:fs'), path=require('node:path'), assert=require('node:ass
 const {chromium}=require('playwright');
 const BASE='https://adnantarabishi.github.io/eu-hem-student-hub/';
 (async()=>{
-  const expected=['exams.html','exams.js','exams-guide.css','unibo-data.js']
+  const expected=['exams.html','exams.js','exams-guide.css','exams-workspace.js','unibo-data.js']
     .map(file=>({file,text:fs.readFileSync(file,'utf8').replace(/\r\n/g,'\n')}));
   let matched=false;
   for(let attempt=0;attempt<15;attempt++){
@@ -33,8 +33,17 @@ const BASE='https://adnantarabishi.github.io/eu-hem-student-hub/';
       await page.getByRole('button',{name:view,exact:true}).click();
       assert.equal(await page.getByRole('button',{name:view,exact:true}).getAttribute('aria-pressed'),'true');
       if(view==='Month')assert.equal(await page.locator('#exam-month').isVisible(),true);
-      if(view==='Table'&&await page.locator('.exam-table').count())
-        assert.equal(await page.locator('.exam-table thead th').count(),10);
+      if(view==='Table'){
+        assert.equal(await page.locator('#exam-rounds').isVisible(),true);
+        const initial=await page.locator('#exam-list').getAttribute('data-round');
+        assert.ok(['first','second'].includes(initial));
+        if(await page.locator('.exam-table').count())
+          assert.equal(await page.locator('.exam-table thead th').count(),10);
+        await page.locator(initial==='first'?'#exam-round-next':'#exam-round-prev').click();
+        assert.equal(await page.locator('#exam-list').getAttribute('data-round'),initial==='first'?'second':'first');
+        await page.locator(initial==='first'?'#exam-round-prev':'#exam-round-next').click();
+        assert.equal(await page.locator('#exam-list').getAttribute('data-round'),initial);
+      }
       await page.evaluate(async()=>{await document.fonts.ready;window.scrollTo({top:0,behavior:'instant'});});
       await page.waitForTimeout(400);
       if(shots)await page.screenshot({path:path.join(shots,`live-exams-${view.toLowerCase()}.png`),fullPage:true});
@@ -44,7 +53,7 @@ const BASE='https://adnantarabishi.github.io/eu-hem-student-hub/';
     await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));await page.waitForTimeout(250);
     if(shots)await page.screenshot({path:path.join(shots,'live-exams-table-phone.png'),fullPage:true});
     assert.deepEqual(errors,[]);
-    console.log('Published Exams assets matched; default List, all four views, collapsed guidance, phone layout and script execution verified.');
+    console.log('Published Exams assets matched; default List, all four views, both Table rounds, collapsed guidance, phone layout and script execution verified.');
     console.log('Feed state:',await page.locator('#exam-checked').innerText());
   }finally{await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1});

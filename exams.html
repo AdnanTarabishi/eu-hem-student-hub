@@ -20,7 +20,7 @@
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=6ef75792">
   <link rel="stylesheet" href="planning.css?v=0e4fe2a7">
-  <link rel="stylesheet" href="exams-guide.css?v=a75a5d07">
+  <link rel="stylesheet" href="exams-guide.css?v=72717b48">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -137,6 +137,18 @@
         <p id="exam-checked" class="planning-checked"></p>
       </div>
       <div class="exam-selection-bar"><span class="planning-scope" id="exam-scope">First-year courses</span><button type="button" id="exam-clear-day" hidden>Show full month</button></div>
+      <section id="exam-rounds" class="exam-rounds" aria-label="Exam round navigation" hidden>
+        <div class="exam-round-toolbar">
+          <div><p class="section-eyebrow">Exam rounds</p><h3 id="exam-round-title">First round</h3><p id="exam-round-meta"></p></div>
+          <div class="exam-round-controls" role="group" aria-label="Choose exam round">
+            <button type="button" id="exam-round-prev" aria-label="Previous exam round" aria-controls="exam-list" disabled><svg class="icon" aria-hidden="true"><use href="icons.svg#chevron-left"></use></svg></button>
+            <span id="exam-round-position" aria-hidden="true">1 / 2</span>
+            <button type="button" id="exam-round-next" aria-label="Next exam round" aria-controls="exam-list" disabled><svg class="icon" aria-hidden="true"><use href="icons.svg#chevron-right"></use></svg></button>
+          </div>
+        </div>
+        <p class="exam-round-help">Each round groups published dates; each course may offer several sittings.</p>
+        <p id="exam-round-status" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></p>
+      </section>
       <div id="exam-list" data-view="list" aria-busy="true"></div>
       <noscript><p>JavaScript is needed for the interactive views. <a href="https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates">Open official exam dates</a> or <a href="notes.html">browse Notes &amp; Resources</a>.</p></noscript>
     </section>
@@ -159,8 +171,8 @@
   <script defer src="notes-schedule.js?v=72ca9b39"></script>
   <script defer src="planning.js?v=5b022301"></script>
   <script defer src="timetable-calendar.js?v=3b7c0c41"></script>
-  <script defer src="exams-workspace.js?v=842c5d60"></script>
-  <script defer src="exams.js?v=a4633a67"></script>
+  <script defer src="exams-workspace.js?v=d4642ce5"></script>
+  <script defer src="exams.js?v=78cfb6ff"></script>
 
 </body>
 </html>

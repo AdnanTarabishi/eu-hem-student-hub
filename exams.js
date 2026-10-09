@@ -9,7 +9,7 @@ const examReset = document.getElementById("exam-reset");
 const ALMAESAMI_URL = "https://almaesami.unibo.it/almaesami/welcome.htm";
 const examsPage = {
   programme: null, exams: [], loaded: false, loading: false, scopeSwitch: null,
-  view: "list", month: Planner.clock().slice(0, 7), day: "", calendarFocus: "",
+  view: "list", month: Planner.clock().slice(0, 7), day: "", calendarFocus: "", tableRound: null,
   studies: {}, studyStarted: false, openDetails: new Set(),
   clockSignature: "", clockRefreshPending: false, feedFailed: false,
 };
@@ -196,7 +196,7 @@ function renderCourseSittings(exams, today) {
     wrapper.appendChild(dates); examList.appendChild(wrapper);
   }
 }
-function renderExamTable(exams, today) {
+function renderExamTable(exams, today, round) {
   const scroll = el("div", "exam-table-scroll");
   scroll.tabIndex = 0;
   scroll.setAttribute("role", "region");
@@ -205,7 +205,7 @@ function renderExamTable(exams, today) {
   const help = el("p", "exam-table-help", "Scroll across to compare all columns. The course column stays visible. Duration is shown only when published.");
   help.id = "exam-table-help";
   const table = el("table", "exam-table");
-  const caption = el("caption", null, "Upcoming exam dates · Bologna time (Europe/Rome)");
+  const caption = el("caption", null, `${round.label} · Upcoming exam dates · Bologna time (Europe/Rome)`);
   caption.id = "exam-table-title";
   const head = el("thead"), headings = el("tr");
   for (const label of ["Course", "Teacher", "Date", "Time (Bologna)", "Duration", "Location", "Format", "Notes", "Registration", "Actions"]) {
@@ -242,6 +242,27 @@ function renderExamTable(exams, today) {
     body.appendChild(row);
   }
   table.append(caption, head, body); scroll.appendChild(table); examList.append(help, scroll);
+}
+function renderRoundControls(round) {
+  const position = examsPage.tableRound + 1;
+  const count = `${round.exams.length} upcoming date${round.exams.length === 1 ? "" : "s"}`;
+  const period = round.id === "first" ? `Before ${fullDate(round.cutoff)}` : `From ${fullDate(round.cutoff)} · including later published sittings`;
+  document.getElementById("exam-round-title").textContent = round.label;
+  document.getElementById("exam-round-meta").textContent = `${period} · ${count}`;
+  document.getElementById("exam-round-position").textContent = `${position} / 2`;
+  document.getElementById("exam-round-prev").disabled = examsPage.tableRound === 0;
+  document.getElementById("exam-round-next").disabled = examsPage.tableRound === 1;
+  document.getElementById("exam-round-status").textContent = `${round.label}, ${position} of 2. ${count}.`;
+}
+function changeTableRound(offset) {
+  if (!examsPage.loaded || examsPage.view !== "table") return;
+  const next = examsPage.tableRound + offset;
+  if (next < 0 || next > 1) return;
+  examsPage.tableRound = next;
+  render();
+  // At either end the pressed arrow becomes disabled. Focus the enabled arrow
+  // so keyboard users can return without losing their place.
+  document.getElementById(next === 0 ? "exam-round-next" : "exam-round-prev").focus({ preventScroll: true });
 }
 function renderExamHighlight(exams, today) {
   const target = document.getElementById("exam-highlight");
@@ -333,25 +354,44 @@ function render() {
     {label:"Next deadline",value:deadline?fullDate(deadline):"—",note:deadline?(deadline===today?"Closes today · check the time":`${daysBetween(today,deadline)} days to register`):"No open booking windows"},
   ]);
   renderExamHighlight(upcoming,today); renderOpenRegistrations(open,today);
-  const monthView=examsPage.view==="month";
+  const monthView=examsPage.view==="month", tableView=examsPage.view==="table";
   document.getElementById("exam-month").hidden=!monthView;
-  const displayed=monthView?all.filter(exam=>exam.dateKey.startsWith(examsPage.month)&&(!examsPage.day||exam.dateKey===examsPage.day)):upcoming;
+  document.getElementById("exam-rounds").hidden=!tableView;
+  let displayed=monthView?all.filter(exam=>exam.dateKey.startsWith(examsPage.month)&&(!examsPage.day||exam.dateKey===examsPage.day)):upcoming;
+  let rounds, round;
+  if (tableView) {
+    rounds = ExamWorkspace.rounds(upcoming, currentCohort(examsPage.programme));
+    if (examsPage.tableRound === null) {
+      const startWithSecond = !rounds[0].exams.length && (rounds[1].exams.length || today >= rounds[0].cutoff);
+      examsPage.tableRound = startWithSecond ? 1 : 0;
+    }
+    round = rounds[examsPage.tableRound];
+    displayed = round.exams;
+    examList.dataset.round = round.id;
+    renderRoundControls(round);
+  } else delete examList.dataset.round;
   if(monthView) drawCalendar(all,today);
   for(const node of document.querySelectorAll("[data-exam-view]")) node.setAttribute("aria-pressed",String(node.dataset.examView===examsPage.view));
   examList.dataset.view=examsPage.view;
-  const label=monthView?(examsPage.day?fullDate(examsPage.day):formatDay(examsPage.month+"-01",{month:"long",year:"numeric"})):"Upcoming dates";
+  const label=monthView?(examsPage.day?fullDate(examsPage.day):formatDay(examsPage.month+"-01",{month:"long",year:"numeric"})):tableView?`${round.label} · Upcoming dates`:"Upcoming dates";
   examStatus.textContent=`${label} · ${ExamWorkspace.groups(displayed).length} courses · ${displayed.length} published date${displayed.length===1?"":"s"}`;
   document.getElementById("exam-scope").textContent=`${currentCohort(examsPage.programme).label} · ${myCoursesOnly(examsPage.programme)?"Your study plan":"All first-year courses"}`;
   document.getElementById("exam-clear-day").hidden=!(monthView&&examsPage.day);
   examReset.disabled=!(examCourseFilter.value||examRegistrationFilter.value||examSearch.value||examsPage.day);
   examList.replaceChildren();
   if(displayed.length) {
-    if (examsPage.view === "table") renderExamTable(displayed, today);
+    if (tableView) renderExamTable(displayed, today, round);
     else renderCourseSittings(displayed,today);
   }
-  else Planner.empty(examList,{title:monthView?"No dates listed for this selection":"No upcoming dates to show",
-    text:monthView?"Try another day or month, or clear the course and registration filters. No published date is not a guarantee of no exam.":"Adjust your filters or study-plan selection, or check the official dates. New sittings may be published later.",
+  else Planner.empty(examList,{title:tableView?`No upcoming dates in ${round.label}`:monthView?"No dates listed for this selection":"No upcoming dates to show",
+    text:tableView?"Try the other round or adjust your filters. New sittings may be published later; check the official dates.":monthView?"Try another day or month, or clear the course and registration filters. No published date is not a guarantee of no exam.":"Adjust your filters or study-plan selection, or check the official dates. New sittings may be published later.",
     onReset:examReset.disabled?null:resetExamFilters,source:document.getElementById("exams-source").href});
+  if (tableView && !displayed.length && rounds[1 - examsPage.tableRound].exams.length) {
+    const other = rounds[1 - examsPage.tableRound];
+    const action = button(`Show ${other.label} (${other.exams.length} date${other.exams.length === 1 ? "" : "s"})`,
+      () => changeTableRound(examsPage.tableRound === 0 ? 1 : -1), "exam-other-round");
+    examList.querySelector(".planning-empty").appendChild(action);
+  }
 }
 async function jsonFile(path) {
   const controller=new AbortController(), timer=setTimeout(()=>controller.abort(),8000);
@@ -388,6 +428,7 @@ async function loadExams() {
   for(const control of controls()) control.disabled=true;
   examList.setAttribute("aria-busy","true"); examList.replaceChildren(skeleton(2,"card"));
   document.getElementById("exam-month").hidden=true;
+  document.getElementById("exam-rounds").hidden=true;
   document.getElementById("exam-feed-notice").replaceChildren();
   examStatus.textContent="Loading official dates…";
   try {
@@ -426,12 +467,18 @@ document.getElementById("exam-month-prev").addEventListener("click",()=>changeMo
 document.getElementById("exam-month-next").addEventListener("click",()=>changeMonth(1));
 document.getElementById("exam-month-today").addEventListener("click",()=>{examsPage.month=Planner.clock().slice(0,7);examsPage.day="";examsPage.calendarFocus="";render();});
 document.getElementById("exam-clear-day").addEventListener("click",()=>{examsPage.day="";render();document.getElementById("exam-month-today").focus({preventScroll:true});});
+document.getElementById("exam-round-prev").addEventListener("click",()=>changeTableRound(-1));
+document.getElementById("exam-round-next").addEventListener("click",()=>changeTableRound(1));
+document.getElementById("exam-rounds").addEventListener("keydown",event=>{
+  if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+  event.preventDefault(); changeTableRound(event.key === "ArrowLeft" ? -1 : 1);
+});
 function examClockSignature(now) {
   return JSON.stringify([now.slice(0,10),examsPage.exams.map(exam=>[Planner.upcomingExam(exam,now),Planner.registration(exam,now.slice(0,10)).key])]);
 }
 function refreshExamClock() {
   if(!examsPage.loaded||examsPage.loading||document.hidden||examClockSignature(Planner.clock())===examsPage.clockSignature)return;
-  const regions=[examList,document.getElementById("exam-month"),document.getElementById("open-registrations"),document.getElementById("exam-highlight")];
+  const regions=[examList,document.getElementById("exam-month"),document.getElementById("exam-rounds"),document.getElementById("open-registrations"),document.getElementById("exam-highlight")];
   if(regions.some(region=>region.contains(document.activeElement))){examsPage.clockRefreshPending=true;return;}
   render();
 }

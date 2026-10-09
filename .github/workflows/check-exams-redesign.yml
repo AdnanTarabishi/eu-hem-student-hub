@@ -33,6 +33,7 @@ jobs:
         run: |
           node tests/planning/exams-workspace-browser.test.js .
           node tests/planning/exams-table-browser.test.js .
+          node tests/planning/exams-rounds-browser.test.js .
       - name: Check the existing planner regressions
         run: node tests/planning/browser.test.js .
       - name: Verify the published workspace (read-only)
