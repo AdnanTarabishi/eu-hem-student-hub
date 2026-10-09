@@ -59,7 +59,7 @@ const executable = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || (fs.exists
     assert.equal(await page.locator(".notes-module-dates").count(), 11);
     assert.match(await page.locator('[data-module="fund-healthcare-management"]').textContent(), /10 Nov 2026.*3 Dec 2026/);
     assert.match(await page.locator('[data-module="right-to-health"]').textContent(), /8 Oct 2026.*23 Oct 2026/);
-    await page.locator('[data-course-exam="fund-health-econ-management"].has-exam').waitFor();
+    await page.locator('[data-course-exam="fund-health-econ-management"].has-exam').waitFor({ state: "attached" });
     assert.match(await page.locator('[data-course-exam="fund-health-econ-management"]').textContent(), /27 Oct 2026/);
     assert.match(await page.locator("#notes-exam-feed-status").textContent(), /saved calendar copy/);
     assert.match(await page.locator('[data-course-exam="health-systems"]').textContent(), /No upcoming date in the calendar copy/);
@@ -80,10 +80,11 @@ const executable = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || (fs.exists
       <tr><th>Test type:</th><td>scritto</td></tr><tr><th>Place:</th><td>Test room</td></tr>
       </table></div>`;
     const live = await open("notes.html", { examHtml: liveHtml, timezoneId: "America/Los_Angeles" });
-    await live.locator('[data-course-exam="fund-health-econ-management"].has-exam').waitFor();
+    await live.locator('[data-course-exam="fund-health-econ-management"].has-exam').waitFor({ state: "attached" });
     const liveExam = live.locator('[data-course-exam="fund-health-econ-management"]');
     assert.match(await liveExam.textContent(), /27 Oct 2026.*10:00 \(Bologna\)/);
     assert.match(await liveExam.textContent(), /Module: Fundamentals in Health Economics/);
+    await live.locator('.course-card:has([data-course-exam="fund-health-econ-management"]) .notes-course-planning > summary').click();
     assert.ok(await liveExam.getByRole("link", { name: "Register on AlmaEsami" }).isVisible());
     assert.match(await live.locator('[data-course-exam="health-systems"]').textContent(), /No upcoming exam date published/);
     assert.match(await live.locator("#notes-exam-feed-status").textContent(), /Exam dates from UniBo/);
@@ -243,13 +244,13 @@ const executable = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || (fs.exists
     assert.ok(await offline.evaluate(async () => !!(await caches.match(new URL("notes-landing.css", location.href).href))));
     await offline.reload();
     await offline.locator(".course-card").first().waitFor();
-    await offline.locator('[data-course-exam="fund-health-econ-management"].has-exam').waitFor();
+    await offline.locator('[data-course-exam="fund-health-econ-management"].has-exam').waitFor({ state: "attached" });
     await offlineContext.setOffline(true);
     await offline.reload();
     await offline.locator(".course-card").first().waitFor();
     assert.equal(await offline.locator(".course-card").count(), 8);
     assert.equal(await offline.locator(".notes-library-stat").count(), 6);
-    await offline.locator('[data-course-exam="fund-health-econ-management"].has-exam').waitFor();
+    await offline.locator('[data-course-exam="fund-health-econ-management"].has-exam').waitFor({ state: "attached" });
     assert.match(await offline.locator('[data-course-exam="fund-health-econ-management"]').textContent(), /27 Oct 2026/);
     ok("service worker caches the new stylesheet and the full library reloads offline under the Pages subdirectory");
     assert.deepEqual(errors, []);
