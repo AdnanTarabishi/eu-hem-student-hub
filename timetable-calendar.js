@@ -37,12 +37,21 @@ const TimetableCalendar = (() => {
     return Number(sessions.reduce((total, session) => total + Math.max(0,
       (Date.parse(session.end + "Z") - Date.parse(session.start + "Z")) / 3600000), 0).toFixed(1));
   }
+  function progressPeriod(selectedDate, view = "month") {
+    if (!validDate(selectedDate) || !["day", "week", "month"].includes(view)) return null;
+    const start = view === "day" ? selectedDate : view === "week" ? monday(selectedDate) : selectedDate.slice(0, 7) + "-01";
+    const monthEnd = new Date(start + "T12:00:00Z");
+    monthEnd.setUTCMonth(monthEnd.getUTCMonth() + 1, 0);
+    const end = view === "day" ? start : view === "week" ? addDays(start, 6) : key(monthEnd);
+    return { view, start, end };
+  }
   // The feed uses Bologna wall-clock timestamps, not the visitor's timezone.
-  // Assign a class to the month of its start, exactly as the Month calendar does.
-  // Count the full duration only when its published end has passed; never infer attendance.
-  function monthlyProgress(sessions, selectedDate, now) {
-    const month = typeof selectedDate === "string" ? selectedDate.slice(0, 7) : "";
-    const unavailable = { state: "unavailable", month, percentage: null };
+  // A class belongs to the period in which it starts, matching the calendar views.
+  // Count its full duration only after its published end; never infer attendance.
+  function periodProgress(sessions, selectedDate, now, view = "month") {
+    const period = progressPeriod(selectedDate, view);
+    const scope = period || { view, start: "", end: "" };
+    const unavailable = { state: "unavailable", ...scope, percentage: null };
     function timestamp(value) {
       if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/.test(value) ||
           !validDate(value.slice(0, 10)) || Number(value.slice(11, 13)) > 23 ||
@@ -50,12 +59,12 @@ const TimetableCalendar = (() => {
       return Date.parse(value + "Z");
     }
     const nowTime = timestamp(now);
-    if (!Array.isArray(sessions) || !validDate(selectedDate) || !Number.isFinite(nowTime)) return unavailable;
+    if (!Array.isArray(sessions) || !period || !Number.isFinite(nowTime)) return unavailable;
     let totalMs = 0, completedMs = 0, totalClasses = 0, completedClasses = 0, activeClasses = 0;
     for (const session of sessions) {
       // Malformed undated entries make a denominator unreliable; do not silently drop them.
       if (!session || !validDate(session.dateKey) || typeof session.start !== "string") return unavailable;
-      if (session.dateKey.slice(0, 7) !== month) continue;
+      if (session.dateKey < period.start || session.dateKey > period.end) continue;
       const start = timestamp(session.start), end = timestamp(session.end);
       if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start ||
           session.dateKey !== session.start.slice(0, 10)) return unavailable;
@@ -67,11 +76,17 @@ const TimetableCalendar = (() => {
     // Floor to one decimal: 100% is reserved for all published classes actually ending.
     const percentage = totalMs ? completedMs === totalMs ? 100 :
       Math.min(99.9, Math.floor(completedMs / totalMs * 1000 + 1e-9) / 10) : null;
-    return { state: totalMs ? "ready" : "empty", month, percentage,
+    return { state: totalMs ? "ready" : "empty", ...period, percentage,
       completedHours: completedMs / 3600000, totalHours: totalMs / 3600000,
       remainingHours: (totalMs - completedMs) / 3600000,
       completedClasses, totalClasses, activeClasses };
   }
-  return { validDate, addDays, monday, shiftMonth, monthDays, hours, monthlyProgress };
+  // Preserve the existing monthly API for callers that only need a month summary.
+  function monthlyProgress(sessions, selectedDate, now) {
+    const { view, start, end, ...result } = periodProgress(sessions, selectedDate, now, "month");
+    const month = typeof selectedDate === "string" ? selectedDate.slice(0, 7) : "";
+    return { ...result, month };
+  }
+  return { validDate, addDays, monday, shiftMonth, monthDays, hours, progressPeriod, periodProgress, monthlyProgress };
 })();
 if (typeof module !== "undefined") module.exports = TimetableCalendar;

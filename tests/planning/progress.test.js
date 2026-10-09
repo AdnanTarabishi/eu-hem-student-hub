@@ -1,6 +1,6 @@
 // Deterministic teaching progress; no network, private data or attendance assumptions.
 const assert = require('node:assert/strict');
-const { monthlyProgress: progress } = require('../../timetable-calendar.js');
+const { monthlyProgress: progress, periodProgress, progressPeriod } = require('../../timetable-calendar.js');
 let count = 0;
 const test = (name, fn) => { fn(); console.log('  ok  ' + name); count++; };
 const lesson = (date, start, end) => ({ dateKey: date, start: `${date}T${start}:00`, end: `${date}T${end}:00` });
@@ -8,6 +8,44 @@ const month = '2026-10-09', now = '2026-10-09T10:30:00';
 const sessions = [lesson('2026-10-01','09:00','11:00'), lesson('2026-10-08','09:00','11:00'), lesson('2026-10-09','10:00','12:00'), lesson('2026-10-20','09:00','13:00')];
 test('4 of 10 scheduled hours finished gives 40%, with an ongoing class left in Remaining', () => {
   assert.deepEqual(progress(sessions,month,now), { state:'ready',month:'2026-10',percentage:40,completedHours:4,totalHours:10,remainingHours:6,completedClasses:2,totalClasses:4,activeClasses:1 });
+});
+test('Day, Week and Month use their own published-hour denominators', () => {
+  const day = periodProgress(sessions,month,now,'day');
+  const week = periodProgress(sessions,month,now,'week');
+  const wholeMonth = periodProgress(sessions,month,now,'month');
+  assert.deepEqual([day.percentage,day.completedHours,day.totalHours,day.remainingHours,day.activeClasses],[0,0,2,2,1]);
+  assert.deepEqual([week.percentage,week.completedHours,week.totalHours,week.remainingHours,week.activeClasses],[50,2,4,2,1]);
+  assert.deepEqual([wholeMonth.percentage,wholeMonth.completedHours,wholeMonth.totalHours],[40,4,10]);
+  assert.equal(periodProgress(sessions,month,'2026-10-09T12:00:00','day').percentage,100);
+  assert.equal(periodProgress(sessions,month,'2026-10-09T12:00:00','week').percentage,100);
+});
+test('a Monday–Sunday week includes both months and excludes the following Monday', () => {
+  const rows=[lesson('2026-09-28','09:00','11:00'),lesson('2026-09-30','09:00','13:00'),lesson('2026-10-02','10:00','12:00'),lesson('2026-10-04','09:00','11:00'),lesson('2026-10-05','09:00','13:00')];
+  const current='2026-10-02T10:30:00';
+  const week=periodProgress(rows,'2026-10-02',current,'week');
+  assert.deepEqual([week.start,week.end,week.percentage,week.totalHours,week.completedHours],['2026-09-28','2026-10-04',60,10,6]);
+  assert.equal(periodProgress(rows,'2026-10-04',current,'week').percentage,60);
+  assert.equal(periodProgress(rows,'2026-10-02',current,'month').totalHours,8);
+  assert.equal(periodProgress(rows,'2026-10-05',current,'week').totalHours,4);
+  assert.equal(periodProgress(rows,'2026-10-05',current,'week').percentage,0);
+});
+test('selected dates, filtered inputs and empty periods update the same calculation', () => {
+  assert.equal(periodProgress(sessions,'2026-10-08',now,'day').percentage,100);
+  assert.equal(periodProgress(sessions,'2026-10-20',now,'week').percentage,0);
+  assert.equal(periodProgress(sessions.filter(s=>s.dateKey==='2026-10-08'),month,now,'week').percentage,100);
+  for(const view of ['day','week','month']) {
+    assert.equal(periodProgress([],month,now,view).percentage,null);
+    assert.equal(periodProgress([],month,now,view).state,'empty');
+    assert.equal(periodProgress([lesson('2026-10-09','12:00','10:00')],month,now,view).state,'unavailable');
+  }
+  assert.equal(periodProgress(sessions,'2026-10-10',now,'day').state,'empty');
+  assert.equal(periodProgress(sessions,month,now,'list').state,'unavailable');
+});
+test('period boundaries cover leap days, year changes and the last supported month', () => {
+  assert.deepEqual(progressPeriod('2028-02-29','month'),{view:'month',start:'2028-02-01',end:'2028-02-29'});
+  assert.deepEqual(progressPeriod('2027-01-01','week'),{view:'week',start:'2026-12-28',end:'2027-01-03'});
+  assert.deepEqual(progressPeriod('2200-12-31','month'),{view:'month',start:'2200-12-01',end:'2200-12-31'});
+  assert.equal(progressPeriod('2026-02-31','day'),null);
 });
 test('a class counts at its exact scheduled end, not at the start of its day', () => {
   assert.equal(progress(sessions,month,'2026-10-09T11:59:59').percentage,40);

@@ -11,5 +11,7 @@ The browser check uses the real shared styles and navigation. It blocks external
 requests and uses no private data. Screenshots cover desktop, tablet and phone
 layouts in light and dark modes. JavaScript-free reading is checked separately.
 
-The initial snapshot is owner-reported: 60 hours, allocated illustratively across
-six workstreams. The data test intentionally checks that approved total.
+The current snapshot is an approximate 120-hour upper-range estimate, reassessed
+at the owner's request on 9 October 2026 and allocated illustratively across six
+workstreams. The data test checks the revised total, its estimate basis and the
+7 October cohort beta date shared with the Roadmap.
