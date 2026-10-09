@@ -231,7 +231,8 @@
                 "virtualeInstruction": "Enrol in the lecturer's Virtuale course. The lecturer specified a Tuesday-midnight deadline, but the shared email does not identify the calendar date; confirm it from the original message.",
                 "recordingInstruction": "Enrol in the class named 'Esame Introduction to Economics (Crash Course)' created by the lecturer so that the Pass/Fail evaluation and corresponding credits can be recorded.",
                 "note": "The lecturer confirmed no final exam, but did not explicitly guarantee automatic Pass for everyone. UniBo lists 3 CFU; the programme handbook treats optional crash courses separately from the 120 ECTS degree requirement.",
-                "source": "Lecturer emails shared with the Student Hub · 2026/27"
+                "source": "intro-economics-lecturer-2026",
+                "sourceLabel": "Lecturer emails (2026/27) · Shared for informational use"
               }
             },
             {

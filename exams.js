@@ -219,7 +219,7 @@ function renderExamSpecial() {
   const more = createElement("a", null, "Course details →");
   more.href=coursePageLink({courseIds:[course.id]});
   actions.appendChild(more);
-  content.append(actions, createElement("p", "exam-special-source", info.source));
+  content.append(actions, createElement("p", "exam-special-source", info.sourceLabel || "Lecturer communication"));
   card.append(top, content);
   target.appendChild(card);
 }
