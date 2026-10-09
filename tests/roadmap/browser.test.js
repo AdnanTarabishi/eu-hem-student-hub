@@ -59,8 +59,8 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   /* ----- Overview and the three stages ----- */
   let page = await open();
   assert.deepStrictEqual(await page.$$eval(".roadmap-overview-item", (all) => all.map((b) => b.textContent.replace(/\s+/g, ""))),
-    ["2Now", "7Next", "8Later", "37Released"]);
-  assert.match(await text(page, "#roadmap-reviewed"), /Last reviewed 8 October 2026/);
+    ["2Now", "9Next", "8Later", "37Released"]);
+  assert.match(await text(page, "#roadmap-reviewed"), /Last reviewed 9 October 2026/);
   assert.deepStrictEqual(await page.$$eval(".roadmap-card.is-now .roadmap-card-title", (all) => all.map((h) => h.textContent)),
     ["Exam Prep", "Beta feedback & essential improvements"]);
   assert.deepStrictEqual(await page.$$eval(".roadmap-window-label", (all) => all.map((h) => h.textContent)),
@@ -111,21 +111,21 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
 
   /* ----- Filters and search ----- */
   await page.click('#roadmap-stage .filter-chip:has-text("Now")');
-  assert.match(await text(page, "#roadmap-count"), /Showing 2 of 17 plans/);
+  assert.match(await text(page, "#roadmap-count"), /Showing 2 of 19 plans/);
   assert.strictEqual(await page.evaluate(() => document.activeElement.textContent), "Now", "focus stays on the chip");
   await page.click('#roadmap-stage .filter-chip:has-text("Next")');
   await page.click('#roadmap-category .filter-chip:has-text("Learning")');
-  assert.match(await text(page, "#roadmap-count"), /Showing 2 of 17 plans/);
+  assert.match(await text(page, "#roadmap-count"), /Showing 2 of 19 plans/);
   await page.click("#roadmap-clear");
   await page.fill("#roadmap-search", "MOBILITY chécklists");
-  assert.match(await text(page, "#roadmap-count"), /Showing 2 of 17 plans/);
+  assert.match(await text(page, "#roadmap-count"), /Showing 2 of 19 plans/);
   assert.deepStrictEqual(await page.$$eval("#roadmap-board .roadmap-card", (all) => all.map((card) => card.id)),
     ["feature-student-hub-v2", "feature-mobility-checklists"]);
   assert.match(await text(page, "#roadmap-board"), /Personal mobility checklists/);
   await page.fill("#roadmap-search", "zebra unicorn");
   assert.match(await text(page, ".empty-state"), /No plans match these filters/);
   await page.click('.empty-state button:has-text("Clear filters")');
-  assert.match(await text(page, "#roadmap-count"), /^17 plans$/);
+  assert.match(await text(page, "#roadmap-count"), /^19 plans$/);
   assert.strictEqual(await page.inputValue("#roadmap-search"), "");
   ok("stage + topic filters combine, accent-insensitive search, empty state with Clear filters");
 

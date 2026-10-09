@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-08",
+  "updatedAt": "2026-10-09",
   "release": {
     "stage": "Beta",
     "version": "v0.9",
@@ -320,26 +320,89 @@
     {
       "id": "beyond-euhem-opportunities",
       "title": "Beyond EU-HEM: careers & opportunities",
-      "summary": "A new section for jobs, internships, research opportunities, career preparation and further study.",
+      "summary": "A public structure preview is available for career paths, jobs, internships, research opportunities, alumni journeys, career preparation and further study. Reviewed content is still being prepared.",
       "category": "career",
       "lane": "next",
-      "status": "planned",
+      "status": "in-progress",
       "target": null,
       "why": "Help students discover possible next steps and reach the original opportunity details.",
       "details": [
+        "Explore the five preview sections: Career Paths, Opportunities, Alumni Paths, Prepare & Apply and Further Study.",
         "Organise jobs, internships and research opportunities by type, location and area of interest.",
         "Add career preparation resources, and further study and PhD opportunities where useful.",
-        "Show the source, deadline, eligibility and the date each listing was last checked; archive expired ones."
+        "Show the source, deadline, eligibility and the date each listing was last checked; archive expired ones.",
+        "Research graduate and former-student journeys using university-published stories and voluntary contributions, with sources, historical cohort context and permission for original profiles. No alumni research collection is published yet."
       ],
       "dependencies": [
-        "Reliable opportunity sources and a regular review routine."
+        "Reliable opportunity sources, reviewed alumni research and a regular review routine."
       ],
       "links": [
+        {
+          "label": "Explore the structure preview",
+          "url": "beyond-euhem.html"
+        },
         {
           "label": "Suggest an opportunity source",
           "url": "contact.html"
         }
-      ]
+      ],
+      "note": "The structure preview is available; opportunity listings, alumni stories and new career guides are still in development."
+    },
+    {
+      "id": "community-events",
+      "title": "Events: university, programme & student activities",
+      "summary": "Explore the Events structure preview, covering upcoming activities, event categories, a future archive and publishing principles. Reviewed event listings are still to come.",
+      "category": "community",
+      "lane": "next",
+      "status": "in-progress",
+      "target": null,
+      "why": "Help students find academic and community activities, understand how to join and keep track of changes.",
+      "details": [
+        "Cover talks, workshops, projects, student-led activities, trips and social gatherings, with the organiser identified clearly.",
+        "Use reviewed sources for dates, explicit local time zones, locations, eligibility, costs and registration details.",
+        "Connect Events and Calendar to one reviewed record when the existing editorial publishing workflow is activated.",
+        "Keep cancellations and postponements visible, and link approved recaps to the appropriate Gallery albums."
+      ],
+      "dependencies": [
+        "Reviewed event sources and activation of the existing editorial publishing workflow."
+      ],
+      "links": [
+        {
+          "label": "Explore the structure preview",
+          "url": "events.html"
+        },
+        {
+          "label": "Visit the current Calendar",
+          "url": "calendar.html"
+        }
+      ],
+      "note": "No event listings, registrations or attendance collection are active in the preview."
+    },
+    {
+      "id": "student-gallery",
+      "title": "Gallery: city albums & shared moments",
+      "summary": "Explore the Gallery structure preview for student photography from Bologna, Oslo, Rotterdam and Innsbruck, alongside community and event albums. Photo contributions and member access are still being prepared.",
+      "category": "community",
+      "lane": "next",
+      "status": "in-progress",
+      "target": null,
+      "why": "Share the places and moments of EU-HEM while giving contributors clear choices about who can see their photos.",
+      "details": [
+        "Organise approved student photos into city albums, community albums and event collections with photographer credit.",
+        "Offer public visibility or private visibility for verified EU-HEM members; member access is not active yet.",
+        "Require photographer permission, consent from identifiable people and review before publication.",
+        "Protect members-only originals, thumbnails and downloads outside publicly accessible GitHub files before enabling private albums."
+      ],
+      "dependencies": [
+        "Reviewed contributions and permissions; verified student access and protected storage before members-only albums can open."
+      ],
+      "links": [
+        {
+          "label": "Explore the structure preview",
+          "url": "gallery.html"
+        }
+      ],
+      "note": "The preview contains no student photos, uploads or active membership service."
     },
     {
       "id": "group-trips-adventures",
