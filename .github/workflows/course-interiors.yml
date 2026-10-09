@@ -1,0 +1,55 @@
+name: Course interiors checks
+on:
+  pull_request:
+    paths:
+      - 'course.html'
+      - 'course-workspace.*'
+      - 'notes-course.js'
+      - 'notes-schedule.js'
+      - 'right-to-health.js'
+      - 'tests/notes/**'
+      - '.github/workflows/course-interiors.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: course-interiors-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Content, version stamps and shared contrast tokens
+        run: |
+          node scripts/check-content.js
+          node scripts/check-contrast.js
+          node tests/notes/schedule.test.js
+      - name: Course interiors on an actual HTTP origin
+        env:
+          COURSE_SCREENSHOT_DIR: previews/course-interiors
+        run: node tests/notes/course-interiors.test.js .
+      - name: Notes library and offline regression
+        run: npm run test:notes
+      - name: Landing workspace regression
+        run: node tests/notes/workspace.test.js .
+      - name: Quizzes, flashcards and exam practice regression
+        env:
+          STUDY_PRACTICE_SCREENSHOT_DIR: previews/practice
+        run: npm run test:practice
+      - name: Right to Health content invariants
+        run: node tests/right-to-health/content.test.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: course-interiors-previews
+          path: previews/course-interiors/
+          if-no-files-found: ignore
+          retention-days: 7

@@ -9,11 +9,12 @@
 //   "Update available · Reload", and old saved copies are deleted.
 // Nothing personal is stored here: only public site files and public data.
 
-const VERSION = "df56ee93";
+const VERSION = "fa3d9cb8";
 const SITE_CACHE = `site-${VERSION}`;
 const DATA_CACHE = "data"; // kept across versions, so offline data survives an update
 
 const SITE_FILES = [
+  "course-workspace.js", "course-workspace.css",
   "behind-the-build.html", "behind-build.css", "behind-build.js", "content/build-effort.json",
   "study-practice.css",
   "toolkit-workbench-core.js", "toolkit-workbench.js", "toolkit-workbench.css",
