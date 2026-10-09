@@ -10,10 +10,18 @@ on:
       - "content/updates.json"
       - "tests/roadmap/**"
       - ".github/workflows/check-roadmap.yml"
+  push:
+    branches: [main]
+    paths:
+      - "content/roadmap.json"
+      - "content/updates.json"
+      - "tests/roadmap/**"
+      - ".github/workflows/check-roadmap.yml"
   workflow_dispatch:
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   roadmap:
@@ -38,6 +46,15 @@ jobs:
           node scripts/check-content.js
           node tests/roadmap/data.test.js .
           node tests/roadmap/browser.test.js .
+      - name: Verify the October review against actual successful deployments
+        run: node tests/roadmap/recent.test.js --verify-deployments
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Check the published release history
+        if: github.event_name == 'push'
+        run: node tests/roadmap/live.test.js
+        env:
+          SCREENSHOT_DIR: ${{ runner.temp }}/roadmap-screenshots
       - name: Save visual checks
         if: always()
         uses: actions/upload-artifact@v4

@@ -176,3 +176,23 @@ last copy still works offline.
 Based on the "Roadmap & Updates V2" handoff (October 2026). Its content, schedule and publishing rules were
 kept; the code was rebuilt on the site's design system with one shared rules file, and today's two real
 releases (Students explorer, new design) were added with their deployment evidence.
+
+## 9 October 2026 release review
+
+Seventeen important student-facing updates bring the verified history to 54 published records.
+They cover the Month/Day timetable and teacher display, monthly finished teaching hours,
+university galleries, course and library workspaces, Contact intake and retry safety, practical
+guide redesigns, the selected Hub identity, study practice and the seven local workbenches.
+The careers, events and gallery entries explicitly document **previews**, not active collections.
+All 37 existing release records are preserved without changing their dates or evidence.
+
+The fully available career tracker leaves Later. Shared-expense and destination-guidance
+plans are narrowed to their unfinished parts and link to the current budget/moving tools.
+Beta v0.9, the 15 October v1 target, the early-November v2 target and the team's separate
+25% full-project estimate remain unchanged. Timetable progress is a different, calculated
+measure of published scheduled teaching hours; it does not determine project completion.
+
+Each new record references a successful main-branch Pages deployment containing its commits.
+The city-guide redesign is evidenced by the subsequent successful logo deployment that includes
+it; Contact intake and its receipt-retry correction are consolidated into one student-facing
+record. No unpublished code or fictional academic test data is presented as a release.

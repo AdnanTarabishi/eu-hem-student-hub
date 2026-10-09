@@ -9,7 +9,7 @@ A free, volunteer website for students of the EU-HEM master's program (European 
 - **Study Plan & Progress:** plan your courses with the official rules (CFU, required and optional groups), track each course (Studying → Exam booked → Passed) and see a timeline. A planning tool only: it does not submit anything.
 - **Tracks** (`tracks.html`): the four specialisation tracks (EEH, E&P, MHI, PHM) from the official 2026 overview: journey, courses per semester with exact elective rules, a factual comparison, "My track" (saved on this device only), cities, careers and an informal student-built quiz
 - **Past Thesis Explorer** (`thesis.html`): search and filter thesis titles from earlier cohorts (an informal list shared by a previous student, with the old six-track structure), for inspiration
-- **Timetable** (`timetable.html`): 1st-year classes loaded live from the official UniBo timetable, in a Week or List view, with "My courses only", room map links and "add this class to my calendar"
+- **Timetable** (`timetable.html`): official UniBo classes in Day, Week, Month and List views; coloured lecture dates, optional teacher names and a monthly finished-teaching-hours percentage. Course filters, maps and calendar exports are retained; the percentage measures scheduled time, not attendance ([calculation](docs/monthly-teaching-progress.md)).
 - **Exams** (`exams.html`): 1st-year exam dates with countdown and registration status (opens / open / closed), loaded live from the official UniBo exam dates page
 - Calendar subscription (Google, Apple, Outlook): one calendar with every course, or one with exactly your study plan
 - One page per course: Overview, Schedule, Exam, Topics, Key Concepts, Practice, Resources

@@ -1,8 +1,591 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-08",
+  "updatedAt": "2026-10-09",
   "dateBasis": "Each date is the day (Rome time) the change first went live through a successful site deployment. Only important student-facing releases are listed.",
   "items": [
+    {
+      "id": "timetable-monthly-progress",
+      "title": "Monthly teaching-hours progress",
+      "summary": "See finished scheduled hours as a percentage of the published teaching hours for the month, with finished, total and remaining hours.",
+      "category": "learning",
+      "type": "new",
+      "highlights": [
+        "The indicator counts a class only after its scheduled end in Bologna time; an ongoing class remains in the hours left.",
+        "Course, search and My courses only filters apply to the full month. Hiding past classes or teacher names does not change the denominator.",
+        "View the selected month in Day, Week and Month, or the current month in List. The indicator refreshes while the page is open.",
+        "This measures scheduled time, not attendance, credits or learning completion. Empty, invalid or unavailable data never produces an assumed percentage."
+      ],
+      "links": [
+        {
+          "label": "Open monthly teaching progress",
+          "url": "timetable.html?view=month#monthly-progress"
+        }
+      ],
+      "version": "v0.9",
+      "date": "2026-10-09",
+      "status": "published",
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37886268178",
+        "deployedAt": "2026-10-09T04:57:43Z",
+        "commits": [
+          {
+            "sha": "cb00ef43cb290c15790e2e4a2f177b2e9a004f4c",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/cb00ef43cb290c15790e2e4a2f177b2e9a004f4c"
+          }
+        ]
+      }
+    },
+    {
+      "id": "universities-directory-galleries",
+      "title": "Refreshed university directory and campus galleries",
+      "summary": "Explore the four partners with redesigned university cards, clearer navigation and a full-screen campus-photo viewer.",
+      "category": "platform",
+      "type": "improved",
+      "highlights": [
+        "University cards and partner-page layouts follow the Hub's navy, ivory and terracotta identity.",
+        "Open campus photographs in a gallery with previous/next controls, keyboard navigation and visible captions, credits and source links.",
+        "Track-aware routes, service search, practical links and university comparisons remain available without changing their underlying academic data."
+      ],
+      "links": [
+        {
+          "label": "Explore partner universities",
+          "url": "universities.html"
+        }
+      ],
+      "version": "v0.9",
+      "date": "2026-10-09",
+      "status": "published",
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37885401134",
+        "deployedAt": "2026-10-09T04:46:23Z",
+        "commits": [
+          {
+            "sha": "204b140b966d2b7ad69bc8f0fd39197a20653c4c",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/204b140b966d2b7ad69bc8f0fd39197a20653c4c"
+          }
+        ]
+      }
+    },
+    {
+      "id": "timetable-month-day-teachers",
+      "title": "A full-month calendar, Day view and optional teacher names",
+      "summary": "Plan across Day, Week, Month and List with a redesigned timetable, tinted class dates and optional teacher names.",
+      "category": "learning",
+      "type": "improved",
+      "highlights": [
+        "The complete Monday-to-Sunday month highlights lecture dates with counts and course-colour markers; choose a date to see its classes.",
+        "The new Day view keeps a focused daily agenda. The Show teacher checkbox is off by default and remembers the display choice on this device.",
+        "Updated navy, ivory and terracotta styling, course-workspace links and compact source labels work alongside existing filters, maps and calendar exports.",
+        "The official UniBo feed remains authoritative. A loading error is not shown as a confirmed empty timetable."
+      ],
+      "links": [
+        {
+          "label": "Explore the monthly timetable",
+          "url": "timetable.html?view=month"
+        }
+      ],
+      "version": "v0.9",
+      "date": "2026-10-09",
+      "status": "published",
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37882023574",
+        "deployedAt": "2026-10-09T04:03:00Z",
+        "commits": [
+          {
+            "sha": "a0b0001011e04fe5c97010e8e37b2c29fc2df2c7",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/a0b0001011e04fe5c97010e8e37b2c29fc2df2c7"
+          }
+        ]
+      }
+    },
+    {
+      "id": "future-sections-browsable-previews",
+      "title": "Explore the planned careers, events and gallery sections",
+      "summary": "Browse the published structure previews for Beyond EU-HEM, Events and Gallery and see how each section is intended to develop.",
+      "category": "community",
+      "type": "new",
+      "highlights": [
+        "Beyond EU-HEM outlines future career resources and the proposed approach to alumni insights.",
+        "Events explains the planned categories and reviewed publishing approach; Gallery explains its proposed public and member-only model.",
+        "These are structure previews, not live opportunity collections, event submission tools or a student-photo upload service.",
+        "Full collections, uploads and verified member access remain on the roadmap."
+      ],
+      "links": [
+        {
+          "label": "Preview Beyond EU-HEM",
+          "url": "beyond-euhem.html"
+        },
+        {
+          "label": "Preview Events",
+          "url": "events.html"
+        },
+        {
+          "label": "Preview Gallery",
+          "url": "gallery.html"
+        }
+      ],
+      "version": "v0.9",
+      "date": "2026-10-09",
+      "status": "published",
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37880941834",
+        "deployedAt": "2026-10-09T03:48:44Z",
+        "commits": [
+          {
+            "sha": "01d9b58b1255bf1429c2bde182ab523d4da4ebd5",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/01d9b58b1255bf1429c2bde182ab523d4da4ebd5"
+          }
+        ]
+      }
+    },
+    {
+      "id": "course-study-workspaces",
+      "title": "Redesigned course Schedule, Exam, Topics and Resources",
+      "summary": "A consistent study workspace across all eight first-year courses makes class dates, assessments, topics and resources easier to browse.",
+      "category": "learning",
+      "type": "improved",
+      "highlights": [
+        "Schedule presents class dates, module filters and map/calendar actions with clear source-error recovery.",
+        "Exam separates official dates and registration, existing assessment guidance and personal preparation; calendar-copy fallbacks remain labelled.",
+        "Topics offers searchable cards and preserved saved progress; Resources puts official platforms first with source labels, search and saved filters.",
+        "Existing readers, specialist course content, quizzes, bookmarks and direct links remain available. Official lectures stay on their original platforms."
+      ],
+      "links": [
+        {
+          "label": "Open the course library",
+          "url": "notes.html"
+        }
+      ],
+      "version": "v0.9",
+      "date": "2026-10-09",
+      "status": "published",
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37871157176",
+        "deployedAt": "2026-10-09T01:44:04Z",
+        "commits": [
+          {
+            "sha": "c9c23f6684a334b60d629a00c1af125e9956ec45",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/c9c23f6684a334b60d629a00c1af125e9956ec45"
+          }
+        ]
+      }
+    },
+    {
+      "id": "notes-resource-first-workspace",
+      "title": "A search-led Notes & Resources library",
+      "summary": "Find courses and study materials faster through a compact search-led library, resource-first cards and a clearer personal study area.",
+      "category": "learning",
+      "type": "improved",
+      "highlights": [
+        "Course cards emphasise available resources, with planning and exam details in expandable panels.",
+        "Search course names, official codes and lesson topics; larger result groups offer an accessible Show more action.",
+        "On phones, the course library comes before secondary panels. Glossary filtering and empty study-list guidance are clearer.",
+        "Existing progress, bookmarks, backup/restore and source-fallback distinctions are preserved."
+      ],
+      "links": [
+        {
+          "label": "Explore Notes & Resources",
+          "url": "notes.html"
+        }
+      ],
+      "version": "v0.9",
+      "date": "2026-10-09",
+      "status": "published",
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37867134059",
+        "deployedAt": "2026-10-09T00:54:59Z",
+        "commits": [
+          {
+            "sha": "f3f56af90cc3216ee956178b1576247bf3cb925b",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/f3f56af90cc3216ee956178b1576247bf3cb925b"
+          }
+        ]
+      }
+    },
+    {
+      "id": "behind-the-build-effort",
+      "title": "Behind the Build: the effort behind the Hub",
+      "summary": "Explore the project owner's 60-hour personal-effort estimate, its illustrative workstreams and the roles of human decisions and AI assistance.",
+      "category": "platform",
+      "type": "new",
+      "highlights": [
+        "Six expandable workstreams, an hours/share chart and project milestones explain the work behind the site.",
+        "The 60 hours are an owner-reported estimate, not an independently measured time log. Category allocations are illustrative.",
+        "The methodology explains what the estimate includes and does not claim. No private conversations or tracking logs are published."
+      ],
+      "links": [
+        {
+          "label": "Read Behind the Build",
+          "url": "behind-the-build.html"
+        }
+      ],
+      "version": "v0.9",
+      "date": "2026-10-08",
+      "status": "published",
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37813727173",
+        "deployedAt": "2026-10-08T17:05:22Z",
+        "commits": [
+          {
+            "sha": "0cf7b1a6151983ad68c8cbefa984735745bd09c6",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/0cf7b1a6151983ad68c8cbefa984735745bd09c6"
+          }
+        ]
+      }
+    },
+    {
+      "id": "contact-private-form-delivery",
+      "title": "Contact forms with private admin delivery",
+      "summary": "Send corrections, ideas, privacy requests and contributions inside the website, with confirmed private receipt and safer retries.",
+      "category": "platform",
+      "type": "new",
+      "highlights": [
+        "One responsive form shows only the fields needed for the selected topic. Name and reply email are optional.",
+        "Messages go to the restricted admin inbox, not to a public feed. No automatic notification email or automatic publication is sent.",
+        "A matching receipt appears only after storage confirmation. An unchanged retry uses the original request identifier to avoid another row.",
+        "Interrupted or uncertain delivery preserves the typed message and warns before edited text becomes a separate request. Privacy explains the active service."
+      ],
+      "links": [
+        {
+          "label": "Use the Contact form",
+          "url": "contact.html#contact-form-section"
+        },
+        {
+          "label": "Read how messages are handled",
+          "url": "privacy.html#messages"
+        }
+      ],
+      "version": "v0.9",
+      "date": "2026-10-08",
+      "status": "published",
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37802537448",
+        "deployedAt": "2026-10-08T15:39:54Z",
+        "commits": [
+          {
+            "sha": "d9c107c6fa25d326964991f99277848e478d1847",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/d9c107c6fa25d326964991f99277848e478d1847"
+          },
+          {
+            "sha": "dde0f99e925e4d8be6a51d204831013f509a2aa5",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/dde0f99e925e4d8be6a51d204831013f509a2aa5"
+          }
+        ]
+      }
+    },
+    {
+      "id": "practice-quiz-flashcard-redesign",
+      "title": "Clearer quizzes, flashcards and mock exams",
+      "summary": "Study practice now shares the Hub's visual identity with clearer questions, answer feedback and review summaries.",
+      "category": "learning",
+      "type": "improved",
+      "highlights": [
+        "Course flashcards and question banks, lecture quizzes, statistics exercises, lab checks and mock exams use a consistent practice layout.",
+        "Lettered answer options, keyboard focus and responsive feedback make the interaction easier to follow.",
+        "Flashcard progress reflects the actual due-card session; starting a Health Economics mock opens the exam directly.",
+        "Existing content, scoring, identifiers, saved study progress and offline support are preserved."
+      ],
+      "links": [
+        {
+          "label": "Open study practice through your course",
+          "url": "notes.html"
+        }
+      ],
+      "version": "v0.9",
+      "date": "2026-10-08",
+      "status": "published",
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37758086108",
+        "deployedAt": "2026-10-08T09:39:13Z",
+        "commits": [
+          {
+            "sha": "12d9f49c4dd0b1c1ebf8b14a3b3744eb13c996f3",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/12d9f49c4dd0b1c1ebf8b14a3b3744eb13c996f3"
+          }
+        ]
+      }
+    },
+    {
+      "id": "support-contact-privacy-redesign",
+      "title": "A clearer Support, Contact and Privacy experience",
+      "summary": "Find the right support route more easily and read a reorganised privacy notice with compact source labels and accessible navigation.",
+      "category": "platform",
+      "type": "improved",
+      "highlights": [
+        "Support includes a guided contact chooser, visible emergency guidance and expandable university support cards.",
+        "The three pages share navy, warm ivory and terracotta styling, phone-friendly navigation and keyboard-accessible controls.",
+        "Privacy describes local study data, offline copies, external requests and the difference between aggregate cohort counts and fictional directory profiles.",
+        "The complete prepared directory terms remain readable and printable. Registration and the editor backend remain inactive; the later Contact-form release is recorded separately."
+      ],
+      "links": [
+        {
+          "label": "Find university support",
+          "url": "support.html"
+        },
+        {
+          "label": "Contact the Hub",
+          "url": "contact.html"
+        },
+        {
+          "label": "Read Privacy",
+          "url": "privacy.html"
+        }
+      ],
+      "version": "v0.9",
+      "date": "2026-10-08",
+      "status": "published",
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37740240821",
+        "deployedAt": "2026-10-08T06:54:57Z",
+        "commits": [
+          {
+            "sha": "e8b1740d215560fdbb4845b3274166ef6d07d167",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/e8b1740d215560fdbb4845b3274166ef6d07d167"
+          }
+        ]
+      }
+    },
+    {
+      "id": "academic-guides-visual-redesign",
+      "title": "New Academic Rules and Programme Journey layouts",
+      "summary": "Browse academic guidance with a shared visual identity, easier section navigation and smaller complete source badges.",
+      "category": "learning",
+      "type": "improved",
+      "highlights": [
+        "Academic Rules has a clearer re-sit guide, expandable university rules and a responsive grading comparison.",
+        "Programme Journey shows a track-aware four-semester route, stage details and organised degree, fee and grant guidance.",
+        "A desktop contents rail becomes a scrollable phone navigation bar; source labels use a compact 11px format without removing their names or dates.",
+        "Original qualifications, sources, saved-track behaviour, deep links and complete printing remain intact."
+      ],
+      "links": [
+        {
+          "label": "Read Academic Rules",
+          "url": "academic-rules.html"
+        },
+        {
+          "label": "Explore Programme Journey",
+          "url": "journey.html"
+        }
+      ],
+      "version": "v0.9",
+      "date": "2026-10-08",
+      "status": "published",
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37718830041",
+        "deployedAt": "2026-10-08T02:38:31Z",
+        "commits": [
+          {
+            "sha": "e5dd21ad418f30dcd886936fcf3589ad7f98c924",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/e5dd21ad418f30dcd886936fcf3589ad7f98c924"
+          }
+        ]
+      }
+    },
+    {
+      "id": "toolkit-seven-local-workbenches",
+      "title": "Seven new study, life and career workbenches",
+      "summary": "Use practical local tools for economics, sample precision, study sessions, four-city budgets, moving, document dates and career applications.",
+      "category": "learning",
+      "type": "new",
+      "highlights": [
+        "Explore economics graphs and approximate sample precision, and organise personal study tasks with explicit capacity and unscheduled-hours feedback.",
+        "Build your own city-budget scenarios, moving checklists and document-deadline reminders; no city prices, exchange rates or official deadlines are invented.",
+        "The career tracker records opportunities, stages, next actions and follow-ups, alongside preparation checks.",
+        "Drafts stay in the tab unless explicitly saved on this device. Exports and reviewed imports are local; the tools do not submit applications or send background notifications."
+      ],
+      "links": [
+        {
+          "label": "Open Your workbench",
+          "url": "toolkit.html?section=workbench"
+        },
+        {
+          "label": "Open the career tracker",
+          "url": "toolkit.html?section=workbench&planner=career-tracker"
+        },
+        {
+          "label": "Open moving checklist",
+          "url": "toolkit.html?section=workbench&planner=moving-checklist"
+        }
+      ],
+      "version": "v0.9",
+      "date": "2026-10-08",
+      "status": "published",
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37717469023",
+        "deployedAt": "2026-10-08T02:21:53Z",
+        "commits": [
+          {
+            "sha": "89775f8b9067e13d29dc42268b22476b683f799d",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/89775f8b9067e13d29dc42268b22476b683f799d"
+          }
+        ]
+      }
+    },
+    {
+      "id": "right-to-health-guides-casebook",
+      "title": "Right to Health guides and an interactive casebook",
+      "summary": "A source-led Right to Health workspace brings original study guides, case exercises, practice questions and revision aids together.",
+      "category": "learning",
+      "type": "new",
+      "highlights": [
+        "Ten original guides and source-located study sections help organise the course concepts and reading.",
+        "Explore progressive cases, multiple-choice practice, open-answer scaffolds, flashcards and glossary terms.",
+        "Existing course identifiers and study progress remain intact; case drafts stay page-local with text export.",
+        "Student-built explanations are distinct from authoritative sources. Official PDFs and recordings remain on their original platforms."
+      ],
+      "links": [
+        {
+          "label": "Open Right to Health",
+          "url": "course.html?course=right-to-health"
+        }
+      ],
+      "version": "v0.9",
+      "date": "2026-10-08",
+      "status": "published",
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37716925722",
+        "deployedAt": "2026-10-08T02:15:19Z",
+        "commits": [
+          {
+            "sha": "b7643c78b7c2ef6f4a728a0fe3aa8c18c7900dc9",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/b7643c78b7c2ef6f4a728a0fe3aa8c18c7900dc9"
+          },
+          {
+            "sha": "e13793d6f40eb25c9b06f85290bb33c5c345b12e",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/e13793d6f40eb25c9b06f85290bb33c5c345b12e"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pulse-to-growth-brand",
+      "title": "The Hub's own Pulse to Growth identity",
+      "summary": "The selected Pulse to Growth mark unifies the unofficial Student Hub's header, app icons and sharing identity.",
+      "category": "platform",
+      "type": "improved",
+      "highlights": [
+        "A rising pulse inside a rounded square is adapted to the navy, white and terracotta palette.",
+        "The shared header, navigation drawer, footer and app/browser assets use the selected mark.",
+        "This is the student project's own logo; it does not imply endorsement by the universities."
+      ],
+      "links": [
+        {
+          "label": "See the Hub identity",
+          "url": "index.html"
+        }
+      ],
+      "version": "v0.9",
+      "date": "2026-10-08",
+      "status": "published",
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37714348657",
+        "deployedAt": "2026-10-08T01:44:47Z",
+        "commits": [
+          {
+            "sha": "c146228bf3531a6aa3980050d0b55e71675eaae4",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/c146228bf3531a6aa3980050d0b55e71675eaae4"
+          },
+          {
+            "sha": "1ea8780a7fb51c724dbd55411a176ac7755103e3",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/1ea8780a7fb51c724dbd55411a176ac7755103e3"
+          }
+        ]
+      }
+    },
+    {
+      "id": "city-guides-topic-redesign",
+      "title": "Redesigned guides for all four EU-HEM cities",
+      "summary": "Explore Bologna, Oslo, Innsbruck and Rotterdam through illustrated covers, practical topic tabs and contextual information panels.",
+      "category": "life",
+      "type": "improved",
+      "highlights": [
+        "A new city directory and eight topic tabs make housing, arrival, transport, everyday life, study and safety information easier to find.",
+        "Search within each guide, save useful sections on your device, or use Read all for full reading and printing.",
+        "Original sources, review dates, cross-references and photo credits remain visible.",
+        "The layouts support phones, both themes, deep links and keyboard navigation."
+      ],
+      "links": [
+        {
+          "label": "Explore the four city guides",
+          "url": "city-guide.html"
+        }
+      ],
+      "version": "v0.9",
+      "date": "2026-10-08",
+      "status": "published",
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37714348657",
+        "deployedAt": "2026-10-08T01:44:47Z",
+        "commits": [
+          {
+            "sha": "cb350dc4cb71345917995a5e63f0e2b38c0d8e55",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/cb350dc4cb71345917995a5e63f0e2b38c0d8e55"
+          }
+        ]
+      }
+    },
+    {
+      "id": "homepage-day-exam-news-browsing",
+      "title": "Browse class days, exams and illustrated news from Home",
+      "summary": "The homepage's everyday planning area lets you browse class days and upcoming exams, alongside an illustrated announcement carousel.",
+      "category": "platform",
+      "type": "improved",
+      "highlights": [
+        "Step through days and exam entries without leaving the homepage, while retaining the saved-course filter.",
+        "Illustrated news cards link to the full announcement reader, with rotation and pause controls.",
+        "Motion respects reduced-motion preferences and the existing homepage navigation remains available."
+      ],
+      "links": [
+        {
+          "label": "Browse the updated homepage",
+          "url": "index.html"
+        }
+      ],
+      "version": "v0.9",
+      "date": "2026-10-08",
+      "status": "published",
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37711186715",
+        "deployedAt": "2026-10-08T01:06:20Z",
+        "commits": [
+          {
+            "sha": "a9dff382e59a44e17bd1d4238f3ad7bcbbfbbddc",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/a9dff382e59a44e17bd1d4238f3ad7bcbbfbbddc"
+          }
+        ]
+      }
+    },
+    {
+      "id": "roadmap-v2-release-windows",
+      "title": "Clearer release history and the November v2 plan",
+      "summary": "Roadmap & Updates separates verified releases from Now, Next and Later work and shows the early-November v2 target alongside v1.",
+      "category": "platform",
+      "type": "improved",
+      "highlights": [
+        "Published updates link to real successful deployments; future release windows remain explicitly labelled as targets.",
+        "The current public version stays Beta v0.9. v1.0 targets 15 October and v2.0 targets early November 2026.",
+        "Search, filters, saved plans and the journey timeline distinguish released features from planned work."
+      ],
+      "links": [
+        {
+          "label": "Read the release roadmap",
+          "url": "roadmap.html#roadmap"
+        }
+      ],
+      "version": "v0.9",
+      "date": "2026-10-08",
+      "status": "published",
+      "evidence": {
+        "deploymentUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/37710258056",
+        "deployedAt": "2026-10-08T00:55:40Z",
+        "commits": [
+          {
+            "sha": "908485c6e8623466232dc978f0774aa3b35c99df",
+            "url": "https://github.com/AdnanTarabishi/eu-hem-student-hub/commit/908485c6e8623466232dc978f0774aa3b35c99df"
+          }
+        ]
+      }
+    },
     {
       "id": "homepage-visual-refresh",
       "version": "v0.9",
