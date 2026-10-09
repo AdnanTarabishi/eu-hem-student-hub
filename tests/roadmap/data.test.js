@@ -7,6 +7,7 @@ const R = require(path.join(ROOT, "roadmap-data.js"));
 const read = (file) => JSON.parse(fs.readFileSync(path.join(ROOT, file), "utf8"));
 const roadmap = read("content/roadmap.json");
 const updates = read("content/updates.json");
+const RECENT_IDS = ["timetable-monthly-progress", "universities-directory-galleries", "timetable-month-day-teachers", "future-sections-browsable-previews", "course-study-workspaces", "notes-resource-first-workspace", "behind-the-build-effort", "contact-private-form-delivery", "practice-quiz-flashcard-redesign", "support-contact-privacy-redesign", "academic-guides-visual-redesign", "toolkit-seven-local-workbenches", "right-to-health-guides-casebook", "pulse-to-growth-brand", "city-guides-topic-redesign", "homepage-day-exam-news-browsing", "roadmap-v2-release-windows"];
 const clone = (x) => JSON.parse(JSON.stringify(x));
 // The real file may have no draft at a given moment, so draft rules are tested with this extra one
 const withDraft = clone(updates);
@@ -54,17 +55,17 @@ t("future-section previews are linked while full collections remain in progress 
   assert.ok(gallery.details.some((detail) => /private visibility for verified EU-HEM members/.test(detail)));
 });
 t("shipped features are no longer listed as plans, including the Student Toolkit and interactive labs", () => {
-  for (const id of ["student-stories-experiences", "partner-university-guides", "student-digital-toolkit", "methods-health-economics-labs"]) {
+  for (const id of ["student-stories-experiences", "partner-university-guides", "student-digital-toolkit", "methods-health-economics-labs", "career-application-tracker"]) {
     assert.ok(!roadmap.items.some((i) => i.id === id), id);
   }
 });
-t("Later: eight remaining ideas without dates, including trips and further thesis planning", () => {
+t("Later: seven remaining ideas without dates, including trips and further thesis planning", () => {
   const later = roadmap.items.filter((i) => i.lane === "later");
-  assert.strictEqual(later.length, 8);
+  assert.strictEqual(later.length, 7);
   for (const i of later) { assert.strictEqual(i.target, null, i.id); assert.strictEqual(i.status, "exploring", i.id); }
   assert.ok(!later.some((i) => i.id === "mobility-checklists"), "mobility checklists moved to Next");
   for (const id of ["group-trips-adventures", "budget-shared-expenses",
-    "cross-device-revision-workspace", "group-project-workspace", "research-reading-workbench", "career-application-tracker",
+    "cross-device-revision-workspace", "group-project-workspace", "research-reading-workbench",
     "thesis-planning-companion", "alumni-mentoring-skills-exchange"]) assert.ok(later.some((i) => i.id === id), id);
   assert.strictEqual(later.find((i) => i.id === "thesis-planning-companion").title, "Thesis timeline & supervisor meeting planner");
 });
@@ -75,15 +76,15 @@ t("accounts are planned, never presented as available", () => {
   assert.match(accounts.note, /secure sign-in and a privacy review/);
   assert.ok(!updates.items.some((u) => u.status === "published" && /account|sign-in|login/i.test(u.title + u.summary)));
 });
-t("updates: 37 published with evidence, seven recent additions in deployment order; drafts stay hidden", () => {
+t("updates: 54 published with evidence, seventeen recent additions in deployment order; drafts stay hidden", () => {
   const published = R.publishedUpdates(updates);
-  assert.strictEqual(published.length, 37);
-  assert.deepStrictEqual(published.slice(0, 7).map((u) => [u.id, u.date]), [
+  assert.strictEqual(published.length, 54);
+  assert.deepStrictEqual(published.filter((u) => !RECENT_IDS.includes(u.id)).slice(0, 7).map((u) => [u.id, u.date]), [
     ["homepage-visual-refresh", "2026-10-08"],
     ["announcements-newsroom", "2026-10-08"], ["cohort-origins-distribution", "2026-10-08"], ["toolkit-solve-a-problem", "2026-10-08"],
     ["toolkit-collections-and-lists", "2026-10-07"], ["student-toolkit", "2026-10-07"], ["statistics-lab-course-expansion", "2026-10-07"],
   ]);
-  assert.deepStrictEqual(published.slice(7, 11).map((u) => u.id), ["statistics-lab", "students-community-atlas", "thesis-research-guide", "timetable-exam-planners"]);
+  assert.deepStrictEqual(published.filter((u) => !RECENT_IDS.includes(u.id)).slice(7, 11).map((u) => u.id), ["statistics-lab", "students-community-atlas", "thesis-research-guide", "timetable-exam-planners"]);
   assert.deepStrictEqual(R.validate(roadmap, withDraft, { today, pageExists }), [], "a correct draft is valid");
   assert.ok(!R.publishedUpdates(withDraft).some((u) => u.id === "test-draft"), "draft hidden");
   for (const u of published) assert.strictEqual(R.dateInRome(u.evidence.deployedAt), u.date, u.id);
@@ -113,8 +114,8 @@ t("progress: the explicit 25% team estimate stays separate from verified release
   assert.strictEqual(vision.targetLabel, "Spring 2027");
   assert.strictEqual(vision.progressPercent, 25);
   assert.match(vision.note, /25%.*estimate/);
-  assert.deepStrictEqual(R.releaseCount(updates), { count: 37, since: "2026-10-01", text: "37 releases shipped since 1 Oct 2026" });
-  assert.strictEqual(R.releaseCount(withDraft).count, 37, "drafts are not counted");
+  assert.deepStrictEqual(R.releaseCount(updates), { count: 54, since: "2026-10-01", text: "54 releases shipped since 1 Oct 2026" });
+  assert.strictEqual(R.releaseCount(withDraft).count, 54, "drafts are not counted");
   const estimate = clone(roadmap); estimate.vision.progressPercent = 15;
   assert.strictEqual(R.readRoadmap(estimate).vision.progressPercent, 15, "explicit optional estimates remain supported");
   const unspecified = clone(roadmap); delete unspecified.vision.progressPercent;
@@ -145,7 +146,7 @@ t("versions: every release has one, by release day; the newest first for the fil
   const byDay = {};
   for (const u of R.publishedUpdates(updates)) (byDay[u.date] = byDay[u.date] || new Set()).add(u.version);
   assert.deepStrictEqual(Object.fromEntries(Object.entries(byDay).map(([d, v]) => [d, [...v]])),
-    { "2026-10-08": ["v0.9"], "2026-10-07": ["v0.9"], "2026-10-06": ["v0.9"], "2026-10-05": ["v0.5"], "2026-10-04": ["v0.4"], "2026-10-03": ["v0.3"], "2026-10-01": ["v0.1"] });
+    { "2026-10-09": ["v0.9"], "2026-10-08": ["v0.9"], "2026-10-07": ["v0.9"], "2026-10-06": ["v0.9"], "2026-10-05": ["v0.5"], "2026-10-04": ["v0.4"], "2026-10-03": ["v0.3"], "2026-10-01": ["v0.1"] });
   assert.deepStrictEqual(R.updateVersions(updates), ["v0.9", "v0.5", "v0.4", "v0.3", "v0.1"]);
   const u = clone(updates); delete u.items.find((i) => i.status === "published").version; fails(roadmap, u, /needs a version/);
 });
@@ -291,7 +292,7 @@ t("search entries: plans lead with their status and say 'not available yet'; rel
   assert.strictEqual(plans.length, roadmap.items.length);
   for (const e of plans) assert.match(e.meta, /^(In progress|Planned|Exploring) · .* · not available yet$/);
   const released = entries.filter((e) => e.type === "update");
-  assert.strictEqual(released.length, 37);
+  assert.strictEqual(released.length, 54);
   for (const e of released) assert.match(e.meta, /^Released · \d+ \w+ 2026 · /);
   assert.ok(!entries.some((e) => /test-draft/.test(e.url)));
   assert.ok(entries.every((e) => /^roadmap\.html#(feature|update)-[a-z0-9-]+$/.test(e.url)));
