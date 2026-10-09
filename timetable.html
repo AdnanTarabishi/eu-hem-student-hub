@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Timetable – EU-HEM Student Hub</title>
-  <meta name="description" content="Plan your EU-HEM classes with a weekly calendar, searchable agenda, rooms and calendar exports from the official UniBo timetable.">
+  <meta name="description" content="Plan your EU-HEM classes with monthly, weekly and daily calendars, an optional teacher display, rooms and calendar exports from the official UniBo timetable.">
   <!-- Social preview (scripts/social-tags.js) -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="EU-HEM Student Hub">
   <meta property="og:title" content="Timetable – EU-HEM Student Hub">
-  <meta property="og:description" content="Plan your EU-HEM classes with a weekly calendar, searchable agenda, rooms and calendar exports from the official UniBo timetable.">
+  <meta property="og:description" content="Plan your EU-HEM classes with monthly, weekly and daily calendars, an optional teacher display, rooms and calendar exports from the official UniBo timetable.">
   <meta property="og:url" content="https://adnantarabishi.github.io/eu-hem-student-hub/timetable.html">
   <meta property="og:image" content="https://adnantarabishi.github.io/eu-hem-student-hub/img/social-preview.png">
   <meta property="og:image:width" content="1200">
@@ -20,6 +20,8 @@
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=6ef75792">
   <link rel="stylesheet" href="planning.css?v=0e4fe2a7">
+  <link rel="stylesheet" href="timetable.css?v=9cb1d56b">
+  <link rel="preload" href="fonts/source-serif-4-latin-600.woff2" as="font" type="font/woff2" crossorigin>
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -43,9 +45,9 @@
   <main class="container">
     <section class="planning-hero" aria-labelledby="timetable-title">
       <div class="planning-hero-main">
-        <p class="section-eyebrow">Academic planner · Year 1</p>
-        <h1 id="timetable-title">Your week,<br>at a glance.</h1>
-        <p class="planning-lead">A little less searching. A clearer view of your classes, rooms and what comes next.</p>
+        <p class="section-eyebrow">Academic planner · Bologna</p>
+        <h1 id="timetable-title">Your time.<br><span>A clearer picture.</span></h1>
+        <p class="planning-lead">See the whole month, focus on today, or plan your week. Your classes and the details you need, in one place.</p>
         <nav class="planning-hero-links" aria-label="Academic planner">
           <a class="planning-pill is-active" href="timetable.html" aria-current="page"><svg class="icon" aria-hidden="true"><use href="icons.svg#timetable"></use></svg> Timetable</a>
           <a class="planning-pill" href="exams.html"><svg class="icon" aria-hidden="true"><use href="icons.svg#exams"></use></svg> Exams &amp; registration</a>
@@ -56,9 +58,9 @@
         </div>
       </div>
       <aside class="planning-hero-aside" aria-label="Your next class">
-        <p class="section-eyebrow">Up next</p>
+        <p class="section-eyebrow">Now &amp; next <span class="tt-live-dot" aria-hidden="true"></span></p>
         <div id="now-next" class="now-next"><p class="schedule-meta">Finding your next class…</p></div>
-        <p class="planning-aside-note">All class times are in Bologna (Europe/Rome).</p>
+        <p class="planning-aside-note">For the current course filters · Bologna time (Europe/Rome).</p>
       </aside>
     </section>
     <div id="timetable-summary" class="planning-summary" aria-label="Timetable overview"></div>
@@ -66,21 +68,23 @@
     <section class="planning-panel" aria-labelledby="classes-title">
       <div class="planning-panel-head">
         <div><p class="section-eyebrow">Make space for learning</p><h2 id="classes-title">Class schedule</h2></div>
-        <p id="timetable-checked" class="schedule-meta">Loading official schedule…</p>
+        <div class="tt-source"><span class="tt-source-label">Official · UniBo</span><p id="timetable-checked" class="schedule-meta">Loading official schedule…</p><button id="timetable-refresh" type="button" class="inline-link">Refresh</button></div>
       </div>
       <div class="planning-toolbar">
         <div class="planning-controls">
           <div id="view-switch" class="segmented" role="group" aria-label="View">
+            <button class="segment icon-button" type="button" data-view="day" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="icons.svg#clock"></use></svg>Day</button>
             <button class="segment icon-button" type="button" data-view="week" aria-pressed="true"><svg class="icon" aria-hidden="true"><use href="icons.svg#grid"></use></svg>Week</button>
+            <button class="segment icon-button" type="button" data-view="month" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="icons.svg#calendar"></use></svg>Month</button>
             <button class="segment icon-button" type="button" data-view="list" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="icons.svg#list"></use></svg>List</button>
           </div>
           <div id="week-nav" class="week-nav">
             <button id="week-prev" class="icon-button" type="button" aria-label="Previous week"><svg class="icon" aria-hidden="true"><use href="icons.svg#chevron-left"></use></svg></button>
-            <strong id="week-label" class="week-label"></strong>
+            <strong id="week-label" class="week-label" aria-live="polite" aria-atomic="true"></strong>
             <button id="week-next" class="icon-button" type="button" aria-label="Next week"><svg class="icon" aria-hidden="true"><use href="icons.svg#chevron-right"></use></svg></button>
             <button id="week-today" class="inline-link" type="button">This week</button>
           </div>
-          <label id="week-picker-label" class="planning-date-picker">Jump to date <input id="week-picker" type="date"></label>
+          <label id="week-picker-label" class="planning-date-picker">Jump to date <input id="week-picker" type="date" min="1900-01-01" max="2200-12-31"></label>
         </div>
         <div class="toolbar-filters schedule-filters">
           <label>Course
@@ -89,16 +93,21 @@
           <label class="planning-search">Search classes
             <input id="timetable-search" type="search" placeholder="Course, room or teacher" autocomplete="off">
           </label>
+          <label class="checkbox-label tt-teacher-switch" title="Show teacher names on schedule cards. Full class details always include the teacher.">
+            <input type="checkbox" id="show-teacher"> Show teacher
+          </label>
           <label class="checkbox-label" id="show-past-label">
             <input type="checkbox" id="show-past"> Show past classes
           </label>
           <button id="timetable-reset" class="inline-link" type="button">Clear filters</button>
         </div>
       </div>
+      <p id="timetable-display-note" class="tt-display-note">View and display preferences stay on this device. Teacher names remain searchable when hidden.</p>
       <div id="timetable-legend" class="planning-legend" aria-label="Courses shown"></div>
       <p id="schedule-status" class="schedule-meta" aria-live="polite"></p>
       <div id="schedule-list"></div>
     </section>
+    <noscript><p class="planning-empty">JavaScript is needed to display the interactive calendar. Please use the <a href="https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/timetable">official UniBo timetable</a>.</p></noscript>
     <p class="planning-source-note">From the official UniBo timetable. Check UniBo for last-minute changes; its published schedule takes priority. Choose a class for details, a map and a calendar export.</p>
   </main>
 
@@ -117,7 +126,8 @@
   <script defer src="unibo-data.js?v=892a323e"></script>
   <script defer src="notes-schedule.js?v=72ca9b39"></script>
   <script defer src="planning.js?v=5b022301"></script>
-  <script defer src="timetable.js?v=a3e99181"></script>
+  <script defer src="timetable-calendar.js?v=dc3d1b19"></script>
+  <script defer src="timetable.js?v=d286a08d"></script>
 
 </body>
 </html>
