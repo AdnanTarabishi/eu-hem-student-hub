@@ -20,7 +20,7 @@
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=6ef75792">
   <link rel="stylesheet" href="planning.css?v=0e4fe2a7">
-  <link rel="stylesheet" href="timetable-progress.css?v=284181c5">
+  <link rel="stylesheet" href="timetable-progress.css?v=e76f6e48">
   <link rel="stylesheet" href="timetable.css?v=9cb1d56b">
   <link rel="preload" href="fonts/source-serif-4-latin-600.woff2" as="font" type="font/woff2" crossorigin>
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
@@ -66,6 +66,31 @@
     </section>
     <div id="timetable-summary" class="planning-summary" aria-label="Timetable overview"></div>
 
+    <section id="monthly-progress" class="tt-progress" aria-labelledby="monthly-progress-title" aria-busy="true">
+      <div class="tt-progress-heading">
+        <div><p id="monthly-progress-eyebrow" class="section-eyebrow">One month at a time</p><h2 id="monthly-progress-title">Monthly teaching progress</h2></div>
+        <p id="monthly-progress-scope" class="tt-progress-scope">Bologna time · Europe/Rome</p>
+      </div>
+      <div id="monthly-progress-values" class="tt-progress-values" hidden>
+        <div class="tt-progress-share"><strong id="monthly-progress-percent">—</strong><span>of published hours finished</span></div>
+        <div class="tt-progress-track">
+          <div class="tt-progress-track-head"><strong id="monthly-progress-month" class="sr-only"></strong><span id="monthly-progress-classes"></span></div>
+          <progress id="monthly-progress-bar" max="100" value="0" aria-labelledby="monthly-progress-title monthly-progress-month" aria-describedby="monthly-progress-method"></progress>
+          <dl class="tt-progress-metrics">
+            <div><dt>Finished</dt><dd id="monthly-progress-finished">—</dd></div>
+            <div><dt>Total</dt><dd id="monthly-progress-total">—</dd></div>
+            <div><dt>Remaining</dt><dd id="monthly-progress-remaining">—</dd></div>
+          </dl>
+        </div>
+      </div>
+      <p id="monthly-progress-status" class="tt-progress-status">Waiting for the official timetable. Progress is not available yet.</p>
+      <details class="tt-progress-method">
+        <summary>How is this calculated?</summary>
+        <p id="monthly-progress-method">Finished scheduled hours ÷ all published scheduled hours in the selected period × 100. Day, Week and Month use the selected date; weeks run Monday–Sunday. A class belongs to the period in which it starts and counts only after its scheduled end, in Bologna time. An ongoing class is still part of Remaining. Course, search and My courses only filters apply; Show teacher and Show past classes do not affect the percentage.</p>
+        <p>This is scheduled teaching progress, not attendance, learning progress or credits earned. It excludes personal study and exams. Unpublished classes are unknown, and the total can change when UniBo changes its timetable. List view shows the current month, including finished classes hidden from the list.</p>
+      </details>
+    </section>
+
     <section class="planning-panel" aria-labelledby="classes-title">
       <div class="planning-panel-head">
         <div><p class="section-eyebrow">Make space for learning</p><h2 id="classes-title">Class schedule</h2></div>
@@ -110,31 +135,6 @@
     </section>
     <noscript><p class="planning-empty">JavaScript is needed to display the interactive calendar. Please use the <a href="https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/timetable">official UniBo timetable</a>.</p></noscript>
     <p class="planning-source-note">From the official UniBo timetable. Check UniBo for last-minute changes; its published schedule takes priority. Choose a class for details, a map and a calendar export.</p>
-
-    <section id="monthly-progress" class="tt-progress" aria-labelledby="monthly-progress-title" aria-busy="true">
-      <div class="tt-progress-heading">
-        <div><p id="monthly-progress-eyebrow" class="section-eyebrow">One month at a time</p><h2 id="monthly-progress-title">Monthly teaching progress</h2></div>
-        <p id="monthly-progress-scope" class="tt-progress-scope">Bologna time · Europe/Rome</p>
-      </div>
-      <div id="monthly-progress-values" class="tt-progress-values" hidden>
-        <div class="tt-progress-share"><strong id="monthly-progress-percent">—</strong><span>of published hours finished</span></div>
-        <div class="tt-progress-track">
-          <div class="tt-progress-track-head"><strong id="monthly-progress-month" class="sr-only"></strong><span id="monthly-progress-classes"></span></div>
-          <progress id="monthly-progress-bar" max="100" value="0" aria-labelledby="monthly-progress-title monthly-progress-month" aria-describedby="monthly-progress-method"></progress>
-          <dl class="tt-progress-metrics">
-            <div><dt>Finished</dt><dd id="monthly-progress-finished">—</dd></div>
-            <div><dt>Total</dt><dd id="monthly-progress-total">—</dd></div>
-            <div><dt>Remaining</dt><dd id="monthly-progress-remaining">—</dd></div>
-          </dl>
-        </div>
-      </div>
-      <p id="monthly-progress-status" class="tt-progress-status">Waiting for the official timetable. Progress is not available yet.</p>
-      <details class="tt-progress-method">
-        <summary>How is this calculated?</summary>
-        <p id="monthly-progress-method">Finished scheduled hours ÷ all published scheduled hours in the selected period × 100. Day, Week and Month use the selected date; weeks run Monday–Sunday. A class belongs to the period in which it starts and counts only after its scheduled end, in Bologna time. An ongoing class is still part of Remaining. Course, search and My courses only filters apply; Show teacher and Show past classes do not affect the percentage.</p>
-        <p>This is scheduled teaching progress, not attendance, learning progress or credits earned. It excludes personal study and exams. Unpublished classes are unknown, and the total can change when UniBo changes its timetable. List view shows the current month, including finished classes hidden from the list.</p>
-      </details>
-    </section>
   </main>
 
   <footer class="site-footer">
