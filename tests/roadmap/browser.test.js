@@ -59,7 +59,7 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
   /* ----- Overview and the three stages ----- */
   let page = await open();
   assert.deepStrictEqual(await page.$$eval(".roadmap-overview-item", (all) => all.map((b) => b.textContent.replace(/\s+/g, ""))),
-    ["2Now", "9Next", "7Later", "37Released"]);
+    ["2Now", "9Next", "7Later", "54Released"]);
   assert.match(await text(page, "#roadmap-reviewed"), /Last reviewed 9 October 2026/);
   assert.deepStrictEqual(await page.$$eval(".roadmap-card.is-now .roadmap-card-title", (all) => all.map((h) => h.textContent)),
     ["Exam Prep", "Beta feedback & essential improvements"]);
