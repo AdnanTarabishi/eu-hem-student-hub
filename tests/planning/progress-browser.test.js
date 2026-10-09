@@ -99,7 +99,7 @@ const FEED = [make('96498','2026-10-01','09:00','QA Statistics Teacher'), make('
     assert.equal(await p.locator('#monthly-progress-values').isVisible(),false);assert.match(await p.locator('#monthly-progress-status').innerText(),/durations could not be validated/);await p.context().close();
     p=await open({url:'timetable.html?view=month',blocked:true});assert.equal(await percent(),'40%');await p.context().close();
     ok('invalid durations cannot claim completion and storage-blocked visits still calculate progress');
-    const plan=JSON.stringify({version:1,cohort:"2026-27",term:"y1-s1",choices:{quant:"96496",elective:"C8393"},statuses:{},savedAt:"2026-10-01T10:00:00Z"});
+    const plan=JSON.stringify({version:1,cohort:"2026-27",term:"y1-s1",choices:{quant:"96525",elective:"C8393"},statuses:{},savedAt:"2026-10-01T10:00:00Z"});
     p=await open({url:'timetable.html?view=month',storage:{'euhem-study-plan-v1':plan}});
     assert.equal(await percent(),'0%');
     assert.match(await p.locator('#monthly-progress-scope').innerText(),/My courses only/);
