@@ -26,7 +26,7 @@ Check in a private browser window that the Sheet link shows "You need access".
 1. Open script.google.com → New project.
 2. Replace the editor content with `Code.gs`.
 3. Project Settings → **Show appsscript.json manifest file in editor**, then replace that file with
-   the accompanying `appsscript.json`. It declares Sheets, Drive and confirmation-email permissions,
+   the accompanying `appsscript.json`. It declares Sheets, Drive, confirmation-email and setup-account-check permissions,
    the V8 runtime, and execution as the deploying account. Automatic exception logging is disabled.
 4. Project Settings → Script Properties → add:
 
@@ -60,7 +60,8 @@ function runDirectoryMaintenance() {
 }
 ```
 
-Google asks for permission to use Sheets, Drive and to send email as the Student Hub account. Accept.
+Google asks for permission to use Sheets, Drive, send email and read the executing account's email for the
+temporary owner check. Accept as the Student Hub account. No visitor account or login is requested.
 `setup_()`:
 
 - creates the `Submissions` tab, or adds any **missing columns at the end** (old columns and rows are never
@@ -123,6 +124,10 @@ Run workflow screen can enable `run_live_delivery` with the owner-deployed `dire
 one fictional hidden-profile registration, followed by one unchanged retry, at the website's actual origin
 using the candidate Join files. It sends a confirmation email only to a plus-address of
 `euhem.studenthub@gmail.com`; it submits no student information, photo or statistics consent.
+
+The workflow must first be available on `main` for GitHub's manual Run workflow control to appear.
+The setup files can be published while the receiving URL is still empty; activate registration in a
+separate change after the deployed checks pass.
 
 The sanitized `directory-real-delivery` artifact records the fictional request ID, version, HTTP status and
 matching receipts. It omits answers, email addresses, private storage IDs, confirmation tokens and temporary

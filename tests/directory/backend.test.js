@@ -29,6 +29,8 @@ t('only registration and email confirmation are callable from the public web app
   assert.strictEqual(manifest.webapp.executeAs, 'USER_DEPLOYING');
   assert.strictEqual(manifest.webapp.access, 'ANYONE_ANONYMOUS');
   assert.strictEqual(manifest.exceptionLogging, 'NONE');
+  assert.ok(manifest.oauthScopes.includes('https://www.googleapis.com/auth/userinfo.email'),
+    'the temporary setup wrapper can verify the executing account');
 });
 t('setup creates all 63 columns and the Options tab', () => {
   const g = fresh(); assert.strictEqual(g.grid[0].length, 63);
