@@ -164,6 +164,101 @@ function renderOpenRegistrations(open, today) {
   target.appendChild(section);
 }
 
+
+function examGroups(exams) {
+  const groups = new Map();
+  for (const sitting of exams) {
+    const courseId = sitting.courseIds[0] || sitting.title;
+    if (!groups.has(courseId)) groups.set(courseId, { courseId, modules: new Map(), count: 0 });
+    const course = groups.get(courseId);
+    const assessment = sitting.moduleCodes?.length ? [...sitting.moduleCodes].sort().join("+") : sitting.title;
+    if (!course.modules.has(assessment)) course.modules.set(assessment, []);
+    course.modules.get(assessment).push(sitting);
+    course.count++;
+  }
+  return [...groups.values()];
+}
+
+function renderExamSpecial() {
+  const target = document.getElementById("exam-special");
+  if (!target || !examsPage.programme) return;
+  target.replaceChildren();
+  const course = currentTerm(examsPage.programme).courses.find(c => c.assessmentNotice?.kind === "administrative-pass-fail");
+  if (!course) return;
+  const info = course.assessmentNotice;
+  const card = createElement("section", "exam-special-card");
+  card.setAttribute("aria-labelledby", "exam-special-title");
+  const top = createElement("div", "exam-special-head");
+  const title = createElement("h2", null, course.name);
+  title.id = "exam-special-title";
+  top.append(
+    createElement("span", "exam-special-kicker", "LECTURER GUIDANCE · ADMINISTRATIVE REGISTRATION"),
+    title,
+    createElement("p", "exam-special-lead", "No final exam · Pass/Fail recording · 3 CFU crash course"),
+    createElement("p", "exam-special-date", `Recording session: ${formatDay(info.sessionDate, {day:"numeric",month:"long",year:"numeric"})} at ${info.sessionTime} (Bologna time)`),
+    createElement("p", "exam-special-caption", "This named Esame session is for administrative recording, not a written exam.")
+  );
+  const content = createElement("div", "exam-special-body");
+  const steps = createElement("ol", "exam-special-steps");
+  for (const [label, text] of [
+    ["Virtuale course enrolment", info.virtualeInstruction],
+    ["Recording-session enrolment", info.recordingInstruction],
+    ["Credits & result", info.note],
+  ]) {
+    const item = createElement("li");
+    item.append(createElement("strong", null, label), createElement("p", null, text));
+    steps.appendChild(item);
+  }
+  content.appendChild(steps);
+  const actions = createElement("div", "exam-special-links");
+  if (course.officialUrl) {
+    const official = createElement("a", null, "Official course syllabus ↗");
+    official.href=course.officialUrl; official.target="_blank"; official.rel="noopener";
+    actions.appendChild(official);
+  }
+  const more = createElement("a", null, "Course details →");
+  more.href=coursePageLink({courseIds:[course.id]});
+  actions.appendChild(more);
+  content.append(actions, createElement("p", "exam-special-source", info.source));
+  card.append(top, content);
+  target.appendChild(card);
+}
+
+function renderCourseSittings(exams, today) {
+  const courses = currentTerm(examsPage.programme).courses;
+  for (const group of examGroups(exams)) {
+    const course = courses.find(c => c.id === group.courseId);
+    const wrapper = createElement("section", "exam-course-group");
+    const heading = createElement("header", "exam-course-group-head");
+    const identity = createElement("div");
+    const h = createElement("h3");
+    const link = createElement("a", null, course?.name || group.modules.values().next().value[0].title);
+    link.href=coursePageLink({courseIds:[group.courseId]});
+    h.appendChild(link);
+    identity.append(h,createElement("p", "exam-course-group-note", `${course?.integrated ? "Integrated course · assessments separated by module" : "Course assessment"} · ${group.count} upcoming sitting${group.count===1?"":"s"}`));
+    heading.append(identity,createElement("span", "exam-course-group-count", `${group.count} date${group.count===1?"":"s"}`));
+    wrapper.appendChild(heading);
+    for (const [moduleCode, sittings] of group.modules) {
+      const block=createElement("div","exam-module-group");
+      const module=course?.modules.find(m=>m.code===moduleCode);
+      if (course?.integrated) block.appendChild(createElement("h4","exam-module-name",module?.name||sittings[0].title));
+      sittings.sort((a,b)=>(a.dateKey+a.time).localeCompare(b.dateKey+b.time));
+      block.appendChild(createElement("p","exam-sitting-label","Next published sitting"));
+      block.appendChild(examCard(sittings[0],today));
+      if (sittings.length>1) {
+        const details=createElement("details","exam-more-sittings");
+        details.appendChild(createElement("summary",null,`View ${sittings.length-1} additional published date${sittings.length===2?"":"s"}`));
+        const stack=createElement("div","exam-more-stack");
+        for (const sitting of sittings.slice(1)) stack.appendChild(examCard(sitting,today));
+        details.appendChild(stack);
+        block.appendChild(details);
+      }
+      wrapper.appendChild(block);
+    }
+    examList.appendChild(wrapper);
+  }
+}
+
 function render() {
   if (!examsPage.loaded) return;
   const now = Planner.clock(), today = now.slice(0, 10);
@@ -183,9 +278,10 @@ function render() {
       note: deadline ? (deadline === today ? "Closes today · check the time" : `${daysBetween(today, deadline)} days to register`) : "No open booking windows" },
   ]);
   renderExamHighlight(exams, today);
+  renderExamSpecial();
   renderOpenRegistrations(open, today);
   examReset.disabled = !examCourseFilter.value && !examRegistrationFilter.value && !examSearch.value;
-  examStatus.textContent = `${exams.length} upcoming sitting${exams.length === 1 ? "" : "s"}${mine ? " for your courses" : ""}${examCourseFilter.value || examRegistrationFilter.value || examSearch.value ? " match these filters" : ""}.`;
+  examStatus.textContent = `${examGroups(exams).length} courses · ${exams.length} upcoming sitting${exams.length === 1 ? "" : "s"}${mine ? " for your courses" : ""}${examCourseFilter.value || examRegistrationFilter.value || examSearch.value ? " match these filters" : ""}.`;
   examList.replaceChildren();
   if (!exams.length) {
     const filtered = examCourseFilter.value || examRegistrationFilter.value || examSearch.value;
@@ -199,20 +295,7 @@ function render() {
     });
     return;
   }
-  let month = "", section = null;
-  for (const exam of exams) {
-    const key = exam.dateKey.slice(0, 7);
-    if (key !== month) {
-      month = key;
-      section = createElement("section", "exam-month-group");
-      const heading = createElement("h3", "month-heading", formatDay(exam.dateKey, { month: "long", year: "numeric" }));
-      heading.id = `exam-month-${key}`;
-      section.setAttribute("aria-labelledby", heading.id);
-      section.appendChild(heading);
-      examList.appendChild(section);
-    }
-    section.appendChild(examCard(exam, today));
-  }
+  renderCourseSittings(exams, today);
 }
 
 async function loadExams() {
@@ -227,6 +310,7 @@ async function loadExams() {
   try {
     // Retry a rejected programme request as well as a failed exam feed.
     examsPage.programme = examsPage.programme || await loadProgramme();
+    renderExamSpecial();
     const cohort = currentCohort(examsPage.programme), term = currentTerm(examsPage.programme);
     document.getElementById("exams-source").href = cohort.sources.examDates;
     examsPage.exams = matchExamsToTerm(await fetchExams(cohort.sources.examDates), term);

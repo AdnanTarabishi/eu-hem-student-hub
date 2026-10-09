@@ -107,7 +107,9 @@ function parseExamsPage(html) {
 function mergeExamSittings(exams) {
   const byKey = new Map();
   for (const exam of exams) {
-    const key = [exam.dateKey, exam.time, exam.place.toLowerCase()].join("|");
+    // Never collapse different course components merely because they share a room and time.
+    const assessmentCode = exam.codes[exam.codes.length - 1] || "unknown";
+    const key = [assessmentCode, exam.dateKey, exam.time, exam.place.toLowerCase(), exam.type || ""].join("|");
     const existing = byKey.get(key);
     if (!existing) {
       byKey.set(key, exam);
