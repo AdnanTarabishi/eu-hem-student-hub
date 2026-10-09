@@ -316,7 +316,7 @@ layouts and the light/dark themes, and saves screenshots for visual review.
 
 ## Behind the Build
 
-`behind-the-build.html` presents an approximate upper-range effort estimate and an illustrative
+`behind-the-build.html` presents an approximate personal-effort estimate and an illustrative
 allocation, not tracked hours. Edit `content/build-effort.json`, then run
 `node scripts/build-behind-build.mjs --integrate` and `node scripts/stamp-versions.js`.
 See `docs/behind-the-build.md` for the data basis, update procedure and checks.

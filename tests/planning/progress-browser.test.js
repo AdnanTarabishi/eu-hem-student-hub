@@ -52,7 +52,7 @@ const FEED = [make('96498','2026-10-01','09:00','QA Statistics Teacher'), make('
     assert.match(await p.locator('#monthly-progress-status').innerText(),/1 class is in progress/);
     assert.match(await p.locator('#monthly-progress-status').innerText(),/not attendance/);
     assert.equal(await p.locator('#monthly-progress-bar').getAttribute('value'),'40');
-    assert.equal(await p.evaluate(()=>document.querySelector('main').lastElementChild.id),'monthly-progress');
+    assert.equal(await p.evaluate(()=>document.querySelector('#monthly-progress').nextElementSibling.getAttribute('aria-labelledby')),'classes-title');
     ok('the published-month denominator shows 40%, not the percentage of classes or calendar days');
     for(const [view,value,hours,title] of [['day','0%',2,'Daily'],['week','50%',4,'Weekly'],['month','40%',10,'Monthly'],['list','40%',10,'Monthly']]) {
       await mode(p,view); assert.equal(await percent(),value,view);
@@ -168,7 +168,7 @@ const FEED = [make('96498','2026-10-01','09:00','QA Statistics Teacher'), make('
       assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth)<=1);
       await p.context().close();
     }
-    ok('the compact bottom card, metrics and keyboard explanation fit both themes and retain progress on resize');
+    ok('the compact card above the schedule, metrics and keyboard explanation fit both themes and retain progress on resize');
     assert.deepEqual(errors,[]);ok('no uncaught JavaScript errors or remote writes during the isolated progress tests');
     console.log(`${checks} teaching-progress browser checks passed`);
   } finally {for(const c of contexts) await c.close().catch(()=>{});await browser.close();server.close();}

@@ -12,8 +12,8 @@ assert.equal(data.schemaVersion, 1);
 assert(Number.isFinite(data.totalHours) && data.totalHours > 0);
 assert.equal(data.categories.reduce((sum, item) => sum + item.hours, 0), data.totalHours, 'Category hours must equal the total');
 assert.equal(new Set(data.categories.map(item => item.id)).size, data.categories.length);
-assert.equal(data.basis, 'Approximate upper-range estimate');
-assert.equal(data.estimateType, 'upper-range');
+assert.equal(data.basis, 'Approximate personal-effort estimate');
+assert.equal(data.estimateType, 'owner-estimate');
 assert(typeof data.estimateNotes === 'string' && data.estimateNotes.length > 0);
 assert(/^\d{4}-\d{2}-\d{2}$/.test(data.asOf));
 for (const item of data.categories) {
@@ -44,12 +44,12 @@ const html = `<!DOCTYPE html>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Behind the Build – EU-HEM Student Hub</title>
-  <meta name="description" content="The human effort behind the EU-HEM Student Hub: approximately ${data.totalHours} hours as an upper-range estimate across design, tools, content, testing, planning and launch.">
+  <meta name="description" content="The human effort behind the EU-HEM Student Hub: an estimated ${data.totalHours} hours across design, tools, content, testing, planning and launch.">
   <!-- Social preview (scripts/social-tags.js) -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="EU-HEM Student Hub">
   <meta property="og:title" content="Behind the Build – EU-HEM Student Hub">
-  <meta property="og:description" content="The human effort behind the EU-HEM Student Hub: approximately ${data.totalHours} hours as an upper-range estimate across design, tools, content, testing, planning and launch.">
+  <meta property="og:description" content="The human effort behind the EU-HEM Student Hub: an estimated ${data.totalHours} hours across design, tools, content, testing, planning and launch.">
   <meta property="og:url" content="https://adnantarabishi.github.io/eu-hem-student-hub/behind-the-build.html">
   <meta property="og:image" content="https://adnantarabishi.github.io/eu-hem-student-hub/img/social-preview.png">
   <meta property="og:image:width" content="1200">
@@ -89,7 +89,7 @@ const html = `<!DOCTYPE html>
       <aside class="build-total-card" aria-label="Estimated effort snapshot">
         <p class="build-eyebrow">The human effort</p>
         <p class="build-total"><strong data-total-hours>${data.totalHours}</strong><span>h</span></p>
-        <h2>Estimated personal effort · upper range</h2>
+        <h2>Estimated personal effort</h2>
         <p>Designing, directing, researching,<br>reviewing and bringing it together.</p>
         <div class="build-card-foot"><span>${esc(data.basis)}</span><time datetime="${data.asOf}">As of ${formattedDate}</time></div>
       </aside>
@@ -97,7 +97,7 @@ const html = `<!DOCTYPE html>
     <nav class="build-jump" aria-label="On this page"><a href="#effort">The effort</a><a href="#milestones">The journey</a><a href="#people">Human + AI</a><a href="#method">About the numbers</a></nav>
     <section class="build-section" id="effort" aria-labelledby="effort-title">
       <div class="build-section-heading"><div><p class="build-eyebrow">01 / The effort</p><h2 id="effort-title">Where the hours went.</h2></div><p>Six kinds of work, one shared purpose:<br>make student life a little easier.</p></div>
-      <p class="build-disclosure" id="allocation-note">Illustrative breakdown of the approximate ${data.totalHours}-hour upper-range estimate. Individual categories were not timed separately.</p>
+      <p class="build-disclosure" id="allocation-note">Illustrative breakdown of the approximate ${data.totalHours}-hour personal-effort estimate. Individual categories were not timed separately.</p>
       <div class="build-effort-grid">
         <div class="build-chart-card"><div class="build-donut" aria-hidden="true" style="background:conic-gradient(${segments})"><div><strong>${data.totalHours}<small>h</small></strong><span>estimated effort</span></div></div><h3>More than writing code.</h3><p>The visible pages are only part of the work. Decisions, research, review and improvements matter too.</p><a class="build-text-link" href="#method">How to read the numbers <span aria-hidden="true">↓</span></a></div>
         <div class="build-breakdown" aria-describedby="allocation-note">
@@ -111,13 +111,13 @@ const html = `<!DOCTYPE html>
     </section>
     <section class="build-section" id="milestones" aria-labelledby="milestone-title">
       <div class="build-section-heading"><div><p class="build-eyebrow">02 / The journey</p><h2 id="milestone-title">An idea, then a useful place.</h2></div><a class="build-text-link" href="roadmap.html">Full roadmap &amp; updates <span aria-hidden="true">↗</span></a></div>
-      <ol class="build-timeline"><li><time datetime="2026-10-01">1 October 2026</time><h3>The first public code</h3><p>The homepage, timetable, calendar and announcements began taking shape in the repository.</p><a href="${esc(data.repositoryUrl)}/commits/main/">Browse the code history ↗</a></li><li><time datetime="${beta.date}">${formatDate(beta.date)}</time><h3>${esc(beta.title)}</h3><p>The Hub was shared with classmates — a starting point for feedback, improvements and new ideas.</p><a href="roadmap.html">Read the project journey ↗</a></li><li><time datetime="${data.asOf}">${formattedDate}</time><h3>A moment to look back</h3><p>This approximate ${data.totalHours}-hour upper-range estimate records the effort so far. The Hub continues to evolve beyond this snapshot.</p><a href="#method">Read the estimate notes ↓</a></li></ol>
+      <ol class="build-timeline"><li><time datetime="2026-10-01">1 October 2026</time><h3>The first public code</h3><p>The homepage, timetable, calendar and announcements began taking shape in the repository.</p><a href="${esc(data.repositoryUrl)}/commits/main/">Browse the code history ↗</a></li><li><time datetime="${beta.date}">${formatDate(beta.date)}</time><h3>${esc(beta.title)}</h3><p>The Hub was shared with classmates — a starting point for feedback, improvements and new ideas.</p><a href="roadmap.html">Read the project journey ↗</a></li><li><time datetime="${data.asOf}">${formattedDate}</time><h3>A moment to look back</h3><p>This approximate ${data.totalHours}-hour personal-effort estimate records the effort so far. The Hub continues to evolve beyond this snapshot.</p><a href="#method">Read the estimate notes ↓</a></li></ol>
     </section>
     <section class="build-section" id="people" aria-labelledby="people-title">
       <div class="build-section-heading"><div><p class="build-eyebrow">03 / Human + AI</p><h2 id="people-title">Human direction. AI assistance.</h2></div><p>Built with tools, guided by people.</p></div>
       <div class="build-role-grid"><article class="build-role"><span class="build-role-label">Project lead</span><h3>${esc(data.reportedBy)}</h3><p>Choosing the priorities, shaping the experience, organising content and sources, directing development, checking results and listening to students.</p><p class="build-role-foot">Product decisions and responsibility stay human.</p></article><article class="build-role"><span class="build-role-label">Development assistance</span><h3>ChatGPT · Codex · Claude Code</h3><p>Used to support exploration, drafting, coding, debugging and iteration. Their outputs still need selection, checking and refinement.</p><p class="build-role-foot">Tool execution time is not a measure of personal effort.</p></article></div>
     </section>
-    <section class="build-section build-method" id="method" aria-labelledby="method-title"><p class="build-eyebrow">04 / About the numbers</p><h2 id="method-title">Transparent, not a timesheet.</h2><p>The headline is an <strong>approximate upper-range estimate of personal effort</strong>, revised at the project owner's request on ${formattedDate}. It is not an independently audited or automatically tracked total.</p><details><summary>What the estimate covers</summary><p>Planning, design decisions, content and source work, development direction, hands-on review, testing, launch preparation and feedback, including AI-assisted work with ChatGPT, Codex and Claude Code. AI runtime and GitHub activity alone cannot establish how long a person was actively working.</p></details><details><summary>How the estimate was prepared</summary><p>${esc(data.estimateNotes)}</p><p>The six categories are an illustrative allocation of the total, not six measured time logs. A work session can involve several activities; the display assigns the overall estimate once rather than adding overlapping sessions.</p></details><details><summary>How the figures are maintained</summary><p>This is a dated snapshot, not a live counter. The project owner can revise the estimate or request a new assessment of the completed work. The page does not track your visits, create a timer, or collect new personal information.</p><a href="content/build-effort.json">View the public estimate data ↗</a></details><p class="build-evidence">Explore the work itself: <a href="${esc(data.repositoryUrl)}">Source repository</a><span aria-hidden="true"> · </span><a href="${esc(data.repositoryUrl)}/pulls">Development reviews</a><span aria-hidden="true"> · </span><a href="roadmap.html">Roadmap &amp; updates</a></p></section>
+    <section class="build-section build-method" id="method" aria-labelledby="method-title"><p class="build-eyebrow">04 / About the numbers</p><h2 id="method-title">Transparent, not a timesheet.</h2><p>The headline is an <strong>approximate estimate of personal effort</strong>, revised at the project owner's request on ${formattedDate}. It is not an independently audited or automatically tracked total.</p><details><summary>What the estimate covers</summary><p>Planning, design decisions, content and source work, development direction, hands-on review, testing, launch preparation and feedback, including AI-assisted work with ChatGPT, Codex and Claude Code. AI runtime and GitHub activity alone cannot establish how long a person was actively working.</p></details><details><summary>How the estimate was prepared</summary><p>${esc(data.estimateNotes)}</p><p>The six categories are an illustrative allocation of the total, not six measured time logs. A work session can involve several activities; the display assigns the overall estimate once rather than adding overlapping sessions.</p></details><details><summary>How the figures are maintained</summary><p>This is a dated snapshot, not a live counter. The project owner can revise the estimate or request a new assessment of the completed work. The page does not track your visits, create a timer, or collect new personal information.</p><a href="content/build-effort.json">View the public estimate data ↗</a></details><p class="build-evidence">Explore the work itself: <a href="${esc(data.repositoryUrl)}">Source repository</a><span aria-hidden="true"> · </span><a href="${esc(data.repositoryUrl)}/pulls">Development reviews</a><span aria-hidden="true"> · </span><a href="roadmap.html">Roadmap &amp; updates</a></p></section>
     <section class="build-feedback" aria-labelledby="feedback-title"><div><p class="build-eyebrow">Better with your perspective</p><h2 id="feedback-title">Help shape the next hours.</h2><p>A confusing page, a useful idea, a missing feature — your feedback helps decide what comes next.</p></div><a class="button button-primary" href="contact.html">Share feedback <span aria-hidden="true">↗</span></a></section>
   </main>
   <footer class="site-footer"><div class="container"><p>EU-HEM Student Hub · Unofficial student project</p></div></footer>
@@ -143,7 +143,7 @@ if (process.argv.includes('--integrate')) {
   }
   let roadmap = read('roadmap.html');
   if (!roadmap.includes('href="behind-build.css')) roadmap = roadmap.replace('</head>', '  <link rel="stylesheet" href="behind-build.css">\n</head>');
-  const teaser = `<aside class="build-teaser" aria-label="Behind the Build"><div><p class="build-eyebrow">Behind the Build</p><h2>Approximately ${data.totalHours} hours of personal effort.</h2><p>Upper-range estimate · ${formattedDate}. Explore the design, tools, content and care behind the Hub.</p></div><a class="button button-secondary" href="behind-the-build.html">See the effort <span aria-hidden="true">↗</span></a></aside>`;
+  const teaser = `<aside class="build-teaser" aria-label="Behind the Build"><div><p class="build-eyebrow">Behind the Build</p><h2>Approximately ${data.totalHours} hours of personal effort.</h2><p>Personal-effort estimate · ${formattedDate}. Explore the design, tools, content and care behind the Hub.</p></div><a class="button button-secondary" href="behind-the-build.html">See the effort <span aria-hidden="true">↗</span></a></aside>`;
   if (roadmap.includes('<!-- build-effort:start -->')) {
     roadmap = roadmap.replace(/<!-- build-effort:start -->[\s\S]*?<!-- build-effort:end -->/, `<!-- build-effort:start -->\n    ${teaser}\n    <!-- build-effort:end -->`);
   } else {
@@ -154,7 +154,7 @@ if (process.argv.includes('--integrate')) {
   write('roadmap.html', roadmap);
   let readme = read('README.md');
   if (!readme.includes('## Behind the Build')) {
-    readme += '\n\n## Behind the Build\n\n`behind-the-build.html` presents an approximate upper-range effort estimate and an illustrative\nallocation, not tracked hours. Edit `content/build-effort.json`, then run\n`node scripts/build-behind-build.mjs --integrate` and `node scripts/stamp-versions.js`.\nSee `docs/behind-the-build.md` for the data basis, update procedure and checks.\n';
+    readme += '\n\n## Behind the Build\n\n`behind-the-build.html` presents an approximate personal-effort estimate and an illustrative\nallocation, not tracked hours. Edit `content/build-effort.json`, then run\n`node scripts/build-behind-build.mjs --integrate` and `node scripts/stamp-versions.js`.\nSee `docs/behind-the-build.md` for the data basis, update procedure and checks.\n';
     write('README.md', readme);
   }
 }

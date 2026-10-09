@@ -1,6 +1,6 @@
 # Teaching progress by selected period (9 October 2026)
 
-A compact card at the end of the timetable, after the schedule and source note,
+A compact card above Class schedule, after the timetable overview,
 shows finished / published / remaining teaching hours and a percentage. Its heading,
 bar and totals follow the chosen **Day, Week or Month** view and selected date:
 

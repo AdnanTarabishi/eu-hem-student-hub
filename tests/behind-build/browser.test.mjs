@@ -35,7 +35,7 @@ try {
     page.on('pageerror', error => errors.push(error.message));
     await page.goto(`${base}/behind-the-build.html`, { waitUntil: 'networkidle' });
     await page.evaluate(value => document.documentElement.dataset.theme = value, theme);
-    check(await page.locator('[data-total-hours]').innerText() === '120', `${name}: total`);
+    check(await page.locator('[data-total-hours]').innerText() === '60', `${name}: total`);
     check(await page.locator('.build-timeline li').filter({ hasText: 'First cohort beta' }).locator('time').getAttribute('datetime') === '2026-10-07', `${name}: cohort beta date`);
     check(await page.locator('.build-work').count() === 6, `${name}: workstreams`);
     check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${name}: horizontal overflow`);
@@ -43,7 +43,7 @@ try {
     await page.getByRole('button', { name: 'Share %', exact: true }).click();
     check(await page.locator('#work-design .build-value').innerText() === '25%', `${name}: percentage toggle`);
     await page.getByRole('button', { name: 'Hours', exact: true }).click();
-    check(await page.locator('#work-tools .build-value').innerText() === '28 h', `${name}: hours toggle`);
+    check(await page.locator('#work-tools .build-value').innerText() === '14 h', `${name}: hours toggle`);
     await page.getByRole('button', { name: 'Show all details', exact: true }).click();
     check(await page.locator('.build-work[open]').count() === 6, `${name}: expand all`);
     await page.getByRole('button', { name: 'Hide all details', exact: true }).click();
@@ -78,14 +78,14 @@ try {
     check(await link.isVisible() && await link.getAttribute('aria-current') === 'page', `${name}: shared current menu ${JSON.stringify(diagnostic)}`);
     await link.click();
     await page.waitForLoadState('networkidle');
-    check(await page.locator('[data-total-hours]').innerText() === '120' && new URL(page.url()).pathname === '/behind-the-build.html', `${name}: real menu navigation`);
+    check(await page.locator('[data-total-hours]').innerText() === '60' && new URL(page.url()).pathname === '/behind-the-build.html', `${name}: real menu navigation`);
     check(errors.length === 0, `${name}: page errors ${errors.join('; ')}`);
     await context.close();
   }
   const nojs = await browser.newContext({ javaScriptEnabled: false, viewport: { width:390,height:844 } });
   const page = await nojs.newPage();
   await page.goto(`${base}/behind-the-build.html`);
-  check(await page.locator('[data-total-hours]').innerText() === '120', 'No-JS total');
+  check(await page.locator('[data-total-hours]').innerText() === '60', 'No-JS total');
   check(await page.locator('.build-controls').isHidden(), 'No-JS controls hidden');
   await page.locator('#work-design > summary').click();
   check(await page.locator('#work-design .build-work-body').isVisible(), 'Native details without JS');

@@ -6,15 +6,14 @@ so the new page is discoverable without changing Resources search logic.
 
 ## What the numbers mean
 
-At the owner's request, the earlier **60-hour personal-effort estimate** from 8 October
-was reassessed as an **approximate 120-hour upper-range estimate** on 9 October 2026.
-The assessment covers the available development history and completed feature scope,
-including work supported by ChatGPT, Codex and Claude Code. It allows for design,
-instructions, research, reviewing outputs, development, testing and launch work.
-It is not a stopwatch measurement, an audit, or a number derived from commit counts.
-Private conversation histories and activity logs were not available for this assessment.
-The allocation (30 design, 28 tools, 26 content, 18 testing, 12 planning, 6 launch) is
-illustrative and sums to 120. Do not describe the categories as measured time logs.
+At the owner's request, the personal-effort estimate was restored to **approximately
+60 hours** on 9 October 2026. Repository history and completed feature scope provide
+evidence of the work, including development supported by ChatGPT, Codex and Claude Code,
+but cannot establish hours worked. A complete time log and private Claude Code
+conversation histories were not available. The 60-hour total is the owner's estimate,
+not a stopwatch measurement, an audit, or a number derived from commit counts.
+The allocation (15 design, 14 tools, 13 content, 9 testing, 6 planning, 3 launch) is
+illustrative and sums to 60. Do not describe the categories as measured time logs.
 No daily distribution is published because the available records cannot substantiate it.
 AI tool runtime is not presented as measured human effort. No private conversations,
 user activity records, third-party analytics or new personal data are published.
