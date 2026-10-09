@@ -28,6 +28,7 @@ statistics answer as `not asked`.
 | The backend | `integrations/directory-apps-script/Code.gs` | Pasted into Google Apps Script. **No IDs or secrets** in the file |
 | Backend setup | `integrations/directory-apps-script/README.md` | Step by step, plus the fortnightly clean-up |
 | Tests | `tests/directory/` | Backend logic against in-memory stand-ins for Google; the form in a real browser |
+| Release checks | `.github/workflows/directory-checks.yml` | Routine checks never send real data; optional manual candidate delivery only to the Hub inbox |
 | Privacy text | `privacy.html#student-directory` | Rewritten for v2, revised 5 October 2026; v3 additions (mobility experience) 6 October 2026 |
 
 Track names: the current tracks (`eeh`, `ep`, `mhi`, `phm`) come from `content/tracks.json`; the checker makes
@@ -52,6 +53,12 @@ to `current` and move the graduated one to the top of `alumni`. People not liste
    `confirmEmailFromPage`) confirms the address; opening the link changes nothing, so email security scanners
    that open links cannot confirm anyone.
 5. An administrator then reviews the row (see "Statuses" below). The website never stores or shows the data.
+
+The only public backend functions are `doGet`, `doPost` and `confirmEmailFromPage`. Setup, migration and
+retention helpers end in `_` and are unavailable to `google.script.run`; follow the backend README's
+temporary owner-only editor procedure. The website accepts a success receipt only when its request ID,
+consent version and directory eligibility match the submitted registration. It retains uncertainty after
+a lost reply, blocks edits from being mistaken for an unchanged retry, and sends no offline queue.
 
 ## Three separate states: email verified ≠ EU-HEM role verified ≠ admin approved
 | State | Column(s) | Values | Set by |
@@ -78,7 +85,7 @@ Eligible`, `EU-HEM Cohort`, `Home Institution`, `Home Programme`, `Programme Rol
 Involved`, `Shared Courses`, `Feature Interests`, `Feature Suggestion`, `Role Verification Status`, `Role
 Verified At`, and three dates an admin fills in for the retention rules: `Rejected At`, `Last Reconfirmed At`
 (alumni), `Participation Ends` (end of the course / academic period for shared-course students; last confirmed
-involvement for staff). Running `setup()` adds missing columns at the end and never moves or rewrites old rows; old rows
+involvement for staff). Running `setup_()` adds missing columns at the end and never moves or rewrites old rows; old rows
 simply have empty new columns.
 
 **v3 appends 7 more columns** (63 in total): `Citizenship Group`, `Citizenship Visibility`, `Study Visa
@@ -97,7 +104,7 @@ Experience`, `Study Visa Experience Scope`, `Study Visa Experience Visibility`, 
   A missing value counts as `hidden`; nothing is wider than the profile (see the table below).
 - Shared-course students and staff: all seven are empty.
 
-**Upgrading an existing Sheet:** run `setup()` (adds the columns), then `migrateV3()` once. It fills only
+**Upgrading an existing Sheet:** run `setup_()` (adds the columns), then `migrateV3_()` once. It fills only
 **empty** cells of old rows: citizenship and visa `not_provided`, both visibilities `private`, mobility consent
 `no` (never backfilled), every per-detail visibility `hidden`. It never overwrites an answer and never infers
 anything, and running it again changes nothing. Because older rows get `hidden` per-detail settings, an older
@@ -118,13 +125,13 @@ What some columns hold:
 Interests`, `Languages`, `Hobbies / Interests`, `I Can Help With`, `I'd Like to Connect About`, `Instagram`,
 `Phone / WhatsApp`, `Instagram Visibility`, `Phone / WhatsApp Visibility`.
 
-The **Options** tab is rewritten by `setup()`: every allowed value with its stored id and label (user types,
+The **Options** tab is rewritten by `setup_()`: every allowed value with its stored id and label (user types,
 academic fields, current and legacy tracks, degrees, roles, features, visibility, role verification). It holds
 no student data.
 
 ## Retention schedule
 The values live in **one place in the code**: `RETENTION` in `Code.gs`. The confirmation link, the
-`retentionReport()` admin function and the tests read them from there. This table and the privacy page
+`retentionReport_()` admin function and the tests read them from there. This table and the privacy page
 (`data-retention` spans) show the same values, and `scripts/check-content.js` fails if any of them differ. To
 change a period: change `RETENTION`, this table and the privacy page, then run the checks.
 
@@ -140,7 +147,7 @@ change a period: change `RETENTION`, this table and the privacy page, then run t
 | `staffMonthsAfterInvolvement` | 12 | Faculty / staff / partners kept while involved and up to this many months after `Participation Ends` (last confirmed involvement) |
 | `deletionRequestDays` | 30 | Withdrawal or deletion request: profile and photo deleted without unnecessary delay, at the latest within this many days, unless a legal reason requires keeping a specific record |
 
-**How to apply it:** run `retentionReport()` in the Apps Script editor every two weeks. It lists each row that
+**How to apply it:** run `retentionReport_()` through the backend README's temporary owner-only wrapper every two weeks, then remove the wrapper before any deployment. It lists each row that
 is due (`delete`), needs a reminder (`ask`) or needs a missing date (`fill`), using row numbers and
 registration ids only. It deletes nothing: delete the row and its photo by hand, then empty the Drive bin. Once a
 year, also review all registrations and delete those no longer needed.
@@ -191,19 +198,24 @@ in someone's browser are then refused with "The privacy information has changed"
    **signed in to that account**, never a personal one.
 2. **Create (or transfer) the private Sheet and the private photo folder under that account** (backend README,
    step 1).
-3. **Deploy the Apps Script from that account** (backend README, steps 2–4). The account that deploys Apps
-   Script is the account that sends the confirmation emails (MailApp), so a personal account would show its
-   address to everyone.
-4. **Set the Script Property `CONTACT_EMAIL`** to `euhem.studenthub@gmail.com` and run `setup()`.
-5. Paste the `/exec` address into `directory-config.js` → `endpoint`. Run `node scripts/check-content.js`
-   and `node scripts/stamp-versions.js`.
-6. **Test the email confirmation** with dummy registrations (backend README, step 5): open the link, check the
-   row stays `unconfirmed`, press the button, check it becomes `pending`. Then delete the test rows and photos.
+3. **Install the Directory code and manifest in a separate Apps Script project** owned by that account
+   (backend README, step 2). Keep storage identifiers in Script Properties.
+4. **Set the Script Property `CONTACT_EMAIL`** to `euhem.studenthub@gmail.com`, run `setup_()` through the
+   temporary owner-only wrapper, then remove that wrapper. Deploy as **Me**, with access **Anyone**,
+   from the dedicated account (backend README, steps 3–4). That account sends the confirmation emails.
+5. **Test the candidate endpoint in a real browser** with fictional registrations before enabling it on the
+   website. Verify a readable matching receipt, all fields in the private Sheet, and one row on an unchanged retry.
+6. **Test the email confirmation** (backend README, step 5): open the link, check the row stays `unconfirmed`,
+   press the button, check it becomes `pending`. Then delete the test rows and photos. After these checks pass,
+   set `directory-config.js` → `endpoint`, update the Privacy notice's availability and storage statements,
+   and run `node scripts/check-content.js` and `node scripts/stamp-versions.js`.
 7. Do not enable the form in production with a personal sender account or without a real contact email.
 8. Merge to `main`, and only then share the link.
 
 ## Running the tests
-One-time setup: `npm install` (Playwright, which drives your installed Chrome). Then:
+One-time setup: `npm install`, then install Playwright Chromium or use the system Chromium.
+The focused registration checks are `npm run test:directory`; they always replace the production endpoint
+with a local stand-in and never send a real confirmation email. The broader site suite is:
 ```
 npm test
 ```

@@ -10,16 +10,22 @@ const PNG = Buffer.from(fs.readFileSync(path.join(__dirname, 'png.b64'), 'utf8')
 
 (async () => {
   const gas = load(path.join(ROOT, 'integrations/directory-apps-script/Code.gs'), { SPREADSHEET_ID: 's', PHOTO_FOLDER_ID: 'f', CONTACT_EMAIL: 'hub@example.com' });
-  gas.ctx.setup();
-  let failNext = 0, preflights = 0, posts = 0;
+  gas.ctx.setup_();
+  let failNext = 0, dropSavedNext = 0, replyOverride = null, preflights = 0, posts = 0;
+  let lastHeaders = {};
   // "Google" on its own port: answers simple requests only, like Apps Script.
   const api = http.createServer((req, res) => {
     if (req.method === 'OPTIONS') { preflights++; res.writeHead(405); return res.end(); }
     let body = ''; req.on('data', c => body += c); req.on('end', () => {
       posts++;
+      lastHeaders = req.headers;
       if (failNext > 0) { failNext--; req.socket.destroy(); return; }
+      const payload = JSON.parse(body);
+      let result = gas.post(body);
+      if (dropSavedNext > 0) { dropSavedNext--; req.socket.destroy(); return; }
+      if (replyOverride) { result = replyOverride(result, payload); replyOverride = null; }
       res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-      res.end(JSON.stringify(gas.post(body)));
+      res.end(JSON.stringify(result));
     });
   }).listen(0);
   let endpoint = `http://127.0.0.1:${api.address().port}/exec`;
@@ -27,7 +33,8 @@ const PNG = Buffer.from(fs.readFileSync(path.join(__dirname, 'png.b64'), 'utf8')
     const file = decodeURIComponent(req.url.split('?')[0].replace(/^\//, '')) || 'join.html';
     if (file === 'directory-config.js') {
       res.writeHead(200, { 'Content-Type': 'text/javascript' });
-      return res.end(fs.readFileSync(path.join(ROOT, file), 'utf8').replace('endpoint: ""', `endpoint: "${endpoint}"`));
+      // Always inject the mock, including after the production endpoint is configured.
+      return res.end(fs.readFileSync(path.join(ROOT, file), 'utf8').replace(/endpoint:\s*"[^"]*"/, `endpoint: "${endpoint}"`));
     }
     const full = path.join(ROOT, file);
     if (!fs.existsSync(full) || fs.statSync(full).isDirectory()) { res.writeHead(404); return res.end('missing'); }
@@ -35,7 +42,9 @@ const PNG = Buffer.from(fs.readFileSync(path.join(__dirname, 'png.b64'), 'utf8')
   }).listen(0);
   const siteUrl = `http://127.0.0.1:${site.address().port}/join.html`;
 
-  const browser = await chromium.launch({ channel: 'chrome' });
+  const executablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ||
+    (fs.existsSync('/usr/bin/chromium') ? '/usr/bin/chromium' : undefined);
+  const browser = await chromium.launch({ executablePath, args: ['--no-sandbox'] });
   let n = 0; const ok = (name) => { n++; console.log('  ok  ' + name); };
   const errors = [];
   const open = async (viewport = { width: 1280, height: 800 }) => {
@@ -56,6 +65,13 @@ const PNG = Buffer.from(fs.readFileSync(path.join(__dirname, 'png.b64'), 'utf8')
     await page.selectOption('#previousField', 'nursing_midwifery'); await page.selectOption('#track', 'not_chosen');
   };
   const submit = async (page) => { await page.waitForTimeout(3100); await page.click('#submitButton'); };
+  const readyStudent = async (email) => {
+    const page = await open(); await fillStudent(page, email);
+    await next(page, 1); await next(page, 2);
+    await page.check('input[name="profileVisibility"][value="hidden"]');
+    await page.check('input[name="analyticsConsent"][value="no"]'); await page.check('#privacyAcknowledgement');
+    return page;
+  };
   const lastRow = () => gas.row(gas.grid.length - 1);
 
   /* ----- start ----- */
@@ -207,6 +223,7 @@ const PNG = Buffer.from(fs.readFileSync(path.join(__dirname, 'png.b64'), 'utf8')
   assert.deepStrictEqual([row['Feature Interests'], row['Feature Suggestion'], row['Role Verification Status'], row['Status']], ['timetable, thesis, other', 'A sports calendar', 'pending', 'unconfirmed']);
   assert.strictEqual(gas.files.length, 1); assert.strictEqual(gas.files[0].blob.mime, 'image/jpeg');
   assert.strictEqual(gas.mails.length, 1); assert.strictEqual(preflights, 0);
+  assert.strictEqual(lastHeaders.cookie, undefined); assert.strictEqual(lastHeaders.referer, undefined);
   ok('retry succeeds: saved once with every field in its column, photo as JPEG, "Check your email" screen, no CORS preflight');
 
   const q = new URL(gas.mails[0].body.match(/https:\S+/)[0]).searchParams;
@@ -283,6 +300,71 @@ const PNG = Buffer.from(fs.readFileSync(path.join(__dirname, 'png.b64'), 'utf8')
     ['faculty_staff', 'Other: External examiner', 'Health Systems', false]);
   ok('faculty with an "Other" role: stored privately, not in the Directory');
   await page.close();
+
+  /* ----- real persistence with a lost response, and truthful recovery ----- */
+  page = await readyStudent('lost-receipt@example.org');
+  const rowsBefore = gas.grid.length, postsBefore = posts;
+  gas.props.__MAIL_FAILS = true; dropSavedNext = 1;
+  await submit(page);
+  await page.waitForFunction(() => /may already have been saved/.test(document.getElementById('formMessage').textContent));
+  assert.strictEqual(gas.grid.length, rowsBefore + 1);
+  assert.strictEqual(await visible(page, '#successCard'), false);
+  await page.locator('[data-step="3"] [data-back]').click();
+  await page.locator('[data-step="2"] [data-back]').click();
+  await page.fill('#email', 'edited-after-timeout@example.org');
+  await next(page, 1); await next(page, 2); await page.click('#submitButton');
+  assert.match(await page.textContent('#formMessage'), /Restore the answers/);
+  assert.strictEqual(posts, postsBefore + 1, 'changed answers are not silently treated as a saved retry');
+  await page.locator('[data-step="3"] [data-back]').click();
+  await page.locator('[data-step="2"] [data-back]').click();
+  await page.fill('#email', 'lost-receipt@example.org');
+  await next(page, 1); await next(page, 2); await page.click('#submitButton');
+  await page.waitForSelector('#successCard:not([hidden])');
+  assert.strictEqual(gas.grid.length, rowsBefore + 1);
+  assert.strictEqual(await page.textContent('#successCard h2'), 'Registration received');
+  assert.match(await page.textContent('#successConfirmText'), /confirmation email could not be sent/);
+  assert.strictEqual(lastRow()['Confirm Email Sent'], 'failed');
+  delete gas.props.__MAIL_FAILS;
+  ok('a saved request with a lost reply is recovered once; edits cannot masquerade as a retry and mail failure stays visible');
+  await page.close();
+
+  /* ----- a receipt belongs to this request and this consent version ----- */
+  for (const [kind, override] of [
+    ['request', result => ({ ...result, requestId: '00000000-0000-4000-8000-000000000000' })],
+    ['consent', result => ({ ...result, consentVersion: 'directory-v2-2026-10' })],
+  ]) {
+    page = await readyStudent(`wrong-${kind}-receipt@example.org`);
+    const rowCount = gas.grid.length;
+    replyOverride = override; await submit(page);
+    await page.waitForFunction(() => /could not confirm receipt/.test(document.getElementById('formMessage').textContent));
+    assert.strictEqual(await visible(page, '#successCard'), false);
+    assert.strictEqual(await page.inputValue('#email'), `wrong-${kind}-receipt@example.org`);
+    assert.strictEqual(gas.grid.length, rowCount + 1);
+    await page.click('#submitButton'); await page.waitForSelector('#successCard:not([hidden])');
+    assert.strictEqual(gas.grid.length, rowCount + 1);
+    await page.close();
+  }
+  ok('unrelated and stale receipts cannot claim success; unchanged retries recover the stored registration');
+
+  /* ----- offline never claims that an earlier uncertain attempt was rejected ----- */
+  page = await readyStudent('offline@example.org');
+  const offlinePosts = posts;
+  await page.evaluate(() => Object.defineProperty(navigator, 'onLine', { configurable: true, value: false }));
+  await submit(page);
+  assert.match(await page.textContent('#formMessage'), /has not been sent/);
+  assert.strictEqual(posts, offlinePosts);
+  await page.evaluate(() => Object.defineProperty(navigator, 'onLine', { configurable: true, value: true }));
+  dropSavedNext = 1; await page.click('#submitButton');
+  await page.waitForFunction(() => /may already have been saved/.test(document.getElementById('formMessage').textContent));
+  await page.evaluate(() => Object.defineProperty(navigator, 'onLine', { configurable: true, value: false }));
+  await page.click('#submitButton');
+  assert.match(await page.textContent('#formMessage'), /may already have been saved/);
+  assert.match(await page.textContent('#formMessage'), /this retry was not sent/);
+  assert.strictEqual(posts, offlinePosts + 1);
+  await page.evaluate(() => Object.defineProperty(navigator, 'onLine', { configurable: true, value: true }));
+  await page.click('#submitButton'); await page.waitForSelector('#successCard:not([hidden])');
+  await page.close();
+  ok('offline submissions send nothing and preserve the uncertainty of an earlier saved request');
 
   /* ----- phones and tablets ----- */
   for (const width of [375, 768, 1024, 1440]) {

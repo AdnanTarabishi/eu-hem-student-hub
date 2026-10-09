@@ -25,7 +25,10 @@ Check in a private browser window that the Sheet link shows "You need access".
 
 1. Open script.google.com → New project.
 2. Replace the editor content with `Code.gs`.
-3. Project Settings → Script Properties → add:
+3. Project Settings → **Show appsscript.json manifest file in editor**, then replace that file with
+   the accompanying `appsscript.json`. It declares Sheets, Drive and confirmation-email permissions,
+   the V8 runtime, and execution as the deploying account. Automatic exception logging is disabled.
+4. Project Settings → Script Properties → add:
 
 | Property | Value |
 |---|---|
@@ -40,8 +43,25 @@ they exist they have no effect, and they are safe to delete (a test checks this)
 
 ## 3. Run setup once (and after every update of Code.gs)
 
-In the editor choose the function `setup` and press Run. Google asks for permission to use Sheets, Drive and
-to send email as the Student Hub account. Accept. `setup`:
+Maintenance functions end in `_`, so anonymous visitors cannot call them through the email-confirmation
+page's `google.script.run` API. They also do not appear in the editor's Run selector.
+
+Create a **temporary** script file named `OwnerOnly.gs`, paste the following, save, select
+`runDirectoryMaintenance`, then press Run:
+
+```js
+function runDirectoryMaintenance() {
+  const account = 'euhem.studenthub@gmail.com';
+  if (Session.getActiveUser().getEmail() !== account ||
+      Session.getEffectiveUser().getEmail() !== account) {
+    throw new Error('Run only from the Student Hub account in the Apps Script editor.');
+  }
+  return setup_();
+}
+```
+
+Google asks for permission to use Sheets, Drive and to send email as the Student Hub account. Accept.
+`setup_()`:
 
 - creates the `Submissions` tab, or adds any **missing columns at the end** (old columns and rows are never
   moved or rewritten; upgrading from v1 adds the 15 v2 columns, from v2 the 7 v3 columns);
@@ -49,11 +69,15 @@ to send email as the Student Hub account. Accept. `setup`:
 
 The execution log should end with "Setup OK" and show your contact email (not "NOT SET").
 
-**Only if the Sheet already has registrations from v2 (or v1):** after `setup`, choose `migrateV3` and press Run
-once. It fills only the empty v3 cells of old rows with "nothing given" values (`not_provided`, `private`, mobility
+**Only if the Sheet already has registrations from v2 (or v1):** after setup, replace `setup_()` in the
+temporary wrapper with `migrateV3_()` and run it once. It fills only the empty v3 cells of old rows with "nothing given" values (`not_provided`, `private`, mobility
 consent `no`, every per-detail visibility `hidden`), never changes an existing value and never infers citizenship
 or visa answers. The log says how many rows were checked and cells filled. Running it again is harmless
 ("0 empty cell(s) filled").
+
+**Delete the entire `OwnerOnly.gs` file and save before creating or updating any deployment.** The final
+Run selector must contain only `doGet`, `doPost` and `confirmEmailFromPage`. Never deploy a maintenance wrapper.
+For later maintenance, temporarily recreate it, run the chosen private helper, then remove it again.
 
 ## 4. Deploy
 
@@ -65,7 +89,9 @@ Deploy → New deployment → type **Web app**.
 "Anyone" is required so people can register without a Google login. It gives access only to this script's
 entry points (submit, the confirmation page and its button), never to the Sheet or the folder.
 
-Copy the Web app address ending in `/exec` into `directory-config.js`.
+Keep the website's endpoint empty until the checks below pass. Send the Web app address ending in `/exec`
+to the developer for a candidate browser test; it is the public submission address, not a password.
+Use a **separate Directory deployment**, not the Contact receiver.
 
 ## 5. Test with dummy data before telling anyone
 
@@ -83,6 +109,42 @@ Copy the Web app address ending in `/exec` into `directory-config.js`.
 - on a phone
 
 Delete the test rows and test photos afterwards.
+
+The browser's success screen requires a readable receipt with this request's ID, consent version and
+directory eligibility. A timeout or unreadable reply may happen after a row was saved: retry unchanged
+answers with the same request ID, then check that there is exactly one row and one confirmation email.
+The form preserves that uncertainty when offline and prevents changed answers from being silently
+treated as the earlier registration. A failed confirmation email remains reported as failed on a retry.
+
+### Candidate browser delivery through GitHub
+
+The `Check Directory registration` workflow normally runs **only local fictional services**. Its manual
+Run workflow screen can enable `run_live_delivery` with the owner-deployed `directory_endpoint`. This sends
+one fictional hidden-profile registration, followed by one unchanged retry, at the website's actual origin
+using the candidate Join files. It sends a confirmation email only to a plus-address of
+`euhem.studenthub@gmail.com`; it submits no student information, photo or statistics consent.
+
+The sanitized `directory-real-delivery` artifact records the fictional request ID, version, HTTP status and
+matching receipts. It omits answers, email addresses, private storage IDs, confirmation tokens and temporary
+Google response URLs. A passing browser check establishes readable delivery, not private row contents or
+email ownership. The owner must still:
+
+1. Inspect the restricted Sheet: exactly **one row** for the artifact's request ID, the fictional answers in
+   their correct columns, `Status` unconfirmed, `Directory Eligible` TRUE and `Confirm Email Sent` yes.
+2. Check the confirmation email's sender is the dedicated account. Open its link, confirm that the row is
+   still unconfirmed, then press **Confirm my email** and verify pending plus a confirmation timestamp.
+   Role verification must remain pending and no profile may be published.
+3. Delete the fictional row after verification. If you test photos separately, remove those too.
+
+If a delivery attempt fails, inspect the artifact and private Sheet **before running again**. Supply the
+same artifact request ID as `recovery_request_id` to recover the same fictional registration rather than
+creating another one. The recovery uses the same Hub-owned plus-address; an already-confirmed recovery can
+report pending review, but it does not replace checking the email-confirmation action yourself.
+
+Only after the deployed checks and owner verification pass: put the actual `/exec` URL in
+`directory-config.js`, update the Privacy page's inactive-registration and intended-storage statements,
+run `npm run test:directory` and `node scripts/stamp-versions.js`, then publish and verify the website.
+Never use `no-cors` or a mock response as evidence that a live registration was saved.
 
 ## Three separate states
 
@@ -108,13 +170,15 @@ Directory, whatever their status.
 
 ## Changing the code later
 
-Paste the new `Code.gs`, run `setup()` again (and `migrateV3()` once when upgrading to v3), then Deploy → Manage deployments → edit the existing deployment →
+Paste the new `Code.gs` and manifest, run `setup_()` through the temporary wrapper again (and `migrateV3_()` once when upgrading to v3),
+remove the wrapper, then Deploy → Manage deployments → edit the existing deployment →
 Version: New version → Deploy. The `/exec` address stays the same.
 
 ## Every two weeks: the retention report
 
 The privacy page promises fixed retention periods (see "Retention schedule" in docs/student-directory.md; the
-values are `RETENTION` at the top of `Code.gs`). In the editor choose `retentionReport` and press Run. The log
+values are `RETENTION` at the top of `Code.gs`). Use the temporary wrapper above with `retentionReport_()` instead
+of `setup_()`, then remove the wrapper before any deployment. The log
 lists, by row number and registration id only:
 
 - `delete`: delete the row and its photo (`Photo Drive File ID`), then empty the Drive bin;
