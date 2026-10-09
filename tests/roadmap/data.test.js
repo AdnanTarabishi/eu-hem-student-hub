@@ -36,11 +36,22 @@ t("Next: four dated plans (Oct → Nov → Nov–Dec), the rest After launch", (
   assert.deepStrictEqual(ids("October 2026"), ["domain-admin-dashboard"]);
   assert.deepStrictEqual(ids("November 2026"), ["student-hub-v2", "mobility-checklists"]);
   assert.deepStrictEqual(ids("November–December 2026"), ["student-accounts-cohort-profiles"]);
-  assert.deepStrictEqual(ids("After launch").sort(), ["beyond-euhem-opportunities", "expanded-notes-interactive-lessons", "expanded-practice-bank"]);
+  assert.deepStrictEqual(ids("After launch").sort(), ["beyond-euhem-opportunities", "community-events", "expanded-notes-interactive-lessons", "expanded-practice-bank", "student-gallery"]);
   assert.ok(roadmap.items.filter((i) => i.lane === "next" && i.target).length <= R.MAX_DATED_NEXT);
   const beyond = roadmap.items.find((i) => i.id === "beyond-euhem-opportunities");
   const text = JSON.stringify(beyond).toLowerCase();
   for (const word of ["jobs", "internships", "research", "career preparation", "phd"]) assert.ok(text.includes(word), word);
+});
+t("future-section previews are linked while full collections remain in progress without a delivery date", () => {
+  for (const [id, url] of [["beyond-euhem-opportunities", "beyond-euhem.html"], ["community-events", "events.html"], ["student-gallery", "gallery.html"]]) {
+    const item = roadmap.items.find((i) => i.id === id);
+    assert.strictEqual(item.status, "in-progress", id);
+    assert.strictEqual(item.target, null, id);
+    assert.ok(item.links.some((link) => link.url === url && /preview/i.test(link.label)), id);
+  }
+  const gallery = roadmap.items.find((i) => i.id === "student-gallery");
+  assert.match(gallery.note, /no student photos, uploads or active membership service/);
+  assert.ok(gallery.details.some((detail) => /private visibility for verified EU-HEM members/.test(detail)));
 });
 t("shipped features are no longer listed as plans, including the Student Toolkit and interactive labs", () => {
   for (const id of ["student-stories-experiences", "partner-university-guides", "student-digital-toolkit", "methods-health-economics-labs"]) {

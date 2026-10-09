@@ -29,6 +29,7 @@ const SITE_MENU = [
     items: [
       { key: "notes", label: "Notes & Resources", href: "notes.html", icon: "notes", desc: "Notes, flashcards and practice" },
       { key: "toolkit", label: "Student Toolkit", href: "toolkit.html", icon: "calculator", desc: "Study tools and useful services" },
+      { key: "beyond-euhem", label: "Beyond EU-HEM", href: "beyond-euhem.html", icon: "briefcase", desc: "Preview: careers, opportunities and alumni paths", preview: true },
       { key: "thesis", label: "Thesis Explorer", href: "thesis.html", icon: "library", desc: "Plan your research, explore topics" },
       { key: "links", label: "Official links", href: "index.html#links", icon: "link", desc: "Virtuale, Studenti Online and more" },
     ],
@@ -38,6 +39,8 @@ const SITE_MENU = [
     items: [
       { key: "students", label: "Students & cohort map", href: "students.html", icon: "students", desc: "Meet the people behind EU-HEM" },
       { key: "experiences", label: "Student Experiences", href: "experiences.html", icon: "notes", desc: "Advice from students and graduates" },
+      { key: "events", label: "Events", href: "events.html", icon: "calendar", desc: "Preview: university, programme and student activities", preview: true },
+      { key: "gallery", label: "Gallery", href: "gallery.html", icon: "grid", desc: "Preview: student photography and shared memories", preview: true },
       { key: "join", label: "Join the Directory", href: "join.html", icon: "plus", desc: "Your profile, your privacy choices" },
       { key: "announcements", label: "Announcements", href: "announcements.html", icon: "announcements", desc: "News for the cohort" },
     ],

@@ -38,13 +38,33 @@
     // Pages (from the menu in site-nav.js)
     add("page", "Home", "index.html", "dashboard today next exam");
     for (const entry of SITE_MENU) {
-      for (const item of entry.items || [entry]) add("page", item.label, item.href, "", entry.items ? entry.label : "");
+      for (const item of entry.items || [entry]) add("page", item.label, item.href,
+        item.desc || "", entry.items ? entry.label : "",
+        item.preview ? "In development · structure preview" : "");
     }
     add("page", "Create an item", "create.html", "write flashcard question concept resource contribute");
     add("page", "Thesis guide: Getting started", "thesis.html#guide-roadmap", "master thesis dissertation when begin semester summer school proposal supervisor milestones", "Thesis Explorer");
     add("page", "Thesis guide: Find a topic", "thesis.html#guide-topics", "research question topic ideas specialisation track healthcare economics policy management population", "Thesis Explorer");
     add("page", "Thesis guide: Research toolkit", "thesis.html#guide-toolkit", "literature review methods data ethics writing reporting defence resources", "Thesis Explorer");
     add("page", "My thesis workspace", "thesis.html#guide-planner", "personal research brief proposal draft feasibility supervisor checklist backup", "Thesis Explorer");
+    // Public structure previews only. Future member photos and unpublished records are not indexed.
+    const previews = [
+      ["Career paths", "beyond-euhem.html#career-paths", "health economics policy management consulting research digital health career roles skills"],
+      ["Opportunities", "beyond-euhem.html#opportunities", "jobs internships PhD funding conferences scholarships source deadline"],
+      ["Alumni Paths", "beyond-euhem.html#alumni-paths", "graduates former students career journeys deep research sourced stories cohort"],
+      ["Prepare & Apply", "beyond-euhem.html#prepare-apply", "CV cover letter portfolio interview preparation"],
+      ["Further study", "beyond-euhem.html#further-study", "doctoral PhD research training programmes"],
+      ["Upcoming events", "events.html#upcoming", "university programme student activities next events calendar"],
+      ["Activities & projects", "events.html#activities", "workshops lectures conference project presentations trips social"],
+      ["Past events", "events.html#past-events", "completed activities event archive"],
+      ["Event principles", "events.html#event-principles", "organiser source local time zone registration confirmed postponed cancelled"],
+      ["Gallery city albums", "gallery.html#city-albums", "student photography Bologna Oslo Rotterdam Innsbruck"],
+      ["Gallery community albums", "gallery.html#community-albums", "events student life trips graduation memories"],
+      ["Gallery visibility", "gallery.html#visibility", "public private members only verified EU-HEM members protected photography"],
+      ["Gallery contributions", "gallery.html#contributions", "photographer credit consent captions review permission removal"]
+    ];
+    for (const [title, url, text] of previews) add("page", title + " (preview)", url, text,
+      "Future Hub sections", "In development · structure preview");
     // Curated public Student Experiences. Keep private drafts/submissions out of global search.
     add("experience", "Learning by doing, with the mountains in view", "experiences.html?story=hanna-lichter#stories", "Hanna Lichter MCI Innsbruck Bologna Oslo study thesis track Management of Healthcare Institutions practical teaching");
     add("experience", "From medicine to a broader view of healthcare", "experiences.html?story=skander-essafi#stories", "Skander Essafi MCI Bologna Innsbruck Rotterdam Population Health Management mobility study track thesis medicine");
