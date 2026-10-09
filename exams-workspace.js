@@ -46,6 +46,18 @@ const ExamWorkspace = (() => {
     }
     return [...result.values()];
   }
+  // Date groups for the two Table pages. The boundary belongs to the cohort,
+  // so reopening the page in January does not move it forward another year.
+  function rounds(exams, cohort) {
+    const year = Number(/^(\d{4})-/.exec(cohort?.id || "")?.[1]);
+    if (!Number.isInteger(year)) throw new Error("The cohort start year is unavailable.");
+    const cutoff = `${year + 1}-01-01`;
+    const ordered = [...exams].sort(sort);
+    return [
+      { id: "first", label: "First round", cutoff, exams: ordered.filter(exam => exam.dateKey < cutoff) },
+      { id: "second", label: "Second round", cutoff, exams: ordered.filter(exam => exam.dateKey >= cutoff) },
+    ];
+  }
   function courseUrl(id, tab) {
     return "course.html?" + new URLSearchParams({ course: id, tab });
   }
@@ -65,6 +77,6 @@ const ExamWorkspace = (() => {
     return { revise: courseUrl(course.id, revision ? "topics" : "resources"),
       label: revision ? "Revise now" : "Course resources", practice, questions, cards };
   }
-  return { sort, validDate, events, groups, studyLinks, courseUrl };
+  return { sort, validDate, events, groups, rounds, studyLinks, courseUrl };
 })();
 if (typeof module !== "undefined") module.exports = ExamWorkspace;

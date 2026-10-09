@@ -22,7 +22,22 @@ different courses, module assessments and times remain distinct. Whitespace and
 equivalent punctuation in published details do not create extra dates. Conflicting
 published booking windows or assessment details are retained for confirmation.
 
-Table shows one row per unique upcoming sitting, ordered by date and time. Columns
+Table has two pages, **First round** and **Second round**, with previous/next arrows.
+First round contains dates before 1 January following the cohort's start year;
+Second round contains dates from that day onwards, including February and any
+later published sittings. The displayed period makes this grouping explicit.
+These are date groups, with several sittings possible per course, rather than a
+record of the student's personal attempts or an official session classification.
+The cutoff remains anchored to the cohort when the current calendar year changes.
+
+The first Table visit opens First round if it has upcoming matching dates,
+otherwise Second round if available (or after the New Year boundary). The selected
+round survives filters, view changes and source retries in memory. An empty round
+retains its navigation and offers a button to the other round when dates match
+there. Arrows have keyboard labels, left/right keys and an announced round/count;
+focus moves to the enabled return arrow at either end.
+
+Each table shows one row per unique upcoming sitting, ordered by date and time. Columns
 include the course/assessment, teacher, date, Bologna time, duration, location,
 format, source notes, booking window and calendar/booking actions. Published notes
 also participate in the shared text search. Missing duration is **Not published**;
@@ -95,6 +110,9 @@ page and Notes fallback remain available without JavaScript.
 - `node tests/planning/exams-table-browser.test.js .` — default nearest-date List,
   duplicate source aliases, all four views, published/missing table details, shared
   filters and keyboard-accessible scrolling in both themes.
+- `node tests/planning/exams-rounds-browser.test.js .` — two date groups, January
+  boundaries, round navigation/focus, filters and saved plans, empty rounds,
+  source recovery and mobile/desktop layouts in both themes.
 - `node tests/planning/browser.test.js .` — the existing planner regression, with
   ordinary exam fixtures separated from the dedicated administrative-date tests.
 - `node scripts/check-content.js`, `node scripts/check-contrast.js`, and

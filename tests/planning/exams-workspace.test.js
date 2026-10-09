@@ -17,4 +17,34 @@ test('different courses with the same day and time remain independent',()=>{asse
 test('study routes stay on the right course and require actual supported module practice',()=>{const course=term.courses.find(c=>c.id==='quant-methods');const catalogue={statistics:{revision:true,questions:20,cards:0,questionTopic:'statistics.normal'}};const stats=W.studyLinks(course,[make(course.id,'74948')],catalogue),eco=W.studyLinks(course,[make(course.id,'32626')],catalogue);assert.equal(stats.label,'Revise now');assert.match(stats.practice,/course=quant-methods&tab=practice/);assert.match(stats.practice,/practiceTopic=statistics.normal#quiz/);assert.equal(eco.practice,'');assert.equal(eco.label,'Course resources');assert.match(eco.revise,/course=quant-methods&tab=resources/);});
 test('unknown study content falls back to resources, without a fake quiz link',()=>{const c=term.courses.find(c=>c.id==='right-to-health');assert.equal(W.studyLinks(c,[make(c.id,c.code)],{}).practice,'');});
 test('calendar helpers cover leap years, winter rollover and Bologna DST boundaries',()=>{assert.equal(C.shiftMonth('2026-12-01',1),'2027-01-01');assert.equal(C.monthDays('2028-02-01').filter(d=>d.inMonth).length,29);assert.equal(C.addDays('2026-10-25',1),'2026-10-26');});
+test('table rounds split at the cohort New Year and preserve all published dates without mutating input',()=>{
+  const rows=[make('a','1','2027-07-02'),make('a','1','2026-12-31'),make('b','2','2027-01-01'),make('a','1','2027-02-06'),make('a','1','2027-01-22')];
+  const copy=JSON.stringify(rows),rounds=W.rounds(rows,programme.cohorts[0]);
+  assert.deepEqual(rounds.map(({id,label,cutoff})=>({id,label,cutoff})),[
+    {id:'first',label:'First round',cutoff:'2027-01-01'},
+    {id:'second',label:'Second round',cutoff:'2027-01-01'},
+  ]);
+  assert.deepEqual(rounds[0].exams.map(row=>row.dateKey),['2026-12-31']);
+  assert.deepEqual(rounds[1].exams.map(row=>row.dateKey),['2027-01-01','2027-01-22','2027-02-06','2027-07-02']);
+  assert.equal(rounds.flatMap(round=>round.exams).length,rows.length);
+  assert.equal(JSON.stringify(rows),copy);
+});
+test('table round boundaries use the selected future cohort rather than a hard-coded year',()=>{
+  const rows=[make('a','1','2030-12-31'),make('a','1','2031-01-01')];
+  const rounds=W.rounds(rows,{...programme.cohorts[0],id:'2030-31',label:'2030/31'});
+  assert.equal(rounds[0].cutoff,'2031-01-01');
+  assert.deepEqual(rounds.map(round=>round.exams.map(row=>row.dateKey)),[['2030-12-31'],['2031-01-01']]);
+});
+test('both empty round definitions remain available for absent dates and January-only sources',()=>{
+  const empty=W.rounds([],programme.cohorts[0]);
+  assert.deepEqual(empty.map(round=>round.exams),[[],[]]);
+  const january=W.rounds([make('a','1','2027-01-22')],programme.cohorts[0]);
+  assert.deepEqual(january.map(round=>round.exams.length),[0,1]);
+});
+test('rounds sort times within each date and keep administrative recordings distinct from exams',()=>{
+  const rows=[make('a','1','2027-01-22','15:00'),{...make('a','1','2026-12-31'),administrative:true},make('a','1','2027-01-22','09:00')];
+  const rounds=W.rounds(rows,programme.cohorts[0]);
+  assert.equal(rounds[0].exams[0].administrative,true);
+  assert.deepEqual(rounds[1].exams.map(row=>row.time),['09:00','15:00']);
+});
 console.log(`${count} Exams workspace data checks passed`);

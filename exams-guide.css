@@ -138,6 +138,21 @@
 .exams-page #exam-list[data-view="list"] .exam-course-group { display:grid;grid-template-columns:minmax(230px,.8fr) minmax(0,1.6fr); }
 .exams-page #exam-list[data-view="list"] .exam-course-group-head { border-bottom:0;border-right:1px solid var(--border-default); }
 .exams-page #exam-list[data-view="list"] .exam-more-sittings>summary { min-height:44px; }
+.exams-page .exam-rounds { margin:0 0 13px;padding:16px 18px;border:1px solid var(--border-default);border-radius:14px;background:var(--surface-card); }
+.exams-page .exam-round-toolbar { display:flex;align-items:center;justify-content:space-between;gap:18px; }
+.exams-page .exam-round-toolbar>div:first-child { min-width:0; }
+.exams-page .exam-rounds .section-eyebrow { margin:0 0 5px;color:var(--ex-navy);font-size:.65rem; }
+.exams-page #exam-round-title { margin:0;font-family:var(--font-serif);font-size:1.55rem;line-height:1.2; }
+.exams-page #exam-round-meta,.exams-page .exam-round-help { margin:6px 0 0;color:var(--text-secondary);font-size:.74rem;line-height:1.65; }
+.exams-page .exam-round-help { margin-top:12px;padding-top:10px;border-top:1px solid var(--border-default); }
+.exams-page .exam-round-controls { display:flex;align-items:center;flex-shrink:0;gap:9px; }
+.exams-page .exam-round-controls button { display:grid;place-items:center;min-width:44px;min-height:44px;padding:10px;border:1px solid var(--border-default);border-radius:10px;background:var(--surface-card);color:var(--ex-navy);cursor:pointer; }
+.exams-page .exam-round-controls button:hover:not(:disabled) { background:var(--ex-navy-soft); }
+.exams-page .exam-round-controls button:focus-visible { outline:2px solid var(--ex-navy);outline-offset:3px; }
+.exams-page .exam-round-controls button:disabled { opacity:.4;cursor:default; }
+.exams-page .exam-round-controls .icon { width:18px;height:18px; }
+.exams-page #exam-round-position { min-width:34px;text-align:center;font-size:.75rem;font-weight:650;color:var(--text-secondary); }
+.exams-page .exam-other-round { min-height:44px;max-width:100%;padding:9px 14px;border:1px solid var(--border-default);border-radius:9px;background:var(--ex-navy-soft);color:var(--ex-navy);font:inherit;font-size:.8rem;cursor:pointer; }
 .exams-page .exam-table-help { margin:0 3px;color:var(--text-secondary);font-size:.75rem;line-height:1.6; }
 .exams-page .exam-table-scroll { width:100%;max-width:100%;min-width:0;overflow-x:auto;overscroll-behavior-x:contain;border:1px solid var(--border-default);border-radius:14px;background:var(--surface-card); }
 .exams-page .exam-table-scroll:focus-visible { outline:2px solid var(--ex-navy);outline-offset:3px; }
@@ -226,6 +241,7 @@
   .exams-page .planning-toolbar{padding:13px}.exams-page #exam-course-filter{max-width:100%}
   .exams-page .planning-panel-head{padding:13px 0}.exams-page .planning-panel-head h2{font-size:1.65rem}
   .exams-page .exam-view-switch{width:100%;min-width:0}.exams-page .exam-view-switch button{flex:1;min-width:0;padding:8px 6px;gap:5px;font-size:.76rem;min-height:44px}
+  .exams-page .exam-rounds{padding:14px}.exams-page .exam-round-toolbar{gap:12px;flex-wrap:wrap}.exams-page #exam-round-title{font-size:1.35rem}
   .exams-page .exam-table thead th:first-child{width:135px}
   .exams-page .exam-table tbody th{font-size:.7rem}
   .exams-page .exam-month-view{padding:13px 8px}.exams-page .exam-month-toolbar{gap:8px;padding:0 4px;flex-wrap:wrap}
@@ -242,7 +258,7 @@
 }
 @media(prefers-reduced-motion:reduce){.exams-page .exams-chevron{transition:none}}
 @media print {
-  .exams-page .planning-hero,.exams-page .exam-view-switch,.exams-page .planning-toolbar,.exams-page .exam-study-actions,.exams-page .item-actions{display:none!important}
+  .exams-page .planning-hero,.exams-page .exam-view-switch,.exams-page .planning-toolbar,.exams-page .exam-study-actions,.exams-page .item-actions,.exams-page .exam-round-controls{display:none!important}
   .exams-page #exam-list[data-view]{display:block}.exams-page .exam-course-group{break-inside:avoid;margin-bottom:16px;box-shadow:none}
   .exams-page .exam-table-scroll{overflow:visible;border:0}.exams-page .exam-table{min-width:0;width:100%;table-layout:auto;font-size:7pt}
   .exams-page .exam-table th,.exams-page .exam-table td{padding:5px;font-size:7pt;width:auto!important}.exams-page .exam-table tbody th,.exams-page .exam-table thead th:first-child{position:static;box-shadow:none}
