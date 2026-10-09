@@ -72,6 +72,13 @@ const PLAN = JSON.stringify({ version: 1, cohort: "2026-27", term: "y1-s1", choi
         failed = true;
         return route.fulfill({ status: 503, body: "unavailable" });
       }
+      // These original fixtures exercise ordinary exams only; the separate Exams
+      // workspace suite verifies email-only dates and their merged admin guidance.
+      if (address.hostname === "127.0.0.1" && address.pathname.endsWith("/content/programme.json")) {
+        const programme = JSON.parse(fs.readFileSync(path.join(ROOT, "content/programme.json"), "utf8"));
+        for (const cohort of programme.cohorts) for (const term of cohort.terms) for (const course of term.courses) delete course.assessmentNotice;
+        return route.fulfill({ contentType: "application/json", body: JSON.stringify(programme) });
+      }
       const feed = address.hostname === "corsi.unibo.it" && address.pathname.includes("@@orario_reale_json");
       const dates = address.hostname === "corsi.unibo.it" && address.pathname.endsWith("/exam-dates");
       if (feed || dates) {
@@ -89,6 +96,9 @@ const PLAN = JSON.stringify({ version: 1, cohort: "2026-27", term: "y1-s1", choi
   const waitExams = page => page.locator("#exam-list .exam-card, #exam-list .planning-empty").first().waitFor();
   const countExams = async (page, expected) => assert.strictEqual(await page.locator("#exam-list .exam-card").count(), expected);
   const exportedCalendar = async (page, button) => {
+    await button.evaluate(node => {
+      for (let details = node.closest("details"); details; details = details.parentElement.closest("details")) details.open = true;
+    });
     const downloading = page.waitForEvent("download");
     await button.click();
     const download = await downloading;
@@ -175,17 +185,17 @@ const PLAN = JSON.stringify({ version: 1, cohort: "2026-27", term: "y1-s1", choi
     assert.match(metricValues[0], /^7$/); assert.match(metricValues[1], /^4$/);
     const today = page.locator(".exam-card").filter({ hasText: "LAB 2" });
     assert.match(await today.textContent(), /Today/);
-    assert.match(await today.textContent(), /closes today|Closes today/i);
+    assert.match(await today.textContent(), /closes today|last day to book/i);
     const tomorrow = page.locator(".exam-card").filter({ hasText: "Aula 4" });
     assert.match(await tomorrow.textContent(), /Tomorrow/);
     assert.match(await tomorrow.textContent(), /Fundamentals in Health Economics/);
-    assert.match(await tomorrow.textContent(), /\(I\.C\.\)/);
+    assert.match(await tomorrow.locator("xpath=ancestor::section[contains(@class, 'exam-course-group')]").textContent(), /Integrated course/);
     assert.match(await page.textContent("#open-registrations"), /Fundamentals of Statistics for Healthcare/);
     assert.strictEqual(await page.locator('a[href="https://almaesami.unibo.it/almaesami/welcome.htm"]').count() > 0, true);
-    const examIcs = await exportedCalendar(page, today.getByRole("button", { name: /^Add exam:/ }));
+    const examIcs = await exportedCalendar(page, today.getByRole("button", { name: /^Add exam:/, includeHidden: true }));
     assert.match(examIcs, /DTSTART;TZID=Europe\/Rome:20261007T150000/);
     assert.match(examIcs, /End time is an estimate/);
-    const reminderIcs = await exportedCalendar(page, today.getByRole("button", { name: /^Registration reminder:/ }));
+    const reminderIcs = await exportedCalendar(page, today.getByRole("button", { name: /^Registration reminder:/, includeHidden: true }));
     assert.match(reminderIcs, /DTSTART;VALUE=DATE:20261007/);
     assert.match(reminderIcs, /DTEND;VALUE=DATE:20261008/);
     ok("exams exclude already-started sittings in Bologna time; integrated modules, deadlines, maps and two calendar exports stay accurate");
@@ -218,7 +228,7 @@ const PLAN = JSON.stringify({ version: 1, cohort: "2026-27", term: "y1-s1", choi
     assert.match(await missingDetails.textContent(), /Time not listed/);
     assert.match(await missingDetails.textContent(), /Room not listed/);
     assert.strictEqual(await missingDetails.getByRole("link", { name: /^Map:/ }).count(), 0);
-    const incompleteIcs = await exportedCalendar(page, missingDetails.getByRole("button", { name: /^Add exam:/ }));
+    const incompleteIcs = await exportedCalendar(page, missingDetails.getByRole("button", { name: /^Add exam:/, includeHidden: true }));
     assert.match(incompleteIcs, /Start time is a placeholder \(09:00\)/);
     assert.match(incompleteIcs, /confirm the time on UniBo/);
     await page.context().close();
@@ -252,7 +262,10 @@ const PLAN = JSON.stringify({ version: 1, cohort: "2026-27", term: "y1-s1", choi
     ok("Bologna date rollover works even while the browser is still on the previous calendar day");
 
     page = await open("exams.html", { clocked: true }); await waitExams(page);
-    const calendarAction = page.locator(".exam-card").filter({ hasText: "LAB 2" }).getByRole("button", { name: /^Add exam:/ });
+    const calendarAction = page.locator(".exam-card").filter({ hasText: "LAB 2" }).getByRole("button", { name: /^Add exam:/, includeHidden: true });
+    await calendarAction.evaluate(node => {
+      for (let details = node.closest("details"); details; details = details.parentElement.closest("details")) details.open = true;
+    });
     await calendarAction.focus();
     await calendarAction.evaluate(element => { window.__planningFocusedAction = element; });
     await page.clock.fastForward(60 * 1000);
@@ -288,9 +301,9 @@ const PLAN = JSON.stringify({ version: 1, cohort: "2026-27", term: "y1-s1", choi
     for (const [url, feed, wait, countSelector] of [["timetable.html", "timetable", waitTimetable, ".week-block"], ["exams.html", "exams", waitExams, ".exam-card"]]) {
       for (const failure of [feed, "programme"]) {
         page = await open(url, { failure });
-        await page.locator(".planning-empty").getByRole("button", { name: "Retry", exact: true }).waitFor();
+        await page.getByRole("button", { name: /^Retry/ }).waitFor();
         assert.match(await page.textContent(".planning-empty"), /UniBo|official|unavailable|load/i);
-        await page.getByRole("button", { name: "Retry", exact: true }).click();
+        await page.getByRole("button", { name: /^Retry/ }).click();
         await wait(page);
         assert.ok(await page.locator(countSelector).count() > 0, `${url} recovers from a failed ${failure} request without reloading the page`);
         await page.context().close();

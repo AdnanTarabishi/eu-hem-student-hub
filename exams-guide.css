@@ -1,44 +1,206 @@
-
-/* Course-first Exams: compact source-backed cards, aligned with the Hub's new identity. */
-.exams-page .exams-help,.exams-page .exam-special-card,.exams-page .exam-course-group{margin:22px 0;border:1px solid var(--border-default);border-radius:19px;background:var(--surface-card);box-shadow:0 7px 28px #122c4a0a;overflow:hidden}
-.exams-page .exams-help{padding:clamp(20px,3vw,33px)}
-.exams-page .exams-help h2,.exams-page .exam-special-card h2,.exams-page .exam-course-group-head h3{font-family:var(--font-serif,Georgia,serif);letter-spacing:-.03em}
-.exams-page .exams-help h2{margin:5px 0 10px;font-size:clamp(1.5rem,2.5vw,2.3rem)}
-.exams-page .exams-help-intro>p:last-child{color:var(--text-secondary);line-height:1.7}
-.exams-page .exams-help-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0}
-.exams-page .exams-help-grid>div{padding:17px;border:1px solid var(--border-default);border-radius:12px;background:var(--surface-page)}
-.exams-page .exams-help-grid strong{font-size:.84rem;color:var(--text-primary)}
-.exams-page .exams-help-grid p{margin:7px 0 0;font-size:.8rem;line-height:1.6;color:var(--text-secondary)}
-.exams-page .exams-help-note{font-size:.79rem;color:var(--text-secondary);line-height:1.7;margin:0;border-left:3px solid #ba5a43;padding-left:12px}
-.exams-page .exam-special-card{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)}
-.exams-page .exam-special-head{padding:clamp(22px,3vw,33px);background:#132e53;color:#f7fbff}
-.exams-page .exam-special-head h2{color:white;font-size:clamp(1.5rem,2.3vw,2.15rem);margin:12px 0}
-.exams-page .exam-special-kicker{color:#f6b69f;letter-spacing:.1em;font-size:.69rem;font-weight:800}
-.exams-page .exam-special-lead{color:#cfdeef;font-size:.83rem;font-weight:650}
-.exams-page .exam-special-date{margin-top:19px;color:white;font-weight:800;font-size:1rem}
-.exams-page .exam-special-caption{color:#cbd8ea;font-size:.8rem;line-height:1.6}
-.exams-page .exam-special-body{padding:clamp(20px,3vw,33px)}
-.exams-page .exam-special-steps{margin:0;padding-left:22px;display:grid;gap:16px}
-.exams-page .exam-special-steps li::marker{color:#be5b41;font-weight:750}
-.exams-page .exam-special-steps strong{color:var(--text-primary);font-size:.84rem}
-.exams-page .exam-special-steps p{font-size:.79rem;line-height:1.65;color:var(--text-secondary);margin:4px 0 0}
-.exams-page .exam-special-links{display:flex;gap:15px;flex-wrap:wrap;margin-top:20px}
-.exams-page .exam-special-links a{font-size:.8rem;font-weight:700}
-.exams-page .exam-special-source{margin:16px 0 0;font-size:.71rem;color:var(--text-secondary)}
-.exams-page .exam-course-group-head{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:19px 22px;border-bottom:1px solid var(--border-default);background:var(--surface-page)}
-.exams-page .exam-course-group-head h3{margin:0 0 4px;font-size:1.3rem}
-.exams-page .exam-course-group-head h3 a{color:var(--text-primary);text-decoration:none}
-.exams-page .exam-course-group-head h3 a:hover{text-decoration:underline}
-.exams-page .exam-course-group-note{font-size:.77rem;color:var(--text-secondary);margin:0;line-height:1.55}
-.exams-page .exam-course-group-count{white-space:nowrap;flex-shrink:0;border:1px solid var(--border-default);border-radius:999px;padding:7px 11px;font-size:.74rem;font-weight:800;color:var(--text-secondary)}
-.exams-page .exam-module-group{padding:16px 20px}
-.exams-page .exam-module-group+.exam-module-group{border-top:1px solid var(--border-default)}
-.exams-page .exam-module-name{margin:0 0 10px;font-size:1rem}
-.exams-page .exam-sitting-label{font-size:.74rem;font-weight:700;color:var(--text-secondary);margin:0 0 8px}
-.exams-page .exam-course-group .exam-card{margin:0;border-radius:13px;box-shadow:none}
-.exams-page .exam-more-sittings{margin-top:12px;border:1px solid var(--border-default);border-radius:12px;overflow:hidden}
-.exams-page .exam-more-sittings summary{cursor:pointer;padding:13px 15px;font-size:.81rem;font-weight:750;color:var(--text-primary)}
-.exams-page .exam-more-sittings summary:hover{background:var(--surface-page)}
-.exams-page .exam-more-stack{padding:0 12px 13px;display:grid;gap:10px}
-@media(max-width:780px){.exams-page .exams-help-grid{grid-template-columns:1fr}.exams-page .exam-special-card{grid-template-columns:1fr}}
-@media(max-width:480px){.exams-page .exam-module-group{padding:12px}.exams-page .exam-course-group-head{padding:15px}.exams-page .exam-special-body,.exams-page .exam-special-head{padding:20px}.exams-page .exam-course-group-head h3{font-size:1.06rem}}
+/* Exams workspace only. Navy, terracotta and warm surfaces reuse the Hub tokens.
+   Cards and List share the same DOM; Month uses the same filtered date collection. */
+.exams-page {
+  --ex-accent: #a74531;
+  --ex-accent-soft: #fff0e8;
+  --ex-navy: #17385b;
+  --ex-navy-soft: #ecf2f7;
+  --pl-ink: var(--text-primary);
+  --pl-teal: var(--color-primary);
+}
+:root[data-theme="dark"] .exams-page { --ex-accent:#ffb89d;--ex-accent-soft:#392c29;--ex-navy:#b6d9ff;--ex-navy-soft:#22344c; }
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .exams-page{--ex-accent:#ffb89d;--ex-accent-soft:#392c29;--ex-navy:#b6d9ff;--ex-navy-soft:#22344c;}}
+.exams-page [hidden] { display:none!important; }
+.exams-page main.container { max-width:1280px;padding:24px 28px 56px; }
+.exams-page .planning-hero { background:#122d50;grid-template-columns:minmax(0,1.65fr) minmax(0,1fr);padding:25px 30px;gap:30px;border-radius:20px;margin-bottom:15px; }
+.exams-page .planning-hero h1 { font-family:var(--font-serif);font-size:2.45rem;line-height:1.08;margin:0 0 10px; }
+.exams-page .planning-hero h1 br { display:none; }
+.exams-page .planning-hero h1 em { color:#ffc3a7;font-style:normal; }
+.exams-page .planning-hero .section-eyebrow { margin-bottom:8px; color:#d0ddef; }
+.exams-page .planning-hero-lead { font-size:.85rem!important; }
+.exams-page .planning-hero-links { margin-top:15px;gap:6px; }
+.exams-page .planning-hero-links a { min-height:36px;padding:6px 10px;font-size:.73rem; }
+.exams-page .planning-hero-links .is-active { background:#fff0e8;border-color:#fff0e8;color:#632c20; }
+.exams-page .planning-hero-actions { margin-top:5px;gap:0 18px; }
+.exams-page .planning-hero-actions a { min-height:32px;font-size:.72rem; }
+.exams-page .planning-hero-aside { padding:16px 22px;background:#ffffff08;border:1px solid #ffffff20; border-radius:12px; }
+.exams-page .planning-aside-title { font-size:1.7rem;letter-spacing:-.03em; }
+.exams-page .planning-next-exam { color:#d9e5f6!important;font-size:.83rem!important;line-height:1.55; }
+.exams-page .planning-next-meta { font-size:.74rem;margin:7px 0 0; }
+.exams-page .planning-summary { margin-bottom:13px;gap:10px; }
+.exams-page .planning-stat { padding:13px 17px;border-radius:12px; }
+.exams-page .planning-stat-value { font-size:1.5rem;line-height:1.15; }
+.exams-page .planning-stat-label { font-size:.67rem; }
+.exams-page .planning-stat-note { font-size:.71rem; }
+.exams-page summary { cursor:pointer; }
+.exams-page summary .icon { width:17px;height:17px;flex-shrink:0; }
+.exams-page .exams-help { margin:0 0 12px;background:var(--surface-card);border:1px solid var(--border-default);border-radius:12px; }
+.exams-page .exams-help>summary { display:flex;align-items:center;gap:12px;min-height:58px;padding:10px 17px;list-style:none; }
+.exams-page .exams-help>summary::-webkit-details-marker { display:none; }
+.exams-page .exams-help>summary>span:nth-child(2) { flex:1;min-width:0;display:flex;align-items:center;gap:15px;flex-wrap:wrap; }
+.exams-page .exams-help strong { color:var(--text-primary);font-size:.83rem; }
+.exams-page .exams-help-preview { color:var(--text-secondary);font-size:.76rem; }
+.exams-page .exams-help-icon { display:grid;place-items:center;width:31px;height:31px;border-radius:9px;background:var(--ex-navy-soft);color:var(--ex-navy); }
+.exams-page .exams-chevron { color:var(--text-secondary);transition:transform .15s; }
+.exams-page .exams-help[open] .exams-chevron { transform:rotate(180deg); }
+.exams-page .exams-help-content { padding:0 18px 16px;border-top:1px solid var(--border-default); }
+.exams-page .exams-help-content>p { font-size:.82rem;line-height:1.7; }
+.exams-page .exams-help-grid { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px; }
+.exams-page .exams-help-grid>div { padding:12px;background:var(--surface-page);border-radius:9px; }
+.exams-page .exams-help-grid p { margin:5px 0 0;color:var(--text-secondary);font-size:.78rem;line-height:1.65; }
+.exams-page .exams-help-note { border-left:3px solid var(--ex-accent);padding-left:12px;color:var(--text-secondary); }
+.exams-page .exam-open-bookings { margin-bottom:15px;border:1px solid var(--border-default);border-left:3px solid var(--ex-accent);border-radius:10px;background:var(--surface-card); }
+.exams-page .exam-open-bookings>summary { padding:12px 16px;font-size:.79rem;font-weight:650; }
+.exams-page .exam-booking-list { padding:0 16px 8px; }
+.exams-page .exam-booking-list>div { display:flex;gap:12px;justify-content:space-between;padding:8px 0;border-top:1px solid var(--border-default);font-size:.78rem; }
+.exams-page .exam-booking-list a { flex-shrink:0; }
+.exams-page .planning-panel { padding:0;background:transparent;border:0;box-shadow:none; }
+.exams-page .planning-panel-head { gap:15px;padding:12px 0 16px;align-items:center; }
+.exams-page .planning-panel-head h2 { font-family:var(--font-serif);font-size:1.85rem;margin:3px 0 5px; }
+.exams-page .planning-panel-head p:not(.section-eyebrow) { font-size:.8rem; }
+.exams-page .exam-view-switch { display:flex;flex-shrink:0;gap:4px;padding:5px;border-radius:12px;border:1px solid var(--border-default);background:var(--surface-card); }
+.exams-page .exam-view-switch button { display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:8px 14px;border:0;border-radius:8px;background:transparent;color:var(--text-secondary);font:inherit;font-size:.8rem;font-weight:650;cursor:pointer; }
+.exams-page .exam-view-switch button[aria-pressed="true"] { background:var(--ex-navy);color:var(--surface-card); }
+.exams-page .exam-view-switch button:disabled { opacity:.6;cursor:wait; }
+.exams-page .exam-view-switch .icon { width:16px;height:16px; }
+.exams-page .planning-toolbar { padding:14px 17px;background:var(--surface-card);border:1px solid var(--border-default);border-radius:12px; }
+.exams-page .schedule-filters { margin:0;gap:12px; }
+.exams-page .schedule-filters label { font-size:.72rem;min-width:0; }
+.exams-page .schedule-filters select,.exams-page .schedule-filters input { min-height:42px;border-radius:8px;font-size:.8rem;max-width:100%; }
+.exams-page #exam-course-filter { max-width:325px; }
+.exams-page .planning-search { flex:1; }
+.exams-page .planning-results-meta { margin:13px 0 5px;padding:0;gap:8px; }
+.exams-page .planning-results-meta p { font-size:.74rem; }
+.exams-page .exam-selection-bar { display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 13px; }
+.exams-page .exam-selection-bar .planning-scope { font-size:.7rem; }
+.exams-page #exam-clear-day { border:0;background:var(--ex-navy-soft);color:var(--ex-navy);padding:8px 12px;border-radius:8px;min-height:36px;font:inherit;font-size:.76rem;cursor:pointer; }
+.exams-page #exam-list { display:grid;gap:17px;align-items:start; }
+.exams-page #exam-list[data-view="cards"] { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.exams-page #exam-list>.planning-empty { grid-column:1/-1; }
+.exams-page .exam-course-group { overflow:hidden;min-width:0;border:1px solid var(--border-default);border-radius:16px;background:var(--surface-card);box-shadow:0 3px 16px #172e4605; }
+.exams-page .exam-course-group-head { padding:19px 21px 15px;border-bottom:1px solid var(--border-default);background:var(--surface-card); }
+.exams-page .exam-course-group-head h3 { font-family:var(--font-serif);font-size:1.24rem;line-height:1.35;margin:6px 0; }
+.exams-page .exam-course-group-head h3 a { color:var(--text-primary);text-decoration:none; }
+.exams-page .exam-course-group-head h3 a:hover { text-decoration:underline; }
+.exams-page .exam-course-eyebrow { margin:0;color:var(--ex-navy);text-transform:uppercase;letter-spacing:.08em;font-size:.65rem;font-weight:700; }
+.exams-page .exam-course-group-note { margin:0;font-size:.72rem;color:var(--text-secondary); }
+.exams-page .exam-study-actions { display:flex;flex-wrap:wrap;gap:8px;margin-top:14px; }
+.exams-page .exam-study-actions a { display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:38px;padding:7px 11px;border-radius:8px;border:1px solid var(--border-default);text-decoration:none;font-size:.76rem;font-weight:650; }
+.exams-page .exam-study-actions a:hover { text-decoration:underline; }
+.exams-page .exam-study-actions .icon { width:15px;height:15px; }
+.exams-page .exam-study-actions .exam-revise { background:var(--ex-navy-soft);color:var(--ex-navy);border-color:transparent; }
+.exams-page .exam-study-actions .exam-practice { color:var(--ex-accent);border-color:var(--border-default); }
+.exams-page .exam-module-group { padding:14px 18px; }
+.exams-page .exam-module-group+.exam-module-group { border-top:1px solid var(--border-default); }
+.exams-page .exam-module-name { margin:0 0 10px;color:var(--text-secondary);font-size:.76rem;font-weight:700; }
+.exams-page .exam-card { display:grid;grid-template-columns:53px minmax(0,1fr);gap:14px;margin:0;padding:0;border:0;box-shadow:none;background:transparent;border-radius:0; }
+.exams-page .exam-date-block { align-self:start;padding:8px 4px;border-radius:10px;background:var(--ex-navy-soft);color:var(--ex-navy);border:0;min-width:0;width:auto; }
+.exams-page .exam-day { font-size:1.4rem;font-weight:750;line-height:1.15; }
+.exams-page .exam-month { font-size:.7rem;text-transform:uppercase; }
+.exams-page .exam-weekday { font-size:.66rem; }
+.exams-page .exam-card-body { min-width:0; }
+.exams-page .exam-card-head { display:flex;gap:8px;align-items:flex-start;justify-content:space-between;margin:0; }
+.exams-page .exam-title { margin:0;font-size:.83rem;line-height:1.4;font-weight:650;letter-spacing:0; }
+.exams-page .exam-title a { color:var(--text-primary);text-decoration:none; }
+.exams-page .exam-title a:hover { text-decoration:underline; }
+.exams-page .exam-countdown { flex-shrink:0;font-size:.65rem;font-weight:650;color:var(--text-secondary);white-space:nowrap;line-height:1.5; }
+.exams-page .exam-when-line { font-size:.78rem;font-weight:600;margin:5px 0;color:var(--text-primary); }
+.exams-page .exam-room { margin:3px 0 7px;font-size:.73rem;line-height:1.5;color:var(--text-secondary); }
+.exams-page .exam-registration { padding:7px 9px;margin:8px 0 3px;display:flex;align-items:start;gap:4px 8px;flex-wrap:wrap;border:0;border-radius:7px;background:var(--surface-page); }
+.exams-page .exam-registration .reg-chip { padding:0;background:transparent;color:var(--text-secondary);font-size:.69rem; }
+.exams-page .exam-registration.is-open .reg-chip { color:var(--color-success-text); }
+.exams-page .exam-registration.is-soon .reg-chip { color:var(--ex-navy); }
+.exams-page .exam-registration-note { font-size:.68rem;line-height:1.6;color:var(--text-secondary);margin:0; }
+.exams-page .exam-sitting-details>summary,.exams-page .exam-more-sittings>summary,.exams-page .exam-admin-instructions>summary { display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;min-height:38px;padding:7px 0;color:var(--text-secondary);font-size:.73rem;font-weight:600; }
+.exams-page .exam-sitting-details>summary::-webkit-details-marker,.exams-page .exam-more-sittings>summary::-webkit-details-marker,.exams-page .exam-admin-instructions>summary::-webkit-details-marker { display:none; }
+.exams-page details[open]>summary>.icon { transform:rotate(180deg); }
+.exams-page .exam-meta-text,.exams-page .exam-registration-dates { font-size:.74rem;line-height:1.6;color:var(--text-secondary);margin:3px 0 7px; }
+.exams-page .item-actions { display:flex;flex-wrap:wrap;gap:5px;margin:7px 0; }
+.exams-page .item-actions a,.exams-page .item-actions button { display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:.7rem;min-height:36px;padding:7px 9px;border-radius:7px; }
+.exams-page .item-actions button { background:var(--surface-card);color:var(--text-primary);border:1px solid var(--border-default);font:inherit;font-size:.7rem;cursor:pointer; }
+.exams-page .item-actions .icon { width:14px;height:14px; }
+.exams-page .exams-source { font-size:11px!important;line-height:1.65;color:var(--text-secondary);margin:8px 0 0;overflow-wrap:anywhere; }
+.exams-page .exam-more-sittings { margin-top:8px;border-top:1px dashed var(--border-default); }
+.exams-page .exam-more-sittings>summary { padding:9px 3px;color:var(--ex-navy); }
+.exams-page .exam-more-sittings>.exam-card { margin-top:13px;padding-top:12px;border-top:1px solid var(--border-default); }
+.exams-page .is-administrative { border-top:3px solid var(--ex-accent); }
+.exams-page .is-administrative .exam-course-eyebrow { color:var(--ex-accent); }
+.exams-page .is-administrative .exam-date-block { color:var(--ex-accent);background:var(--ex-accent-soft); }
+.exams-page .exam-no-final { font-size:.74rem;font-weight:650;color:var(--ex-accent);margin:5px 0; }
+.exams-page .exam-admin-instructions { margin:0 18px 12px;padding:0 12px;background:var(--surface-page);border-radius:9px; }
+.exams-page .exam-admin-instructions>summary { color:var(--text-primary); }
+.exams-page .exam-admin-instructions ol { padding:0 0 0 20px;margin:7px 0; }
+.exams-page .exam-admin-instructions li { font-size:.76rem;line-height:1.6;margin-bottom:12px; }
+.exams-page .exam-admin-instructions li p { margin:4px 0;color:var(--text-secondary); }
+.exams-page .exam-admin-instructions .exams-source { padding-bottom:13px; }
+.exams-page .exam-conflict { border-left:3px solid var(--ex-accent);padding-left:10px;font-size:.75rem;line-height:1.6; }
+.exams-page #exam-list[data-view="list"] .exam-course-group { display:grid;grid-template-columns:minmax(230px,.8fr) minmax(0,1.6fr); }
+.exams-page #exam-list[data-view="list"] .exam-course-group-head { border-bottom:0;border-right:1px solid var(--border-default); }
+.exams-page #exam-list[data-view="month"] { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.exams-page .exam-feed-warning { display:flex;justify-content:space-between;align-items:center;gap:16px;border-left:3px solid var(--ex-accent);border-radius:9px;background:var(--surface-card);padding:12px 15px;margin-top:13px; }
+.exams-page .exam-feed-warning p { font-size:.78rem;margin:0;line-height:1.65; }
+.exams-page .exam-feed-warning button { flex-shrink:0;background:var(--surface-page);border:1px solid var(--border-default);color:var(--text-primary);border-radius:7px;min-height:40px;padding:7px 11px;cursor:pointer; }
+/* A semantic table with roving keyboard focus: coloured counts also have text labels. */
+.exams-page .exam-month-view { margin-top:16px;padding:20px;background:var(--surface-card);border:1px solid var(--border-default);border-radius:16px; }
+.exams-page .exam-month-toolbar { display:flex;align-items:center;justify-content:space-between;gap:15px; }
+.exams-page #exam-month-title { font-family:var(--font-serif);margin:0;font-size:1.6rem; }
+.exams-page #exam-month-meta { margin:5px 0 0;color:var(--text-secondary);font-size:.75rem; }
+.exams-page .exam-month-controls { display:flex;gap:5px; }
+.exams-page .exam-month-controls button { display:grid;place-items:center;min-width:42px;min-height:42px;padding:8px 11px;border:1px solid var(--border-default);border-radius:9px;background:var(--surface-card);color:var(--text-primary);font:inherit;font-size:.77rem;cursor:pointer; }
+.exams-page .exam-month-controls .icon { width:17px;height:17px; }
+.exams-page .exam-calendar-help { margin:12px 0 8px;font-size:.72rem;color:var(--text-secondary); }
+.exams-page .exam-month-table { width:100%;table-layout:fixed;border-collapse:separate;border-spacing:5px;margin:0; }
+.exams-page .exam-month-table th { text-align:center;padding:4px;font-size:.69rem;color:var(--text-secondary);background:none;border:0; }
+.exams-page .exam-month-table td { padding:0;border:0;vertical-align:top;background:transparent; }
+.exams-page .exam-calendar-day { display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:5px;width:100%;height:57px;padding:8px 12px;background:var(--surface-page);color:var(--text-primary);border:1px solid transparent;border-radius:9px;font:inherit;font-size:.85rem;cursor:pointer; }
+.exams-page .exam-calendar-day:hover { border-color:var(--border-default); }
+.exams-page .exam-calendar-day.has-exams { background:var(--ex-navy-soft); }
+.exams-page .exam-calendar-day.has-admin:not(.has-exams) { background:var(--ex-accent-soft); }
+.exams-page .exam-calendar-day.is-outside { background:var(--surface-card);color:var(--text-secondary);border:1px dashed var(--border-default); }
+.exams-page .exam-calendar-day[aria-pressed="true"] { border:2px solid var(--ex-navy);box-shadow:0 0 0 1px var(--ex-navy); }
+.exams-page .exam-calendar-day.is-today .exam-calendar-number { text-decoration:underline;text-underline-offset:5px;font-weight:800; }
+.exams-page .exam-calendar-marks { display:flex;gap:3px; }
+.exams-page .exam-date-count { display:grid;place-items:center;min-width:22px;height:22px;border-radius:50%;background:var(--ex-navy);color:var(--surface-card);font-size:.67rem;font-weight:700; }
+.exams-page .exam-date-count.is-admin { background:var(--ex-accent);border-radius:5px; }
+.exams-page .exam-month-legend { display:flex;align-items:center;gap:9px 20px;flex-wrap:wrap;margin:12px 5px 0;color:var(--text-secondary);font-size:.71rem; }
+.exams-page .exam-month-legend>span { display:flex;align-items:center;gap:7px; }
+.exams-page .exam-month-legend>span:last-child { margin-left:auto; }
+.exams-page .exam-dot { display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--ex-navy); }
+.exams-page .exam-dot.is-admin { background:var(--ex-accent);border-radius:2px; }
+@media(max-width:1000px){
+  .exams-page .planning-hero{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);padding:23px;gap:22px}
+  .exams-page .planning-hero h1{font-size:2.1rem}.exams-page .planning-hero h1 br{display:block}
+  .exams-page .planning-panel-head{align-items:flex-start;flex-wrap:wrap}
+  .exams-page .exam-card-head{flex-wrap:wrap;gap:3px}.exams-page .exam-course-group-head{padding:16px}
+  .exams-page .exam-module-group{padding:12px}.exams-page .exam-card{gap:10px;grid-template-columns:46px minmax(0,1fr)}
+}
+@media(max-width:700px){
+  .exams-page main.container{padding:18px 16px 40px}
+  .exams-page .planning-hero{grid-template-columns:1fr;padding:21px;gap:17px}
+  .exams-page .planning-hero-aside{padding:13px 16px}.exams-page .planning-aside-title{font-size:1.3rem}
+  .exams-page .planning-hero h1 br{display:none}.exams-page .planning-hero h1{font-size:2rem}
+  .exams-page .planning-hero h1 em{display:block}
+  .exams-page .planning-summary{gap:6px}.exams-page .planning-stat{padding:12px 9px;min-width:0}
+  .exams-page .planning-stat-value{font-size:1.15rem;overflow-wrap:anywhere}.exams-page .planning-stat-label{font-size:.6rem}.exams-page .planning-stat-note{font-size:.63rem}
+  .exams-page .exams-help>summary>span:nth-child(2){display:block}.exams-page .exams-help-preview{display:block;margin-top:2px;font-size:.68rem}
+  .exams-page .exams-help-grid{grid-template-columns:1fr;gap:8px}.exams-page .exams-help>summary{padding:11px}
+  .exams-page #exam-list[data-view="cards"],.exams-page #exam-list[data-view="month"]{grid-template-columns:1fr}
+  .exams-page #exam-list[data-view="list"] .exam-course-group{grid-template-columns:1fr}
+  .exams-page #exam-list[data-view="list"] .exam-course-group-head{border-right:0;border-bottom:1px solid var(--border-default)}
+  .exams-page #exam-list[data-view="list"] .exam-course-group-head h3{font-size:1.1rem}
+  .exams-page .planning-toolbar{padding:13px}.exams-page #exam-course-filter{max-width:100%}
+  .exams-page .planning-panel-head{padding:13px 0}.exams-page .planning-panel-head h2{font-size:1.65rem}
+  .exams-page .exam-view-switch{width:100%}.exams-page .exam-view-switch button{flex:1;padding:8px;min-height:44px}
+  .exams-page .exam-month-view{padding:13px 8px}.exams-page .exam-month-toolbar{gap:8px;padding:0 4px;flex-wrap:wrap}
+  .exams-page #exam-month-title{font-size:1.3rem}.exams-page .exam-calendar-help{padding:0 4px;font-size:.68rem}
+  .exams-page .exam-month-table{border-spacing:3px}.exams-page .exam-calendar-day{height:61px;flex-direction:column;justify-content:flex-start;padding:6px 1px;font-size:.8rem;gap:5px;border-radius:6px}
+  .exams-page .exam-date-count{min-width:17px;height:17px;font-size:.6rem}.exams-page .exam-calendar-marks{gap:2px}
+  .exams-page .exam-month-legend{font-size:.67rem;gap:8px 12px}.exams-page .exam-month-legend>span:last-child{margin-left:0}
+  .exams-page .exam-booking-list>div,.exams-page .exam-feed-warning{flex-direction:column;align-items:start;gap:7px}
+  .exams-page .exam-card-head{flex-wrap:nowrap}.exams-page .exam-course-group-head h3{font-size:1.22rem}
+}
+@media(prefers-reduced-motion:reduce){.exams-page .exams-chevron{transition:none}}
+@media print {
+  .exams-page .planning-hero,.exams-page .exam-view-switch,.exams-page .planning-toolbar,.exams-page .exam-study-actions,.exams-page .item-actions{display:none!important}
+  .exams-page #exam-list[data-view]{display:block}.exams-page .exam-course-group{break-inside:avoid;margin-bottom:16px;box-shadow:none}
+}

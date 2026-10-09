@@ -1,5 +1,5 @@
-// Exam planner: official first-year sittings, registration windows and calendar actions.
-// All comparisons use Bologna time, even when the student is elsewhere.
+// Exams workspace: one source-backed collection, three views, no invented
+// attempts. UI choices stay in memory; only existing study-plan preferences persist.
 const examList = document.getElementById("exam-list");
 const examStatus = document.getElementById("exam-status");
 const examCourseFilter = document.getElementById("exam-course-filter");
@@ -7,387 +7,373 @@ const examRegistrationFilter = document.getElementById("exam-registration-filter
 const examSearch = document.getElementById("exam-search");
 const examReset = document.getElementById("exam-reset");
 const ALMAESAMI_URL = "https://almaesami.unibo.it/almaesami/welcome.htm";
-
 const examsPage = {
   programme: null, exams: [], loaded: false, loading: false, scopeSwitch: null,
-  clockSignature: "", clockRefreshPending: false,
+  view: "cards", month: Planner.clock().slice(0, 7), day: "", calendarFocus: "",
+  studies: {}, studyStarted: false, openDetails: new Set(),
+  clockSignature: "", clockRefreshPending: false, feedFailed: false,
 };
-
-function visibleExams(now = Planner.clock()) {
-  const today = now.slice(0, 10);
+const controls = () => [examCourseFilter, examRegistrationFilter, examSearch, examReset,
+  ...document.querySelectorAll("[data-exam-view]")];
+const el = createElement;
+const fullDate = date => formatDay(date, { day: "numeric", month: "short", year: "numeric" });
+const courseFor = id => currentTerm(examsPage.programme).courses.find(c => c.id === id);
+function link(label, href, className = "", external = false) {
+  const node = el("a", className, label); node.href = href;
+  if (external) { node.target = "_blank"; node.rel = "noopener"; }
+  return node;
+}
+function button(label, action, className = "") {
+  const node = el("button", className, label); node.type = "button";
+  node.addEventListener("click", action); return node;
+}
+function disclosure(title, key, className = "") {
+  const node = el("details", className); node.dataset.disclosure = key;
+  node.open = examsPage.openDetails.has(key);
+  const summary = el("summary"); summary.append(el("span", null, title), siteIcon("chevron-down"));
+  node.appendChild(summary);
+  node.addEventListener("toggle", () => {
+    if (!node.isConnected) return;
+    if (node.open) examsPage.openDetails.add(key); else examsPage.openDetails.delete(key);
+  });
+  return node;
+}
+function rememberDisclosures() {
+  for (const node of examList.querySelectorAll("details[data-disclosure]")) {
+    if (node.open) examsPage.openDetails.add(node.dataset.disclosure);
+    else examsPage.openDetails.delete(node.dataset.disclosure);
+  }
+}
+function filteredExams(now = Planner.clock(), includePast = false) {
+  if (!examsPage.programme) return [];
   const mine = myCoursesOnly(examsPage.programme) ? new Set(myModuleCodes(examsPage.programme)) : null;
-  const courseId = examCourseFilter.value;
   const query = simplify(examSearch.value.trim());
-  return examsPage.exams.filter((exam) => {
-    if (!Planner.upcomingExam(exam, now)) return false;
-    if (mine && !exam.codes.some((code) => mine.has(code))) return false;
-    if (courseId && !exam.courseIds.includes(courseId)) return false;
-    if (examRegistrationFilter.value && Planner.registration(exam, today).key !== examRegistrationFilter.value) return false;
-    const searchText = [exam.title, exam.partOf, exam.place, ...exam.teachers].filter(Boolean).join(" ");
-    return !query || simplify(searchText).includes(query);
+  return examsPage.exams.filter(exam => {
+    if (!includePast && !Planner.upcomingExam(exam, now)) return false;
+    if (mine && !exam.codes.some(code => mine.has(code))) return false;
+    if (examCourseFilter.value && !exam.courseIds.includes(examCourseFilter.value)) return false;
+    if (examRegistrationFilter.value && Planner.registration(exam, now.slice(0,10)).key !== examRegistrationFilter.value) return false;
+    const words = [exam.title, exam.partOf, exam.place, ...exam.teachers,
+      exam.administrative ? "administrative recording Pass/Fail no final exam" : ""].join(" ");
+    return !query || simplify(words).includes(query);
   });
 }
-
+function visibleExams(now = Planner.clock()) { return filteredExams(now); }
 function resetExamFilters() {
-  examCourseFilter.value = "";
-  examRegistrationFilter.value = "";
-  examSearch.value = "";
-  render();
+  examCourseFilter.value = ""; examRegistrationFilter.value = ""; examSearch.value = "";
+  examsPage.day = ""; render();
 }
-
-function registrationNote(registration) {
-  if (registration.key === "open") return registration.days === 0
-    ? "Last day to book. Check the closing time on AlmaEsami."
-    : `Closes in ${registration.days} day${registration.days === 1 ? "" : "s"}. Book on AlmaEsami.`;
-  if (registration.key === "soon") return `Opens in ${registration.days} day${registration.days === 1 ? "" : "s"}. You can save a reminder below.`;
-  if (registration.key === "closed") return "The published registration window has ended.";
-  return "A complete registration window is not listed. Check AlmaEsami for booking details.";
+function coursePageLink(exam) { return ExamWorkspace.courseUrl(exam.courseIds[0], "exam"); }
+function registrationNote(reg, exam) {
+  if (reg.key === "open") return reg.days === 0 ? "Last day to book · check the closing time on AlmaEsami." : `Book by ${fullDate(exam.registrationCloses)}`;
+  if (reg.key === "soon") return `Booking opens ${fullDate(exam.registrationOpens)}`;
+  if (reg.key === "closed") return "The published booking window has ended.";
+  return exam.origin === "lecturer" ? "Booking window not supplied · check the lecturer’s session." : "Booking dates not listed · check AlmaEsami.";
 }
-
-function coursePageLink(exam) {
-  return `course.html?course=${encodeURIComponent(exam.courseIds[0])}&tab=exam`;
+function registrationWindow(exam, today) {
+  const reg = Planner.registration(exam, today);
+  const box = el("div", `exam-registration is-${reg.key}`);
+  const label = exam.origin === "lecturer" && reg.key === "unknown" ? "Check registration" : reg.label;
+  box.append(el("strong", "reg-chip", label), el("span", "exam-registration-note", registrationNote(reg, exam)));
+  return box;
 }
-
-function examMeta(label, text, icon) {
-  const item = createElement("li");
-  item.appendChild(siteIcon(icon));
-  const content = createElement("span");
-  content.appendChild(createElement("span", "visually-hidden", `${label}: `));
-  content.appendChild(document.createTextNode(text));
-  item.appendChild(content);
-  return item;
+function adminInstructions(course, exam) {
+  const info = exam.notice;
+  const details = disclosure("Registration instructions · lecturer guidance", `admin-${course.id}`, "exam-admin-instructions");
+  const list = el("ol");
+  for (const [label, text] of [["Virtuale course enrolment", info.virtualeInstruction],
+    ["Recording-session enrolment", info.recordingInstruction], ["Result and credits", info.note]]) {
+    const item = el("li"); item.append(el("strong", null, label), el("p", null, text)); list.appendChild(item);
+  }
+  details.appendChild(list);
+  if (exam.noticeTimeDiffers) details.appendChild(el("p", "exam-conflict", `The lecturer’s email gives ${info.sessionTime} on ${fullDate(info.sessionDate)}. The live listing differs; confirm the current time before acting.`));
+  const sources = el("p", "exams-source", info.sourceLabel || "Lecturer communication");
+  if (course.officialUrl) sources.append(" · ", link("Official syllabus", course.officialUrl, "", true));
+  details.appendChild(sources);
+  return details;
 }
-
+function adminActions(exam) {
+  const actions = el("div", "item-actions");
+  const add = button("Add recording reminder", () => {
+    const start = `${exam.dateKey}T${exam.time}:00`;
+    const calendar = eventIcs({
+      uid: `recording-${exam.codes.join("-")}-${exam.dateKey}-${exam.time}`,
+      title: `Registration / Pass-Fail recording: ${exam.title}`,
+      start, end: start,
+      description: "No final examination. This is the lecturer's recording session. Complete required enrolment separately; saving a reminder does not register you. Confirm current instructions and deadlines with the lecturer.",
+    // A date-time VEVENT without DTEND is a point-in-time reminder. Do not invent
+    // an examination duration or mark the student's calendar busy for two hours.
+    }).replace(/^DTEND[^\r\n]*\r?\n/m, "").replace("END:VEVENT", "TRANSP:TRANSPARENT\r\nEND:VEVENT");
+    const url = URL.createObjectURL(new Blob([calendar], { type: "text/calendar" }));
+    const download = link("", url); download.download = "course-recording-reminder.ics";
+    document.body.appendChild(download); download.click(); download.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    toast("Reminder downloaded. Enrol separately on the course platform.");
+  });
+  add.setAttribute("aria-label", `Add recording reminder: ${exam.title}`);
+  actions.appendChild(add); return actions;
+}
 function examCard(exam, today) {
-  const registration = Planner.registration(exam, today);
-  const card = createElement("article", "exam-card");
-  const course = currentTerm(examsPage.programme).courses.find((c) => exam.courseIds.includes(c.id));
-  if (course && course.color) card.style.setProperty("--course-color", course.color);
-  card.dataset.registration = registration.key;
-
-  const block = createElement("time", "exam-date-block");
-  block.dateTime = exam.dateKey;
-  block.append(createElement("span", "exam-day", String(Number(exam.dateKey.slice(8)))),
-    createElement("span", "exam-month", formatDay(exam.dateKey, { month: "short" })),
-    createElement("span", "exam-weekday", formatDay(exam.dateKey, { weekday: "short" })));
-  card.appendChild(block);
-
-  const body = createElement("div", "exam-card-body");
-  const head = createElement("div", "exam-card-head");
-  const title = createElement("h4", "exam-title");
-  const courseLink = createElement("a", null, exam.title);
-  courseLink.href = coursePageLink(exam);
-  title.appendChild(courseLink);
-  head.append(title, createElement("span", "badge exam-countdown", countdownText(exam.dateKey, today)));
+  const card = el("article", "exam-card");
+  const reg = Planner.registration(exam, today), past = !Planner.upcomingExam(exam, Planner.clock());
+  card.dataset.registration = reg.key;
+  card.dataset.kind = exam.administrative ? "administrative" : "exam";
+  card.dataset.date = exam.dateKey;
+  const date = el("time", "exam-date-block"); date.dateTime = exam.dateKey;
+  date.append(el("span", "exam-day", String(Number(exam.dateKey.slice(8)))),
+    el("span", "exam-month", formatDay(exam.dateKey, {month:"short"})),
+    el("span", "exam-weekday", formatDay(exam.dateKey, {weekday:"short"})));
+  const body = el("div", "exam-card-body"), head = el("div", "exam-card-head");
+  const title = el("h4", "exam-title" + (courseFor(exam.courseIds[0])?.integrated ? "" : " visually-hidden")); title.appendChild(link(exam.title, coursePageLink(exam)));
+  head.append(title, el("span", "exam-countdown", past ? "Past date" : countdownText(exam.dateKey, today)));
   body.appendChild(head);
-  if (exam.partOf) body.appendChild(createElement("p", "exam-integrated schedule-meta", `Part of ${exam.partOf}`));
-
-  const metadata = createElement("ul", "exam-meta");
-  metadata.appendChild(examMeta("Time", exam.time ? `${exam.time} · Bologna time` : "Time not listed", "clock"));
-  if (exam.type) metadata.appendChild(examMeta("Format", exam.type, "file"));
-  metadata.appendChild(examMeta("Location", exam.place || "Room not listed", "map-pin"));
-  if (exam.teachers.length) metadata.appendChild(examMeta("Teacher", exam.teachers.join(", "), "graduation"));
-  body.appendChild(metadata);
-
-  const window = createElement("div", `exam-registration is-${registration.key}${registration.key === "open" && registration.days <= 3 ? " is-urgent" : ""}`);
-  window.append(createElement("strong", "reg-chip", registration.label),
-    createElement("p", "exam-registration-note", registrationNote(registration)));
-  const dates = createElement("div", "exam-registration-dates");
-  const shortDate = { day: "numeric", month: "short", year: "numeric" };
-  if (exam.registrationOpens) dates.appendChild(createElement("span", null, `Opens ${formatDay(exam.registrationOpens, shortDate)}`));
-  if (exam.registrationCloses) dates.appendChild(createElement("span", null, `Closes ${formatDay(exam.registrationCloses, shortDate)}`));
-  if (dates.childElementCount) window.appendChild(dates);
-  body.appendChild(window);
-
-  const actions = examActions(exam, today);
-  if (registration.key === "open" || registration.key === "unknown") {
-    const booking = iconButton(registration.key === "open" ? "Register on AlmaEsami" : "Check AlmaEsami", "external", {
-      href: ALMAESAMI_URL,
-      ariaLabel: `${registration.key === "open" ? "Register on AlmaEsami" : "Check AlmaEsami"}: ${exam.title}`,
-      className: "exam-booking-link",
-    });
-    actions.prepend(booking);
+  const format = exam.administrative ? "Pass/Fail recording" : exam.type || "Assessment";
+  body.appendChild(el("p", "exam-when-line", `${exam.time || "Time not listed"} · ${format} · ${exam.dateKey.slice(0,4)}`));
+  if (exam.administrative) body.appendChild(el("p", "exam-no-final", "No final exam · enrolment required for recording"));
+  else if (exam.place) body.appendChild(el("p", "exam-room", exam.place));
+  body.appendChild(registrationWindow(exam, today));
+  const extra = disclosure("Details & booking", `sitting-${exam.courseIds[0]}-${exam.moduleCodes.join("+")}-${exam.dateKey}-${exam.time}`, "exam-sitting-details");
+  const meta = el("p", "exam-meta-text", [exam.time ? "Bologna time (Europe/Rome)" : "Time not listed",
+    exam.administrative ? "No final examination" : exam.place || "Room not listed", ...exam.teachers].join(" · "));
+  extra.appendChild(meta);
+  const windowText = [exam.registrationOpens && `Opens ${fullDate(exam.registrationOpens)}`,
+    exam.registrationCloses && `Closes ${fullDate(exam.registrationCloses)}`].filter(Boolean).join(" · ");
+  if (windowText) extra.appendChild(el("p", "exam-registration-dates", windowText));
+  if (!past) {
+    const actions = exam.administrative ? adminActions(exam) : examActions(exam, today);
+    if (reg.key === "open" || reg.key === "unknown") actions.prepend(link(
+      reg.key === "open" ? "Register on AlmaEsami" : "Check AlmaEsami", ALMAESAMI_URL, "exam-booking-link", true));
+    extra.appendChild(actions);
   }
-  body.appendChild(actions);
-  card.appendChild(body);
-  return card;
+  extra.appendChild(el("p", "exams-source", exam.origin === "lecturer" ? "Date: lecturer email · not independently confirmed in the current UniBo feed" : "Date & booking window: UniBo · confirm on AlmaEsami"));
+  body.appendChild(extra); card.append(date, body); return card;
 }
-
-function renderExamHighlight(exams, today) {
-  const aside = document.getElementById("exam-highlight");
-  aside.replaceChildren(createElement("span", "planning-aside-eyebrow", "Your next milestone"));
-  const exam = exams[0];
-  if (!exam) {
-    aside.append(createElement("strong", "planning-aside-title", "Space to plan ahead"),
-      createElement("p", "planning-aside-note", "No upcoming sitting matches this selection. Adjust the filters or check the official dates."));
-    return;
+function studyActions(course, exams) {
+  const targets = ExamWorkspace.studyLinks(course, exams, examsPage.studies);
+  const box = el("div", "exam-study-actions"); box.dataset.studyCourse = course.id;
+  const revise = link(targets.label, targets.revise, "exam-revise"); revise.prepend(siteIcon("book"));
+  revise.setAttribute("aria-label", `${targets.label}: ${course.name}`); box.appendChild(revise);
+  if (targets.practice) {
+    const practice = link("Test yourself", targets.practice, "exam-practice"); practice.prepend(siteIcon("flashcards"));
+    practice.setAttribute("aria-label", `Test yourself: ${course.name}`); box.appendChild(practice);
   }
-  const date = createElement("strong", "planning-aside-title",
-    formatDay(exam.dateKey, { day: "numeric", month: "long" }));
-  const name = createElement("a", "planning-next-exam", exam.title);
-  name.href = coursePageLink(exam);
-  aside.append(date, name,
-    createElement("p", "planning-next-meta", `${exam.time || "Time not listed"} · ${countdownText(exam.dateKey, today)}`),
-    createElement("p", "planning-aside-note", Planner.registration(exam, today).label));
+  return box;
 }
-
-function renderOpenRegistrations(open, today) {
-  const target = document.getElementById("open-registrations");
-  target.replaceChildren();
-  if (!open.length) return;
-  const section = createElement("section", "deadline-panel");
-  section.setAttribute("aria-labelledby", "deadline-title");
-  const head = createElement("div", "deadline-head");
-  const title = createElement("h2", null, "Registration is open");
-  title.id = "deadline-title";
-  head.append(title, createElement("p", null, "Take the next step. The nearest booking deadline comes first."));
-  section.appendChild(head);
-  const list = createElement("div", "deadline-list");
-  for (const exam of open) {
-    const days = daysBetween(today, exam.registrationCloses);
-    const item = createElement("div", `deadline-item${days <= 3 ? " is-urgent" : ""}`);
-    const details = createElement("div");
-    details.appendChild(createElement("strong", null, exam.title));
-    const closes = days === 0 ? "Closes today" : days === 1 ? "Closes tomorrow" : `Closes in ${days} days`;
-    details.appendChild(createElement("p", null,
-      `${closes} · ${formatDay(exam.registrationCloses, { day: "numeric", month: "short" })} · Exam ${formatDay(exam.dateKey, { day: "numeric", month: "short" })}`));
-    const link = createElement("a", "deadline-register", "Register on AlmaEsami");
-    link.href = ALMAESAMI_URL;
-    link.target = "_blank";
-    link.rel = "noopener";
-    link.setAttribute("aria-label", `Register on AlmaEsami: ${exam.title}`);
-    link.appendChild(siteIcon("external"));
-    item.append(details, link);
-    list.appendChild(item);
-  }
-  section.appendChild(list);
-  target.appendChild(section);
-}
-
-
-function examGroups(exams) {
-  const groups = new Map();
-  for (const sitting of exams) {
-    const courseId = sitting.courseIds[0] || sitting.title;
-    if (!groups.has(courseId)) groups.set(courseId, { courseId, modules: new Map(), count: 0 });
-    const course = groups.get(courseId);
-    const assessment = sitting.moduleCodes?.length ? [...sitting.moduleCodes].sort().join("+") : sitting.title;
-    if (!course.modules.has(assessment)) course.modules.set(assessment, []);
-    course.modules.get(assessment).push(sitting);
-    course.count++;
-  }
-  return [...groups.values()];
-}
-
-function renderExamSpecial() {
-  const target = document.getElementById("exam-special");
-  if (!target || !examsPage.programme) return;
-  target.replaceChildren();
-  const course = currentTerm(examsPage.programme).courses.find(c => c.assessmentNotice?.kind === "administrative-pass-fail");
-  if (!course) return;
-  const info = course.assessmentNotice;
-  const card = createElement("section", "exam-special-card");
-  card.setAttribute("aria-labelledby", "exam-special-title");
-  const top = createElement("div", "exam-special-head");
-  const title = createElement("h2", null, course.name);
-  title.id = "exam-special-title";
-  top.append(
-    createElement("span", "exam-special-kicker", "LECTURER GUIDANCE · ADMINISTRATIVE REGISTRATION"),
-    title,
-    createElement("p", "exam-special-lead", "No final exam · Pass/Fail recording · 3 CFU crash course"),
-    createElement("p", "exam-special-date", `Recording session: ${formatDay(info.sessionDate, {day:"numeric",month:"long",year:"numeric"})} at ${info.sessionTime} (Bologna time)`),
-    createElement("p", "exam-special-caption", "This named Esame session is for administrative recording, not a written exam.")
-  );
-  const content = createElement("div", "exam-special-body");
-  const steps = createElement("ol", "exam-special-steps");
-  for (const [label, text] of [
-    ["Virtuale course enrolment", info.virtualeInstruction],
-    ["Recording-session enrolment", info.recordingInstruction],
-    ["Credits & result", info.note],
-  ]) {
-    const item = createElement("li");
-    item.append(createElement("strong", null, label), createElement("p", null, text));
-    steps.appendChild(item);
-  }
-  content.appendChild(steps);
-  const actions = createElement("div", "exam-special-links");
-  if (course.officialUrl) {
-    const official = createElement("a", null, "Official course syllabus ↗");
-    official.href=course.officialUrl; official.target="_blank"; official.rel="noopener";
-    actions.appendChild(official);
-  }
-  const more = createElement("a", null, "Course details →");
-  more.href=coursePageLink({courseIds:[course.id]});
-  actions.appendChild(more);
-  content.append(actions, createElement("p", "exam-special-source", info.sourceLabel || "Lecturer communication"));
-  card.append(top, content);
-  target.appendChild(card);
-}
-
 function renderCourseSittings(exams, today) {
-  const courses = currentTerm(examsPage.programme).courses;
-  for (const group of examGroups(exams)) {
-    const course = courses.find(c => c.id === group.courseId);
-    const wrapper = createElement("section", "exam-course-group");
-    const heading = createElement("header", "exam-course-group-head");
-    const identity = createElement("div");
-    const h = createElement("h3");
-    const link = createElement("a", null, course?.name || group.modules.values().next().value[0].title);
-    link.href=coursePageLink({courseIds:[group.courseId]});
-    h.appendChild(link);
-    identity.append(h,createElement("p", "exam-course-group-note", `${course?.integrated ? "Integrated course · assessments separated by module" : "Course assessment"} · ${group.count} upcoming sitting${group.count===1?"":"s"}`));
-    heading.append(identity,createElement("span", "exam-course-group-count", `${group.count} date${group.count===1?"":"s"}`));
-    wrapper.appendChild(heading);
-    for (const [moduleCode, sittings] of group.modules) {
-      const block=createElement("div","exam-module-group");
-      const module=course?.modules.find(m=>m.code===moduleCode);
-      if (course?.integrated) block.appendChild(createElement("h4","exam-module-name",module?.name||sittings[0].title));
-      sittings.sort((a,b)=>(a.dateKey+a.time).localeCompare(b.dateKey+b.time));
-      block.appendChild(createElement("p","exam-sitting-label","Next published sitting"));
-      block.appendChild(examCard(sittings[0],today));
-      if (sittings.length>1) {
-        const details=createElement("details","exam-more-sittings");
-        details.appendChild(createElement("summary",null,`View ${sittings.length-1} additional published date${sittings.length===2?"":"s"}`));
-        const stack=createElement("div","exam-more-stack");
-        for (const sitting of sittings.slice(1)) stack.appendChild(examCard(sitting,today));
-        details.appendChild(stack);
+  for (const group of ExamWorkspace.groups(exams)) {
+    const course = courseFor(group.courseId); if (!course) continue;
+    const wrapper = el("section", "exam-course-group"); wrapper.dataset.course = course.id;
+    if (group.exams.every(exam => exam.administrative)) wrapper.classList.add("is-administrative");
+    const heading = el("header", "exam-course-group-head"), identity = el("div");
+    const top = el("p", "exam-course-eyebrow", `${course.code} · ${course.integrated ? "Integrated course" : group.exams[0].administrative ? "Administrative registration" : "Course assessment"}`);
+    const title = el("h3"); title.appendChild(link(course.name, coursePageLink(group.exams[0])));
+    identity.append(top, title, el("p", "exam-course-group-note", `${group.exams.length} published date${group.exams.length === 1 ? "" : "s"}${course.integrated ? " · Modules listed separately" : ""}`));
+    heading.append(identity, studyActions(course, group.exams)); wrapper.appendChild(heading);
+    const dates = el("div", "exam-course-dates");
+    for (const [key, sittings] of group.modules) {
+      const block = el("div", "exam-module-group");
+      block.appendChild(examCard(sittings[0], today));
+      if (sittings.length > 1) {
+        const details = disclosure(`${sittings.length - 1} more date${sittings.length === 2 ? "" : "s"} for this assessment`, `more-${course.id}-${key}`, "exam-more-sittings");
+        for (const sitting of sittings.slice(1)) details.appendChild(examCard(sitting, today));
         block.appendChild(details);
       }
-      wrapper.appendChild(block);
+      dates.appendChild(block);
     }
-    examList.appendChild(wrapper);
+    const admin = group.exams.find(exam => exam.notice);
+    if (admin) dates.appendChild(adminInstructions(course, admin));
+    wrapper.appendChild(dates); examList.appendChild(wrapper);
   }
 }
-
+function renderExamHighlight(exams, today) {
+  const target = document.getElementById("exam-highlight");
+  // Keep administrative recording out of the next actual exam countdown when possible.
+  const exam = exams.find(item => !item.administrative) || exams[0];
+  target.replaceChildren(el("span", "planning-aside-eyebrow", exam?.administrative ? "Next registration task" : "Next assessment"));
+  if (!exam) { target.append(el("strong", "planning-aside-title", "Room to plan"), el("p", "planning-aside-note", "No upcoming date matches these filters. Check the official listing.")); return; }
+  target.append(el("strong", "planning-aside-title", fullDate(exam.dateKey)), link(exam.title, coursePageLink(exam), "planning-next-exam"),
+    el("p", "planning-next-meta", `${exam.time || "Time not listed"} · ${exam.administrative ? "No final exam" : countdownText(exam.dateKey,today)}`));
+}
+function renderOpenRegistrations(exams, today) {
+  const target = document.getElementById("open-registrations"); target.replaceChildren();
+  if (!exams.length) return;
+  const box = el("details", "exam-open-bookings");
+  box.appendChild(el("summary", null, `${exams.length} booking window${exams.length === 1 ? "" : "s"} open · nearest deadline ${fullDate(exams[0].registrationCloses)}`));
+  const list = el("div", "exam-booking-list");
+  for (const exam of exams) {
+    const row = el("div"); row.append(el("span", null, `${exam.title} · closes ${fullDate(exam.registrationCloses)}`), link("Register on AlmaEsami", ALMAESAMI_URL, "", true)); list.appendChild(row);
+  }
+  box.appendChild(list); target.appendChild(box);
+}
+function drawCalendar(exams, today) {
+  const month = examsPage.month, days = TimetableCalendar.monthDays(month + "-01");
+  const monthExams = exams.filter(exam => exam.dateKey.startsWith(month));
+  const examDays = new Set(monthExams.map(exam => exam.dateKey));
+  document.getElementById("exam-month-title").textContent = formatDay(month + "-01", { month:"long", year:"numeric" });
+  document.getElementById("exam-month-meta").textContent = `${monthExams.length} published date${monthExams.length === 1 ? "" : "s"} on ${examDays.size} day${examDays.size === 1 ? "" : "s"} · current filters`;
+  const focusDate = examsPage.calendarFocus || examsPage.day || (today.startsWith(month) ? today : month + "-01");
+  const table = el("table", "exam-month-table");
+  table.setAttribute("aria-describedby", "exam-calendar-help");
+  const caption = el("caption", "visually-hidden", formatDay(month+"-01", {month:"long",year:"numeric"}) + " exam dates");
+  const head = el("thead"), labels = el("tr");
+  for (const weekday of ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]) { const th=el("th",null,weekday); th.scope="col"; labels.appendChild(th); }
+  head.appendChild(labels); const body=el("tbody");
+  for (let at=0; at<days.length; at+=7) {
+    const row=el("tr");
+    for (const day of days.slice(at,at+7)) {
+      const cell=el("td"), events=exams.filter(exam=>exam.dateKey===day.date);
+      const academic=events.filter(exam=>!exam.administrative).length, admin=events.length-academic;
+      const node=button("",()=>selectDay(day.date),"exam-calendar-day"); node.dataset.day=day.date;
+      node.tabIndex=day.date===focusDate?0:-1;
+      node.classList.toggle("is-outside", !day.inMonth); node.classList.toggle("has-exams",academic>0); node.classList.toggle("has-admin",admin>0);
+      node.setAttribute("aria-pressed",String(day.date===examsPage.day));
+      if (day.date===today) {node.classList.add("is-today"); node.setAttribute("aria-current","date");}
+      node.setAttribute("aria-label",`${fullDate(day.date)}${day.date===today?", today":""}: ${academic} exam sitting${academic===1?"":"s"}, ${admin} administrative recording${admin===1?"":"s"}`);
+      node.appendChild(el("span","exam-calendar-number",String(Number(day.date.slice(8)))));
+      const marks=el("span","exam-calendar-marks");
+      if(academic) marks.appendChild(el("span","exam-date-count",String(academic)));
+      if(admin) marks.appendChild(el("span","exam-date-count is-admin",String(admin)));
+      marks.setAttribute("aria-hidden","true"); node.appendChild(marks);
+      node.addEventListener("keydown",event=>calendarKey(event,day.date)); cell.appendChild(node); row.appendChild(cell);
+    }
+    body.appendChild(row);
+  }
+  table.append(caption,head,body); document.getElementById("exam-month-grid").replaceChildren(table);
+  // Ensure one tab stop when a previously focused date is outside the new month grid.
+  if (!table.querySelector('[tabindex="0"]')) table.querySelector("button:not(.is-outside)").tabIndex=0;
+}
+function calendarKey(event, date) {
+  const offsets={ArrowLeft:-1,ArrowRight:1,ArrowUp:-7,ArrowDown:7}; let next;
+  if (Object.hasOwn(offsets,event.key)) next=TimetableCalendar.addDays(date,offsets[event.key]);
+  else if(event.key==="Home") next=TimetableCalendar.monday(date);
+  else if(event.key==="End") next=TimetableCalendar.addDays(TimetableCalendar.monday(date),6);
+  else if(event.key==="PageUp"||event.key==="PageDown") next=TimetableCalendar.shiftMonth(date,event.key==="PageUp"?-1:1);
+  if(!next) return; event.preventDefault();
+  if(!TimetableCalendar.validDate(next)) return;
+  examsPage.calendarFocus=next; examsPage.month=next.slice(0,7); examsPage.day="";
+  render(); document.querySelector(`[data-day="${next}"]`)?.focus({preventScroll:true});
+}
+function selectDay(date) {
+  examsPage.day=date; examsPage.month=date.slice(0,7); examsPage.calendarFocus=date;
+  render(); document.querySelector(`[data-day="${date}"]`)?.focus({preventScroll:true});
+}
+function changeMonth(offset) {
+  examsPage.month=TimetableCalendar.shiftMonth(examsPage.month+"-01",offset).slice(0,7);
+  examsPage.day=""; examsPage.calendarFocus=""; render();
+}
 function render() {
-  if (!examsPage.loaded) return;
-  const now = Planner.clock(), today = now.slice(0, 10);
-  examsPage.clockSignature = examClockSignature(now);
-  examsPage.clockRefreshPending = false;
-  const exams = visibleExams(now);
-  const mine = myCoursesOnly(examsPage.programme);
-  const open = exams.filter((exam) => Planner.registration(exam, today).key === "open")
-    .sort((a, b) => a.registrationCloses.localeCompare(b.registrationCloses) || a.dateKey.localeCompare(b.dateKey));
-  const scope = mine ? "Your study plan" : "All first-year courses";
-  document.getElementById("exam-scope").textContent = `${currentCohort(examsPage.programme).label} · ${scope}`;
-  const deadline = open[0]?.registrationCloses;
-  Planner.summary(document.getElementById("exam-summary"), [
-    { label: "Upcoming sittings", value: exams.length, note: "Matching your selection" },
-    { label: "Registration open", value: open.length, note: "Book on AlmaEsami" },
-    { label: "Next deadline", value: deadline ? formatDay(deadline, { day: "numeric", month: "short" }) : "—",
-      note: deadline ? (deadline === today ? "Closes today · check the time" : `${daysBetween(today, deadline)} days to register`) : "No open booking windows" },
+  if(!examsPage.loaded) return;
+  rememberDisclosures();
+  const now=Planner.clock(), today=now.slice(0,10), upcoming=filteredExams(now), all=filteredExams(now,true);
+  examsPage.clockSignature=examClockSignature(now); examsPage.clockRefreshPending=false;
+  const open=upcoming.filter(exam=>Planner.registration(exam,today).key==="open").sort((a,b)=>a.registrationCloses.localeCompare(b.registrationCloses)||ExamWorkspace.sort(a,b));
+  const deadline=open[0]?.registrationCloses;
+  const admin=upcoming.filter(exam=>exam.administrative).length;
+  Planner.summary(document.getElementById("exam-summary"),[
+    {label:"Upcoming dates",value:upcoming.length,note:`${ExamWorkspace.groups(upcoming).length} courses${admin?` · ${admin} administrative`:""}`},
+    {label:"Registration open",value:open.length,note:"Check and book on AlmaEsami"},
+    {label:"Next deadline",value:deadline?fullDate(deadline):"—",note:deadline?(deadline===today?"Closes today · check the time":`${daysBetween(today,deadline)} days to register`):"No open booking windows"},
   ]);
-  renderExamHighlight(exams, today);
-  renderExamSpecial();
-  renderOpenRegistrations(open, today);
-  examReset.disabled = !examCourseFilter.value && !examRegistrationFilter.value && !examSearch.value;
-  examStatus.textContent = `${examGroups(exams).length} courses · ${exams.length} upcoming sitting${exams.length === 1 ? "" : "s"}${mine ? " for your courses" : ""}${examCourseFilter.value || examRegistrationFilter.value || examSearch.value ? " match these filters" : ""}.`;
+  renderExamHighlight(upcoming,today); renderOpenRegistrations(open,today);
+  const monthView=examsPage.view==="month";
+  document.getElementById("exam-month").hidden=!monthView;
+  const displayed=monthView?all.filter(exam=>exam.dateKey.startsWith(examsPage.month)&&(!examsPage.day||exam.dateKey===examsPage.day)):upcoming;
+  if(monthView) drawCalendar(all,today);
+  for(const node of document.querySelectorAll("[data-exam-view]")) node.setAttribute("aria-pressed",String(node.dataset.examView===examsPage.view));
+  examList.dataset.view=examsPage.view;
+  const label=monthView?(examsPage.day?fullDate(examsPage.day):formatDay(examsPage.month+"-01",{month:"long",year:"numeric"})):"Upcoming dates";
+  examStatus.textContent=`${label} · ${ExamWorkspace.groups(displayed).length} courses · ${displayed.length} published date${displayed.length===1?"":"s"}`;
+  document.getElementById("exam-scope").textContent=`${currentCohort(examsPage.programme).label} · ${myCoursesOnly(examsPage.programme)?"Your study plan":"All first-year courses"}`;
+  document.getElementById("exam-clear-day").hidden=!(monthView&&examsPage.day);
+  examReset.disabled=!(examCourseFilter.value||examRegistrationFilter.value||examSearch.value||examsPage.day);
   examList.replaceChildren();
-  if (!exams.length) {
-    const filtered = examCourseFilter.value || examRegistrationFilter.value || examSearch.value;
-    Planner.empty(examList, {
-      title: filtered ? "No exams match these filters" : "No upcoming sittings to show",
-      text: filtered ? "Try another course, registration status or search. Your study-plan selection also applies." :
-        mine ? "No future sitting is listed for your saved courses. Turn off My courses only to see all courses, or check UniBo." :
-          "New dates may be published later. Check the official page for the latest sittings.",
-      onReset: filtered ? resetExamFilters : null,
-      source: currentCohort(examsPage.programme).sources.examDates,
-    });
-    return;
-  }
-  renderCourseSittings(exams, today);
+  if(displayed.length) renderCourseSittings(displayed,today);
+  else Planner.empty(examList,{title:monthView?"No dates listed for this selection":"No upcoming dates to show",
+    text:monthView?"Try another day or month, or clear the course and registration filters. No published date is not a guarantee of no exam.":"Adjust your filters or study-plan selection, or check the official dates. New sittings may be published later.",
+    onReset:examReset.disabled?null:resetExamFilters,source:document.getElementById("exams-source").href});
 }
-
-async function loadExams() {
-  if (examsPage.loading) return;
-  examsPage.loading = true;
-  examsPage.loaded = false;
-  examList.replaceChildren(skeleton(3, "card"));
-  examList.setAttribute("aria-busy", "true");
-  examStatus.textContent = "Loading official exam dates…";
-  document.getElementById("exam-checked").textContent = "Loading UniBo exam dates…";
-  for (const control of [examCourseFilter, examRegistrationFilter, examSearch, examReset]) control.disabled = true;
+async function jsonFile(path) {
+  const controller=new AbortController(), timer=setTimeout(()=>controller.abort(),8000);
+  try {const response=await fetch(path,{signal:controller.signal});if(!response.ok)throw Error("Content unavailable");return await response.json();}
+  finally{clearTimeout(timer);}
+}
+async function loadStudyLinks() {
+  if(examsPage.studyStarted) return; examsPage.studyStarted=true;
   try {
-    // Retry a rejected programme request as well as a failed exam feed.
-    examsPage.programme = examsPage.programme || await loadProgramme();
-    renderExamSpecial();
-    const cohort = currentCohort(examsPage.programme), term = currentTerm(examsPage.programme);
-    document.getElementById("exams-source").href = cohort.sources.examDates;
-    examsPage.exams = matchExamsToTerm(await fetchExams(cohort.sources.examDates), term);
-    const selected = examCourseFilter.value;
-    examCourseFilter.replaceChildren(new Option("All courses", ""));
-    for (const course of term.courses) {
-      if (examsPage.exams.some((exam) => exam.courseIds.includes(course.id))) examCourseFilter.appendChild(new Option(course.name, course.id));
+    const index=await jsonFile("content/index.json");
+    const modules=currentTerm(examsPage.programme).courses.flatMap(course=>course.modules);
+    await Promise.all(modules.map(async module=>{
+      const available=index.modules?.[module.id]||[];
+      const get=async file=>available.includes(file)?jsonFile(`content/modules/${module.id}/${file}`).catch(()=>[]):[];
+      const [topics,questions,cards]=await Promise.all([get("topics.json"),get("questions.json"),get("flashcards.json")]);
+      const qs=Array.isArray(questions)?questions.filter(q=>q.id&&!q.sample):[];
+      const cs=Array.isArray(cards)?cards.filter(c=>c.id&&!c.sample):[];
+      examsPage.studies[module.id]={questions:qs.length,cards:cs.length,questionTopic:qs[0]?.topic,cardTopic:cs[0]?.topic,
+        revision:Array.isArray(topics)&&topics.some(topic=>(topic.notes||topic.lecture)&&!topic.sample)};
+    }));
+    // Enhance only the study strips, never destroy a focused action elsewhere.
+    for(const strip of document.querySelectorAll("[data-study-course]")) {
+      if(strip.contains(document.activeElement)) continue;
+      const course=courseFor(strip.dataset.studyCourse);
+      const shown=filteredExams(Planner.clock(),examsPage.view==="month").filter(exam=>exam.courseIds.includes(course.id)&&
+        (examsPage.view!=="month"||(exam.dateKey.startsWith(examsPage.month)&&(!examsPage.day||exam.dateKey===examsPage.day))));
+      strip.replaceWith(studyActions(course,shown));
     }
-    if ([...examCourseFilter.options].some((option) => option.value === selected)) examCourseFilter.value = selected;
-    if (!examsPage.scopeSwitch && loadPlan(examsPage.programme).saved) {
-      examsPage.scopeSwitch = myCoursesSwitch(examsPage.programme, render);
-      document.getElementById("exam-filters").appendChild(examsPage.scopeSwitch);
-    }
-    for (const control of [examCourseFilter, examRegistrationFilter, examSearch]) control.disabled = false;
-    examsPage.loaded = true;
-    Planner.checked(document.getElementById("exam-checked"));
-    render();
-  } catch (error) {
-    console.warn("Could not load exams:", error);
-    examStatus.textContent = "Exam dates could not be loaded.";
-    document.getElementById("exam-checked").textContent = "Could not load UniBo exam dates.";
-    document.getElementById("open-registrations").replaceChildren();
-    const aside = document.getElementById("exam-highlight");
-    aside.replaceChildren(createElement("span", "planning-aside-eyebrow", "Stay ready"),
-      createElement("strong", "planning-aside-title", "Check official dates"),
-      createElement("p", "planning-aside-note", "UniBo lists the sittings. AlmaEsami confirms your registration."));
-    Planner.summary(document.getElementById("exam-summary"), [
-      { label: "Upcoming sittings", value: "—", note: "Dates unavailable" },
-      { label: "Registration open", value: "—", note: "Check AlmaEsami" },
-      { label: "Next deadline", value: "—", note: "Check the official dates" },
-    ]);
-    Planner.empty(examList, {
-      title: "The exam dates are unavailable",
-      text: "Try loading the dates again, or open the official UniBo page.",
-      retry: loadExams,
-      source: document.getElementById("exams-source").href,
-    });
-  } finally {
-    examsPage.loading = false;
-    examList.setAttribute("aria-busy", "false");
-  }
+  } catch { /* Course resources remain useful when optional study metadata fails. */ }
 }
-
-examCourseFilter.addEventListener("change", render);
-examRegistrationFilter.addEventListener("change", render);
-examSearch.addEventListener("input", render);
-examReset.addEventListener("click", resetExamFilters);
-loadExams();
-
-// Refresh only when time changes the information shown. Keep a focused booking,
-// map or calendar action intact; apply a pending update once focus moves away.
+async function loadExams() {
+  if(examsPage.loading) return;
+  examsPage.loading=true; examsPage.loaded=false;
+  for(const control of controls()) control.disabled=true;
+  examList.setAttribute("aria-busy","true"); examList.replaceChildren(skeleton(2,"card"));
+  document.getElementById("exam-month").hidden=true;
+  document.getElementById("exam-feed-notice").replaceChildren();
+  examStatus.textContent="Loading official dates…";
+  try {
+    examsPage.programme=examsPage.programme||await loadProgramme();
+    const cohort=currentCohort(examsPage.programme), term=currentTerm(examsPage.programme);
+    document.getElementById("exams-source").href=cohort.sources.examDates;
+    let raw=[], timeout;
+    examsPage.feedFailed=false;
+    try { raw=await Promise.race([fetchExams(cohort.sources.examDates),new Promise((_,reject)=>{timeout=setTimeout(()=>reject(Error("Exam feed timeout")),15000);})]); }
+    catch {examsPage.feedFailed=true;} finally{clearTimeout(timeout);}
+    examsPage.exams=ExamWorkspace.events(matchExamsToTerm(raw,term),term);
+    const selected=examCourseFilter.value;
+    examCourseFilter.replaceChildren(new Option("All courses",""));
+    for(const course of term.courses) if(examsPage.exams.some(exam=>exam.courseIds.includes(course.id))) examCourseFilter.appendChild(new Option(course.name,course.id));
+    if([...examCourseFilter.options].some(option=>option.value===selected)) examCourseFilter.value=selected;
+    if(!examsPage.scopeSwitch&&loadPlan(examsPage.programme).saved){examsPage.scopeSwitch=myCoursesSwitch(examsPage.programme,render);document.getElementById("exam-filters").appendChild(examsPage.scopeSwitch);}
+    for(const control of controls()) control.disabled=false;
+    examsPage.loaded=true;
+    const checked=document.getElementById("exam-checked");
+    if(examsPage.feedFailed){
+      checked.textContent="UniBo feed unavailable · lecturer-provided dates only";
+      const warning=el("div","exam-feed-warning");warning.append(el("p",null,"Official exam dates could not be loaded. Any date below comes only from lecturer guidance; the calendar is incomplete."),button("Retry official dates",loadExams));
+      document.getElementById("exam-feed-notice").appendChild(warning);
+    } else Planner.checked(checked);
+    render(); loadStudyLinks();
+  } catch {
+    document.getElementById("exam-checked").textContent="Course data could not be loaded.";
+    examStatus.textContent="Exam workspace unavailable.";
+    Planner.empty(examList,{title:"The exam dates are unavailable",text:"Retry loading the course data, or open the official UniBo page.",retry:loadExams,source:document.getElementById("exams-source").href});
+  } finally {examsPage.loading=false;examList.setAttribute("aria-busy","false");}
+}
+for(const control of [examCourseFilter,examRegistrationFilter]) control.addEventListener("change",()=>{examsPage.day="";render();});
+examSearch.addEventListener("input",()=>{examsPage.day="";render();}); examReset.addEventListener("click",resetExamFilters);
+for(const node of document.querySelectorAll("[data-exam-view]")) node.addEventListener("click",()=>{examsPage.view=node.dataset.examView;render();});
+document.getElementById("exam-month-prev").addEventListener("click",()=>changeMonth(-1));
+document.getElementById("exam-month-next").addEventListener("click",()=>changeMonth(1));
+document.getElementById("exam-month-today").addEventListener("click",()=>{examsPage.month=Planner.clock().slice(0,7);examsPage.day="";examsPage.calendarFocus="";render();});
+document.getElementById("exam-clear-day").addEventListener("click",()=>{examsPage.day="";render();document.getElementById("exam-month-today").focus({preventScroll:true});});
 function examClockSignature(now) {
-  const today = now.slice(0, 10);
-  return JSON.stringify([today, examsPage.exams.map((exam, index) => {
-    if (!Planner.upcomingExam(exam, now)) return null;
-    const registration = Planner.registration(exam, today);
-    return [index, registration.key, registration.days];
-  })]);
+  return JSON.stringify([now.slice(0,10),examsPage.exams.map(exam=>[Planner.upcomingExam(exam,now),Planner.registration(exam,now.slice(0,10)).key])]);
 }
-
 function refreshExamClock() {
-  if (!examsPage.loaded || examsPage.loading || document.hidden) return;
-  if (examClockSignature(Planner.clock()) === examsPage.clockSignature) {
-    examsPage.clockRefreshPending = false;
-    return;
-  }
-  const active = document.activeElement;
-  const protectedRegions = [examList, document.getElementById("open-registrations"), document.getElementById("exam-highlight")];
-  if (protectedRegions.some((region) => region.contains(active))) {
-    examsPage.clockRefreshPending = true;
-    return;
-  }
+  if(!examsPage.loaded||examsPage.loading||document.hidden||examClockSignature(Planner.clock())===examsPage.clockSignature)return;
+  const regions=[examList,document.getElementById("exam-month"),document.getElementById("open-registrations"),document.getElementById("exam-highlight")];
+  if(regions.some(region=>region.contains(document.activeElement))){examsPage.clockRefreshPending=true;return;}
   render();
 }
-
-setInterval(refreshExamClock, 60 * 1000);
-document.addEventListener("visibilitychange", refreshExamClock);
-document.addEventListener("focusout", () => {
-  if (examsPage.clockRefreshPending) setTimeout(refreshExamClock, 0);
-});
+setInterval(refreshExamClock,60000); document.addEventListener("visibilitychange",refreshExamClock);
+document.addEventListener("focusout",()=>{if(examsPage.clockRefreshPending)setTimeout(refreshExamClock,0);});
+loadExams();

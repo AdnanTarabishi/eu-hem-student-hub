@@ -1,12 +1,15 @@
-name: Check Exams redesign
+name: Check Exams workspace
 on:
   pull_request:
-    paths: ['exams.html','exams.js','exams-guide.css','unibo-data.js','content/programme.json','tests/planning/**','.github/workflows/check-exams-redesign.yml']
+    paths: ['exams.html','exams.js','exams-guide.css','exams-workspace.js','unibo-data.js','timetable-calendar.js','content/programme.json','tests/planning/**','.github/workflows/check-exams-redesign.yml']
   push:
-    paths: ['exams.html','exams.js','exams-guide.css','unibo-data.js','content/programme.json','tests/planning/**','.github/workflows/check-exams-redesign.yml']
+    paths: ['exams.html','exams.js','exams-guide.css','exams-workspace.js','unibo-data.js','timetable-calendar.js','content/programme.json','tests/planning/**','.github/workflows/check-exams-redesign.yml']
+permissions:
+  contents: read
 jobs:
   exam-tests:
     runs-on: ubuntu-latest
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -14,7 +17,32 @@ jobs:
           node-version: '22'
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - run: node scripts/check-content.js
-      - run: node scripts/check-contrast.js
-      - run: node tests/planning/exams-grouped.test.js
-      - run: node tests/planning/browser.test.js .
+      - name: Check sources, shared colours and cache fingerprints
+        run: |
+          node scripts/check-content.js
+          node scripts/check-contrast.js
+          node scripts/stamp-versions.js --check
+      - name: Check notice reconciliation and learning routes
+        run: |
+          node tests/planning/exams-grouped.test.js
+          node tests/planning/exams-workspace.test.js
+      - name: Check Cards, List and Month with fictional data
+        env:
+          EXAMS_SCREENSHOT_DIR: ${{ runner.temp }}/exams-previews
+        run: node tests/planning/exams-workspace-browser.test.js .
+      - name: Check the existing planner regressions
+        run: node tests/planning/browser.test.js .
+      - name: Verify the published workspace (read-only)
+        if: github.ref == 'refs/heads/main'
+        env:
+          EXAMS_SCREENSHOT_DIR: ${{ runner.temp }}/exams-live
+        run: node tests/planning/exams-live.test.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: exams-workspace-previews
+          path: |
+            ${{ runner.temp }}/exams-previews
+            ${{ runner.temp }}/exams-live
+          retention-days: 7
+          if-no-files-found: ignore
