@@ -1,0 +1,67 @@
+{
+ "reviewedAt":"2026-10-09",
+ "removePlans":["career-application-tracker"],
+ "planEdits":{
+  "beta-feedback-improvements":{
+   "details":["Review feedback on the new monthly/day timetable, teaching-hours indicator, course workspaces, Contact forms and refreshed practical guides.","Improve reliable loading and explain source failures without presenting missing official data as a verified empty schedule.","Keep mobile and keyboard use clear, and keep released features separate from unfinished plans."],
+   "links":[{"label":"Send feedback through the Contact form","url":"contact.html#contact-form-section"},{"label":"Try the updated timetable","url":"timetable.html?view=month"}]
+  },
+  "mobility-checklists":{
+   "title":"Destination-reviewed mobility checklists",
+   "summary":"Add reviewed, destination-specific guidance to the local moving checklist and document reminders already available in the Toolkit.",
+   "details":["The personal moving checklist and document-deadline tools are already usable; this plan covers additional verified destination guidance, not their initial launch.","Link housing, arrival and administrative steps to official sources, with review dates and clear qualifications.","Connect reviewed destination guidance to the planned v2 study overview while retaining explicit on-device saving."],
+   "links":[{"label":"Use the current moving checklist","url":"toolkit.html?section=workbench&planner=moving-checklist"},{"label":"Use document deadline reminders","url":"toolkit.html?section=workbench&planner=document-deadlines"},{"label":"Explore the city guides","url":"city-guide.html"}]
+  },
+  "budget-shared-expenses":{
+   "title":"Shared trip & flat expenses",
+   "summary":"Explore shared-cost splitting and settlement on top of the personal four-city budget planner that is already available.",
+   "details":["The local four-city budget planner is already usable with your own estimates and explicit saving.","Explore recording shared trip or flat costs, who paid and how to split them.","Keep any future shared data opt-in and separate from private budget entries; collaboration is not active."],
+   "links":[{"label":"Use the current personal budget planner","url":"toolkit.html?section=workbench&planner=four-city-budget"}]
+  },
+  "student-hub-v2":{
+   "details":["A personal study overview connecting selected courses, upcoming deadlines, saved resources and learning progress on this device.","Expand reviewed worked examples and revision coverage, building on the redesigned course and practice workspaces already available.","Build a reviewed contribution workflow beyond the active Contact forms; messages already reach the private inbox, but automatic content publishing is not active.","Connect the overview with destination guidance and mobility checklists, building on the current local moving and document tools.","Target the initial v2 release for early November; further content and refinements can follow during the month."]
+  }
+ },
+ "extraLimits":["Contact forms are active and send messages to a private admin inbox. This does not activate directory registration, accounts or the separate editor publishing dashboard.","Timetable colouring and monthly teaching progress depend on the published official schedule. The percentage measures finished scheduled hours, not attendance or credits; unavailable data has no assumed percentage.","Beyond EU-HEM, Events and the student Gallery currently show browsable previews. Curated opportunity/event collections, student photo uploads and member-only access are not live."],
+ "textChanges":{
+  "tests/roadmap/data.test.js":[
+   {"old":"\\b37\\b","new":"54","count":6,"regex":true},
+   {"old":"seven recent additions in deployment order","new":"seventeen recent additions in deployment order","count":1},
+   {"old":"published.slice(0, 7)","new":"published.filter((u) => !RECENT_IDS.includes(u.id)).slice(0, 7)","count":1},
+   {"old":"published.slice(7, 11)","new":"published.filter((u) => !RECENT_IDS.includes(u.id)).slice(7, 11)","count":1},
+   {"old":"Later: eight remaining ideas","new":"Later: seven remaining ideas","count":1},
+   {"old":"assert.strictEqual(later.length, 8);","new":"assert.strictEqual(later.length, 7);","count":1},
+   {"old":"\"research-reading-workbench\", \"career-application-tracker\",","new":"\"research-reading-workbench\",","count":1},
+   {"old":"\"student-digital-toolkit\", \"methods-health-economics-labs\"","new":"\"student-digital-toolkit\", \"methods-health-economics-labs\", \"career-application-tracker\"","count":1},
+   {"old":"{ \"2026-10-08\": [\"v0.9\"],","new":"{ \"2026-10-09\": [\"v0.9\"], \"2026-10-08\": [\"v0.9\"],","count":1},
+   {"old":"const updates = read(\"content/updates.json\");","new":"const updates = read(\"content/updates.json\");\nconst RECENT_IDS = [\"timetable-monthly-progress\", \"universities-directory-galleries\", \"timetable-month-day-teachers\", \"future-sections-browsable-previews\", \"course-study-workspaces\", \"notes-resource-first-workspace\", \"behind-the-build-effort\", \"contact-private-form-delivery\", \"practice-quiz-flashcard-redesign\", \"support-contact-privacy-redesign\", \"academic-guides-visual-redesign\", \"toolkit-seven-local-workbenches\", \"right-to-health-guides-casebook\", \"pulse-to-growth-brand\", \"city-guides-topic-redesign\", \"homepage-day-exam-news-browsing\", \"roadmap-v2-release-windows\"];","count":1}
+  ],
+  "tests/roadmap/browser.test.js":[
+   {"old":"\\b37\\b","new":"54","count":7,"regex":true},
+   {"old":"\"8Later\"","new":"\"7Later\"","count":1},
+   {"old":"locator(\".roadmap-card.is-later\").count(), 8","new":"locator(\".roadmap-card.is-later\").count(), 7","count":1},
+   {"old":"all eight","new":"all seven","count":1},
+   {"old":"19 plans","new":"18 plans","count":4},
+   {"old":"Personal mobility checklists","new":"Destination-reviewed mobility checklists","count":1},
+   {"old":"[\"roadmap.html#update-homepage-visual-refresh\", \"roadmap.html#update-announcements-newsroom\", \"roadmap.html#update-cohort-origins-distribution\"]","new":"[\"roadmap.html#update-timetable-monthly-progress\", \"roadmap.html#update-universities-directory-galleries\", \"roadmap.html#update-timetable-month-day-teachers\"]","count":1}
+  ],
+  "README.md":[{"old":"- **Timetable** (`timetable.html`): 1st-year classes loaded live from the official UniBo timetable, in a Week or List view, with \"My courses only\", room map links and \"add this class to my calendar\"","new":"- **Timetable** (`timetable.html`): official UniBo classes in Day, Week, Month and List views; coloured lecture dates, optional teacher names and a monthly finished-teaching-hours percentage. Course filters, maps and calendar exports are retained; the percentage measures scheduled time, not attendance ([calculation](docs/monthly-teaching-progress.md)).","count":1}]
+ },
+ "docAppend":"\n## 9 October 2026 release review\n\nSeventeen important student-facing updates bring the verified history to 54 published records.\nThey cover the Month/Day timetable and teacher display, monthly finished teaching hours,\nuniversity galleries, course and library workspaces, Contact intake and retry safety, practical\nguide redesigns, the selected Hub identity, study practice and the seven local workbenches.\nThe careers, events and gallery entries explicitly document **previews**, not active collections.\nAll 37 existing release records are preserved without changing their dates or evidence.\n\nThe fully available career tracker leaves Later. Shared-expense and destination-guidance\nplans are narrowed to their unfinished parts and link to the current budget/moving tools.\nBeta v0.9, the 15 October v1 target, the early-November v2 target and the team's separate\n25% full-project estimate remain unchanged. Timetable progress is a different, calculated\nmeasure of published scheduled teaching hours; it does not determine project completion.\n\nEach new record references a successful main-branch Pages deployment containing its commits.\nThe city-guide redesign is evidenced by the subsequent successful logo deployment that includes\nit; Contact intake and its receipt-retry correction are consolidated into one student-facing\nrecord. No unpublished code or fictional academic test data is presented as a release.\n",
+ "inputHashes":{
+  "content/updates.json":"59b22b1ff60acbaa9aef45da7fa76142afa3c0c352694adc58cbca9e08affafe",
+  "content/roadmap.json":"3ee596161ece943c09c1ea812bb5ff19a0d7acb69f8afdd6f610b97f9642b09b",
+  "tests/roadmap/data.test.js":"f2299ece305f54dcb0501779c0a7809728b99926578179f0602428835506db82",
+  "tests/roadmap/browser.test.js":"6a47bce68722f58e7082af8a5c207dd264d1f84f01fc265bf8442af5bdd1e91f",
+  "README.md":"0bceb3790e80f006232bf66dfeb78735077c269256d7573122253e09f3e1dc2b",
+  "docs/roadmap.md":"a2b375fcba577dde156deb7d3d3b6b5fd2b7658006a5970acc79a769992d08e1"
+ },
+ "outputHashes":{
+  "content/updates.json":"d650a0dff75a84f0152066a843f7eaea8164a395437926f3fb9b20328d0922fb",
+  "content/roadmap.json":"48c732bfca63d92e193b210b7ad0596e91e162c6d7972bb623153ed0f45d75c8",
+  "tests/roadmap/data.test.js":"08c8feb6e80f89c967d99cc36ba2132e302b383ff624c9605833a54da4f18895",
+  "tests/roadmap/browser.test.js":"b827f712d5a0efddb05eba17b241c975a52223e1abb537979455589c632f40fe",
+  "README.md":"6efb034b3de2515f1a89eb9ed433b8485a6b34cf670dcd4c9047b2b4f4af263c",
+  "docs/roadmap.md":"169831b6ff86174a7233f83dc3c6785f2b892d860f3a911427acd770b51ffd49"
+ }
+}
