@@ -1,17 +1,19 @@
 {
   "schemaVersion": 1,
-  "totalHours": 60,
-  "asOf": "2026-10-08",
+  "totalHours": 120,
+  "asOf": "2026-10-09",
   "reportedBy": "Adnan Tarabishi",
-  "basis": "Owner-reported estimate",
+  "basis": "Approximate upper-range estimate",
+  "estimateType": "upper-range",
+  "estimateNotes": "Revised at the owner's request from the earlier 60-hour estimate, available development history and completed project scope, including AI-assisted work with ChatGPT, Codex and Claude Code. This is an approximate upper range of personal effort, not recorded hours or AI execution time.",
   "allocationBasis": "Illustrative allocation, not individually tracked hours",
   "repositoryUrl": "https://github.com/AdnanTarabishi/eu-hem-student-hub",
   "categories": [
-    {"id":"design","title":"Design & visual identity","hours":18,"summary":"Making every page feel like part of the same Hub.","examples":["Homepage, navigation and page layouts","Mobile and dark-mode refinements","Visual identity, imagery and readable interfaces"],"link":"index.html","linkLabel":"Explore the homepage"},
-    {"id":"tools","title":"Interactive tools & features","hours":14,"summary":"Turning useful ideas into things students can actually use.","examples":["Statistics Lab and Student Toolkit","Timetables, calendars and interactive explorers","Contact forms and editor workflows"],"link":"toolkit.html","linkLabel":"Explore the Student Toolkit"},
-    {"id":"content","title":"Content & research","hours":12,"summary":"Finding, organising and explaining the information that matters.","examples":["Original study guides and learning activities","Programme rules and source checks","University, city and thesis information"],"link":"notes.html","linkLabel":"Explore study resources"},
-    {"id":"testing","title":"Testing & refinement","hours":8,"summary":"Checking the details that make a site usable and dependable.","examples":["Reviewing behaviour on phones and desktops","Fixing links, images and interface issues","Checking changes, deployments and offline updates"],"link":"https://github.com/AdnanTarabishi/eu-hem-student-hub/pulls","linkLabel":"Browse development reviews"},
-    {"id":"planning","title":"Planning & direction","hours":5,"summary":"Deciding what to build, how it should work and what to improve.","examples":["Defining scope and priorities","Writing development instructions and reviewing outputs","Organising the roadmap and next steps"],"link":"roadmap.html","linkLabel":"See the roadmap"},
-    {"id":"launch","title":"Launch & feedback","hours":3,"summary":"Sharing the beta and learning from the people it is built for.","examples":["Preparing the cohort launch","Explaining the Hub and its features","Collecting feedback and improvement ideas"],"link":"contact.html","linkLabel":"Share your feedback"}
+    {"id":"design","title":"Design & visual identity","hours":30,"summary":"Making every page feel like part of the same Hub.","examples":["Homepage, navigation and page layouts","Mobile and dark-mode refinements","Visual identity, imagery and readable interfaces"],"link":"index.html","linkLabel":"Explore the homepage"},
+    {"id":"tools","title":"Interactive tools & features","hours":28,"summary":"Turning useful ideas into things students can actually use.","examples":["Statistics Lab and Student Toolkit","Timetables, calendars and interactive explorers","Contact forms and editor workflows"],"link":"toolkit.html","linkLabel":"Explore the Student Toolkit"},
+    {"id":"content","title":"Content & research","hours":26,"summary":"Finding, organising and explaining the information that matters.","examples":["Original study guides and learning activities","Programme rules and source checks","University, city and thesis information"],"link":"notes.html","linkLabel":"Explore study resources"},
+    {"id":"testing","title":"Testing & refinement","hours":18,"summary":"Checking the details that make a site usable and dependable.","examples":["Reviewing behaviour on phones and desktops","Fixing links, images and interface issues","Checking changes, deployments and offline updates"],"link":"https://github.com/AdnanTarabishi/eu-hem-student-hub/pulls","linkLabel":"Browse development reviews"},
+    {"id":"planning","title":"Planning & direction","hours":12,"summary":"Deciding what to build, how it should work and what to improve.","examples":["Defining scope and priorities","Writing development instructions and reviewing outputs","Organising the roadmap and next steps"],"link":"roadmap.html","linkLabel":"See the roadmap"},
+    {"id":"launch","title":"Launch & feedback","hours":6,"summary":"Sharing the beta and learning from the people it is built for.","examples":["Preparing the cohort launch","Explaining the Hub and its features","Collecting feedback and improvement ideas"],"link":"contact.html","linkLabel":"Share your feedback"}
   ]
 }

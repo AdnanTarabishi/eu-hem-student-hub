@@ -35,12 +35,12 @@ const FEED = [make('96498','2026-10-01','09:00','QA Statistics Teacher'), make('
   };
   const mode = (p,v) => p.locator(`[data-view="${v}"]`).click();
   const date = (p,d) => p.locator('#week-picker').fill(d);
-  const teachers = p => p.locator('#schedule-list .tt-teacher:visible');
   const capture = async (p,name) => {
     if(!process.env.PLANNING_SCREENSHOT_DIR) return;
     fs.mkdirSync(process.env.PLANNING_SCREENSHOT_DIR,{recursive:true});
     await p.evaluate(async()=>{await document.fonts.ready;window.scrollTo(0,0);});
     await p.screenshot({path:path.join(process.env.PLANNING_SCREENSHOT_DIR,name+'.png'),fullPage:true});
+    await p.locator('#monthly-progress').screenshot({path:path.join(process.env.PLANNING_SCREENSHOT_DIR,name+'-card.png')});
   };
   try {
     let p=await open({url:'timetable.html?view=month'});
@@ -52,13 +52,21 @@ const FEED = [make('96498','2026-10-01','09:00','QA Statistics Teacher'), make('
     assert.match(await p.locator('#monthly-progress-status').innerText(),/1 class is in progress/);
     assert.match(await p.locator('#monthly-progress-status').innerText(),/not attendance/);
     assert.equal(await p.locator('#monthly-progress-bar').getAttribute('value'),'40');
+    assert.equal(await p.evaluate(()=>document.querySelector('main').lastElementChild.id),'monthly-progress');
     ok('the published-month denominator shows 40%, not the percentage of classes or calendar days');
-    for(const v of ['day','week','month','list']) {
-      await mode(p,v); assert.equal(await percent(),'40%',v);
-      await p.locator('#show-teacher').check(); assert.equal(await percent(),'40%');
-      if(v==='list') { await p.locator('#show-past').check(); assert.equal(await percent(),'40%'); await p.locator('#show-past').uncheck(); }
+    for(const [view,value,hours,title] of [['day','0%',2,'Daily'],['week','50%',4,'Weekly'],['month','40%',10,'Monthly'],['list','40%',10,'Monthly']]) {
+      await mode(p,view); assert.equal(await percent(),value,view);
+      assert.equal(await p.locator('#monthly-progress-total').innerText(),`${hours} h`);
+      assert.equal(await p.locator('#monthly-progress-bar').getAttribute('value'),value.slice(0,-1));
+      assert.equal(await p.locator('#monthly-progress-title').innerText(),`${title} teaching progress`);
+      assert.equal(await p.locator('#monthly-progress-eyebrow').textContent(),`One ${view==='list' ? 'month' : view} at a time`);
+      await p.locator('#show-teacher').check(); assert.equal(await percent(),value);
+      if(view==='list') {
+        assert.match(await p.locator('#monthly-progress-scope').innerText(),/Current month in List/);
+        await p.locator('#show-past').check(); assert.equal(await percent(),value); await p.locator('#show-past').uncheck();
+      }
     }
-    ok('all views retain the monthly denominator; hiding past classes and toggling names leave it unchanged');
+    ok('Day, Week and Month change hours, percentage, bar and heading; List keeps the explained current-month summary');
     await p.locator('#course-filter').selectOption('fund-quant-methods'); assert.equal(await percent(),'100%');
     await p.locator('#timetable-reset').click(); await p.locator('#timetable-search').fill('QA Economics Teacher');assert.equal(await percent(),'0%');
     assert.match(await p.locator('#monthly-progress-scope').innerText(),/Search applied/);
@@ -66,6 +74,22 @@ const FEED = [make('96498','2026-10-01','09:00','QA Statistics Teacher'), make('
     assert.match(await p.locator('#monthly-progress-status').innerText(),/No published hours/);
     await p.locator('#timetable-reset').click();assert.equal(await percent(),'40%');
     ok('course and search filters change the scope and hours, with an honest no-matching-hours state');
+    for(const [view,hours] of [['day',2],['week',2],['month',6]]) {
+      await mode(p,view);await p.locator('#timetable-search').fill('QA Economics Teacher');
+      assert.equal(await percent(),'0%');assert.equal(await p.locator('#monthly-progress-total').innerText(),`${hours} h`);
+      await p.locator('#timetable-search').fill('');await p.locator('#course-filter').selectOption('fund-health-econ-management');
+      assert.equal(await percent(),'0%');assert.equal(await p.locator('#monthly-progress-total').innerText(),`${hours} h`);
+      await p.locator('#timetable-reset').click();
+    }
+    await mode(p,'day');await date(p,'2026-10-08');assert.equal(await percent(),'100%');
+    await p.locator('#course-filter').selectOption('fund-quant-methods');assert.equal(await percent(),'100%');
+    await date(p,'2026-10-09');assert.equal(await p.locator('#monthly-progress-values').isVisible(),false);
+    await p.locator('#timetable-reset').click();assert.equal(await percent(),'0%');
+    await date(p,'2026-10-10');assert.equal(await p.locator('#monthly-progress-values').isVisible(),false);
+    await mode(p,'week');await date(p,'2026-10-20');assert.equal(await percent(),'0%');
+    assert.equal(await p.locator('#monthly-progress-total').innerText(),'4 h');
+    await date(p,'2026-10-09');assert.equal(await percent(),'50%');
+    ok('search/course filters and selected dates apply independently to daily, weekly and monthly progress');
     await mode(p,'month'); await date(p,'2026-11-01');
     assert.equal(await p.locator('#monthly-progress-values').isVisible(),false);
     assert.match(await p.locator('#monthly-progress-scope').innerText(),/November 2026/);
@@ -84,6 +108,19 @@ const FEED = [make('96498','2026-10-01','09:00','QA Statistics Teacher'), make('
     await date(p,'2026-10-15');await p.context().clock.setFixedTime(new Date('2026-11-01T06:00:00Z'));await p.evaluate(()=>document.dispatchEvent(new Event("visibilitychange")));assert.equal(await percent(),'100%');
     await p.context().close();
     ok('future sessions remain unfinished and the selected past month reaches 100% only after the final end');
+    const crossMonth=[make('96498','2026-09-28','09:00','QA Statistics Teacher'),{...make('96498','2026-09-30','09:00','QA Statistics Teacher'),end:'2026-09-30T13:00:00',time:'09:00 - 13:00'},make('79060','2026-10-02','10:00','QA Economics Teacher'),make('79060','2026-10-04','09:00','QA Economics Teacher'),{...make('79060','2026-10-05','09:00','QA Economics Teacher'),end:'2026-10-05T13:00:00',time:'09:00 - 13:00'}];
+    p=await open({url:'timetable.html?view=week&date=2026-10-02',feed:crossMonth});
+    await p.context().clock.setFixedTime(new Date('2026-10-02T08:30:00Z'));await p.evaluate(()=>document.dispatchEvent(new Event('visibilitychange')));
+    assert.equal(await percent(),'60%');assert.equal(await p.locator('#monthly-progress-total').innerText(),'10 h');
+    assert.match(await p.locator('#monthly-progress-scope').innerText(),/28 Sept? – 4 Oct 2026/);
+    await p.locator('#course-filter').selectOption('fund-quant-methods');assert.equal(await percent(),'100%');
+    assert.equal(await p.locator('#monthly-progress-total').innerText(),'6 h');
+    await p.locator('#timetable-reset').click();assert.equal(await percent(),'60%');
+    await mode(p,'day');assert.equal(await percent(),'0%');assert.equal(await p.locator('#monthly-progress-total').innerText(),'2 h');
+    await mode(p,'month');assert.equal(await percent(),'0%');assert.equal(await p.locator('#monthly-progress-total').innerText(),'8 h');
+    await mode(p,'week');await date(p,'2026-10-05');assert.equal(await percent(),'0%');assert.equal(await p.locator('#monthly-progress-total').innerText(),'4 h');
+    await p.context().close();
+    ok('a cross-month week counts Monday–Sunday hours from both months and excludes the following week');
     p=await open({url:'timetable.html?view=month',fail:true}); await p.getByRole('button',{name:'Retry',exact:true}).waitFor();
     assert.equal(await p.locator('#monthly-progress-values').isVisible(),false);
     assert.equal(await p.locator('#monthly-progress').getAttribute('data-state'),'error');
@@ -101,28 +138,37 @@ const FEED = [make('96498','2026-10-01','09:00','QA Statistics Teacher'), make('
     ok('invalid durations cannot claim completion and storage-blocked visits still calculate progress');
     const plan=JSON.stringify({version:1,cohort:"2026-27",term:"y1-s1",choices:{quant:"96525",elective:"C8393"},statuses:{},savedAt:"2026-10-01T10:00:00Z"});
     p=await open({url:'timetable.html?view=month',storage:{'euhem-study-plan-v1':plan}});
-    assert.equal(await percent(),'0%');
-    assert.match(await p.locator('#monthly-progress-scope').innerText(),/My courses only/);
-    await p.locator('.my-courses-switch input').uncheck();assert.equal(await percent(),'40%');
+    for(const [view,hours,all] of [['day',2,'0%'],['week',2,'50%'],['month',6,'40%']]) {
+      await mode(p,view);await p.locator('.my-courses-switch input').check();
+      assert.equal(await percent(),'0%');assert.equal(await p.locator('#monthly-progress-total').innerText(),`${hours} h`);
+      assert.match(await p.locator('#monthly-progress-scope').innerText(),/My courses only/);
+      await p.locator('.my-courses-switch input').uncheck();assert.equal(await percent(),all);
+    }
     assert.equal(await p.evaluate(()=>localStorage.getItem('euhem-study-plan-v1')),plan);
     await p.context().close();
-    ok('saved study-plan filtering changes monthly totals without modifying the study plan or adding storage');
+    ok('My courses filtering changes each period without modifying the saved study plan');
     p=await open({url:'timetable.html?view=week',clock:true});
     await p.clock.fastForward(90*60*1000);
-    assert.equal(await percent(),'60%');await p.context().close();
+    assert.equal(await percent(),'100%');await p.context().close();
     ok('the minute timer refreshes progress at a class end even when the weekly grid is not redrawn');
     for(const width of [320,390,768,1440]) for(const colorScheme of ['light','dark']) {
       p=await open({url:'timetable.html?view=month',viewport:{width,height:1000},colorScheme});
       assert.equal(await percent(),'40%');
+      if(width===320) await capture(p,`teaching-progress-${width}-${colorScheme}`);
+      const card=await p.locator('#monthly-progress').boundingBox();
+      assert.ok(card.height<(width<640 ? 330 : 230),`compact ${width}px ${colorScheme} card height: ${card.height}`);
       assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth)<=1);
       await p.locator('.tt-progress-method summary').focus();await p.keyboard.press('Enter');
       assert.equal(await p.locator('.tt-progress-method').getAttribute('open'),'');
       assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth)<=1);
       await p.keyboard.press('Enter');
       if([390,1440].includes(width)) await capture(p,`teaching-progress-${width}-${colorScheme}`);
+      await p.setViewportSize({width:width===1440 ? 390 : 1440,height:1000});
+      assert.equal(await percent(),'40%');
+      assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth)<=1);
       await p.context().close();
     }
-    ok('progress, metrics and keyboard explanation fit phone and desktop in both themes');
+    ok('the compact bottom card, metrics and keyboard explanation fit both themes and retain progress on resize');
     assert.deepEqual(errors,[]);ok('no uncaught JavaScript errors or remote writes during the isolated progress tests');
     console.log(`${checks} teaching-progress browser checks passed`);
   } finally {for(const c of contexts) await c.close().catch(()=>{});await browser.close();server.close();}
