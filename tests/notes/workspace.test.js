@@ -44,7 +44,7 @@ const shots = process.env.NOTES_SCREENSHOT_DIR;
     const overview = page.locator('.notes-overview-group').first();
     assert.ok(await overview.count());
     assert.equal(await overview.getAttribute('open'), null);
-    await overview.locator('summary').click();
+    await overview.locator(':scope > summary').click();
     assert.ok(await overview.locator('.course-card').first().isVisible());
     console.log('PASS: native planning and overview disclosures work by pointer and keyboard.');
 
