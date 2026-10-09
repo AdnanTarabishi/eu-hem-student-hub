@@ -1,6 +1,7 @@
 // ===== Course page =====
 // One page for every course: course.html?course=<course-id>
-// Tabs: Overview · Schedule · Exam · Topics · Key Concepts · Practice · Resources. A tab with no content is hidden.
+// Schedule, Exam, Topics and Resources remain available with honest recovery states.
+// Other study tabs appear when their supporting content exists.
 // Course facts come from content/programme.json; Schedule and Exam are loaded live from UniBo;
 // notes and practice come from content/modules/<module-id>/ (Course -> Module -> Topic).
 
@@ -10,6 +11,7 @@ const page = {
   data: null, course: null, index: 0, notesByTopic: {}, settings: {},
   unibo: "loading", // "loading" | "ready" | "failed"
   sessions: [], exams: [],
+  timetableState: "loading", examState: "loading",
 };
 
 const TABS = [
@@ -82,19 +84,18 @@ function courseExams() {
   return page.exams.filter((exam) => exam.courseIds.includes(page.course.id));
 }
 
-// Tabs with content; Overview is always there. Schedule/Exam show while loading from UniBo.
+// Keep the four course interiors visible even when a feed or student content is unavailable.
 function availableTabs() {
   const c = page.course;
-  const loading = page.unibo === "loading";
   const has = {
     overview: true,
-    schedule: loading || courseSessions().length > 0,
-    exam: loading || courseExams().length > 0,
+    schedule: true, // Keep official-source recovery available even when the feed fails.
+    exam: true,
     lectures: c.topics.some((t) => t.lecture),
-    topics: Object.keys(page.notesByTopic).length > 0,
+    topics: true, // Syllabus-only and unavailable content are clearly labelled.
     concepts: conceptsForCourse(c, page.data.concepts).length > 0,
     practice: c.flashcards.length + c.questions.length > 0,
-    resources: c.resources.length > 0,
+    resources: true, // Official module links are useful even without student additions.
   };
   if (c.id === "right-to-health" && window.RightToHealth?.ready()) {
     has.schedule = has.exam = has.lectures = has.concepts = true;
@@ -119,6 +120,7 @@ function moduleOfTopic(topicId) {
 // ----- Header -----
 
 function renderHeader(tab, tabs) {
+  if (window.CourseWorkspace?.handles(tab)) return CourseWorkspace.header(workspaceContext(), tab, tabs);
   if (page.course.id === "right-to-health" && window.RightToHealth?.ready()) {
     return RightToHealth.header({ pageLink, course: page.course }, tab, tabs);
   }
@@ -185,11 +187,24 @@ function renderHeader(tab, tabs) {
   return header;
 }
 
+// Shared interior renderer uses the existing data and navigation; it never changes content IDs.
+function workspaceContext() {
+  return { page, course: page.course, data: page.data, notes: page.notesByTopic,
+    pageLink, topicTitle, topicLink, planStatusBox, sessions: courseSessions, exams: courseExams,
+    retry: () => {
+      if (page.unibo === "loading") return;
+      page.unibo = "loading"; page.timetableState = page.examState = "loading";
+      renderPage(); loadUniboData();
+    },
+  };
+}
+
 function renderPage() {
   const params = currentParams();
   const tabs = availableTabs();
   const tab = tabs.some((t) => t.key === params.tab) ? params.tab : "overview";
 
+  document.body.classList.toggle("cw-page", Boolean(window.CourseWorkspace?.handles(tab)));
   coursePage.innerHTML = "";
   const back = createElement("a", "back-link", "← All courses");
   back.href = "notes.html";
@@ -197,7 +212,14 @@ function renderPage() {
   coursePage.appendChild(renderHeader(tab, tabs));
 
   const panel = createElement("section", "card course-panel");
+  panel.id = "course-panel";
+  panel.tabIndex = -1;
+  panel.setAttribute("aria-label", `${page.course.info.name}: ${tabs.find(t => t.key === tab)?.label || "Overview"}`);
   coursePage.appendChild(panel);
+  if (window.CourseWorkspace?.render(panel, tab, params, workspaceContext())) {
+    highlightTarget();
+    return;
+  }
   const custom =
     (page.course.id === "right-to-health" &&
       window.RightToHealth?.ready() &&
@@ -237,7 +259,8 @@ function renderPage() {
 }
 
 function highlightTarget() {
-  const id = decodeURIComponent(window.location.hash.slice(1));
+  let id;
+  try { id = decodeURIComponent(window.location.hash.slice(1)); } catch (_) { return; }
   const target = id && document.getElementById(id);
   if (target) {
     target.classList.add("is-highlighted");
@@ -790,16 +813,32 @@ function renderResources(panel) {
 // Loads the class schedule and exam dates from UniBo, then redraws (keeping the scroll position)
 async function loadUniboData() {
   const sources = page.data.cohort.sources;
-  const [sessions, exams] = await Promise.allSettled([fetchTimetable(sources.timetableFeed), fetchExams(sources.examDates)]);
-  if (sessions.status === "fulfilled") page.sessions = sessions.value;
-  if (exams.status === "fulfilled") page.exams = matchExamsToTerm(exams.value, page.data.term);
+  // One failed endpoint must not silently erase the other. Slow feeds cannot hold the UI forever.
+  const timed = promise => new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error("University feed timed out")), 12000);
+    promise.then(value => { clearTimeout(timer); resolve(value); }, error => { clearTimeout(timer); reject(error); });
+  });
+  const [sessions, exams] = await Promise.allSettled([
+    timed(fetchTimetable(sources.timetableFeed)), timed(fetchExams(sources.examDates)),
+  ]);
+  page.timetableState = sessions.status === "fulfilled" ? "ready" : "failed";
+  page.examState = exams.status === "fulfilled" ? "ready" : "failed";
+  page.sessions = sessions.status === "fulfilled" ? sessions.value : [];
+  page.exams = exams.status === "fulfilled" ? matchExamsToTerm(exams.value, page.data.term) : [];
   page.unibo = sessions.status === "rejected" && exams.status === "rejected" ? "failed" : "ready";
-  if (sessions.status === "rejected" || exams.status === "rejected") {
-    console.error("UniBo data:", sessions.reason || exams.reason);
+  if (page.examState === "failed" && typeof NotesSchedule !== "undefined") {
+    try {
+      const manifest = await timed(readJson(fetchText, "calendar/calendars.json", []));
+      const entry = manifest.find(item => item.cohort === page.data.cohort.id && item.term === page.data.term.id && item.plan === null);
+      if (entry && /^[a-zA-Z0-9_.-]+\.ics$/.test(entry.file)) {
+        const text = await timed(fetchText(`calendar/${entry.file}`));
+        const copy = NotesSchedule.calendarExams(text || "", page.data.term);
+        if (copy.length) { page.exams = copy; page.examState = "copy"; }
+      }
+    } catch (_) { /* Keep an explicit unavailable state, never fabricate a sitting. */ }
   }
-  // Do not erase an in-progress local activity when the independent UniBo request finishes.
-  if (page.course.id === "right-to-health" &&
-      ["casebook", "explore", "workshop", "concepts", "topics", "practice", "resources"].includes(currentParams().tab)) return;
+  // Do not erase search, a quiz, a reader position, or an unsaved workshop when feeds finish.
+  if (!["", "overview", "schedule", "exam"].includes(currentParams().tab || "")) return;
   const y = window.scrollY;
   renderPage();
   window.scrollTo(0, y);

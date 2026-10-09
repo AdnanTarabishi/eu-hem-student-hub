@@ -197,6 +197,9 @@
     function draw(){grid.replaceChildren();data.sources.filter(s=>select.value==="All sources"||s.kind===select.value).forEach(s=>{
       const card=add(grid,"article","rth-source-card");card.id="right-to-health.r."+String(data.sources.indexOf(s)+1).padStart(3,"0");add(card,"p","rth-eyebrow",s.kind);const h=add(card,"h3");h.append(external(s.title+" ↗",s.url));add(card,"p","rth-meta",s.locator);add(card,"p",null,s.note);
     });} select.addEventListener("change",draw);draw();
+    resourceCaveat(panel);
+  }
+  function resourceCaveat(panel) {
     notice(panel,"A book cited inside a slide deck is not automatically a book reviewed in full. The Italian-language reading’s publisher page could not be independently retrieved. The article behind the workshop’s 2026 proposals was not independently reviewed; the guide attributes those proposals to the deck.");
   }
   const PROFILES={
@@ -359,6 +362,6 @@
     if(tab==="schedule")scheduleNotes(panel);
     return false;
   }
-  root.RightToHealth={prepare,ready:()=>Boolean(data),header,render,expectedMargin,cleanDraft};
+  root.RightToHealth={prepare,ready:()=>Boolean(data),header,render,expectedMargin,cleanDraft,scheduleNotes,organisation,resourceCaveat};
   if(typeof module!=="undefined"&&module.exports)module.exports={expectedMargin,cleanDraft};
 })(typeof window!=="undefined"?window:globalThis);
