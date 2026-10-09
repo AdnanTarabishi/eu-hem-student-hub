@@ -1,0 +1,17 @@
+const assert=require("node:assert/strict"),fs=require("node:fs"),vm=require("node:vm"),path=require("node:path");
+const root=path.resolve(__dirname,"../..");const context={module:{exports:{}}};
+vm.runInNewContext(fs.readFileSync(path.join(root,"unibo-data.js"),"utf8")+"\nmodule.exports={mergeExamSittings};",context);
+const m=context.module.exports.mergeExamSittings;
+const item=(codes)=>({codes,names:["Sample"],dateKey:"2026-10-27",time:"09:00",place:"Aula 1",type:"Written",teachers:["Example"]});
+assert.equal(m([item(["79060"]),item(["74948"])]).length,2,"different courses sharing a room must not merge");
+assert.equal(m([item(["79060"]),item(["79060"])]).length,1,"duplicated official row merges");
+assert.equal(m([item(["97177","79060"]),item(["79060"])]).length,1,"parent + module same assessment merges");
+assert.equal(m([item(["97177","79060"]),item(["97177","87428"])]).length,2,"different components remain separate");
+const p=JSON.parse(fs.readFileSync(path.join(root,"content/programme.json"),"utf8"));
+const c=p.cohorts.find(x=>x.id==="2026-27").terms.find(x=>x.id==="y1-s1").courses.find(x=>x.id==="intro-economics");
+assert.equal(c.modules[0].teachingEnd,"2026-09-12");
+assert.equal(c.assessmentNotice.sessionDate,"2026-10-27");
+assert.equal(c.assessmentNotice.sessionTime,"09:00");
+assert.equal(c.assessmentNotice.grading,"Pass/Fail");
+assert.match(c.assessmentNotice.note,/did not explicitly guarantee automatic Pass/);
+console.log("Nine Exams grouping / instructor guidance assertions passed");

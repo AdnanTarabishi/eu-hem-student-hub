@@ -212,16 +212,28 @@
                     "Adelajda Matuka"
                   ],
                   "teachingStart": "2026-09-07",
-                  "teachingEnd": "2026-09-22",
+                  "teachingEnd": "2026-09-12",
                   "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518755",
                   "virtualeUrl": "https://virtuale.unibo.it",
                   "description": "A short refresher on the core ideas of economics: how people and firms make choices, how markets reach equilibrium, and when markets fail.",
-                  "assessment": "No final exam. Attendance and active participation are encouraged.",
+                  "assessment": "No final examination. Interactive classes; Pass/Fail outcome requires enrolment in the lecturer's recording session. The lecturer also requires Virtuale course enrolment.",
                   "textbooks": [
                     "Mankiw, N. G. Principles of Economics. Cengage Learning (any recent edition)."
                   ]
                 }
-              ]
+              ],
+              "assessmentNotice": {
+                "kind": "administrative-pass-fail",
+                "sessionName": "Esame Introduction to Economics (Crash Course)",
+                "sessionDate": "2026-10-27",
+                "sessionTime": "09:00",
+                "grading": "Pass/Fail",
+                "virtualeInstruction": "Enrol in the lecturer's Virtuale course. The lecturer specified a Tuesday-midnight deadline, but the shared email does not identify the calendar date; confirm it from the original message.",
+                "recordingInstruction": "Enrol in the class named 'Esame Introduction to Economics (Crash Course)' created by the lecturer so that the Pass/Fail evaluation and corresponding credits can be recorded.",
+                "note": "The lecturer confirmed no final exam, but did not explicitly guarantee automatic Pass for everyone. UniBo lists 3 CFU; the programme handbook treats optional crash courses separately from the 120 ECTS degree requirement.",
+                "source": "intro-economics-lecturer-2026",
+                "sourceLabel": "Lecturer emails (2026/27) · Shared for informational use"
+              }
             },
             {
               "code": "97484",

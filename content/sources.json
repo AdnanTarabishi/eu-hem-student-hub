@@ -1,14 +1,35 @@
 {
   "schemaVersion": 1,
   "note": "Every fact taken from a document points to one of these ids. The documents themselves are not published here (they are not public); 'link' is the official page to send students to. Format and labels: docs/sources.md",
-  "priority": ["official-handbook", "official-university-page", "official-letter", "student-reps", "esn-guide"],
+  "priority": [
+    "official-handbook",
+    "official-university-page",
+    "official-letter",
+    "student-reps",
+    "esn-guide"
+  ],
   "priorityNote": "When sources disagree: cohort-specific official document > official university page > EU-HEM website > student representatives > ESN. A live official web page is checked first for prices and course codes, because documents go out of date.",
   "types": {
-    "official-handbook": { "label": "Official", "kind": "official" },
-    "official-university-page": { "label": "Official", "kind": "official" },
-    "official-letter": { "label": "Official", "kind": "official" },
-    "student-reps": { "label": "Student tip", "kind": "tip" },
-    "esn-guide": { "label": "Student tip", "kind": "tip" }
+    "official-handbook": {
+      "label": "Official",
+      "kind": "official"
+    },
+    "official-university-page": {
+      "label": "Official",
+      "kind": "official"
+    },
+    "official-letter": {
+      "label": "Official",
+      "kind": "official"
+    },
+    "student-reps": {
+      "label": "Student tip",
+      "kind": "tip"
+    },
+    "esn-guide": {
+      "label": "Student tip",
+      "kind": "tip"
+    }
   },
   "sources": [
     {
@@ -18,7 +39,10 @@
       "type": "official-handbook",
       "cohort": "2026-2028",
       "lastChecked": "2026-10-06",
-      "link": { "label": "EU-HEM course website (University of Bologna)", "url": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement" }
+      "link": {
+        "label": "EU-HEM course website (University of Bologna)",
+        "url": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement"
+      }
     },
     {
       "id": "unibo-welcome-letter-2026",
@@ -27,7 +51,10 @@
       "type": "official-letter",
       "cohort": "2026-2028",
       "lastChecked": "2026-10-06",
-      "link": { "label": "EU-HEM course website (University of Bologna)", "url": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement" }
+      "link": {
+        "label": "EU-HEM course website (University of Bologna)",
+        "url": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement"
+      }
     },
     {
       "id": "welcome-days-2026",
@@ -52,7 +79,10 @@
       "type": "esn-guide",
       "cohort": "2026-2027",
       "lastChecked": "2026-10-06",
-      "link": { "label": "ESN Bologna", "url": "https://esnbologna.org" }
+      "link": {
+        "label": "ESN Bologna",
+        "url": "https://esnbologna.org"
+      }
     },
     {
       "id": "unibo-exam-dates",
@@ -60,7 +90,10 @@
       "shortTitle": "UniBo exam dates",
       "type": "official-university-page",
       "lastChecked": "2026-10-06",
-      "link": { "label": "UniBo: EU-HEM exam dates and AlmaEsami", "url": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates" }
+      "link": {
+        "label": "UniBo: EU-HEM exam dates and AlmaEsami",
+        "url": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates"
+      }
     },
     {
       "id": "unibo-genai-students",
@@ -68,7 +101,10 @@
       "shortTitle": "UniBo AI policy",
       "type": "official-university-page",
       "lastChecked": "2026-10-06",
-      "link": { "label": "UniBo: generative AI in student work", "url": "https://www.unibo.it/en/university/statute-standards-strategies-and-reports/artificial-intelligence/use-cases-of-generative-artificial-intelligence-in-preparing-student-work-to-be-assessed" }
+      "link": {
+        "label": "UniBo: generative AI in student work",
+        "url": "https://www.unibo.it/en/university/statute-standards-strategies-and-reports/artificial-intelligence/use-cases-of-generative-artificial-intelligence-in-preparing-student-work-to-be-assessed"
+      }
     },
     {
       "id": "uio-grades",
@@ -76,7 +112,10 @@
       "shortTitle": "UiO grading",
       "type": "official-university-page",
       "lastChecked": "2026-10-06",
-      "link": { "label": "UiO: grading and grading scales", "url": "https://www.uio.no/english/studies/examinations/grades/" }
+      "link": {
+        "label": "UiO: grading and grading scales",
+        "url": "https://www.uio.no/english/studies/examinations/grades/"
+      }
     },
     {
       "id": "uio-med-regulations",
@@ -84,7 +123,10 @@
       "shortTitle": "UiO master rules",
       "type": "official-university-page",
       "lastChecked": "2026-10-06",
-      "link": { "label": "UiO Faculty of Medicine: rules for master studies", "url": "https://www.med.uio.no/english/studies/about/regulations/master/index.html" }
+      "link": {
+        "label": "UiO Faculty of Medicine: rules for master studies",
+        "url": "https://www.med.uio.no/english/studies/about/regulations/master/index.html"
+      }
     },
     {
       "id": "uio-cheating",
@@ -92,7 +134,10 @@
       "shortTitle": "UiO cheating rules",
       "type": "official-university-page",
       "lastChecked": "2026-10-06",
-      "link": { "label": "UiO: what counts as cheating", "url": "https://www.uio.no/english/studies/examinations/cheating/" }
+      "link": {
+        "label": "UiO: what counts as cheating",
+        "url": "https://www.uio.no/english/studies/examinations/cheating/"
+      }
     },
     {
       "id": "uio-med-ai",
@@ -100,7 +145,10 @@
       "shortTitle": "UiO AI rules",
       "type": "official-university-page",
       "lastChecked": "2026-10-06",
-      "link": { "label": "UiO Faculty of Medicine: AI in exams and assignments", "url": "https://www.med.uio.no/english/studies/resources/ai-in-examinations-assignments-med/" }
+      "link": {
+        "label": "UiO Faculty of Medicine: AI in exams and assignments",
+        "url": "https://www.med.uio.no/english/studies/resources/ai-in-examinations-assignments-med/"
+      }
     },
     {
       "id": "mci-exam-regulations-2026",
@@ -108,7 +156,10 @@
       "shortTitle": "MCI exam regulations",
       "type": "official-university-page",
       "lastChecked": "2026-10-06",
-      "link": { "label": "MCI: Study & Examination Regulations (PDF)", "url": "https://www.mci.edu/en/download/category/14-kollegium-en?download=115%3Aexamination-regulations" }
+      "link": {
+        "label": "MCI: Study & Examination Regulations (PDF)",
+        "url": "https://www.mci.edu/en/download/category/14-kollegium-en?download=115%3Aexamination-regulations"
+      }
     },
     {
       "id": "eur-genai",
@@ -116,7 +167,10 @@
       "shortTitle": "EUR AI guidelines",
       "type": "official-university-page",
       "lastChecked": "2026-10-06",
-      "link": { "label": "EUR: generative AI guidelines", "url": "https://www.eur.nl/en/about-university/policy-and-regulations/regulations-and-guidelines/ai-usage-guidelines" }
+      "link": {
+        "label": "EUR: generative AI guidelines",
+        "url": "https://www.eur.nl/en/about-university/policy-and-regulations/regulations-and-guidelines/ai-usage-guidelines"
+      }
     },
     {
       "id": "eur-special-provisions",
@@ -124,7 +178,10 @@
       "shortTitle": "EUR special provisions",
       "type": "official-university-page",
       "lastChecked": "2026-10-06",
-      "link": { "label": "EUR: request special provisions", "url": "https://eur.nl/en/education/practical-matters/advice-counselling/studying-functional-impairment/request-extra-facilities" }
+      "link": {
+        "label": "EUR: request special provisions",
+        "url": "https://eur.nl/en/education/practical-matters/advice-counselling/studying-functional-impairment/request-extra-facilities"
+      }
     },
     {
       "id": "eur-hem-contact",
@@ -132,7 +189,10 @@
       "shortTitle": "EUR EU-HEM contact",
       "type": "official-university-page",
       "lastChecked": "2026-10-06",
-      "link": { "label": "Official EU-HEM contact page (EUR)", "url": "https://www.eur.nl/en/eshpm/master/european-master-health-economics-and-management/contact" }
+      "link": {
+        "label": "Official EU-HEM contact page (EUR)",
+        "url": "https://www.eur.nl/en/eshpm/master/european-master-health-economics-and-management/contact"
+      }
     },
     {
       "id": "uio-hem-contact",
@@ -140,7 +200,10 @@
       "shortTitle": "UiO EU-HEM contact",
       "type": "official-university-page",
       "lastChecked": "2026-10-06",
-      "link": { "label": "UiO: EU-HEM contact page", "url": "https://www.uio.no/english/studies/programmes/hem-master/contact/" }
+      "link": {
+        "label": "UiO: EU-HEM contact page",
+        "url": "https://www.uio.no/english/studies/programmes/hem-master/contact/"
+      }
     },
     {
       "id": "unibo-ombudsman",
@@ -148,7 +211,10 @@
       "shortTitle": "UniBo Ombudsman",
       "type": "official-university-page",
       "lastChecked": "2026-10-06",
-      "link": { "label": "UniBo: Student Ombudsman", "url": "https://www.unibo.it/en/university/organisation/university-governing-bodies/student-ombudsman" }
+      "link": {
+        "label": "UniBo: Student Ombudsman",
+        "url": "https://www.unibo.it/en/university/organisation/university-governing-bodies/student-ombudsman"
+      }
     },
     {
       "id": "unibo-sap",
@@ -156,7 +222,10 @@
       "shortTitle": "UniBo SAP",
       "type": "official-university-page",
       "lastChecked": "2026-10-06",
-      "link": { "label": "UniBo: Psychological Support Service", "url": "https://www.unibo.it/en/services-and-opportunities/health-and-assistance/the-psychological-support-service-sap" }
+      "link": {
+        "label": "UniBo: Psychological Support Service",
+        "url": "https://www.unibo.it/en/services-and-opportunities/health-and-assistance/the-psychological-support-service-sap"
+      }
     },
     {
       "id": "unibo-office365",
@@ -164,7 +233,10 @@
       "shortTitle": "UniBo Office 365",
       "type": "official-university-page",
       "lastChecked": "2026-10-06",
-      "link": { "label": "UniBo: free Microsoft 365", "url": "https://www.unibo.it/en/services-and-opportunities/studying-and-beyond/discounts-for-computer-tablet-and-software-1/microsoft-office-365-1" }
+      "link": {
+        "label": "UniBo: free Microsoft 365",
+        "url": "https://www.unibo.it/en/services-and-opportunities/studying-and-beyond/discounts-for-computer-tablet-and-software-1/microsoft-office-365-1"
+      }
     },
     {
       "id": "uio-student-ombud",
@@ -172,7 +244,10 @@
       "shortTitle": "UiO Student Ombud",
       "type": "official-university-page",
       "lastChecked": "2026-10-06",
-      "link": { "label": "UiO: Student Ombud", "url": "https://www.uio.no/english/about/organisation/student-ombudsperson/help/" }
+      "link": {
+        "label": "UiO: Student Ombud",
+        "url": "https://www.uio.no/english/about/organisation/student-ombudsperson/help/"
+      }
     },
     {
       "id": "uio-speak-up",
@@ -180,7 +255,10 @@
       "shortTitle": "UiO Speak up",
       "type": "official-university-page",
       "lastChecked": "2026-10-06",
-      "link": { "label": "UiO: Speak up!", "url": "https://www.uio.no/english/about/hse/speak-up/index.html" }
+      "link": {
+        "label": "UiO: Speak up!",
+        "url": "https://www.uio.no/english/about/hse/speak-up/index.html"
+      }
     },
     {
       "id": "uio-health",
@@ -188,7 +266,10 @@
       "shortTitle": "UiO health and counselling",
       "type": "official-university-page",
       "lastChecked": "2026-10-06",
-      "link": { "label": "UiO: health services and counselling (SiO)", "url": "https://www.uio.no/english/student-life/services/health/" }
+      "link": {
+        "label": "UiO: health services and counselling (SiO)",
+        "url": "https://www.uio.no/english/student-life/services/health/"
+      }
     },
     {
       "id": "mci-mental-health",
@@ -196,7 +277,10 @@
       "shortTitle": "MCI mental health",
       "type": "official-university-page",
       "lastChecked": "2026-10-06",
-      "link": { "label": "MCI: Mental Health @ MCI", "url": "https://www.mci4me.at/en/services/student-support/mental-health" }
+      "link": {
+        "label": "MCI: Mental Health @ MCI",
+        "url": "https://www.mci4me.at/en/services/student-support/mental-health"
+      }
     },
     {
       "id": "mci-code-of-conduct",
@@ -204,7 +288,10 @@
       "shortTitle": "MCI Code of Conduct",
       "type": "official-university-page",
       "lastChecked": "2026-10-06",
-      "link": { "label": "MCI: Code of Conduct and contact points", "url": "https://www.mci.edu/en/university/the-mci/diversity/code-of-conduct" }
+      "link": {
+        "label": "MCI: Code of Conduct and contact points",
+        "url": "https://www.mci.edu/en/university/the-mci/diversity/code-of-conduct"
+      }
     },
     {
       "id": "eur-safe",
@@ -212,7 +299,10 @@
       "shortTitle": "Safe@EUR",
       "type": "official-university-page",
       "lastChecked": "2026-10-06",
-      "link": { "label": "EUR: Safe@EUR", "url": "https://www.eur.nl/en/services/safeeur" }
+      "link": {
+        "label": "EUR: Safe@EUR",
+        "url": "https://www.eur.nl/en/services/safeeur"
+      }
     },
     {
       "id": "eur-eshpm-social-safety",
@@ -220,7 +310,23 @@
       "shortTitle": "ESHPM social safety",
       "type": "official-university-page",
       "lastChecked": "2026-10-06",
-      "link": { "label": "ESHPM: social safety and student support", "url": "https://www.eur.nl/en/eshpm/about/social-safety" }
+      "link": {
+        "label": "ESHPM: social safety and student support",
+        "url": "https://www.eur.nl/en/eshpm/about/social-safety"
+      }
+    },
+    {
+      "id": "intro-economics-lecturer-2026",
+      "title": "Introduction to Economics — assessment and registration instructions communicated by the course lecturer",
+      "shortTitle": "Introduction to Economics lecturer",
+      "type": "official-letter",
+      "cohort": "2026-2028",
+      "lastChecked": "2026-10-09",
+      "note": "Private instructor emails shared by a student. The text and identities of recipients are not published. Please confirm individual registration requirements with the lecturer.",
+      "link": {
+        "label": "Official University of Bologna course syllabus",
+        "url": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518755"
+      }
     }
   ]
 }
