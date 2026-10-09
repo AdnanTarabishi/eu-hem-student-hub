@@ -1,9 +1,9 @@
 name: Check Exams workspace
 on:
   pull_request:
-    paths: ['exams.html','exams.js','exams-guide.css','exams-workspace.js','unibo-data.js','timetable-calendar.js','content/programme.json','tests/planning/**','.github/workflows/check-exams-redesign.yml']
+    paths: ['exams.html','exams.js','exams-guide.css','exams-workspace.js','unibo-data.js','timetable-calendar.js','scripts/build-calendar.js','content/programme.json','tests/planning/**','.github/workflows/check-exams-redesign.yml']
   push:
-    paths: ['exams.html','exams.js','exams-guide.css','exams-workspace.js','unibo-data.js','timetable-calendar.js','content/programme.json','tests/planning/**','.github/workflows/check-exams-redesign.yml']
+    paths: ['exams.html','exams.js','exams-guide.css','exams-workspace.js','unibo-data.js','timetable-calendar.js','scripts/build-calendar.js','content/programme.json','tests/planning/**','.github/workflows/check-exams-redesign.yml']
 permissions:
   contents: read
 jobs:
@@ -26,10 +26,13 @@ jobs:
         run: |
           node tests/planning/exams-grouped.test.js
           node tests/planning/exams-workspace.test.js
-      - name: Check Cards, List and Month with fictional data
+          node tests/planning/exams-dedup.test.js
+      - name: Check all four views with fictional data
         env:
           EXAMS_SCREENSHOT_DIR: ${{ runner.temp }}/exams-previews
-        run: node tests/planning/exams-workspace-browser.test.js .
+        run: |
+          node tests/planning/exams-workspace-browser.test.js .
+          node tests/planning/exams-table-browser.test.js .
       - name: Check the existing planner regressions
         run: node tests/planning/browser.test.js .
       - name: Verify the published workspace (read-only)

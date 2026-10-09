@@ -8,24 +8,21 @@
 // Runs on GitHub Actions every few hours (see .github/workflows/update-calendar.yml).
 // Run it yourself with:  node scripts/build-calendar.js
 //
-// Note: the exam-page reading below mirrors exams.js (which runs in the browser).
-// If UniBo changes its exam page, both files need the same update.
+// The HTML reader mirrors unibo-data.js; sitting reconciliation and optional
+// published details are shared with that browser helper.
 
 const fs = require("fs");
 const path = require("path");
 
 const programmeRules = require("../programme.js");
+const uniboData = require("../unibo-data.js");
 const PROGRAMME_FILE = path.join(__dirname, "..", "content", "programme.json");
 
 const OUTPUT_DIR = path.join(__dirname, "..", "calendar");
 
-// Exams on the UniBo page have a start time but no end time
+// Most exam records publish a start time without an end time.
 const EXAM_HOURS = 2;
 
-const MONTHS = {
-  january: "01", february: "02", march: "03", april: "04", may: "05", june: "06",
-  july: "07", august: "08", september: "09", october: "10", november: "11", december: "12",
-};
 const TEST_TYPES = { scritto: "Written", orale: "Oral", pratico: "Practical" };
 
 // --- Small helpers ---
@@ -44,16 +41,6 @@ function htmlToText(html) {
     .replace(/&nbsp;/g, " ")
     .replace(/\s+/g, " ")
     .trim();
-}
-
-// "05 November 2026 at 09:00" -> { dateKey: "2026-11-05", time: "09:00" }
-function parseUniboDate(text) {
-  const match = text.match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})(?:\s+at\s+(\d{1,2}:\d{2}))?/);
-  if (!match) return null;
-  const [, day, monthName, year, time] = match;
-  const month = MONTHS[monthName.toLowerCase()];
-  if (!month) return null;
-  return { dateKey: `${year}-${month}-${day.padStart(2, "0")}`, time: time ? time.padStart(5, "0") : "" };
 }
 
 // --- Reading UniBo data ---
@@ -78,31 +65,34 @@ async function fetchTimetable(url) {
 async function fetchExams(url) {
   const response = await fetch(url);
   if (!response.ok) throw new Error(`Exams: HTTP ${response.status}`);
-  const html = await response.text();
+  return parseExamsHtml(await response.text());
+}
 
+function parseExamsHtml(html) {
   const exams = [];
   // Each course starts with <h3 ... role="tab"> and is followed by its exam tables
   const courseBlocks = html.split(/<h3[^>]*role="tab"[^>]*>/).slice(1);
   for (const block of courseBlocks) {
     const [headingHtml, panelHtml] = block.split("</h3>");
-    const code = (headingHtml.match(/<span class="code">([\s\S]*?)<\/span>/) || [])[1] || "";
+    const code = htmlToText((headingHtml.match(/<span class="code">([\s\S]*?)<\/span>/) || [])[1] || "").toUpperCase();
     const teacherHtml = (headingHtml.match(/<span class="docente">([\s\S]*?)<\/span>/) || [])[1] || "";
     const courseName = toTitleCase(
       htmlToText(headingHtml.replace(/<span class="(code|docente)">[\s\S]*?<\/span>/g, ""))
     );
     const teacher = teacherHtml ? toTitleCase(htmlToText(teacherHtml)) : "";
 
-    for (const tableHtml of (panelHtml || "").split('<table class="single-item">').slice(1)) {
+    const tables = [...(panelHtml || "").matchAll(/<table\b[^>]*class=["'][^"']*\bsingle-item\b[^"']*["'][^>]*>([\s\S]*?)<\/table>/gi)];
+    for (const [, tableHtml] of tables) {
       // Rows look like <th>Label</th><td>Value</td>
       const fields = {};
       for (const row of tableHtml.matchAll(/<th[^>]*>([\s\S]*?)<\/th>\s*<td[^>]*>([\s\S]*?)<\/td>/g)) {
         fields[htmlToText(row[1])] = row[2];
       }
-      const when = parseUniboDate(htmlToText(fields["When"] || ""));
+      const when = uniboData.parseUniboDate(htmlToText(fields["When"] || ""));
       if (!when) continue;
 
       const registrationDates = [...(fields["Subscriptions list:"] || "").matchAll(/<span>([^<]*)<\/span>/g)]
-        .map((m) => parseUniboDate(m[1]));
+        .map((m) => uniboData.parseUniboDate(m[1]));
       const component = htmlToText(fields["Componente:"] || "");
       const componentCode = (component.match(/^([A-Z0-9]+)\s*-/) || [])[1] || "";
       const componentName = component.split(" - ").pop().trim();
@@ -119,28 +109,19 @@ async function fetchExams(url) {
         teachers: teacher ? [teacher] : [],
         type: TEST_TYPES[typeText.toLowerCase()] || typeText,
         place: htmlToText(fields["Place:"] || ""),
+        registrationOpens: registrationDates[0]?.dateKey || "",
         registrationCloses: registrationDates[1]?.dateKey || "",
+        ...uniboData.examPublishedDetails(Object.fromEntries(Object.entries(fields)
+          .map(([label, value]) => [label, htmlToText(value)]))),
       });
     }
   }
   return exams;
 }
 
-// Same sitting (date + time + room) listed under several names -> one exam
+// Use the same conservative assessment aliases and conflict checks as the page.
 function mergeDuplicates(exams) {
-  const byKey = new Map();
-  for (const exam of exams) {
-    const key = [exam.dateKey, exam.time, exam.place.toLowerCase()].join("|");
-    const existing = byKey.get(key);
-    if (!existing) {
-      byKey.set(key, exam);
-      continue;
-    }
-    for (const name of exam.names) if (!existing.names.includes(name)) existing.names.push(name);
-    for (const code of exam.codes) if (!existing.codes.includes(code)) existing.codes.push(code);
-    for (const t of exam.teachers) if (!existing.teachers.includes(t)) existing.teachers.push(t);
-  }
-  return [...byKey.values()];
+  return uniboData.mergeExamSittings(exams);
 }
 
 // Keeps the exams of this term's courses (matched by official code) and names them from
@@ -205,15 +186,15 @@ function nextDayKey(dateKey) {
   return date.toISOString().slice(0, 10);
 }
 
-function addHours(isoLocal, hours) {
-  const date = new Date(isoLocal + "Z"); // treat as UTC only for the arithmetic
-  date.setUTCHours(date.getUTCHours() + hours);
-  return date.toISOString().slice(0, 19);
-}
-
 // Unique, stable event id so calendar apps update events instead of duplicating them
 function uid(text) {
   return text.replace(/[^A-Za-z0-9]+/g, "-") + "@eu-hem-student-hub";
+}
+
+// Keep independent components and conflicting published records independent in
+// calendar apps too, even when they share the same date, time and classroom.
+function examUid(exam, prefix) {
+  return prefix + "-" + uniboData.examSittingIdentity(exam) + "@eu-hem-student-hub";
 }
 
 // Italian time zone, so times show correctly for everyone
@@ -283,20 +264,24 @@ function buildCalendar(calendarName, sessions, exams, keyDates = []) {
 
   for (const exam of exams) {
     const title = exam.title;
-    const start = `${exam.dateKey}T${exam.time || "09:00"}:00`;
+    const timing = uniboData.examCalendarTimes(exam, EXAM_HOURS);
     const description = [
       exam.type && `Type: ${exam.type}`,
       exam.teachers.length && `Teacher: ${exam.teachers.join(", ")}`,
       exam.registrationCloses && `Registration closes: ${exam.registrationCloses}`,
-      `End time is an estimate (${EXAM_HOURS} h). Register on AlmaEsami.`,
+      exam.duration && `Published duration: ${exam.duration}`,
+      exam.notes && `Notes: ${exam.notes}`,
+      !exam.time && "Start time is a placeholder (09:00); confirm the time on UniBo.",
+      timing.estimated ? `End time is an estimate (${EXAM_HOURS} h). Register on AlmaEsami.` :
+        "End time is published by UniBo. Register on AlmaEsami.",
       "Source: official UniBo exam dates",
     ].filter(Boolean).join("\n");
     lines.push(
       "BEGIN:VEVENT",
-      `UID:${uid(`exam-${exam.dateKey}-${exam.time}-${exam.place}`)}`,
+      `UID:${examUid(exam, "exam")}`,
       DTSTAMP,
-      `DTSTART;TZID=Europe/Rome:${icsDateTime(start)}`,
-      `DTEND;TZID=Europe/Rome:${icsDateTime(addHours(start, EXAM_HOURS))}`,
+      `DTSTART;TZID=Europe/Rome:${icsDateTime(timing.start)}`,
+      `DTEND;TZID=Europe/Rome:${icsDateTime(timing.end)}`,
       `SUMMARY:${icsEscape("Exam: " + title)}`,
       `LOCATION:${icsEscape(exam.place)}`,
       `DESCRIPTION:${icsEscape(description)}`,
@@ -307,7 +292,7 @@ function buildCalendar(calendarName, sessions, exams, keyDates = []) {
     if (exam.registrationCloses) {
       lines.push(
         "BEGIN:VEVENT",
-        `UID:${uid(`registration-${exam.dateKey}-${exam.time}-${exam.place}`)}`,
+        `UID:${examUid(exam, "registration")}`,
         DTSTAMP,
         `DTSTART;VALUE=DATE:${icsDate(exam.registrationCloses)}`,
         `DTEND;VALUE=DATE:${icsDate(nextDayKey(exam.registrationCloses))}`,
@@ -374,7 +359,9 @@ async function main() {
   console.log(`${entries.length} calendars (${changed} changed): ${sessions.length} classes, ${exams.length} exams in the full calendar`);
 }
 
-main().catch((error) => {
+if (require.main === module) main().catch((error) => {
   console.error(error);
   process.exit(1); // marks the GitHub Actions run as failed, and the old calendar stays online
 });
+
+module.exports = { parseExamsHtml, mergeDuplicates, matchExamsToTerm, buildCalendar, examUid };

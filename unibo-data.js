@@ -44,12 +44,38 @@ async function fetchTimetable(url) {
 
 // "05 November 2026 at 09:00" -> { dateKey: "2026-11-05", time: "09:00" }
 function parseUniboDate(text) {
-  const match = text.match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})(?:\s+at\s+(\d{1,2}:\d{2}))?/);
+  const match = text.match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})(?:\s+at\s+(\d{1,2}:\d{2}))?/i);
   if (!match) return null;
   const [, day, monthName, year, time] = match;
   const month = EXAM_MONTHS[monthName.toLowerCase()];
   if (!month) return null;
-  return { dateKey: `${year}-${month}-${day.padStart(2, "0")}`, time: time || "" };
+  return { dateKey: `${year}-${month}-${day.padStart(2, "0")}`, time: time ? time.padStart(5, "0") : "" };
+}
+
+function examText(value) {
+  return String(value || "").normalize("NFC").replace(/\s+/g, " ").trim();
+}
+
+// Punctuation and spacing are presentational; numbers and words remain distinct.
+function normalizedExamText(value) {
+  return examText(value).toLowerCase().replace(/[\p{P}\p{S}]+/gu, " ").replace(/\s+/g, " ").trim();
+}
+
+// These fields are optional: an absent duration is never replaced with an estimate.
+// Both the browser and calendar reader use the same source-field interpretation.
+function examPublishedDetails(fields) {
+  const values = new Map(Object.entries(fields).map(([label, value]) =>
+    [normalizedExamText(label), examText(value)]));
+  const read = labels => labels.map(label => values.get(label)).find(Boolean) || "";
+  const when = read(["when"]);
+  const end = read(["end time", "ends at", "orario fine"]) ||
+    (when.match(/\bat\s+\d{1,2}:\d{2}\s*(?:[-–—]|until|to)\s*(\d{1,2}:\d{2})/i) || [])[1] || "";
+  const clock = end.match(/^(?:at\s+)?(\d{1,2}):([0-5]\d)$/i);
+  return {
+    duration: read(["duration", "exam duration", "test duration", "durata"]),
+    notes: read(["notes", "note", "remarks", "additional information", "avvertenze"]),
+    endTime: clock && Number(clock[1]) <= 23 ? `${clock[1].padStart(2, "0")}:${clock[2]}` : "",
+  };
 }
 
 // Reads the exam dates page. Each exam: { codes, names, dateKey, time, teachers, type, place, registration... }
@@ -59,12 +85,13 @@ function parseExamsPage(html) {
   const exams = [];
   for (const heading of page.querySelectorAll('h3[role="tab"]')) {
     const link = heading.querySelector("a");
+    if (!link) continue;
     const codeElement = link.querySelector(".code");
     const teacherElement = link.querySelector(".docente");
     let name = link.textContent;
     if (codeElement) name = name.replace(codeElement.textContent, "");
     if (teacherElement) name = name.replace(teacherElement.textContent, "");
-    const courseCode = codeElement ? codeElement.textContent.trim() : "";
+    const courseCode = codeElement ? examText(codeElement.textContent).toUpperCase() : "";
     const teacher = teacherElement ? toTitleCase(teacherElement.textContent) : "";
 
     const panel = page.getElementById(heading.getAttribute("aria-controls"));
@@ -85,10 +112,13 @@ function parseExamsPage(html) {
       const component = fields["Componente:"]?.textContent.replace(/\s+/g, " ").trim() || "";
       const componentCode = (component.match(/^([A-Z0-9]+)\s*-/) || [])[1] || "";
       const typeText = fields["Test type:"]?.textContent.trim() || "";
+      const details = examPublishedDetails(Object.fromEntries(Object.entries(fields)
+        .map(([label, cell]) => [label, cell.textContent])));
 
       exams.push({
         codes: [courseCode, componentCode].filter(Boolean),
-        names: [toTitleCase(name.replace(/\s+/g, " "))],
+        names: [toTitleCase(name.replace(/\s+/g, " ")), componentCode &&
+          toTitleCase(component.replace(/^[A-Z0-9]+\s*-\s*/, ""))].filter(Boolean),
         dateKey: when.dateKey,
         time: when.time,
         teachers: teacher ? [teacher] : [],
@@ -96,30 +126,90 @@ function parseExamsPage(html) {
         place: fields["Place:"]?.textContent.trim() || "",
         registrationOpens: opens?.dateKey || "",
         registrationCloses: closes?.dateKey || "",
+        ...details,
       });
     }
   }
   return mergeExamSittings(exams);
 }
 
-// UniBo lists one sitting several times (per module, per integrated course, per teacher).
-// Same date + time + room = one sitting.
+// UniBo may list the same assessment under its integrated course and its module.
+// Only an explicit parent/component relationship identifies those aliases. A
+// parent-only row stays separate if two compatible components are possible.
+// Booking, format, room or published-detail conflicts also remain separate.
 function mergeExamSittings(exams) {
-  const byKey = new Map();
-  for (const exam of exams) {
-    // Never collapse different course components merely because they share a room and time.
-    const assessmentCode = exam.codes[exam.codes.length - 1] || "unknown";
-    const key = [assessmentCode, exam.dateKey, exam.time, exam.place.toLowerCase(), exam.type || ""].join("|");
-    const existing = byKey.get(key);
-    if (!existing) {
-      byKey.set(key, exam);
-      continue;
+  const fields = ["place", "type", "registrationOpens", "registrationCloses", "duration", "endTime", "notes"];
+  const compatible = (a, b) => fields.every(field => !a[field] || !b[field] ||
+    normalizedExamText(a[field]) === normalizedExamText(b[field]));
+  const rows = exams.map(exam => {
+    const row = { ...exam };
+    for (const list of ["codes", "names", "teachers", "moduleCodes", "courseIds"]) {
+      if (!Array.isArray(exam[list]) && !["codes", "names", "teachers"].includes(list)) continue;
+      row[list] = [...new Map((exam[list] || []).filter(Boolean).map(value =>
+        [normalizedExamText(value), examText(value)])).values()];
     }
-    for (const list of ["codes", "names", "teachers"]) {
-      for (const value of exam[list]) if (!existing[list].includes(value)) existing[list].push(value);
-    }
+    row.codes = row.codes.map(code => code.toUpperCase());
+    for (const field of fields) row[field] = examText(exam[field]);
+    row.time = examText(exam.time).replace(/^(\d):/, "0$1:");
+    row.assessmentCode = examText(exam.assessmentCode || row.moduleCodes?.at(-1) || row.codes.at(-1)).toUpperCase();
+    return row;
+  });
+  const slots = new Map();
+  for (const row of rows) {
+    const key = `${row.dateKey}|${row.time}`;
+    if (!slots.has(key)) slots.set(key, []);
+    slots.get(key).push(row);
   }
-  return [...byKey.values()];
+  const result = [];
+  for (const slot of slots.values()) {
+    for (const row of slot) {
+      if (row.codes.length !== 1 || !row.assessmentCode) continue;
+      const components = new Set(slot.filter(other => other.codes.length > 1 &&
+        other.codes.slice(0, -1).includes(row.assessmentCode) && compatible(row, other))
+        .map(other => other.assessmentCode));
+      if (components.size === 1) row.assessmentCode = [...components][0];
+    }
+    // Inspect the full slot first: a partial row must not be assigned to one of
+    // two conflicting possibilities just because that possibility appears first.
+    const ambiguous = new Set(slot.filter(row => {
+      const matches = slot.filter(other => other.assessmentCode === row.assessmentCode && compatible(row, other));
+      return matches.some((a, index) => matches.slice(index + 1).some(b => !compatible(a, b)));
+    }));
+    // Prefer the richer source text when non-conflicting records are combined.
+    const ordered = [...slot].sort((a, b) => fields.filter(field => b[field]).length -
+      fields.filter(field => a[field]).length);
+    const merged = [];
+    for (const row of ordered) {
+      let candidates = row.assessmentCode ? merged.filter(other =>
+        other.assessmentCode === row.assessmentCode && compatible(row, other)) : [];
+      // Even an ambiguous incomplete record can have an exact duplicate of its
+      // own; remove that repeat without assigning it to either richer sitting.
+      const exact = candidates.filter(other => fields.every(field =>
+        normalizedExamText(row[field]) === normalizedExamText(other[field])));
+      if (exact.length === 1) candidates = exact;
+      else candidates = candidates.filter(other => !ambiguous.has(row) && !ambiguous.has(other));
+      if (candidates.length !== 1) {
+        merged.push(row);
+        continue;
+      }
+      const existing = candidates[0];
+      for (const list of ["codes", "names", "teachers", "moduleCodes", "courseIds"]) {
+        if (!row[list]) continue;
+        if (!existing[list]) existing[list] = [];
+        const values = new Set(existing[list].map(normalizedExamText));
+        for (const value of row[list]) if (!values.has(normalizedExamText(value))) {
+          existing[list].push(value);
+          values.add(normalizedExamText(value));
+        }
+      }
+      for (const field of fields) if (!existing[field] && row[field]) existing[field] = row[field];
+      if (existing.codes.includes(existing.assessmentCode)) {
+        existing.codes = existing.codes.filter(code => code !== existing.assessmentCode).concat(existing.assessmentCode);
+      }
+    }
+    result.push(...merged);
+  }
+  return result.sort((a, b) => (a.dateKey + a.time).localeCompare(b.dateKey + b.time));
 }
 
 async function fetchExams(url) {
@@ -253,21 +343,42 @@ function plusHours(isoLocal, hours) {
   return date.toISOString().slice(0, 19);
 }
 
+// Shared by single-event exports and generated subscriptions. Identity includes
+// the assessment and any conflicting published details, not just its room/time.
+function examSittingIdentity(exam) {
+  const assessment = exam.assessmentCode || exam.moduleCodes?.at(-1) || exam.codes?.at(-1) ||
+    exam.courseIds?.join("+") || exam.title || exam.names?.join("+") || "unknown";
+  return [assessment, exam.dateKey, exam.time, exam.place, exam.type,
+    exam.registrationOpens, exam.registrationCloses, exam.duration, exam.endTime, exam.notes]
+    // Encode fields separately so empty values and room/type boundaries stay distinct.
+    .map(value => encodeURIComponent(normalizedExamText(value))).join("--");
+}
+
+function examCalendarTimes(exam, estimatedHours = 2) {
+  const start = `${exam.dateKey}T${exam.time || "09:00"}:00`;
+  const validClock = value => /^([01]\d|2[0-3]):[0-5]\d$/.test(value || "");
+  const publishedEnd = validClock(exam.time) && validClock(exam.endTime) && exam.endTime > exam.time;
+  return { start, end: publishedEnd ? `${exam.dateKey}T${exam.endTime}:00` : plusHours(start, estimatedHours),
+    estimated: !publishedEnd };
+}
+
 function examActions(exam, today = todayKey()) {
   const row = createElement("div", "item-actions");
   if (exam.place) row.appendChild(iconButton("Map", "map-pin", { href: mapUrl(`${exam.place}, Bologna`), ariaLabel: `Map: ${exam.place}` }));
-  const start = `${exam.dateKey}T${exam.time || "09:00"}:00`;
+  const timing = examCalendarTimes(exam);
   row.appendChild(iconButton("Add exam", "plus", {
     ariaLabel: `Add exam: ${exam.title}`,
     onClick: () => downloadEvent({
-      uid: `exam-${exam.dateKey}-${exam.time}-${exam.place}`,
+      uid: `exam-${examSittingIdentity(exam)}`,
       title: `Exam: ${exam.title}`,
-      start,
-      end: plusHours(start, 2),
+      start: timing.start,
+      end: timing.end,
       location: exam.place,
       description: [exam.type && `Type: ${exam.type}`, exam.teachers.join(", "),
+        exam.duration && `Published duration: ${exam.duration}`, exam.notes && `Notes: ${exam.notes}`,
         !exam.time && "Start time is a placeholder (09:00); confirm the time on UniBo.",
-        "End time is an estimate. Register on AlmaEsami."].filter(Boolean).join("\n"),
+        timing.estimated ? "End time is an estimate. Register on AlmaEsami." :
+          "End time is published by UniBo. Register on AlmaEsami."].filter(Boolean).join("\n"),
     }),
   }));
   if (exam.registrationCloses && exam.registrationCloses >= today) {
@@ -277,7 +388,7 @@ function examActions(exam, today = todayKey()) {
         const next = new Date(exam.registrationCloses + "T12:00:00");
         next.setDate(next.getDate() + 1);
         downloadEvent({
-          uid: `registration-${exam.dateKey}-${exam.time}-${exam.place}`,
+          uid: `registration-${examSittingIdentity(exam)}`,
           title: `Last day to register: ${exam.title}`,
           start: exam.registrationCloses,
           end: dateToKey(next),
@@ -347,4 +458,8 @@ function layoutDay(sessions) {
   return placed;
 }
 
-if (typeof module !== "undefined") module.exports = { nowAndNext, weekStartOf, layoutDay, hourOf, plusHours };
+if (typeof module !== "undefined") module.exports = {
+  nowAndNext, weekStartOf, layoutDay, hourOf, plusHours,
+  parseUniboDate, examPublishedDetails, mergeExamSittings,
+  examSittingIdentity, examCalendarTimes,
+};

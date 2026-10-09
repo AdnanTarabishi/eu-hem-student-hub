@@ -1,4 +1,4 @@
-// Exams workspace: one source-backed collection, three views, no invented
+// Exams workspace: one source-backed collection, four views, no invented
 // attempts. UI choices stay in memory; only existing study-plan preferences persist.
 const examList = document.getElementById("exam-list");
 const examStatus = document.getElementById("exam-status");
@@ -9,7 +9,7 @@ const examReset = document.getElementById("exam-reset");
 const ALMAESAMI_URL = "https://almaesami.unibo.it/almaesami/welcome.htm";
 const examsPage = {
   programme: null, exams: [], loaded: false, loading: false, scopeSwitch: null,
-  view: "cards", month: Planner.clock().slice(0, 7), day: "", calendarFocus: "",
+  view: "list", month: Planner.clock().slice(0, 7), day: "", calendarFocus: "",
   studies: {}, studyStarted: false, openDetails: new Set(),
   clockSignature: "", clockRefreshPending: false, feedFailed: false,
 };
@@ -53,7 +53,7 @@ function filteredExams(now = Planner.clock(), includePast = false) {
     if (mine && !exam.codes.some(code => mine.has(code))) return false;
     if (examCourseFilter.value && !exam.courseIds.includes(examCourseFilter.value)) return false;
     if (examRegistrationFilter.value && Planner.registration(exam, now.slice(0,10)).key !== examRegistrationFilter.value) return false;
-    const words = [exam.title, exam.partOf, exam.place, ...exam.teachers,
+    const words = [exam.title, exam.partOf, exam.place, exam.notes, ...exam.teachers,
       exam.administrative ? "administrative recording Pass/Fail no final exam" : ""].join(" ");
     return !query || simplify(words).includes(query);
   });
@@ -113,6 +113,13 @@ function adminActions(exam) {
   add.setAttribute("aria-label", `Add recording reminder: ${exam.title}`);
   actions.appendChild(add); return actions;
 }
+function sittingActions(exam, today) {
+  const reg = Planner.registration(exam, today);
+  const actions = exam.administrative ? adminActions(exam) : examActions(exam, today);
+  if (reg.key === "open" || reg.key === "unknown") actions.prepend(link(
+    reg.key === "open" ? "Register on AlmaEsami" : "Check AlmaEsami", ALMAESAMI_URL, "exam-booking-link", true));
+  return actions;
+}
 function examCard(exam, today) {
   const card = el("article", "exam-card");
   const reg = Planner.registration(exam, today), past = !Planner.upcomingExam(exam, Planner.clock());
@@ -132,19 +139,18 @@ function examCard(exam, today) {
   if (exam.administrative) body.appendChild(el("p", "exam-no-final", "No final exam · enrolment required for recording"));
   else if (exam.place) body.appendChild(el("p", "exam-room", exam.place));
   body.appendChild(registrationWindow(exam, today));
-  const extra = disclosure("Details & booking", `sitting-${exam.courseIds[0]}-${exam.moduleCodes.join("+")}-${exam.dateKey}-${exam.time}`, "exam-sitting-details");
+  const detailKey = JSON.stringify([exam.courseIds, exam.moduleCodes, exam.dateKey, exam.time,
+    exam.place, exam.type, exam.registrationOpens, exam.registrationCloses, exam.duration, exam.notes]);
+  const extra = disclosure("Details & booking", `sitting-${detailKey}`, "exam-sitting-details");
   const meta = el("p", "exam-meta-text", [exam.time ? "Bologna time (Europe/Rome)" : "Time not listed",
     exam.administrative ? "No final examination" : exam.place || "Room not listed", ...exam.teachers].join(" · "));
   extra.appendChild(meta);
+  if (exam.duration && !exam.administrative) extra.appendChild(el("p", "exam-meta-text", `Published duration: ${exam.duration}`));
+  if (exam.notes) extra.appendChild(el("p", "exam-meta-text", exam.notes));
   const windowText = [exam.registrationOpens && `Opens ${fullDate(exam.registrationOpens)}`,
     exam.registrationCloses && `Closes ${fullDate(exam.registrationCloses)}`].filter(Boolean).join(" · ");
   if (windowText) extra.appendChild(el("p", "exam-registration-dates", windowText));
-  if (!past) {
-    const actions = exam.administrative ? adminActions(exam) : examActions(exam, today);
-    if (reg.key === "open" || reg.key === "unknown") actions.prepend(link(
-      reg.key === "open" ? "Register on AlmaEsami" : "Check AlmaEsami", ALMAESAMI_URL, "exam-booking-link", true));
-    extra.appendChild(actions);
-  }
+  if (!past) extra.appendChild(sittingActions(exam, today));
   extra.appendChild(el("p", "exams-source", exam.origin === "lecturer" ? "Date: lecturer email · not independently confirmed in the current UniBo feed" : "Date & booking window: UniBo · confirm on AlmaEsami"));
   body.appendChild(extra); card.append(date, body); return card;
 }
@@ -160,21 +166,26 @@ function studyActions(course, exams) {
   return box;
 }
 function renderCourseSittings(exams, today) {
-  for (const group of ExamWorkspace.groups(exams)) {
+  const listView = examsPage.view === "list";
+  const groups = ExamWorkspace.groups(exams).sort((a, b) => ExamWorkspace.sort(a.exams[0], b.exams[0]));
+  for (const group of groups) {
     const course = courseFor(group.courseId); if (!course) continue;
     const wrapper = el("section", "exam-course-group"); wrapper.dataset.course = course.id;
     if (group.exams.every(exam => exam.administrative)) wrapper.classList.add("is-administrative");
     const heading = el("header", "exam-course-group-head"), identity = el("div");
     const top = el("p", "exam-course-eyebrow", `${course.code} · ${course.integrated ? "Integrated course" : group.exams[0].administrative ? "Administrative registration" : "Course assessment"}`);
     const title = el("h3"); title.appendChild(link(course.name, coursePageLink(group.exams[0])));
-    identity.append(top, title, el("p", "exam-course-group-note", `${group.exams.length} published date${group.exams.length === 1 ? "" : "s"}${course.integrated ? " · Modules listed separately" : ""}`));
+    identity.append(top, title, el("p", "exam-course-group-note", `${group.exams.length} published date${group.exams.length === 1 ? "" : "s"}${listView ? " · Nearest date first" : ""}${course.integrated ? " · Separate module assessments" : ""}`));
     heading.append(identity, studyActions(course, group.exams)); wrapper.appendChild(heading);
     const dates = el("div", "exam-course-dates");
-    for (const [key, sittings] of group.modules) {
+    // The default List shows one nearest date for the entire course. Other module
+    // assessments remain available in the same course disclosure, in date order.
+    const assessments = listView ? [["course", group.exams]] : group.modules;
+    for (const [key, sittings] of assessments) {
       const block = el("div", "exam-module-group");
       block.appendChild(examCard(sittings[0], today));
       if (sittings.length > 1) {
-        const details = disclosure(`${sittings.length - 1} more date${sittings.length === 2 ? "" : "s"} for this assessment`, `more-${course.id}-${key}`, "exam-more-sittings");
+        const details = disclosure(`${sittings.length - 1} more date${sittings.length === 2 ? "" : "s"} for this ${listView ? "course" : "assessment"}`, `more-${course.id}-${key}`, "exam-more-sittings");
         for (const sitting of sittings.slice(1)) details.appendChild(examCard(sitting, today));
         block.appendChild(details);
       }
@@ -184,6 +195,53 @@ function renderCourseSittings(exams, today) {
     if (admin) dates.appendChild(adminInstructions(course, admin));
     wrapper.appendChild(dates); examList.appendChild(wrapper);
   }
+}
+function renderExamTable(exams, today) {
+  const scroll = el("div", "exam-table-scroll");
+  scroll.tabIndex = 0;
+  scroll.setAttribute("role", "region");
+  scroll.setAttribute("aria-labelledby", "exam-table-title");
+  scroll.setAttribute("aria-describedby", "exam-table-help");
+  const help = el("p", "exam-table-help", "Scroll across to compare all columns. The course column stays visible. Duration is shown only when published.");
+  help.id = "exam-table-help";
+  const table = el("table", "exam-table");
+  const caption = el("caption", null, "Upcoming exam dates · Bologna time (Europe/Rome)");
+  caption.id = "exam-table-title";
+  const head = el("thead"), headings = el("tr");
+  for (const label of ["Course", "Teacher", "Date", "Time (Bologna)", "Duration", "Location", "Format", "Notes", "Registration", "Actions"]) {
+    const th = el("th", null, label); th.scope = "col"; headings.appendChild(th);
+  }
+  head.appendChild(headings);
+  const body = el("tbody");
+  for (const exam of [...exams].sort(ExamWorkspace.sort)) {
+    const course = courseFor(exam.courseIds[0]);
+    const row = el("tr");
+    row.dataset.course = exam.courseIds[0]; row.dataset.date = exam.dateKey;
+    row.dataset.kind = exam.administrative ? "administrative" : "exam";
+    const name = el("th"); name.scope = "row";
+    name.appendChild(link(course?.name || exam.title, coursePageLink(exam), "exam-table-course"));
+    if (course && course.name !== exam.title) name.appendChild(el("span", "exam-table-module", exam.title));
+    if (exam.administrative) name.appendChild(el("span", "exam-table-admin", "Administrative recording"));
+    const teacher = el("td", null, exam.teachers.length ? exam.teachers.join(", ") : "Not listed");
+    const dateCell = el("td"), date = el("time", null, fullDate(exam.dateKey)); date.dateTime = exam.dateKey;
+    dateCell.append(date, el("span", "exam-table-subtext", countdownText(exam.dateKey, today)));
+    const time = el("td", null, exam.time || "Not listed");
+    const duration = el("td", null, exam.administrative ? "Not applicable" : exam.duration || "Not published");
+    const place = el("td", null, exam.place || "Not listed");
+    const format = el("td", null, exam.administrative ? "Pass/Fail recording" : exam.type || "Not listed");
+    const notes = el("td");
+    notes.appendChild(el("p", null, exam.notes || (exam.administrative ? "No final exam · enrolment required for recording" : "No notes published")));
+    notes.appendChild(el("span", "exam-table-subtext", exam.origin === "lecturer" ? "Lecturer guidance · confirm current details" : "Source: UniBo · confirm on AlmaEsami"));
+    if (exam.administrative && exam.notice && course) notes.appendChild(adminInstructions(course, exam));
+    const registration = el("td"); registration.appendChild(registrationWindow(exam, today));
+    const window = [exam.registrationOpens && `Opens ${fullDate(exam.registrationOpens)}`,
+      exam.registrationCloses && `Closes ${fullDate(exam.registrationCloses)}`].filter(Boolean).join(" · ");
+    if (window) registration.appendChild(el("span", "exam-table-subtext", window));
+    const actions = el("td"); actions.appendChild(sittingActions(exam, today));
+    row.append(name, teacher, dateCell, time, duration, place, format, notes, registration, actions);
+    body.appendChild(row);
+  }
+  table.append(caption, head, body); scroll.appendChild(table); examList.append(help, scroll);
 }
 function renderExamHighlight(exams, today) {
   const target = document.getElementById("exam-highlight");
@@ -287,7 +345,10 @@ function render() {
   document.getElementById("exam-clear-day").hidden=!(monthView&&examsPage.day);
   examReset.disabled=!(examCourseFilter.value||examRegistrationFilter.value||examSearch.value||examsPage.day);
   examList.replaceChildren();
-  if(displayed.length) renderCourseSittings(displayed,today);
+  if(displayed.length) {
+    if (examsPage.view === "table") renderExamTable(displayed, today);
+    else renderCourseSittings(displayed,today);
+  }
   else Planner.empty(examList,{title:monthView?"No dates listed for this selection":"No upcoming dates to show",
     text:monthView?"Try another day or month, or clear the course and registration filters. No published date is not a guarantee of no exam.":"Adjust your filters or study-plan selection, or check the official dates. New sittings may be published later.",
     onReset:examReset.disabled?null:resetExamFilters,source:document.getElementById("exams-source").href});

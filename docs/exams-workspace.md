@@ -1,15 +1,40 @@
 # Exams workspace
 
 `exams.html`, `exams.js` and `exams-guide.css` present the same course-matched
-UniBo collection in three views: two-column **Cards**, compact **List**, and
-**Month**. `exams-workspace.js` contains pure source reconciliation, grouping and
+UniBo collection in four views: **List** (default), two-column **Cards**, **Month**
+and **Table**. `exams-workspace.js` contains pure source reconciliation, grouping and
 study-link helpers. The existing `timetable-calendar.js` supplies date arithmetic.
 
 The explanation of appelli is a native disclosure, closed by default, and works
-without JavaScript. A course group contains each module's next available date;
-additional published dates and booking details expand in place. These are not
+without JavaScript. List orders courses by their nearest upcoming date and shows
+one date per course. Its arrow disclosure reveals the remaining dates, including
+other module assessments, in chronological order. Cards and Month retain the
+next available date for each module. Additional dates and booking details expand
+in place. These are not
 labelled as the student's personal attempts. Disclosure state survives a view or
 filter change in the same page. No additional browser storage or tracking is used.
+
+## Source aliases and the comparison table
+
+The UniBo page can list the same sitting under an integrated course, an explicit
+component and a standalone module. Matching aliases are reconciled before display;
+different courses, module assessments and times remain distinct. Whitespace and
+equivalent punctuation in published details do not create extra dates. Conflicting
+published booking windows or assessment details are retained for confirmation.
+
+Table shows one row per unique upcoming sitting, ordered by date and time. Columns
+include the course/assessment, teacher, date, Bologna time, duration, location,
+format, source notes, booking window and calendar/booking actions. Published notes
+also participate in the shared text search. Missing duration is **Not published**;
+administrative recording is **Not applicable**. The two-hour estimate used by an
+existing exam calendar download is not presented as an official duration.
+Single-exam downloads and generated calendar subscriptions share the same
+assessment identity and duplicate checks. A published end time is used when
+available; otherwise the existing two-hour estimate remains explicitly labelled.
+
+The table scrolls within its own keyboard-focusable region on narrow screens;
+the course column stays visible. It preserves the same filters and source labels
+as the other views. Native disclosures still expose administrative guidance.
 
 ## One administrative card, not a second banner
 
@@ -62,9 +87,14 @@ page and Notes fallback remain available without JavaScript.
 
 - `node tests/planning/exams-workspace.test.js` — date validation, notice matching,
   non-mutation, component grouping, content-aware study routes and date boundaries.
+- `node tests/planning/exams-dedup.test.js` — source aliases, exact repeats,
+  conflicting details, shared calendar identities and published end times.
 - `node tests/planning/exams-workspace-browser.test.js .` — disclosures, views,
   calendar selection/keyboard access, filtering, saved-plan scope, source failure,
   truthful calendar exports and responsive light/dark rendering with fictional feeds.
+- `node tests/planning/exams-table-browser.test.js .` — default nearest-date List,
+  duplicate source aliases, all four views, published/missing table details, shared
+  filters and keyboard-accessible scrolling in both themes.
 - `node tests/planning/browser.test.js .` — the existing planner regression, with
   ordinary exam fixtures separated from the dedicated administrative-date tests.
 - `node scripts/check-content.js`, `node scripts/check-contrast.js`, and
