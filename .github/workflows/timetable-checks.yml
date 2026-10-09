@@ -1,0 +1,55 @@
+name: Check timetable workspace
+on:
+  pull_request:
+    paths:
+      - 'timetable*'
+      - 'planning*'
+      - 'unibo-data.js'
+      - 'tests/planning/**'
+      - '.github/workflows/timetable-checks.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'timetable*'
+      - 'tests/planning/**'
+      - '.github/workflows/timetable-checks.yml'
+permissions:
+  contents: read
+jobs:
+  timetable:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Check content, design tokens and calendar arithmetic
+        run: |
+          node scripts/check-content.js
+          node scripts/check-contrast.js
+          node tests/planning/calendar.test.js
+          node tests/notes/schedule.test.js
+      - name: Check existing timetable and exam behaviour
+        run: node tests/planning/browser.test.js .
+      - name: Check monthly calendar, Day view and teacher visibility
+        run: node tests/planning/timetable-v2.test.js .
+        env:
+          PLANNING_SCREENSHOT_DIR: ${{ runner.temp }}/timetable-previews
+      - name: Inspect published timetable after deployment
+        if: github.event_name == 'push'
+        run: node tests/planning/live-timetable.test.js
+        env:
+          PLANNING_SCREENSHOT_DIR: ${{ runner.temp }}/timetable-live
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: timetable-previews
+          path: |
+            ${{ runner.temp }}/timetable-previews
+            ${{ runner.temp }}/timetable-live
+          retention-days: 7
+          if-no-files-found: ignore
