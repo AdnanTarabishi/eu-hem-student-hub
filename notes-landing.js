@@ -168,7 +168,7 @@ function renderStudyFocus() {
   const streak = currentStreak(progress.activity, today);
   box.replaceChildren();
   box.setAttribute("aria-busy", "false");
-  box.appendChild(createElement("p", "section-eyebrow", "A little progress, every day"));
+  box.appendChild(createElement("p", "section-eyebrow", "YOUR NEXT STEP"));
   box.appendChild(createElement("h2", null, studied ? "Keep the momentum." : "A good place to start."));
   const overview = createElement("div", "notes-focus-overview");
   const ring = createElement("div", "notes-focus-ring");
@@ -245,7 +245,7 @@ function officialExamLink(label = "Check UniBo", className = "notes-exam-link") 
 function teachingDates(course, today) {
   const section = createElement("section", "notes-course-dates");
   section.setAttribute("aria-label", `Teaching dates for ${course.info.name}`);
-  const head = createElement("h4", "notes-card-section-title", course.info.integrated ? "Teaching blocks" : "Teaching dates");
+  const head = createElement("h5", "notes-card-section-title", course.info.integrated ? "Teaching blocks" : "Teaching dates");
   head.prepend(landingIcon("calendar"));
   section.appendChild(head);
   for (const { info, key } of courseTeachingStatus(course, today).modules) {
@@ -282,7 +282,7 @@ function fillCourseExam(box, course) {
   box.replaceChildren();
   box.classList.toggle("has-exam", !!exam);
   box.setAttribute("aria-busy", String(landingExamState.refreshing && !landingExamState.source));
-  const head = createElement("h4", "notes-card-section-title", "Next exam");
+  const head = createElement("h5", "notes-card-section-title", "Next exam");
   head.prepend(landingIcon("exams"));
   box.appendChild(head);
   if (exam) {
@@ -328,9 +328,12 @@ function buildSemesterOverview() {
     title.prepend(landingIcon(icon));
     button.append(title, createElement("strong", "notes-overview-value"), createElement("span", "notes-overview-detail"));
     button.addEventListener("click", () => {
+      clearLandingSearch();
       courseFilters.status = courseFilters.status === key ? "" : key;
-      document.querySelector(".notes-status-filter select").value = courseFilters.status;
-      renderCourseGrid();
+      const select = document.querySelector(".notes-status-filter select");
+      if (select) { select.value = courseFilters.status; renderCourseGrid(); }
+      else { showLandingTab("courses", true); }
+      document.getElementById("study-library").scrollIntoView({ block: "start" });
     });
     box.appendChild(button);
   }
@@ -365,6 +368,10 @@ function updateLandingExamUI() {
   for (const box of document.querySelectorAll("[data-course-exam]")) {
     const course = landingData.courses.find(c => c.id === box.dataset.courseExam);
     if (course) fillCourseExam(box, course);
+  }
+  for (const peek of document.querySelectorAll("[data-exam-peek]")) {
+    const exam = NotesSchedule.nextExam(landingExamState.exams, peek.dataset.examPeek, NotesSchedule.clock());
+    peek.textContent = exam ? `${landingDate(exam.dateKey)}${landingExamState.source === "calendar" ? " · calendar copy" : ""}` : "View details";
   }
   const status = document.getElementById("notes-exam-feed-status");
   if (status) {
@@ -473,7 +480,7 @@ function courseCard(course, index, progress, today, myCodes) {
   });
   head.appendChild(save);
   card.appendChild(head);
-  const title = createElement("h3");
+  const title = createElement("h4", "notes-course-heading");
   title.id = `course-title-${course.id}`;
   title.appendChild(landingLink(info.name + (info.integrated ? " (I.C.)" : ""), courseUrl(course.id), "course-card-title"));
   card.appendChild(title);
@@ -492,8 +499,7 @@ function courseCard(course, index, progress, today, myCodes) {
   const samples = [...course.flashcards, ...course.questions, ...course.resources].some((i) => i.sample);
   if (samples) badges.appendChild(sampleTag());
   card.appendChild(badges);
-  card.appendChild(teachingDates(course, today));
-  card.appendChild(courseExamDetails(course));
+
 
   if (total) {
     const materials = createElement("div", "notes-course-materials");
@@ -530,11 +536,20 @@ function courseCard(course, index, progress, today, myCodes) {
   open.appendChild(landingIcon("arrow-right"));
   bottom.appendChild(open);
   card.appendChild(bottom);
+  // Keep planning detail available without making every course a wall of dates.
+  const planning = createElement("details", "notes-course-planning");
+  const summary = createElement("summary");
+  summary.append(landingIcon("calendar"), createElement("span", null, "Dates & next exam"));
+  const peek = createElement("span", "notes-exam-peek");
+  peek.dataset.examPeek = course.id;
+  summary.appendChild(peek);
+  planning.append(summary, teachingDates(course, today), courseExamDetails(course));
+  card.appendChild(planning);
   return card;
 }
 
 function renderCourseList() {
-  landingContent.appendChild(buildSemesterOverview());
+  document.getElementById("notes-semester-slot").replaceChildren(buildSemesterOverview());
   const toolbar = createElement("div", "notes-toolbar");
   const filters = createElement("div", "notes-type-filters");
   filters.setAttribute("role", "group");
@@ -615,10 +630,9 @@ function renderCourseList() {
   refresh.addEventListener("click", loadLandingExams);
   feedActions.appendChild(refresh);
   examFeed.appendChild(feedActions);
-  landingContent.appendChild(examFeed);
   const results = createElement("div");
   results.id = "notes-course-results";
-  landingContent.appendChild(results);
+  landingContent.append(results, examFeed);
   renderCourseGrid();
   updateLandingExamUI();
 }
@@ -657,28 +671,36 @@ function renderCourseGrid() {
     return;
   }
   const groups = [
-    { key: "now", title: "Teaching now", icon: "book", description: "Your current courses. Dates are shown for each teaching block." },
-    { key: "upcoming", title: "Coming up", icon: "calendar", description: "Your next courses and returning modules, ordered by their next start date." },
-    { key: "finished", title: "Teaching completed", icon: "check", description: "Classes have finished. Exams and revision may still be ahead." },
+    { key: "now", title: "Teaching now", icon: "book", description: "Pick up a topic from your current teaching blocks." },
+    { key: "upcoming", title: "Coming up", icon: "calendar", description: "Get familiar with your next courses and returning modules." },
+    { key: "finished", title: "Teaching completed", icon: "check", description: "Teaching has ended; keep these materials close for revision." },
     { key: "other", title: "Dates to confirm", icon: "info", description: "Teaching dates have not yet been confirmed for these courses." },
   ];
   for (const group of groups) {
     const members = matches.filter(({ course }) => courseTeachingStatus(course, today).key === group.key)
       .sort((a, b) => courseTeachingStatus(a.course, today).nextDate.localeCompare(courseTeachingStatus(b.course, today).nextDate) || a.course.info.name.localeCompare(b.course.info.name));
     if (members.length === 0) continue;
-    const section = createElement("section", `notes-teaching-group notes-group-${group.key}`);
+    // Overview-only courses remain discoverable, without crowding out ready-to-use study material.
+    const overviewOnly = !courseFilters.status && members.every(({ counts }) => !Object.values(counts).some(Boolean));
+    const section = createElement(overviewOnly ? "details" : "section", `notes-teaching-group notes-group-${group.key}${overviewOnly ? " notes-overview-group" : ""}`);
     section.dataset.teachingGroup = group.key;
     const title = createElement("h3", "course-group-title", group.title);
     title.id = `notes-group-${group.key}`;
     title.prepend(landingIcon(group.icon));
     title.appendChild(createElement("span", "notes-group-count", String(members.length)));
     section.setAttribute("aria-labelledby", title.id);
-    section.append(title, createElement("p", "notes-group-description", group.description));
+    if (overviewOnly) {
+      const summary = createElement("summary");
+      summary.appendChild(title);
+      section.appendChild(summary);
+    } else section.appendChild(title);
+    section.appendChild(createElement("p", "notes-group-description", group.description));
     const list = createElement("div", `course-list${courseView === "list" ? " is-list-view" : ""}`);
     for (const { course, index } of members) list.appendChild(courseCard(course, index, progress, today, myCodes));
     section.appendChild(list);
     results.appendChild(section);
   }
+  updateLandingExamUI();
 }
 
 
@@ -714,7 +736,22 @@ function renderGlossary() {
     if (concept.topics && concept.topics.length) card.appendChild(where);
     list.appendChild(card);
   }
-  box.appendChild(list);
+  const filter = createElement("input", "notes-concept-filter");
+  filter.type = "search";
+  filter.placeholder = "Find a term in the glossary…";
+  filter.setAttribute("aria-label", "Filter key concepts");
+  const count = createElement("p", "schedule-meta", plural(concepts.length, "concept"));
+  count.setAttribute("role", "status");
+  filter.addEventListener("input", () => {
+    const query = simplify(filter.value.trim());
+    let visible = 0;
+    for (const card of list.children) {
+      card.hidden = !simplify(card.textContent).includes(query);
+      if (!card.hidden) visible++;
+    }
+    count.textContent = visible ? `${plural(visible, "concept")} shown` : "No concepts match. Try a different term.";
+  });
+  box.append(filter, count, list);
   landingContent.appendChild(box);
   typesetMath(box);
 }
@@ -833,8 +870,12 @@ function renderStudyList() {
 
   const saved = getStudyList();
   if (saved.length === 0) {
-    box.appendChild(createElement("p", "placeholder",
-      "Nothing saved yet. Use ☆ Save on courses, topics, flashcards, questions, concepts and resources."));
+    const empty = createElement("div", "notes-empty-state");
+    empty.append(landingIcon("bookmark"), createElement("h4", null, "Your next study session, collected."), createElement("p", null, "Save a course with its bookmark button, or save individual notes, questions and concepts as you explore."));
+    const browse = landingLink("Browse courses", "notes.html", "button notes-primary");
+    browse.addEventListener("click", event => { event.preventDefault(); showLandingTab("courses", true); document.getElementById("notes-tab-courses").focus(); });
+    empty.appendChild(browse);
+    box.appendChild(empty);
     landingContent.appendChild(box);
     return;
   }
@@ -871,8 +912,8 @@ function renderStudyList() {
 
 // ----- Search -----
 
-const SEARCH_GROUPS = ["topic", "concept", "flashcard", "question", "resource"];
-const SEARCH_GROUP_LABELS = { topic: "Notes", concept: "Key concepts", flashcard: "Flashcards", question: "Questions", resource: "Resources" };
+const SEARCH_GROUPS = ["course", "lecture", "topic", "concept", "flashcard", "question", "resource"];
+const SEARCH_GROUP_LABELS = { course: "Courses", lecture: "Interactive lessons", topic: "Notes", concept: "Key concepts", flashcard: "Flashcards", question: "Questions", resource: "Resources" };
 
 async function ensureSearchIndex() {
   if (searchEntries) return;
@@ -887,7 +928,17 @@ async function ensureSearchIndex() {
     }
   }
   await Promise.all(jobs);
-  searchEntries = buildSearchIndex(landingData, notesByTopic);
+  // Course names/codes and lessons without a Markdown note were missing from search.
+  // Extend this landing page only; other course readers keep their shared API unchanged.
+  const extra = [];
+  for (const course of landingData.courses) {
+    extra.push({ id: course.id, type: "course", title: course.info.name, text: `${course.info.code} · ${course.info.cfu} CFU · ${course.info.modules.map(m => m.name).join(" · ")}`, courseTitle: "", courseId: course.id });
+    for (const topic of course.topics.filter(t => t.lecture && !t.notes)) {
+      extra.push({ id: topic.id, type: "lecture", title: topic.title, text: "Interactive student-made lesson", courseTitle: course.info.name, courseId: course.id });
+    }
+  }
+  searchEntries = [...extra, ...buildSearchIndex(landingData, notesByTopic)];
+  for (const entry of searchEntries) entry.searchable = simplify(`${entry.title} ${entry.text} ${entry.courseTitle || ""}`);
   })();
   try { await searchIndexPromise; }
   finally { searchIndexPromise = null; }
@@ -936,7 +987,11 @@ function showResults(results, query) {
     results.length ? `${plural(results.length, "result")} for “${query}”` : `No results for “${query}”`));
   document.getElementById("search-announcement").textContent = `${plural(visible.length, "result")} for ${query}`;
   if (results.length === 0) {
-    searchResults.appendChild(createElement("p", "placeholder", "Try fewer or different words. Press Esc to clear the search."));
+    searchResults.appendChild(createElement("p", "placeholder", "Try a course name, a course code or fewer words. Press Esc to clear the search."));
+    const browse = createElement("button", "button button-secondary", "Back to the library");
+    browse.type = "button";
+    browse.addEventListener("click", () => { clearLandingSearch(); searchBox.focus(); });
+    searchResults.appendChild(browse);
     return;
   }
   searchResults.appendChild(filterChips(results, query));
@@ -946,7 +1001,7 @@ function showResults(results, query) {
     if (group.length === 0) continue;
     searchResults.appendChild(createElement("h4", "search-group", `${SEARCH_GROUP_LABELS[type]} (${group.length})`));
     const list = createElement("ul", "search-list");
-    for (const result of group) {
+    const appendResult = (result) => {
       const item = createElement("li");
       const link = createElement("a", "search-title");
       link.href = itemUrl(result.id, landingData);
@@ -957,8 +1012,26 @@ function showResults(results, query) {
       snippet.appendChild(highlightMatches(searchSnippet(result, query), query));
       item.appendChild(snippet);
       list.appendChild(item);
-    }
+    };
+    let shown = Math.min(8, group.length);
+    group.slice(0, shown).forEach(appendResult);
     searchResults.appendChild(list);
+    if (shown < group.length) {
+      const more = createElement("button", "button button-secondary notes-more-results");
+      more.type = "button";
+      const label = () => { more.textContent = `Show more ${SEARCH_GROUP_LABELS[type].toLowerCase()} (${group.length - shown} remaining)`; };
+      label();
+      more.addEventListener("click", () => {
+        const first = shown;
+        const batch = group.slice(shown, shown + 12);
+        batch.forEach(appendResult);
+        shown += batch.length;
+        document.getElementById("search-announcement").textContent = `${shown} of ${group.length} ${SEARCH_GROUP_LABELS[type].toLowerCase()} shown`;
+        if (shown === group.length) more.remove(); else label();
+        list.children[first].querySelector("a").focus();
+      });
+      searchResults.appendChild(more);
+    }
   }
 }
 
@@ -1024,6 +1097,8 @@ document.addEventListener("keydown", (event) => {
 async function initLanding() {
   try {
     landingData = await loadAll();
+    const termLabel = document.getElementById("notes-term-label");
+    if (termLabel) termLabel.textContent = `Year ${landingData.term.year} · ${landingData.cohort.id.replace("-", "–")}`;
     const slot = document.getElementById("contribute-slot");
     slot.replaceChildren();
     const contribute = formButton("Share a resource", landingData.settings.contributeFormUrl, "button button-secondary");
