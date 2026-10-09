@@ -1,0 +1,64 @@
+# Temporary, feature-branch-only transport for the locally reviewed patch.
+# It never pushes to main. Remove this workflow before opening the final PR.
+name: Stage reviewed course interiors
+on:
+  push:
+    branches: ['codex/course-interiors-20261009']
+    paths: ['.github/staging-course/**']
+permissions:
+  contents: write
+jobs:
+  stage:
+    if: github.repository == 'AdnanTarabishi/eu-hem-student-hub' && github.ref == 'refs/heads/codex/course-interiors-20261009'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify and apply the reviewed patch to this feature branch only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64, gzip, hashlib, subprocess, tempfile
+          assert subprocess.check_output(['git','rev-parse','HEAD^'],text=True).strip() == 'f3f56af90cc3216ee956178b1576247bf3cb925b', 'Unexpected base; do not overwrite newer work'
+          encoded = ''.join(Path('.github/staging-course/part'+str(i)).read_text() for i in (1,2,3))
+          patch = gzip.decompress(base64.b64decode(encoded,validate=True))
+          assert hashlib.sha256(patch).hexdigest() == '5479e737b19c6e8f3372a150bb6056704f0f139c3339c178e186a11d982775d1', 'Patch checksum mismatch'
+          target = Path(tempfile.gettempdir())/'reviewed-course-interiors.patch'
+          target.write_bytes(patch)
+          subprocess.run(['git','apply','--check','--index','--exclude=.github/workflows/course-interiors.yml',str(target)],check=True)
+          subprocess.run(['git','apply','--index','--exclude=.github/workflows/course-interiors.yml',str(target)],check=True)
+          expected = {
+            '.github/workflows/course-interiors.yml':'be566f6f921214b96c8563f2f08525ed4bb2fed90a88ea73ad2521e3ad15700b',
+            'course-workspace.css':'e7ae1fd2e4297ba1152cbbb3b36c04e9d7a4ea675f6c9f08d60a1f9e56519d64',
+            'course-workspace.js':'d7b6ae8dc59d9cdafe6251f0389d3b3509e551576933fda5b122fc17797afde2',
+            'course.html':'8ea2ae5359020fe0aed1d025c711ff013aa94927d142b7ea051a96c5f38bac6d',
+            'docs/course-interiors.md':'59a8a51eb76cba19ced58488bf455574f795e6902fe38589f6a143476b942413',
+            'notes-course.js':'d4a82b30dea48f517d6d687118ff2c0a4103228587af98fcc1daf43a2af201cd',
+            'right-to-health.js':'a8bcdc6fcd8a5219fe21524762852efbd7d7a1ca25fb08e537b0f3831b4f32b3',
+            'sw.js':'11ca128a893330a62be8fd9b3ad55a12cc4baccef93f3f35504c87a19cb73dde',
+            'tests/notes/course-interiors.test.js':'78d496599ab48f580272388512e2321a0c5c9e3d323a83f0de42d1dfe97cfae2'
+          }
+          changed=set(subprocess.check_output(['git','diff','--cached','--name-only'],text=True).splitlines())
+          assert changed == set(expected)-{'.github/workflows/course-interiors.yml'}, 'Unexpected changed paths'
+          for file,digest in expected.items():
+              assert hashlib.sha256(Path(file).read_bytes()).hexdigest()==digest, 'Output mismatch: '+file
+          print('All nine reviewed output files match their local SHA-256 fingerprints.')
+          PY
+          git diff --cached --check
+          node --check course-workspace.js
+          node --check notes-course.js
+          node scripts/check-content.js
+          node tests/notes/schedule.test.js
+          git rm .github/staging-course/part1 .github/staging-course/part2 .github/staging-course/part3
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Redesign shared Schedule, Exam, Topics and Resources interiors'
+          git push origin HEAD:refs/heads/codex/course-interiors-20261009
+          git rev-parse HEAD
