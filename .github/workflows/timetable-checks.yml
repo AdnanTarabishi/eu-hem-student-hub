@@ -6,6 +6,7 @@ on:
       - 'planning*'
       - 'unibo-data.js'
       - 'tests/planning/**'
+      - 'scripts/release-audit.js'
       - '.github/workflows/timetable-checks.yml'
   push:
     branches: [main]
@@ -15,12 +16,15 @@ on:
       - '.github/workflows/timetable-checks.yml'
 permissions:
   contents: read
+  actions: read
 jobs:
   timetable:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -32,6 +36,7 @@ jobs:
           node scripts/check-content.js
           node scripts/check-contrast.js
           node tests/planning/calendar.test.js
+          node tests/planning/progress.test.js
           node tests/notes/schedule.test.js
       - name: Check existing timetable and exam behaviour
         run: node tests/planning/browser.test.js .
@@ -39,11 +44,20 @@ jobs:
         run: node tests/planning/timetable-v2.test.js .
         env:
           PLANNING_SCREENSHOT_DIR: ${{ runner.temp }}/timetable-previews
+      - name: Check monthly teaching progress
+        run: node tests/planning/progress-browser.test.js .
+        env:
+          PLANNING_SCREENSHOT_DIR: ${{ runner.temp }}/timetable-previews
       - name: Inspect published timetable after deployment
         if: github.event_name == 'push'
         run: node tests/planning/live-timetable.test.js
         env:
           PLANNING_SCREENSHOT_DIR: ${{ runner.temp }}/timetable-live
+      - name: Collect read-only publication evidence for the October release review
+        continue-on-error: true
+        run: node scripts/release-audit.js 2026-10-08 "${{ runner.temp }}/timetable-previews/release-audit.json"
+        env:
+          GH_TOKEN: ${{ github.token }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
