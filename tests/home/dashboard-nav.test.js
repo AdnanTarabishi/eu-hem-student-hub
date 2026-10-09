@@ -125,10 +125,10 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
     await examNext(page).focus();
     await page.keyboard.press("Enter");
     assert.strictEqual(await page.textContent("#dash-exam .dash-browse-position"), "Exam 2 of 5");
-    assert.match(await page.textContent("#dash-exam .schedule-meta"), /10 Oct, 9:00/);
+    assert.match(await page.textContent("#dash-exam .schedule-meta"), /10 Oct, 09:00/);
     assert.strictEqual(await page.textContent("#dash-exam .dash-countdown-number"), "4");
     assert.strictEqual(await page.evaluate(() => document.activeElement === window.savedExamArrow && document.querySelector("#dash-exam .dash-period") === window.savedPeriod), true);
-    assert.match(await page.textContent("#dash-exam-nav [role=status]"), /Exam 2 of 5.*10 October 2026 at 9:00/);
+    assert.match(await page.textContent("#dash-exam-nav [role=status]"), /Exam 2 of 5.*10 October 2026 at 09:00/);
     await examNext(page).click();
     assert.match(await page.textContent("#dash-exam .schedule-meta"), /10 Oct, 12:00/);
     await examNext(page).click();

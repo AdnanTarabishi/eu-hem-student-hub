@@ -27,6 +27,8 @@ const PLAN=JSON.stringify({version:1,cohort:'2026-27',term:'y1-s1',choices:{quan
  async function screenshot(p,name){if(!SHOTS)return;fs.mkdirSync(SHOTS,{recursive:true});await p.evaluate(async()=>{await document.fonts.ready;window.scrollTo(0,0)});await p.screenshot({path:path.join(SHOTS,name+'.png'),fullPage:true});}
  try{
   let {page:p,context:c}=await open();
+  assert.equal(await p.locator('#exam-list').getAttribute('data-view'),'list');
+  assert.equal(await p.getByRole('button',{name:'List',exact:true}).getAttribute('aria-pressed'),'true');
   assert.equal(await p.locator('#exam-explainer').getAttribute('open'),null);
   await p.locator('#exam-explainer>summary').focus();await p.keyboard.press('Enter');assert.ok(await p.locator('#exam-explainer').evaluate(n=>n.open));assert.match(await p.locator('#exam-explainer').innerText(),/rolling window/);await p.keyboard.press('Enter');
   ok('explanation starts collapsed and opens/closes with native keyboard interaction');
@@ -35,12 +37,16 @@ const PLAN=JSON.stringify({version:1,cohort:'2026-27',term:'y1-s1',choices:{quan
   await admin.locator('.exam-admin-instructions>summary').click();assert.match(await admin.innerText(),/Virtuale|Tuesday/);assert.match(await admin.innerText(),/did not explicitly guarantee/);await admin.locator('.exam-admin-instructions>summary').click();
   ok('Economics guidance lives in its single dated course card; mandatory enrolment is not hidden or called a written test');
   const groups=await p.locator('.exam-course-group').count();assert.equal(groups,5);assert.equal(await p.locator('.exam-card').count(),8);
+  assert.equal(await p.locator('.exam-card:visible').count(),5);
+  await view(p,'Cards');
   assert.equal(await p.locator('#exam-list').evaluate(n=>getComputedStyle(n).gridTemplateColumns.split(' ').length),2);
+  await view(p,'List');
   const more=p.locator('[data-course="quant-methods"] .exam-more-sittings>summary');await more.click();
-  await view(p,'List');assert.equal(await p.locator('.exam-course-group').count(),groups);assert.equal(await p.getByRole('button',{name:'List',exact:true}).getAttribute('aria-pressed'),'true');assert.ok(await more.evaluate(n=>n.parentElement.open));
+  await view(p,'Cards');await view(p,'List');
+  assert.equal(await p.locator('.exam-course-group').count(),groups);assert.equal(await p.getByRole('button',{name:'List',exact:true}).getAttribute('aria-pressed'),'true');assert.ok(await more.evaluate(n=>n.parentElement.open));
   assert.equal(await p.evaluate(()=>document.activeElement.textContent.trim()),'List');
-  await screenshot(p,'exams-list-desktop');await view(p,'Cards');await more.click();
-  ok('two-column Cards and compact List share every date, preserve disclosures and keep focus on the view switch');
+  await screenshot(p,'exams-list-desktop');await view(p,'Cards');
+  ok('default nearest-date List and two-column Cards share every date, preserve List disclosures and keep focus on the view switch');
   await p.locator('[data-course="quant-methods"] .exam-practice').waitFor();
   assert.match(await p.locator('[data-course="quant-methods"] .exam-practice').getAttribute('href'),/course=quant-methods.*practiceTopic=statistics\./);
   assert.match(await p.locator('[data-course="fund-quant-methods"] .exam-practice').getAttribute('href'),/course=fund-quant-methods.*practiceTopic=fund-statistics\./);

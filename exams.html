@@ -20,7 +20,7 @@
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=6ef75792">
   <link rel="stylesheet" href="planning.css?v=0e4fe2a7">
-  <link rel="stylesheet" href="exams-guide.css?v=7c38e7d2">
+  <link rel="stylesheet" href="exams-guide.css?v=a75a5d07">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -91,9 +91,10 @@
       <div class="planning-panel-head">
         <div><p class="section-eyebrow">From planning to preparation</p><h2 id="exam-panel-title">Your exam workspace</h2><p>Choose a view. Find a date. Make time to revise.</p></div>
         <div class="exam-view-switch" role="group" aria-label="Exam display">
-          <button type="button" data-exam-view="cards" aria-pressed="true" aria-controls="exam-list exam-month" disabled><svg class="icon" aria-hidden="true"><use href="icons.svg#grid"></use></svg> Cards</button>
-          <button type="button" data-exam-view="list" aria-pressed="false" aria-controls="exam-list exam-month" disabled><svg class="icon" aria-hidden="true"><use href="icons.svg#list"></use></svg> List</button>
+          <button type="button" data-exam-view="list" aria-pressed="true" aria-controls="exam-list exam-month" disabled><svg class="icon" aria-hidden="true"><use href="icons.svg#list"></use></svg> List</button>
+          <button type="button" data-exam-view="cards" aria-pressed="false" aria-controls="exam-list exam-month" disabled><svg class="icon" aria-hidden="true"><use href="icons.svg#grid"></use></svg> Cards</button>
           <button type="button" data-exam-view="month" aria-pressed="false" aria-controls="exam-list exam-month" disabled><svg class="icon" aria-hidden="true"><use href="icons.svg#calendar"></use></svg> Month</button>
+          <button type="button" data-exam-view="table" aria-pressed="false" aria-controls="exam-list exam-month" disabled><svg class="icon" aria-hidden="true"><use href="icons.svg#table"></use></svg> Table</button>
         </div>
 
       </div>
@@ -136,7 +137,7 @@
         <p id="exam-checked" class="planning-checked"></p>
       </div>
       <div class="exam-selection-bar"><span class="planning-scope" id="exam-scope">First-year courses</span><button type="button" id="exam-clear-day" hidden>Show full month</button></div>
-      <div id="exam-list" data-view="cards" aria-busy="true"></div>
+      <div id="exam-list" data-view="list" aria-busy="true"></div>
       <noscript><p>JavaScript is needed for the interactive views. <a href="https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates">Open official exam dates</a> or <a href="notes.html">browse Notes &amp; Resources</a>.</p></noscript>
     </section>
     <p class="planning-source-note"><svg class="icon" aria-hidden="true"><use href="icons.svg#info"></use></svg> Dates and times use Bologna time (Europe/Rome). UniBo and AlmaEsami are the official reference for changes and booking; downloading a reminder does not register you.</p>
@@ -154,12 +155,12 @@
   <script defer src="pwa.js?v=c9212bf8"></script>
   <script defer src="announcements.js?v=5ec8eef9"></script>
   <script defer src="programme.js?v=92916c59"></script>
-  <script defer src="unibo-data.js?v=92fc0ed0"></script>
+  <script defer src="unibo-data.js?v=7b87bd5a"></script>
   <script defer src="notes-schedule.js?v=72ca9b39"></script>
   <script defer src="planning.js?v=5b022301"></script>
   <script defer src="timetable-calendar.js?v=3b7c0c41"></script>
   <script defer src="exams-workspace.js?v=842c5d60"></script>
-  <script defer src="exams.js?v=35971c13"></script>
+  <script defer src="exams.js?v=a4633a67"></script>
 
 </body>
 </html>
