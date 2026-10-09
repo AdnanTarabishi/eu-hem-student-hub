@@ -41,6 +41,8 @@ jobs:
       - name: Landing workspace regression
         run: node tests/notes/workspace.test.js .
       - name: Quizzes, flashcards and exam practice regression
+        env:
+          STUDY_PRACTICE_SCREENSHOT_DIR: previews/practice
         run: npm run test:practice
       - name: Right to Health content invariants
         run: node tests/right-to-health/content.test.js
