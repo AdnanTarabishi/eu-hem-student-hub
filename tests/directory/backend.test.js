@@ -15,11 +15,21 @@ const shared = (over = {}) => Object.assign({ requestId: uuid() }, common, {
 const faculty = (over = {}) => Object.assign({ requestId: uuid() }, common, {
   userType: 'faculty_staff', fullName: 'Prof Example', email: 'prof@unibo.it', organisation: 'University of Bologna',
   programmeRole: 'lecturer' }, over);
-const fresh = (props = {}) => { const g = load(CODE, Object.assign({ SPREADSHEET_ID: 'sheet1', PHOTO_FOLDER_ID: 'folder1', CONTACT_EMAIL: 'hub@example.com' }, props)); g.ctx.setup(); return g; };
+const fresh = (props = {}) => { const g = load(CODE, Object.assign({ SPREADSHEET_ID: 'sheet1', PHOTO_FOLDER_ID: 'folder1', CONTACT_EMAIL: 'hub@example.com' }, props)); g.ctx.setup_(); return g; };
 const JPEG = Buffer.concat([Buffer.from([0xff, 0xd8, 0xff, 0xe0]), Buffer.alloc(40, 1)]).toString('base64');
 const linkOf = (g, i = 0) => new URL(g.mails[i].body.match(/https:\S+/)[0]).searchParams;
 
 /* ----- setup and Sheet schema ----- */
+t('only registration and email confirmation are callable from the public web app', () => {
+  const source = require('fs').readFileSync(CODE, 'utf8');
+  const publicFunctions = [...source.matchAll(/^function ([A-Za-z0-9_]+)\(/gm)]
+    .map(match => match[1]).filter(name => !name.endsWith('_')).sort();
+  assert.deepStrictEqual(publicFunctions, ['confirmEmailFromPage', 'doGet', 'doPost']);
+  const manifest = JSON.parse(require('fs').readFileSync(require('path').join(require('path').dirname(CODE), 'appsscript.json'), 'utf8'));
+  assert.strictEqual(manifest.webapp.executeAs, 'USER_DEPLOYING');
+  assert.strictEqual(manifest.webapp.access, 'ANYONE_ANONYMOUS');
+  assert.strictEqual(manifest.exceptionLogging, 'NONE');
+});
 t('setup creates all 63 columns and the Options tab', () => {
   const g = fresh(); assert.strictEqual(g.grid[0].length, 63);
   assert.strictEqual(g.grid[0][40], 'Confirm Email Sent'); assert.strictEqual(g.grid[0][41], 'User Type');
@@ -29,7 +39,7 @@ t('setup creates all 63 columns and the Options tab', () => {
 t('an existing v1 Sheet gets the new columns appended; old columns and rows stay in place', () => {
   const g = fresh(); const v1 = g.grid[0].slice(0, 41);
   g.grid.length = 0; g.grid.push(v1.slice(), v1.map((h) => 'old ' + h));
-  g.ctx.setup();
+  g.ctx.setup_();
   assert.deepStrictEqual(g.grid[0].slice(0, 41), v1); assert.strictEqual(g.grid[0].length, 63);
   assert.strictEqual(g.grid[1][3], 'old Full Name'); assert.strictEqual(g.grid[1][45], undefined);
   assert.strictEqual(g.post(student()).ok, true); assert.strictEqual(g.row(2)['User Type'], 'current_student');
@@ -239,15 +249,15 @@ t('migrateV3 fills only empty cells with "nothing given" values, never infers, a
   const g = fresh(); const v2 = g.grid[0].slice(0, 56);
   const oldRow = v2.map((h) => (h === 'Primary Country' ? 'Syria' : h === 'Profile Visibility' ? 'public' : 'old ' + h));
   g.grid.length = 0; g.grid.push(v2.slice(), oldRow.slice(), oldRow.slice());
-  g.ctx.setup();
+  g.ctx.setup_();
   assert.strictEqual(g.grid[0].length, 63); assert.strictEqual(g.grid[1][56], undefined, 'setup alone writes no values');
   g.grid[2][g.grid[0].indexOf('Citizenship Group')] = 'eu_eea_swiss'; // an answer already there
-  assert.match(g.ctx.migrateV3(), /2 row\(s\) checked, 11 empty cell/);
+  assert.match(g.ctx.migrateV3_(), /2 row\(s\) checked, 11 empty cell/);
   assert.deepStrictEqual(mob(g.row(1)), ['not_provided', 'private', 'not_provided', '', 'private', 'no']);
   assert.deepStrictEqual(JSON.parse(g.row(1)['Field Visibility JSON']), { country: 'hidden', field: 'hidden', degree: 'hidden', university: 'hidden', track: 'hidden', bio: 'hidden' });
   assert.strictEqual(g.row(2)['Citizenship Group'], 'eu_eea_swiss', 'existing values are never overwritten');
   assert.strictEqual(g.row(1)['Full Name'], 'old Full Name');
-  assert.match(g.ctx.migrateV3(), /0 empty cell/);
+  assert.match(g.ctx.migrateV3_(), /0 empty cell/);
 });
 t('duplicate headers stop the script instead of writing to the wrong column', () => {
   const g = fresh(); g.grid[0].push('Citizenship Group');
@@ -299,7 +309,26 @@ t('confirmation can be switched off', () => { const g = fresh({ REQUIRE_EMAIL_CO
 
 /* ----- protections kept from v1 ----- */
 t('retry with the same requestId is not saved twice', () => { const g = fresh(); const b = student(); g.post(b); const r = g.post(b);
-  assert.strictEqual(r.ok, true); assert.strictEqual(g.grid.length, 2); assert.strictEqual(g.mails.length, 1); });
+  assert.strictEqual(r.ok, true); assert.strictEqual(g.grid.length, 2); assert.strictEqual(g.mails.length, 1);
+  assert.strictEqual(r.requestId, b.requestId); assert.strictEqual(r.consentVersion, b.consentVersion); assert.strictEqual(r.directoryEligible, true); });
+t('a lost response followed by an email change cannot save a second row with the same request ID', () => {
+  const g = fresh(); const b = student(); g.post(b);
+  const r = g.post({ ...b, email: 'different@example.org' });
+  assert.strictEqual(r.ok, false); assert.strictEqual(r.code, 'REQUEST_CONFLICT');
+  assert.strictEqual(g.grid.length, 2); assert.strictEqual(g.mails.length, 1);
+});
+t('retry reports a failed email truthfully and keeps a private non-directory registration private', () => {
+  const g = fresh({ __MAIL_FAILS: true }); const b = shared(); g.post(b); const r = g.post(b);
+  assert.strictEqual(r.confirmation, 'failed'); assert.strictEqual(r.directoryEligible, false);
+  assert.strictEqual(g.row(1)['Status'], 'unconfirmed'); assert.strictEqual(g.grid.length, 2);
+  assert.strictEqual(g.mails.length, 0);
+});
+t('retry after explicit email confirmation reports the saved review status without sending another email', () => {
+  const g = fresh(); const b = student(); g.post(b); const q = linkOf(g);
+  g.confirm(q.get('id'), q.get('token'));
+  assert.strictEqual(g.post(b).confirmation, 'not_required'); assert.strictEqual(g.mails.length, 1);
+  assert.strictEqual(g.row(1)['Role Verification Status'], 'pending');
+});
 t('duplicate email is refused with the friendly message and no stored data', () => { const g = fresh(); g.post(student({ shortBio: 'private' }));
   const r = g.post(alumnus({ email: 'TEST.student@studio.unibo.it' }));
   assert.strictEqual(r.code, 'DUPLICATE_EMAIL'); assert.match(r.message, /Profile editing will be available later/); assert.ok(!JSON.stringify(r).includes('private')); });
@@ -338,6 +367,17 @@ t('photo without a configured folder gives a clear message', () => { const g = f
 t('hourly limit stops a flood', () => { const g = fresh(); let last;
   for (let i = 0; i < 62; i++) last = g.post(student({ email: `s${i}@x.org` }));
   assert.strictEqual(last.code, 'BUSY'); assert.strictEqual(g.grid.length, 61); });
+t('hourly limit uses stored timestamps rather than locale-dependent displayed dates', () => {
+  const g = fresh(); const sheet = g.sheets.Submissions, getRange = sheet.getRange;
+  sheet.getRange = (...args) => {
+    const range = getRange(...args);
+    return { ...range, getDisplayValues: () => range.getValues().map(row => row.map(value =>
+      Object.prototype.toString.call(value) === '[object Date]' ? '31/12/1999 12:00:00' : String(value ?? ''))) };
+  };
+  let last;
+  for (let i = 0; i < 61; i++) last = g.post(student({ email: `locale${i}@example.org` }));
+  assert.strictEqual(last.code, 'BUSY'); assert.strictEqual(g.grid.length, 61);
+});
 t('unexpected errors do not leak details', () => { const g = fresh(); g.ctx.SpreadsheetApp.openById = () => { throw new Error('secret internal detail'); };
   const r = g.post(student()); assert.strictEqual(r.ok, false); assert.ok(!JSON.stringify(r).includes('secret')); });
 
@@ -369,7 +409,7 @@ const R = (g) => vm.runInContext('RETENTION', g.ctx);
 const DAY = 86400000;
 const col = (g, name) => g.grid[0].indexOf(name);
 const setCell = (g, i, name, v) => { g.grid[i][col(g, name)] = v; };
-const report = (g, now) => [...g.ctx.retentionReport(now)].map((x) => `${x.row}:${x.action}`);
+const report = (g, now) => [...g.ctx.retentionReport_(now)].map((x) => `${x.row}:${x.action}`);
 t('retention: every value lives in RETENTION; the confirmation link lasts unconfirmedDays', () => {
   const g = fresh(); const ret = R(g);
   for (const k of ['unconfirmedDays', 'rejectedDays', 'studentMonthsAfterGraduation', 'graduationMonthDay', 'alumniMonths', 'reminderDays',
@@ -419,7 +459,7 @@ t('retention: shared-course and staff rows need "Participation Ends", then share
 t('retention report shows row numbers and ids only, never names or emails', () => {
   const g = fresh(); g.post(student({ fullName: 'Secret Person' })); const logs = [];
   g.ctx.console.log = (s) => logs.push(s);
-  g.ctx.retentionReport(Date.now() + 400 * DAY);
+  g.ctx.retentionReport_(Date.now() + 400 * DAY);
   assert.ok(logs.join(' ').includes('Row 2')); assert.ok(!/Secret|studio\.unibo/.test(logs.join(' ')));
 });
 console.log(n + ' backend checks passed');

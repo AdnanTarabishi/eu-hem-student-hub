@@ -18,11 +18,12 @@
  * ALLOWED_EMAIL_DOMAINS and COLLECT_PHONE from onboarding v1 are not read anywhere any more: if they still
  * exist in Script Properties they have no effect and can safely be deleted.
  *
- * First use, and after every update of this file: run setup() once from the editor. It authorises the
+ * First use, and after every update: run setup_() through a temporary owner-only editor wrapper.
+ * Remove the wrapper before deploying (see README.md). It authorises the
  * script, adds any missing columns at the END of the "Submissions" tab (existing columns and rows are
  * never moved or rewritten) and rewrites the human-readable "Options" tab.
  *
- * Upgrading a Sheet that already has v2 registrations: run setup(), then migrateV3() once. migrateV3()
+ * Upgrading a Sheet that already has v2 registrations: run setup_(), then migrateV3_() once. migrateV3_()
  * only fills EMPTY cells of the v3 columns with "nothing given" values (see V3_DEFAULTS); it never
  * changes an existing answer and never works anything out from other columns. Running it again is safe.
  */
@@ -39,7 +40,7 @@ const SETTINGS = Object.freeze({
 });
 
 // How long registrations are kept. The ONLY place these numbers live in the code: the confirmation link,
-// retentionReport() and the tests read them from here. privacy.html and docs/student-directory.md show
+// retentionReport_() and the tests read them from here. privacy.html and docs/student-directory.md show
 // the same values; scripts/check-content.js fails if they differ. Change a value here first.
 const RETENTION = Object.freeze({
   unconfirmedDays: 14,                  // unconfirmed registration (and its photo) deleted; also the link's lifetime
@@ -71,7 +72,7 @@ const HEADERS = Object.freeze([
   'User Type','Directory Eligible','EU-HEM Cohort','Home Institution','Home Programme','Programme Role',
   'Courses / Areas Involved','Shared Courses','Feature Interests','Feature Suggestion',
   'Role Verification Status','Role Verified At',
-  // retention (filled in by an admin; see retentionReport)
+  // retention (filled in by an admin; see retentionReport_)
   'Rejected At','Last Reconfirmed At','Participation Ends',
   // v3: optional mobility experience (private by default) and per-detail visibility
   'Citizenship Group','Citizenship Visibility','Study Visa Experience','Study Visa Experience Scope',
@@ -224,7 +225,7 @@ const LIMITS = Object.freeze({
 /* ------------------------------------------------------------------ */
 
 /** Run once from the editor after setting the Script Properties, and again after updating this file. */
-function setup() {
+function setup_() {
   const sheet = openSheet_(true);
   const added = ensureHeaders_(sheet);
   sheet.setFrozenRows(1);
@@ -275,13 +276,21 @@ function doPost(e) {
       const sheet = openSheet_(false);
       const table = readTable_(sheet);
 
+      const retry = findByRequestId_(table, requestId);
+      if (retry) {
+        // A request ID can never create a second registration, even if the email changes.
+        if (retry['University Email'].toLowerCase() !== p.email) {
+          throw appError_('REQUEST_CONFLICT', 'An earlier registration may already have been received. Please contact the Student Hub team before submitting different details.');
+        }
+        return json_({ ok: true, code: 'OK', requestId: requestId,
+                       consentVersion: retry['Consent Version'],
+                       confirmation: retry['Status'] !== 'unconfirmed' ? 'not_required' :
+                         (retry['Confirm Email Sent'] === 'yes' ? 'sent' : 'failed'),
+                       directoryEligible: retry['Directory Eligible'] === true || retry['Directory Eligible'] === 'TRUE' });
+      }
+
       const existing = findByEmail_(table, p.email);
       if (existing) {
-        // Same browser retrying after a lost response: report success, save nothing twice.
-        if (existing['Submission ID'] === requestId) {
-          return json_({ ok: true, code: 'OK', requestId: requestId,
-                         confirmation: existing['Status'] === 'unconfirmed' ? 'sent' : 'not_required' });
-        }
         throw appError_('DUPLICATE_EMAIL', 'A registration already exists for this email address. ' +
           'Profile editing will be available later. Please contact the Student Hub team if you need to update your information.');
       }
@@ -303,13 +312,14 @@ function doPost(e) {
         setCell_(sheet, table.headers, sheet.getLastRow(), 'Confirm Email Sent',
                  confirmation === 'sent' ? 'yes' : 'failed');
       }
-      return json_({ ok: true, code: 'OK', requestId: requestId, confirmation: confirmation,
+      return json_({ ok: true, code: 'OK', requestId: requestId, consentVersion: SETTINGS.CONSENT_VERSION,
+                     confirmation: confirmation,
                      directoryEligible: p.directoryEligible });
     } finally {
       lock.releaseLock();
     }
   } catch (err) {
-    console.error(err && err.stack ? err.stack : err);
+    console.error('Registration failed: ' + (err && err.code ? err.code : 'SUBMISSION_ERROR'));
     return json_({ ok: false, requestId: requestId,
                    code: err && err.code ? err.code : 'SUBMISSION_ERROR',
                    message: publicMessage_(err) });
@@ -582,7 +592,7 @@ function readTable_(sheet) {
   const headers = sheet.getRange(1, 1, 1, lastCol).getDisplayValues()[0];
   const missing = HEADERS.filter(function (h) { return headers.indexOf(h) === -1; });
   if (missing.length) {
-    console.error('Missing headers (run setup()): ' + missing.join(', '));
+    console.error('Missing headers (run setup_()): ' + missing.join(', '));
     throw appError_('NOT_CONFIGURED', 'The directory is not configured yet.');
   }
   const doubled = HEADERS.filter(function (h) { return headers.indexOf(h) !== headers.lastIndexOf(h); });
@@ -590,7 +600,8 @@ function readTable_(sheet) {
     console.error('Duplicate headers (fix the Sheet by hand): ' + doubled.join(', '));
     throw appError_('NOT_CONFIGURED', 'The directory is not configured yet.');
   }
-  const rows = lastRow > 1 ? sheet.getRange(2, 1, lastRow - 1, lastCol).getDisplayValues() : [];
+  // Use real Date and Boolean values; the Sheet's locale can change their displayed text.
+  const rows = lastRow > 1 ? sheet.getRange(2, 1, lastRow - 1, lastCol).getValues() : [];
   return { headers: headers, rows: rows };
 }
 
@@ -604,6 +615,14 @@ function findByEmail_(table, email) {
   const col = table.headers.indexOf('University Email');
   for (let i = 0; i < table.rows.length; i++) {
     if (String(table.rows[i][col]).replace(/^'/, '').trim().toLowerCase() === email) return rowObject_(table, i);
+  }
+  return null;
+}
+
+function findByRequestId_(table, id) {
+  const col = table.headers.indexOf('Submission ID');
+  for (let i = 0; i < table.rows.length; i++) {
+    if (table.rows[i][col] === id) return rowObject_(table, i);
   }
   return null;
 }
@@ -708,8 +727,8 @@ const V3_DEFAULTS = Object.freeze({
   'Field Visibility JSON': JSON.stringify(DETAIL_FIELDS.reduce(function (o, k) { o[k] = 'hidden'; return o; }, {}))
 });
 
-/** Run once after setup() when upgrading. Fills only EMPTY cells, so it is safe to run again. */
-function migrateV3() {
+/** Run once after setup_() when upgrading. Fills only EMPTY cells, so it is safe to run again. */
+function migrateV3_() {
   const lock = LockService.getScriptLock();
   lock.waitLock(30000);
   try {
@@ -836,7 +855,7 @@ function sendConfirmation_(p, requestId, token) {
     MailApp.sendEmail(p.email, 'Confirm your EU-HEM Student Hub registration', lines.join('\n'), options);
     return true;
   } catch (err) {
-    console.error('Confirmation email failed: ' + err);
+    console.error('Confirmation email could not be sent.');
     return false;
   }
 }
@@ -898,7 +917,7 @@ const DAY_MS_ = 86400000;
  * admin action, under RETENTION. It deletes NOTHING: you delete the row and its photo by hand (then empty
  * the Drive bin). The log shows only row numbers and registration ids, no names or emails.
  */
-function retentionReport(now) {
+function retentionReport_(now) {
   const sheet = openSheet_(false);
   const table = readTable_(sheet);
   const values = table.rows.length ? sheet.getRange(2, 1, table.rows.length, table.headers.length).getValues() : [];

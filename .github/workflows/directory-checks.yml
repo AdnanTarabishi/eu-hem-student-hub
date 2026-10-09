@@ -1,0 +1,76 @@
+name: Check Directory registration
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'join.*'
+      - 'directory-*.js'
+      - 'integrations/directory-apps-script/**'
+      - 'tests/directory/**'
+      - 'docs/student-directory.md'
+      - 'scripts/check-content.js'
+      - 'package*.json'
+      - '.github/workflows/directory-checks.yml'
+  pull_request:
+    paths:
+      - 'join.*'
+      - 'directory-*.js'
+      - 'integrations/directory-apps-script/**'
+      - 'tests/directory/**'
+      - 'docs/student-directory.md'
+      - 'scripts/check-content.js'
+      - 'package*.json'
+      - '.github/workflows/directory-checks.yml'
+  workflow_dispatch:
+    inputs:
+      run_live_delivery:
+        description: 'Send one fictional registration and one retry to the Hub-owned Directory deployment'
+        type: boolean
+        default: false
+      directory_endpoint:
+        description: 'Owner-deployed Directory /exec URL (separate from Contact)'
+        type: string
+        required: false
+      recovery_request_id:
+        description: 'Reuse a previous fictional test UUID after checking its private row'
+        type: string
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: directory-checks-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  registration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Check form and private receiver using fictional local services
+        run: npm run test:directory
+      - name: Verify candidate delivery from the website origin
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_live_delivery }}
+        env:
+          DIRECTORY_SMOKE_EXECUTE: 'true'
+          DIRECTORY_ENDPOINT: ${{ inputs.directory_endpoint }}
+          DIRECTORY_SMOKE_REQUEST_ID: ${{ inputs.recovery_request_id }}
+          DIRECTORY_SMOKE_OUTPUT: ${{ runner.temp }}/directory-real-delivery
+        run: node tests/directory/real-delivery-smoke.js .
+      - name: Save sanitized fictional delivery evidence
+        if: ${{ always() && github.event_name == 'workflow_dispatch' && inputs.run_live_delivery }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: directory-real-delivery
+          path: ${{ runner.temp }}/directory-real-delivery
+          if-no-files-found: ignore
+          retention-days: 3

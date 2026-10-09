@@ -183,6 +183,12 @@ backend. It stays switched off until `endpoint` is set in `directory-config.js`.
 [docs/student-directory.md](docs/student-directory.md) for how it works, the go-live checklist and the tests
 (`npm install` once, then `npm test`).
 
+Focused registration checks: `npm run test:directory`. The Directory receiver and manifest are in
+`integrations/directory-apps-script/`; follow its temporary owner-only setup procedure before deploying.
+The `Check Directory registration` workflow includes an explicitly enabled fictional delivery check
+for a candidate endpoint. Registration stays off until that separate deployment, private row and email
+confirmation have been verified. The Contact receiver cannot receive Directory registrations.
+
 ## Tracks page
 Everything on `tracks.html` comes from **one file**, `content/tracks.json` (format and how to add next
 year's cohort: [docs/tracks-format.md](docs/tracks-format.md)). Facts come from the official *EU-HEM tracks

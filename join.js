@@ -40,6 +40,9 @@
 
   let currentStep = 1;
   let submitting = false;
+  let uncertainReceipt = false;
+  let attemptedAnswers = "";
+  let disabledControls = [];
   let photo = null; // { base64, type, objectUrl }
   let trackNames = { ...OPTIONS.currentTracks }; // replaced by content/tracks.json when it loads
 
@@ -574,6 +577,14 @@
 
   function setSubmitting(on) {
     submitting = on;
+    if (on) {
+      disabledControls = [...form.querySelectorAll("input, select, textarea, button")]
+        .map((control) => ({ control, disabled: control.disabled }));
+      for (const { control } of disabledControls) control.disabled = true;
+    } else {
+      for (const { control, disabled } of disabledControls) control.disabled = disabled;
+      disabledControls = [];
+    }
     $("submitButton").disabled = on;
     $("submitSpinner").hidden = !on;
     $("submitButtonText").textContent = on ? "Sending…" : (isDirectory() ? "Join the Directory" : "Submit registration");
@@ -587,9 +598,12 @@
   function showSuccess(result) {
     const profile = profileVisibility();
     if (result.confirmation === "failed") {
-      $("successConfirmText").textContent = "We could not send the confirmation email, so the Student Hub team will verify your address manually.";
+      $("successCard").querySelector("h2").textContent = "Registration received";
+      $("successConfirmText").textContent = "Your registration was saved, but the confirmation email could not be sent. Please contact the Student Hub team to complete verification.";
     } else if (result.confirmation === "not_required") {
+      $("successCard").querySelector("h2").textContent = "Registration received";
       $("successConfirmText").textContent = "Your registration is waiting for review.";
+      $("successVerificationText").textContent = "The Student Hub team still needs to verify your connection to EU-HEM and review your registration.";
     }
     $("successVisibilityText").textContent = !isDirectory()
       ? "Your registration will not be added to the Student Directory."
@@ -605,6 +619,21 @@
     $("successCard").focus();
   }
 
+  function answersKey(payload) {
+    // The elapsed time changes on every attempt; the submitted answers must stay unchanged.
+    return JSON.stringify({ ...payload, elapsedMs: 0 });
+  }
+
+  function isReceipt(result, payload) {
+    return result && result.ok === true && result.code === "OK" &&
+      result.requestId === payload.requestId && result.consentVersion === payload.consentVersion &&
+      ["sent", "failed", "not_required"].includes(result.confirmation) &&
+      result.directoryEligible === (OPTIONS.directoryEligible[payload.userType] === true);
+  }
+
+  const uncertainMessage = "We could not confirm receipt. Your registration may already have been saved. " +
+    "Keep your answers unchanged and press the button again, or contact the Student Hub team before editing them.";
+
   // Apps Script cannot answer a CORS preflight. A "text/plain" body is a simple
   // request, so the browser sends it directly and can read the JSON reply.
   async function send(payload) {
@@ -615,6 +644,9 @@
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(payload),
+        mode: "cors",
+        credentials: "omit",
+        referrerPolicy: "no-referrer",
         redirect: "follow",
         signal: controller.signal
       });
@@ -643,15 +675,33 @@
       return;
     }
 
+    const payload = buildPayload();
+    if (uncertainReceipt && attemptedAnswers !== answersKey(payload)) {
+      showMessage("An earlier attempt may already be saved. Restore the answers you sent before retrying, or contact the Student Hub team to correct your registration.");
+      return;
+    }
+    if (navigator.onLine === false) {
+      showMessage(uncertainReceipt ? uncertainMessage + " You are currently offline; this retry was not sent."
+        : "You are offline. This registration has not been sent. Keep this page open and try again when connected.");
+      return;
+    }
+
     setSubmitting(true);
+    attemptedAnswers = answersKey(payload);
     try {
-      const result = await send(buildPayload());
-      if (result && result.ok) { showSuccess(result); return; }
-      showMessage((result && result.message) || "We could not send your registration. Please try again.");
+      const result = await send(payload);
+      if (isReceipt(result, payload)) { showSuccess(result); return; }
+      if (result && result.ok === false && result.requestId === payload.requestId &&
+          typeof result.code === "string" && result.code !== "SUBMISSION_ERROR" &&
+          typeof result.message === "string") {
+        showMessage(result.message + (uncertainReceipt ? " " + uncertainMessage : ""));
+      } else {
+        uncertainReceipt = true;
+        showMessage(uncertainMessage);
+      }
     } catch (error) {
-      showMessage(error.name === "AbortError"
-        ? "Sending took too long. Please check your connection and press the button again. Your registration will not be saved twice."
-        : "We could not reach the server. Please check your connection and press the button again. Your registration will not be saved twice.");
+      uncertainReceipt = true;
+      showMessage(uncertainMessage);
     } finally {
       setSubmitting(false);
     }
