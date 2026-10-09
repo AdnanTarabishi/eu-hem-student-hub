@@ -20,6 +20,7 @@
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=6ef75792">
   <link rel="stylesheet" href="planning.css?v=0e4fe2a7">
+  <link rel="stylesheet" href="timetable-progress.css?v=43b47b6c">
   <link rel="stylesheet" href="timetable.css?v=9cb1d56b">
   <link rel="preload" href="fonts/source-serif-4-latin-600.woff2" as="font" type="font/woff2" crossorigin>
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
@@ -64,6 +65,31 @@
       </aside>
     </section>
     <div id="timetable-summary" class="planning-summary" aria-label="Timetable overview"></div>
+
+    <section id="monthly-progress" class="tt-progress" aria-labelledby="monthly-progress-title" aria-busy="true">
+      <div class="tt-progress-heading">
+        <div><p class="section-eyebrow">One month at a time</p><h2 id="monthly-progress-title">Monthly teaching progress</h2></div>
+        <p id="monthly-progress-scope" class="tt-progress-scope">Bologna time · Europe/Rome</p>
+      </div>
+      <div id="monthly-progress-values" class="tt-progress-values" hidden>
+        <div class="tt-progress-share"><strong id="monthly-progress-percent">—</strong><span>of published hours finished</span></div>
+        <div class="tt-progress-track">
+          <div class="tt-progress-track-head"><strong id="monthly-progress-month"></strong><span id="monthly-progress-classes"></span></div>
+          <progress id="monthly-progress-bar" max="100" value="0" aria-labelledby="monthly-progress-title monthly-progress-month" aria-describedby="monthly-progress-method"></progress>
+          <dl class="tt-progress-metrics">
+            <div><dt>Finished</dt><dd id="monthly-progress-finished">—</dd></div>
+            <div><dt>Published total</dt><dd id="monthly-progress-total">—</dd></div>
+            <div><dt>Remaining</dt><dd id="monthly-progress-remaining">—</dd></div>
+          </dl>
+        </div>
+      </div>
+      <p id="monthly-progress-status" class="tt-progress-status">Waiting for the official timetable. Progress is not available yet.</p>
+      <details class="tt-progress-method">
+        <summary>How is this calculated?</summary>
+        <p id="monthly-progress-method">Finished scheduled hours ÷ all published scheduled hours in the month × 100. A class counts only after its scheduled end, in Bologna time; an ongoing class is still part of Remaining. Classes belong to the month in which they start. Course, search and My courses only filters apply; Show teacher and Show past classes do not affect the percentage.</p>
+        <p>This is scheduled teaching progress, not attendance, learning progress or credits earned. It excludes personal study and exams. Unpublished classes are unknown, and the total can change when UniBo changes its timetable. In List view this shows the current month; other views use the month of the selected date.</p>
+      </details>
+    </section>
 
     <section class="planning-panel" aria-labelledby="classes-title">
       <div class="planning-panel-head">
@@ -126,8 +152,9 @@
   <script defer src="unibo-data.js?v=892a323e"></script>
   <script defer src="notes-schedule.js?v=72ca9b39"></script>
   <script defer src="planning.js?v=5b022301"></script>
-  <script defer src="timetable-calendar.js?v=dc3d1b19"></script>
+  <script defer src="timetable-calendar.js?v=dfa2625c"></script>
   <script defer src="timetable.js?v=d286a08d"></script>
 
+  <script defer src="timetable-progress.js?v=1d35b283"></script>
 </body>
 </html>
