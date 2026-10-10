@@ -59,11 +59,17 @@ purpose and retention process are those in the Contact privacy notice.
 
 The production Contact receiver was verified with fictional browser delivery and
 unchanged retries on **8 October 2026**, as recorded in
-[Contact forms](contact-forms.md). That verification concerned the existing
-receiver. The Student Experiences update uses local browser checks, mocked
-requests and the receiver's local validator. No live delivery verification was
-performed for this update and no real contribution was sent. A configured URL
-alone cannot guarantee that the service remains available.
+[Contact forms](contact-forms.md). Student Experiences was also verified from the
+actual deployed website on **10 October 2026**, after
+[the release](https://github.com/AdnanTarabishi/eu-hem-student-hub/pull/40).
+The [one-off live check](https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/38025103639)
+matched the published page and four scripts to the reviewed release, sent exactly
+one anonymous, explicitly fictional contribution marked Keep unpublished, and
+confirmed the matching private-storage receipt in the form. An unchanged adapter
+call returned the same receipt without another POST. No real student answers
+were used. The isolated verification branch was removed after completion;
+ordinary CI checks use mocked delivery only. This confirms delivery at that
+time, not permanent service availability.
 
 Answers reach the restricted Contact Inbox for the Hub administrator to review.
 They do not appear in the public collection automatically. Any future story
