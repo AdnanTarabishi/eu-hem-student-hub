@@ -72,7 +72,7 @@
         <p id="monthly-progress-scope" class="tt-progress-scope">Bologna time · Europe/Rome</p>
       </div>
       <div id="monthly-progress-values" class="tt-progress-values" hidden>
-        <div class="tt-progress-share"><strong id="monthly-progress-percent">—</strong><span>of published hours finished</span></div>
+        <div class="tt-progress-share"><strong id="monthly-progress-percent">—</strong><span id="monthly-progress-unit">of published hours finished</span></div>
         <div class="tt-progress-track">
           <div class="tt-progress-track-head"><strong id="monthly-progress-month" class="sr-only"></strong><span id="monthly-progress-classes"></span></div>
           <progress id="monthly-progress-bar" max="100" value="0" aria-labelledby="monthly-progress-title monthly-progress-month" aria-describedby="monthly-progress-method"></progress>
@@ -87,7 +87,7 @@
       <details class="tt-progress-method">
         <summary>How is this calculated?</summary>
         <p id="monthly-progress-method">Finished scheduled hours ÷ all published scheduled hours in the selected period × 100. Day, Week and Month use the selected date; weeks run Monday–Sunday. A class belongs to the period in which it starts and counts only after its scheduled end, in Bologna time. An ongoing class is still part of Remaining. Course, search and My courses only filters apply; Show teacher and Show past classes do not affect the percentage.</p>
-        <p>This is scheduled teaching progress, not attendance, learning progress or credits earned. It excludes personal study and exams. Unpublished classes are unknown, and the total can change when UniBo changes its timetable. List view shows the current month, including finished classes hidden from the list.</p>
+        <p>This is scheduled teaching progress, not attendance, learning progress or credits earned. It excludes personal study and exams. Unpublished classes are unknown, and the total can change when UniBo changes its timetable. List view shows overall progress across all published matching classes, including finished classes hidden from the agenda. Save your study plan and use My courses only for a personalised overall percentage.</p>
       </details>
     </section>
 
@@ -153,6 +153,7 @@
   <script defer src="notes-schedule.js?v=72ca9b39"></script>
   <script defer src="planning.js?v=5b022301"></script>
   <script defer src="timetable-calendar.js?v=3b7c0c41"></script>
+  <script defer src="timetable-locations.js"></script>
   <script defer src="timetable.js?v=d286a08d"></script>
 
   <script defer src="timetable-progress.js?v=af2d36a9"></script>
