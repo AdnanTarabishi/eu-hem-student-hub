@@ -1,6 +1,6 @@
 // Deterministic teaching progress; no network, private data or attendance assumptions.
 const assert = require('node:assert/strict');
-const { monthlyProgress: progress, periodProgress, progressPeriod } = require('../../timetable-calendar.js');
+const { monthlyProgress: progress, periodProgress, overallProgress, progressPeriod } = require('../../timetable-calendar.js');
 let count = 0;
 const test = (name, fn) => { fn(); console.log('  ok  ' + name); count++; };
 const lesson = (date, start, end) => ({ dateKey: date, start: `${date}T${start}:00`, end: `${date}T${end}:00` });
@@ -40,6 +40,14 @@ test('selected dates, filtered inputs and empty periods update the same calculat
   }
   assert.equal(periodProgress(sessions,'2026-10-10',now,'day').state,'empty');
   assert.equal(periodProgress(sessions,month,now,'list').state,'unavailable');
+});
+test('overall List progress measures completed published classes across the full feed', () => {
+  const rows=[...sessions,lesson('2026-11-10','09:00','11:00'),lesson('2026-11-11','09:00','11:00')];
+  const overall=overallProgress(rows,now);
+  assert.deepEqual([overall.state,overall.percentage,overall.completedHours,overall.totalHours,overall.remainingHours,overall.completedClasses,overall.totalClasses,overall.start,overall.end],
+    ['ready',33.3,4,14,10,2,6,'2026-10-01','2026-11-11']);
+  assert.equal(overallProgress([],now).state,'empty');
+  assert.equal(overallProgress([lesson('2026-10-09','11:00','10:00')],now).state,'unavailable');
 });
 test('period boundaries cover leap days, year changes and the last supported month', () => {
   assert.deepEqual(progressPeriod('2028-02-29','month'),{view:'month',start:'2028-02-01',end:'2028-02-29'});

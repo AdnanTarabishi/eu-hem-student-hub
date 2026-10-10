@@ -5,7 +5,7 @@ const ROOT = path.resolve(process.argv[2] || '.');
 const NOW = '2026-10-09T08:30:00Z';
 const MIME = { '.html':'text/html', '.css':'text/css', '.js':'text/javascript', '.json':'application/json', '.svg':'image/svg+xml', '.png':'image/png', '.woff2':'font/woff2', '.webmanifest':'application/manifest+json' };
 const make = (code, day, time, teacher, options = {}) => ({ cod_modulo:code, title:'OFFICIAL / FICTIONAL WORKSHOP', start:`${day}T${time}:00`, end:`${day}T${String(Number(time.slice(0,2))+2).padStart(2,'0')}${time.slice(2)}:00`, time:`${time} - ${String(Number(time.slice(0,2))+2).padStart(2,'0')}${time.slice(2)}`, aule:options.online ? [] : [{des_edificio:options.room || 'QA Classroom', des_indirizzo:'Fictional campus, Bologna'}], docente:teacher, note:options.note || '', teledidattica:!!options.online });
-const FEED = [make('96498','2026-10-01','09:00','QA Statistics Teacher'), make('96498','2026-10-08','09:00','QA Statistics Teacher'), make('79060','2026-10-09','10:00','QA Economics Teacher'), {...make('79060','2026-10-20','09:00','QA Economics Teacher'),end:'2026-10-20T13:00:00',time:'09:00 - 13:00'}];
+const FEED = [make('96498','2026-10-01','09:00','QA Statistics Teacher'), make('96498','2026-10-08','09:00','QA Statistics Teacher'), make('79060','2026-10-09','10:00','QA Economics Teacher'), {...make('79060','2026-10-20','09:00','QA Economics Teacher'),end:'2026-10-20T13:00:00',time:'09:00 - 13:00'}, make('79060','2026-11-10','09:00','QA Economics Teacher'), make('79060','2026-11-11','09:00','QA Economics Teacher')];
 (async () => {
   const server = http.createServer((req,res) => {
     const file = path.resolve(ROOT, decodeURIComponent(new URL(req.url,'http://localhost').pathname).slice(1) || 'index.html');
@@ -54,26 +54,28 @@ const FEED = [make('96498','2026-10-01','09:00','QA Statistics Teacher'), make('
     assert.equal(await p.locator('#monthly-progress-bar').getAttribute('value'),'40');
     assert.equal(await p.evaluate(()=>document.querySelector('#monthly-progress').nextElementSibling.getAttribute('aria-labelledby')),'classes-title');
     ok('the published-month denominator shows 40%, not the percentage of classes or calendar days');
-    for(const [view,value,hours,title] of [['day','0%',2,'Daily'],['week','50%',4,'Weekly'],['month','40%',10,'Monthly'],['list','40%',10,'Monthly']]) {
+    for(const [view,value,hours,title] of [['day','0%',2,'Daily'],['week','50%',4,'Weekly'],['month','40%',10,'Monthly'],['list','33.3%',14,'Overall']]) {
       await mode(p,view); assert.equal(await percent(),value,view);
       assert.equal(await p.locator('#monthly-progress-total').innerText(),`${hours} h`);
       assert.equal(await p.locator('#monthly-progress-bar').getAttribute('value'),value.slice(0,-1));
       assert.equal(await p.locator('#monthly-progress-title').innerText(),`${title} teaching progress`);
-      assert.equal(await p.locator('#monthly-progress-eyebrow').textContent(),`One ${view==='list' ? 'month' : view} at a time`);
+      assert.equal(await p.locator('#monthly-progress-eyebrow').textContent(),view==='list' ? 'Across the published schedule' : `One ${view} at a time`);
       await p.locator('#show-teacher').check(); assert.equal(await percent(),value);
       if(view==='list') {
-        assert.match(await p.locator('#monthly-progress-scope').innerText(),/Current month in List/);
+        assert.match(await p.locator('#monthly-progress-scope').innerText(),/Overall published schedule/);
+        assert.equal(await p.locator('#monthly-progress-unit').innerText(),'of published classes finished');
+        assert.match(await p.locator('#monthly-progress-classes').innerText(),/2 of 6 classes finished/);
         await p.locator('#show-past').check(); assert.equal(await percent(),value); await p.locator('#show-past').uncheck();
       }
     }
-    ok('Day, Week and Month change hours, percentage, bar and heading; List keeps the explained current-month summary');
+    ok('Day, Week and Month use selected-period denominators; List shows overall published-class progress');
     await p.locator('#course-filter').selectOption('fund-quant-methods'); assert.equal(await percent(),'100%');
     await p.locator('#timetable-reset').click(); await p.locator('#timetable-search').fill('QA Economics Teacher');assert.equal(await percent(),'0%');
     assert.match(await p.locator('#monthly-progress-scope').innerText(),/Search applied/);
     await p.locator('#timetable-search').fill('nothing-matches'); assert.equal(await p.locator('#monthly-progress-values').isVisible(),false);
     assert.match(await p.locator('#monthly-progress-status').innerText(),/No published hours/);
-    await p.locator('#timetable-reset').click();assert.equal(await percent(),'40%');
-    ok('course and search filters change the scope and hours, with an honest no-matching-hours state');
+    await p.locator('#timetable-reset').click();assert.equal(await percent(),'33.3%');
+    ok('course and search filters change the overall List scope and classes, with an honest no-matching-hours state');
     for(const [view,hours] of [['day',2],['week',2],['month',6]]) {
       await mode(p,view);await p.locator('#timetable-search').fill('QA Economics Teacher');
       assert.equal(await percent(),'0%');assert.equal(await p.locator('#monthly-progress-total').innerText(),`${hours} h`);
@@ -91,10 +93,11 @@ const FEED = [make('96498','2026-10-01','09:00','QA Statistics Teacher'), make('
     await date(p,'2026-10-09');assert.equal(await percent(),'50%');
     ok('search/course filters and selected dates apply independently to daily, weekly and monthly progress');
     await mode(p,'month'); await date(p,'2026-11-01');
-    assert.equal(await p.locator('#monthly-progress-values').isVisible(),false);
+    assert.equal(await percent(),'0%');
+    assert.equal(await p.locator('#monthly-progress-total').innerText(),'4 h');
     assert.match(await p.locator('#monthly-progress-scope').innerText(),/November 2026/);
-    await mode(p,'list'); assert.equal(await percent(),'40%');
-    assert.match(await p.locator('#monthly-progress-scope').innerText(),/October 2026/);
+    await mode(p,'list'); assert.equal(await percent(),'33.3%');
+    assert.match(await p.locator('#monthly-progress-scope').innerText(),/Overall published schedule/);
     await mode(p,'month');await date(p,'2026-10-09');
     await p.locator('.tt-progress-method summary').click();
     await p.locator('.tt-month-day[data-date="2026-10-09"]').focus();

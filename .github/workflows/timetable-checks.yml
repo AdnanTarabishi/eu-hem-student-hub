@@ -37,6 +37,7 @@ jobs:
           node scripts/check-contrast.js
           node tests/planning/calendar.test.js
           node tests/planning/progress.test.js
+          node tests/planning/locations.test.js
           node tests/notes/schedule.test.js
       - name: Check existing timetable and exam behaviour
         run: node tests/planning/browser.test.js .
