@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" fill="none">
+  <title>Learning in the mountains</title>
+  <desc>Original decorative illustration of an open study journal, alpine scenery and a healthcare project card. It does not depict a real person or event.</desc>
+  <defs>
+    <pattern id="mountain-paper" width="26" height="26" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#B7A38E" opacity=".22"/></pattern>
+    <filter id="mountain-shadow" x="-25%" y="-25%" width="150%" height="160%"><feDropShadow dx="0" dy="10" stdDeviation="11" flood-color="#15364F" flood-opacity=".12"/></filter>
+    <clipPath id="mountain-frame"><rect width="800" height="500"/></clipPath>
+  </defs>
+  <g clip-path="url(#mountain-frame)">
+    <path d="M0 0h800v500H0z" fill="#F2EADF"/>
+    <path d="M0 0h800v500H0z" fill="url(#mountain-paper)"/>
+    <circle cx="400" cy="255" r="207" stroke="#D6CBBF"/>
+    <circle cx="400" cy="255" r="170" stroke="#DFD5C8"/>
+    <circle cx="572" cy="126" r="39" fill="#E6CDBA"/>
+    <path d="m105 279 121-144 112 112 109-167 181 199H105Z" fill="#A7BCAE"/>
+    <path d="m259 279 79-107 76 109 74-117 115 115H259Z" fill="#6D9386"/>
+    <path d="m413 131 34-51 46 51-26-9-17 13-14-16-23 12Zm-211 34 24-30 34 34-21-4-12 13-10-17-15 4Z" fill="#F7F1E8"/>
+    <path d="m105 279 121-144 30 30m191-85 53 58" stroke="#638577" stroke-width="2" stroke-linecap="round"/>
+    <path d="M-34 404c139-91 223-113 385-82s299 3 494-45v223H0l-34-96Z" fill="#DBE4DA"/>
+    <path d="M-21 467c137-96 238-94 376-82s295 60 466-12" stroke="#C9D6CB" stroke-width="31"/>
+    <path d="M231 307c76-69 156-51 224-10s127 49 198-3" stroke="#C97857" stroke-width="3" stroke-dasharray="5 8" stroke-linecap="round"/>
+    <circle cx="233" cy="306" r="6" fill="#C97857"/>
+    <circle cx="652" cy="295" r="6" fill="#C97857"/>
+    <g filter="url(#mountain-shadow)">
+      <path d="M214 276c67-18 122-13 182 10 60-23 117-28 183-10v143c-71-18-124-10-183 12-60-22-118-30-182-12V276Z" fill="#15364F"/>
+      <path d="M221 267c63-16 120-11 175 12v143c-56-23-113-28-175-11V267Z" fill="#FFFAEF"/>
+      <path d="M396 279c55-23 112-28 175-12v144c-62-17-119-12-175 11V279Z" fill="#F4EAD9"/>
+      <path d="M396 287v125" stroke="#D4C7B5" stroke-width="2"/>
+      <path d="M245 296c39-5 74-2 113 12m-113 11c37-5 77-1 113 11m-113 44c39-4 74-1 113 12m-113 7c26-3 53-2 76 4" stroke="#A7B5A5" stroke-width="5" stroke-linecap="round"/>
+      <path d="m437 348 24-36 30 25 29-49 25 46" stroke="#C97857" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M428 370c39-8 76-9 115-4m-115 21c29-6 58-8 87-5" stroke="#ADA38F" stroke-width="5" stroke-linecap="round"/>
+      <path d="M359 284v69l12-10 11 14v-69" fill="#C97857"/>
+    </g>
+    <g filter="url(#mountain-shadow)" transform="rotate(8 599 266)">
+      <rect x="558" y="211" width="84" height="105" rx="13" fill="#E6CDBA"/>
+      <rect x="584" y="205" width="33" height="15" rx="5" fill="#15364F"/>
+      <path d="M600 233v24m-12-12h24" stroke="#A95E43" stroke-width="4" stroke-linecap="round"/>
+      <path d="M575 278h50m-50 13h35" stroke="#B5977B" stroke-width="4" stroke-linecap="round"/>
+    </g>
+    <path d="M116 196v18m-9-9h18m571 178v20m-10-10h20" stroke="#97A695" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="697" cy="196" r="5" fill="#C97857"/>
+  </g>
+</svg>

@@ -16,7 +16,8 @@
     "test:statistics": "node scripts/check-content.js && node tests/statistics/state.test.js && node tests/statistics/browser.test.js",
     "test:quant-methods": "node scripts/check-content.js && node tests/statistics/state.test.js && node tests/quant-methods/browser.test.js",
     "test:students": "node scripts/check-content.js && node tests/students/data.test.js . && node tests/students/browser.test.js . && node tests/students/design.test.js .",
-    "test:editor": "node tests/editor/data.test.js && node tests/editor/schema.test.mjs && node tests/editor/browser.test.js ."
+    "test:editor": "node tests/editor/data.test.js && node tests/editor/schema.test.mjs && node tests/editor/browser.test.js .",
+    "test:experiences": "node scripts/check-content.js && node tests/experiences/submission.test.js && node tests/experiences/browser.test.js ."
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.8",

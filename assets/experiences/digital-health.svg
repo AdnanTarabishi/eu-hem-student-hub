@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" fill="none">
+  <title>A path into digital health</title>
+  <desc>Original decorative illustration of a health-data screen and connected project cards. The diagrams are abstract and do not contain patient information or measured results.</desc>
+  <defs>
+    <pattern id="digital-grid" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M36 0H0v36" stroke="#A7BCAE" stroke-opacity=".09"/></pattern>
+    <filter id="digital-shadow" x="-30%" y="-35%" width="160%" height="180%"><feDropShadow dx="0" dy="12" stdDeviation="13" flood-color="#061B2C" flood-opacity=".22"/></filter>
+    <clipPath id="digital-frame"><rect width="800" height="500"/></clipPath>
+  </defs>
+  <g clip-path="url(#digital-frame)">
+    <path d="M0 0h800v500H0z" fill="#15364F"/>
+    <path d="M0 0h800v500H0z" fill="url(#digital-grid)"/>
+    <circle cx="396" cy="249" r="213" stroke="#A7BCAE" stroke-opacity=".25"/>
+    <circle cx="396" cy="249" r="172" stroke="#A7BCAE" stroke-opacity=".13"/>
+    <circle cx="794" cy="61" r="157" fill="#20465D"/>
+    <circle cx="-2" cy="487" r="145" fill="#214B58"/>
+    <path d="M132 257V173a37 37 0 0 1 37-37h72m322 102h78a32 32 0 0 1 32 32v75" stroke="#7D9E88" stroke-width="3" stroke-dasharray="5 8" stroke-linecap="round"/>
+    <g filter="url(#digital-shadow)">
+      <rect x="225" y="88" width="355" height="270" rx="23" fill="#F7F1E8"/>
+      <rect x="241" y="104" width="323" height="227" rx="14" fill="#DDE7DC"/>
+      <rect x="258" y="123" width="45" height="45" rx="11" fill="#15364F"/>
+      <path d="M280 133v23m-11-11h23" stroke="#F7F1E8" stroke-width="4" stroke-linecap="round"/>
+      <path d="M319 134h105m-105 15h72" stroke="#789587" stroke-width="5" stroke-linecap="round"/>
+      <path d="M266 216h30l20-19 24 50 24-74 26 44h30l16-20 20 20h77" stroke="#C97857" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M264 273h74m-74 17h48" stroke="#8BA795" stroke-width="5" stroke-linecap="round"/>
+      <rect x="380" y="263" width="71" height="42" rx="9" fill="#C1D1BE"/>
+      <rect x="465" y="263" width="71" height="42" rx="9" fill="#E6CDBA"/>
+      <path d="m399 284 9 9 18-19m63 10h24m-12-12v24" stroke="#577C6A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M368 358v37h68v-37m-97 47h128" stroke="#A8BCAF" stroke-width="11" stroke-linecap="round"/>
+      <circle cx="402" cy="344" r="4" fill="#7D9E88"/>
+    </g>
+    <g filter="url(#digital-shadow)" transform="rotate(-10 182 322)">
+      <rect x="130" y="264" width="111" height="117" rx="17" fill="#E6CDBA"/>
+      <path d="M149 286h42m-42 16h67" stroke="#B28D72" stroke-width="5" stroke-linecap="round"/>
+      <rect x="149" y="324" width="22" height="31" rx="5" fill="#C97857"/>
+      <rect x="177" y="314" width="22" height="41" rx="5" fill="#B67C60"/>
+      <rect x="205" y="334" width="18" height="21" rx="5" fill="#9E644A"/>
+    </g>
+    <g filter="url(#digital-shadow)" transform="rotate(9 620 346)">
+      <rect x="568" y="294" width="105" height="105" rx="19" fill="#7D9E88"/>
+      <path d="m592 329 15-10 15 10-15 10-15-10Zm30 28 15-10 15 10-15 10-15-10Zm-38 0 15-10 15 10-15 10-15-10Z" stroke="#F7F1E8" stroke-width="2.5" stroke-linejoin="round"/>
+      <path d="M607 339v9m0-3 30 2m-30-2-8 2" stroke="#F7F1E8" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <path d="M112 115v20m-10-10h20m560 42v20m-10-10h20" stroke="#95B0A4" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="699" cy="267" r="5" fill="#D59470"/>
+    <circle cx="292" cy="432" r="4" fill="#A7BCAE"/>
+  </g>
+</svg>

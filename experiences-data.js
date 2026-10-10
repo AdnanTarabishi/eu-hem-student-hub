@@ -9,7 +9,7 @@ window.EUHEM_EXPERIENCES = {
     rotterdam: { name: "Rotterdam", country: "Netherlands" }
   },
   tracks: {
-    hep: "Health Economics & Policy",
+    hep: "Health Economics & Policy (historical source)",
     eeh: "Economic Evaluation in Healthcare",
     mhi: "Management of Healthcare Institutions",
     phm: "Population Health Management"
@@ -29,10 +29,10 @@ window.EUHEM_EXPERIENCES = {
     {
       id: "hanna-lichter",
       image: {
-        small: "assets/images/cities/innsbruck/ai-students-mountains-640.webp",
-        large: "assets/images/cities/innsbruck/ai-students-mountains-1200.webp",
-        alt: "Editorial illustration of students studying with the mountains of Innsbruck in the background.",
-        credit: "AI-generated editorial illustration for the Student Hub · not a photograph of Hanna Lichter",
+        small: "assets/experiences/learning-in-mountains.svg",
+        large: "assets/experiences/learning-in-mountains.svg",
+        alt: "Original illustration of an open book, learning cards and mountains.",
+        credit: "Original editorial artwork for the Student Hub · thematic illustration, not a portrait",
         kind: "illustration"
       },
       kind: "external",
@@ -60,10 +60,10 @@ window.EUHEM_EXPERIENCES = {
     {
       id: "skander-essafi",
       image: {
-        small: "assets/images/cities/rotterdam/ai-students-campus-640.webp",
-        large: "assets/images/cities/rotterdam/ai-students-campus-1200.webp",
-        alt: "Editorial illustration of international students on a modern European campus.",
-        credit: "AI-generated editorial illustration for the Student Hub · not a photograph of Skander Essafi",
+        small: "assets/experiences/healthcare-perspectives.svg",
+        large: "assets/experiences/healthcare-perspectives.svg",
+        alt: "Original illustration of a healthcare symbol, research cards and a path between perspectives.",
+        credit: "Original editorial artwork for the Student Hub · thematic illustration, not a portrait",
         kind: "illustration"
       },
       kind: "external",
@@ -91,10 +91,10 @@ window.EUHEM_EXPERIENCES = {
     {
       id: "elke-van-gorp",
       image: {
-        small: "assets/images/cities/innsbruck/ai-inn-river-sunset-640.webp",
-        large: "assets/images/cities/innsbruck/ai-inn-river-sunset-1200.webp",
-        alt: "Editorial illustration of Innsbruck and the Inn River at sunset.",
-        credit: "AI-generated editorial illustration for the Student Hub · not a photograph of Elke van Gorp",
+        small: "assets/experiences/city-mobility.svg",
+        large: "assets/experiences/city-mobility.svg",
+        alt: "Original illustration of a suitcase, a home and connected city routes.",
+        credit: "Original editorial artwork for the Student Hub · thematic illustration, not a portrait",
         kind: "illustration"
       },
       kind: "external",
@@ -122,10 +122,10 @@ window.EUHEM_EXPERIENCES = {
     {
       id: "susanne-cornelis-klitsie",
       image: {
-        small: "assets/images/cities/rotterdam/ai-erasmus-bridge-sunset-640.webp",
-        large: "assets/images/cities/rotterdam/ai-erasmus-bridge-sunset-1200.webp",
-        alt: "Editorial illustration of Rotterdam and the Erasmus Bridge at sunset.",
-        credit: "AI-generated editorial illustration for the Student Hub · not a photograph of Susanne Cornelis-Klitsie",
+        small: "assets/experiences/digital-health.svg",
+        large: "assets/experiences/digital-health.svg",
+        alt: "Original illustration of a digital health screen, a learning book and a healthcare symbol.",
+        credit: "Original editorial artwork for the Student Hub · thematic illustration, not a portrait",
         kind: "illustration"
       },
       kind: "external",
@@ -153,10 +153,10 @@ window.EUHEM_EXPERIENCES = {
     {
       id: "remy-lesuis",
       image: {
-        small: "assets/images/cities/oslo/ai-students-university-640.webp",
-        large: "assets/images/cities/oslo/ai-students-university-1200.webp",
-        alt: "Editorial illustration of international students studying together at a European university.",
-        credit: "AI-generated editorial illustration for the Student Hub · not a photograph of Remy Lesuis",
+        small: "assets/experiences/international-network.svg",
+        large: "assets/experiences/international-network.svg",
+        alt: "Original illustration of a globe and connected learning and community symbols.",
+        credit: "Original editorial artwork for the Student Hub · thematic illustration, not a portrait",
         kind: "illustration"
       },
       kind: "external",
@@ -184,10 +184,10 @@ window.EUHEM_EXPERIENCES = {
     {
       id: "frank-bisselink",
       image: {
-        small: "assets/images/cities/bologna/ai-students-porticoes-640.webp",
-        large: "assets/images/cities/bologna/ai-students-porticoes-1200.webp",
-        alt: "Editorial illustration of an international student group in a European university city.",
-        credit: "AI-generated editorial illustration for the Student Hub · not a photograph of Frank Bisselink",
+        small: "assets/experiences/programme-journey.svg",
+        large: "assets/experiences/programme-journey.svg",
+        alt: "Original illustration of learning, healthcare and several connected programme routes.",
+        credit: "Original editorial artwork for the Student Hub · thematic illustration, not a portrait",
         kind: "illustration"
       },
       kind: "external",

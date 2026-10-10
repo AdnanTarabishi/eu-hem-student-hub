@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Student Experiences · EU-HEM Student Hub</title>
-  <meta name="description" content="Explore EU-HEM student and alumni perspectives on study, tracks, mobility, housing, thesis work and careers — or draft your own experience to share later.">
+  <meta name="description" content="Explore EU-HEM student and alumni perspectives on study, tracks, mobility, housing, thesis work and careers — or share your own experience for private review.">
   <!-- Social preview (scripts/social-tags.js) -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="EU-HEM Student Hub">
   <meta property="og:title" content="Student Experiences · EU-HEM Student Hub">
-  <meta property="og:description" content="Explore EU-HEM student and alumni perspectives on study, tracks, mobility, housing, thesis work and careers — or draft your own experience to share later.">
+  <meta property="og:description" content="Explore EU-HEM student and alumni perspectives on study, tracks, mobility, housing, thesis work and careers — or share your own experience for private review.">
   <meta property="og:url" content="https://adnantarabishi.github.io/eu-hem-student-hub/experiences.html">
   <meta property="og:image" content="https://adnantarabishi.github.io/eu-hem-student-hub/img/social-preview.png">
   <meta property="og:image:width" content="1200">
@@ -20,7 +20,7 @@
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/source-serif-4-latin-600.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=6ef75792">
-  <link rel="stylesheet" href="experiences.css?v=images-20261006">
+  <link rel="stylesheet" href="experiences.css?v=b4a5b422">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -44,31 +44,30 @@
   <section class="ex-hero ex-wrap" aria-labelledby="experience-title">
     <div class="ex-hero-copy">
       <p class="ex-eyebrow"><span class="ex-eyebrow-dot" aria-hidden="true"></span>Student Experiences</p>
-      <h1 id="experience-title">Your next chapter,<br><em>in their words.</em></h1>
-      <p class="ex-hero-lead">A new city. A different classroom. A path of your own. Explore grounded perspectives from EU-HEM students and graduates — and take a little experience with you.</p>
+      <h1 id="experience-title">A shared journey.<br><em>Your own perspective.</em></h1>
+      <p class="ex-hero-lead">What is it like to study, move and find your direction in EU-HEM? Explore student and alumni perspectives, find practical advice, and pass your experience on.</p>
       <div class="ex-hero-actions">
         <a class="ex-button" href="#stories">Explore the stories</a>
         <a class="ex-button-secondary" href="#share-experience">Share your experience</a>
       </div>
       <p class="ex-hero-note">The first collection links to partner-university interviews and testimonials. Direct student contributions will appear only after author and editorial approval.</p>
     </div>
-    <div class="ex-hero-visual" aria-label="Illustration of the four EU-HEM cities">
-      <div class="ex-route-art">
-        <div class="ex-route-map" aria-hidden="true">
-          <span class="ex-city-pin" data-city="bologna">Bologna</span>
-          <span class="ex-city-pin" data-city="oslo">Oslo</span>
-          <span class="ex-city-pin" data-city="innsbruck">Innsbruck</span>
-          <span class="ex-city-pin" data-city="rotterdam">Rotterdam</span>
-        </div>
-      </div>
+    <div class="ex-hero-visual">
+      <img class="ex-hero-illustration" src="assets/experiences/programme-journey-generated.webp" width="1586" height="992" alt="AI-generated editorial illustration of books, a globe and imagined European city silhouettes connected by a terracotta route." fetchpriority="high">
       <div class="ex-route-caption">
-        <strong>One programme · several perspectives</strong>
-        <span>Stories are filtered only by cities actually covered in the source — not by future plans.</span>
+        <strong>One programme. Different perspectives.</strong>
+        <span>AI-generated editorial illustration · imagined scenery, not a literal route map.</span>
       </div>
     </div>
   </section>
 
-  <section class="ex-feature-band ex-wrap" aria-labelledby="featured-title">
+  <div class="ex-collection-stats ex-wrap" aria-label="About the collection">
+    <div><strong id="ex-story-total">6</strong><span>Source-linked perspectives</span></div>
+    <div><strong id="ex-city-total">4</strong><span>Cities covered in the sources</span></div>
+    <div><strong>Private review</strong><span>Your contribution is never published automatically</span></div>
+  </div>
+
+  <section class="ex-feature-band ex-wrap" aria-labelledby="ex-feature-title">
     <article class="ex-feature">
       <div class="ex-feature-copy">
         <p class="ex-eyebrow"><span class="ex-eyebrow-dot" aria-hidden="true"></span>Featured perspective</p>
@@ -78,7 +77,7 @@
         <div id="ex-feature-meta" class="ex-feature-meta" aria-label="Featured story context"></div>
         <button type="button" class="ex-button-secondary" id="ex-feature-open">Read the overview</button>
       </div>
-      <div class="ex-feature-panel" aria-hidden="true">
+      <div class="ex-feature-panel">
         <p>Innsbruck · study, community, thesis</p>
       </div>
     </article>
@@ -89,14 +88,14 @@
       <div>
         <p class="ex-eyebrow"><span class="ex-eyebrow-dot" aria-hidden="true"></span>Browse by question</p>
         <h2 id="questions-title">What are you trying to figure out?</h2>
-        <p>Start with the question behind the decision, rather than scrolling through every story.</p>
+        <p>Choose a question to find the perspectives most relevant to you.</p>
       </div>
     </div>
     <div class="ex-question-grid">
       <button class="ex-question" type="button" data-topic-shortcut="track">
         <span class="ex-question-icon" aria-hidden="true">01</span>
         <strong>Which track might fit me?</strong>
-        <span>Background, interests and what students noticed after choosing.</span>
+        <span>Background, interests and reflections on choosing a direction.</span>
       </button>
       <button class="ex-question" type="button" data-topic-shortcut="study">
         <span class="ex-question-icon" aria-hidden="true">02</span>
@@ -160,6 +159,10 @@
     <div class="ex-results-bar">
       <p id="ex-result-count" role="status" aria-live="polite">Preparing the collection…</p>
       <div class="ex-actions">
+        <div class="ex-view-switch" role="group" aria-label="Story layout">
+          <button id="ex-view-grid" data-ex-view="grid" type="button" aria-pressed="true" aria-controls="ex-grid">Grid</button>
+          <button id="ex-view-list" data-ex-view="list" type="button" aria-pressed="false" aria-controls="ex-grid">List</button>
+        </div>
         <label class="ex-field">
           <span>Sort</span>
           <select id="ex-sort">
@@ -173,22 +176,25 @@
     </div>
 
     <div class="ex-grid" id="ex-grid"></div>
-    <p class="ex-subcopy" style="margin-top:18px"><span id="ex-reviewed">Sources checked 6 Oct 2026</span>. Personal experiences are time-specific and do not replace current official programme, immigration, housing or financial guidance.</p>
+    <p class="ex-subcopy" style="margin-top:18px"><span id="ex-reviewed">Sources checked 6 Oct 2026</span>. Stories describe the time and track structure in each original source. Check <a href="tracks.html">current tracks</a> and official guidance for today’s programme, immigration, housing and costs.</p>
   </section>
 
   <section class="ex-contribute ex-wrap" id="share-experience" aria-labelledby="share-title">
     <aside class="ex-form-aside">
       <p class="ex-eyebrow"><span class="ex-eyebrow-dot" aria-hidden="true"></span>Pass experience forward</p>
-      <h2 id="share-title">Useful beats perfect.</h2>
+      <h2 id="share-title">Your experience can help.</h2>
       <p>Share one city, one semester or the journey so far. The core contribution is short; deeper questions appear only for topics you choose.</p>
       <div class="ex-progress" aria-label="Contribution progress">
         <span></span><span></span><span></span><span></span><span></span>
       </div>
       <p class="ex-step-label" id="ex-step-label">Step 1 of 5 · About your experience</p>
-      <p>Nothing is sent from this page in the current release. Submission opens only after a private review workflow is configured and tested.</p>
+      <p>You can send your answers to the Hub’s private contribution inbox for review. Publication needs a separate review and your approval. Required questions are marked with *.</p>
     </aside>
 
+    <noscript><p class="ex-privacy-box">Enable JavaScript to complete this form, or <a href="contact.html">contact the Hub</a> to contribute.</p></noscript>
     <form class="ex-form-card" id="ex-form" novalidate>
+      <fieldset class="ex-form-fields" id="ex-form-fields" disabled>
+      <legend class="visually-hidden">Share an EU-HEM experience</legend>
       <div id="ex-draft-note" class="ex-privacy-box" hidden style="margin:18px 22px 0">
         A draft exists on this device.
         <button type="button" class="ex-link-button" id="ex-restore-draft">Restore it</button>
@@ -198,7 +204,7 @@
 
       <section class="ex-form-step is-active" data-step="0">
         <h3>About your experience</h3>
-        <p>Enough context to help a future student understand where your advice comes from.</p>
+        <p>Share only the context that helps someone understand your story. Leave optional details blank if you prefer. Do not include student IDs, private contact details of others, or sensitive personal information.</p>
         <div class="ex-fields">
           <label class="ex-field">
             <span>Your connection to EU-HEM *</span>
@@ -219,21 +225,23 @@
             </select>
           </label>
           <label class="ex-field">
-            <span>Specialisation track</span>
+            <span>Specialisation track · optional</span>
             <select name="formTrack">
               <option value="">Not chosen / prefer not to say</option>
-              <option>Health Economics &amp; Policy</option>
+              <option>Economics &amp; Policy</option>
+              <option>Health Economics &amp; Policy (earlier track name)</option>
               <option>Economic Evaluation in Healthcare</option>
               <option>Management of Healthcare Institutions</option>
               <option>Population Health Management</option>
+              <option>Other / earlier track</option>
             </select>
           </label>
           <label class="ex-field">
-            <span>Cohort</span>
+            <span>Cohort · optional</span>
             <input name="cohort" maxlength="20" placeholder="e.g. 2026–2028">
           </label>
           <label class="ex-field ex-field-wide">
-            <span>Previous field of study</span>
+            <span>Previous field of study · optional</span>
             <input name="background" maxlength="80" placeholder="e.g. Medicine, Economics, Public Health">
             <p class="ex-help">Optional. A broad field is usually enough; you can keep it out of the public preview later.</p>
           </label>
@@ -249,7 +257,8 @@
           <label class="ex-journey-row"><strong>Innsbruck</strong><select id="journey-innsbruck"><option value="">Not part of this story</option><option value="completed">Completed</option><option value="in_progress">In progress</option><option value="planned">Planned</option></select></label>
           <label class="ex-journey-row"><strong>Rotterdam</strong><select id="journey-rotterdam"><option value="">Not part of this story</option><option value="completed">Completed</option><option value="in_progress">In progress</option><option value="planned">Planned</option></select></label>
         </div>
-        <p class="ex-help" style="margin-top:12px">At least one city must be Completed or In progress before you continue.</p>
+        <p class="ex-help" style="margin-top:12px">Include only cities relevant to this story. At least one must be Completed or In progress.</p>
+        <label class="ex-field"><span>When did this experience take place? · optional</span><input name="period" maxlength="80" placeholder="e.g. Bologna, September–December 2025"></label>
       </section>
 
       <section class="ex-form-step" data-step="2">
@@ -261,27 +270,27 @@
             <input name="title" maxlength="100" required placeholder="e.g. What I learned moving from Bologna to Innsbruck">
           </label>
           <label class="ex-field ex-field-wide">
-            <span>What should a new student know? *</span>
-            <textarea name="story" maxlength="1800" required placeholder="What happened, what mattered, and what context should the reader know?"></textarea>
+            <span>What happened, and what should another student know? *</span>
+            <textarea name="story" minlength="30" maxlength="1800" required placeholder="Describe your experience, what helped or was difficult, and the context a reader needs."></textarea>
           </label>
           <label class="ex-field ex-field-wide">
-            <span>Practical tip 1 *</span>
-            <textarea name="tip1" maxlength="500" required></textarea>
+            <span>One practical tip *</span>
+            <textarea name="tip1" minlength="10" maxlength="500" required></textarea>
           </label>
           <label class="ex-field ex-field-wide">
-            <span>Practical tip 2 *</span>
-            <textarea name="tip2" maxlength="500" required></textarea>
+            <span>Another tip · optional</span>
+            <textarea name="tip2" maxlength="500"></textarea>
           </label>
           <label class="ex-field ex-field-wide">
-            <span>Practical tip 3</span>
+            <span>A third tip · optional</span>
             <textarea name="tip3" maxlength="500"></textarea>
           </label>
           <label class="ex-field">
-            <span>What surprised you?</span>
+            <span>What, if anything, surprised you? · optional</span>
             <textarea name="surprise" maxlength="700"></textarea>
           </label>
           <label class="ex-field">
-            <span>What would you do differently?</span>
+            <span>What, if anything, would you approach differently? · optional</span>
             <textarea name="different" maxlength="700"></textarea>
           </label>
         </div>
@@ -309,7 +318,7 @@
           <label class="ex-field ex-topic-detail" data-topic-detail="track"><span>Track choice — what influenced your decision?</span><textarea name="detail_track" maxlength="1000" disabled></textarea></label>
           <label class="ex-field ex-topic-detail" data-topic-detail="study"><span>Study — what did a typical week or assessment pattern feel like?</span><textarea name="detail_study" maxlength="1000" disabled></textarea></label>
           <label class="ex-field ex-topic-detail" data-topic-detail="housing"><span>Housing — what should students check before committing?</span><textarea name="detail_housing" maxlength="1000" disabled></textarea></label>
-          <label class="ex-field ex-topic-detail" data-topic-detail="costs"><span>Costs — include city, period and what your estimate covers.</span><textarea name="detail_costs" maxlength="1000" disabled></textarea></label>
+          <label class="ex-field ex-topic-detail" data-topic-detail="costs"><span>Costs — include city, month/year, currency and what your estimate covers. Avoid bank or account details.</span><textarea name="detail_costs" maxlength="1000" disabled></textarea></label>
           <label class="ex-field ex-topic-detail" data-topic-detail="mobility"><span>Mobility — what made moving easier or harder?</span><textarea name="detail_mobility" maxlength="1000" disabled></textarea></label>
           <label class="ex-field ex-topic-detail" data-topic-detail="community"><span>Community — what helped you feel part of the cohort or city?</span><textarea name="detail_community" maxlength="1000" disabled></textarea></label>
           <label class="ex-field ex-topic-detail" data-topic-detail="thesis"><span>Thesis — what stage are you at, and what has helped?</span><textarea name="detail_thesis" maxlength="1000" disabled></textarea></label>
@@ -319,10 +328,10 @@
 
       <section class="ex-form-step" data-step="4">
         <h3>Preview &amp; privacy</h3>
-        <p>Choose how this story could appear. These settings are only a preview until real submissions open.</p>
+        <p>Review every answer and choose your publication preference. Sending requests private review; it does not publish your story or grant permission to publish it.</p>
         <div class="ex-fields">
           <label class="ex-field">
-            <span>Name display *</span>
+            <span>If the story is later published, show *</span>
             <select name="nameMode" required>
               <option value="anonymous">Do not show my name</option>
               <option value="first">First name only</option>
@@ -335,24 +344,27 @@
             <input name="displayName" maxlength="80" placeholder="Used only if your choice needs it">
           </label>
           <label class="ex-field">
-            <span>Audience *</span>
+            <span>Publication preference *</span>
             <select name="audience" required>
-              <option value="unpublished">Do not publish yet</option>
-              <option value="public">Public</option>
-              <option value="members">EU-HEM members only · future access</option>
+              <option value="unpublished">Private review only</option>
+              <option value="public">I am open to discussing public publication</option>
             </select>
           </label>
           <label class="ex-field">
-            <span>Show cohort?</span>
+            <span>Show cohort in a future story?</span>
             <select name="showCohort"><option value="no">No</option><option value="yes">Yes</option></select>
           </label>
           <label class="ex-field">
-            <span>Show previous field?</span>
+            <span>Show previous field in a future story?</span>
             <select name="showBackground"><option value="no">No</option><option value="yes">Yes</option></select>
           </label>
         </div>
 
         <div id="ex-preview" style="margin-top:20px"></div>
+        <label class="ex-field"><span>Reply email · optional, kept private</span><input type="email" name="replyEmail" maxlength="254" autocomplete="email" placeholder="Only if you would like follow-up"></label>
+        <label class="ex-consent"><input type="checkbox" name="reviewConsent" required><span>I understand that these answers will be sent to the Hub’s private inbox for contribution review, as described in <a href="privacy.html#messages" target="_blank" rel="noopener">Messages you send</a>. Nothing is published automatically.</span></label>
+        <label hidden aria-hidden="true">Leave this blank<input name="website" tabindex="-1" autocomplete="off"></label>
+        <p class="ex-help" id="ex-submission-count">Your complete contribution must fit the inbox’s 5,000-character limit.</p>
         <p class="ex-privacy-box" id="ex-preview-privacy">Private details stay out of the public preview.</p>
 
         <div class="ex-form-final-actions">
@@ -361,7 +373,7 @@
           <button type="button" class="ex-button-secondary" id="ex-download-draft">Download draft</button>
           <button type="button" class="ex-button-secondary" id="ex-import-draft">Import draft</button>
           <input type="file" id="ex-import-file" accept="application/json,.json" hidden>
-          <button type="button" class="ex-button" disabled title="Private review backend not connected">Submit for review · coming soon</button>
+          <button type="submit" class="ex-button" id="ex-submit" disabled>Send for private review</button>
         </div>
       </section>
 
@@ -372,7 +384,10 @@
           <button type="button" class="ex-button" id="ex-form-next">Continue</button>
         </div>
       </div>
+      </fieldset>
       <p class="ex-form-message" id="ex-form-message" role="alert" aria-live="polite"></p>
+      <p class="ex-submission-status" id="ex-submit-status" role="status" aria-live="polite" tabindex="-1"></p>
+      <p class="ex-help" id="ex-submit-receipt" hidden></p>
     </form>
   </section>
 
@@ -389,28 +404,28 @@
       </details>
       <details>
         <summary>Can current students contribute?</summary>
-        <p>Yes. The form is designed so a second-year student can share the semesters and cities already experienced without pretending the whole degree is complete. Completed, in-progress and planned stages remain separate.</p>
+        <p>Yes. Current students, graduates and former students can share one city, one semester or their journey so far. Completed, in-progress and planned stages remain separate. You need one practical tip; other details are optional.</p>
       </details>
       <details>
-        <summary>Are the images photographs of the students?</summary>
-        <p>Not unless a story explicitly says so. The current covers are editorial illustrations chosen to reflect the city or topic of each story. They are labeled as AI-generated and should not be interpreted as portraits of the contributor. Official university photography can replace an illustration later when reuse permission is clear.</p>
+        <summary>What do the illustrations represent?</summary>
+        <p>The story covers are original editorial illustrations about learning, mobility, community and careers, in the same visual style as Announcements. The opening image is an AI-generated illustration of imagined scenery. These images are not photographs, literal route maps or portraits of the named contributors.</p>
       </details>
       <details>
         <summary>Can someone publish a story without publishing their profile?</summary>
-        <p>Yes. A future Student Experiences submission and a Student Directory profile are separate. A contributor can choose the audience and identity display for the story independently.</p>
+        <p>Yes. A story contribution and a Student Directory profile are separate. You can request private review without creating a profile. Any public story would need a separate review and your approval of its wording and name display.</p>
       </details>
       <details>
         <summary>Does “no name” guarantee anonymity?</summary>
         <p>No. In a small international cohort, a very specific route or background can still identify someone. The preview therefore lets contributors hide optional cohort and background details too.</p>
       </details>
       <details>
-        <summary>Why is the Submit button disabled?</summary>
-        <p>The public interface is ready for drafting and preview, but real submission will stay closed until a private intake, editorial review, author approval and withdrawal workflow is configured and tested.</p>
+        <summary>Can this form receive answers?</summary>
+        <p>The form connects to the existing private Contact contribution inbox. It shows a reference only after the service confirms storage. If sending is unavailable or unconfirmed, your answers stay in the form so you can retry or download a draft. Draft saving alone is not a submission. For corrections or withdrawal requests, <a href="contact.html">contact the Hub</a> and include your reference.</p>
       </details>
     </div>
   </section>
 
-  <noscript><div class="ex-wrap ex-noscript"><strong>JavaScript is needed for filters and story previews.</strong> The Student Hub still provides the original university links through the source pages referenced in this section.</div></noscript>
+  <noscript><div class="ex-wrap ex-noscript"><strong>JavaScript is needed for filters and story previews.</strong> Read the original <a href="https://www.mci.edu/en/news-filter-en/117-studyprogram-news/203-news-european-health-economics-management/7061-studying-between-class-rooms-and-mountains">MCI student interview</a> and <a href="https://www.eur.nl/en/master/european-master-health-economics-and-management/after-graduation">Erasmus alumni story</a>, or <a href="contact.html">contact the Hub</a> to contribute.</div></noscript>
 </main>
 
 <dialog class="ex-dialog" id="ex-story-dialog">
@@ -451,8 +466,10 @@
 
 <footer class="site-footer"><div class="container"></div></footer>
 
-<script src="experiences-data.js?v=images-20261006"></script>
-<script src="experiences.js?v=images-20261006"></script>
+<script src="experiences-data.js?v=7f1cf311"></script>
+<script src="contact-config.js?v=6ead99f6"></script>
+<script src="experiences-submit.js?v=2209b965"></script>
+<script src="experiences.js?v=83647431"></script>
 <script defer src="utils.js?v=3f08bd92"></script>
 <script defer src="search.js?v=7a1b7e68"></script>
 <script defer src="pwa.js?v=c9212bf8"></script>

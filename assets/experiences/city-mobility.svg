@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" fill="none">
+  <title>Finding your footing between cities</title>
+  <desc>Original decorative illustration of city buildings, a suitcase, house keys and a winding route. It does not represent verified housing availability or a student's personal itinerary.</desc>
+  <defs>
+    <pattern id="mobility-grid" width="35" height="35" patternUnits="userSpaceOnUse"><path d="M35 0H0v35" stroke="#7D9E88" stroke-opacity=".12"/></pattern>
+    <filter id="mobility-shadow" x="-30%" y="-35%" width="160%" height="180%"><feDropShadow dx="0" dy="11" stdDeviation="12" flood-color="#15364F" flood-opacity=".14"/></filter>
+    <clipPath id="mobility-frame"><rect width="800" height="500"/></clipPath>
+  </defs>
+  <g clip-path="url(#mobility-frame)">
+    <path d="M0 0h800v500H0z" fill="#E5EBE2"/>
+    <path d="M0 0h800v500H0z" fill="url(#mobility-grid)"/>
+    <circle cx="393" cy="250" r="211" stroke="#C7D3C5"/>
+    <circle cx="393" cy="250" r="169" stroke="#D3DDD0"/>
+    <circle cx="105" cy="45" r="130" fill="#E6CDBA" opacity=".62"/>
+    <circle cx="792" cy="488" r="181" fill="#D2DECF"/>
+    <path d="M79 339c96 83 136-54 225-33s136 132 233 64 99-151 191-112" stroke="#C97857" stroke-width="4" stroke-linecap="round" stroke-dasharray="5 9"/>
+    <g filter="url(#mobility-shadow)">
+      <rect x="133" y="124" width="158" height="157" rx="17" fill="#F9F5EA"/>
+      <path d="M157 252V151h53v101m-28-101v-22h6v22m22 101v-71h55v71m-114 0h119" stroke="#9E644A" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M168 168h9m12 0h9m-30 18h9m12 0h9m-30 18h9m12 0h9m32-5h9m10 0h9m-28 18h9m10 0h9" stroke="#C59A7C" stroke-width="3" stroke-linecap="round"/>
+      <path d="M171 252v-27a13 13 0 0 1 26 0v27m29 0v-15a12 12 0 0 1 24 0v15" fill="#E6CDBA" stroke="#9E644A" stroke-width="3"/>
+      <rect x="505" y="80" width="153" height="157" rx="17" fill="#F9F5EA"/>
+      <path d="M527 195h109m-84 0v-80l31 37 32-37v80m-64-41h64m-95 53h127" stroke="#577C73" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M552 154 529 195m53-43-15 43m15-43 16 43m17-41 21 41" stroke="#92AEA0" stroke-width="2"/>
+    </g>
+    <g filter="url(#mobility-shadow)">
+      <path d="M330 244v-30a15 15 0 0 1 15-15h53a15 15 0 0 1 15 15v30" stroke="#15364F" stroke-width="10"/>
+      <rect x="279" y="233" width="188" height="175" rx="23" fill="#15364F"/>
+      <path d="M305 241v156m136-156v156" stroke="#537183" stroke-width="4"/>
+      <path d="M324 275h98m-98 24h98m-98 24h98m-98 24h98" stroke="#294F65" stroke-width="6" stroke-linecap="round"/>
+      <rect x="350" y="277" width="46" height="60" rx="7" fill="#E6CDBA" transform="rotate(-8 373 307)"/>
+      <path d="m363 306 12-11 12 11v16h-24v-16Zm9 16v-10h6v10" stroke="#A65D44" stroke-width="2" stroke-linejoin="round"/>
+      <circle cx="310" cy="410" r="10" fill="#0D283A"/>
+      <circle cx="436" cy="410" r="10" fill="#0D283A"/>
+      <path d="M306 260h26" stroke="#E9E3D6" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <g filter="url(#mobility-shadow)" transform="rotate(14 533 340)">
+      <circle cx="531" cy="315" r="23" fill="#F7F1E8" stroke="#C97857" stroke-width="7"/>
+      <path d="M531 335v58h19m-19-15h15" stroke="#C97857" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M522 296v-19" stroke="#15364F" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <circle cx="716" cy="258" r="6" fill="#C97857"/>
+    <path d="M86 219v20m-10-10h20m603 174v20m-10-10h20" stroke="#88A28D" stroke-width="2" stroke-linecap="round"/>
+  </g>
+</svg>

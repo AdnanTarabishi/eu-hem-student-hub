@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" fill="none">
+  <title>One programme, many experiences</title>
+  <desc>Original decorative illustration of city postcards connected to an open journal by a shared study journey. Buildings and routes are symbolic, not an official programme map.</desc>
+  <defs>
+    <pattern id="journey-paper" width="25" height="25" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#B7A38E" opacity=".2"/></pattern>
+    <filter id="journey-shadow" x="-30%" y="-30%" width="160%" height="175%"><feDropShadow dx="0" dy="11" stdDeviation="12" flood-color="#15364F" flood-opacity=".12"/></filter>
+    <clipPath id="journey-frame"><rect width="800" height="500"/></clipPath>
+  </defs>
+  <g clip-path="url(#journey-frame)">
+    <path d="M0 0h800v500H0z" fill="#F2EADF"/>
+    <path d="M0 0h800v500H0z" fill="url(#journey-paper)"/>
+    <circle cx="400" cy="250" r="212" stroke="#D9CDBF"/>
+    <circle cx="400" cy="250" r="171" stroke="#E1D7CB"/>
+    <path d="M-15 411c108-79 171-39 251-4m337-394c38 66 138 128 251 113" stroke="#E6D8C9" stroke-width="43"/>
+    <path d="M200 155c69-74 137-39 192-11s109 59 180 5 73 31 25 107-95 74-197 70" stroke="#C97857" stroke-width="5" stroke-linecap="round"/>
+    <path d="M201 154c69-74 137-39 191-11" stroke="#F7F1E8" stroke-width="1.5" stroke-dasharray="2 7" stroke-linecap="round"/>
+    <g filter="url(#journey-shadow)" transform="rotate(-10 181 161)">
+      <rect x="127" y="105" width="109" height="113" rx="16" fill="#F9F5EA" stroke="#D4C4B1"/>
+      <rect x="139" y="117" width="85" height="75" rx="8" fill="#E6CDBA"/>
+      <path d="M150 178v-42h21v42m-15-42v-8h9v8m6 42v-33h41v33m-65 0h69" stroke="#9E644A" stroke-width="2.5" stroke-linejoin="round"/>
+      <path d="M154 178v-10a5 5 0 0 1 10 0v10m15 0v-10a5 5 0 0 1 10 0v10m8 0v-10a5 5 0 0 1 10 0v10" stroke="#9E644A" stroke-width="2"/>
+      <path d="M151 204h44" stroke="#C0A58B" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <g filter="url(#journey-shadow)" transform="rotate(8 358 124)">
+      <rect x="305" y="68" width="109" height="113" rx="16" fill="#F9F5EA" stroke="#D4C4B1"/>
+      <rect x="317" y="80" width="85" height="75" rx="8" fill="#D7E3D9"/>
+      <path d="M329 144h61m-55-6v-31h49v31m-24-45 29 14h-58l29-14Zm-14 19v25m14-25v25m14-25v25" stroke="#577C6A" stroke-width="2.5" stroke-linejoin="round"/>
+      <path d="M329 167h44" stroke="#9AAF99" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <g filter="url(#journey-shadow)" transform="rotate(-6 578 135)">
+      <rect x="525" y="79" width="109" height="113" rx="16" fill="#F9F5EA" stroke="#D4C4B1"/>
+      <rect x="537" y="91" width="85" height="75" rx="8" fill="#DCE6E6"/>
+      <path d="m546 149 22-34 18 25 12-18 17 27h-69Z" fill="#7D9E88"/>
+      <path d="m560 127 8-12 10 14-8-2-4 5-6-5Z" fill="#F9F5EA"/>
+      <path d="M548 178h44" stroke="#9CAFAD" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <g filter="url(#journey-shadow)" transform="rotate(11 624 284)">
+      <rect x="571" y="228" width="109" height="113" rx="16" fill="#F9F5EA" stroke="#D4C4B1"/>
+      <rect x="583" y="240" width="85" height="75" rx="8" fill="#E6CDBA"/>
+      <path d="M594 295h61m-43 0v-44l16 19 16-19v44m-32-23h32m-32 0-15 23m31-25-12 25m12-25 12 25m4-23 12 23" stroke="#9E644A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M595 327h44" stroke="#C0A58B" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <g filter="url(#journey-shadow)">
+      <path d="M228 281c58-9 110-3 168 20 57-23 111-29 168-20v140c-62-11-114-2-168 19-54-21-107-30-168-19V281Z" fill="#15364F"/>
+      <path d="M235 270c53-8 108-1 161 21v138c-53-22-105-29-161-19V270Z" fill="#FFFAEF"/>
+      <path d="M396 291c53-22 108-29 161-21v140c-56-10-108-3-161 19V291Z" fill="#F3E8D6"/>
+      <path d="M396 300v115" stroke="#D4C7B5" stroke-width="2"/>
+      <path d="M263 304c34 0 63 5 95 15m-95 12c34 0 63 5 95 15m-95 29c34 0 63 5 95 15" stroke="#ADB7A8" stroke-width="5" stroke-linecap="round"/>
+      <path d="M425 366c33-10 64-14 102-14m-102 35c25-8 50-12 75-13" stroke="#B2A28C" stroke-width="5" stroke-linecap="round"/>
+      <path d="M472 301v34m-17-17h34" stroke="#C97857" stroke-width="5" stroke-linecap="round"/>
+      <path d="M355 294v53l12-10 11 14v-50" fill="#7D9E88"/>
+    </g>
+    <circle cx="112" cy="330" r="5" fill="#C97857"/>
+    <circle cx="698" cy="116" r="4" fill="#7D9E88"/>
+    <path d="M165 390v18m-9-9h18m293-180v18m-9-9h18" stroke="#A5AD98" stroke-width="2" stroke-linecap="round"/>
+  </g>
+</svg>
