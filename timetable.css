@@ -255,3 +255,13 @@
   .timetable-page .session-location-facts { grid-template-columns: minmax(0, 1fr); }
   .timetable-page .session-location-detail { padding: 14px; }
 }
+
+
+/* Complete official classroom details from the live UniBo feed. */
+.timetable-page .agenda-meta { white-space: normal; overflow-wrap: anywhere; }
+.timetable-page .session-location-official-list { display: grid; gap: 9px; margin-top: 8px; }
+.timetable-page .session-location-official-card { padding: 12px 13px; border: 1px solid var(--border-default); border-radius: 10px; background: var(--surface-card); }
+.timetable-page .session-location-official-kicker { display: block; margin-bottom: 4px; color: var(--text-secondary); font-size: .64rem; font-weight: 750; letter-spacing: .07em; text-transform: uppercase; }
+.timetable-page .session-location-practical { margin-top: 14px; padding: 12px 13px; border-radius: 10px; background: var(--color-primary-light); }
+.timetable-page .session-location-practical-title { display: block; color: var(--text-heading); font-size: .76rem; }
+.timetable-page .session-location-practical .session-location-guide { margin: 5px 0 0; padding: 0; border: 0; background: transparent; }
