@@ -11,3 +11,9 @@ The existing Community events renderer and hidden-until-published behavior are p
 The homepage uses `home-roadmap-preview.js` and `home-roadmap-preview.css`: all Now items can be browsed one at a time, and all validated published releases three at a time, in fixed-height cards. Arrows, counters, boundary states and links remain keyboard accessible. No timer changes the user's selection and no draft updates are included.
 
 Validation: `node tests/home-calendar/browser.test.js .`, existing homepage/roadmap/handbook checks, `node scripts/check-content.js`, colour contrast, and `node scripts/stamp-versions.js --check`.
+
+## October 2026 review
+
+The focused homepage/calendar suite and the existing homepage and roadmap browser suites passed together in [the final layout check](https://github.com/AdnanTarabishi/eu-hem-student-hub/actions/runs/38020760160). Desktop and phone screenshots were reviewed, including both colour themes. The upward release arrow reuses the existing downward sprite with a rotation; no missing icon is referenced. Long shared-menu descriptions are allowed to wrap on these two pages only, without altering the shared navigation or other page styles.
+
+The permanent `home-calendar-checks.yml` workflow repeats the checks on pull requests. Its main-branch run additionally compares the four public JavaScript/CSS assets with the exact checked-out source and runs `tests/home-calendar/live.test.js` against the published site. That smoke test uses only read-only requests and captures the actual homepage and calendar on desktop and phone; it does not register for events, subscribe the user to calendars or submit contact forms.
