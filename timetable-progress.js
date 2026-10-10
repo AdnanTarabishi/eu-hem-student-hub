@@ -18,12 +18,8 @@ function renderTeachingProgress(now, sourceState = "ready") {
   const view = overall ? "overall" : timetable.view;
   const date = timetable.selectedDate;
   const period = overall ? null : TimetableCalendar.progressPeriod(date, view);
-  const result = overall ? TimetableCalendar.overallProgress(filteredSessions(), now)
-    : TimetableCalendar.periodProgress(filteredSessions(), date, now, view);
   const name = overall ? "Overall" : { day: "Daily", week: "Weekly", month: "Monthly" }[view];
-  const periodName = overall
-    ? (result.start && result.end ? `${formatDay(result.start, { day: "numeric", month: "short" })} – ${formatDay(result.end, { day: "numeric", month: "short", year: "numeric" })}` : "Published schedule")
-    : teachingPeriodLabel(period);
+  let periodName = overall ? "Published schedule" : teachingPeriodLabel(period);
   put("monthly-progress-title", `${name} teaching progress`);
   put("monthly-progress-eyebrow", overall ? "Across the published schedule" : `One ${view} at a time`);
   root.dataset.period = view;
@@ -36,6 +32,11 @@ function renderTeachingProgress(now, sourceState = "ready") {
       : "Progress unavailable — the official timetable could not be loaded. Use Retry or Refresh; no percentage has been assumed.";
     if (status.textContent !== text) status.textContent = text;
     return;
+  }
+  const result = overall ? TimetableCalendar.overallProgress(filteredSessions(), now)
+    : TimetableCalendar.periodProgress(filteredSessions(), date, now, view);
+  if (overall && result.start && result.end) {
+    periodName = `${formatDay(result.start, { day: "numeric", month: "short" })} – ${formatDay(result.end, { day: "numeric", month: "short", year: "numeric" })}`;
   }
   const scoped = [];
   if (myCoursesOnly(timetable.programme)) scoped.push("My courses only");
