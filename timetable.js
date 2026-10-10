@@ -52,7 +52,8 @@ function filteredSessions() {
   return timetable.sessions.filter(session => {
     if (mine && !mine.has(session.moduleCode)) return false;
     if (courseFilter.value && timetable.index.modulesByCode[session.moduleCode]?.course.id !== courseFilter.value) return false;
-    return !query || simplify([sessionLabel(session, timetable.index), session.room, session.teacher, session.note,
+    const locationSearch = typeof TimetableLocations !== "undefined" ? TimetableLocations.searchText(session.room) : "";
+    return !query || simplify([sessionLabel(session, timetable.index), session.room, locationSearch, session.teacher, session.note,
       session.online ? "online" : ""].join(" ")).includes(query);
   });
 }
@@ -92,7 +93,10 @@ function renderNowNext(now) {
       createElement("strong", null, sessionLabel(session, timetable.index)));
     const day = session.dateKey === now.slice(0, 10) ? "Today" : formatDay(session.dateKey, { weekday: "short", day: "numeric", month: "short" });
     item.appendChild(createElement("span", "schedule-meta", `${day} · ${session.time}`));
-    item.appendChild(createElement("span", "schedule-meta", session.online ? "Online class" : session.room.split(",")[0] || "Room to be confirmed"));
+    const locationText = session.online ? "Online class" : session.room || "Room to be confirmed";
+    const locationLine = createElement("span", "schedule-meta tt-full-location", locationText);
+    locationLine.title = locationText;
+    item.appendChild(locationLine);
     const teacher = teacherLine(session, "schedule-meta");
     if (teacher) item.appendChild(teacher);
     item.addEventListener("click", () => showSessionDetails(session));
@@ -328,6 +332,39 @@ function renderMonth(sessions, now) {
   scheduleStatus.textContent = `${sessions.length} ${sessions.length === 1 ? "class" : "classes"} across ${daysWithClasses} teaching ${daysWithClasses === 1 ? "day" : "days"} this month · ${selected.length} on the selected day.`;
 }
 
+function sessionLocationDetail(session) {
+  const detail = createElement("div", "session-detail session-location-detail");
+  detail.appendChild(createElement("span", "session-detail-label", "Location"));
+  const raw = session.room || (session.online ? "Online class" : "Room to be confirmed");
+  detail.appendChild(createElement("strong", "session-location-official", raw));
+  if (session.online || !session.room || typeof TimetableLocations === "undefined") return detail;
+  const room = TimetableLocations.lookup(session.room);
+  if (!room) {
+    detail.appendChild(createElement("p", "session-location-guide", "No room-specific guide is available yet. Use the complete official location above and check UniBo for last-minute room changes."));
+    return detail;
+  }
+  const facts = createElement("div", "session-location-facts");
+  for (const [label, value] of [["Building", room.building], ["Floor", room.floor], ["Entrance", room.entrance], ["Address", room.address]]) {
+    if (!value) continue;
+    const item = createElement("span", "session-location-fact");
+    item.append(createElement("b", null, label), document.createTextNode(value));
+    facts.appendChild(item);
+  }
+  detail.appendChild(facts);
+  if (room.guidance) detail.appendChild(createElement("p", "session-location-guide", room.guidance));
+  const actions = createElement("div", "session-location-actions");
+  const map = createElement("a", "session-location-map", "Open this entrance in Maps ↗");
+  map.href = mapUrl(room.address || session.room); map.target = "_blank"; map.rel = "noopener";
+  actions.appendChild(map);
+  if (room.sourceUrl) {
+    const source = createElement("a", "session-location-source", `Official UniBo room reference · checked ${room.checked} ↗`);
+    source.href = room.sourceUrl; source.target = "_blank"; source.rel = "noopener";
+    actions.appendChild(source);
+  }
+  detail.appendChild(actions);
+  return detail;
+}
+
 function showSessionDetails(session) {
   let dialog = document.getElementById("session-dialog");
   if (!dialog) {
@@ -347,7 +384,8 @@ function showSessionDetails(session) {
   heading.id = "session-detail-title";
   dialog.append(heading, createElement("p", "planning-detail-date", `${formatDay(session.dateKey)} · ${session.time}`));
   const grid = createElement("div", "session-detail-grid");
-  for (const [label, value] of [["Location", session.room || (session.online ? "Online class" : "Room to be confirmed")], ["Teacher", session.teacher], ["Format", session.online ? "Online" : "On campus"], ["Notes", session.note]]) {
+  grid.appendChild(sessionLocationDetail(session));
+  for (const [label, value] of [["Teacher", session.teacher], ["Format", session.online ? "Online" : "On campus"], ["Notes", session.note]]) {
     if (!value) continue;
     const detail = createElement("div", "session-detail");
     detail.append(createElement("span", null, label), createElement("strong", null, value));
@@ -402,8 +440,9 @@ function renderWeek(sessions, now) {
       block.style.left = `${(lane / lanes) * 100}%`;
       block.style.width = `${100 / lanes}%`;
       block.style.setProperty("--course-color", courseColorOf(session));
-      block.append(createElement("strong", null, sessionLabel(session, timetable.index)), createElement("span", null, session.time),
-        createElement("span", "week-room", session.online ? "Online" : session.room.split(",")[0] || "Room TBC"));
+      const weekLocation = session.online ? "Online" : session.room || "Room TBC";
+      const roomLine = createElement("span", "week-room", weekLocation); roomLine.title = weekLocation;
+      block.append(createElement("strong", null, sessionLabel(session, timetable.index)), createElement("span", null, session.time), roomLine);
       const teacher = teacherLine(session);
       if (teacher) block.insertBefore(teacher, block.querySelector(".week-room"));
       block.setAttribute("aria-label", `${sessionLabel(session, timetable.index)}, ${formatDay(day)}, ${session.time}${timetable.showTeacher && session.teacher ? ", " + session.teacher : ""}`);
