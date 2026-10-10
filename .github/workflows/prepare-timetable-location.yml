@@ -1,4 +1,5 @@
 name: Prepare timetable progress and location update
+# Re-run on the latest feature head after the final map-label safeguard.
 on:
   push:
     branches: ['codex/timetable-progress-location-20261010']
