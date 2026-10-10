@@ -12,13 +12,13 @@ const ok = text => { checks++; console.log("  ok  " + text); };
 const session = (code, date, from, to, options = {}) => ({
   cod_modulo: code, title: options.title || "OFFICIAL / CLASS TITLE",
   start: `${date}T${from}:00`, end: `${date}T${to}:00`, time: `${from} - ${to}`,
-  aule: options.room === false ? [] : [{ des_edificio: options.room || "LAB 2", des_indirizzo: "Via Zamboni 34, Bologna" }],
+  aule: options.room === false ? [] : [{ des_edificio: options.room || "LAB 2", des_indirizzo: options.address || "Via Zamboni 34, Bologna" }],
   docente: options.teacher || "Sara Capacci", teledidattica: !!options.online, note: options.note || "",
 });
 const TIMETABLE = [
   session("96500", "2026-10-07", "08:00", "09:00", { note: "Ended morning session" }),
   session("96498", "2026-10-07", "10:00", "12:00", { note: "Bring the exercise workbook" }),
-  session("79060", "2026-10-07", "10:00", "11:00", { teacher: "Daniele Fabbri", room: "Aula 4" }),
+  session("79060", "2026-10-07", "10:00", "11:00", { teacher: "Daniele Fabbri", room: "Aula 4", address: "PIAZZA Antonino Scaravilli 1/2 - Bologna" }),
   session("74948", "2026-10-07", "14:00", "16:00", { teacher: "Martin Forster", room: false, online: true, note: "Join via Virtuale" }),
   session("UNLISTED", "2026-10-08", "11:00", "12:00", { title: "SPECIAL / UNKNOWN CLINICAL WORKSHOP", room: false }),
   session("96498", "2026-10-09", "09:00", "11:00"),
@@ -136,7 +136,15 @@ const PLAN = JSON.stringify({ version: 1, cohort: "2026-27", term: "y1-s1", choi
     await page.keyboard.press("Escape");
     assert.strictEqual(await dialog.isVisible(), false);
     assert.strictEqual(await opener.evaluate(element => element === document.activeElement), true, "Escape returns focus to the opened class");
-    ok("class details preserve teacher, notes and map; calendar export has Europe/Rome; Escape restores focus");
+    const scaravilli = blocks.filter({ hasText: "Fundamentals in Health Economics" }).first();
+    assert.match(await scaravilli.textContent(), /PIAZZA Antonino Scaravilli 1\/2/);
+    await scaravilli.click(); await dialog.waitFor({ state: "visible" });
+    assert.match(await dialog.textContent(), /Piazza Scaravilli teaching building/);
+    assert.match(await dialog.textContent(), /Ground floor/);
+    assert.match(await dialog.textContent(), /Piazza Antonino Scaravilli 1\/2, Bologna/);
+    assert.strictEqual(await dialog.getByRole("link", { name: /Official UniBo room reference/ }).count(), 1);
+    await page.keyboard.press("Escape");
+    ok("class details preserve full official locations and add researched building/floor guidance without breaking map/calendar actions");
 
     await page.getByRole("button", { name: "List", exact: true }).click();
     assert.match(await page.evaluate(() => document.activeElement.textContent), /List/);
