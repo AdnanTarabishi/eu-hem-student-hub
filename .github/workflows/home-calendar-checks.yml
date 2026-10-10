@@ -1,0 +1,30 @@
+name: Check homepage browsers and calendar
+on:
+  pull_request:
+    paths: ['home*.js','home*.css','index.html','calendar.html','calendar.js','calendar-page.css','tests/home-calendar/**','.github/workflows/home-calendar-checks.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  home-calendar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: node scripts/check-content.js && node scripts/check-contrast.js && node scripts/stamp-versions.js --check
+      - run: node tests/home-calendar/browser.test.js .
+        env:
+          SCREENSHOT_DIR: ${{ runner.temp }}/home-calendar
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: home-calendar-previews
+          path: ${{ runner.temp }}/home-calendar
+          retention-days: 7
+          if-no-files-found: ignore

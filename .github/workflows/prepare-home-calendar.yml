@@ -1,0 +1,40 @@
+name: Prepare and validate home calendar workspace
+on:
+  push:
+    branches: ['codex/home-calendar-20261010']
+    paths: ['scripts/prepare-home-calendar.cjs','.github/workflows/prepare-home-calendar.yml']
+permissions:
+  contents: write
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/home-calendar-20261010
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: node scripts/prepare-home-calendar.cjs && node scripts/stamp-versions.js
+      - run: node scripts/check-content.js && node scripts/check-contrast.js
+      - run: node tests/handbook/data.test.js . && node tests/roadmap/data.test.js .
+      - run: node tests/home-calendar/browser.test.js .
+        env:
+          SCREENSHOT_DIR: ${{ runner.temp }}/home-calendar
+      - name: Commit only the successfully tested integration
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -u
+          git commit -m 'Integrate and stamp the verified homepage browsers and calendar workspace'
+          git push origin HEAD:codex/home-calendar-20261010
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: home-calendar-previews
+          path: ${{ runner.temp }}/home-calendar
+          retention-days: 7
+          if-no-files-found: ignore
