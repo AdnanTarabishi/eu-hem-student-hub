@@ -7,10 +7,9 @@ bar and totals follow the chosen **Day, Week or Month** view and selected date:
 - Day uses classes starting on the selected date.
 - Week uses the complete Monday–Sunday week, including weeks spanning two months.
 - Month uses classes starting in the selected month.
-- List retains the current-month summary and states this scope on the card.
+- List is an overall lecture-completion view: completed published classes ÷ every published matching class across the full schedule.
 
-It uses **all filtered sessions in that period**, including finished classes hidden
-by List. Course/search/My courses only filters apply and the scope is stated on the
+Day, Week and Month use **all filtered sessions in that period**. List uses every filtered session across the full published schedule, including finished classes hidden from the agenda. Course/search/My courses only filters apply and the scope is stated on the
 card; changing the teacher display or Show past classes cannot change progress.
 Smaller padding, a slim bar, inline desktop totals, consistently stacked phone
 metrics and no repeated visible date keep the card compact. Supporting text remains at least 12px at the base font size and
@@ -20,8 +19,7 @@ The numerator includes only sessions whose scheduled end is at or before the cur
 Europe/Rome clock. An ongoing class remains entirely in Remaining until its end.
 Durations use the feed's published wall-clock times; a class belongs to the period of
 its start, consistent with the calendar views, and overlaps contribute individual hours.
-The percentage is floored to one decimal; 100% is reserved for all valid scheduled
-sessions having ended. Actual attendance, credits, learning progress, private study
+For Day, Week and Month, the percentage is based on scheduled hours. For List, the headline percentage is the number of completed published classes divided by the total number of published matching classes; the three metrics also switch to Finished / Total / Remaining classes. Percentages are floored to one decimal and 100% is reserved for all valid scheduled sessions having ended. Actual attendance, credits, learning progress, private study
 and exams are not inferred. The denominator contains published classes only and can
 change with the source. An empty or failed source never becomes 0% or 100%; invalid
 durations yield an explicit unavailable state. No new storage or network request.
@@ -43,3 +41,8 @@ cross-month weeks, exact class endings, empty/invalid states and timezone indepe
 My courses, loading failures, minute updates, focus/explanation stability and compact
 320/390/768/1440px layouts in both themes, including resize. Browser feeds are fictional
 and external requests are blocked. Set `PLANNING_SCREENSHOT_DIR` to save previews.
+
+
+## Classroom locations
+
+The timetable now keeps all four classroom fields exposed by the UniBo timetable feed: classroom/resource name, floor, building and full address. The class-detail dialog shows those official values separately, then adds a student-facing English wayfinding note from `timetable-locations.js` when a researched building match exists. The room guide never invents a classroom or floor: exact room/floor data come from the live UniBo feed, while the local guide only explains entrances or common nearby-building confusions. Calendar subscriptions use the same complete official location string.

@@ -26,4 +26,19 @@ test('second-term buildings provide researched floor guidance',()=>{
   assert.equal(locations.lookup('AULA A - S.P.V., VIA San Petronio vecchio 32 - Bologna').floor,'Ground floor');
 });
 test('unknown rooms remain unknown rather than inventing directions',()=>assert.equal(locations.lookup('QA Classroom, Fictional campus, Bologna'),null));
+
+
+const unibo=require('../../unibo-data.js');
+test('the timetable parser preserves classroom name, floor, building and address',()=>{
+  const room=unibo.timetableClassroomRecord({des_risorsa:'AULA 11',des_piano:'Piano Primo',des_edificio:'Edificio in Bo - p.zza A. Scaravilli 1-2',des_indirizzo:'PIAZZA Antonino Scaravilli 1/2 - Bologna'});
+  assert.equal(room.name,'AULA 11'); assert.equal(room.floor,'Piano Primo');
+  assert.equal(room.building,'Edificio in Bo - p.zza A. Scaravilli 1-2');
+  assert.equal(room.address,'PIAZZA Antonino Scaravilli 1/2 - Bologna');
+  const text=unibo.timetableClassroomsText([room]);
+  assert.match(text,/AULA 11/); assert.match(text,/Piano Primo/); assert.match(text,/Scaravilli 1\/2 - Bologna/);
+});
+test('generic building guidance covers new room names at confusing Irnerio and Selmi sites',()=>{
+  assert.match(locations.lookup('NEW ROOM · Piano Terra · Edificio in Bo - via Irnerio 48 · Via Irnerio, 48 - Bologna').guidance,/exact classroom name and floor/i);
+  assert.match(locations.lookup('NEW ROOM · Edificio in Bo - via F. Selmi 3 · Via Selmi, 3 - Bologna').guidance,/different access points/i);
+});
 console.log(count+' timetable-location guide checks passed');

@@ -4,7 +4,7 @@ const { chromium } = require('playwright');
 const ROOT = path.resolve(process.argv[2] || '.');
 const NOW = '2026-10-07T08:30:00Z';
 const MIME = { '.html':'text/html', '.css':'text/css', '.js':'text/javascript', '.json':'application/json', '.svg':'image/svg+xml', '.png':'image/png', '.woff2':'font/woff2', '.webmanifest':'application/manifest+json' };
-const make = (code, day, time, teacher, options = {}) => ({ cod_modulo:code, title:'OFFICIAL / FICTIONAL WORKSHOP', start:`${day}T${time}:00`, end:`${day}T${String(Number(time.slice(0,2))+2).padStart(2,'0')}${time.slice(2)}:00`, time:`${time} - ${String(Number(time.slice(0,2))+2).padStart(2,'0')}${time.slice(2)}`, aule:options.online ? [] : [{des_edificio:options.room || 'QA Classroom', des_indirizzo:'Fictional campus, Bologna'}], docente:teacher, note:options.note || '', teledidattica:!!options.online });
+const make = (code, day, time, teacher, options = {}) => ({ cod_modulo:code, title:'OFFICIAL / FICTIONAL WORKSHOP', start:`${day}T${time}:00`, end:`${day}T${String(Number(time.slice(0,2))+2).padStart(2,'0')}${time.slice(2)}:00`, time:`${time} - ${String(Number(time.slice(0,2))+2).padStart(2,'0')}${time.slice(2)}`, aule:options.online ? [] : [{des_risorsa:options.room || 'QA Classroom', des_piano:options.floor || 'Piano Terra', des_edificio:options.building || 'QA Teaching Building', des_indirizzo:options.address || 'Fictional campus, Bologna'}], docente:teacher, note:options.note || '', teledidattica:!!options.online });
 const FEED = [make('96500','2026-10-07','07:00','QA Law Teacher'), make('96498','2026-10-07','10:00','QA Statistics Teacher'), make('79060','2026-10-07','10:00','QA Economics Teacher'), make('74948','2026-10-07','14:00','QA Advanced Teacher',{online:true}), make('UNLISTED','2026-10-08','11:00','QA Workshop Teacher'), make('96498','2026-10-09','09:00','QA Statistics Teacher'), make('C8393','2026-10-10','10:00','QA Systems Teacher')];
 (async () => {
   const server = http.createServer((req,res) => {
@@ -63,6 +63,13 @@ const FEED = [make('96500','2026-10-07','07:00','QA Law Teacher'), make('96498',
     assert.equal(await p.locator('.tt-day-choice').count(),7);
     assert.match(await p.locator('#schedule-status').innerText(),/includes earlier classes/);
     ok('a monthly date opens its own schedule; day view retains earlier classes and all seven selectable dates');
+    await p.locator('.agenda-item').first().getByRole('button',{name:/Details:/}).click();
+    const location=await p.locator('#session-dialog .session-location-detail').innerText();
+    assert.match(location,/QA Classroom/); assert.match(location,/Piano Terra/i);
+    assert.match(location,/QA Teaching Building/i); assert.match(location,/Fictional campus, Bologna/i);
+    assert.match(location,/Practical location tip|Getting there/);
+    await p.locator('#session-dialog').getByRole('button',{name:'Close'}).click();
+    ok('class details keep the complete official classroom, floor, building and address');
     for (const v of ['day','week','month','list']) {
       await mode(p,v); assert.equal(await teachers(p).count(),0);
       await p.locator('#show-teacher').check(); assert.ok(await teachers(p).count()>0,`${v} shows teachers`);

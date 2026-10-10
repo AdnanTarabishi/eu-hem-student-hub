@@ -47,25 +47,31 @@ function renderTeachingProgress(now, sourceState = "ready") {
   values.hidden = result.state !== "ready";
   if (result.state !== "ready") {
     put("monthly-progress-status", result.state === "empty"
-      ? `No published hours for ${periodName} with these filters. There is no percentage to calculate; this does not confirm that this ${overall ? "schedule" : view} is free of classes.`
+      ? overall
+        ? "No published classes match these List filters. There is no percentage to calculate; this does not confirm that the programme has no classes."
+        : `No published hours for ${periodName} with these filters. There is no percentage to calculate; this does not confirm that this ${view} is free of classes.`
       : "Progress unavailable — some class dates or durations could not be validated. Check the official timetable; no percentage has been assumed.");
     return;
   }
   const number = value => new Intl.NumberFormat("en-GB", { maximumFractionDigits: 2 }).format(value);
   put("monthly-progress-percent", `${result.percentage}%`);
-  put("monthly-progress-unit", overall ? "of published classes finished" : "of published hours finished");
+  put("monthly-progress-unit", overall ? "of published classes completed" : "of published hours finished");
   put("monthly-progress-month", periodName);
-  put("monthly-progress-classes", `${result.completedClasses} of ${result.totalClasses} classes finished`);
-  put("monthly-progress-finished", `${number(result.completedHours)} h`);
-  put("monthly-progress-total", `${number(result.totalHours)} h`);
-  put("monthly-progress-remaining", `${number(result.remainingHours)} h`);
+  put("monthly-progress-classes", overall
+    ? `${result.completedClasses} of ${result.totalClasses} published classes completed · ${result.percentage}%`
+    : `${result.completedClasses} of ${result.totalClasses} classes finished`);
+  put("monthly-progress-finished", overall ? `${result.completedClasses} classes` : `${number(result.completedHours)} h`);
+  put("monthly-progress-total", overall ? `${result.totalClasses} classes` : `${number(result.totalHours)} h`);
+  put("monthly-progress-remaining", overall ? `${result.totalClasses - result.completedClasses} classes` : `${number(result.remainingHours)} h`);
   const bar = document.getElementById("monthly-progress-bar");
   bar.value = result.percentage;
   bar.setAttribute("aria-valuetext", overall
     ? `${result.percentage}% — ${result.completedClasses} of ${result.totalClasses} published classes finished; ${number(result.completedHours)} of ${number(result.totalHours)} scheduled hours finished.`
     : `${result.percentage}% — ${number(result.completedHours)} of ${number(result.totalHours)} published teaching hours finished; ${number(result.remainingHours)} hours remaining.`);
   const active = result.activeClasses ? ` ${result.activeClasses} ${result.activeClasses === 1 ? "class is" : "classes are"} in progress.` : "";
-  put("monthly-progress-status", `As of ${formatDay(now.slice(0, 10), { day: "numeric", month: "short" })}, ${now.slice(11, 16)} Bologna time. Scheduled hours, not attendance.${active}`);
+  put("monthly-progress-status", overall
+    ? `As of ${formatDay(now.slice(0, 10), { day: "numeric", month: "short" })}, ${now.slice(11, 16)} Bologna time. ${result.completedClasses} of ${result.totalClasses} published matching classes have ended. This measures the published timetable, not attendance.${active}`
+    : `As of ${formatDay(now.slice(0, 10), { day: "numeric", month: "short" })}, ${now.slice(11, 16)} Bologna time. Scheduled hours, not attendance.${active}`);
 }
 
 // The shared summary is rebuilt on every view/filter/date change. Observe only that
