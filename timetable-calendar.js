@@ -81,12 +81,49 @@ const TimetableCalendar = (() => {
       remainingHours: (totalMs - completedMs) / 3600000,
       completedClasses, totalClasses, activeClasses };
   }
+  // Overall published teaching progress across every matching session, regardless
+  // of month. List view uses the number of published classes rather than hours
+  // for its headline percentage; hours remain available as supporting context.
+  function overallProgress(sessions, now) {
+    const unavailable = { state: "unavailable", view: "overall", start: "", end: "", percentage: null };
+    function timestamp(value) {
+      if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/.test(value) ||
+          !validDate(value.slice(0, 10)) || Number(value.slice(11, 13)) > 23 ||
+          Number(value.slice(14, 16)) > 59 || Number(value.slice(17, 19)) > 59) return NaN;
+      return Date.parse(value + "Z");
+    }
+    const nowTime = timestamp(now);
+    if (!Array.isArray(sessions) || !Number.isFinite(nowTime)) return unavailable;
+    if (!sessions.length) return { state: "empty", view: "overall", start: "", end: "", percentage: null };
+    let totalMs = 0, completedMs = 0, totalClasses = 0, completedClasses = 0, activeClasses = 0;
+    let first = "", last = "";
+    for (const session of sessions) {
+      if (!session || !validDate(session.dateKey) || typeof session.start !== "string") return unavailable;
+      const start = timestamp(session.start), end = timestamp(session.end);
+      if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start ||
+          session.dateKey !== session.start.slice(0, 10)) return unavailable;
+      first = !first || session.dateKey < first ? session.dateKey : first;
+      last = !last || session.dateKey > last ? session.dateKey : last;
+      totalClasses++;
+      totalMs += end - start;
+      if (end <= nowTime) { completedMs += end - start; completedClasses++; }
+      else if (start <= nowTime) activeClasses++;
+    }
+    const percentage = totalClasses ? completedClasses === totalClasses ? 100 :
+      Math.min(99.9, Math.floor(completedClasses / totalClasses * 1000 + 1e-9) / 10) : null;
+    const hoursPercentage = totalMs ? completedMs === totalMs ? 100 :
+      Math.min(99.9, Math.floor(completedMs / totalMs * 1000 + 1e-9) / 10) : null;
+    return { state: totalMs ? "ready" : "empty", view: "overall", start: first, end: last, percentage, hoursPercentage,
+      completedHours: completedMs / 3600000, totalHours: totalMs / 3600000,
+      remainingHours: (totalMs - completedMs) / 3600000,
+      completedClasses, totalClasses, activeClasses };
+  }
   // Preserve the existing monthly API for callers that only need a month summary.
   function monthlyProgress(sessions, selectedDate, now) {
     const { view, start, end, ...result } = periodProgress(sessions, selectedDate, now, "month");
     const month = typeof selectedDate === "string" ? selectedDate.slice(0, 7) : "";
     return { ...result, month };
   }
-  return { validDate, addDays, monday, shiftMonth, monthDays, hours, progressPeriod, periodProgress, monthlyProgress };
+  return { validDate, addDays, monday, shiftMonth, monthDays, hours, progressPeriod, periodProgress, overallProgress, monthlyProgress };
 })();
 if (typeof module !== "undefined") module.exports = TimetableCalendar;
