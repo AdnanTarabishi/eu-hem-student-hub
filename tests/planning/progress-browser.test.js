@@ -56,7 +56,7 @@ const FEED = [make('96498','2026-10-01','09:00','QA Statistics Teacher'), make('
     ok('the published-month denominator shows 40%, not the percentage of classes or calendar days');
     for(const [view,value,hours,title] of [['day','0%',2,'Daily'],['week','50%',4,'Weekly'],['month','40%',10,'Monthly'],['list','33.3%',14,'Overall']]) {
       await mode(p,view); assert.equal(await percent(),value,view);
-      assert.equal(await p.locator('#monthly-progress-total').innerText(),`${hours} h`);
+      assert.equal(await p.locator('#monthly-progress-total').innerText(),view==='list' ? '6 classes' : `${hours} h`);
       assert.equal(await p.locator('#monthly-progress-bar').getAttribute('value'),value.slice(0,-1));
       assert.equal(await p.locator('#monthly-progress-title').innerText(),`${title} teaching progress`);
       assert.equal(await p.locator('#monthly-progress-eyebrow').textContent(),view==='list' ? 'Across the published schedule' : `One ${view} at a time`);
@@ -76,7 +76,7 @@ const FEED = [make('96498','2026-10-01','09:00','QA Statistics Teacher'), make('
     await p.locator('#timetable-reset').click(); await p.locator('#timetable-search').fill('QA Economics Teacher');assert.equal(await percent(),'0%');
     assert.match(await p.locator('#monthly-progress-scope').innerText(),/Search applied/);
     await p.locator('#timetable-search').fill('nothing-matches'); assert.equal(await p.locator('#monthly-progress-values').isVisible(),false);
-    assert.match(await p.locator('#monthly-progress-status').innerText(),/No published hours/);
+    assert.match(await p.locator('#monthly-progress-status').innerText(),/No published classes/);
     await p.locator('#timetable-reset').click();assert.equal(await percent(),'33.3%');
     ok('course and search filters change the overall List scope and classes, with an honest no-matching-hours state');
     for(const [view,hours] of [['day',2],['week',2],['month',6]]) {
