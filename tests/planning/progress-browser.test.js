@@ -63,8 +63,11 @@ const FEED = [make('96498','2026-10-01','09:00','QA Statistics Teacher'), make('
       await p.locator('#show-teacher').check(); assert.equal(await percent(),value);
       if(view==='list') {
         assert.match(await p.locator('#monthly-progress-scope').innerText(),/Overall published schedule/);
-        assert.equal(await p.locator('#monthly-progress-unit').innerText(),'of published classes finished');
-        assert.match(await p.locator('#monthly-progress-classes').innerText(),/2 of 6 classes finished/);
+        assert.equal(await p.locator('#monthly-progress-unit').innerText(),'of published classes completed');
+        assert.match(await p.locator('#monthly-progress-classes').innerText(),/2 of 6 published classes completed · 33.3%/);
+        assert.equal(await p.locator('#monthly-progress-finished').innerText(),'2 classes');
+        assert.equal(await p.locator('#monthly-progress-total').innerText(),'6 classes');
+        assert.equal(await p.locator('#monthly-progress-remaining').innerText(),'4 classes');
         await p.locator('#show-past').check(); assert.equal(await percent(),value); await p.locator('#show-past').uncheck();
       }
     }
