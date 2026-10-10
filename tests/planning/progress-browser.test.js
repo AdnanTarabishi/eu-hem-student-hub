@@ -74,8 +74,8 @@ const FEED = [make('96498','2026-10-01','09:00','QA Statistics Teacher'), make('
     assert.match(await p.locator('#monthly-progress-scope').innerText(),/Search applied/);
     await p.locator('#timetable-search').fill('nothing-matches'); assert.equal(await p.locator('#monthly-progress-values').isVisible(),false);
     assert.match(await p.locator('#monthly-progress-status').innerText(),/No published hours/);
-    await p.locator('#timetable-reset').click();assert.equal(await percent(),'40%');
-    ok('course and search filters change the scope and hours, with an honest no-matching-hours state');
+    await p.locator('#timetable-reset').click();assert.equal(await percent(),'33.3%');
+    ok('course and search filters change the overall List scope and classes, with an honest no-matching-hours state');
     for(const [view,hours] of [['day',2],['week',2],['month',6]]) {
       await mode(p,view);await p.locator('#timetable-search').fill('QA Economics Teacher');
       assert.equal(await percent(),'0%');assert.equal(await p.locator('#monthly-progress-total').innerText(),`${hours} h`);
