@@ -54,6 +54,10 @@ const TimetableLocations = (() => {
     if (has(text, "filippo re 10")) return entry({ building:"Via Filippo Re 10 teaching building", floor:"Ground floor", entrance:"Via Filippo Re 10", address:"Via Filippo Re 10, Bologna", guidance:"The Aula Magna used by Healthcare Management is on the ground floor at Via Filippo Re 10. Check the street number because UniBo has other Aula Magna rooms nearby.", sourceUrl:SOURCE.healthcareManagement });
     if (has(text, "zamboni 32")) return entry({ building:"Via Zamboni 32 teaching building", floor:"First floor", entrance:"Via Zamboni 32", address:"Via Zamboni 32, Bologna", guidance:"Aula Emilio Pasquini is on the first floor at Via Zamboni 32.", sourceUrl:SOURCE.econometrics });
     if (has(text, "san petronio vecchio 32")) return entry({ building:"San Petronio Vecchio 32 teaching building", floor:"Ground floor", entrance:"Via San Petronio Vecchio 32", address:"Via San Petronio Vecchio 32, Bologna", guidance:"Aula A - S.P.V. is listed on the ground floor at Via San Petronio Vecchio 32.", sourceUrl:SOURCE.internationalLaw });
+    // Building-level fallbacks keep wayfinding useful if UniBo renames a room.
+    // Exact classroom name and floor still come from the live official feed.
+    if (has(text, "irnerio 48")) return entry({ building:"Anatomy / Pharmacology teaching building", entrance:"Via Irnerio 48", address:"Via Irnerio 48, Bologna", guidance:"Several Anatomy, Pharmacology and Biochemistry rooms share Via Irnerio 48. Use the exact classroom name and floor shown above; do not confuse this building with Via Irnerio 42 next door.", sourceUrl:SOURCE.healthcareManagement });
+    if (has(text, "selmi 3")) return entry({ building:"Via Selmi 3 teaching complex", entrance:"Check the classroom access note", address:"Via Selmi 3, Bologna", guidance:"Rooms in the Selmi 3 complex can use different access points. If UniBo names an access from Via Belmeloro 8 or Via San Giacomo 9, follow that entrance instruction instead of relying only on the Selmi 3 street address.", sourceUrl:SOURCE.rightToHealth });
     return null;
   }
   function searchText(raw) {
