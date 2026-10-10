@@ -377,8 +377,9 @@ function sessionLocationDetail(session) {
 
   const primaryAddress = guide?.address || classrooms.find(room => room.address)?.address || session.room;
   const actions = createElement("div", "session-location-actions");
+  const hasSpecificEntrance = !!guide?.entrance && !/check|varies/i.test(guide.entrance);
   const map = createElement("a", "session-location-map",
-    guide?.entrance ? "Open the recommended entrance in Maps ↗" : "Open the official address in Maps ↗");
+    hasSpecificEntrance ? "Open the recommended entrance in Maps ↗" : "Open the official address in Maps ↗");
   map.href = mapUrl(primaryAddress); map.target = "_blank"; map.rel = "noopener";
   actions.appendChild(map);
   if (guide?.sourceUrl) {
