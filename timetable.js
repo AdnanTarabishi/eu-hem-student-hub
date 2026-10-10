@@ -371,6 +371,16 @@ function sessionLocationDetail(session) {
   const guide = typeof TimetableLocations !== "undefined" ? TimetableLocations.lookup(session.room) : null;
   const guideBox = createElement("div", "session-location-practical");
   guideBox.appendChild(createElement("strong", "session-location-practical-title", guide ? "Getting there" : "Practical location tip"));
+  if (guide) {
+    const guideFacts = createElement("div", "session-location-guide-facts");
+    for (const [label, value] of [["Building", guide.building], ["Floor", guide.floor], ["Entrance", guide.entrance]]) {
+      if (!value) continue;
+      const fact = createElement("span", "session-location-guide-fact");
+      fact.append(createElement("b", null, label), document.createTextNode(value));
+      guideFacts.appendChild(fact);
+    }
+    if (guideFacts.childElementCount) guideBox.appendChild(guideFacts);
+  }
   guideBox.appendChild(createElement("p", "session-location-guide", guide?.guidance ||
     "Use the exact classroom name, floor and street number above. UniBo has several teaching buildings only a few minutes apart, so the room name and civic number are more reliable than the building area alone."));
   detail.appendChild(guideBox);
