@@ -1,0 +1,51 @@
+name: Final visual refinement of homepage and calendar
+on:
+  push:
+    branches: ['codex/home-calendar-20261010']
+    paths: ['.github/workflows/refine-home-calendar.yml']
+permissions:
+  contents: write
+jobs:
+  refine:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/home-calendar-20261010
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Apply exact visual-review changes
+        run: |
+          node <<'NODE'
+          const fs=require('node:fs');
+          function edit(file,from,to){const before=fs.readFileSync(file,'utf8');if(!before.includes(from))throw Error('Missing review anchor: '+file);fs.writeFileSync(file,before.replace(from,to));}
+          edit('home-roadmap-preview.js','button.appendChild(siteIcon(vertical ? (index ? "chevron-down" : "chevron-up") : (index ? "chevron-right" : "chevron-left")));','const icon=siteIcon(vertical ? "chevron-down" : (index ? "chevron-right" : "chevron-left"));\n      if(vertical && !index)icon.style.transform="rotate(180deg)";\n      button.appendChild(icon);');
+          edit('home-roadmap-preview.css','grid-template-rows:repeat(3,82px)','grid-template-rows:repeat(3,80px)');
+          edit('tests/home-calendar/browser.test.js',"else await page.screenshot({path:path.join(SHOTS,name+'.png'),fullPage:true});", "else {await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));await page.screenshot({path:path.join(SHOTS,name+'.png'),fullPage:true});}");
+          edit('tests/home-calendar/browser.test.js',"const oldHref=await page.locator('.roadmap-preview-now').getAttribute('href')", "const symbols=fs.readFileSync(path.join(ROOT,'icons.svg'),'utf8');for(const name of await page.locator('.home-preview-controls use').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('href').split('#')[1])))assert.ok(symbols.includes('id=\\\"'+name+'\\\"'),'pager icon exists: '+name);const oldHref=await page.locator('.roadmap-preview-now').getAttribute('href')");
+          fs.unlinkSync('.github/workflows/refine-home-calendar.yml');
+          NODE
+          node scripts/stamp-versions.js
+      - run: node scripts/check-content.js && node scripts/check-contrast.js && node scripts/stamp-versions.js --check
+      - run: node tests/home-calendar/browser.test.js .
+        env:
+          SCREENSHOT_DIR: ${{ runner.temp }}/home-calendar
+      - name: Save only the tested refinement
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -u
+          git commit -m 'Fix upward release indicator and finish calendar visual checks'
+          git push origin HEAD:codex/home-calendar-20261010
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: home-calendar-final-previews
+          path: ${{ runner.temp }}/home-calendar
+          retention-days: 7
+          if-no-files-found: ignore
