@@ -335,30 +335,55 @@ function renderMonth(sessions, now) {
 function sessionLocationDetail(session) {
   const detail = createElement("div", "session-detail session-location-detail");
   detail.appendChild(createElement("span", "session-detail-label", "Location"));
-  const raw = session.room || (session.online ? "Online class" : "Room to be confirmed");
-  detail.appendChild(createElement("strong", "session-location-official", raw));
-  if (session.online || !session.room || typeof TimetableLocations === "undefined") return detail;
-  const room = TimetableLocations.lookup(session.room);
-  if (!room) {
-    detail.appendChild(createElement("p", "session-location-guide", "No room-specific guide is available yet. Use the complete official location above and check UniBo for last-minute room changes."));
+  if (session.online) {
+    detail.appendChild(createElement("strong", "session-location-official", "Online class"));
     return detail;
   }
-  const facts = createElement("div", "session-location-facts");
-  for (const [label, value] of [["Building", room.building], ["Floor", room.floor], ["Entrance", room.entrance], ["Address", room.address]]) {
-    if (!value) continue;
-    const item = createElement("span", "session-location-fact");
-    item.append(createElement("b", null, label), document.createTextNode(value));
-    facts.appendChild(item);
+  const classrooms = Array.isArray(session.classrooms) ? session.classrooms.filter(room =>
+    room && [room.name, room.floor, room.building, room.address].some(Boolean)) : [];
+  if (!classrooms.length && !session.room) {
+    detail.appendChild(createElement("strong", "session-location-official", "Room to be confirmed"));
+    return detail;
   }
-  detail.appendChild(facts);
-  if (room.guidance) detail.appendChild(createElement("p", "session-location-guide", room.guidance));
+
+  const official = createElement("div", "session-location-official-list");
+  if (classrooms.length) {
+    for (const [index, classroom] of classrooms.entries()) {
+      const card = createElement("div", "session-location-official-card");
+      card.appendChild(createElement("span", "session-location-official-kicker",
+        classrooms.length > 1 ? `Official location ${index + 1}` : "Official UniBo location"));
+      card.appendChild(createElement("strong", "session-location-official", classroom.name || "Classroom name not listed"));
+      const facts = createElement("div", "session-location-facts");
+      for (const [label, value] of [["Floor", classroom.floor], ["Building", classroom.building], ["Address", classroom.address]]) {
+        if (!value) continue;
+        const item = createElement("span", "session-location-fact");
+        item.append(createElement("b", null, label), document.createTextNode(value));
+        facts.appendChild(item);
+      }
+      if (facts.childElementCount) card.appendChild(facts);
+      official.appendChild(card);
+    }
+  } else {
+    official.appendChild(createElement("strong", "session-location-official", session.room));
+  }
+  detail.appendChild(official);
+
+  const guide = typeof TimetableLocations !== "undefined" ? TimetableLocations.lookup(session.room) : null;
+  const guideBox = createElement("div", "session-location-practical");
+  guideBox.appendChild(createElement("strong", "session-location-practical-title", guide ? "Getting there" : "Practical location tip"));
+  guideBox.appendChild(createElement("p", "session-location-guide", guide?.guidance ||
+    "Use the exact classroom name, floor and street number above. UniBo has several teaching buildings only a few minutes apart, so the room name and civic number are more reliable than the building area alone."));
+  detail.appendChild(guideBox);
+
+  const primaryAddress = guide?.address || classrooms.find(room => room.address)?.address || session.room;
   const actions = createElement("div", "session-location-actions");
-  const map = createElement("a", "session-location-map", "Open this entrance in Maps ↗");
-  map.href = mapUrl(room.address || session.room); map.target = "_blank"; map.rel = "noopener";
+  const map = createElement("a", "session-location-map",
+    guide?.entrance ? "Open the recommended entrance in Maps ↗" : "Open the official address in Maps ↗");
+  map.href = mapUrl(primaryAddress); map.target = "_blank"; map.rel = "noopener";
   actions.appendChild(map);
-  if (room.sourceUrl) {
-    const source = createElement("a", "session-location-source", `Official UniBo room reference · checked ${room.checked} ↗`);
-    source.href = room.sourceUrl; source.target = "_blank"; source.rel = "noopener";
+  if (guide?.sourceUrl) {
+    const source = createElement("a", "session-location-source", `Official UniBo room reference · checked ${guide.checked} ↗`);
+    source.href = guide.sourceUrl; source.target = "_blank"; source.rel = "noopener";
     actions.appendChild(source);
   }
   detail.appendChild(actions);
@@ -494,6 +519,8 @@ function render() {
   else if (timetable.view === "month") renderMonth(sessions, now);
   else if (timetable.view === "day") renderDay(sessions, now);
   else renderList(sessions, now);
+  // Refresh the progress card immediately when switching views or filters.
+  if (typeof renderTeachingProgress === "function") renderTeachingProgress(now, "ready");
   timetable.lastClock = now;
 }
 
