@@ -26,7 +26,9 @@ async function fillRoadmapPreview() {
     const buttons = [-1,1].map((direction,index) => {
       const button = createElement("button", "home-preview-arrow"); button.type = "button";
       button.setAttribute("aria-label", index ? nextLabel : previousLabel); button.setAttribute("aria-controls", id);
-      button.appendChild(siteIcon(vertical ? (index ? "chevron-down" : "chevron-up") : (index ? "chevron-right" : "chevron-left")));
+      const icon=siteIcon(vertical ? "chevron-down" : (index ? "chevron-right" : "chevron-left"));
+      if(vertical && !index)icon.style.transform="rotate(180deg)";
+      button.appendChild(icon);
       button.addEventListener("click", () => { if (button.getAttribute("aria-disabled") !== "true") onMove(direction); }); return button;
     });
     controls.append(counter,...buttons);
