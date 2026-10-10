@@ -19,24 +19,46 @@ function getProgramme() {
 
 // ----- Timetable -----
 
-// Every class in the feed: { moduleCode, dateKey, start, end, time, room, teacher, online, note }
+// Keep the complete classroom payload published by UniBo. Older code retained
+// only building + address, hiding the aula name and floor.
+function timetableClassroomRecord(room = {}) {
+  const clean = value => String(value || "").replace(/\s+/g, " ").trim();
+  return {
+    name: clean(room.des_risorsa || room.raw?.descrizione),
+    floor: clean(room.des_piano),
+    building: clean(room.des_edificio),
+    address: clean(room.des_indirizzo),
+  };
+}
+function timetableClassroomText(room = {}) {
+  return [...new Set([room.name, room.floor, room.building, room.address].filter(Boolean))].join(" · ");
+}
+function timetableClassroomsText(classrooms = []) {
+  return classrooms.map(timetableClassroomText).filter(Boolean).join(" + ");
+}
+
+// Every class in the feed includes the complete official classroom description.
 async function fetchTimetable(url) {
   const response = await fetch(url);
   if (!response.ok) throw new Error(`Timetable: HTTP ${response.status}`);
   const raw = await response.json();
   return raw
-    .map((s) => ({
-      moduleCode: s.cod_modulo,
-      feedTitle: s.title,
-      dateKey: s.start.slice(0, 10),
-      start: s.start,
-      end: s.end,
-      time: s.time,
-      room: s.aule.map((room) => `${room.des_edificio}, ${room.des_indirizzo}`).join(" + "),
-      teacher: s.docente,
-      online: s.teledidattica,
-      note: s.note,
-    }))
+    .map((s) => {
+      const classrooms = (s.aule || []).map(timetableClassroomRecord);
+      return {
+        moduleCode: s.cod_modulo,
+        feedTitle: s.title,
+        dateKey: s.start.slice(0, 10),
+        start: s.start,
+        end: s.end,
+        time: s.time,
+        classrooms,
+        room: timetableClassroomsText(classrooms),
+        teacher: s.docente,
+        online: s.teledidattica,
+        note: s.note,
+      };
+    })
     .sort((a, b) => a.start.localeCompare(b.start));
 }
 
@@ -462,4 +484,5 @@ if (typeof module !== "undefined") module.exports = {
   nowAndNext, weekStartOf, layoutDay, hourOf, plusHours,
   parseUniboDate, examPublishedDetails, mergeExamSittings,
   examSittingIdentity, examCalendarTimes,
+  timetableClassroomRecord, timetableClassroomText, timetableClassroomsText,
 };
