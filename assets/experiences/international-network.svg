@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" fill="none">
+  <title>Learning across borders</title>
+  <desc>Original decorative illustration of a globe connected to study, discussion and healthcare symbols. It does not identify actual students or institutions.</desc>
+  <defs>
+    <pattern id="network-lines" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M0 30 30 0" stroke="#D7E3D9" stroke-opacity=".09"/></pattern>
+    <filter id="network-shadow" x="-30%" y="-30%" width="160%" height="175%"><feDropShadow dx="0" dy="11" stdDeviation="12" flood-color="#143B34" flood-opacity=".2"/></filter>
+    <clipPath id="network-frame"><rect width="800" height="500"/></clipPath>
+  </defs>
+  <g clip-path="url(#network-frame)">
+    <path d="M0 0h800v500H0z" fill="#2C6159"/>
+    <path d="M0 0h800v500H0z" fill="url(#network-lines)"/>
+    <circle cx="399" cy="248" r="215" stroke="#A7BCAE" stroke-opacity=".29"/>
+    <circle cx="399" cy="248" r="171" stroke="#A7BCAE" stroke-opacity=".15"/>
+    <path d="M-2 69c125 25 89 125 175 166m474 24c67 50 131 52 169 126" stroke="#386E60" stroke-width="48"/>
+    <path d="m241 152 82 51m158 0 82-51m-322 193 80-51m159 0 87 51" stroke="#C8D8C5" stroke-width="3" stroke-dasharray="4 8" stroke-linecap="round"/>
+    <g filter="url(#network-shadow)">
+      <circle cx="400" cy="250" r="113" fill="#F7F1E8"/>
+      <circle cx="400" cy="250" r="89" fill="#DDE7DC" stroke="#7D9E88" stroke-width="2"/>
+      <ellipse cx="400" cy="250" rx="46" ry="89" stroke="#7D9E88" stroke-width="2"/>
+      <path d="M311 250h178m-166-43h155m-155 86h155M400 161v178" stroke="#7D9E88" stroke-width="2"/>
+      <path d="m355 192 28-11 18 14 28-1 14 14-10 19-19 2-3 26-25 13-14-21-21-11-10-25 14-19Zm84 94 17-5 14 13-12 18-20 8-11-18 12-16Z" fill="#527C6E" opacity=".76"/>
+      <path d="M365 229c22-38 72-40 98-9" stroke="#C97857" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="365" cy="229" r="6" fill="#C97857" stroke="#F7F1E8" stroke-width="2"/>
+      <circle cx="463" cy="220" r="6" fill="#C97857" stroke="#F7F1E8" stroke-width="2"/>
+    </g>
+    <g filter="url(#network-shadow)" transform="rotate(-10 215 135)">
+      <rect x="168" y="88" width="95" height="95" rx="21" fill="#E6CDBA"/>
+      <path d="M186 117c13-5 22-3 29 1 9-4 19-6 31-1v37c-13-4-22-3-31 1-8-4-17-5-29-1v-37Zm29 1v37" stroke="#9E644A" stroke-width="3" stroke-linejoin="round"/>
+      <path d="m195 128 11 1m-11 12 11 1m20-13 11-1m-11 13 11-1" stroke="#C09375" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <g filter="url(#network-shadow)" transform="rotate(9 589 135)">
+      <rect x="542" y="88" width="95" height="95" rx="21" fill="#D7E3D9"/>
+      <path d="M564 112h47v32h-15l-12 13v-13h-20v-32Z" stroke="#345E56" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M574 124h25m-25 10h18" stroke="#729B83" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <g filter="url(#network-shadow)" transform="rotate(8 214 362)">
+      <rect x="167" y="315" width="95" height="95" rx="21" fill="#15364F"/>
+      <path d="M207 337h15v18h18v15h-18v18h-15v-18h-18v-15h18v-18Z" fill="#F7F1E8"/>
+    </g>
+    <g filter="url(#network-shadow)" transform="rotate(-10 589 362)">
+      <rect x="542" y="315" width="95" height="95" rx="21" fill="#C97857"/>
+      <path d="M563 388h53m-46-9v-17m17 17v-29m17 29v-42" stroke="#F7F1E8" stroke-width="4" stroke-linecap="round"/>
+      <path d="m565 347 16-13 13 7 17-13" stroke="#EAD0B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <circle cx="113" cy="263" r="4" fill="#D6B89A"/>
+    <circle cx="693" cy="216" r="5" fill="#D59470"/>
+    <path d="M100 149v18m-9-9h18m594 280v20m-10-10h20" stroke="#A7BCAE" stroke-width="2" stroke-linecap="round"/>
+  </g>
+</svg>

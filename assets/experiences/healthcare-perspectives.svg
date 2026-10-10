@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" fill="none">
+  <title>More than one perspective on healthcare</title>
+  <desc>Original decorative illustration of overlapping healthcare, economics and discussion cards. It does not depict a real student or a clinical outcome.</desc>
+  <defs>
+    <pattern id="perspective-dots" width="27" height="27" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#D7E3D9" opacity=".14"/></pattern>
+    <filter id="perspective-shadow" x="-30%" y="-30%" width="160%" height="175%"><feDropShadow dx="0" dy="12" stdDeviation="13" flood-color="#061B2C" flood-opacity=".25"/></filter>
+    <clipPath id="perspective-frame"><rect width="800" height="500"/></clipPath>
+  </defs>
+  <g clip-path="url(#perspective-frame)">
+    <path d="M0 0h800v500H0z" fill="#15364F"/>
+    <path d="M0 0h800v500H0z" fill="url(#perspective-dots)"/>
+    <circle cx="400" cy="250" r="211" stroke="#A7BCAE" stroke-opacity=".27"/>
+    <circle cx="400" cy="250" r="170" stroke="#A7BCAE" stroke-opacity=".14"/>
+    <path d="M-29 439c96-22 111-140 193-179S365 269 419 149 627 15 828 67" stroke="#244960" stroke-width="50"/>
+    <g filter="url(#perspective-shadow)" transform="rotate(-12 275 260)">
+      <rect x="164" y="117" width="214" height="277" rx="18" fill="#D7E3D9"/>
+      <rect x="187" y="144" width="168" height="120" rx="13" fill="#ABC4B3"/>
+      <path d="M221 238v-30m34 30v-52m34 52v-75m-75 78h88" stroke="#345E56" stroke-width="7" stroke-linecap="round"/>
+      <path d="m211 190 34-22 26 9 35-29" stroke="#F7F1E8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M190 292h144m-144 22h126m-126 22h85" stroke="#8FA997" stroke-width="6" stroke-linecap="round"/>
+      <rect x="189" y="359" width="63" height="10" rx="5" fill="#54796C"/>
+    </g>
+    <g filter="url(#perspective-shadow)" transform="rotate(10 528 251)">
+      <rect x="417" y="105" width="214" height="279" rx="18" fill="#E6CDBA"/>
+      <rect x="441" y="132" width="166" height="123" rx="13" fill="#C97857"/>
+      <path d="M481 167h81v45h-26l-20 16v-16h-35v-45Z" stroke="#FFF5E7" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M496 183h50m-50 14h31" stroke="#FFF5E7" stroke-width="3" stroke-linecap="round"/>
+      <path d="M443 285h141m-141 22h118m-118 22h91" stroke="#B49A81" stroke-width="6" stroke-linecap="round"/>
+      <rect x="443" y="353" width="63" height="10" rx="5" fill="#A65D44"/>
+    </g>
+    <g filter="url(#perspective-shadow)">
+      <circle cx="398" cy="256" r="91" fill="#F7F1E8"/>
+      <circle cx="398" cy="256" r="72" stroke="#D5C7B4"/>
+      <path d="M384 216h28v26h27v28h-27v27h-28v-27h-27v-28h27v-26Z" fill="#15364F"/>
+      <path d="M360 242c-7 9-11 20-11 33m66-57c12 5 20 13 26 24" stroke="#C97857" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="361" cy="290" r="5" fill="#7D9E88"/>
+    </g>
+    <circle cx="670" cy="121" r="5" fill="#D59470"/>
+    <circle cx="116" cy="345" r="4" fill="#B6C8AC"/>
+    <path d="M100 168v22m-11-11h22m565 154v18m-9-9h18" stroke="#99B3AF" stroke-width="2" stroke-linecap="round"/>
+    <path d="m620 428 8-14 8 14h-16Z" stroke="#D59470" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+</svg>

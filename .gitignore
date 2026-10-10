@@ -10,3 +10,6 @@ private-data/
 # Dev-only tools installed by "npm install" (Playwright for the browser tests)
 node_modules/
 announcements-import.sql
+
+# Local task drafts, generated originals and QA screenshots.
+work/
