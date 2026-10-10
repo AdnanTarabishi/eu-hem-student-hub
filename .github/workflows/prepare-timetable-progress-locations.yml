@@ -1,0 +1,53 @@
+name: Prepare timetable progress and location guide
+on:
+  push:
+    branches: ['codex/timetable-progress-locations-20261010']
+    paths: ['.github/workflows/prepare-timetable-progress-locations.yml']
+permissions:
+  contents: write
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/timetable-progress-locations-20261010
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Stamp changed assets
+        run: node scripts/stamp-versions.js
+      - name: Validate content and timetable calculations
+        run: |
+          node scripts/check-content.js
+          node scripts/check-contrast.js
+          node scripts/stamp-versions.js --check
+          node tests/planning/calendar.test.js
+          node tests/planning/progress.test.js
+          node tests/planning/locations.test.js
+      - name: Validate timetable browser behavior
+        run: |
+          node tests/planning/browser.test.js .
+          node tests/planning/progress-browser.test.js .
+          node tests/planning/timetable-v2.test.js .
+        env:
+          PLANNING_SCREENSHOT_DIR: ${{ runner.temp }}/timetable-previews
+      - name: Commit exact tested stamps and remove this one-time workflow
+        run: |
+          rm .github/workflows/prepare-timetable-progress-locations.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Stamp and verify timetable progress and location guidance'
+          git push origin HEAD:codex/timetable-progress-locations-20261010
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: timetable-progress-location-previews
+          path: ${{ runner.temp }}/timetable-previews
+          retention-days: 7
+          if-no-files-found: ignore
