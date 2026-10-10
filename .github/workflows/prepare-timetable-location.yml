@@ -1,5 +1,5 @@
 name: Prepare timetable progress and location update
-# Re-run on the latest feature head after aligning List metrics and researched locations.
+# Final re-run after case-insensitive classroom rendering assertions.
 on:
   push:
     branches: ['codex/timetable-progress-location-20261010']
