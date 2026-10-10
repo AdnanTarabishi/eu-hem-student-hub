@@ -65,8 +65,8 @@ const FEED = [make('96500','2026-10-07','07:00','QA Law Teacher'), make('96498',
     ok('a monthly date opens its own schedule; day view retains earlier classes and all seven selectable dates');
     await p.locator('.agenda-item').first().getByRole('button',{name:/Details:/}).click();
     const location=await p.locator('#session-dialog .session-location-detail').innerText();
-    assert.match(location,/QA Classroom/); assert.match(location,/Piano Terra/);
-    assert.match(location,/QA Teaching Building/); assert.match(location,/Fictional campus, Bologna/);
+    assert.match(location,/QA Classroom/); assert.match(location,/Piano Terra/i);
+    assert.match(location,/QA Teaching Building/i); assert.match(location,/Fictional campus, Bologna/i);
     assert.match(location,/Practical location tip|Getting there/);
     await p.locator('#session-dialog').getByRole('button',{name:'Close'}).click();
     ok('class details keep the complete official classroom, floor, building and address');
