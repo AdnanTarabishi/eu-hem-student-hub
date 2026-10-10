@@ -49,17 +49,21 @@ async function fetchTimetable(url) {
   const response = await fetch(url);
   if (!response.ok) throw new Error(`Timetable: HTTP ${response.status}`);
   const raw = await response.json();
-  return raw.map((s) => ({
-    id: `${s.extCode}-${s.start}`,
-    start: s.start, // "2026-09-07T09:00:00"
-    end: s.end,
-    moduleCode: s.cod_modulo,
-    feedTitle: s.title,
-    room: s.aule.map((a) => `${a.des_edificio}, ${a.des_indirizzo}`).join(" + "),
-    teacher: s.docente || "",
-    online: s.teledidattica,
-    note: s.note || "",
-  }));
+  return raw.map((s) => {
+    const classrooms = (s.aule || []).map(uniboData.timetableClassroomRecord);
+    return {
+      id: `${s.extCode}-${s.start}`,
+      start: s.start, // "2026-09-07T09:00:00"
+      end: s.end,
+      moduleCode: s.cod_modulo,
+      feedTitle: s.title,
+      classrooms,
+      room: uniboData.timetableClassroomsText(classrooms),
+      teacher: s.docente || "",
+      online: s.teledidattica,
+      note: s.note || "",
+    };
+  });
 }
 
 async function fetchExams(url) {
