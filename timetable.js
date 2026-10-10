@@ -373,7 +373,7 @@ function sessionLocationDetail(session) {
   guideBox.appendChild(createElement("strong", "session-location-practical-title", guide ? "Getting there" : "Practical location tip"));
   if (guide) {
     const guideFacts = createElement("div", "session-location-guide-facts");
-    for (const [label, value] of [["Building", guide.building], ["Floor", guide.floor], ["Entrance", guide.entrance]]) {
+    for (const [label, value] of [["Building", guide.building], ["Floor", guide.floor], ["Entrance", guide.entrance], ["Address", guide.address]]) {
       if (!value) continue;
       const fact = createElement("span", "session-location-guide-fact");
       fact.append(createElement("b", null, label), document.createTextNode(value));
