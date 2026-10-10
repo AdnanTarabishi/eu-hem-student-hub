@@ -1,4 +1,5 @@
 name: Restamp and verify timetable location update
+# Final rerun with guide address preserved in the expanded location card.
 on:
   push:
     branches: ['codex/timetable-progress-location-20261010']
