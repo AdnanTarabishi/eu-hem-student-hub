@@ -47,7 +47,9 @@ function renderTeachingProgress(now, sourceState = "ready") {
   values.hidden = result.state !== "ready";
   if (result.state !== "ready") {
     put("monthly-progress-status", result.state === "empty"
-      ? `No published hours for ${periodName} with these filters. There is no percentage to calculate; this does not confirm that this ${overall ? "schedule" : view} is free of classes.`
+      ? overall
+        ? "No published classes match these List filters. There is no percentage to calculate; this does not confirm that the programme has no classes."
+        : `No published hours for ${periodName} with these filters. There is no percentage to calculate; this does not confirm that this ${view} is free of classes.`
       : "Progress unavailable — some class dates or durations could not be validated. Check the official timetable; no percentage has been assumed.");
     return;
   }
