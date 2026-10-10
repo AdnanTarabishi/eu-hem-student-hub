@@ -2,7 +2,7 @@
 
 `roadmap.html` shows what the Student Hub team is working on (**Now**), what is planned with estimated
 periods (**Next**), larger ideas without dates (**Later**), every important release (**Updates**), and the
-history of the Hub (**Our journey**). The homepage shows the current focus and the three latest releases,
+history of the Hub (**Our journey**). The homepage browses all Now items and all published releases, three at a time in a fixed-height panel,
 and the site search finds plans and releases. All of them read the same two files.
 
 | What | File |
@@ -11,7 +11,7 @@ and the site search finds plans and releases. All of them read the same two file
 | Releases (drafts and published) | `content/updates.json` |
 | All rules (validation, what is public, grouping, search entries) | `roadmap-data.js` |
 | The page | `roadmap.html`, `roadmap.css`, `roadmap.js` |
-| Homepage preview | `fillRoadmapPreview()` in `home.js` (styles in `home.css`) |
+| Homepage preview | `fillRoadmapPreview()` in `home-roadmap-preview.js` (styles in `home-roadmap-preview.css`) |
 | Site search | `search.js` (uses `searchEntries()` from `roadmap-data.js`) |
 | Draft / publish helper | `scripts/updates.js` |
 | Checks | `scripts/check-content.js` (runs `validate()`), `tests/roadmap/` |
