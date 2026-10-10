@@ -26,7 +26,7 @@ test('second-term buildings provide researched floor guidance',()=>{
   assert.equal(locations.lookup('AULA A - S.P.V., VIA San Petronio vecchio 32 - Bologna').floor,'Ground floor');
 });
 test('unknown rooms remain unknown rather than inventing directions',()=>assert.equal(locations.lookup('QA Classroom, Fictional campus, Bologna'),null));
-console.log(count+' timetable-location guide checks passed');
+
 
 const unibo=require('../../unibo-data.js');
 test('the timetable parser preserves classroom name, floor, building and address',()=>{
@@ -41,3 +41,4 @@ test('generic building guidance covers new room names at confusing Irnerio and S
   assert.match(locations.lookup('NEW ROOM · Piano Terra · Edificio in Bo - via Irnerio 48 · Via Irnerio, 48 - Bologna').guidance,/exact classroom name and floor/i);
   assert.match(locations.lookup('NEW ROOM · Edificio in Bo - via F. Selmi 3 · Via Selmi, 3 - Bologna').guidance,/different access points/i);
 });
+console.log(count+' timetable-location guide checks passed');
