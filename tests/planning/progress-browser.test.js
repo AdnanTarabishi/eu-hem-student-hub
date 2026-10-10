@@ -93,7 +93,8 @@ const FEED = [make('96498','2026-10-01','09:00','QA Statistics Teacher'), make('
     await date(p,'2026-10-09');assert.equal(await percent(),'50%');
     ok('search/course filters and selected dates apply independently to daily, weekly and monthly progress');
     await mode(p,'month'); await date(p,'2026-11-01');
-    assert.equal(await p.locator('#monthly-progress-values').isVisible(),false);
+    assert.equal(await percent(),'0%');
+    assert.equal(await p.locator('#monthly-progress-total').innerText(),'4 h');
     assert.match(await p.locator('#monthly-progress-scope').innerText(),/November 2026/);
     await mode(p,'list'); assert.equal(await percent(),'33.3%');
     assert.match(await p.locator('#monthly-progress-scope').innerText(),/Overall published schedule/);
