@@ -1,0 +1,51 @@
+name: Check global footer
+on:
+  pull_request:
+    paths:
+      - 'site-nav.js'
+      - 'style.css'
+      - 'icons.svg'
+      - 'tests/site/shell.test.js'
+      - 'tests/site/footer-live.test.js'
+      - '.github/workflows/footer-checks.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'site-nav.js'
+      - 'style.css'
+      - 'icons.svg'
+      - 'tests/site/shell.test.js'
+      - 'tests/site/footer-live.test.js'
+      - '.github/workflows/footer-checks.yml'
+permissions:
+  contents: read
+jobs:
+  footer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: node scripts/check-content.js && node scripts/check-contrast.js && node scripts/stamp-versions.js --check
+      - name: Check the shared site shell and footer
+        run: PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=$(node -e "console.log(require('playwright').chromium.executablePath())") node tests/site/shell.test.js .
+      - name: Verify the published footer
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: node tests/site/footer-live.test.js
+        env:
+          FOOTER_SCREENSHOT_DIR: ${{ runner.temp }}/footer-live
+          GITHUB_SHA: ${{ github.sha }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: footer-visual-checks
+          path: ${{ runner.temp }}/footer-live
+          retention-days: 7
+          if-no-files-found: ignore

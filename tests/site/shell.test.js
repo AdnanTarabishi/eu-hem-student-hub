@@ -68,11 +68,23 @@ const PAGES = ['index.html', 'studyplan.html', 'tracks.html', 'timetable.html', 
   await page.waitForFunction(() => document.querySelector('.site-header').classList.contains('is-compact'));
   const footer = await page.$$eval('.site-footer a', (all) => all.map((a) => a.textContent));
   for (const label of ['Home', 'Timetable', 'Notes & Resources', 'All city guides', 'Academic Rules', 'Support & Contacts', 'Privacy', 'Contact',
-    'Virtuale (UniBo)', 'Source on GitHub']) assert.ok(footer.includes(label), label);
+    'Official EU-HEM website', 'EU-HEM at UniBo', 'Virtuale (UniBo)', 'Source on GitHub']) assert.ok(footer.includes(label), label);
   assert.deepStrictEqual(await page.$$eval('.footer-heading', (all) => all.map((h) => h.textContent)), ['Study', 'Resources', 'Community', 'Life', 'About', 'Official platforms']);
   assert.ok(await page.$('.site-footer #links') && await page.$('.site-footer #about'), 'index.html#links and #about targets');
+  const officialChannels = await page.$$eval('.footer-social-link', all => all.map(a => ({
+    label: a.getAttribute('aria-label'), href: a.href, target: a.target, rel: a.rel,
+    icon: a.querySelector('use')?.getAttribute('href'), text: a.textContent.trim(),
+  })));
+  assert.deepStrictEqual(officialChannels.map(x => x.text), ['Website', 'Instagram', 'LinkedIn', 'YouTube']);
+  assert.match(officialChannels[0].href, /^https:\/\/eu-hem\.eu\/?$/);
+  assert.match(officialChannels[1].href, /^https:\/\/www\.instagram\.com\/euhemmasters\/?$/);
+  assert.match(officialChannels[2].href, /^https:\/\/www\.linkedin\.com\/school\/eu-hem\/?$/);
+  assert.match(officialChannels[3].href, /^https:\/\/www\.youtube\.com\/playlist\?list=PLlOJwZvbb_A5xLtoG0_YCTAHFeNlW3CmC$/);
+  assert.deepStrictEqual(officialChannels.map(x => x.icon), ['icons.svg#globe','icons.svg#instagram','icons.svg#linkedin','icons.svg#youtube']);
+  assert.ok(officialChannels.every(x => x.target === '_blank' && x.rel.includes('noopener') &&
+    (x.label.startsWith('EU-HEM') || x.label === 'Official EU-HEM website')));
   assert.match(await page.textContent('.footer-bottom'), /Unofficial student project/);
-  ok('header compacts on scroll; navy footer: the five menu groups, official platforms (#links), about (#about), disclaimer');
+  ok('header compacts on scroll; footer keeps all site groups, separates Hub source from official platforms and exposes four accessible EU-HEM programme channels');
   await page.context().close();
 
   /* ----- Homepage: Home is the brand (no menu item) ----- */
