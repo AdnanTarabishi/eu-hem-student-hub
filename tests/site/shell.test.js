@@ -42,7 +42,7 @@ const PAGES = ['index.html', 'studyplan.html', 'tracks.html', 'timetable.html', 
   assert.deepStrictEqual(await page.$$eval('.menu > .menu-item > :first-child', (all) => all.map((e) => e.textContent.trim())),
     ['Study', 'Resources', 'Community', 'Life', 'About']);
   assert.strictEqual(await page.getAttribute('.menu-dropdown a[href="tracks.html"]', 'aria-current'), 'page');
-  assert.ok(await page.$$eval('.menu-group:text("Study")', (b) => b.classList.contains('is-current')), 'Study group marked');
+  assert.ok(await page.$eval('.menu-group:text("Study")', (b) => b.classList.contains('is-current')), 'Study group marked');
   assert.ok(await page.isVisible('.header-cta'));
   assert.strictEqual(await page.isVisible('.menu-toggle'), false);
   ok('header: brand lockup, five menu groups, current page and its group marked, Join the Directory, no phone menu button');
@@ -97,7 +97,7 @@ const PAGES = ['index.html', 'studyplan.html', 'tracks.html', 'timetable.html', 
   page = await open('join.html');
   assert.strictEqual(await page.$('.header-cta'), null);
   assert.strictEqual(await page.getAttribute('.menu-dropdown a[href="join.html"]', 'aria-current'), 'page');
-  assert.ok(await page.$$eval('.menu-group:text("Community")', (b) => b.classList.contains('is-current')), 'Community group marked');
+  assert.ok(await page.$eval('.menu-group:text("Community")', (b) => b.classList.contains('is-current')), 'Community group marked');
   ok('the Join page hides the header Join button and marks Join in the Community group');
   await page.context().close();
 
