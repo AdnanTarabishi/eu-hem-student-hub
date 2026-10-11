@@ -79,7 +79,7 @@ const PAGES = ['index.html', 'studyplan.html', 'tracks.html', 'timetable.html', 
   assert.match(officialChannels[0].href, /^https:\/\/eu-hem\.eu\/?$/);
   assert.match(officialChannels[1].href, /^https:\/\/www\.instagram\.com\/euhemmasters\/?$/);
   assert.match(officialChannels[2].href, /^https:\/\/www\.linkedin\.com\/school\/eu-hem\/?$/);
-  assert.match(officialChannels[3].href, /^https:\/\/www\.youtube\.com\/playlist\?list=PLlOJwZvbb_A5xLtoG0_YCTAHFeNlW3CmC$/);
+  assert.match(officialChannels[3].href, /^https:\/\/www\.youtube\.com\/@eu-hem\/?$/);
   assert.deepStrictEqual(officialChannels.map(x => x.icon), ['icons.svg#globe','icons.svg#instagram','icons.svg#linkedin','icons.svg#youtube']);
   assert.ok(officialChannels.every(x => x.target === '_blank' && x.rel.includes('noopener') &&
     (x.label.startsWith('EU-HEM') || x.label === 'Official EU-HEM website')));
