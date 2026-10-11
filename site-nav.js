@@ -381,14 +381,12 @@ function brandLockup(make) {
     ["Studenti Online", "https://studenti.unibo.it"],
     ["AlmaEsami", "https://almaesami.unibo.it/almaesami/welcome.htm"],
   ];
-  // Official programme channels. The YouTube destination is the EU-HEM video
-  // series linked by the programme's own website; no separate official channel
-  // is claimed where one could not be verified.
+  // Official programme channels, verified against EU-HEM's public programme pages and profiles.
   const OFFICIAL_EUHEM_CHANNELS = [
     { label: "Official EU-HEM website", short: "Website", href: "https://eu-hem.eu/", icon: "globe" },
     { label: "EU-HEM on Instagram", short: "Instagram", href: "https://www.instagram.com/euhemmasters/", icon: "instagram" },
     { label: "EU-HEM on LinkedIn", short: "LinkedIn", href: "https://www.linkedin.com/school/eu-hem/", icon: "linkedin" },
-    { label: "EU-HEM video series on YouTube", short: "YouTube", href: "https://www.youtube.com/playlist?list=PLlOJwZvbb_A5xLtoG0_YCTAHFeNlW3CmC", icon: "youtube" },
+    { label: "EU-HEM on YouTube", short: "YouTube", href: "https://www.youtube.com/@eu-hem", icon: "youtube" },
   ];
   function footerColumn(title, links, id) {
     const column = make("section", "footer-column");
@@ -418,7 +416,7 @@ function brandLockup(make) {
     const brandLinks = make("ul", "footer-brand-links");
     for (const [label, href] of [
       ["Home", "index.html"],
-      ["Getting started", "index.html#welcome"],
+      ["Getting started", "index.html#your-week"],
       ["Source on GitHub", "https://github.com/AdnanTarabishi/eu-hem-student-hub"],
     ]) brandLinks.appendChild(footerLink(label, href));
     brandBox.appendChild(brandLinks);
