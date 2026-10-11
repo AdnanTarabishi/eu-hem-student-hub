@@ -375,10 +375,20 @@ function brandLockup(make) {
   }
   // The official systems, in the footer of every page (index.html#links points here)
   const OFFICIAL_LINKS = [
+    ["Official EU-HEM website", "https://eu-hem.eu/"],
+    ["EU-HEM at UniBo", "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement"],
     ["Virtuale (UniBo)", "https://virtuale.unibo.it"],
     ["Studenti Online", "https://studenti.unibo.it"],
     ["AlmaEsami", "https://almaesami.unibo.it/almaesami/welcome.htm"],
-    ["EU-HEM course website", "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement"],
+  ];
+  // Official programme channels. The YouTube destination is the EU-HEM video
+  // series linked by the programme's own website; no separate official channel
+  // is claimed where one could not be verified.
+  const OFFICIAL_EUHEM_CHANNELS = [
+    { label: "Official EU-HEM website", short: "Website", href: "https://eu-hem.eu/", icon: "globe" },
+    { label: "EU-HEM on Instagram", short: "Instagram", href: "https://www.instagram.com/euhemmasters/", icon: "instagram" },
+    { label: "EU-HEM on LinkedIn", short: "LinkedIn", href: "https://www.linkedin.com/school/eu-hem/", icon: "linkedin" },
+    { label: "EU-HEM video series on YouTube", short: "YouTube", href: "https://www.youtube.com/playlist?list=PLlOJwZvbb_A5xLtoG0_YCTAHFeNlW3CmC", icon: "youtube" },
   ];
   function footerColumn(title, links, id) {
     const column = make("section", "footer-column");
@@ -406,8 +416,31 @@ function brandLockup(make) {
       make("p", null, "Less searching. More learning, living and connecting."),
       make("p", "footer-about", "Independent, student-run and free. Your study plan stays on your device."));
     const brandLinks = make("ul", "footer-brand-links");
-    for (const [label, href] of [["Home", "index.html"], ["Getting started", "index.html#welcome"]]) brandLinks.appendChild(footerLink(label, href));
+    for (const [label, href] of [
+      ["Home", "index.html"],
+      ["Getting started", "index.html#welcome"],
+      ["Source on GitHub", "https://github.com/AdnanTarabishi/eu-hem-student-hub"],
+    ]) brandLinks.appendChild(footerLink(label, href));
     brandBox.appendChild(brandLinks);
+
+    const programme = make("div", "footer-programme");
+    programme.append(
+      make("p", "footer-programme-label", "Official EU-HEM"),
+      make("p", "footer-programme-note", "Programme website & social channels"));
+    const socials = make("div", "footer-socials");
+    socials.setAttribute("aria-label", "Official EU-HEM links");
+    for (const channel of OFFICIAL_EUHEM_CHANNELS) {
+      const link = make("a", "footer-social-link");
+      link.href = channel.href;
+      link.target = "_blank";
+      link.rel = "noopener";
+      link.title = channel.label;
+      link.setAttribute("aria-label", channel.label);
+      link.append(siteIcon(channel.icon, "footer-social-icon"), make("span", "footer-social-text", channel.short));
+      socials.appendChild(link);
+    }
+    programme.appendChild(socials);
+    brandBox.appendChild(programme);
     grid.appendChild(brandBox);
 
     // One column per menu group, then the official systems
@@ -416,7 +449,7 @@ function brandLockup(make) {
     for (const group of SITE_MENU) {
       links.appendChild(footerColumn(group.label, (group.items || [group]).map((item) => [item.label, item.href])));
     }
-    const official = footerColumn("Official platforms", [...OFFICIAL_LINKS, ["Source on GitHub", "https://github.com/AdnanTarabishi/eu-hem-student-hub"]], "links");
+    const official = footerColumn("Official platforms", OFFICIAL_LINKS, "links");
     const install = make("li", "footer-install");
     install.hidden = true; // shown by pwa.js where the browser can install the app
     const installButton = make("button", "footer-link", "Install the app");
