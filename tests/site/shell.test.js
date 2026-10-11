@@ -42,7 +42,7 @@ const PAGES = ['index.html', 'studyplan.html', 'tracks.html', 'timetable.html', 
   assert.deepStrictEqual(await page.$$eval('.menu > .menu-item > :first-child', (all) => all.map((e) => e.textContent.trim())),
     ['Study', 'Resources', 'Community', 'Life', 'About']);
   assert.strictEqual(await page.getAttribute('.menu-dropdown a[href="tracks.html"]', 'aria-current'), 'page');
-  assert.ok(await page.$eval('.menu-group:text("Study")', (b) => b.classList.contains('is-current')), 'Study group marked');
+  assert.ok(await page.$$eval('.menu-group:text("Study")', (b) => b.classList.contains('is-current')), 'Study group marked');
   assert.ok(await page.isVisible('.header-cta'));
   assert.strictEqual(await page.isVisible('.menu-toggle'), false);
   ok('header: brand lockup, five menu groups, current page and its group marked, Join the Directory, no phone menu button');
@@ -66,12 +66,12 @@ const PAGES = ['index.html', 'studyplan.html', 'tracks.html', 'timetable.html', 
 
   await page.evaluate(() => window.scrollTo(0, 400));
   await page.waitForFunction(() => document.querySelector('.site-header').classList.contains('is-compact'));
-  const footer = await page.$eval('.site-footer a', (all) => all.map((a) => a.textContent));
+  const footer = await page.$$eval('.site-footer a', (all) => all.map((a) => a.textContent));
   for (const label of ['Home', 'Timetable', 'Notes & Resources', 'All city guides', 'Academic Rules', 'Support & Contacts', 'Privacy', 'Contact',
     'Official EU-HEM website', 'EU-HEM at UniBo', 'Virtuale (UniBo)', 'Source on GitHub']) assert.ok(footer.includes(label), label);
-  assert.deepStrictEqual(await page.$eval('.footer-heading', (all) => all.map((h) => h.textContent)), ['Study', 'Resources', 'Community', 'Life', 'About', 'Official platforms']);
+  assert.deepStrictEqual(await page.$$eval('.footer-heading', (all) => all.map((h) => h.textContent)), ['Study', 'Resources', 'Community', 'Life', 'About', 'Official platforms']);
   assert.ok(await page.$('.site-footer #links') && await page.$('.site-footer #about'), 'index.html#links and #about targets');
-  const officialChannels = await page.$eval('.footer-social-link', all => all.map(a => ({
+  const officialChannels = await page.$$eval('.footer-social-link', all => all.map(a => ({
     label: a.getAttribute('aria-label'), href: a.href, target: a.target, rel: a.rel,
     icon: a.querySelector('use')?.getAttribute('href'), text: a.textContent.trim(),
   })));
@@ -97,7 +97,7 @@ const PAGES = ['index.html', 'studyplan.html', 'tracks.html', 'timetable.html', 
   page = await open('join.html');
   assert.strictEqual(await page.$('.header-cta'), null);
   assert.strictEqual(await page.getAttribute('.menu-dropdown a[href="join.html"]', 'aria-current'), 'page');
-  assert.ok(await page.$eval('.menu-group:text("Community")', (b) => b.classList.contains('is-current')), 'Community group marked');
+  assert.ok(await page.$$eval('.menu-group:text("Community")', (b) => b.classList.contains('is-current')), 'Community group marked');
   ok('the Join page hides the header Join button and marks Join in the Community group');
   await page.context().close();
 
