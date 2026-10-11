@@ -1,5 +1,5 @@
 name: Prepare footer update
-# Rerun after fixing multi-element footer assertions.
+# Final rerun after restoring single-element shell assertions.
 on:
   push:
     branches: ['codex/footer-official-socials-20261011']
