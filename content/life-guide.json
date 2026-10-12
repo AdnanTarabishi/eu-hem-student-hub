@@ -1,0 +1,473 @@
+{
+  "version": 1,
+  "reviewed": "2026-10-12",
+  "topics": [
+    {
+      "id": "housing",
+      "title": "Housing & Renting Essentials",
+      "icon": "home",
+      "summary": "Find a room that fits your semester, understand the agreement and leave with a clear record of the handover.",
+      "advice": [
+        "Start with your host university's housing guidance. Ask which offers apply to your enrolment category; a degree student and an exchange student may have different options.",
+        "Compare the full cost: rent, utilities, service charges, deposit, booking fees and travel to your teaching location. Treat a refundable deposit as cash held, separate from spending.",
+        "Verify the address, provider and agreement before paying. Pause if a private offer pressures you to transfer money quickly, avoids a viewing or gives conflicting details.",
+        "Read every contract clause before signing. Ask for an explanation of unfamiliar terms, the notice procedure, possible early departure and whether registration at the address is permitted.",
+        "Make a dated move-in record with the landlord or provider: inventory, existing damage, keys and any relevant meter readings. Keep your contract, receipts and photos privately.",
+        "Arrange the move-out inspection and deposit follow-up before leaving. Use the contract and local university advice to confirm what applies to your room."
+      ],
+      "questions": [
+        "What is included in the rent, and which payments or charges are separate?",
+        "Does the contract cover my actual study dates, and how do I give notice?",
+        "What evidence will the provider give me for payments, the room condition and the deposit return?"
+      ],
+      "guideSections": ["housing", "cost-of-living", "residence-and-registration"],
+      "related": [
+        { "label": "Compare your moving budget", "href": "toolkit.html?section=workbench&planner=four-city-budget" },
+        { "label": "Open your moving checklist", "href": "toolkit.html?section=workbench&planner=moving-checklist" }
+      ],
+      "sourceIds": ["unibo-housing", "sio-housing", "mci-housing", "eur-housing"]
+    },
+    {
+      "id": "wellbeing",
+      "title": "Wellbeing & Settling In",
+      "icon": "stethoscope",
+      "summary": "Build a manageable routine, stay connected and find the right support when a new city or a demanding semester feels difficult.",
+      "advice": [
+        "As a personal starting point, choose a regular meal, sleep and study routine, one familiar place nearby and one social activity you can return to each week.",
+        "Keep contact with people you trust while making space for new connections. A shared walk, meal or study session can be a simple way to meet classmates.",
+        "Use the university wellbeing routes below to ask about counselling, appointment availability, language and any eligibility or cost conditions. The Hub's Support page brings existing university contacts together.",
+        "If personal circumstances affect coursework or exams, contact the relevant programme support route early and read the existing rules for special provisions or leave.",
+        "During exam periods, try shorter study sessions, breaks and a realistic daily plan. These are student-made organisation suggestions, not treatment or a measure of your wellbeing.",
+        "For an urgent safety or medical situation, use the official emergency route in your city. Routine university counselling and the Hub Contact form are not emergency services."
+      ],
+      "questions": [
+        "Which service supports my situation, and how do I request an appointment?",
+        "Can I access support in a language I am comfortable using?",
+        "If this affects my studies, who can explain the programme's available arrangements?"
+      ],
+      "guideSections": ["healthcare", "emergency-numbers", "sport-social-life-and-student-organisations"],
+      "related": [
+        { "label": "Find the right support contact", "href": "support.html#contact-guide" },
+        { "label": "Official emergency routes", "href": "support.html#emergency" },
+        { "label": "Read student experiences", "href": "experiences.html" }
+      ],
+      "sourceIds": ["unibo-sap", "sio-health", "mci-support", "eur-support"]
+    },
+    {
+      "id": "benefits",
+      "title": "Student Benefits & Saving",
+      "icon": "calculator",
+      "summary": "Make better use of student services and compare the real cost of an offer before committing to it.",
+      "advice": [
+        "Start with your host university's student services: transport, meals, sport, libraries, language learning and software. Use the city guide for local options and the Support page for existing software information.",
+        "Check the full eligibility wording. Offers may depend on enrolment, age, institution, semester-fee payment, income or a specific application; a student card alone does not establish every entitlement.",
+        "Match a subscription to the time you will actually stay. Compare total cost, activation charges, renewal, notice and any commitment period rather than only the advertised monthly amount.",
+        "For a grant or allowance, check the current official call before budgeting for it. Note whether it is a subsidy, reimbursement or loan, and count unconfirmed support separately from confirmed income.",
+        "Review recurring payments before each city move. Ask whether cancellation, freezing or a change of student status affects the contract.",
+        "Use your own dated estimates in the Four-City Budget Planner. It does not supply live prices or exchange rates, and a low-cost scenario is not a guaranteed cost of living."
+      ],
+      "questions": [
+        "Am I eligible under the current terms, and what proof is required?",
+        "What will I pay for my whole stay, including fees and the notice period?",
+        "Will this offer renew or change when I move or finish studying?"
+      ],
+      "guideSections": ["getting-around", "cost-of-living", "food-and-daily-life", "sport-social-life-and-student-organisations"],
+      "related": [
+        { "label": "Build your city budget", "href": "toolkit.html?section=workbench&planner=four-city-budget" },
+        { "label": "Existing student software benefits", "href": "support.html#software" },
+        { "label": "Compare the city guides", "href": "city-guide.html" }
+      ],
+      "sourceIds": ["unibo-transport", "unibo-italian", "sio-sport", "mci-language", "eur-dutch", "eur-housing", "eur-work"]
+    },
+    {
+      "id": "language",
+      "title": "Language & Local Culture",
+      "icon": "globe",
+      "summary": "Learn useful everyday language and ask about local routines without needing to master everything before you arrive.",
+      "advice": [
+        "Begin with a greeting: buongiorno in Italian, hei in Norwegian, Guten Tag in German and hallo in Dutch. Then practise asking for directions, booking an appointment and understanding a shop receipt.",
+        "Choose one small daily task to practise in the local language, such as ordering a coffee or asking where a classroom is. Keep a short personal phrase list on your device.",
+        "Use the university language routes below to check current levels, placement tests, fees, registration dates and whether your student category can enrol.",
+        "Ask about a language exchange or student association through the host institution. Confirm meeting arrangements and respect other participants' privacy.",
+        "For contracts, medical information and official procedures, request a clear explanation or appropriate language support instead of relying only on an automatic translation.",
+        "Ask local classmates about practical habits such as appointments, shared-kitchen rules, quiet hours and recycling. Treat individual experiences as helpful perspectives rather than rules about an entire country."
+      ],
+      "questions": [
+        "Which beginner course or language exchange fits my stay and timetable?",
+        "Is a placement test required, and does my enrolment qualify for a student fee?",
+        "Where can I get help understanding an important document or appointment?"
+      ],
+      "guideSections": ["sport-social-life-and-student-organisations", "food-and-daily-life", "useful-apps-and-websites"],
+      "related": [
+        { "label": "Explore the city guides", "href": "city-guide.html" },
+        { "label": "Learn from student experiences", "href": "experiences.html" }
+      ],
+      "sourceIds": ["unibo-italian", "uio-norwegian", "mci-language", "eur-dutch"]
+    },
+    {
+      "id": "inclusion",
+      "title": "Accessibility & Inclusion",
+      "icon": "students",
+      "summary": "Plan for access to study, housing and everyday life, and use the existing programme route for academic arrangements.",
+      "advice": [
+        "For EU-HEM academic or exam adjustments, start with the existing Special provisions guidance and Support contact guide. These contain the programme process; local service pages help with practical support.",
+        "Before moving, ask your host about accessible teaching rooms, study spaces, transport and accommodation that fit your needs. Confirm practical details rather than assuming a building or room is suitable.",
+        "Ask which documentation is required, how to provide it securely and whether arrangements need confirmation at the next institution. Share sensitive records directly with the authorised service, not through public Hub content.",
+        "Discuss learning access early: accessible materials, assistive tools, communication support and exam arrangements may require preparation or approval.",
+        "If you experience discrimination, harassment or an unsafe situation, use the official safety and support routes already listed on the Support page.",
+        "Make room for different needs in group work: agree on accessible meeting formats, breaks and ways to contribute without asking classmates to disclose private health information."
+      ],
+      "questions": [
+        "Who can explain the programme's process and the host institution's practical support?",
+        "Can I confirm the room, route and materials meet my needs before arrival?",
+        "What should be arranged now, and what needs confirmation when I change university?"
+      ],
+      "guideSections": ["before-you-move", "housing", "getting-around", "study-places-and-campus"],
+      "related": [
+        { "label": "Programme special provisions", "href": "academic-rules.html#special-provisions" },
+        { "label": "Find the right support route", "href": "support.html#contact-guide" }
+      ],
+      "sourceIds": ["unibo-inclusion", "sio-housing", "mci-support", "eur-support"]
+    },
+    {
+      "id": "work",
+      "title": "Working & Volunteering",
+      "icon": "briefcase",
+      "summary": "Explore useful experience alongside your studies while checking the conditions that apply to your location and status.",
+      "advice": [
+        "Begin with university career services and recognised student or community organisations. Ask about student roles, volunteering and programme-related internships rather than assuming every opportunity fits your semester.",
+        "Before starting, confirm the rules for the country and your citizenship or residence status with the official authority or university service. EU/EEA and non-EU students can face different requirements; an existing permit does not establish permission in every destination.",
+        "Check whether a permit, declaration, internship agreement or other approval is needed. Volunteering and unpaid work can also have conditions; ask the organisation to explain its responsibilities.",
+        "Ask how employment or compensation affects insurance, taxes, benefits and any student-status requirements. Use the country's official information rather than applying one city's rules to the whole programme.",
+        "Make a realistic time and budget plan before accepting a role. Count anticipated job income separately until the role and conditions are confirmed.",
+        "Keep a private record of responsibilities, skills and feedback for later applications. The Career Tracker helps organise opportunities and preparation; Beyond EU-HEM currently previews the future careers section."
+      ],
+      "questions": [
+        "Am I permitted to do this specific paid, unpaid or volunteer role in this country?",
+        "Who arranges any approval, and what must be confirmed before I begin?",
+        "Does the commitment fit my studies, insurance and next city move?"
+      ],
+      "guideSections": ["residence-and-registration", "healthcare", "sport-social-life-and-student-organisations"],
+      "related": [
+        { "label": "Open the Career Tracker", "href": "toolkit.html?section=workbench&planner=career-tracker" },
+        { "label": "Explore the Beyond EU-HEM preview", "href": "beyond-euhem.html" },
+        { "label": "Ask the relevant university service", "href": "support.html#contact-guide" }
+      ],
+      "sourceIds": ["eur-support", "eur-work", "eu-work", "eu-residence"]
+    }
+  ],
+  "stages": [
+    {
+      "id": "prepare",
+      "title": "Preparing for Your Next Destination",
+      "kicker": "Before you book",
+      "summary": "Use your programme route as a starting point, then confirm the practical arrangements for your own stay.",
+      "tasks": [
+        "Confirm the host university, study dates, orientation and teaching location with the programme. The track route is a planning overview, not a booking or an individual admission decision.",
+        "Read the destination's Before you move, Residence and registration, and Healthcare guide sections. Follow the official process for your citizenship and residence status; EU/EEA and non-EU routes may differ.",
+        "Ask the host which student housing routes apply to your enrolment category, and check accommodation availability before committing to non-refundable travel.",
+        "Build a budget using your own figures for travel, rent, setup costs, ongoing spending and refundable deposits. Include any overlap between the current and next accommodation.",
+        "Confirm insurance for the whole stay, including travel days, and ask the provider about any effect of working or doing an internship.",
+        "List the documents and appointments the official instructions require. Put confirmed dates in the Document Dates tool without adding identity numbers or document scans.",
+        "If you need accessibility, academic or wellbeing support, contact the relevant service early and use the programme's existing special-provisions guidance."
+      ],
+      "guideSections": ["before-you-move", "residence-and-registration", "healthcare", "housing"],
+      "related": [
+        { "label": "Build your moving checklist", "href": "toolkit.html?section=workbench&planner=moving-checklist" },
+        { "label": "Compare destination budgets", "href": "toolkit.html?section=workbench&planner=four-city-budget" },
+        { "label": "Review your programme route", "href": "tracks.html" }
+      ],
+      "sourceIds": ["unibo-housing", "sio-housing", "mci-housing", "eur-housing", "eu-residence"]
+    },
+    {
+      "id": "departure",
+      "title": "Before Leaving the Current City",
+      "kicker": "Close the loose ends",
+      "summary": "Prepare the handover, check ongoing contracts and keep enough time for travel and unfinished university tasks.",
+      "tasks": [
+        "Confirm your accommodation notice, final payment, cleaning requirements, inspection and key handover with the provider. Keep a written record of the agreed steps.",
+        "Photograph the room condition privately, note relevant meter readings and ask how the deposit will be assessed and returned.",
+        "Check utilities, phone plans, transport passes and gym subscriptions for renewal, notice or cancellation conditions. Do not assume they end when you leave the city.",
+        "Ask the local university and authority whether address changes, deregistration or residence notifications apply to your departure or next destination.",
+        "Check remaining exams, submissions, borrowed library items and any transcript or enrolment documents needed by the next host.",
+        "Compare travel options, baggage rules and storage or shipping costs. Keep essential documents and items you may need during delays accessible.",
+        "Keep contracts, receipts and university documents in a private backup, and retain a working contact route while closing outstanding accounts."
+      ],
+      "guideSections": ["housing", "residence-and-registration", "money-and-phone", "getting-around"],
+      "related": [
+        { "label": "Update your moving checklist", "href": "toolkit.html?section=workbench&planner=moving-checklist" },
+        { "label": "Record confirmed document dates", "href": "toolkit.html?section=workbench&planner=document-deadlines" },
+        { "label": "Check your upcoming exams", "href": "exams.html" }
+      ],
+      "sourceIds": ["eur-housing", "sio-sport"]
+    },
+    {
+      "id": "arrival",
+      "title": "Arrival & the First Week",
+      "kicker": "Make the essentials work",
+      "summary": "Start with a safe place to stay, the host university's instructions and the services you need day to day.",
+      "tasks": [
+        "Confirm the key collection and check the accommodation inventory, condition and contract details. Report existing damage through the provider's official route and keep a private record.",
+        "Follow the host's published arrival and orientation instructions. Confirm access to university accounts, teaching systems, the student card and your actual classroom locations.",
+        "Complete the registration or residence steps that the official instructions identify for your situation. Record confirmed appointments instead of relying on a general checklist as a legal deadline.",
+        "Check how to access healthcare locally and where to get urgent help. Keep the official emergency route available offline.",
+        "Plan the route from your accommodation to teaching and identify a grocery shop, pharmacy and suitable study space.",
+        "Choose phone, banking and transport arrangements after checking the total cost, eligibility and contract length.",
+        "Introduce yourself to a classmate, student association or orientation group. Give yourself time to settle in rather than trying to finish every non-urgent task immediately."
+      ],
+      "guideSections": ["residence-and-registration", "healthcare", "emergency-numbers", "getting-around", "study-places-and-campus"],
+      "related": [
+        { "label": "Follow your arrival checklist", "href": "toolkit.html?section=workbench&planner=moving-checklist" },
+        { "label": "Find university support", "href": "support.html#universities" }
+      ],
+      "sourceIds": ["eu-residence", "eur-housing", "sio-health"]
+    },
+    {
+      "id": "settling",
+      "title": "Settling Into Everyday Life",
+      "kicker": "Build your rhythm",
+      "summary": "Turn arrival tasks into a routine that supports studying, everyday needs and time with other people.",
+      "tasks": [
+        "Review your actual spending after the first few weeks and update your budget assumptions, including setup costs and any deposit still held.",
+        "Check student services and discounts against your current enrolment and intended stay. Compare full contract costs before signing up.",
+        "Choose a realistic study routine and find one regular social, cultural or sport activity that suits your interests and access needs.",
+        "Check beginner language courses or exchanges, including registration, placement and fee conditions.",
+        "If a wellbeing or accessibility issue makes settling in harder, use the host and programme support routes instead of waiting until an exam period.",
+        "If considering work or volunteering, confirm the specific role's permission, insurance and other conditions before starting.",
+        "Review your next move when the programme publishes relevant arrangements. Add only confirmed dates to your personal checklist."
+      ],
+      "guideSections": ["cost-of-living", "food-and-daily-life", "sport-social-life-and-student-organisations", "useful-apps-and-websites"],
+      "related": [
+        { "label": "Update your city budget", "href": "toolkit.html?section=workbench&planner=four-city-budget" },
+        { "label": "Read student experiences", "href": "experiences.html" },
+        { "label": "Wellbeing and support contacts", "href": "support.html#contact-guide" }
+      ],
+      "sourceIds": ["unibo-transport", "sio-sport", "mci-language", "eur-dutch", "eur-work"]
+    },
+    {
+      "id": "returning",
+      "title": "Returning to Bologna, If Applicable",
+      "kicker": "Confirm your own route",
+      "summary": "Use this stage only if your track, thesis choice or confirmed programme arrangements involve returning to Bologna.",
+      "tasks": [
+        "Review the route for your selected track and confirm your next host or thesis destination with the programme. Returning to Bologna is not a required step for every student.",
+        "Confirm the current teaching, thesis, exam or administrative arrangements before choosing travel and accommodation dates.",
+        "Start a new accommodation check even if you lived in Bologna before. Confirm availability, contract dates, registration at the address and the deposit conditions.",
+        "Ask which registration, residence and insurance steps need updating for your current situation. A previous stay does not confirm that every document or arrangement remains valid.",
+        "Check access to the university services you expect to use, including accounts, libraries, support and any student benefits.",
+        "Budget for the move back, accommodation overlap and setup costs, and reuse your existing checklist without treating earlier completed tasks as confirmation for a new stay."
+      ],
+      "guideSections": ["before-you-move", "housing", "residence-and-registration", "healthcare"],
+      "related": [
+        { "label": "Review your track and thesis options", "href": "tracks.html" },
+        { "label": "Bologna: prepare for your stay", "href": "city-guide.html?city=bologna#before-you-move" },
+        { "label": "Plan the move back", "href": "toolkit.html?section=workbench&planner=moving-checklist" }
+      ],
+      "sourceIds": ["unibo-housing", "eu-residence"]
+    },
+    {
+      "id": "leaving",
+      "title": "Leaving a City at the End of the Programme",
+      "kicker": "A careful handover",
+      "summary": "Close your local arrangements and prepare for what follows, whether you move elsewhere or remain under a confirmed new status.",
+      "tasks": [
+        "Confirm your final university requirements, thesis or graduation process and the official route for obtaining academic documents.",
+        "Complete the accommodation handover and deposit follow-up. Keep a private record of payments, inspection and any unresolved questions.",
+        "Review subscriptions, utilities and student benefits. Confirm which arrangements stop, renew or change when your enrolment ends.",
+        "Ask the official university or authority which deregistration, address or residence notifications apply. If staying for work or further study, confirm the appropriate permission and insurance before relying on a new arrangement.",
+        "Keep essential private records and a way to receive outstanding refunds or messages. Check before closing an account that is still needed for those transactions.",
+        "Save examples of your own coursework, responsibilities and skills that you are permitted to retain. Respect confidentiality and the rights of other authors.",
+        "Organise future applications with the Career Tracker and explore the Beyond EU-HEM preview. Those Hub pages do not submit applications or guarantee opportunities."
+      ],
+      "guideSections": ["housing", "residence-and-registration", "money-and-phone", "healthcare"],
+      "related": [
+        { "label": "Organise your next applications", "href": "toolkit.html?section=workbench&planner=career-tracker" },
+        { "label": "Explore the Beyond EU-HEM preview", "href": "beyond-euhem.html" },
+        { "label": "Ask the relevant programme contact", "href": "support.html#contact-guide" }
+      ],
+      "sourceIds": ["eur-housing", "sio-sport", "eu-residence", "eur-work"]
+    }
+  ],
+  "sources": [
+    {
+      "id": "unibo-housing",
+      "title": "University of Bologna · Housing",
+      "url": "https://www.unibo.it/en/study/life-at-university-and-in-the-city/housing-and-residences/housing",
+      "city": "bologna",
+      "topics": ["housing"],
+      "checked": "2026-10-12",
+      "status": "verified",
+      "note": "University housing routes, SAIS and tenancy registration guidance; residence offers and grants have their own enrolment and application conditions."
+    },
+    {
+      "id": "unibo-sap",
+      "title": "University of Bologna · Psychological Support Service",
+      "url": "https://www.unibo.it/en/study/life-at-university-and-in-the-city/health-and-assistance/the-psychological-support-service-sap",
+      "city": "bologna",
+      "topics": ["wellbeing"],
+      "checked": "2026-10-12",
+      "status": "verified",
+      "note": "Counselling for enrolled UniBo students, its request process and waiting list; the page directs urgent situations to medical emergency services."
+    },
+    {
+      "id": "unibo-inclusion",
+      "title": "University of Bologna · Disability and learning support",
+      "url": "https://site.unibo.it/studenti-con-disabilita-e-dsa/en/for-students",
+      "city": "bologna",
+      "topics": ["inclusion"],
+      "checked": "2026-10-12",
+      "status": "verified",
+      "note": "Local support for disability, learning disorders and other educational needs; specific adaptations require documentation reviewed by the service."
+    },
+    {
+      "id": "unibo-italian",
+      "title": "University of Bologna · Italian language courses",
+      "url": "https://centri.unibo.it/cla/en/italian-language-courses/italian-language-courses-for-international-learners",
+      "city": "bologna",
+      "topics": ["language", "benefits"],
+      "checked": "2026-10-12",
+      "status": "verified",
+      "note": "Courses, enrolment and placement process; fees and credit recognition depend on learner category and previous courses."
+    },
+    {
+      "id": "unibo-transport",
+      "title": "University of Bologna · Public transport subsidies",
+      "url": "https://www.unibo.it/en/study/life-at-university-and-in-the-city/transport-and-mobility/transport-and-mobility-subsidies-for-students",
+      "city": "bologna",
+      "topics": ["benefits"],
+      "checked": "2026-10-12",
+      "status": "verified",
+      "note": "Subsidised annual passes and a separate income-related call; eligibility, deadlines, available funds and purchase conditions must be checked before applying."
+    },
+    {
+      "id": "sio-housing",
+      "title": "SiO · Housing applications and eligibility",
+      "url": "https://bolig.sio.no/en/information/how-to-apply",
+      "city": "oslo",
+      "topics": ["housing", "inclusion"],
+      "checked": "2026-10-12",
+      "status": "verified",
+      "note": "Housing eligibility, waiting lists, offers and adapted housing; institutional affiliation, semester-fee status and individual allocation conditions matter."
+    },
+    {
+      "id": "sio-health",
+      "title": "SiO · Health and counselling services",
+      "url": "https://www.sio.no/en/health",
+      "city": "oslo",
+      "topics": ["wellbeing"],
+      "checked": "2026-10-12",
+      "status": "verified",
+      "note": "Routes to counselling, mental health and other student health services; check the linked service's access, appointment and payment conditions."
+    },
+    {
+      "id": "uio-norwegian",
+      "title": "University of Oslo · Norwegian language course route",
+      "url": "https://www.uio.no/english/studies/courses/norwegian-language/",
+      "city": "oslo",
+      "topics": ["language"],
+      "checked": null,
+      "status": "not-verified",
+      "note": "This official route could not be opened during this review. Confirm the current course page, availability, eligibility and fees with UiO."
+    },
+    {
+      "id": "sio-sport",
+      "title": "SiO Athletica · Membership prices and terms",
+      "url": "https://sio.no/en/sports/prices-and-terms",
+      "city": "oslo",
+      "topics": ["benefits"],
+      "checked": "2026-10-12",
+      "status": "verified",
+      "note": "Membership categories, student proof, commitment periods, renewal and termination; compare the terms for your institution and length of stay."
+    },
+    {
+      "id": "mci-housing",
+      "title": "MCI Innsbruck · Living & Student Life",
+      "url": "https://www.mci.edu/en/study-at-mci/services/living-student-life",
+      "city": "innsbruck",
+      "topics": ["housing"],
+      "checked": "2026-10-12",
+      "status": "verified",
+      "note": "Student housing routes and scam checks; MCI labels its OeAD accommodation route as exchange-only, so confirm your enrolment category."
+    },
+    {
+      "id": "mci-support",
+      "title": "MCI Innsbruck · Student Support",
+      "url": "https://www.mci.edu/en/study-at-mci/services/student-support",
+      "city": "innsbruck",
+      "topics": ["wellbeing", "inclusion"],
+      "checked": "2026-10-12",
+      "status": "verified",
+      "note": "Local wellbeing and inclusion support, including advice on study arrangements and early preparation; confirm individual access with MCI."
+    },
+    {
+      "id": "mci-language",
+      "title": "MCI Innsbruck · Language Center",
+      "url": "https://www.mci4me.at/en/services/language-center",
+      "city": "innsbruck",
+      "topics": ["language", "benefits"],
+      "checked": "2026-10-12",
+      "status": "verified",
+      "note": "German and other language courses, registration, fees, course levels and cancellation terms; current MCI student and alumni rates differ."
+    },
+    {
+      "id": "eur-housing",
+      "title": "Erasmus University Rotterdam · Legal aspects of renting",
+      "url": "https://www.eur.nl/en/education/practical-matters/orientation-arrival/housing/legal-aspects",
+      "city": "rotterdam",
+      "topics": ["housing", "benefits"],
+      "checked": "2026-10-12",
+      "status": "verified",
+      "note": "Rental questions, contract types, registration, scam prevention and legal-help routes; housing benefit depends on individual conditions."
+    },
+    {
+      "id": "eur-support",
+      "title": "Erasmus University Rotterdam · Student Support",
+      "url": "https://www.eur.nl/en/education/practical-matters/advice-counselling",
+      "city": "rotterdam",
+      "topics": ["wellbeing", "inclusion", "work"],
+      "checked": "2026-10-12",
+      "status": "verified",
+      "note": "Routes to study advisers, student counsellors, psychologists, disability support and Career Services; individual services have their own access conditions."
+    },
+    {
+      "id": "eur-dutch",
+      "title": "Erasmus University Rotterdam · Dutch language courses",
+      "url": "https://www.eur.nl/en/education/language-training-centre/dutch",
+      "city": "rotterdam",
+      "topics": ["language", "benefits"],
+      "checked": "2026-10-12",
+      "status": "verified",
+      "note": "Dutch course levels, registration and placement tests; advertised student fees have conditions and course availability changes."
+    },
+    {
+      "id": "eur-work",
+      "title": "Erasmus University Rotterdam · Work while studying",
+      "url": "https://www.eur.nl/en/education/practical-matters/orientation-arrival/work-while-you-study",
+      "city": "rotterdam",
+      "topics": ["work", "benefits"],
+      "checked": "2026-10-12",
+      "status": "verified",
+      "note": "Dutch work, internship and volunteering conditions, including non-EU/EEA requirements and insurance implications; these are Netherlands-specific."
+    },
+    {
+      "id": "eu-residence",
+      "title": "Your Europe · Students' residence rights",
+      "url": "https://europa.eu/youreurope/citizens/residence/residence-rights/students/index_en.htm",
+      "city": "all",
+      "topics": ["work"],
+      "checked": "2026-10-12",
+      "status": "verified",
+      "note": "General residence conditions for EU citizens studying in another EU country; use destination guidance for Norway and for non-EU residence procedures."
+    },
+    {
+      "id": "eu-work",
+      "title": "Your Europe · Working while studying",
+      "url": "https://europa.eu/youreurope/citizens/education/university/working-while-studying/index_en.htm",
+      "city": "all",
+      "topics": ["work"],
+      "checked": "2026-10-12",
+      "status": "verified",
+      "note": "EU citizens' work rights while studying in another EU country and related tax/social-security questions; confirm national conditions and Norway's separate guidance."
+    }
+  ]
+}

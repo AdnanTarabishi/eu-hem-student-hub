@@ -1,0 +1,82 @@
+name: Check Student Life guides
+
+on:
+  pull_request:
+    paths:
+      - "student-life.html"
+      - "mobility-guide.html"
+      - "life.css"
+      - "life.js"
+      - "content/life-guide.json"
+      - "content/tracks.json"
+      - "guide-data.js"
+      - "site-nav.js"
+      - "search.js"
+      - "sw.js"
+      - "style.css"
+      - "tests/life/**"
+      - ".github/workflows/life-checks.yml"
+  push:
+    paths:
+      - "student-life.html"
+      - "mobility-guide.html"
+      - "life.css"
+      - "life.js"
+      - "content/life-guide.json"
+      - "content/tracks.json"
+      - "guide-data.js"
+      - "site-nav.js"
+      - "search.js"
+      - "sw.js"
+      - "style.css"
+      - "tests/life/**"
+      - ".github/workflows/life-checks.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: life-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  life-guides:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install existing development tools
+        run: npm ci
+      - name: Install Chromium for browser verification
+        run: npx playwright install --with-deps chromium
+      - name: Check sources, shared colours and cache fingerprints
+        run: |
+          node scripts/check-content.js
+          node scripts/check-contrast.js
+          node scripts/stamp-versions.js --check
+      - name: Check guidance references and route boundaries
+        run: node tests/life/data.test.js
+      - name: Check navigation, accessibility, privacy and offline browsing
+        env:
+          LIFE_SCREENSHOT_DIR: ${{ runner.temp }}/life-previews
+        run: node tests/life/browser.test.js .
+      - name: Verify both published guides (read-only)
+        if: github.ref == 'refs/heads/main'
+        env:
+          LIFE_SCREENSHOT_DIR: ${{ runner.temp }}/life-live
+        run: node tests/life/live.test.js
+      - name: Save visual verification
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: student-life-previews
+          path: |
+            ${{ runner.temp }}/life-previews
+            ${{ runner.temp }}/life-live
+          retention-days: 7
+          if-no-files-found: ignore
