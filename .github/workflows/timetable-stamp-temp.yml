@@ -1,0 +1,29 @@
+name: Stamp timetable release assets
+on:
+  push:
+    branches: [fix/timetable-reliability-2026-10-12]
+permissions:
+  contents: write
+concurrency:
+  group: timetable-autostamp
+  cancel-in-progress: false
+jobs:
+  stamp:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/timetable-reliability-2026-10-12
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/stamp-versions.js
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*.html' sw.js
+          if ! git diff --staged --quiet; then
+            git commit -m "Stamp updated timetable progress asset"
+            git push origin HEAD:fix/timetable-reliability-2026-10-12
+          fi
