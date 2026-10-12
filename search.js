@@ -42,6 +42,16 @@
         item.desc || "", entry.items ? entry.label : "",
         item.preview ? "In development · structure preview" : "");
     }
+    // Public Life topics and moving stages share the same editorial content as their pages.
+    try {
+      const response = await fetch("content/life-guide.json");
+      if (!response.ok) throw new Error("Life guidance unavailable");
+      const life = await response.json();
+      for (const topic of life.topics) add("page", topic.title, "student-life.html#" + topic.id,
+        [topic.summary, ...topic.advice, ...topic.questions].join(" "), "Student Life Guide", "Practical student-made guidance");
+      for (const stage of life.stages) add("page", stage.title, "mobility-guide.html#" + stage.id,
+        [stage.summary, ...stage.tasks].join(" "), "Moving Between Cities", "Practical moving suggestions");
+    } catch { /* Menu entries and city guides remain searchable when Life content is unavailable. */ }
     add("page", "Create an item", "create.html", "write flashcard question concept resource contribute");
     add("page", "Thesis guide: Getting started", "thesis.html#guide-roadmap", "master thesis dissertation when begin semester summer school proposal supervisor milestones", "Thesis Explorer");
     add("page", "Thesis guide: Find a topic", "thesis.html#guide-topics", "research question topic ideas specialisation track healthcare economics policy management population", "Thesis Explorer");

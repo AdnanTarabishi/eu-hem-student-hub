@@ -48,6 +48,9 @@ const SITE_MENU = [
   {
     label: "Life",
     items: [
+      { key: "student-life", label: "Student Life Guide", href: "student-life.html", icon: "home", desc: "Housing, wellbeing and everyday essentials" },
+      { key: "mobility-guide", label: "Moving Between Cities", href: "mobility-guide.html", icon: "route", desc: "Prepare, leave, arrive and settle in" },
+      { key: "wellbeing", label: "Wellbeing & Support", href: "support.html#universities", icon: "stethoscope", desc: "Find university support and contacts" },
       { key: "city-guide", label: "All city guides", href: "city-guide.html", icon: "guide", desc: "Prepare, arrive and feel at home" },
       { key: "bologna", label: "Bologna", href: "city-guide.html?city=bologna", icon: "map-pin", desc: "Italy" },
       { key: "oslo", label: "Oslo", href: "city-guide.html?city=oslo", icon: "map-pin", desc: "Norway" },
