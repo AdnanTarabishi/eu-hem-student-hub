@@ -26,7 +26,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/unibo-verified-timetable.json calendar/ -- '*.html' sw.js
+          git add -- data/unibo-verified-timetable.json calendar/ '*.html' sw.js
           if ! git diff --staged --quiet; then
             git commit -m "Publish official per-course timetable snapshot"
             git pull --rebase origin fix/unibo-course-authoritative-timetable-20261012
