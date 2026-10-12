@@ -25,6 +25,12 @@ test('second-term buildings provide researched floor guidance',()=>{
   assert.equal(locations.lookup('AULA EMILIO PASQUINI, Via Zamboni, 32 - Bologna').floor,'First floor');
   assert.equal(locations.lookup('AULA A - S.P.V., VIA San Petronio vecchio 32 - Bologna').floor,'Ground floor');
 });
+test('Palazzo Malvezzi Campeggi Sala delle Feste uses its correct first-floor entrance',()=>{
+  const room=locations.lookup('AULA 8 "SALA DELLE FESTE" (Via Zamboni, 22) · Piano Primo · Palazzo Malvezzi Campeggi · VIA Zamboni 22 - Bologna');
+  assert.equal(room.floor,'First floor');
+  assert.equal(room.entrance,'Via Zamboni 22');
+  assert.equal(room.address,'Via Zamboni 22, Bologna');
+});
 test('unknown rooms remain unknown rather than inventing directions',()=>assert.equal(locations.lookup('QA Classroom, Fictional campus, Bologna'),null));
 
 
