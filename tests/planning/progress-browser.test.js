@@ -26,6 +26,7 @@ const FEED = [make('96498','2026-10-01','09:00','QA Statistics Teacher'), make('
     let attempts=0;
     await context.route('**/*',route=>{
       const u=new URL(route.request().url());
+      if(u.pathname.endsWith("/data/unibo-verified-timetable.json")) return route.fulfill({status:404,body:"Fixture feed"});
       if(u.hostname==='corsi.unibo.it' && u.pathname.includes('@@orario_reale_json')) { attempts++; return fail && attempts<=3 ? route.fulfill({status:503,body:'unavailable'}) : route.fulfill({contentType:'application/json',body:JSON.stringify(feed)}); }
       return u.origin===new URL(base).origin ? route.continue() : route.abort();
     });
