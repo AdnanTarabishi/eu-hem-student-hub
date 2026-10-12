@@ -438,7 +438,7 @@ function showSessionDetails(session) {
   const officialModule = timetable.index.modulesByCode[session.moduleCode]?.module;
   if (officialModule?.officialUrl) {
     const sourceLink = createElement("a", "tt-course-link", "View this class on the official UniBo course timetable ↗");
-    sourceLink.href = officialModule.officialUrl.replace(/\\/$/, "") + "/orariolezioni";
+    sourceLink.href = officialModule.officialUrl + "/orariolezioni";
     sourceLink.target = "_blank";
     sourceLink.rel = "noopener";
     dialog.appendChild(sourceLink);
