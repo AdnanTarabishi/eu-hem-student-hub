@@ -29,6 +29,7 @@ function renderTeachingProgress(now, sourceState = "ready") {
     root.dataset.state = sourceState;
     put("monthly-progress-scope", "Bologna time · Europe/Rome");
     const text = sourceState === "loading" ? "Waiting for the official timetable. Progress is not available yet."
+      : sourceState === "stale" ? "Showing a saved timetable, not a live verification. Progress is hidden until UniBo can be checked again."
       : "Progress unavailable — the official timetable could not be loaded. Use Retry or Refresh; no percentage has been assumed.";
     if (status.textContent !== text) status.textContent = text;
     return;
@@ -78,7 +79,7 @@ function renderTeachingProgress(now, sourceState = "ready") {
 // boundary and loading state, not the calendar subtree; updates here cannot loop.
 function refreshTeachingProgress() {
   if (document.hidden) return;
-  renderTeachingProgress(Planner.clock(), timetable.ready ? "ready" : timetable.loading ? "loading" : "error");
+  renderTeachingProgress(Planner.clock(), timetable.ready ? (timetable.stale ? "stale" : "ready") : timetable.loading ? "loading" : "error");
 }
 const teachingProgressObserver = new MutationObserver(refreshTeachingProgress);
 teachingProgressObserver.observe(document.getElementById("timetable-summary"), { childList: true });

@@ -26,7 +26,7 @@ const FEED = [make('96500','2026-10-07','07:00','QA Law Teacher'), make('96498',
     let attempts=0;
     await context.route('**/*',route=>{
       const u=new URL(route.request().url());
-      if(u.hostname==='corsi.unibo.it' && u.pathname.includes('@@orario_reale_json')) { attempts++; return fail && attempts===1 ? route.fulfill({status:503,body:'unavailable'}) : route.fulfill({contentType:'application/json',body:JSON.stringify(feed)}); }
+      if(u.hostname==='corsi.unibo.it' && u.pathname.includes('@@orario_reale_json')) { attempts++; return fail && attempts<=3 ? route.fulfill({status:503,body:'unavailable'}) : route.fulfill({contentType:'application/json',body:JSON.stringify(feed)}); }
       return u.origin===new URL(base).origin ? route.continue() : route.abort();
     });
     const page=await context.newPage(); page.on('pageerror',e=>errors.push(e.message)); await page.goto(base+url);
@@ -112,6 +112,31 @@ const FEED = [make('96500','2026-10-07','07:00','QA Law Teacher'), make('96498',
     assert.equal(await p.locator('#course-filter').inputValue(),'fund-quant-methods'); assert.equal(await p.locator('#show-teacher').isChecked(),true);
     await p.context().close();
     ok('an empty feed is not confused with a failed feed; Retry and Refresh recover without losing display preferences');
+    p=await open({url:'timetable.html?view=day'});
+    const moved = FEED.map(item => ({...item, aule:item.aule.map(room => ({...room}))}));
+    const target = moved.find(item => item.cod_modulo==='96498' && item.start.startsWith('2026-10-07'));
+    target.aule[0].des_risorsa='AULA 8 SALA DELLE FESTE';
+    target.aule[0].des_piano='Piano Primo';
+    target.aule[0].des_indirizzo='Via Zamboni 22, Bologna';
+    await p.route(/@@orario_reale_json/,route=>route.fulfill({contentType:'application/json',body:JSON.stringify(moved)}));
+    await p.locator('#timetable-refresh').click();
+    await p.waitForFunction(()=>!document.querySelector('#timetable-room-changes').hidden);
+    assert.match(await p.locator('#timetable-room-changes').innerText(),/AULA 8 SALA DELLE FESTE/);
+    assert.match(await p.locator('#timetable-room-changes').innerText(),/QA Classroom/);
+    assert.match(await p.locator('#timetable-checked').innerText(),/Checked.*auto-check every 5 min/i);
+    await p.route(/@@orario_reale_json/,route=>route.fulfill({status:503,body:'unavailable'}));
+    await p.locator('#timetable-refresh').click();
+    await p.waitForFunction(()=>timetable.stale);
+    assert.equal(await p.locator('#timetable-sync-notice').isVisible(),true);
+    assert.match(await p.locator('#timetable-sync-notice').innerText(),/last|older|could not be verified/i);
+    assert.equal(await p.locator('#monthly-progress-values').isVisible(),false);
+    await p.reload();
+    await p.waitForFunction(()=>timetable.ready && timetable.stale);
+    assert.match(await p.locator('#timetable-checked').innerText(),/Cached timetable/);
+    assert.equal(await p.locator('.tt-day-choice').count(),7);
+    await p.context().close();
+    ok('room moves are detected, source outages keep verified sessions visibly stale, and refresh survives reload');
+
     p=await open({blocked:true,url:'timetable.html?view=month&date=2026-02-31'});
     assert.match(await p.locator('#week-label').innerText(),/October 2026/); await p.locator('#show-teacher').check(); assert.ok(await teachers(p).count()>0); await p.context().close();
     ok('blocked storage and invalid deep-link dates do not break the calendar');

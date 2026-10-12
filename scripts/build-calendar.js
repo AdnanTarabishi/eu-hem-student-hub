@@ -46,9 +46,10 @@ function htmlToText(html) {
 // --- Reading UniBo data ---
 
 async function fetchTimetable(url) {
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`Timetable: HTTP ${response.status}`);
-  const raw = await response.json();
+  // Shared retry policy with the live website, with longer backoff for Actions.
+  const { raw } = await uniboData.requestOfficialTimetable(url, {
+    attempts: 5, delayMs: 1500, timeoutMs: 20000,
+  });
   return raw.map((s) => {
     const classrooms = (s.aule || []).map(uniboData.timetableClassroomRecord);
     return {
@@ -230,8 +231,8 @@ function buildCalendar(calendarName, sessions, exams, keyDates = []) {
     `X-WR-CALNAME:${calendarName}`,
     "X-WR-CALDESC:Unofficial. Classes and exams from the official UniBo pages; exam periods and deadlines from the EU-HEM handbook.",
     "X-WR-TIMEZONE:Europe/Rome",
-    "REFRESH-INTERVAL;VALUE=DURATION:PT6H",
-    "X-PUBLISHED-TTL:PT6H",
+    "REFRESH-INTERVAL;VALUE=DURATION:PT1H",
+    "X-PUBLISHED-TTL:PT1H",
     ...VTIMEZONE,
   ];
 
@@ -311,11 +312,39 @@ function buildCalendar(calendarName, sessions, exams, keyDates = []) {
   return lines.map(foldLine).join("\r\n") + "\r\n";
 }
 
+// Revisions are stable when the event is unchanged and increase when a room,
+// time or exam detail changes. Calendar clients use SEQUENCE and DTSTAMP to
+// recognise modified events. Do not rewrite every subscription every hour.
+function reconcileEventRevisions(next, previous = "", stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z")) {
+  const unfold = text => text.replace(/\r\n[ \t]/g, "").replace(/\r\n/g, "\n");
+  const events = text => [...unfold(text).matchAll(/BEGIN:VEVENT\n([\s\S]*?)END:VEVENT/g)].map(([, body]) => body.trim().split("\n"));
+  const field = (lines, name) => lines.find(line => line.startsWith(name + ":"))?.slice(name.length + 1) || "";
+  const semantic = lines => lines.filter(line => !/^(DTSTAMP|LAST-MODIFIED|SEQUENCE):/.test(line)).join("\n");
+  const oldByUid = new Map(events(previous).map(lines => [field(lines, "UID"), lines]));
+
+  const prepared = unfold(next).replace(/BEGIN:VEVENT\n([\s\S]*?)END:VEVENT/g, (_, body) => {
+    const lines = body.trim().split("\n");
+    const old = oldByUid.get(field(lines, "UID"));
+    const unchanged = old && semantic(old) === semantic(lines);
+    const revision = unchanged ? Number(field(old, "SEQUENCE") || 0)
+      : old ? Number(field(old, "SEQUENCE") || 0) + 1 : 0;
+    const when = unchanged ? (field(old, "DTSTAMP") || stamp) : stamp;
+    const modified = unchanged ? (field(old, "LAST-MODIFIED") || when) : stamp;
+    const details = lines.filter(line => !/^(DTSTAMP|LAST-MODIFIED|SEQUENCE):/.test(line));
+    const at = Math.max(0, details.findIndex(line => line.startsWith("UID:")) + 1);
+    details.splice(at, 0, `SEQUENCE:${revision}`, `DTSTAMP:${when}`, `LAST-MODIFIED:${modified}`);
+    return "BEGIN:VEVENT\n" + details.join("\n") + "\nEND:VEVENT";
+  });
+  return prepared.trimEnd().split("\n").map(foldLine).join("\r\n") + "\r\n";
+}
+
 // --- Main ---
 
 function writeIfChanged(fileName, content) {
   const full = path.join(OUTPUT_DIR, fileName);
-  if (fs.existsSync(full) && fs.readFileSync(full, "utf8") === content) return false;
+  const previous = fs.existsSync(full) ? fs.readFileSync(full, "utf8") : "";
+  if (fileName.endsWith(".ics")) content = reconcileEventRevisions(content, previous);
+  if (previous === content) return false;
   fs.writeFileSync(full, content);
   return true;
 }
@@ -368,4 +397,4 @@ if (require.main === module) main().catch((error) => {
   process.exit(1); // marks the GitHub Actions run as failed, and the old calendar stays online
 });
 
-module.exports = { parseExamsHtml, mergeDuplicates, matchExamsToTerm, buildCalendar, examUid };
+module.exports = { parseExamsHtml, mergeDuplicates, matchExamsToTerm, buildCalendar, examUid, reconcileEventRevisions };

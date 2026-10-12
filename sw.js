@@ -9,12 +9,12 @@
 //   "Update available · Reload", and old saved copies are deleted.
 // Nothing personal is stored here: only public site files and public data.
 
-const VERSION = "6b3ff071";
+const VERSION = "304b7d93";
 const SITE_CACHE = `site-${VERSION}`;
 const DATA_CACHE = "data"; // kept across versions, so offline data survives an update
 
 const SITE_FILES = [
-  "timetable.css", "timetable-progress.css", "timetable-progress.js", "timetable-calendar.js", "timetable-locations.js",
+  "timetable.css", "timetable-progress.css", "timetable-progress.js", "timetable-calendar.js", "timetable-locations.js", "timetable-sync.js",
   "beyond-euhem.html", "events.html", "gallery.html", "future-pages.css", "future-pages.js",
   "course-workspace.js", "course-workspace.css",
   "behind-the-build.html", "behind-build.css", "behind-build.js", "content/build-effort.json",
@@ -132,6 +132,17 @@ async function networkFirst(event, request) {
       headers.set("x-saved-at", new Date().toISOString());
       const copy = new Response(await response.clone().blob(), { status: response.status, statusText: response.statusText, headers });
       event.waitUntil(cache.put(request, copy));
+      tellPage(event, { type: "fresh-data", source: request.url });
+      return response;
+    }
+    // An HTTP 503 is not a network exception. Previously we ignored the good
+    // cached response and showed an error instead. Never mask 4xx source errors.
+    if (response.status === 408 || response.status === 429 || response.status >= 500) {
+      const saved = await cache.match(request);
+      if (saved) {
+        tellPage(event, { type: "stale-data", source: request.url, savedAt: saved.headers.get("x-saved-at") });
+        return saved;
+      }
     }
     return response;
   } catch (error) {

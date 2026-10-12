@@ -60,12 +60,13 @@
   // ----- Offline banner -----
 
   let savedAt = null;
+  const staleSources = new Map(); // transient 5xx source failures while online
 
   // Offline = the device says so, or saved data had to be used (e.g. Wi-Fi without internet,
   // where the device still claims to be online)
   function updateOfflineBanner() {
     let banner = document.getElementById("offline-banner");
-    if (navigator.onLine && !savedAt) {
+    if (navigator.onLine && !savedAt && !staleSources.size) {
       if (banner) banner.remove();
       return;
     }
@@ -76,12 +77,14 @@
       banner.setAttribute("role", "status");
       document.body.prepend(banner);
     }
-    const when = savedAt
-      ? new Date(savedAt).toLocaleString("en-GB", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })
+    const fallbackDate = savedAt || [...staleSources.values()].filter(Boolean).sort()[0];
+    const when = fallbackDate && Number.isFinite(Date.parse(fallbackDate))
+      ? new Date(fallbackDate).toLocaleString("en-GB", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })
       : null;
-    banner.textContent = when
-      ? `You're offline: showing data saved on ${when}.`
-      : "You're offline: showing the last saved copy of this page.";
+    banner.textContent = !navigator.onLine || savedAt
+      ? when ? `You're offline: showing data saved on ${when}.` : "You're offline: showing the last saved copy of this page."
+      : when ? `An official data source is unavailable: showing a saved copy from ${when}.`
+      : "An official data source is temporarily unavailable; check UniBo for live changes.";
   }
 
   window.addEventListener("online", () => {
@@ -98,8 +101,16 @@
 
   navigator.serviceWorker.addEventListener("message", (event) => {
     if (event.data && event.data.type === "offline-data") {
-      // Keep the oldest date: that is how old the page's data can be
+      // Keep the oldest date: that is how old the page's data can be.
       if (event.data.savedAt && (!savedAt || event.data.savedAt < savedAt)) savedAt = event.data.savedAt;
+      updateOfflineBanner();
+    }
+    if (event.data?.type === "stale-data") {
+      staleSources.set(event.data.source || "unknown", event.data.savedAt || "");
+      updateOfflineBanner();
+    }
+    if (event.data?.type === "fresh-data") {
+      staleSources.delete(event.data.source || "unknown");
       updateOfflineBanner();
     }
   });

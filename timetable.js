@@ -14,6 +14,7 @@ const initialDate = TimetableCalendar.validDate(initialParams.get("date")) ? ini
 const timetable = { programme: null, index: null, sessions: [], ready: false, loading: false,
   view: VIEW_NAMES.includes(initialView) ? initialView : "week",
   selectedDate: initialDate, weekStart: TimetableCalendar.monday(initialDate), lastClock: "",
+  lastAttemptAt: 0, verifiedAt: "", stale: false, pendingSessions: null,
   showTeacher: readStorage(TEACHER_KEY, false) === true };
 const teacherCheckbox = document.getElementById("show-teacher");
 teacherCheckbox.checked = timetable.showTeacher;
@@ -434,7 +435,8 @@ function showSessionDetails(session) {
     link.href = `course.html?course=${encodeURIComponent(course.id)}`;
     dialog.appendChild(link);
   }
-  dialog.showModal();
+  dialog.dataset.sessionKey = TimetableSync.sessionKey(session);
+  if (!dialog.open) dialog.showModal();
 }
 
 function renderWeek(sessions, now) {
@@ -531,51 +533,170 @@ function render() {
   else if (timetable.view === "day") renderDay(sessions, now);
   else renderList(sessions, now);
   // Refresh the progress card immediately when switching views or filters.
-  if (typeof renderTeachingProgress === "function") renderTeachingProgress(now, "ready");
+  if (typeof renderTeachingProgress === "function") renderTeachingProgress(now, timetable.stale ? "stale" : "ready");
   timetable.lastClock = now;
 }
 
-async function loadTimetable() {
+// The official source is checked every five minutes while the page is active.
+// A stored snapshot is PUBLIC timetable data, never a student's choices or notes.
+const TIMETABLE_REFRESH_MS = 5 * 60 * 1000;
+const TIMETABLE_RESUME_MS = 60 * 1000;
+
+function safeTimetableStorage() {
+  try { return window.localStorage; } catch { return null; }
+}
+
+function timetableCheckTime(iso) {
+  if (!iso || !Number.isFinite(Date.parse(iso))) return "unknown time";
+  return new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Rome",
+    day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }).format(new Date(iso)) + " Bologna time";
+}
+
+function renderTimetableSourceState() {
+  const checked = document.getElementById("timetable-checked");
+  const warning = document.getElementById("timetable-sync-notice");
+  checked.textContent = timetable.stale
+    ? `Cached timetable · last verified ${timetableCheckTime(timetable.verifiedAt)}`
+    : `Checked ${timetableCheckTime(timetable.verifiedAt)} · auto-check every 5 min`;
+  warning.hidden = !timetable.stale;
+  if (timetable.stale) {
+    warning.replaceChildren(createElement("strong", null, "Live changes could not be verified. "),
+      document.createTextNode("Showing an older confirmed UniBo timetable. The university's latest timetable takes priority. "));
+    const link = createElement("a", null, "Check the official timetable ↗");
+    link.href = document.getElementById("timetable-source").href;
+    link.target = "_blank"; link.rel = "noopener";
+    warning.appendChild(link);
+  } else {
+    warning.replaceChildren();
+  }
+}
+
+function displayRoomChanges(changes) {
+  if (!changes.length) return;
+  const notice = document.getElementById("timetable-room-changes");
+  notice.replaceChildren(createElement("strong", null, `UniBo classroom update: ${changes.length} ${changes.length === 1 ? "change" : "changes"} detected`));
+  const list = createElement("ul");
+  for (const change of changes.slice(0, 4)) {
+    const item = createElement("li");
+    const label = timetable.index.modulesByCode[change.moduleCode]?.module.name || change.moduleCode;
+    item.append(createElement("b", null, `${label} · ${change.dateKey} · ${change.time}`),
+      createElement("span", null, `${change.before} → ${change.after}`));
+    list.appendChild(item);
+  }
+  notice.appendChild(list);
+  if (changes.length > 4) notice.appendChild(createElement("p", null, `And ${changes.length - 4} more classroom updates.`));
+  notice.hidden = false;
+}
+
+// Keep navigation, study-plan filters and accessibility preferences intact
+// when a background or manual refresh replaces the official session records.
+function applyTimetableSessions(sessions) {
+  const before = courseFilter.value;
+  timetable.sessions = sessions;
+  courseFilter.replaceChildren(new Option("All courses", ""));
+  for (const course of currentTerm(timetable.programme).courses) {
+    if (sessions.some(s => course.modules.some(m => m.code === s.moduleCode))) courseFilter.appendChild(new Option(course.name, course.id));
+  }
+  if ([...courseFilter.options].some(option => option.value === before)) courseFilter.value = before;
+  if (loadPlan(timetable.programme).saved && !document.querySelector(".my-courses-switch")) {
+    document.querySelector(".toolbar-filters").appendChild(myCoursesSwitch(timetable.programme, render));
+  }
+  timetable.ready = true;
+  render();
+  const dialog = document.getElementById("session-dialog");
+  if (dialog?.open) {
+    const updated = sessions.find(s => TimetableSync.sessionKey(s) === dialog.dataset.sessionKey);
+    if (updated) showSessionDetails(updated);
+  }
+}
+
+async function loadTimetable({ background = false } = {}) {
   if (timetable.loading) return;
   timetable.loading = true;
+  timetable.lastAttemptAt = Date.now();
   document.getElementById("timetable-refresh").disabled = true;
-  timetable.ready = false;
-  scheduleList.replaceChildren(skeleton(4, "card"));
-  scheduleList.setAttribute("aria-busy", "true");
-  scheduleStatus.textContent = "Loading classes from UniBo…";
-  document.querySelectorAll(".planning-toolbar input, .planning-toolbar select, .planning-toolbar button").forEach(control => { control.disabled = true; });
+  const showingData = timetable.ready;
+  if (!showingData) {
+    scheduleList.replaceChildren(skeleton(4, "card"));
+    scheduleList.setAttribute("aria-busy", "true");
+    scheduleStatus.textContent = "Loading classes from UniBo…";
+    document.querySelectorAll(".planning-toolbar input, .planning-toolbar select, .planning-toolbar button").forEach(control => { control.disabled = true; });
+  }
+
   try {
     timetable.programme = timetable.programme || await loadProgramme();
     timetable.index = programmeIndex(timetable.programme);
     const cohort = currentCohort(timetable.programme);
-    const source = document.getElementById("timetable-source");
-    source.href = cohort.sources.timetableFeed.split("/@@")[0];
-    const filterBeforeRefresh = courseFilter.value;
-    timetable.sessions = await fetchTimetable(cohort.sources.timetableFeed);
-    courseFilter.replaceChildren(new Option("All courses", ""));
-    for (const course of currentTerm(timetable.programme).courses) {
-      if (timetable.sessions.some(s => course.modules.some(m => m.code === s.moduleCode))) courseFilter.appendChild(new Option(course.name, course.id));
+    document.getElementById("timetable-source").href = cohort.sources.timetableFeed.split("/@@")[0];
+    const prior = timetable.sessions.length
+      ? { sessions: timetable.sessions, verifiedAt: timetable.verifiedAt }
+      : TimetableSync.read(safeTimetableStorage(), cohort.id);
+
+    const sessions = await fetchTimetable(cohort.sources.timetableFeed);
+    const cachedAt = sessions.sourceMeta?.cachedAt;
+    // A service-worker fallback must never reset the 'verified' clock or
+    // overwrite the last genuinely live snapshot with a potentially old copy.
+    timetable.stale = !!cachedAt;
+    timetable.verifiedAt = cachedAt || new Date().toISOString();
+    if (!timetable.stale) {
+      const changes = TimetableSync.roomChanges(prior?.sessions, sessions);
+      displayRoomChanges(changes);
+      TimetableSync.save(safeTimetableStorage(), cohort.id, sessions, timetable.verifiedAt);
     }
-    if ([...courseFilter.options].some(option => option.value === filterBeforeRefresh)) courseFilter.value = filterBeforeRefresh;
-    if (loadPlan(timetable.programme).saved && !document.querySelector(".my-courses-switch")) {
-      document.querySelector(".toolbar-filters").appendChild(myCoursesSwitch(timetable.programme, render));
+    // A successful check with identical data should not redraw a focused day
+    // button. A real background change waits for focus to leave the calendar.
+    const changed = JSON.stringify(sessions) !== JSON.stringify(timetable.sessions);
+    if (background && timetable.ready && !changed) {
+      if (typeof renderTeachingProgress === "function") {
+        renderTeachingProgress(Planner.clock(), timetable.stale ? "stale" : "ready");
+      }
+    } else if (background && timetable.ready && scheduleList.contains(document.activeElement)) {
+      timetable.pendingSessions = sessions;
+    } else {
+      timetable.pendingSessions = null;
+      applyTimetableSessions(sessions);
     }
-    timetable.ready = true;
-    Planner.checked(document.getElementById("timetable-checked"));
-    render();
+    renderTimetableSourceState();
   } catch (error) {
-    scheduleStatus.textContent = "The official schedule is unavailable right now.";
-    document.getElementById("timetable-checked").textContent = "Could not load UniBo schedule";
-    document.getElementById("now-next").replaceChildren(createElement("p", "planning-next-meta", "Check the official timetable while we reconnect."));
-    Planner.empty(scheduleList, { title: "Let’s reconnect to your schedule.", text: "We couldn’t load UniBo’s classes. Try again, or open the official timetable.", retry: loadTimetable, source: document.getElementById("timetable-source").href });
-    document.getElementById("timetable-summary").replaceChildren();
-    document.getElementById("timetable-legend").replaceChildren();
+    // A failed background refresh must not erase a working schedule.
+    const cached = timetable.programme && TimetableSync.read(safeTimetableStorage(), currentCohort(timetable.programme).id);
+    const fallback = timetable.ready ? { sessions: timetable.sessions, verifiedAt: timetable.verifiedAt } : cached;
+    if (fallback) {
+      timetable.stale = true;
+      timetable.verifiedAt = fallback.verifiedAt;
+      if (!timetable.ready) applyTimetableSessions(fallback.sessions);
+      else render();
+      renderTimetableSourceState();
+    } else {
+      scheduleStatus.textContent = "The official schedule is unavailable right now.";
+      document.getElementById("timetable-checked").textContent = "Could not load UniBo schedule";
+      document.getElementById("now-next").replaceChildren(createElement("p", "planning-next-meta", "Check the official timetable while we reconnect."));
+      Planner.empty(scheduleList, { title: "Let’s reconnect to your schedule.",
+        text: "We couldn’t load UniBo’s classes. Try again, or open the official timetable.",
+        retry: loadTimetable, source: document.getElementById("timetable-source").href });
+      document.getElementById("timetable-summary").replaceChildren();
+      document.getElementById("timetable-legend").replaceChildren();
+    }
+    if (!background) console.warn("UniBo timetable refresh failed:", error);
   } finally {
     timetable.loading = false;
     document.getElementById("timetable-refresh").disabled = false;
     scheduleList.setAttribute("aria-busy", "false");
     document.querySelectorAll(".planning-toolbar input, .planning-toolbar select, .planning-toolbar button").forEach(control => { control.disabled = !timetable.ready; });
   }
+}
+
+function refreshOfficialTimetableOnResume() {
+  if (!document.hidden && Date.now() - timetable.lastAttemptAt >= TIMETABLE_RESUME_MS) {
+    loadTimetable({ background: true });
+  }
+}
+
+function applyPendingTimetableUpdate() {
+  if (!timetable.pendingSessions || scheduleList.contains(document.activeElement)) return;
+  const sessions = timetable.pendingSessions;
+  timetable.pendingSessions = null;
+  applyTimetableSessions(sessions);
 }
 
 document.querySelectorAll("#view-switch [data-view]").forEach(button => button.addEventListener("click", () => changeTimetableView(button.dataset.view)));
@@ -609,6 +730,22 @@ function refreshTimetableClock() {
   else timetable.lastClock = now;
 }
 setInterval(refreshTimetableClock, 60000);
-document.addEventListener("visibilitychange", refreshTimetableClock);
-document.addEventListener("focusout", () => setTimeout(refreshTimetableClock, 0));
+setInterval(() => {
+  if (!document.hidden && Date.now() - timetable.lastAttemptAt >= TIMETABLE_REFRESH_MS) {
+    loadTimetable({ background: true });
+  }
+}, 60000);
+let wasTimetableHidden = document.hidden;
+document.addEventListener("visibilitychange", () => {
+  refreshTimetableClock();
+  // Ignore synthetic/duplicate visibility events without a real tab transition.
+  if (wasTimetableHidden && !document.hidden) refreshOfficialTimetableOnResume();
+  wasTimetableHidden = document.hidden;
+});
+window.addEventListener("focus", refreshOfficialTimetableOnResume);
+window.addEventListener("online", refreshOfficialTimetableOnResume);
+document.addEventListener("focusout", () => setTimeout(() => {
+  refreshTimetableClock();
+  applyPendingTimetableUpdate();
+}, 0));
 loadTimetable();

@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="style.css?v=b647d404">
   <link rel="stylesheet" href="planning.css?v=0e4fe2a7">
   <link rel="stylesheet" href="timetable-progress.css?v=e76f6e48">
-  <link rel="stylesheet" href="timetable.css?v=c3a1bfc9">
+  <link rel="stylesheet" href="timetable.css?v=01ef82bb">
   <link rel="preload" href="fonts/source-serif-4-latin-600.woff2" as="font" type="font/woff2" crossorigin>
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
@@ -96,6 +96,8 @@
         <div><p class="section-eyebrow">Make space for learning</p><h2 id="classes-title">Class schedule</h2></div>
         <div class="tt-source"><span class="tt-source-label">Official · UniBo</span><p id="timetable-checked" class="schedule-meta">Loading official schedule…</p><button id="timetable-refresh" type="button" class="inline-link">Refresh</button></div>
       </div>
+      <div id="timetable-sync-notice" class="tt-sync-notice tt-stale-notice" role="status" aria-live="polite" hidden></div>
+      <div id="timetable-room-changes" class="tt-sync-notice tt-change-notice" role="status" aria-live="polite" hidden></div>
       <div class="planning-toolbar">
         <div class="planning-controls">
           <div id="view-switch" class="segmented" role="group" aria-label="View">
@@ -146,16 +148,17 @@
   <script defer src="utils.js?v=3f08bd92"></script>
   <script defer src="ui.js?v=6d55e433"></script>
   <script defer src="search.js?v=7a1b7e68"></script>
-  <script defer src="pwa.js?v=c9212bf8"></script>
+  <script defer src="pwa.js?v=6f628bf6"></script>
   <script defer src="announcements.js?v=5ec8eef9"></script>
   <script defer src="programme.js?v=92916c59"></script>
-  <script defer src="unibo-data.js?v=6c5c5d1b"></script>
+  <script defer src="unibo-data.js?v=5ba4220a"></script>
   <script defer src="notes-schedule.js?v=72ca9b39"></script>
   <script defer src="planning.js?v=5b022301"></script>
   <script defer src="timetable-calendar.js?v=ea9b633a"></script>
   <script defer src="timetable-locations.js?v=c33d5e14"></script>
-  <script defer src="timetable.js?v=44ecad37"></script>
+  <script defer src="timetable-sync.js?v=535dcfcc"></script>
+  <script defer src="timetable.js?v=23b9a168"></script>
 
-  <script defer src="timetable-progress.js?v=f586fff3"></script>
+  <script defer src="timetable-progress.js?v=54bd083a"></script>
 </body>
 </html>

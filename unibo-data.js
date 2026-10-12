@@ -37,12 +37,49 @@ function timetableClassroomsText(classrooms = []) {
   return classrooms.map(timetableClassroomText).filter(Boolean).join(" + ");
 }
 
+// The official UniBo endpoint may temporarily return 502/503/504 or throttle requests.
+// Retry transient errors with bounded backoff; never manufacture sessions on failure.
+// This reader is shared with the server-side .ics calendar builder.
+async function requestOfficialTimetable(url, options = {}) {
+  const attempts = options.attempts || 3;
+  const delayMs = options.delayMs === undefined ? 500 : options.delayMs;
+  const timeoutMs = options.timeoutMs || 15000;
+  const fetcher = options.fetcher || fetch;
+  const pause = options.pause || (ms => new Promise(resolve => setTimeout(resolve, ms)));
+  let lastError;
+
+  for (let attempt = 0; attempt < attempts; attempt++) {
+    try {
+      const request = { cache: "no-store" };
+      if (typeof AbortSignal !== "undefined" && typeof AbortSignal.timeout === "function") {
+        request.signal = AbortSignal.timeout(timeoutMs);
+      }
+      const response = await fetcher(url, request);
+      if (!response.ok) {
+        const error = new Error(`Timetable: HTTP ${response.status}`);
+        error.retryable = response.status === 408 || response.status === 429 || response.status >= 500;
+        throw error;
+      }
+      const raw = await response.json();
+      if (!Array.isArray(raw)) throw new Error("Timetable: invalid official response");
+      return {
+        raw,
+        // The service worker adds this only when it serves a previously cached response.
+        cachedAt: response.headers?.get("x-saved-at") || "",
+      };
+    } catch (error) {
+      lastError = error;
+      if (error.retryable === false || attempt === attempts - 1) break;
+      await pause(Math.min(delayMs * (2 ** attempt), 10000));
+    }
+  }
+  throw lastError;
+}
+
 // Every class in the feed includes the complete official classroom description.
-async function fetchTimetable(url) {
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`Timetable: HTTP ${response.status}`);
-  const raw = await response.json();
-  return raw
+async function fetchTimetable(url, options) {
+  const { raw, cachedAt } = await requestOfficialTimetable(url, options);
+  const sessions = raw
     .map((s) => {
       const classrooms = (s.aule || []).map(timetableClassroomRecord);
       return {
@@ -60,6 +97,8 @@ async function fetchTimetable(url) {
       };
     })
     .sort((a, b) => a.start.localeCompare(b.start));
+  Object.defineProperty(sessions, "sourceMeta", { value: { cachedAt }, enumerable: false });
+  return sessions;
 }
 
 // ----- Exam dates -----
@@ -485,4 +524,5 @@ if (typeof module !== "undefined") module.exports = {
   parseUniboDate, examPublishedDetails, mergeExamSittings,
   examSittingIdentity, examCalendarTimes,
   timetableClassroomRecord, timetableClassroomText, timetableClassroomsText,
+  requestOfficialTimetable, fetchTimetable,
 };
