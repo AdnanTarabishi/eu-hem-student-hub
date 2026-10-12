@@ -79,7 +79,7 @@ function renderTeachingProgress(now, sourceState = "ready") {
 // boundary and loading state, not the calendar subtree; updates here cannot loop.
 function refreshTeachingProgress() {
   if (document.hidden) return;
-  renderTeachingProgress(Planner.clock(), timetable.ready ? "ready" : timetable.loading ? "loading" : "error");
+  renderTeachingProgress(Planner.clock(), timetable.ready ? (timetable.stale ? "stale" : "ready") : timetable.loading ? "loading" : "error");
 }
 const teachingProgressObserver = new MutationObserver(refreshTeachingProgress);
 teachingProgressObserver.observe(document.getElementById("timetable-summary"), { childList: true });
