@@ -14,7 +14,8 @@ const initialDate = TimetableCalendar.validDate(initialParams.get("date")) ? ini
 const timetable = { programme: null, index: null, sessions: [], ready: false, loading: false,
   view: VIEW_NAMES.includes(initialView) ? initialView : "week",
   selectedDate: initialDate, weekStart: TimetableCalendar.monday(initialDate), lastClock: "",
-  lastAttemptAt: 0, verifiedAt: "", stale: false, sourceKind: "", partial: false, pendingSessions: null,
+  lastAttemptAt: 0, verifiedAt: "", stale: false, sourceKind: "", partial: false,
+  verifiedCurrent: 0, currentModules: 0, pendingSessions: null,
   showTeacher: readStorage(TEACHER_KEY, false) === true };
 const teacherCheckbox = document.getElementById("show-teacher");
 teacherCheckbox.checked = timetable.showTeacher;
@@ -564,9 +565,11 @@ function renderTimetableSourceState() {
   const checked = document.getElementById("timetable-checked");
   const warning = document.getElementById("timetable-sync-notice");
   const origin = timetable.sourceKind === "course-pages" ? "Official UniBo course pages" : "UniBo degree timetable";
+  const coverage = timetable.sourceKind === "course-pages" && timetable.currentModules
+    ? ` · ${timetable.verifiedCurrent}/${timetable.currentModules} active modules verified` : "";
   checked.textContent = timetable.stale
-    ? `Source not fully current · ${origin} · last checked ${timetableCheckTime(timetable.verifiedAt)}`
-    : `${origin} · verified ${timetableCheckTime(timetable.verifiedAt)} · check site updates every 5 min`;
+    ? `Source not fully current · ${origin}${coverage} · last checked ${timetableCheckTime(timetable.verifiedAt)}`
+    : `${origin}${coverage} · verified ${timetableCheckTime(timetable.verifiedAt)} · check site updates every 5 min`;
   warning.hidden = !timetable.stale;
   if (timetable.stale) {
     warning.replaceChildren(createElement("strong", null, "Some timetable information may be out of date. "),
@@ -650,6 +653,8 @@ async function loadTimetable({ background = false } = {}) {
     timetable.stale = !!(sourceInfo.stale || sourceInfo.cachedAt);
     timetable.partial = !!sourceInfo.partial;
     timetable.sourceKind = sourceInfo.kind || "degree-feed";
+    timetable.verifiedCurrent = sourceInfo.verifiedCurrentModules || 0;
+    timetable.currentModules = sourceInfo.currentModules || 0;
     timetable.verifiedAt = sourceInfo.checkedAt || sourceInfo.cachedAt || new Date().toISOString();
     if (!timetable.stale) {
       const changes = TimetableSync.roomChanges(prior?.sessions, sessions);
