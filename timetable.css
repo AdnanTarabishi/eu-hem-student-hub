@@ -55,6 +55,27 @@
 .timetable-page #timetable-checked { font-size: 11px; line-height: 1.5; }
 .timetable-page #timetable-refresh { min-height: 40px; border: 1px solid var(--border-default); border-radius: 8px; padding: 6px 12px; background: var(--surface-card); color: var(--color-primary); font-size: .75rem; cursor: pointer; }
 .timetable-page #timetable-refresh:disabled { opacity: .55; cursor: wait; }
+
+/* Status comes from the actual source response; stale data is never called live. */
+.timetable-page .tt-sync-notice {
+  padding: 13px 16px;
+  margin: 16px 0;
+  border-radius: 11px;
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
+  background: var(--surface-warm);
+  font-size: .8rem;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+.timetable-page .tt-sync-notice strong { color: var(--text-heading); }
+.timetable-page .tt-sync-notice a { color: var(--color-primary); font-weight: 700; }
+.timetable-page .tt-stale-notice { border-left: 4px solid #ad6a37; }
+.timetable-page .tt-change-notice { border-left: 4px solid var(--color-primary); background: var(--color-primary-light); }
+.timetable-page .tt-change-notice ul { padding-left: 19px; margin: 9px 0 0; }
+.timetable-page .tt-change-notice li + li { margin-top: 9px; }
+.timetable-page .tt-change-notice li span { display: block; overflow-wrap: anywhere; }
+
 .timetable-page .planning-controls { justify-content: space-between; gap: 12px; }
 .timetable-page .segmented { display: flex; flex: 0 0 auto; gap: 2px; border-radius: 12px; }
 .timetable-page .segmented .segment { padding: 9px 13px; min-width: 65px; border: 0; font-size: .8rem; }
