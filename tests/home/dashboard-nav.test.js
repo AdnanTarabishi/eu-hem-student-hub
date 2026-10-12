@@ -71,6 +71,7 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
       return route.abort();
     });
     if (programmeUnavailable) await context.route("**/content/programme.json", (route) => route.fulfill({ status: 503, body: "Unavailable" }));
+    await context.route("**/data/unibo-verified-timetable.json", route => route.fulfill({ status: 404, body: "Fixture feed" }));
     const page = await context.newPage();
     page.on("pageerror", (error) => errors.push(error.message));
     await page.goto(`http://127.0.0.1:${site.address().port}/index.html`);
