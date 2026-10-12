@@ -1,0 +1,52 @@
+name: Check Track Explorer
+
+on:
+  pull_request:
+    paths:
+      - "tracks*"
+      - "assets/tracks/**"
+      - "content/tracks*.json"
+      - "tests/tracks/**"
+      - "privacy.html"
+      - "style.css"
+      - "site-nav.js"
+      - "utils.js"
+      - ".github/workflows/tracks-checks.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tracks-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  tracks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install existing test dependencies
+        run: npm ci
+      - name: Install Chromium for browser checks
+        run: npx playwright install --with-deps chromium
+      - name: Verify content, curriculum integrity and browser behaviour
+        env:
+          SCREENSHOT_DIR: ${{ runner.temp }}/tracks-screenshots
+        run: |
+          npm run test:tracks
+          node scripts/check-contrast.js
+          node scripts/stamp-versions.js --check
+      - name: Save visual checks
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tracks-visual-checks
+          path: ${{ runner.temp }}/tracks-screenshots
+          if-no-files-found: ignore
+          retention-days: 7

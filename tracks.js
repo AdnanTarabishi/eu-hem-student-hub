@@ -4,7 +4,7 @@
 // (tabs on wide screens, an accordion on phones), careers across tracks, cities, quiz, FAQ and sources.
 
 // tabs: the open section per track, kept when the layout switches between tabs and accordion
-const tracksPage = { cohort: null, narrow: null, compareNarrow: null, compareTwo: null, tabs: {} };
+const tracksPage = { cohort: null, narrow: null, compareNarrow: null, compareTwo: null, differences: false, tabs: {}, guide: null };
 const NARROW_QUERY = "(max-width: 640px)";
 
 // ----- Small helpers -----
@@ -62,28 +62,46 @@ function show(id) {
 // ----- 1. Hero -----
 
 function renderTracksHero() {
-  const { texts } = tracksPage.cohort;
+  const c = tracksPage.cohort;
+  const { texts } = c;
   const hero = document.getElementById("tracks-hero");
-  hero.appendChild(createElement("p", "hero-badge", texts.hero.badge));
+  const copy = createElement("div", "tx-hero-copy");
+  copy.appendChild(createElement("p", "tx-kicker", texts.hero.badge));
   const h1 = createElement("h1", null, texts.hero.heading);
   h1.id = "tracks-title";
-  hero.appendChild(h1);
-  hero.appendChild(createElement("p", "tracks-tagline", texts.hero.tagline));
-  hero.appendChild(createElement("p", "tracks-hero-text", texts.hero.text));
-  // The buttons only appear once their sections exist (My track, Compare)
+  copy.appendChild(h1);
+  copy.appendChild(createElement("p", "tracks-tagline", texts.hero.tagline));
+  copy.appendChild(createElement("p", "tracks-hero-text", texts.hero.text));
   const actions = createElement("div", "hero-actions");
-  for (const [label, target, primary] of [["Set my track", "my-track", true], ["Compare the tracks", "compare", false]]) {
+  for (const [label, target, primary] of [["Compare two tracks", "compare-two", true], ["Explore the four tracks", "track-cards", false]]) {
     if (document.getElementById(target).hidden) continue;
     const a = createElement("a", primary ? "button" : "button button-quiet", label);
     a.href = `#${target}`;
     actions.appendChild(a);
   }
-  if (actions.children.length) hero.appendChild(actions);
-  hero.appendChild(createElement("p", "tracks-hero-note", texts.hero.note));
-  const label = createElement("p", "student-label");
+  copy.appendChild(actions);
+  const stats = createElement("div", "tx-stats");
+  for (const [value, label] of [[c.tracks.length, "specialisations"], [Object.keys(c.universities).length, "partner cities"], ["S1", "shared in Bologna"]]) {
+    const stat = createElement("div");
+    stat.append(createElement("strong", null, String(value)), createElement("span", null, label));
+    stats.appendChild(stat);
+  }
+  copy.appendChild(stats);
+  copy.appendChild(createElement("p", "tracks-hero-note", texts.hero.note));
+  const label = createElement("p", "tx-hero-source");
   label.appendChild(siteIcon("info"));
   label.appendChild(document.createTextNode(` ${texts.studentLabel}`));
-  hero.appendChild(label);
+  copy.appendChild(label);
+  const art = createElement("figure", "tx-hero-art");
+  const image = createElement("img");
+  image.src = "assets/tracks/tracks-atlas.svg";
+  image.alt = "An open book branches into four illustrated perspectives: economic value, policy evidence, healthcare organisations and population health.";
+  image.width = 900;
+  image.height = 640;
+  art.append(image, createElement("figcaption", null, "Four perspectives. One shared foundation. Editorial illustration by the Student Hub."));
+  hero.append(copy, art);
+  const requested = new URLSearchParams(location.search).get("cohort");
+  if (requested && requested !== c.id) hero.appendChild(createElement("p", "tx-cohort-notice", `That cohort is not available in this guide. Showing the ${c.id} overview.`));
   show("tracks-hero");
 }
 
@@ -142,28 +160,45 @@ function renderJourney() {
 function renderTrackCards() {
   const c = tracksPage.cohort;
   const section = document.getElementById("track-cards");
-  sectionHead(section, "track-cards-title", "The four tracks");
+  sectionHead(section, "track-cards-title", "Four ways to approach healthcare", "Start with the questions that interest you, then inspect the courses and the journey behind each track. Original editorial illustrations by the Student Hub.");
   const grid = createElement("div", "track-card-grid");
   for (const track of c.tracks) {
     const card = createElement("article", "track-card");
     card.dataset.track = track.id;
     card.style.setProperty("--track-accent", trackAccent(track));
-    card.appendChild(trackBadge(track));
-    card.appendChild(createElement("h3", null, track.name));
-    card.appendChild(createElement("p", "track-question", track.student.question));
+    const art = createElement("img", "tx-card-art");
+    art.src = `assets/tracks/${track.id}.svg`;
+    art.alt = { eeh: "Illustrated cost and outcome models for healthcare evaluation.", ep: "Illustrated evidence, analysis and policy choices.", mhi: "Illustrated healthcare teams and connected organisational resources.", phm: "Illustrated communities, prevention and environmental influences on health." }[track.id] || "Editorial illustration of this track’s perspective.";
+    art.width = 800;
+    art.height = 400;
+    art.loading = "lazy";
+    const copy = createElement("div", "tx-card-copy");
+    copy.appendChild(trackBadge(track));
+    copy.appendChild(createElement("h3", null, track.name));
+    copy.appendChild(createElement("p", "track-question", track.student.question));
     const route = createElement("p", "track-route");
     route.appendChild(siteIcon("route"));
     route.appendChild(document.createTextNode(` ${trackRoute(c, track)}`));
-    card.appendChild(route);
-    card.appendChild(createElement("p", "track-description", track.student.description));
+    copy.appendChild(route);
+    copy.appendChild(createElement("p", "track-description", track.student.description));
     const tags = createElement("ul", "track-tags");
     tags.setAttribute("aria-label", "Topics");
     for (const tag of track.student.tags) tags.appendChild(createElement("li", null, tag));
-    card.appendChild(tags);
+    copy.appendChild(tags);
+    const actions = createElement("div", "tx-card-actions");
     const more = createElement("a", "button button-light", `Explore ${track.abbr}`);
     more.href = `#track-${track.id}`;
     more.addEventListener("click", () => openTrack(track.id));
-    card.appendChild(more);
+    actions.appendChild(more);
+    const compare = createElement("button", "button button-quiet", "Compare this track");
+    compare.type = "button";
+    compare.addEventListener("click", () => {
+      const other = tracksPage.compareTwo?.find((id) => id !== track.id) || c.tracks.find((item) => item.id !== track.id).id;
+      showCompareTwo(track.id, other);
+    });
+    actions.appendChild(compare);
+    copy.appendChild(actions);
+    card.append(art, copy);
     grid.appendChild(card);
   }
   section.appendChild(grid);
@@ -184,6 +219,11 @@ function overviewPanel(track) {
   const panel = createElement("div", "explorer-panel-body");
   panel.appendChild(createElement("p", "track-central", track.student.centralQuestion));
   panel.appendChild(createElement("p", null, track.student.overview));
+  if (tracksPage.guide?.naming?.track === track.id) {
+    const naming = createElement("p", "course-note tx-naming-note", tracksPage.guide.naming.text + " ");
+    for (const page of tracksPage.guide.naming.links) { naming.append(externalLink(page.label, page.url), document.createTextNode(" ")); }
+    panel.appendChild(naming);
+  }
   panel.appendChild(createElement("h3", null, "Key focus areas (official overview)"));
   const focus = createElement("ul", "track-tags");
   for (const area of track.focusAreas) focus.appendChild(createElement("li", null, area));
@@ -429,7 +469,7 @@ function openTrack(trackId) {
 // The saved track, if it exists in this cohort; otherwise null
 function myTrack() {
   const saved = loadMyTrack();
-  return saved ? trackById(tracksPage.cohort, saved.track) : null;
+  return saved && saved.cohort === tracksPage.cohort.id ? trackById(tracksPage.cohort, saved.track) : null;
 }
 
 // Marks "my track" everywhere on the page (journey, cards, explorer, comparison)
@@ -475,7 +515,9 @@ function renderMyTrack(editing = false) {
     card.style.setProperty("--track-accent", trackAccent(mine));
     const head = createElement("div", "my-track-head");
     head.appendChild(trackBadge(mine));
-    head.appendChild(createElement("h3", null, mine.name));
+    const title = createElement("h3", null, mine.name);
+    title.tabIndex = -1;
+    head.appendChild(title);
     const change = createElement("button", "button button-quiet", "Change");
     change.type = "button";
     change.addEventListener("click", () => {
@@ -505,11 +547,14 @@ function renderMyTrack(editing = false) {
     more.href = `#track-${mine.id}`;
     more.addEventListener("click", () => openTrack(mine.id));
     card.appendChild(more);
+    const plan = createElement("a", "button button-light", "Continue to Study Plan & Progress");
+    plan.href = "studyplan.html";
+    card.appendChild(plan);
     card.appendChild(createElement("p", "course-note", c.texts.myTrackNote));
     section.appendChild(card);
   } else {
     section.appendChild(createElement("p", "section-sub",
-      "Already chose your track? Pick it here to see your own summary, and to have it highlighted on this page."));
+      "Save a personal track preference for your summary and the Hub’s planning tools. This does not submit or change your official EU-HEM choice."));
     const picker = createElement("div", "track-picker");
     picker.setAttribute("role", "group");
     picker.setAttribute("aria-label", "Choose your track");
@@ -522,7 +567,11 @@ function renderMyTrack(editing = false) {
       button.appendChild(createElement("strong", null, track.name));
       button.appendChild(createElement("span", null, trackRoute(c, track)));
       button.addEventListener("click", () => {
-        saveMyTrack(c.id, track.id);
+        if (!saveMyTrack(c.id, track.id)) {
+          const note = document.querySelector("#my-track .my-track-foot .course-note");
+          if (note) { note.textContent = "This browser could not save your preference. You can still explore and compare all tracks."; note.setAttribute("role", "status"); }
+          return;
+        }
         renderMyTrack();
         highlightMyTrack();
         if (typeof toast === "function") toast(`Saved: ${track.abbr} is your track (on this device only) ✓`);
@@ -541,7 +590,11 @@ function renderMyTrack(editing = false) {
       const clear = createElement("button", "button button-quiet", "Remove my track");
       clear.type = "button";
       clear.addEventListener("click", () => {
-        saveMyTrack(c.id, null);
+        if (!saveMyTrack(c.id, null)) {
+          const note = document.querySelector("#my-track .my-track-foot .course-note");
+          if (note) { note.textContent = "This browser could not remove the saved preference. Try your browser’s site-data settings."; note.setAttribute("role", "status"); }
+          return;
+        }
         renderMyTrack();
         highlightMyTrack();
         if (typeof toast === "function") toast("Your track was removed from this device");
@@ -565,7 +618,7 @@ function statusBlock(cell) {
   label.lastChild.setAttribute("aria-hidden", "true");
   label.appendChild(document.createTextNode(` ${TRACK_STATUS[cell.status]}`));
   box.appendChild(label);
-  const names = [...cell.required, ...cell.elective.map((n) => (cell.status === "required" ? `${n} (elective)` : n))];
+  const names = [...cell.required, ...cell.elective.map((n) => (cell.status === "required" ? `${n} (available option)` : n))];
   if (names.length) box.appendChild(createElement("span", "compare-courses", names.join("; ")));
   return box;
 }
@@ -676,11 +729,16 @@ function renderCompare() {
   section.innerHTML = "";
   sectionHead(section, "compare-title", "Compare the tracks", c.texts.compareIntro);
   section.appendChild(createElement("p", "course-note",
-    "Built from the official course lists: each course is tagged with the themes it covers, and every cell names the courses behind it."));
-  section.appendChild(compareLegend());
-  section.appendChild(tracksPage.compareNarrow ? compareCards() : compareTable());
+    "Theme labels are assigned by students to the listed courses in Semesters 2–3. They show required courses or available options, including complementary choices. The common first semester is excluded; an untagged topic may still be taught. This is a course comparison, not a measure of workload or track quality."));
   renderCompareTwo(section);
-  renderOverlaps(section);
+  const full = createElement("details", "tx-full-compare");
+  full.open = Boolean(tracksPage.matrixOpen);
+  full.addEventListener("toggle", () => { tracksPage.matrixOpen = full.open; });
+  full.appendChild(createElement("summary", null, "View all four tracks and their shared courses"));
+  full.appendChild(compareLegend());
+  full.appendChild(tracksPage.compareNarrow ? compareCards() : compareTable());
+  renderOverlaps(full);
+  section.appendChild(full);
   show("compare");
 }
 
@@ -694,9 +752,11 @@ function compareTwoBody(a, b) {
     return box;
   }
   const rows = [
+    ["Central question", (t) => document.createTextNode(t.student.centralQuestion)],
     ["Mobility", (t) => document.createTextNode(trackRoute(c, t))],
     ["Thesis", (t) => document.createTextNode(t.thesis.map((u) => cityOf(u).city).join(" or "))],
     ...requiredSemesterRows(),
+    ...[2, 3].map((number) => [`Semester ${number}: choices`, (track) => semesterChoices(track, number)]),
     ...c.themes.map((theme) => [theme.label, (t) => statusBlock(themeCell(c, t, theme.id))]),
     ["Most common sectors", (t) => document.createTextNode(t.sectors.map((s) => s.label).join("; "))],
   ];
@@ -710,25 +770,51 @@ function compareTwoBody(a, b) {
     head.appendChild(createElement("strong", null, track.name));
     grid.appendChild(head);
   }
+  let shown = 0;
   for (const [label, render] of rows) {
+    const cells = [render(a), render(b)];
+    if (tracksPage.differences && cells[0].textContent === cells[1].textContent) continue;
+    shown++;
     grid.appendChild(createElement("div", "compare-two-label", label));
-    for (const track of [a, b]) {
+    for (const content of cells) {
       const cell = createElement("div", "compare-two-cell");
       cell.dataset.label = label;
-      cell.appendChild(render(track));
+      cell.appendChild(content);
       grid.appendChild(cell);
     }
   }
   box.appendChild(grid);
+  box.appendChild(createElement("p", "tx-compare-count", `${shown} of ${rows.length} criteria shown${tracksPage.differences ? " · identical displayed criteria are hidden" : ""}.`));
   const shared = sharedCourses(c, a, b);
   const cities = sharedCities(c, a, b);
   const note = createElement("p", "compare-two-shared");
   note.appendChild(createElement("strong", null, "In common: "));
   const parts = [];
   if (cities.length) parts.push(cities.map((x) => `${x.city} (Semester ${x.semesterA} for ${a.abbr}, Semester ${x.semesterB} for ${b.abbr})`).join("; "));
-  if (shared.length) parts.push(`${shared.length} shared course${shared.length === 1 ? "" : "s"}: ${shared.map((x) => x.name).join("; ")}`);
+  if (shared.length) parts.push(`${shared.length} shared course listing${shared.length === 1 ? "" : "s"} (required or available as an option): ${shared.map((x) => x.name).join("; ")}`);
   note.appendChild(document.createTextNode(parts.length ? parts.join(". ") + "." : "no shared city or course in Semesters 2 and 3."));
   box.appendChild(note);
+  return box;
+}
+
+function semesterChoices(track, number) {
+  const semester = track.semesters.find((item) => item.number === number);
+  const box = createElement("div", "tx-choice-rules");
+  for (const choice of semester.choices) {
+    const kind = choice.kind === "complementary" ? "Complementary courses" : "Electives";
+    box.appendChild(createElement("strong", "course-rule", `${kind} · ${choice.rule || "Selection rule not stated in the source"}`));
+    const list = createElement("ul", "track-course-list");
+    for (const option of choice.options) {
+      const item = createElement("li");
+      option.forEach((id, index) => {
+        if (index) item.appendChild(document.createTextNode(" + "));
+        item.appendChild(courseLabel(id, choice.notes?.[id]));
+      });
+      list.appendChild(item);
+    }
+    box.appendChild(list);
+  }
+  if (semester.choicesNote) box.appendChild(createElement("p", "course-note", semester.choicesNote));
   return box;
 }
 
@@ -753,6 +839,7 @@ function renderCompareTwo(section) {
   const mine = myTrack();
   const first = tracksPage.compareTwo?.[0] || (mine ? mine.id : c.tracks[0].id);
   const second = tracksPage.compareTwo?.[1] || c.tracks.find((t) => t.id !== first).id;
+  tracksPage.compareTwo = [first, second];
   const selects = [first, second].map((value, i) => {
     const label = createElement("label", null, i === 0 ? "Track 1" : "Track 2");
     const select = createElement("select");
@@ -768,6 +855,20 @@ function renderCompareTwo(section) {
     return select;
   });
   box.appendChild(pickers);
+  const tools = createElement("div", "tx-compare-tools");
+  const differences = createElement("label", "tx-differences-label");
+  const checkbox = createElement("input", "tx-differences");
+  checkbox.type = "checkbox";
+  checkbox.checked = tracksPage.differences;
+  differences.append(checkbox, document.createTextNode(" Show differences only"));
+  const share = createElement("button", "button button-quiet tx-share-compare", "Copy comparison link");
+  share.type = "button";
+  share.disabled = first === second;
+  tools.append(differences, share);
+  box.appendChild(tools);
+  const status = createElement("p", "course-note tx-compare-status", tracksPage.linkWarning ? "This comparison link was not valid. Choose two different tracks below." : "Compare the exact choice rules as well as the course themes. Personal worksheet notes are excluded from comparison links.");
+  status.setAttribute("role", "status");
+  box.appendChild(status);
   let body = compareTwoBody(trackById(c, first), trackById(c, second));
   box.appendChild(body);
   const update = () => {
@@ -775,16 +876,68 @@ function renderCompareTwo(section) {
     const next = compareTwoBody(trackById(c, selects[0].value), trackById(c, selects[1].value));
     body.replaceWith(next);
     body = next;
+    share.disabled = selects[0].value === selects[1].value;
+    tracksPage.linkWarning = false;
+    updateComparisonURL();
+    document.dispatchEvent(new CustomEvent("tracks:comparison-change"));
   };
   for (const select of selects) select.addEventListener("change", update);
+  checkbox.addEventListener("change", () => { tracksPage.differences = checkbox.checked; update(); });
+  share.addEventListener("click", async () => {
+    if (share.disabled) return;
+    const link = comparisonShareURL();
+    try {
+      await navigator.clipboard.writeText(link);
+      status.textContent = "Comparison link copied. It includes track and library-filter choices; your worksheet notes stay private.";
+    } catch {
+      status.replaceChildren(document.createTextNode("Copying is unavailable. Open or copy this "));
+      const fallback = createElement("a", "tx-comparison-link", "comparison link");
+      fallback.href = link;
+      status.append(fallback, document.createTextNode(". Personal notes are excluded."));
+    }
+  });
   section.appendChild(box);
+}
+
+function readComparisonURL() {
+  const params = new URLSearchParams(location.search);
+  const value = params.get("compare");
+  const pair = value?.split(",");
+  const valid = pair?.length === 2 && pair[0] !== pair[1] && pair.every((id) => trackById(tracksPage.cohort, id));
+  tracksPage.compareTwo = valid ? pair : null;
+  tracksPage.linkWarning = Boolean(value && !valid);
+  tracksPage.differences = params.get("differences") === "1";
+}
+
+function updateComparisonURL(push = false, anchor = false) {
+  const url = new URL(location.href);
+  const pair = tracksPage.compareTwo;
+  if (pair?.[0] !== pair?.[1] && pair?.every((id) => trackById(tracksPage.cohort, id))) url.searchParams.set("compare", pair.join(","));
+  else url.searchParams.delete("compare");
+  if (tracksPage.differences) url.searchParams.set("differences", "1"); else url.searchParams.delete("differences");
+  if (anchor) url.hash = "compare-two";
+  history[push ? "pushState" : "replaceState"](null, "", url);
+}
+
+function comparisonShareURL() {
+  const current = new URL(location.href);
+  const url = new URL(location.pathname, location.origin);
+  url.searchParams.set("cohort", tracksPage.cohort.id);
+  url.searchParams.set("compare", tracksPage.compareTwo.join(","));
+  if (tracksPage.differences) url.searchParams.set("differences", "1");
+  for (const key of ["q", "theme"]) if (current.searchParams.has(key)) url.searchParams.set(key, current.searchParams.get(key));
+  url.hash = "compare-two";
+  return url.href;
 }
 
 // Used by the quiz result (step 4): show two tracks side by side
 function showCompareTwo(idA, idB) {
+  if (idA === idB || !trackById(tracksPage.cohort, idA) || !trackById(tracksPage.cohort, idB)) return;
   tracksPage.compareTwo = [idA, idB];
+  updateComparisonURL(true, true);
   renderCompare();
   highlightMyTrack();
+  document.dispatchEvent(new CustomEvent("tracks:comparison-change"));
   document.getElementById("compare-two").scrollIntoView({ block: "start" });
 }
 
@@ -901,7 +1054,7 @@ function renderCities() {
 // ----- 9. Quiz "Which track fits you?" -----
 // One question at a time, answers shuffled every time, nothing saved or sent anywhere.
 
-const quizState = { index: 0, answers: [] };
+const quizState = { index: 0, answers: [], orders: {} };
 
 function quizBox() {
   return document.getElementById("quiz-box");
@@ -933,6 +1086,7 @@ function quizIntro() {
   start.addEventListener("click", () => {
     quizState.index = 0;
     quizState.answers = [];
+    quizState.orders = {};
     quizQuestion();
   });
   box.appendChild(start);
@@ -959,10 +1113,11 @@ function quizQuestion() {
   list.setAttribute("role", "group");
   list.setAttribute("aria-label", question.text);
   const chosen = quizState.answers[quizState.index];
-  for (const answer of shuffled(question.answers)) {
+  if (!quizState.orders[quizState.index]) quizState.orders[quizState.index] = shuffled(question.answers);
+  for (const answer of quizState.orders[quizState.index]) {
     const button = createElement("button", "quiz-answer", answer.text);
     button.type = "button";
-    if (answer === chosen) button.setAttribute("aria-pressed", "true");
+    button.setAttribute("aria-pressed", String(answer === chosen));
     button.addEventListener("click", () => {
       quizState.answers[quizState.index] = answer;
       if (quizState.index + 1 < questions.length) {
@@ -1006,7 +1161,7 @@ function quizResult() {
   const ranked = rankTracks(c, quizScores(c, quizState.answers));
   const max = c.quiz.maxScore;
 
-  const title = createElement("h3", "quiz-question", "Your result");
+  const title = createElement("h3", "quiz-question", "Your interest reflection");
   title.tabIndex = -1;
   box.appendChild(title);
 
@@ -1030,17 +1185,20 @@ function quizResult() {
     bars.appendChild(li);
   }
   box.appendChild(bars);
+  box.appendChild(createElement("p", "course-note", "These points reflect the selected answers under a student-designed scoring system. They are not a percentage fit, a test of ability or an official recommendation."));
 
   if (isCloseMatch(ranked, c.quiz.closeMatchPoints)) {
     box.appendChild(createElement("p", "tracks-callout quiz-close", c.texts.quizCloseMatch));
   }
 
-  // The top two, each with one sentence and a way to explore it
+  // Equal scores stay equal: show every track tied for the highest score.
   const top = createElement("div", "quiz-top");
-  ranked.slice(0, 2).forEach(({ track }, i) => {
+  const tied = ranked.filter((item) => item.score === ranked[0].score);
+  const suggestions = tied.length > 1 ? tied : ranked.slice(0, 2);
+  suggestions.forEach(({ track }, i) => {
     const card = createElement("div", "quiz-top-card");
     card.style.setProperty("--track-accent", trackAccent(track));
-    card.appendChild(createElement("span", "journey-step-label", i === 0 ? "Closest match" : "Second closest"));
+    card.appendChild(createElement("span", "journey-step-label", tied.length > 1 ? "Joint closest on these points" : i === 0 ? "Highest points" : "Next starting point"));
     const head = createElement("div", "quiz-top-head");
     head.appendChild(trackBadge(track));
     head.appendChild(createElement("strong", null, track.name));
@@ -1054,19 +1212,54 @@ function quizResult() {
   });
   box.appendChild(top);
 
+  const explanation = createElement("details", "tx-quiz-explanation");
+  explanation.id = "tx-quiz-explanation";
+  explanation.appendChild(createElement("summary", null, "See how your answers contributed"));
+  const reasons = createElement("ol");
+  quizState.answers.forEach((answer, index) => {
+    const item = createElement("li");
+    item.appendChild(createElement("strong", null, c.quiz.questions[index].text));
+    item.appendChild(createElement("p", null, answer.text));
+    const points = Object.entries(answer.points).map(([id, value]) => `${trackById(c, id).abbr}: +${value}`).join(" · ");
+    item.appendChild(createElement("p", "course-note", points));
+    reasons.appendChild(item);
+  });
+  explanation.appendChild(reasons);
+  box.appendChild(explanation);
+
   const actions = createElement("div", "quiz-actions");
-  const compare = createElement("button", "button", `Compare ${ranked[0].track.abbr} and ${ranked[1].track.abbr} side by side`);
+  const compare = createElement("button", "button", tied.length > 2 ? "Choose two tracks to compare" : `Compare ${ranked[0].track.abbr} and ${ranked[1].track.abbr} side by side`);
   compare.type = "button";
-  compare.addEventListener("click", () => showCompareTwo(ranked[0].track.id, ranked[1].track.id));
+  compare.addEventListener("click", () => {
+    if (tied.length > 2) document.getElementById("compare-two").scrollIntoView({ block: "start" });
+    else showCompareTwo(ranked[0].track.id, ranked[1].track.id);
+  });
   actions.appendChild(compare);
   const retake = createElement("button", "button button-quiet", "Retake");
   retake.type = "button";
   retake.addEventListener("click", () => {
     quizState.index = 0;
     quizState.answers = [];
+    quizState.orders = {};
     quizQuestion();
   });
   actions.appendChild(retake);
+  const review = createElement("button", "button button-quiet", "Review my answers");
+  review.id = "tx-quiz-review";
+  review.type = "button";
+  review.addEventListener("click", () => { quizState.index = c.quiz.questions.length - 1; quizQuestion(); });
+  actions.appendChild(review);
+  const clear = createElement("button", "button button-quiet", "Clear quiz");
+  clear.id = "tx-quiz-clear";
+  clear.type = "button";
+  clear.addEventListener("click", () => {
+    quizState.index = 0;
+    quizState.answers = [];
+    quizState.orders = {};
+    quizIntro();
+    quizBox().querySelector("button")?.focus();
+  });
+  actions.appendChild(clear);
   box.appendChild(actions);
   box.appendChild(createElement("p", "quiz-advice", c.texts.quizAdvice));
   title.focus({ preventScroll: true });
@@ -1078,8 +1271,9 @@ function quizResult() {
 function renderFaq() {
   const c = tracksPage.cohort;
   const section = document.getElementById("faq");
+  section.replaceChildren();
   sectionHead(section, "faq-title", "Questions");
-  for (const item of c.faq) {
+  for (const item of [...c.faq, ...(tracksPage.guide?.faqs || [])]) {
     const details = createElement("details", "faq-item");
     const summary = createElement("summary", null, item.q);
     if (item.audience === "future") summary.appendChild(createElement("span", "faq-audience", "For future students"));
@@ -1095,6 +1289,7 @@ function renderFaq() {
 function renderSources() {
   const c = tracksPage.cohort;
   const section = document.getElementById("sources");
+  section.replaceChildren();
   sectionHead(section, "sources-title", "Sources & verification");
   const list = createElement("ul", "sources-list");
   list.appendChild(createElement("li", null, c.sources.official));
@@ -1106,6 +1301,22 @@ function renderSources() {
   section.appendChild(list);
   section.appendChild(createElement("p", "course-note", `Last reviewed: ${c.lastReviewed}`));
   section.appendChild(createElement("p", "course-note", c.texts.sourcesDisclaimer));
+  const guide = tracksPage.guide;
+  if (guide) {
+    section.appendChild(createElement("h3", null, "What was checked for this guide"));
+    section.appendChild(createElement("p", "tx-source-scope", `${guide.reviewed} · ${guide.coverage}`));
+    section.appendChild(createElement("p", "course-note", guide.naming.text));
+    const additional = createElement("ul", "sources-list");
+    const seen = new Set(c.sources.pages.map((page) => page.url));
+    for (const page of [...guide.naming.links, ...guide.sources]) {
+      if (seen.has(page.url)) continue;
+      seen.add(page.url);
+      const item = createElement("li");
+      item.appendChild(externalLink(page.label, page.url));
+      additional.appendChild(item);
+    }
+    section.appendChild(additional);
+  }
   show("sources");
 }
 
@@ -1114,14 +1325,22 @@ function renderSources() {
 async function initTracksPage() {
   const status = document.getElementById("tracks-status");
   try {
-    const file = await loadTracksFile();
+    status.textContent = "Loading the tracks…";
+    const [file, guide] = await Promise.all([
+      loadTracksFile(),
+      typeof loadTrackGuide === "function" ? loadTrackGuide().catch(() => null) : Promise.resolve(null),
+    ]);
     tracksPage.cohort = tracksCohort(file, new URLSearchParams(window.location.search).get("cohort"));
+    if (!tracksPage.cohort?.tracks?.length) throw new Error("No track overview is available");
+    tracksPage.guide = guide;
+    readComparisonURL();
     const media = window.matchMedia(NARROW_QUERY);
     tracksPage.narrow = media.matches;
     tracksPage.compareNarrow = window.matchMedia(COMPARE_QUERY).matches;
     renderMyTrack();
     renderJourney();
     renderTrackCards();
+    if (typeof initTrackFilters === "function") initTrackFilters(tracksPage.cohort);
     renderCompare();
     renderExplorer();
     renderCareers();
@@ -1129,9 +1348,27 @@ async function initTracksPage() {
     renderQuiz();
     renderFaq();
     renderSources();
+    if (typeof renderTrackGuide === "function") renderTrackGuide(guide, tracksPage.cohort);
     renderTracksHero(); // last: its buttons depend on which sections exist
     highlightMyTrack();
     status.remove();
+    document.addEventListener("tracks:guide-loaded", (event) => {
+      tracksPage.guide = event.detail;
+      renderFaq();
+      renderSources();
+    });
+    const handleTrackLink = () => {
+      const match = location.hash.match(/^#track-([a-z]+)$/);
+      if (match) openTrack(match[1]);
+    };
+    window.addEventListener("hashchange", handleTrackLink);
+    window.addEventListener("popstate", () => {
+      readComparisonURL();
+      renderCompare();
+      highlightMyTrack();
+      handleTrackLink();
+      document.dispatchEvent(new CustomEvent("tracks:comparison-change"));
+    });
     // The comparison is a table on wide screens and cards on phones
     window.matchMedia(COMPARE_QUERY).addEventListener("change", (event) => {
       tracksPage.compareNarrow = event.matches;
@@ -1152,7 +1389,12 @@ async function initTracksPage() {
     else if (myTrack()) document.getElementById(`track-${myTrack().id}`).open = true; // my track open by default
   } catch (error) {
     console.error("Tracks:", error);
-    status.textContent = "Sorry, the tracks could not be loaded right now. Please try again later.";
+    status.replaceChildren(document.createTextNode("The track overview could not be loaded. Your saved choices have not been changed. "));
+    const retry = createElement("button", "button button-quiet", "Retry loading tracks");
+    retry.id = "tx-retry-tracks";
+    retry.type = "button";
+    retry.addEventListener("click", () => initTracksPage());
+    status.append(retry, document.createTextNode(" "), externalLink("Open the official EU-HEM programme", "https://eu-hem.eu/programme/"));
   }
 }
 
