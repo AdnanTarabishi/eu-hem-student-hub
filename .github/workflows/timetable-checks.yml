@@ -5,6 +5,10 @@ on:
       - 'timetable*'
       - 'planning*'
       - 'unibo-data.js'
+      - 'scripts/unibo-course-reader.js'
+      - 'scripts/update-unibo-timetable.js'
+      - 'data/unibo-verified-timetable.json'
+      - '.github/workflows/update-calendar.yml'
       - 'scripts/build-calendar.js'
       - 'sw.js'
       - 'pwa.js'
@@ -40,6 +44,7 @@ jobs:
           node scripts/check-contrast.js
           node tests/planning/calendar.test.js
           node tests/planning/calendar-revisions.test.js
+          node tests/planning/unibo-course-source.test.js
           node tests/planning/timetable-sync.test.js
           node scripts/stamp-versions.js --check
           node tests/planning/progress.test.js
@@ -47,6 +52,8 @@ jobs:
           node tests/notes/schedule.test.js
       - name: Check existing timetable and exam behaviour
         run: node tests/planning/browser.test.js .
+      - name: Ensure the published source works when UniBo degree JSON is down
+        run: node tests/planning/verified-source-browser.test.js .
       - name: Check monthly calendar, Day view and teacher visibility
         run: node tests/planning/timetable-v2.test.js .
         env:

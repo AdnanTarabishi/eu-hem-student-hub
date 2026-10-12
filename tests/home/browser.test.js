@@ -43,6 +43,8 @@ ok("no standalone-preview leftovers: one menu script, no demo dashboard text, no
     const context = await browser.newContext({ viewport, colorScheme: scheme, serviceWorkers: "block", reducedMotion: "reduce" });
     await context.clock.setFixedTime(new Date("2026-10-06T10:00:00+02:00"));
     await context.route(/unibo\.it/, (route) => route.abort());
+    // This test simulates both live UniBo and the published course snapshot being unavailable.
+    await context.route("**/data/unibo-verified-timetable.json", route => route.abort());
     if (mapUnavailable) await context.route("**/assets/map/world-countries.svg", (route) => route.abort());
     if (storage) await context.addInitScript((items) => { for (const [k, v] of Object.entries(items)) localStorage.setItem(k, v); }, storage);
     const page = await context.newPage();

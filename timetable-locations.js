@@ -25,6 +25,12 @@ const TimetableLocations = (() => {
   }
   function lookup(raw) {
     const text = clean(raw); if (!text) return null;
+    if (has(text, "zamboni 22", "aula 8")) return entry({
+      building:"Palazzo Malvezzi Campeggi", floor:"First floor", entrance:"Via Zamboni 22",
+      address:"Via Zamboni 22, Bologna",
+      guidance:"Enter Palazzo Malvezzi Campeggi at Via Zamboni 22 and go to the first floor (Piano Primo). Look for Aula 8, Sala delle Feste.",
+      sourceUrl:SOURCE.fundamentalsStatistics
+    });
     if (has(text, "aula magna istologia carinci")) return entry({ building:"Histology teaching building (Via Selmi 3)", floor:"Ground floor", entrance:"Via Belmeloro 8", address:"Via Belmeloro 8, Bologna", guidance:"Important: UniBo lists the building at Via Selmi 3 but explicitly says this classroom is accessed from Via Belmeloro 8. Use the Belmeloro entrance rather than searching only for the Selmi-side address.", sourceUrl:SOURCE.rightToHealth });
     if (has(text, "aula magna anatomia comparata")) return entry({ building:"Comparative Anatomy teaching building", floor:"Second floor", entrance:"Via Selmi 3", address:"Via Selmi 3, Bologna", guidance:"Enter from Via Selmi 3 and go to the second floor. This is not the ground-floor Istologia Carinci room, which has a separate Belmeloro entrance.", sourceUrl:SOURCE.fundamentalsStatistics });
     if (has(text, "aula esercitazioni anatomia comparata")) return entry({ building:"Comparative Anatomy teaching building", floor:"Fourth floor", entrance:"Via Selmi 3", address:"Via Selmi 3, Bologna", guidance:"Use the Via Selmi 3 entrance and continue to the fourth floor. The room is different from Aula Magna Anatomia Comparata on the second floor.", sourceUrl:SOURCE.fundamentalsStatistics });

@@ -19,6 +19,8 @@ const uniboData = require("../unibo-data.js");
 const PROGRAMME_FILE = path.join(__dirname, "..", "content", "programme.json");
 
 const OUTPUT_DIR = path.join(__dirname, "..", "calendar");
+const VERIFIED_TIMETABLE_FILE = path.join(__dirname, "..", "data", "unibo-verified-timetable.json");
+let keepExistingExamEvents = false;
 
 // Most exam records publish a start time without an end time.
 const EXAM_HOURS = 2;
@@ -46,7 +48,27 @@ function htmlToText(html) {
 // --- Reading UniBo data ---
 
 async function fetchTimetable(url) {
-  // Shared retry policy with the live website, with longer backoff for Actions.
+  if (fs.existsSync(VERIFIED_TIMETABLE_FILE)) {
+    const snapshot=JSON.parse(fs.readFileSync(VERIFIED_TIMETABLE_FILE,"utf8"));
+    const checkedAt=Date.parse(snapshot.checkedAt);
+    if (snapshot.schemaVersion!==1 || !Array.isArray(snapshot.sessions) || snapshot.sessions.length<3 ||
+        !Number.isFinite(checkedAt) || Date.now()-checkedAt>24*60*60*1000) {
+      throw Error("Verified course-unit timetable file is invalid or older than 24 hours");
+    }
+    if (snapshot.partial) console.warn("Some UniBo modules rely on previous verified lesson entries; consult source pages");
+    const ordinal=new Map();
+    return snapshot.sessions.map(s=>{
+      const key=s.moduleCode+"|"+s.dateKey;
+      const number=(ordinal.get(key)||0)+1;
+      ordinal.set(key,number);
+      return {
+        ...s,
+        // Stable on classroom/time changes, unlike programme-feed start-based UIDs.
+        id:`official-${s.moduleCode}-${s.dateKey}-${number}`,
+      };
+    });
+  }
+  // Legacy fallback only for local builds without the verified file.
   const { raw } = await uniboData.requestOfficialTimetable(url, {
     attempts: 5, delayMs: 1500, timeoutMs: 20000,
   });
@@ -340,9 +362,52 @@ function reconcileEventRevisions(next, previous = "", stamp = new Date().toISOSt
 
 // --- Main ---
 
+function preserveExamEvents(next, previous) {
+  if (!previous) return next;
+  const unfolded=previous.replace(/\r\n[ \t]/g,"").replace(/\r\n/g,"\n");
+  const old=[...unfolded.matchAll(/BEGIN:VEVENT\n([\s\S]*?)END:VEVENT/g)]
+    .map(([,body])=>body.trim().split("\n"))
+    .filter(lines=>lines.some(line=>/^UID:(exam-|registration-)/.test(line)));
+  if(!old.length)return next;
+  const withOld=old.map(lines=>"BEGIN:VEVENT\n"+lines.join("\n")+"\nEND:VEVENT").join("\n");
+  return next.replace(/END:VCALENDAR\s*$/,withOld+"\nEND:VCALENDAR\n");
+}
+
+function calendarExamTitles(calendar) {
+  const unfolded=calendar.replace(/\r\n[ \t]/g,"").replace(/\r\n/g,"\n");
+  return new Set([...unfolded.matchAll(/BEGIN:VEVENT\n([\s\S]*?)END:VEVENT/g)]
+    .map(([,body])=>body)
+    .filter(body=>/^UID:exam-/m.test(body))
+    .map(body=>body.match(/^SUMMARY:(.+)$/m)?.[1]||"")
+    .filter(Boolean));
+}
+
+function holdUnverifiedExamChanges(current,previous) {
+  const oldTitles=calendarExamTitles(previous);
+  if(!oldTitles.size)return false;
+  const currentTitles=calendarExamTitles(current);
+  // UniBo's degree-level exam service can return partial data (missing
+  // modules). Preserve the old subscription instead of silently dropping exam
+  // events on an update intended to fix classrooms, and flag it as unverified.
+  return [...oldTitles].some(title=>!currentTitles.has(title));
+}
+
+function withoutExamEvents(ics) {
+  const unfolded=ics.replace(/\r\n[ \t]/g,"").replace(/\r\n/g,"\n");
+  return unfolded.replace(/BEGIN:VEVENT\n([\s\S]*?)END:VEVENT\n?/g,(whole,body)=>
+    /^UID:(exam-|registration-)/m.test(body) ? "" : whole);
+}
+
 function writeIfChanged(fileName, content) {
   const full = path.join(OUTPUT_DIR, fileName);
   const previous = fs.existsSync(full) ? fs.readFileSync(full, "utf8") : "";
+  if (fileName.endsWith(".ics") && (keepExistingExamEvents || holdUnverifiedExamChanges(content,previous))) {
+    // Drop partial incoming exam rows before bringing back the complete older
+    // subscription's exam rows. Do not duplicate conflicting sittings.
+    if (!keepExistingExamEvents) console.warn(`Incomplete exam coverage in ${fileName}; preserving previous exam events`);
+    content=preserveExamEvents(withoutExamEvents(content),previous);
+    content=content.replace("X-WR-CALDESC:Unofficial.","X-WR-CALDESC:Exam dates retained from the last published copy (not re-verified). Unofficial.");
+  }
   if (fileName.endsWith(".ics")) content = reconcileEventRevisions(content, previous);
   if (previous === content) return false;
   fs.writeFileSync(full, content);
@@ -357,8 +422,14 @@ async function main() {
   const sessions = matchSessionsToTerm(await fetchTimetable(cohort.sources.timetableFeed), term)
     .sort((a, b) => a.start.localeCompare(b.start));
   if (sessions.length === 0) throw new Error("Timetable is empty, not updating the calendar");
-  const exams = matchExamsToTerm(mergeDuplicates(await fetchExams(cohort.sources.examDates)), term)
-    .sort((a, b) => (a.dateKey + a.time).localeCompare(b.dateKey + b.time));
+  let exams=[];
+  try {
+    exams=matchExamsToTerm(mergeDuplicates(await fetchExams(cohort.sources.examDates)), term)
+      .sort((a, b) => (a.dateKey + a.time).localeCompare(b.dateKey + b.time));
+  } catch(error) {
+    keepExistingExamEvents = true;
+    console.warn("Official UniBo exam dates unavailable; existing exam events will be preserved:",error.message);
+  }
 
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
   const entries = [];
@@ -397,4 +468,4 @@ if (require.main === module) main().catch((error) => {
   process.exit(1); // marks the GitHub Actions run as failed, and the old calendar stays online
 });
 
-module.exports = { parseExamsHtml, mergeDuplicates, matchExamsToTerm, buildCalendar, examUid, reconcileEventRevisions };
+module.exports = { parseExamsHtml, mergeDuplicates, matchExamsToTerm, buildCalendar, examUid, reconcileEventRevisions, preserveExamEvents, calendarExamTitles, holdUnverifiedExamChanges, withoutExamEvents, fetchTimetable };

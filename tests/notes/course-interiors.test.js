@@ -26,6 +26,7 @@ const exam = `<h3 role="tab" aria-controls="e1"><a><span class="code">97177</spa
     await context.clock.setFixedTime(new Date(now));
     await context.route(/^https?:\/\//, async route => {
       const u = new URL(route.request().url());
+      if (u.pathname.endsWith("/data/unibo-verified-timetable.json")) return route.fulfill({status:404,body:"Fixture feed"});
       if (u.hostname === '127.0.0.1') {
         if (!calendar && u.pathname.includes('/calendar/')) return route.fulfill({status:503, body:'Test: calendar unavailable'});
         return route.continue();

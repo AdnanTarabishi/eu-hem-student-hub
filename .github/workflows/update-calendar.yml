@@ -1,4 +1,4 @@
-# Rebuilds the calendar files from the official UniBo pages every hour.
+# Rebuilds the verified schedule and subscribed calendars from UniBo course pages every 30 minutes.
 # If something changed, it saves (commits) the new file, and GitHub Pages publishes it.
 # You can also run it by hand: GitHub -> Actions -> Update calendar -> Run workflow.
 
@@ -6,7 +6,7 @@ name: Update calendar
 
 on:
   schedule:
-    - cron: "17 * * * *" # hourly at minute 17 UTC (GitHub schedules may run late)
+    - cron: "17,47 * * * *" # twice each hour (GitHub may delay schedules)
   workflow_dispatch: # adds a "Run workflow" button
 
 permissions:
@@ -29,7 +29,10 @@ jobs:
         with:
           node-version: 22
 
-      - name: Build the calendar
+      - name: Verify individual UniBo course pages
+        run: node scripts/update-unibo-timetable.js
+
+      - name: Build subscriptions from the verified timetable
         run: node scripts/build-calendar.js
       - name: Explain failed source synchronization
         if: failure()
@@ -44,15 +47,13 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add calendar
+          git add calendar data/unibo-verified-timetable.json
           if git diff --staged --quiet; then
             echo "Calendar unchanged."
             exit 0
           fi
-          git commit -m "Update calendar from UniBo"
-          # Another robot (announcements) may have saved something meanwhile: get it first
-          git pull --rebase
+          git commit -m "Synchronize verified UniBo course timetable and subscriptions"
+          # Rebase against any concurrent announcement updates; normal Pages build
+          # runs automatically after this push.
+          git pull --rebase origin main
           git push
-          # Ask GitHub Pages to publish the new version
-          curl -sS -X POST -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/${{ github.repository }}/pages/builds"

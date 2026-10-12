@@ -76,8 +76,52 @@ async function requestOfficialTimetable(url, options = {}) {
   throw lastError;
 }
 
+// The degree-programme JSON service currently returns HTTP 503. Prefer the
+// independently verified, public course-unit pages compiled by GitHub Actions.
+// This is the same source used for .ics subscriptions; no user data is involved.
+const VERIFIED_TIMETABLE_URL = "data/unibo-verified-timetable.json";
+const VERIFIED_TIMETABLE_MAX_AGE_MS = 4 * 60 * 60 * 1000;
+
+function verifiedTimetableSessions(documentData, { cachedAt = "", now = Date.now() } = {}) {
+  const data = documentData;
+  if (data?.schemaVersion !== 1 || !Array.isArray(data.sessions) ||
+      data.sessions.length < 3 || !Number.isFinite(Date.parse(data.checkedAt))) {
+    throw Error("Invalid verified UniBo course-page timetable");
+  }
+  const age = now - Date.parse(data.checkedAt);
+  const stale = !!data.partial || !Number.isFinite(age) || age < -10 * 60 * 1000 ||
+    age > VERIFIED_TIMETABLE_MAX_AGE_MS || !!cachedAt;
+  const sessions = data.sessions.map(s => ({
+    moduleCode: s.moduleCode, feedTitle: s.feedTitle,
+    dateKey: s.dateKey, start: s.start, end: s.end, time: s.time,
+    classrooms: s.classrooms || [], room: s.room || "",
+    teacher: s.teacher || "", online: !!s.online, note: s.note || "",
+  })).sort((a, b) => a.start.localeCompare(b.start));
+  Object.defineProperty(sessions, "sourceMeta", { value: {
+    kind: "course-pages", source: data.source, checkedAt: data.checkedAt,
+    stale, cachedAt, partial: !!data.partial, verifiedModules: data.verifiedModules,
+    trackedModules: data.trackedModules, verifiedCurrentModules: data.verifiedCurrentModules,
+    currentModules: data.currentModules,
+  }, enumerable: false });
+  return sessions;
+}
+
 // Every class in the feed includes the complete official classroom description.
 async function fetchTimetable(url, options) {
+  if (typeof document !== "undefined" && !options?.preferMasterFeed) {
+    try {
+      const response = await fetch(VERIFIED_TIMETABLE_URL, { cache: "no-store" });
+      if (response.ok) {
+        return verifiedTimetableSessions(await response.json(), {
+          cachedAt: response.headers?.get("x-saved-at") || "",
+        });
+      }
+    } catch (error) {
+      // Only then try the university degree-level feed. A stale/invalid
+      // generated file must never be silently represented as a fresh source.
+      console.warn("UniBo verified course timetable unavailable:", error);
+    }
+  }
   const { raw, cachedAt } = await requestOfficialTimetable(url, options);
   const sessions = raw
     .map((s) => {
@@ -524,5 +568,5 @@ if (typeof module !== "undefined") module.exports = {
   parseUniboDate, examPublishedDetails, mergeExamSittings,
   examSittingIdentity, examCalendarTimes,
   timetableClassroomRecord, timetableClassroomText, timetableClassroomsText,
-  requestOfficialTimetable, fetchTimetable,
+  requestOfficialTimetable, fetchTimetable, verifiedTimetableSessions,
 };
