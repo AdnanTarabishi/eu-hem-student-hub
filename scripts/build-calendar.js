@@ -373,12 +373,40 @@ function preserveExamEvents(next, previous) {
   return next.replace(/END:VCALENDAR\s*$/,withOld+"\nEND:VCALENDAR\n");
 }
 
+function calendarExamTitles(calendar) {
+  const unfolded=calendar.replace(/\r\n[ \t]/g,"").replace(/\r\n/g,"\n");
+  return new Set([...unfolded.matchAll(/BEGIN:VEVENT\n([\s\S]*?)END:VEVENT/g)]
+    .map(([,body])=>body)
+    .filter(body=>/^UID:exam-/m.test(body))
+    .map(body=>body.match(/^SUMMARY:(.+)$/m)?.[1]||"")
+    .filter(Boolean));
+}
+
+function holdUnverifiedExamChanges(current,previous) {
+  const oldTitles=calendarExamTitles(previous);
+  if(!oldTitles.size)return false;
+  const currentTitles=calendarExamTitles(current);
+  // UniBo's degree-level exam service can return partial data (missing
+  // modules). Preserve the old subscription instead of silently dropping exam
+  // events on an update intended to fix classrooms, and flag it as unverified.
+  return [...oldTitles].some(title=>!currentTitles.has(title));
+}
+
+function withoutExamEvents(ics) {
+  const unfolded=ics.replace(/\r\n[ \t]/g,"").replace(/\r\n/g,"\n");
+  return unfolded.replace(/BEGIN:VEVENT\n([\s\S]*?)END:VEVENT\n?/g,(whole,body)=>
+    /^UID:(exam-|registration-)/m.test(body) ? "" : whole);
+}
+
 function writeIfChanged(fileName, content) {
   const full = path.join(OUTPUT_DIR, fileName);
   const previous = fs.existsSync(full) ? fs.readFileSync(full, "utf8") : "";
-  if (fileName.endsWith(".ics") && keepExistingExamEvents) {
-    content=preserveExamEvents(content,previous);
-    content=content.replace("X-WR-CALDESC:Unofficial.","X-WR-CALDESC:Exam dates retained from the last successful update (unverified now). Unofficial.");
+  if (fileName.endsWith(".ics") && (keepExistingExamEvents || holdUnverifiedExamChanges(content,previous))) {
+    // Drop partial incoming exam rows before bringing back the complete older
+    // subscription's exam rows. Do not duplicate conflicting sittings.
+    if (!keepExistingExamEvents) console.warn(`Incomplete exam coverage in ${fileName}; preserving previous exam events`);
+    content=preserveExamEvents(withoutExamEvents(content),previous);
+    content=content.replace("X-WR-CALDESC:Unofficial.","X-WR-CALDESC:Exam dates retained from the last published copy (not re-verified). Unofficial.");
   }
   if (fileName.endsWith(".ics")) content = reconcileEventRevisions(content, previous);
   if (previous === content) return false;
@@ -440,4 +468,4 @@ if (require.main === module) main().catch((error) => {
   process.exit(1); // marks the GitHub Actions run as failed, and the old calendar stays online
 });
 
-module.exports = { parseExamsHtml, mergeDuplicates, matchExamsToTerm, buildCalendar, examUid, reconcileEventRevisions, preserveExamEvents, fetchTimetable };
+module.exports = { parseExamsHtml, mergeDuplicates, matchExamsToTerm, buildCalendar, examUid, reconcileEventRevisions, preserveExamEvents, calendarExamTitles, holdUnverifiedExamChanges, withoutExamEvents, fetchTimetable };
