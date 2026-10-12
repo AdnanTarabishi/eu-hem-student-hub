@@ -69,6 +69,7 @@ const PLAN = JSON.stringify({ version: 1, cohort: "2026-27", term: "y1-s1", choi
     let timetableFailures = 0;
     await context.route(/^https?:\/\//, route => {
       const address = new URL(route.request().url());
+      if (address.pathname.endsWith("/data/unibo-verified-timetable.json")) return route.fulfill({ status: 404, body: "Fixture uses mocked programme feed" });
       if (failure === "programme" && !failed && address.hostname === "127.0.0.1" && address.pathname.endsWith("/content/programme.json")) {
         failed = true;
         return route.fulfill({ status: 503, body: "unavailable" });
