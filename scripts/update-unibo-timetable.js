@@ -61,14 +61,7 @@ async function buildVerifiedTimetable(programme,previous,opts={}) {
   const fetcher=opts.fetcher||fetch;
   let verified=0,verifiedCurrent=0,currentCount=0;
   for (const module of modules) {
-    const candidate = module.code === "97484"
-      ? "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518749"
-      : "";
-    // The introductory management course has no published URL in programme
-    // metadata yet. This candidate is accepted only if the official page
-    // itself identifies code 97484 and contains valid 2026 visible rows.
-    const sourcePage=module.officialUrl || candidate;
-    const sourceUrl=sourcePage ? sourcePage.replace(/\/$/,"")+"/orariolezioni" : "";
+    const sourceUrl=module.officialUrl ? module.officialUrl.replace(/\/$/,"")+"/orariolezioni" : "";
     const current=!module.teachingEnd || module.teachingEnd>=today;
     if(current)currentCount++;
     try {
