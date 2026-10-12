@@ -25,6 +25,12 @@ const DIR = process.env.PLANNING_SCREENSHOT_DIR;
     const ready=await page.evaluate(()=>timetable.ready);
     if(ready) {
       assert.ok(await page.locator('.tt-month-day').count()>=28);
+      const stat=await page.evaluate(()=>timetable.sessions.find(s=>s.moduleCode==='96498'&&s.dateKey==='2026-10-12'));
+      assert.ok(stat,'Official course-page snapshot must include the 12 October statistics class');
+      assert.equal(stat.start,'2026-10-12T09:00:00');
+      assert.equal(stat.end,'2026-10-12T12:00:00');
+      assert.match(stat.room,/AULA 8.*SALA DELLE FESTE/);
+      assert.equal(await page.evaluate(()=>timetable.sourceKind),'course-pages');
       await page.locator('#show-teacher').check();
       for(const v of ['day','week','list','month']) {await page.locator(`[data-view="${v}"]`).click();assert.equal(await page.locator(`[data-view="${v}"]`).getAttribute('aria-pressed'),'true');}
     }
