@@ -96,6 +96,8 @@
         <div><p class="section-eyebrow">Make space for learning</p><h2 id="classes-title">Class schedule</h2></div>
         <div class="tt-source"><span class="tt-source-label">Official · UniBo</span><p id="timetable-checked" class="schedule-meta">Loading official schedule…</p><button id="timetable-refresh" type="button" class="inline-link">Refresh</button></div>
       </div>
+      <div id="timetable-sync-notice" class="tt-sync-notice tt-stale-notice" role="status" aria-live="polite" hidden></div>
+      <div id="timetable-room-changes" class="tt-sync-notice tt-change-notice" role="status" aria-live="polite" hidden></div>
       <div class="planning-toolbar">
         <div class="planning-controls">
           <div id="view-switch" class="segmented" role="group" aria-label="View">
@@ -154,6 +156,7 @@
   <script defer src="planning.js?v=5b022301"></script>
   <script defer src="timetable-calendar.js?v=ea9b633a"></script>
   <script defer src="timetable-locations.js?v=c33d5e14"></script>
+  <script defer src="timetable-sync.js"></script>
   <script defer src="timetable.js?v=44ecad37"></script>
 
   <script defer src="timetable-progress.js?v=f586fff3"></script>
