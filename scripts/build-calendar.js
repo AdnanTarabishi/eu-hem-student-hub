@@ -315,15 +315,15 @@ function buildCalendar(calendarName, sessions, exams, keyDates = []) {
 // Revisions are stable when the event is unchanged and increase when a room,
 // time or exam detail changes. Calendar clients use SEQUENCE and DTSTAMP to
 // recognise modified events. Do not rewrite every subscription every hour.
-function reconcileEventRevisions(next, previous = "", stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\\.\\d{3}Z$/, "Z")) {
-  const unfold = text => text.replace(/\\r\\n[ \\t]/g, "").replace(/\\r\\n/g, "\\n");
-  const events = text => [...unfold(text).matchAll(/BEGIN:VEVENT\\n([\\s\\S]*?)END:VEVENT/g)].map(([, body]) => body.trim().split("\\n"));
+function reconcileEventRevisions(next, previous = "", stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z")) {
+  const unfold = text => text.replace(/\r\n[ \t]/g, "").replace(/\r\n/g, "\n");
+  const events = text => [...unfold(text).matchAll(/BEGIN:VEVENT\n([\s\S]*?)END:VEVENT/g)].map(([, body]) => body.trim().split("\n"));
   const field = (lines, name) => lines.find(line => line.startsWith(name + ":"))?.slice(name.length + 1) || "";
-  const semantic = lines => lines.filter(line => !/^(DTSTAMP|LAST-MODIFIED|SEQUENCE):/.test(line)).join("\\n");
+  const semantic = lines => lines.filter(line => !/^(DTSTAMP|LAST-MODIFIED|SEQUENCE):/.test(line)).join("\n");
   const oldByUid = new Map(events(previous).map(lines => [field(lines, "UID"), lines]));
 
-  const prepared = unfold(next).replace(/BEGIN:VEVENT\\n([\\s\\S]*?)END:VEVENT/g, (_, body) => {
-    const lines = body.trim().split("\\n");
+  const prepared = unfold(next).replace(/BEGIN:VEVENT\n([\s\S]*?)END:VEVENT/g, (_, body) => {
+    const lines = body.trim().split("\n");
     const old = oldByUid.get(field(lines, "UID"));
     const unchanged = old && semantic(old) === semantic(lines);
     const revision = unchanged ? Number(field(old, "SEQUENCE") || 0)
@@ -333,9 +333,9 @@ function reconcileEventRevisions(next, previous = "", stamp = new Date().toISOSt
     const details = lines.filter(line => !/^(DTSTAMP|LAST-MODIFIED|SEQUENCE):/.test(line));
     const at = Math.max(0, details.findIndex(line => line.startsWith("UID:")) + 1);
     details.splice(at, 0, `SEQUENCE:${revision}`, `DTSTAMP:${when}`, `LAST-MODIFIED:${modified}`);
-    return "BEGIN:VEVENT\\n" + details.join("\\n") + "\\nEND:VEVENT";
+    return "BEGIN:VEVENT\n" + details.join("\n") + "\nEND:VEVENT";
   });
-  return prepared.trimEnd().split("\\n").map(foldLine).join("\\r\\n") + "\\r\\n";
+  return prepared.trimEnd().split("\n").map(foldLine).join("\r\n") + "\r\n";
 }
 
 // --- Main ---
