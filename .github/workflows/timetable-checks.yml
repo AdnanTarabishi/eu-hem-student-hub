@@ -5,6 +5,9 @@ on:
       - 'timetable*'
       - 'planning*'
       - 'unibo-data.js'
+      - 'scripts/build-calendar.js'
+      - 'sw.js'
+      - 'pwa.js'
       - 'tests/planning/**'
       - 'scripts/release-audit.js'
       - '.github/workflows/timetable-checks.yml'
@@ -36,6 +39,9 @@ jobs:
           node scripts/check-content.js
           node scripts/check-contrast.js
           node tests/planning/calendar.test.js
+          node tests/planning/calendar-revisions.test.js
+          node tests/planning/timetable-sync.test.js
+          node scripts/stamp-versions.js --check
           node tests/planning/progress.test.js
           node tests/planning/locations.test.js
           node tests/notes/schedule.test.js
