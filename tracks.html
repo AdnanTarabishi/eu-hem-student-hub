@@ -18,7 +18,9 @@
   <meta name="twitter:card" content="summary_large_image">
   <!-- /Social preview -->
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/source-serif-4-latin-600.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css?v=b647d404">
+  <link rel="stylesheet" href="tracks.css?v=c8a000d5">
   <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="manifest.webmanifest">
@@ -42,38 +44,57 @@
   <!-- tracks.js fills every section from content/tracks.json (format: docs/tracks-format.md) -->
   <main class="container tracks">
     <p id="tracks-status" class="placeholder" aria-live="polite">Loading the tracks…</p>
+    <noscript>
+      <div class="tx-noscript">
+        <h1>Explore the EU-HEM tracks</h1>
+        <p>This guide needs JavaScript to load its course lists and comparison tools. You can read the <a href="https://eu-hem.eu/" target="_blank" rel="noopener">official EU-HEM programme information</a> or open your <a href="studyplan.html">Study Plan</a>.</p>
+      </div>
+    </noscript>
 
     <!-- 1. Hero -->
     <section id="tracks-hero" class="tracks-hero" aria-labelledby="tracks-title" hidden></section>
 
-    <!-- 2. My track (step 3) -->
-    <section id="my-track" class="tracks-section" aria-labelledby="my-track-title" hidden></section>
+    <nav class="tx-section-nav" aria-label="On this page">
+      <a href="#track-cards">The four tracks</a>
+      <a href="#compare">Compare</a>
+      <a href="#explorer">Course explorer</a>
+      <a href="#decision-guide">Decision guide</a>
+      <a href="#my-track">My track</a>
+      <a href="#quiz">Interest quiz</a>
+      <a href="#sources">Sources</a>
+    </nav>
 
-    <!-- 3. How the tracks work: the journey -->
-    <section id="journey" class="tracks-section" aria-labelledby="journey-title" hidden></section>
-
-    <!-- 4. The four tracks -->
+    <!-- 2. The four tracks -->
     <section id="track-cards" class="tracks-section" aria-labelledby="track-cards-title" hidden></section>
 
-    <!-- 5. Compare (step 3) -->
+    <!-- 3. Compare -->
     <section id="compare" class="tracks-section" aria-labelledby="compare-title" hidden></section>
 
-    <!-- 6. Detailed explorer -->
+    <!-- 4. Detailed explorer -->
     <section id="explorer" class="tracks-section" aria-labelledby="explorer-title" hidden></section>
 
-    <!-- 7. Careers across tracks -->
-    <section id="careers" class="tracks-section" aria-labelledby="careers-title" hidden></section>
+    <!-- 5. Decision guide -->
+    <section id="decision-guide" class="tracks-section" aria-labelledby="decision-guide-title" hidden></section>
 
-    <!-- 8. Cities -->
-    <section id="cities" class="tracks-section" aria-labelledby="cities-title" hidden></section>
+    <!-- 6. My track: a preference saved on this device -->
+    <section id="my-track" class="tracks-section" aria-labelledby="my-track-title" hidden></section>
 
-    <!-- 9. Quiz (step 4) -->
+    <!-- 7. The common foundation and four routes -->
+    <section id="journey" class="tracks-section" aria-labelledby="journey-title" hidden></section>
+
+    <!-- 8. Interest quiz -->
     <section id="quiz" class="tracks-section" aria-labelledby="quiz-title" hidden></section>
 
-    <!-- 10. FAQ -->
+    <!-- 9. Careers across tracks -->
+    <section id="careers" class="tracks-section" aria-labelledby="careers-title" hidden></section>
+
+    <!-- 10. Cities -->
+    <section id="cities" class="tracks-section" aria-labelledby="cities-title" hidden></section>
+
+    <!-- 11. FAQ -->
     <section id="faq" class="tracks-section" aria-labelledby="faq-title" hidden></section>
 
-    <!-- 11. Sources -->
+    <!-- 12. Sources -->
     <section id="sources" class="tracks-section" aria-labelledby="sources-title" hidden></section>
   </main>
 
@@ -88,8 +109,9 @@
   <script defer src="search.js?v=7a1b7e68"></script>
   <script defer src="pwa.js?v=6f628bf6"></script>
   <script defer src="announcements.js?v=5ec8eef9"></script>
-  <script defer src="tracks-data.js?v=629a5538"></script>
-  <script defer src="tracks.js?v=0193cc3b"></script>
+  <script defer src="tracks-data.js?v=8252f648"></script>
+  <script defer src="tracks-workspace.js?v=746223fe"></script>
+  <script defer src="tracks.js?v=8ee66f51"></script>
 
 </body>
 </html>
