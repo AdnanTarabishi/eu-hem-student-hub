@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400" fill="none">
+  <title>Management of healthcare institutions</title>
+  <desc>Original editorial illustration of an organisation connected to resource, coordination and service-planning panels. It is a conceptual model, not the structure of a real institution.</desc>
+  <defs>
+    <pattern id="mhi-grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0v32" stroke="#0F2B5B" stroke-opacity=".045"/></pattern>
+    <filter id="mhi-shadow" x="-25%" y="-30%" width="150%" height="170%"><feDropShadow dx="0" dy="9" stdDeviation="12" flood-color="#0F2B5B" flood-opacity=".1"/></filter>
+    <clipPath id="mhi-frame"><rect width="800" height="400"/></clipPath>
+  </defs>
+  <g clip-path="url(#mhi-frame)">
+    <path d="M0 0h800v400H0z" fill="#F4F0E9"/>
+    <path d="M0 0h800v400H0z" fill="url(#mhi-grid)"/>
+    <path d="M-34 317c125-25 189-98 287-86s180 107 268 40 184-29 302 22" stroke="#EDDDD0" stroke-width="52"/>
+    <path d="M110 72h580M110 328h580" stroke="#D9D6D0"/>
+    <path d="M318 201h-43a23 23 0 0 0-23 23v31m228-54h47a23 23 0 0 1 23 23v31M400 143v-34" stroke="#A64B2A" stroke-width="3" stroke-linecap="round"/>
+    <g filter="url(#mhi-shadow)">
+      <rect x="294" y="125" width="211" height="183" rx="18" fill="#0F2B5B"/>
+      <rect x="318" y="149" width="163" height="113" rx="10" fill="#F8E9E2"/>
+      <path d="M339 243h122m-112-1v-67h31v-13h39v13h31v67" stroke="#A64B2A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M398 175v19m-10-10h20M365 203h8m52 0h8m-68 15h8m52 0h8m-40 24v-23h15v23" stroke="#C75B3A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M320 285h81m30 0h48" stroke="#8B9EBB" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="400" cy="92" r="28" fill="#FFFDF9" stroke="#DBCEC1"/>
+      <path d="m389 92 8 8 15-17" stroke="#A64B2A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g filter="url(#mhi-shadow)" transform="rotate(-6 212 251)">
+      <rect x="151" y="191" width="123" height="127" rx="14" fill="#FFFDF9" stroke="#DFD3C7"/>
+      <path d="M170 213h57" stroke="#B98F77" stroke-width="4" stroke-linecap="round"/>
+      <rect x="170" y="234" width="25" height="25" rx="5" fill="#C75B3A"/>
+      <rect x="202" y="234" width="25" height="25" rx="5" fill="#E4C4B2"/>
+      <rect x="234" y="234" width="21" height="25" rx="5" fill="#ECDDD0"/>
+      <rect x="170" y="267" width="25" height="25" rx="5" fill="#ECDDD0"/>
+      <rect x="202" y="267" width="25" height="25" rx="5" fill="#E4C4B2"/>
+      <rect x="234" y="267" width="21" height="25" rx="5" fill="#C75B3A"/>
+    </g>
+    <g filter="url(#mhi-shadow)" transform="rotate(6 592 251)">
+      <rect x="530" y="191" width="123" height="127" rx="14" fill="#FFFDF9" stroke="#DFD3C7"/>
+      <path d="M549 214h54" stroke="#B98F77" stroke-width="4" stroke-linecap="round"/>
+      <path d="M550 242h82m-82 25h82m-82 25h82" stroke="#D7C7B8" stroke-width="4" stroke-linecap="round"/>
+      <rect x="560" y="236" width="28" height="12" rx="4" fill="#A64B2A"/>
+      <rect x="583" y="261" width="37" height="12" rx="4" fill="#C75B3A"/>
+      <rect x="551" y="286" width="30" height="12" rx="4" fill="#0F2B5B"/>
+    </g>
+    <path d="M245 133h47m217 0h46" stroke="#C6B7A8" stroke-width="2" stroke-dasharray="4 7" stroke-linecap="round"/>
+    <path d="M107 117v16m-8-8h16m585 190v16m-8-8h16" stroke="#BEA590" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="680" cy="125" r="4" fill="#A64B2A"/>
+  </g>
+</svg>

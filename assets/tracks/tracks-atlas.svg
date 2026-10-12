@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="640" viewBox="0 0 900 640" fill="none">
+  <title>A shared foundation and four fields of study</title>
+  <desc>Original conceptual illustration of four study pathways branching from an open evidence book. It is not a geographical map, timetable or statement of individual programme routes.</desc>
+  <defs>
+    <pattern id="atlas-grid" width="38" height="38" patternUnits="userSpaceOnUse"><path d="M38 0H0v38" stroke="#0F2B5B" stroke-opacity=".045"/></pattern>
+    <filter id="atlas-shadow" x="-30%" y="-30%" width="160%" height="175%"><feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#0F2B5B" flood-opacity=".11"/></filter>
+    <clipPath id="atlas-frame"><rect width="900" height="640"/></clipPath>
+  </defs>
+  <g clip-path="url(#atlas-frame)">
+    <path d="M0 0h900v640H0z" fill="#F4F0E9"/>
+    <path d="M0 0h900v640H0z" fill="url(#atlas-grid)"/>
+    <path d="M-56 523c164-81 257-39 321 22s154 68 252 22m195-601c-45 94 50 179 230 191" stroke="#E9DFD3" stroke-width="49"/>
+    <path d="M117 95h666M117 576h666" stroke="#D9D6D0"/>
+    <path d="M170 197h560m-560 66h560m-560 66h560m-560 66h560" stroke="#DDD9D1" stroke-dasharray="3 7"/>
+    <path d="M450 459v-68c0-33-42-47-94-47H197a57 57 0 0 1-57-57v-51" stroke="#2F6DAA" stroke-width="8" stroke-linecap="round"/>
+    <path d="M450 459v-73c0-58-47-72-77-90-24-15-50-32-50-69v-41" stroke="#6B5AA6" stroke-width="8" stroke-linecap="round"/>
+    <path d="M450 459v-73c0-58 47-72 77-90 24-15 50-32 50-69v-41" stroke="#C75B3A" stroke-width="8" stroke-linecap="round"/>
+    <path d="M450 459v-68c0-33 42-47 94-47h159a57 57 0 0 0 57-57v-51" stroke="#3D7D6A" stroke-width="8" stroke-linecap="round"/>
+    <path d="M191 344h46m86-131v35m254-35v35m88 96h45" stroke="#F4F0E9" stroke-width="2" stroke-dasharray="2 6" stroke-linecap="round"/>
+    <g filter="url(#atlas-shadow)">
+      <rect x="76" y="126" width="128" height="121" rx="18" fill="#FFFDF9" stroke="#CCD8E6"/>
+      <rect x="89" y="139" width="102" height="82" rx="10" fill="#EAF2FA"/>
+      <path d="M105 207h71m-65-3v-23m17 23v-38m17 38v-51" stroke="#2F6DAA" stroke-width="4" stroke-linecap="round"/>
+      <path d="m107 166 21-15 18 7 25-18" stroke="#2F6DAA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M100 234h42" stroke="#A4BBD2" stroke-width="3" stroke-linecap="round"/>
+      <rect x="259" y="77" width="128" height="121" rx="18" fill="#FFFDF9" stroke="#D7CFE5"/>
+      <rect x="272" y="90" width="102" height="82" rx="10" fill="#F0EDF8"/>
+      <path d="m293 114 30-13 30 13h-60Zm-4 42h69m-60-37v30m17-30v30m17-30v30m17-30v30" stroke="#6B5AA6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M283 185h42" stroke="#B6A9CF" stroke-width="3" stroke-linecap="round"/>
+      <rect x="513" y="77" width="128" height="121" rx="18" fill="#FFFDF9" stroke="#E2CDC0"/>
+      <rect x="526" y="90" width="102" height="82" rx="10" fill="#F8E9E2"/>
+      <path d="M577 112v15m0 0h-27v18m27-18h27v18" stroke="#A64B2A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="566" y="101" width="22" height="18" rx="5" fill="#C75B3A"/>
+      <rect x="539" y="141" width="22" height="18" rx="5" fill="#E1AE95"/>
+      <rect x="593" y="141" width="22" height="18" rx="5" fill="#A64B2A"/>
+      <path d="M537 185h42" stroke="#D0A78E" stroke-width="3" stroke-linecap="round"/>
+      <rect x="696" y="126" width="128" height="121" rx="18" fill="#FFFDF9" stroke="#CDDCCF"/>
+      <rect x="709" y="139" width="102" height="82" rx="10" fill="#E9F3EF"/>
+      <circle cx="760" cy="180" r="26" stroke="#95BAA3"/>
+      <circle cx="760" cy="180" r="13" fill="#3D7D6A"/>
+      <path d="M760 173v14m-7-7h14" stroke="#FFFDF9" stroke-width="2" stroke-linecap="round"/>
+      <g fill="#3D7D6A"><circle cx="720" cy="162" r="3"/><circle cx="726" cy="196" r="3"/><circle cx="794" cy="161" r="3"/><circle cx="799" cy="196" r="3"/></g>
+      <path d="M720 234h42" stroke="#A1BFA9" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <g filter="url(#atlas-shadow)">
+      <path d="M279 452c58-13 111-10 171 11 60-21 112-24 171-11v118c-65-13-117-5-171 15-54-20-107-28-171-15V452Z" fill="#0F2B5B"/>
+      <path d="M288 438c55-10 108-4 162 16v119c-54-20-106-26-162-14V438Z" fill="#FFFDF9"/>
+      <path d="M450 454c54-20 107-26 162-16v121c-56-12-108-6-162 14V454Z" fill="#EBE0D0"/>
+      <path d="M450 463v99" stroke="#C5B7A5" stroke-width="2"/>
+      <path d="M310 470c37-3 69 1 105 12m-105 15c37-3 69 1 105 12m-105 15c25-2 51-1 77 5" stroke="#ACB6BA" stroke-width="5" stroke-linecap="round"/>
+      <path d="M481 483c34-10 69-13 105-10m-105 54c34-10 69-13 105-10" stroke="#B7A78E" stroke-width="5" stroke-linecap="round"/>
+      <path d="m483 507 19-16 17 8 24-22 30 17" stroke="#A64B2A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M401 452v47l11-8 11 12v-45" fill="#A64B2A"/>
+      <circle cx="450" cy="414" r="25" fill="#0F2B5B" stroke="#F4F0E9" stroke-width="5"/>
+      <path d="M440 414h20m-10-10v20" stroke="#F4F0E9" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <path d="M104 430v18m-9-9h18m684 53v18m-9-9h18" stroke="#A9AFB5" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="213" cy="435" r="4" fill="#A64B2A"/>
+    <circle cx="698" cy="428" r="4" fill="#3D7D6A"/>
+  </g>
+</svg>

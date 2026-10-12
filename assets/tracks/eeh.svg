@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400" fill="none">
+  <title>Economic evaluation in healthcare</title>
+  <desc>Original editorial illustration of a cost and outcome plane, comparison bars and a decision model. The diagrams are conceptual and contain no measured data.</desc>
+  <defs>
+    <pattern id="eeh-grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0v32" stroke="#0F2B5B" stroke-opacity=".045"/></pattern>
+    <filter id="eeh-shadow" x="-25%" y="-30%" width="150%" height="170%"><feDropShadow dx="0" dy="9" stdDeviation="12" flood-color="#0F2B5B" flood-opacity=".1"/></filter>
+    <clipPath id="eeh-frame"><rect width="800" height="400"/></clipPath>
+  </defs>
+  <g clip-path="url(#eeh-frame)">
+    <path d="M0 0h800v400H0z" fill="#F4F0E9"/>
+    <path d="M0 0h800v400H0z" fill="url(#eeh-grid)"/>
+    <path d="M-47 337c137-73 168-96 307-41s246 43 307-37 144-100 277-57" stroke="#E2E9F1" stroke-width="52"/>
+    <path d="M110 72h580M110 328h580" stroke="#D9D6D0"/>
+    <g filter="url(#eeh-shadow)">
+      <rect x="217" y="61" width="367" height="272" rx="17" fill="#FFFDF9" stroke="#D5DCE5"/>
+      <path d="M234 61h333a17 17 0 0 1 17 17v24H217V78a17 17 0 0 1 17-17Z" fill="#0F2B5B"/>
+      <circle cx="240" cy="82" r="4" fill="#8EB3D8"/>
+      <path d="M256 82h62" stroke="#BACDE0" stroke-width="4" stroke-linecap="round"/>
+      <path d="M247 129h303M247 166h303M247 203h303M247 240h303M247 277h303M284 116v185M328 116v185M372 116v185M416 116v185M460 116v185M504 116v185" stroke="#E5EAF0"/>
+      <path d="M261 277h282m-257 21V122" stroke="#738AA6" stroke-width="2" stroke-linecap="round"/>
+      <path d="m286 277 86-36 114-110 55 146H286Z" fill="#EAF2FA"/>
+      <path d="m286 277 90-38 112-105" stroke="#2F6DAA" stroke-width="2" stroke-dasharray="5 7" stroke-linecap="round"/>
+      <path d="M301 256c37-4 43-30 83-38s65 1 99-28 37-35 58-47" stroke="#2F6DAA" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="348" cy="236" r="7" fill="#2F6DAA" stroke="#FFFDF9" stroke-width="3"/>
+      <circle cx="423" cy="214" r="7" fill="#0F2B5B" stroke="#FFFDF9" stroke-width="3"/>
+      <circle cx="501" cy="173" r="8" fill="#A64B2A" stroke="#FFFDF9" stroke-width="3"/>
+      <path d="M250 313h52m218 0h29" stroke="#B8C7D7" stroke-width="4" stroke-linecap="round"/>
+    </g>
+    <g filter="url(#eeh-shadow)" transform="rotate(-7 167 229)">
+      <rect x="114" y="170" width="106" height="116" rx="13" fill="#EAF2FA" stroke="#C8D8E8"/>
+      <path d="M133 260h70m-61-8v-34m20 34v-53m20 53v-24" stroke="#2F6DAA" stroke-width="7" stroke-linecap="round"/>
+      <path d="M134 187h35" stroke="#90ACC7" stroke-width="4" stroke-linecap="round"/>
+    </g>
+    <g filter="url(#eeh-shadow)" transform="rotate(7 621 239)">
+      <rect x="569" y="180" width="105" height="116" rx="13" fill="#F4F0E9" stroke="#D7CCBE"/>
+      <path d="M591 240h17m0 0v-27h29m-29 27v28h29" stroke="#7C8EA6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="590" cy="240" r="7" fill="#0F2B5B"/>
+      <circle cx="639" cy="213" r="7" fill="#2F6DAA"/>
+      <circle cx="639" cy="268" r="7" fill="#A64B2A"/>
+    </g>
+    <path d="M105 117v16m-8-8h16m585 190v16m-8-8h16" stroke="#A7B7C6" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="683" cy="125" r="4" fill="#A64B2A"/>
+  </g>
+</svg>

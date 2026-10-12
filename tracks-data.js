@@ -5,10 +5,20 @@
 // used by other pages later and are tested in Node (scripts/check-content.js uses them too).
 
 const TRACKS_URL = "content/tracks.json";
-const TRACK_STATUS = { required: "Required course", elective: "Elective available", none: "Not in the curriculum" };
+const TRACK_STATUS = {
+  required: "Required course tagged",
+  elective: "Available option tagged",
+  none: "No tagged course in Semesters 2–3",
+};
 
 async function loadTracksFile(read) {
-  const text = read ? await read(TRACKS_URL) : await (await fetch(TRACKS_URL)).text();
+  let text;
+  if (read) text = await read(TRACKS_URL);
+  else {
+    const response = await fetch(TRACKS_URL);
+    if (!response.ok) throw new Error("Track data is unavailable");
+    text = await response.text();
+  }
   return JSON.parse(text);
 }
 

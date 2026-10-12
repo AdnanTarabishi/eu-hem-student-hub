@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400" fill="none">
+  <title>Population health management</title>
+  <desc>Original editorial illustration of population groups, neighbourhood environments and prevention. The field and dots are conceptual and do not depict actual people or population statistics.</desc>
+  <defs>
+    <pattern id="phm-grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0v32" stroke="#0F2B5B" stroke-opacity=".045"/></pattern>
+    <filter id="phm-shadow" x="-25%" y="-30%" width="150%" height="170%"><feDropShadow dx="0" dy="9" stdDeviation="12" flood-color="#0F2B5B" flood-opacity=".1"/></filter>
+    <clipPath id="phm-frame"><rect width="800" height="400"/></clipPath>
+  </defs>
+  <g clip-path="url(#phm-frame)">
+    <path d="M0 0h800v400H0z" fill="#F4F0E9"/>
+    <path d="M0 0h800v400H0z" fill="url(#phm-grid)"/>
+    <path d="M-35 329c114-56 210-33 276-97s152-23 243 21 150-34 345-38" stroke="#DFE9DE" stroke-width="52"/>
+    <path d="M110 72h580M110 328h580" stroke="#D9D6D0"/>
+    <g filter="url(#phm-shadow)">
+      <rect x="230" y="69" width="342" height="267" rx="17" fill="#FFFDF9" stroke="#CCD8CD"/>
+      <path d="M247 69h308a17 17 0 0 1 17 17v26H230V86a17 17 0 0 1 17-17Z" fill="#0F2B5B"/>
+      <circle cx="253" cy="90" r="4" fill="#9AC4AD"/>
+      <path d="M269 90h64" stroke="#BACFC9" stroke-width="4" stroke-linecap="round"/>
+      <rect x="250" y="132" width="302" height="184" rx="12" fill="#E9F3EF"/>
+      <path d="M251 241c47-38 84-20 117-61s108-25 184-39M252 284c58-23 104-55 155-36s98 23 143-1" stroke="#CCDFD0" stroke-width="28"/>
+      <path d="M275 299c39-45 36-81 76-94s56 38 104 24 47-63 76-75" stroke="#9DBDA7" stroke-width="2" stroke-dasharray="4 7" stroke-linecap="round"/>
+      <circle cx="411" cy="226" r="60" stroke="#B3CFBD" stroke-width="2"/>
+      <circle cx="411" cy="226" r="38" stroke="#B3CFBD"/>
+      <g fill="#3D7D6A"><circle cx="299" cy="174" r="5"/><circle cx="312" cy="187" r="5"/><circle cx="289" cy="195" r="5"/><circle cx="303" cy="209" r="5"/><circle cx="277" cy="213" r="5"/><circle cx="489" cy="267" r="5"/><circle cx="504" cy="279" r="5"/><circle cx="521" cy="263" r="5"/><circle cx="526" cy="285" r="5"/><circle cx="484" cy="292" r="5"/></g>
+      <path d="m467 177 21-15 21 15v27h-42v-27Zm17 27v-17h10v17" fill="#FFFDF9" stroke="#6D9D85" stroke-width="2" stroke-linejoin="round"/>
+      <path d="m303 280 21-15 21 15v27h-42v-27Zm17 27v-17h10v17" fill="#FFFDF9" stroke="#6D9D85" stroke-width="2" stroke-linejoin="round"/>
+      <circle cx="411" cy="226" r="20" fill="#0F2B5B"/>
+      <path d="M411 216v20m-10-10h20" stroke="#FFFDF9" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <g filter="url(#phm-shadow)" transform="rotate(-8 190 248)">
+      <rect x="143" y="193" width="94" height="111" rx="13" fill="#F4F0E9" stroke="#D7CCBE"/>
+      <path d="M172 267c-1-29 13-47 38-48 5 28-9 49-38 48Z" fill="#B8CFB9"/>
+      <path d="m171 281 33-54m-25 40 14 1m-8-15-2-12" stroke="#3D7D6A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g filter="url(#phm-shadow)" transform="rotate(7 608 246)">
+      <rect x="561" y="191" width="94" height="111" rx="13" fill="#F4F0E9" stroke="#D7CCBE"/>
+      <path d="m608 213 25 10v28c0 17-12 28-25 35-13-7-25-18-25-35v-28l25-10Z" fill="#3D7D6A"/>
+      <path d="m595 248 9 9 18-21" stroke="#FFFDF9" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <path d="M107 117v16m-8-8h16m585 190v16m-8-8h16" stroke="#9EB8A5" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="680" cy="125" r="4" fill="#A64B2A"/>
+  </g>
+</svg>

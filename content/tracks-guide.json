@@ -1,0 +1,131 @@
+{
+  "reviewed": "10 October 2026",
+  "coverage": "The public EU-HEM programme and four track pages were checked for study routes and listed course groups on 10 October 2026. The Erasmus study page and UniBo programme and course-structure pages were also inspected. The UiO programme-structure page was unavailable during this review, so its course codes, credits and current availability were not independently rechecked. This review does not replace the supplied 2026 track overview or confirm future course offerings; existing credit provenance and unknown selection rules are retained.",
+  "naming": {
+    "track": "ep",
+    "text": "Official pages use different names for E&P: UniBo lists Economics and Policy, while the EU-HEM consortium and Erasmus use Health Economics & Policy. This guide keeps the name from the supplied 2026 overview. The wording difference alone does not establish a change to the programme.",
+    "links": [
+      { "label": "UniBo: current curriculum names", "url": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement" },
+      { "label": "EU-HEM: Health Economics & Policy", "url": "https://eu-hem.eu/health-economics-policy/" },
+      { "label": "Erasmus: EU-HEM study routes", "url": "https://www.eur.nl/en/master/european-master-health-economics-and-management/during-your-study" }
+    ]
+  },
+  "checklist": [
+    {
+      "id": "focus",
+      "title": "Choose questions you want to investigate",
+      "prompt": "Write down two healthcare questions that interest you. Compare the track descriptions and examples; overlapping interests are a useful starting point."
+    },
+    {
+      "id": "courses",
+      "title": "Read the required courses",
+      "prompt": "Compare required courses in Semesters 2 and 3, then open official descriptions where available. Course titles and theme tags do not tell you the full syllabus, assessment format or difficulty."
+    },
+    {
+      "id": "electives",
+      "title": "Check every choice rule",
+      "prompt": "Separate required courses from electives and complementary options. Note paired options, prior-course restrictions and missing credits or selection counts; ask the coordinator to confirm anything unclear."
+    },
+    {
+      "id": "mobility",
+      "title": "Plan the move between universities",
+      "prompt": "Review the Semester 2 and 3 cities alongside your housing, budget, accessibility and travel needs. Use the City Guides as a starting point and verify current arrangements with each university."
+    },
+    {
+      "id": "thesis",
+      "title": "Think about a thesis direction",
+      "prompt": "List questions and methods you might want to explore at one of your track's thesis universities. Earlier thesis titles can inspire ideas; ask about current supervision, topic approval and practical arrangements."
+    },
+    {
+      "id": "advice",
+      "title": "Discuss uncertainties before submitting",
+      "prompt": "Take your shortlist and open questions to the track coordinators and, when available, current students. Confirm the official submission process and deadline; saving My Track on the Hub does not submit a choice."
+    }
+  ],
+  "tracks": {
+    "eeh": {
+      "prepare": [
+        "Take a healthcare intervention you know and list the costs, health outcomes and uncertainty you would want to compare.",
+        "Review how a spreadsheet model connects assumptions to results, and practise explaining what changes when an assumption changes.",
+        "Read an introductory explanation of health technology assessment and note questions you would ask about a funding recommendation."
+      ],
+      "ask": [
+        "Which modelling, statistics or software topics would you suggest reviewing before the track starts?",
+        "Which Semester 3 elective credits and combinations are currently confirmed, including courses whose credits are missing from the overview?",
+        "How are thesis topics and supervision arranged between Rotterdam and Oslo, and when should students start discussing ideas?"
+      ]
+    },
+    "ep": {
+      "prepare": [
+        "Choose a health policy and write a precise question about its effects on costs, access or health outcomes.",
+        "Review the difference between an association and a causal effect, and think about which comparison group a policy study might need.",
+        "Revisit how to read a regression result and explain its assumptions in plain language."
+      ],
+      "ask": [
+        "What preparation would you recommend for Applied Micro Econometrics and the policy-evaluation courses?",
+        "How do Semester 1 choices affect eligibility for the Bologna electives listed with prior-course restrictions?",
+        "How are the complementary seminar or internship options organised, and what approval and timing should students confirm?"
+      ]
+    },
+    "mhi": {
+      "prepare": [
+        "Choose a healthcare service and map the people, resources and decisions involved in delivering it.",
+        "Review basic budgeting and investment concepts, then list the assumptions behind a proposed organisational change.",
+        "Think about how interviews or other qualitative evidence could help explain an organisational problem without recording anyone's private information."
+      ],
+      "ask": [
+        "How many Semester 2 electives must students choose in Oslo, and which credit combinations are valid? The selection count is not stated in the supplied overview.",
+        "What should students consider when choosing between the two Innsbruck complementary course pairs?",
+        "How are internship options, thesis supervision and project approval currently arranged across Oslo and Innsbruck?"
+      ]
+    },
+    "phm": {
+      "prepare": [
+        "Choose a population-health issue and map possible social, environmental and healthcare influences without assuming a single cause.",
+        "Review how rates, denominators and comparison groups affect the interpretation of population-health evidence.",
+        "Sketch a prevention intervention and list whose input you would need, which outcomes you would measure and how you would examine equity."
+      ],
+      "ask": [
+        "What preparation would you recommend for Analysis and Epidemiology and the Semester 3 methods-related courses?",
+        "How should students compare the two Innsbruck elective groups and the Rotterdam options, and which offerings are currently confirmed?",
+        "What are the current arrangements for thesis topics, supervision and any external project collaboration between Innsbruck and Rotterdam?"
+      ]
+    }
+  },
+  "faqs": [
+    {
+      "q": "Does saving My Track submit my official choice?",
+      "a": "No. My Track is a preference saved in your browser for the Hub's planning tools. Use the official EU-HEM process to submit your choice and confirm its deadline and rules with the programme."
+    },
+    {
+      "q": "What do comparison theme tags mean?",
+      "a": "The tags are student-assigned browsing labels on the listed Semester 2 and 3 courses. They distinguish required courses from available elective or complementary options. The common Semester 1 is excluded. A missing tag does not prove that a subject is absent from a track, and tags do not measure teaching time, difficulty or expertise."
+    },
+    {
+      "q": "Why are some credits or selection rules missing?",
+      "a": "The source does not state every detail. Missing credits are not zero, and an unspecified selection count is not permission to take every option. Ask the relevant coordinator to confirm the current rule and availability before planning a course combination."
+    },
+    {
+      "q": "Are the preparation suggestions prerequisites?",
+      "a": "No. These are student-authored ideas for exploring your interests and preparing questions. They are not admissions requirements or an official preparation syllabus; ask the coordinator for current course guidance."
+    },
+    {
+      "q": "What does a shared comparison link contain?",
+      "a": "It contains the selected comparison of public track information. Checklist answers and personal notes are not included. Review the comparison against current official sources before relying on it."
+    },
+    {
+      "q": "What happens to my checklist and notes?",
+      "a": "They stay in the current page session and are cleared when the page reloads. They are not submitted. A TXT download can contain what you entered, so review it before sharing. My Track is a separate preference saved in your browser."
+    }
+  ],
+  "sources": [
+    { "label": "EU-HEM: Programme and mobility structure", "url": "https://eu-hem.eu/programme/" },
+    { "label": "EU-HEM: Economic Evaluation in Healthcare", "url": "https://eu-hem.eu/economic-evaluation-in-healthcare/" },
+    { "label": "EU-HEM: Health Economics & Policy", "url": "https://eu-hem.eu/health-economics-policy/" },
+    { "label": "EU-HEM: Management of Healthcare Institutions", "url": "https://eu-hem.eu/management-of-healthcare-institutions/" },
+    { "label": "EU-HEM: Population Health Management", "url": "https://eu-hem.eu/population-health-management/" },
+    { "label": "UniBo: programme and curriculum names", "url": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement" },
+    { "label": "UniBo: course structure by academic year and curriculum", "url": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/course-structure-diagram" },
+    { "label": "Erasmus: EU-HEM study routes", "url": "https://www.eur.nl/en/master/european-master-health-economics-and-management/during-your-study" }
+  ]
+}

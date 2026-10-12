@@ -181,10 +181,10 @@
             "overview": "Healthcare systems constantly face difficult choices. A treatment may save lives but cost hundreds of thousands of euros. Economic evaluation helps decision-makers compare costs, outcomes and uncertainty in a systematic way.",
             "typicalProblem": "A new therapy can significantly improve survival, but its cost is extremely high. How should we measure its long-term benefits? Which costs should count? How much should the healthcare system be willing to pay?",
             "fit": [
-              "You enjoy numbers and models.",
-              "You are interested in pharmaceuticals, HTA or market access.",
-              "You like asking whether an intervention provides enough value for its cost.",
-              "You enjoy structured decision-making under uncertainty."
+              "You want to explore how economic models support healthcare decisions.",
+              "You are curious about health technology assessment, pricing or reimbursement.",
+              "You want to compare an intervention's costs and health outcomes.",
+              "You are interested in how uncertainty changes a funding decision."
             ],
             "secondYearQuotes": []
           }
@@ -239,10 +239,10 @@
             "overview": "Healthcare policies affect prices, behaviour, access, inequality, spending and health outcomes. This track combines economic theory with quantitative analysis to understand these effects and support better policy decisions.",
             "typicalProblem": "A government wants to cap medicine prices. Will the policy reduce spending? Could it affect innovation or medicine availability? Will the effects be equal across different groups?",
             "fit": [
-              "You enjoy statistics and empirical research.",
-              "You are interested in government and healthcare policy.",
+              "You want to investigate health policy with empirical evidence.",
+              "You are curious about how incentives affect healthcare decisions.",
               "You want to understand whether policies cause measurable change.",
-              "You like combining economics with real-world data."
+              "You are interested in combining economic theory with real-world data."
             ],
             "secondYearQuotes": []
           }
@@ -291,10 +291,10 @@
             "overview": "Hospitals and healthcare organisations constantly balance quality, people, finances, regulation, innovation and limited resources. This track looks at healthcare from the perspective of the organisation and the people who lead it.",
             "typicalProblem": "A hospital faces staff shortages, rising admissions and financial pressure while considering a major digital-health investment. How should leadership balance innovation, finances, staff support and patient care?",
             "fit": [
-              "You are interested in leadership and management.",
-              "You enjoy solving organisational problems.",
-              "You can imagine working with hospitals, providers or healthcare companies.",
-              "You like combining people, strategy, finance and innovation."
+              "You want to understand leadership and organisational change.",
+              "You are curious about how healthcare services use people and resources.",
+              "You want to examine decisions made by hospitals and other healthcare organisations.",
+              "You are interested in combining organisational, financial and ethical perspectives."
             ],
             "secondYearQuotes": []
           }
@@ -344,9 +344,9 @@
             "overview": "Health outcomes are shaped by far more than medical treatment. Income, environment, behaviour, access, education and social conditions all matter. This track looks at how health systems and communities can design interventions that improve outcomes at scale.",
             "typicalProblem": "A low-income community has high rates of diabetes, hypertension and obesity. Medical treatment alone has not solved the problem. Which social, environmental and healthcare factors drive these outcomes, and what population-level intervention could change them?",
             "fit": [
-              "You care about prevention and inequalities.",
-              "You enjoy public or global health.",
-              "You want to understand health at community and system level.",
+              "You want to investigate prevention and health inequalities.",
+              "You are curious about public or global health questions.",
+              "You want to examine health at community and system level.",
               "You are interested in epidemiology, environment and social determinants of health."
             ],
             "secondYearQuotes": []
@@ -355,36 +355,36 @@
       ],
 
       "texts": {
-        "studentLabel": "Descriptions, 'fit' statements and the quiz are written by students. Course lists and locations come from the official EU-HEM track overview 2026.",
+        "studentLabel": "Descriptions, interest prompts, preparation suggestions and the quiz are student-authored. Course lists and locations come from the supplied official EU-HEM track overview 2026, with the documented credit supplements.",
         "typicalProblemNote": "Adapted from the official track overview.",
         "notStated": "Not stated in the source",
         "hero": {
           "badge": "EU-HEM Tracks · Cohort 2026-2028",
-          "heading": "Explore Your EU-HEM Track",
-          "tagline": "Four specialisations. Four perspectives on healthcare. One joint degree.",
-          "text": "After the common first semester in Bologna, your track shapes what you study, where you live, and the perspective you develop on healthcare challenges.",
-          "note": "Student-built guide. Always verify academic requirements with EU-HEM."
+          "heading": "Track Explorer",
+          "tagline": "Compare questions, courses and study routes.",
+          "text": "Explore four specialisations after the shared first semester in Bologna. Build a shortlist, understand the course choices and prepare questions for your coordinators.",
+          "note": "An unofficial student guide. Confirm current academic requirements with EU-HEM."
         },
-        "myTrackNote": "Saved on this device only. Nothing is sent anywhere.",
-        "journeyHeading": "One foundation. Four paths.",
-        "finalCallout": "The track choice is final once submitted.",
+        "myTrackNote": "A preference saved in your browser. This does not submit an official track choice.",
+        "journeyHeading": "A shared start, four study routes.",
+        "finalCallout": "The supplied 2026 overview states that the submitted track choice is final. Confirm the official process before submitting.",
         "compareIntro": "No track is better than another. They approach healthcare problems from different angles.",
-        "careerHeading": "Your track does not define your career",
-        "careerText": "The tracks create different areas of emphasis, but EU-HEM remains an interdisciplinary degree. Alumni across tracks work in consulting, pharmaceutical and biotech companies, research, government, healthcare providers, international organisations and technology-related roles. Your internships, thesis, background and later experience also shape where you go next.",
-        "quizLabel": "An informal student-built orientation tool, not an official EU-HEM recommendation. If you have already chosen, this is just for fun.",
-        "quizCloseMatch": "You have a close match between two tracks. That is normal: the tracks overlap substantially.",
-        "quizAdvice": "Talk to the track coordinators and second-year students before deciding.",
-        "quizResultSentence": "Your answers lean towards the question at the heart of this track: “{centralQuestion}”",
-        "sourcesDisclaimer": "Course names and electives may change. Official EU-HEM and partner-university information remains authoritative."
+        "careerHeading": "Explore sectors, keep options open",
+        "careerText": "The official overview describes overlapping career sectors across the tracks. The lists are examples of pathways, not placement statistics, job guarantees or restrictions on where you can work. Your interests, thesis, experience and the requirements of a particular role also matter.",
+        "quizLabel": "A student-authored interest quiz. Points reflect the answers you choose; they do not measure aptitude, eligibility or career prospects, and are not an official EU-HEM recommendation.",
+        "quizCloseMatch": "Several tracks may be worth a closer look. Similar scores reflect overlapping interests.",
+        "quizAdvice": "Use the result to choose courses and questions to investigate. Talk to the track coordinators and, when available, current students before deciding.",
+        "quizResultSentence": "Your selected interests overlap with this track's student guide: “{centralQuestion}”",
+        "sourcesDisclaimer": "Course lists, choices and teaching arrangements may change. Confirm current academic requirements with EU-HEM and the partner universities."
       },
 
       "faq": [
-        { "q": "Can I change tracks later?", "a": "No. The submitted choice is final." },
+        { "q": "Can I change tracks after the official submission?", "a": "The supplied 2026 overview states that the submitted choice is final. Confirm the current process and deadline with EU-HEM before submitting. Changing My Track on this site only changes your browser preference." },
         { "q": "Does my track determine my thesis university?", "a": "You write your thesis at one of the two universities of your track." },
         { "q": "Does choosing one track limit me to one industry?", "a": "No. Career sectors overlap significantly across tracks." },
-        { "q": "Which tracks are more quantitative?", "a": "It depends on what you mean by quantitative, and on your electives. From the course lists: EEH requires modelling courses (Advanced Health Economic Modelling, Modeling in Economic Evaluation II) and Research Design. E&P requires Applied Micro Econometrics. PHM requires Analysis and Epidemiology. MHI requires Economic Evaluation and Qualitative Research Methods, and offers Applied Micro Econometrics and data courses as Semester 2 electives." },
-        { "q": "Is one track better for a PhD?", "a": "Research and PhD paths appear among the common sectors of several tracks. What matters is the research questions and methods that interest you." },
-        { "q": "Should I choose based on cities?", "a": "City matters, but academic content and professional interests should come first.", "audience": "future" }
+        { "q": "How can I compare the methods taught in each track?", "a": "Read the required courses and available choices rather than treating the tracks as a difficulty ranking. EEH requires modelling courses and Research Design; E&P requires Applied Micro Econometrics; PHM requires Analysis and Epidemiology; MHI requires Economic Evaluation and Qualitative Research Methods, and lists Applied Micro Econometrics and data courses as Semester 2 options. Course titles do not establish workload, software requirements or assessment format; ask for current syllabi." },
+        { "q": "Is one track better for a PhD?", "a": "Research and PhD paths appear in the overview for several tracks. Explore the research questions and methods that interest you, then ask about current supervision and the requirements of specific PhD opportunities. The track list does not establish admission chances." },
+        { "q": "How should I consider the study cities?", "a": "Compare academic interests alongside your housing, budget, accessibility and mobility needs. The City Guides can help you prepare practical questions; verify current arrangements with the universities.", "audience": "future" }
       ],
 
       "quiz": {
@@ -412,19 +412,19 @@
           {
             "text": "Which topics attract you most?",
             "answers": [
-              { "text": "HTA, reimbursement and market access", "points": { "eeh": 3 } },
+              { "text": "Health technology assessment, reimbursement and market access", "points": { "eeh": 3 } },
               { "text": "Econometrics, incentives and public policy", "points": { "ep": 3 } },
               { "text": "Leadership, finance and organisational change", "points": { "mhi": 3 } },
               { "text": "Epidemiology, prevention and global health", "points": { "phm": 3 } }
             ]
           },
           {
-            "text": "Where can you most easily imagine yourself working?",
+            "text": "Which project would you like to investigate?",
             "answers": [
-              { "text": "Pharma, HTA agency or HEOR consultancy", "points": { "eeh": 2, "mhi": 1 } },
-              { "text": "Government, policy institute or research organisation", "points": { "ep": 2, "phm": 1 } },
-              { "text": "Hospital, healthcare provider or management consultancy", "points": { "mhi": 2, "phm": 1, "ep": 1 } },
-              { "text": "Public-health agency, NGO or international organisation", "points": { "phm": 2, "ep": 1 } }
+              { "text": "Compare the costs, health outcomes and uncertainty of a new treatment.", "points": { "eeh": 2, "mhi": 1 } },
+              { "text": "Evaluate how a payment or pricing policy affects different groups.", "points": { "ep": 2, "phm": 1 } },
+              { "text": "Improve a healthcare service by studying its resources, staff and delivery.", "points": { "mhi": 2, "phm": 1, "ep": 1 } },
+              { "text": "Design and evaluate a prevention programme with communities.", "points": { "phm": 2, "ep": 1 } }
             ]
           },
           {
@@ -437,16 +437,16 @@
             ]
           },
           {
-            "text": "Which course cluster sounds most exciting?",
+            "text": "Which topic combination would you like to explore? Examples may include elective options.",
             "answers": [
-              { "text": "HTA + Advanced Health Economic Modelling + Pricing", "points": { "eeh": 3 } },
-              { "text": "Applied Micro Econometrics + Policy Evaluation", "points": { "ep": 3 } },
-              { "text": "Finance + Leadership + Qualitative Research", "points": { "mhi": 3 } },
-              { "text": "Epidemiology + Environmental Health + Global Health", "points": { "phm": 3 } }
+              { "text": "Health technology assessment, economic modelling and pricing", "points": { "eeh": 3 } },
+              { "text": "Applied microeconometrics, policy evaluation and pharmaceutical markets", "points": { "ep": 3 } },
+              { "text": "Finance, leadership and qualitative research", "points": { "mhi": 3 } },
+              { "text": "Epidemiology, environmental health and health promotion", "points": { "phm": 3 } }
             ]
           },
           {
-            "text": "You are happiest when a problem is framed around...",
+            "text": "Which aspect of a healthcare problem would you explore first?",
             "answers": [
               { "text": "Value for money", "points": { "eeh": 2 } },
               { "text": "Evidence and policy impact", "points": { "ep": 2 } },
@@ -455,7 +455,7 @@
             ]
           },
           {
-            "text": "Which sentence sounds most like you?",
+            "text": "Which contribution would you like to make?",
             "answers": [
               { "text": "I want to help decide which technologies healthcare systems should fund.", "points": { "eeh": 3 } },
               { "text": "I want to understand and improve health policy using evidence.", "points": { "ep": 3 } },
