@@ -22,6 +22,14 @@ for (const [name,url] of urls) {
       console.log("FOUND_DATES",i,"AULA8",j,"AREA_DATE",i<0?"missing":body.slice(Math.max(0,i-1300),i+2800));
       console.log("AREA_ROOM",j<0?"missing":body.slice(Math.max(0,j-400),j+700));
       console.log("MATCH_TABLE_TOKENS",body.match(/<table|<tr|<time|<li|orario-lezioni|calendario|schedule/gi)?.length);
+      if(name==="course" && j>0){
+        const trStart=body.lastIndexOf("<tr",j);
+        const trEnd=body.indexOf("</tr>",j);
+        console.log("CLASS_ROW",body.slice(trStart,trEnd+5).slice(0,8500));
+        console.log("ROW_BEFORE",body.slice(Math.max(0,trStart-1800),trStart).slice(-1800));
+        console.log("DATE_TOKENS",body.match(/2026-10-12|12.10.2026|12\/10\/2026|12 October|October 12|12 ottob|12 Ottob/gi)?.slice(0,20));
+      }
+
     }
   } catch(error){console.log("SOURCE",name,"ERROR",String(error))}
 }
