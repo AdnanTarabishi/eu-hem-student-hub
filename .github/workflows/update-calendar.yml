@@ -1,4 +1,4 @@
-# Rebuilds the calendar file from the official UniBo pages every 6 hours.
+# Rebuilds the calendar files from the official UniBo pages every hour.
 # If something changed, it saves (commits) the new file, and GitHub Pages publishes it.
 # You can also run it by hand: GitHub -> Actions -> Update calendar -> Run workflow.
 
@@ -6,12 +6,16 @@ name: Update calendar
 
 on:
   schedule:
-    - cron: "17 */6 * * *" # every 6 hours, at minute 17 (UTC)
+    - cron: "17 * * * *" # hourly at minute 17 UTC (GitHub schedules may run late)
   workflow_dispatch: # adds a "Run workflow" button
 
 permissions:
-  contents: write # to save the file
-  pages: write # to ask GitHub Pages to republish
+  contents: write # save generated subscriptions
+  pages: write # request a Pages rebuild when needed
+
+concurrency:
+  group: update-calendar-main
+  cancel-in-progress: false
 
 jobs:
   update-calendar:
@@ -27,6 +31,12 @@ jobs:
 
       - name: Build the calendar
         run: node scripts/build-calendar.js
+      - name: Explain failed source synchronization
+        if: failure()
+        run: |
+          echo "::error::UniBo sync failed. The last published calendar remains available; check the official UniBo timetable."
+          echo "### UniBo timetable synchronization failed" >> "$GITHUB_STEP_SUMMARY"
+          echo "The previous calendar files were preserved. Inspect the HTTP error and try **Run workflow** again; check UniBo for recent room changes." >> "$GITHUB_STEP_SUMMARY"
 
       - name: Save changes and republish, if any
         env:
