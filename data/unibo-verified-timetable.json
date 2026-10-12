@@ -3,7 +3,7 @@
   "source": "UniBo course-unit timetable pages",
   "cohort": "2026-27",
   "term": "y1-s1",
-  "checkedAt": "2026-10-12T19:53:20.138Z",
+  "checkedAt": "2026-10-12T19:54:16.577Z",
   "verifiedModules": 10,
   "trackedModules": 11,
   "verifiedCurrentModules": 9,
@@ -12,68 +12,68 @@
   "modules": {
     "32626": {
       "sourceUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518722/orariolezioni",
-      "verifiedAt": "2026-10-12T19:53:20.138Z",
+      "verifiedAt": "2026-10-12T19:54:16.577Z",
       "state": "verified",
       "count": 13
     },
     "70125": {
       "sourceUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518666/orariolezioni",
-      "verifiedAt": "2026-10-12T19:53:20.138Z",
+      "verifiedAt": "2026-10-12T19:54:16.577Z",
       "state": "verified",
       "count": 10
     },
     "74948": {
       "sourceUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518721/orariolezioni",
-      "verifiedAt": "2026-10-12T19:53:20.138Z",
+      "verifiedAt": "2026-10-12T19:54:16.577Z",
       "state": "verified",
       "count": 13
     },
     "79060": {
       "sourceUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518742/orariolezioni",
-      "verifiedAt": "2026-10-12T19:53:20.138Z",
+      "verifiedAt": "2026-10-12T19:54:16.577Z",
       "state": "verified",
       "count": 14
     },
     "87428": {
       "sourceUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518743/orariolezioni",
-      "verifiedAt": "2026-10-12T19:53:20.138Z",
+      "verifiedAt": "2026-10-12T19:54:16.577Z",
       "state": "verified",
       "count": 8
     },
     "96498": {
       "sourceUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518697/orariolezioni",
-      "verifiedAt": "2026-10-12T19:53:20.138Z",
+      "verifiedAt": "2026-10-12T19:54:16.577Z",
       "state": "verified",
       "count": 15
     },
     "96499": {
       "sourceUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518698/orariolezioni",
-      "verifiedAt": "2026-10-12T19:53:20.138Z",
+      "verifiedAt": "2026-10-12T19:54:16.577Z",
       "state": "verified",
       "count": 14
     },
     "96500": {
       "sourceUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518699/orariolezioni",
-      "verifiedAt": "2026-10-12T19:53:20.138Z",
+      "verifiedAt": "2026-10-12T19:54:16.577Z",
       "state": "verified",
       "count": 8
     },
     "97484": {
-      "sourceUrl": "",
+      "sourceUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518749/orariolezioni",
       "verifiedAt": "",
       "state": "unavailable",
       "count": 0,
-      "reason": "No official course timetable URL"
+      "reason": "Course page does not identify module 97484"
     },
     "B1076": {
       "sourceUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518755/orariolezioni",
-      "verifiedAt": "2026-10-12T19:53:20.138Z",
+      "verifiedAt": "2026-10-12T19:54:16.577Z",
       "state": "verified",
       "count": 5
     },
     "C8393": {
       "sourceUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/558081/orariolezioni",
-      "verifiedAt": "2026-10-12T19:53:20.138Z",
+      "verifiedAt": "2026-10-12T19:54:16.577Z",
       "state": "verified",
       "count": 10
     }
