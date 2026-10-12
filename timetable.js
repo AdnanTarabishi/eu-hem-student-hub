@@ -14,7 +14,7 @@ const initialDate = TimetableCalendar.validDate(initialParams.get("date")) ? ini
 const timetable = { programme: null, index: null, sessions: [], ready: false, loading: false,
   view: VIEW_NAMES.includes(initialView) ? initialView : "week",
   selectedDate: initialDate, weekStart: TimetableCalendar.monday(initialDate), lastClock: "",
-  lastAttemptAt: 0, verifiedAt: "", stale: false,
+  lastAttemptAt: 0, verifiedAt: "", stale: false, pendingSessions: null,
   showTeacher: readStorage(TEACHER_KEY, false) === true };
 const teacherCheckbox = document.getElementById("show-teacher");
 teacherCheckbox.checked = timetable.showTeacher;
@@ -643,7 +643,19 @@ async function loadTimetable({ background = false } = {}) {
       displayRoomChanges(changes);
       TimetableSync.save(safeTimetableStorage(), cohort.id, sessions, timetable.verifiedAt);
     }
-    applyTimetableSessions(sessions);
+    // A successful check with identical data should not redraw a focused day
+    // button. A real background change waits for focus to leave the calendar.
+    const changed = JSON.stringify(sessions) !== JSON.stringify(timetable.sessions);
+    if (background && timetable.ready && !changed) {
+      if (typeof renderTeachingProgress === "function") {
+        renderTeachingProgress(Planner.clock(), timetable.stale ? "stale" : "ready");
+      }
+    } else if (background && timetable.ready && scheduleList.contains(document.activeElement)) {
+      timetable.pendingSessions = sessions;
+    } else {
+      timetable.pendingSessions = null;
+      applyTimetableSessions(sessions);
+    }
     renderTimetableSourceState();
   } catch (error) {
     // A failed background refresh must not erase a working schedule.
@@ -678,6 +690,13 @@ function refreshOfficialTimetableOnResume() {
   if (!document.hidden && Date.now() - timetable.lastAttemptAt >= TIMETABLE_RESUME_MS) {
     loadTimetable({ background: true });
   }
+}
+
+function applyPendingTimetableUpdate() {
+  if (!timetable.pendingSessions || scheduleList.contains(document.activeElement)) return;
+  const sessions = timetable.pendingSessions;
+  timetable.pendingSessions = null;
+  applyTimetableSessions(sessions);
 }
 
 document.querySelectorAll("#view-switch [data-view]").forEach(button => button.addEventListener("click", () => changeTimetableView(button.dataset.view)));
@@ -716,11 +735,17 @@ setInterval(() => {
     loadTimetable({ background: true });
   }
 }, 60000);
+let wasTimetableHidden = document.hidden;
 document.addEventListener("visibilitychange", () => {
   refreshTimetableClock();
-  refreshOfficialTimetableOnResume();
+  // Ignore synthetic/duplicate visibility events without a real tab transition.
+  if (wasTimetableHidden && !document.hidden) refreshOfficialTimetableOnResume();
+  wasTimetableHidden = document.hidden;
 });
 window.addEventListener("focus", refreshOfficialTimetableOnResume);
 window.addEventListener("online", refreshOfficialTimetableOnResume);
-document.addEventListener("focusout", () => setTimeout(refreshTimetableClock, 0));
+document.addEventListener("focusout", () => setTimeout(() => {
+  refreshTimetableClock();
+  applyPendingTimetableUpdate();
+}, 0));
 loadTimetable();
