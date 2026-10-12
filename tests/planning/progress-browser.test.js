@@ -26,7 +26,7 @@ const FEED = [make('96498','2026-10-01','09:00','QA Statistics Teacher'), make('
     let attempts=0;
     await context.route('**/*',route=>{
       const u=new URL(route.request().url());
-      if(u.hostname==='corsi.unibo.it' && u.pathname.includes('@@orario_reale_json')) { attempts++; return fail && attempts===1 ? route.fulfill({status:503,body:'unavailable'}) : route.fulfill({contentType:'application/json',body:JSON.stringify(feed)}); }
+      if(u.hostname==='corsi.unibo.it' && u.pathname.includes('@@orario_reale_json')) { attempts++; return fail && attempts<=3 ? route.fulfill({status:503,body:'unavailable'}) : route.fulfill({contentType:'application/json',body:JSON.stringify(feed)}); }
       return u.origin===new URL(base).origin ? route.continue() : route.abort();
     });
     const page=await context.newPage(); page.on('pageerror',e=>errors.push(e.message)); await page.goto(base+url);
@@ -133,11 +133,13 @@ const FEED = [make('96498','2026-10-01','09:00','QA Statistics Teacher'), make('
     assert.match(await p.locator('#monthly-progress-status').innerText(),/no percentage has been assumed/i);
     await p.getByRole('button',{name:'Retry',exact:true}).click(); await p.waitForFunction(()=>timetable.ready);assert.equal(await percent(),'40%');
     await p.context().route('**/@@orario_reale_json*',route=>route.fulfill({status:503,body:'unavailable'}));
-    await p.locator('#timetable-refresh').click();await p.getByRole('button',{name:'Retry',exact:true}).waitFor();
+    await p.locator('#timetable-refresh').click();await p.waitForFunction(()=>timetable.stale);
+    assert.equal(await p.locator('#timetable-sync-notice').isVisible(),true);
     assert.equal(await p.locator('#monthly-progress-values').isVisible(),false);
+    assert.equal(await p.locator('#monthly-progress').getAttribute('data-state'),'stale');
     await p.context().close();
     p=await open({url:'timetable.html?view=month',feed:[]});assert.equal(await p.locator('#monthly-progress-values').isVisible(),false);assert.equal(await p.locator('#monthly-progress').getAttribute('data-state'),'empty');await p.context().close();
-    ok('initial and refresh failures remove numeric progress; a successful empty feed stays distinct');
+    ok('initial failure hides progress; later failures show a clearly stale snapshot without an unsupported percentage');
     p=await open({url:'timetable.html?view=month',feed:[{...FEED[0],end:'2026-10-01T08:00:00'}]});
     assert.equal(await p.locator('#monthly-progress-values').isVisible(),false);assert.match(await p.locator('#monthly-progress-status').innerText(),/durations could not be validated/);await p.context().close();
     p=await open({url:'timetable.html?view=month',blocked:true});assert.equal(await percent(),'40%');await p.context().close();
