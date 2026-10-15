@@ -42,6 +42,14 @@
         item.desc || "", entry.items ? entry.label : "",
         item.preview ? "In development · structure preview" : "");
     }
+    // The public Visitor Guide offers chapter entry points from any page.
+    try {
+      const response = await fetch("content/visitor-guide.json");
+      if (!response.ok) throw new Error("Visitor Guide unavailable");
+      const guide = await response.json();
+      for (const chapter of guide.chapters) add("page", chapter.title, "visitor-guide.html#" + chapter.id,
+        [chapter.summary, ...chapter.highlights].join(" "), "Visitor Guide");
+    } catch { /* The guide menu entry stays searchable without chapter data. */ }
     // Public Life topics and moving stages share the same editorial content as their pages.
     try {
       const response = await fetch("content/life-guide.json");
