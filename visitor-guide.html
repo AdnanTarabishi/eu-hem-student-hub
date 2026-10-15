@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visitor Guide – EU-HEM Student Hub</title>
+  <meta name="description" content="Explore the EU-HEM Student Hub: an interactive tour of study tools, programme guidance, student life and community features.">
+  <!-- Social preview (scripts/social-tags.js) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="EU-HEM Student Hub">
+  <meta property="og:title" content="Visitor Guide – EU-HEM Student Hub">
+  <meta property="og:description" content="Explore the EU-HEM Student Hub: an interactive tour of study tools, programme guidance, student life and community features.">
+  <meta property="og:url" content="https://adnantarabishi.github.io/eu-hem-student-hub/visitor-guide.html">
+  <meta property="og:image" content="https://adnantarabishi.github.io/eu-hem-student-hub/img/social-preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="EU-HEM Student Hub: less searching, more learning, living and connecting.">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- /Social preview -->
+  <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/source-serif-4-latin-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css?v=b647d404">
+  <link rel="stylesheet" href="visitor-guide.css?v=d3893f67">
+  <meta name="theme-color" content="#0f2b5b" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#091d3a" media="(prefers-color-scheme: dark)">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="img/favicon-32.png?v=934f2f81" sizes="32x32" type="image/png">
+  <link rel="icon" href="img/app-icon.svg?v=9629db81" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=6074bd3c">
+  <script src="theme.js?v=d51d4769"></script>
+</head>
+<body class="visitor-page">
+  <header class="site-header"><div class="container">
+    <p class="site-title"><a href="index.html">EU-HEM Student Hub</a></p>
+    <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's programme</p>
+    <nav class="site-nav" id="site-nav" data-current="visitor-guide" aria-label="Main menu"></nav>
+    <script src="site-nav.js?v=f761a0dc"></script>
+  </div></header>
+  <main class="container vg-main" id="visitor-main" aria-busy="true">
+    <header class="vg-hero">
+      <div class="vg-hero-copy">
+        <p class="vg-kicker">A visitor's guide to the Hub</p>
+        <h1>One programme.<br><em>Many possibilities.</em><br>Your starting point.</h1>
+        <p class="vg-lead">A practical companion for studying, moving cities and finding your next step. Take a tour of what is here, and what comes next.</p>
+        <div class="vg-actions"><a class="vg-button" href="#tour">Take the tour <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="#directory">Explore every section <svg class="icon" aria-hidden="true"><use href="icons.svg#grid"></use></svg></a></div>
+        <div class="vg-hero-tags"><span>Independent</span><span>Free for students</span><span>Public beta</span></div>
+      </div>
+      <div class="vg-book-scene" aria-hidden="true">
+        <div class="vg-book-shadow"></div><div class="vg-book">
+          <span class="vg-book-edition">THE VISITOR EDITION</span><svg class="icon" aria-hidden="true"><use href="icons.svg#guide"></use></svg>
+          <strong>One programme.<br>A shared journey.</strong>
+          <span class="vg-book-line"></span><small>Study. Live. Connect.</small>
+          <span class="vg-book-bottom">EU-HEM<br><b>STUDENT HUB</b><span>08 chapters</span></span>
+        </div><span class="vg-book-stamp"><svg class="icon" aria-hidden="true"><use href="icons.svg#sparkles"></use></svg> Built around students</span>
+      </div>
+    </header>
+
+    <section class="vg-route-section" aria-labelledby="visitor-route-title">
+      <div><p class="vg-kicker">Find a useful first step</p><h2 id="visitor-route-title">Where would you like to begin?</h2></div>
+      <div class="vg-route-choices" role="group" aria-label="Choose a starting point"><button type="button" class="visitor-route-button" data-visitor-route="student" aria-pressed="true" aria-controls="visitor-route-links" disabled><svg class="icon" aria-hidden="true"><use href="icons.svg#book"></use></svg>I'm studying here</button><button type="button" class="visitor-route-button" data-visitor-route="exploring" aria-pressed="false" aria-controls="visitor-route-links" disabled><svg class="icon" aria-hidden="true"><use href="icons.svg#globe"></use></svg>I'm exploring EU-HEM</button><button type="button" class="visitor-route-button" data-visitor-route="programme" aria-pressed="false" aria-controls="visitor-route-links" disabled><svg class="icon" aria-hidden="true"><use href="icons.svg#graduation"></use></svg>I want the programme overview</button></div>
+      <p id="visitor-route-intro" class="vg-muted">Start with your semester and your next study session.</p>
+      <div id="visitor-route-links" class="vg-route-links"><a href="studyplan.html">Your Study Plan <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a href="timetable.html">Timetable <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a href="notes.html">Notes &amp; Resources <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a href="exams.html">Exams <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a></div>
+      <p id="visitor-route-status" class="visually-hidden" role="status" aria-live="polite"></p>
+    </section>
+
+    <div id="visitor-load-notice" class="vg-load-notice" role="status" hidden><p>The interactive guide could not be loaded. The tour and useful links below remain available.</p><button id="visitor-retry" class="vg-button" type="button">Retry interactive guide</button></div>
+    <noscript><p class="vg-notice">You can read every chapter and follow its links below. Enable JavaScript for the interactive tour, starting-point chooser and searchable directory.</p></noscript>
+
+    <section class="vg-tour" id="tour" aria-labelledby="visitor-tour-title">
+      <div class="vg-section-heading"><div><p class="vg-kicker">The Hub, chapter by chapter</p><h2 id="visitor-tour-title">A guided look inside.</h2></div><button id="visitor-all" type="button" class="vg-secondary" aria-pressed="false" aria-controls="visitor-deck" hidden>Read all chapters</button></div>
+      <div class="vg-tour-layout">
+        <nav class="vg-chapter-nav" aria-label="Tour chapters"><a data-visitor-chapter="welcome" href="#welcome"><span>01</span>Start here<svg class="icon" aria-hidden="true"><use href="icons.svg#guide"></use></svg></a><a data-visitor-chapter="plan" href="#plan"><span>02</span>Plan your semester<svg class="icon" aria-hidden="true"><use href="icons.svg#calendar"></use></svg></a><a data-visitor-chapter="learn" href="#learn"><span>03</span>Learn &amp; practise<svg class="icon" aria-hidden="true"><use href="icons.svg#book"></use></svg></a><a data-visitor-chapter="tools" href="#tools"><span>04</span>Your workbench<svg class="icon" aria-hidden="true"><use href="icons.svg#calculator"></use></svg></a><a data-visitor-chapter="research" href="#research"><span>05</span>Research &amp; direction<svg class="icon" aria-hidden="true"><use href="icons.svg#graduation"></use></svg></a><a data-visitor-chapter="life" href="#life"><span>06</span>Life across cities<svg class="icon" aria-hidden="true"><use href="icons.svg#globe"></use></svg></a><a data-visitor-chapter="community" href="#community"><span>07</span>Your community<svg class="icon" aria-hidden="true"><use href="icons.svg#students"></use></svg></a><a data-visitor-chapter="project" href="#project"><span>08</span>The project<svg class="icon" aria-hidden="true"><use href="icons.svg#rocket"></use></svg></a></nav>
+        <div class="vg-stage">
+          <div id="visitor-deck">        <section class="visitor-chapter" id="welcome" aria-labelledby="welcome-title">
+          <div class="vg-chapter-copy">
+            <p class="vg-kicker">01 / Your starting point</p>
+            <h2 id="welcome-title" tabindex="-1">A Hub for your EU-HEM journey</h2>
+            <p class="vg-summary">Find the information, study spaces and practical tools that help you move through the programme.</p>
+            <ul class="vg-highlights"><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>See your week at a glance</span></li><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>Search from any page</span></li><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>Choose your theme and install the app</span></li></ul>
+            <div class="vg-actions"><a class="vg-button" href="index.html">Explore the homepage <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="studyplan.html">Open your Study Plan <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="notes.html">Browse study resources <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="toolkit.html">Explore the Toolkit <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a></div>
+            <p class="vg-chapter-note"><svg class="icon" aria-hidden="true"><use href="icons.svg#info"></use></svg><span>The Hub is an unofficial volunteer project. Offline copies may be older than their original sources.</span></p>
+          </div>
+          <div class="vg-chapter-art" aria-hidden="true"><span class="vg-art-orbit"></span><span class="vg-art-number">01</span><svg class="icon" aria-hidden="true"><use href="icons.svg#guide"></use></svg><span class="vg-art-label">Your starting point</span><i></i><i></i><i></i></div>
+        </section>
+        <section class="visitor-chapter" id="plan" aria-labelledby="plan-title">
+          <div class="vg-chapter-copy">
+            <p class="vg-kicker">02 / Organise your semester</p>
+            <h2 id="plan-title" tabindex="-1">From your courses to your next exam</h2>
+            <p class="vg-summary">Build your personal study plan, find published classes and exam dates, and keep programme milestones nearby.</p>
+            <ul class="vg-highlights"><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>Choose courses within the published plan rules</span></li><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>Explore classes, rooms and exam sittings</span></li><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>Follow key dates and subscribe to a calendar</span></li></ul>
+            <div class="vg-actions"><a class="vg-button" href="studyplan.html">Build your Study Plan <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="timetable.html">Find your classes <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="exams.html">Check exam dates <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="calendar.html">Open Calendar &amp; Key Dates <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="academic-rules.html">Read Academic Rules <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a></div>
+            <p class="vg-chapter-note"><svg class="icon" aria-hidden="true"><use href="icons.svg#info"></use></svg><span>Saving a plan does not submit it. Adding an exam to your calendar does not register you for it.</span></p>
+          </div>
+          <div class="vg-chapter-art" aria-hidden="true"><span class="vg-art-orbit"></span><span class="vg-art-number">02</span><svg class="icon" aria-hidden="true"><use href="icons.svg#calendar"></use></svg><span class="vg-art-label">Organise your semester</span><i></i><i></i><i></i></div>
+        </section>
+        <section class="visitor-chapter" id="learn" aria-labelledby="learn-title">
+          <div class="vg-chapter-copy">
+            <p class="vg-kicker">03 / Study actively</p>
+            <h2 id="learn-title" tabindex="-1">Read, experiment and practise</h2>
+            <p class="vg-summary">Move from the study library into course guides, interactive lessons and dedicated practice spaces.</p>
+            <ul class="vg-highlights"><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>Find topics, concepts and source-linked resources</span></li><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>Use flashcards, quizzes and worked exercises</span></li><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>Review your locally saved learning progress</span></li></ul>
+            <div class="vg-actions"><a class="vg-button" href="notes.html">Browse Notes &amp; Resources <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="statistics.html">Open Statistics Study Centre <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="fund-statistics.html">Open Fundamentals of Statistics <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="statistics-lab.html">Experiment in Statistics Lab <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="fhem-exam.html">Try the FHEM Exam Centre <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a></div>
+            <p class="vg-chapter-note"><svg class="icon" aria-hidden="true"><use href="icons.svg#info"></use></svg><span>Content coverage varies by course. Student-made guides and practice support learning; official materials and assessment instructions remain on university platforms.</span></p>
+          </div>
+          <div class="vg-chapter-art" aria-hidden="true"><span class="vg-art-orbit"></span><span class="vg-art-number">03</span><svg class="icon" aria-hidden="true"><use href="icons.svg#book"></use></svg><span class="vg-art-label">Study actively</span><i></i><i></i><i></i></div>
+        </section>
+        <section class="visitor-chapter" id="tools" aria-labelledby="tools-title">
+          <div class="vg-chapter-copy">
+            <p class="vg-kicker">04 / Your personal workbench</p>
+            <h2 id="tools-title" tabindex="-1">Turn a question into a next step</h2>
+            <p class="vg-summary">Find useful services, work through academic problems and organise your own study, moving and career plans.</p>
+            <ul class="vg-highlights"><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>Save tools, build lists and compare options</span></li><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>Explore methods, Excel recipes and health-economics calculations</span></li><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>Use practical planners with local exports</span></li></ul>
+            <div class="vg-actions"><a class="vg-button" href="toolkit.html">Browse the Toolkit <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="toolkit.html?section=solve&amp;solver=finder">Find a statistical method <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="toolkit.html?section=solve&amp;solver=excel">Explore Excel recipes <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="toolkit.html?section=solve&amp;solver=health">Try health-economics calculators <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="toolkit.html?section=workbench">Open your workbench <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a></div>
+            <p class="vg-chapter-note"><svg class="icon" aria-hidden="true"><use href="icons.svg#info"></use></svg><span>Workbench drafts stay in the current tab until you choose to save them on this device. Calculations depend on your inputs and each tool's stated assumptions.</span></p>
+          </div>
+          <div class="vg-chapter-art" aria-hidden="true"><span class="vg-art-orbit"></span><span class="vg-art-number">04</span><svg class="icon" aria-hidden="true"><use href="icons.svg#calculator"></use></svg><span class="vg-art-label">Your personal workbench</span><i></i><i></i><i></i></div>
+        </section>
+        <section class="visitor-chapter" id="research" aria-labelledby="research-title">
+          <div class="vg-chapter-copy">
+            <p class="vg-kicker">05 / Explore your direction</p>
+            <h2 id="research-title" tabindex="-1">Connect your interests with what comes next</h2>
+            <p class="vg-summary">Compare specialisations and partner universities, develop research ideas and learn from historical thesis topics.</p>
+            <ul class="vg-highlights"><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>Compare track routes, courses and elective rules</span></li><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>Explore research themes and past thesis titles</span></li><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>Build a private research plan and export a brief</span></li></ul>
+            <div class="vg-actions"><a class="vg-button" href="tracks.html">Compare the tracks <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="universities.html">Meet the universities <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="thesis.html#guide-roadmap">Start the thesis guide <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="thesis.html#guide-archive">Explore past thesis titles <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="beyond-euhem.html">Preview Beyond EU-HEM <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a></div>
+            <p class="vg-chapter-note"><svg class="icon" aria-hidden="true"><use href="icons.svg#info"></use></svg><span>Historical thesis titles and student-made classifications are inspiration. Confirm current supervision, ethics, submission and assessment requirements with your university.</span></p>
+          </div>
+          <div class="vg-chapter-art" aria-hidden="true"><span class="vg-art-orbit"></span><span class="vg-art-number">05</span><svg class="icon" aria-hidden="true"><use href="icons.svg#graduation"></use></svg><span class="vg-art-label">Explore your direction</span><i></i><i></i><i></i></div>
+        </section>
+        <section class="visitor-chapter" id="life" aria-labelledby="life-title">
+          <div class="vg-chapter-copy">
+            <p class="vg-kicker">06 / Across the four cities</p>
+            <h2 id="life-title" tabindex="-1">Prepare, arrive and feel at home</h2>
+            <p class="vg-summary">Explore everyday student life, prepare for your next move and find the right university support.</p>
+            <ul class="vg-highlights"><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>Follow your programme route</span></li><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>Explore city-specific guidance and sources</span></li><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>Connect preparation checklists with practical tools</span></li></ul>
+            <div class="vg-actions"><a class="vg-button" href="journey.html">Follow the Programme Journey <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="student-life.html">Read the Student Life Guide <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="mobility-guide.html">Prepare your next move <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="city-guide.html">Compare the city guides <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="support.html#universities">Find university support <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a></div>
+            <p class="vg-chapter-note"><svg class="icon" aria-hidden="true"><use href="icons.svg#info"></use></svg><span>Guides and checklists help you prepare. Confirm residence, insurance, grants and other personal requirements with the relevant official service.</span></p>
+          </div>
+          <div class="vg-chapter-art" aria-hidden="true"><span class="vg-art-orbit"></span><span class="vg-art-number">06</span><svg class="icon" aria-hidden="true"><use href="icons.svg#globe"></use></svg><span class="vg-art-label">Across the four cities</span><i></i><i></i><i></i></div>
+        </section>
+        <section class="visitor-chapter" id="community" aria-labelledby="community-title">
+          <div class="vg-chapter-copy">
+            <p class="vg-kicker">07 / People and perspectives</p>
+            <h2 id="community-title" tabindex="-1">Discover the community around EU-HEM</h2>
+            <p class="vg-summary">Explore the cohort overview, read student and alumni perspectives, and follow updates from the Hub.</p>
+            <ul class="vg-highlights"><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>Explore the supplied cohort origins overview</span></li><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>Browse stories and contribute your experience</span></li><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>Follow announcements and future community spaces</span></li></ul>
+            <div class="vg-actions"><a class="vg-button" href="students.html">Explore Students &amp; Cohort Map <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="experiences.html">Read Student Experiences <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="announcements.html">Browse Announcements <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="events.html">Preview Events <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="gallery.html">Preview Gallery <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a></div>
+            <p class="vg-chapter-note"><svg class="icon" aria-hidden="true"><use href="icons.svg#info"></use></svg><span>Individual directory profiles are fictional demos. Events and Gallery are previews; contributed experiences require separate review and author approval before publication.</span></p>
+          </div>
+          <div class="vg-chapter-art" aria-hidden="true"><span class="vg-art-orbit"></span><span class="vg-art-number">07</span><svg class="icon" aria-hidden="true"><use href="icons.svg#students"></use></svg><span class="vg-art-label">People and perspectives</span><i></i><i></i><i></i></div>
+        </section>
+        <section class="visitor-chapter" id="project" aria-labelledby="project-title">
+          <div class="vg-chapter-copy">
+            <p class="vg-kicker">08 / An independent student project</p>
+            <h2 id="project-title" tabindex="-1">See the work and help shape the Hub</h2>
+            <p class="vg-summary">Understand how the Hub is built, follow its development and find the current contact and privacy information.</p>
+            <ul class="vg-highlights"><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>Distinguish released features from future plans</span></li><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>Explore the effort behind the project</span></li><li><svg class="icon" aria-hidden="true"><use href="icons.svg#check"></use></svg><span>Send corrections, questions and ideas</span></li></ul>
+            <div class="vg-actions"><a class="vg-button" href="roadmap.html">Follow Roadmap &amp; Updates <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="behind-the-build.html">Go Behind the Build <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="index.html#about">Read About the Hub <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="contact.html">Find contact options <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a><a class="vg-text-link" href="privacy.html">Read privacy information <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a></div>
+            <p class="vg-chapter-note"><svg class="icon" aria-hidden="true"><use href="icons.svg#info"></use></svg><span>Roadmap targets are estimates. Personal saved choices belong to their browser and web address; accounts and cross-device sync are not available.</span></p>
+          </div>
+          <div class="vg-chapter-art" aria-hidden="true"><span class="vg-art-orbit"></span><span class="vg-art-number">08</span><svg class="icon" aria-hidden="true"><use href="icons.svg#rocket"></use></svg><span class="vg-art-label">An independent student project</span><i></i><i></i><i></i></div>
+        </section>
+          </div>
+          <div id="visitor-controls" class="vg-tour-controls" role="group" aria-label="Tour navigation" hidden><button id="visitor-prev" type="button" class="vg-secondary" aria-label="Previous chapter" aria-controls="visitor-deck" disabled><svg class="icon" aria-hidden="true"><use href="icons.svg#chevron-left"></use></svg><span>Previous</span></button><span id="visitor-position">1 / 8</span><button id="visitor-next" type="button" class="vg-secondary" aria-label="Next chapter" aria-controls="visitor-deck"><span>Next chapter</span><svg class="icon" aria-hidden="true"><use href="icons.svg#chevron-right"></use></svg></button></div>
+          <progress id="visitor-tour-progress" max="8" value="1" aria-label="Tour chapter position" hidden></progress>
+          <p class="vg-meta">Use the chapter links or arrow keys within the tour. Choose “Read all chapters” to read it as a document.</p>
+          <p id="visitor-tour-status" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="vg-directory" id="directory" aria-labelledby="visitor-directory-title">
+      <div class="vg-section-heading"><div><p class="vg-kicker">Your map of the Hub</p><h2 id="visitor-directory-title">Every section. A direct route.</h2></div><a class="vg-text-link" href="roadmap.html">Follow development <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a></div>
+      <p class="vg-muted">Browse the site menus and specialist workspaces. Labels distinguish working destinations, previews, demo profiles and registration that is not yet open.</p>
+      <div class="vg-directory-filters">
+        <label for="visitor-search">Find a feature<input id="visitor-search" type="search" placeholder="Try exams, city, flashcards or thesis" disabled></label>
+        <label for="visitor-group">Section<select id="visitor-group" disabled><option value="all">All sections</option><option value="Study">Study</option><option value="Resources">Resources</option><option value="Community">Community</option><option value="Life">Life</option><option value="About">About</option></select></label>
+        <label for="visitor-status-filter">Availability<select id="visitor-status-filter" disabled><option value="all">All availability</option><option value="available">Available</option><option value="preview">Preview</option><option value="demo">Demo data</option><option value="not-open">Not open</option></select></label>
+        <button id="visitor-reset" type="button" class="vg-secondary" disabled>Reset filters</button>
+      </div>
+      <p id="visitor-results" class="vg-meta" role="status" aria-live="polite">Open a section below, or use the interactive directory when it loads.</p>
+      <div id="visitor-empty" class="vg-empty" hidden><h3>No destinations match your filters.</h3><p>Try another word, choose all sections or reset the filters.</p></div>
+      <div id="visitor-directory" class="vg-feature-grid">
+        <a class="vg-fallback-link" href="studyplan.html">Plan your study</a><a class="vg-fallback-link" href="notes.html">Notes &amp; Resources</a><a class="vg-fallback-link" href="toolkit.html">Student Toolkit</a><a class="vg-fallback-link" href="student-life.html">Student Life Guide</a><a class="vg-fallback-link" href="students.html">Students &amp; Cohort Map</a><a class="vg-fallback-link" href="support.html">Support &amp; Contacts</a>
+      </div>
+    </section>
+
+    <section class="vg-good-to-know" aria-labelledby="visitor-know-title"><div><p class="vg-kicker">Good to know</p><h2 id="visitor-know-title">A shared Hub.<br>Your own choices.</h2><p>Use the public features without a student account. Saved plans, progress and selected tools belong to their current browser and web address; each feature explains its save and backup options.</p><a class="vg-text-link" href="privacy.html">Read the privacy information <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a></div><div class="vg-know-cards"><article><svg class="icon" aria-hidden="true"><use href="icons.svg#bookmark"></use></svg><h3>Save deliberately</h3><p>Some tools keep drafts only in the open tab. Save or export through that tool before leaving.</p></article><article><svg class="icon" aria-hidden="true"><use href="icons.svg#offline"></use></svg><h3>Keep useful pages close</h3><p>Install the app or revisit cached pages offline. Fresh dates and external services need a connection.</p></article><article><svg class="icon" aria-hidden="true"><use href="icons.svg#rocket"></use></svg><h3>A wider vision</h3><p>Student accounts, a personalised dashboard and protected member content remain future plans.</p><a href="roadmap.html">Explore the roadmap</a></article></div></section>
+    <aside class="vg-closing"><div><p class="vg-kicker">Your next step</p><h2>Make the Hub part of your journey.</h2><p>Start with what you need today. Come back as your courses, city and goals change.</p></div><a class="vg-button" href="index.html">Explore the Hub <svg class="icon" aria-hidden="true"><use href="icons.svg#arrow-right"></use></svg></a></aside>
+    <p class="vg-disclaimer">Independent, volunteer and free for students. The Hub complements official university systems; it is not an official EU-HEM or university website. Check the original sources for authoritative dates, rules and materials.</p>
+  </main>
+  <footer class="site-footer"><div class="container"><p>EU-HEM Student Hub · Unofficial student project</p></div></footer>
+  <script defer src="utils.js?v=3f08bd92"></script><script defer src="ui.js?v=6d55e433"></script>
+  <script defer src="search.js?v=eeec3764"></script><script defer src="pwa.js?v=6f628bf6"></script>
+  <script defer src="announcements.js?v=5ec8eef9"></script><script defer src="directory-config.js?v=bb28e887"></script>
+  <script defer src="visitor-guide.js?v=35ea4ce4"></script>
+</body>
+</html>

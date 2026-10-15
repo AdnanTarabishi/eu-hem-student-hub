@@ -61,6 +61,7 @@ const SITE_MENU = [
   {
     label: "About",
     items: [
+      { key: "visitor-guide", label: "Visitor Guide", href: "visitor-guide.html", icon: "guide", desc: "An interactive introduction to the whole Hub" },
       { key: "support", label: "Support & Contacts", href: "support.html", icon: "phone", desc: "Who to ask, wellbeing, leave" },
       { key: "roadmap", label: "Roadmap & Updates", href: "roadmap.html", icon: "rocket", desc: "What is new and what is next" },
       { key: "behind-build", label: "Behind the Build", href: "behind-the-build.html", icon: "info", desc: "The effort and people behind the Hub" },

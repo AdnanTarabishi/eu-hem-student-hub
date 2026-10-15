@@ -1,0 +1,554 @@
+{
+  "version": 1,
+  "reviewed": "2026-10-15",
+  "chapters": [
+    {
+      "id": "welcome",
+      "title": "A Hub for your EU-HEM journey",
+      "eyebrow": "Your starting point",
+      "summary": "Find the information, study spaces and practical tools that help you move through the programme.",
+      "highlights": [
+        "See your week at a glance",
+        "Search from any page",
+        "Choose your theme and install the app"
+      ],
+      "actions": [
+        {
+          "label": "Explore the homepage",
+          "href": "index.html"
+        },
+        {
+          "label": "Open your Study Plan",
+          "href": "studyplan.html"
+        },
+        {
+          "label": "Browse study resources",
+          "href": "notes.html"
+        },
+        {
+          "label": "Explore the Toolkit",
+          "href": "toolkit.html"
+        }
+      ],
+      "note": "The Hub is an unofficial volunteer project. Offline copies may be older than their original sources."
+    },
+    {
+      "id": "plan",
+      "title": "From your courses to your next exam",
+      "eyebrow": "Organise your semester",
+      "summary": "Build your personal study plan, find published classes and exam dates, and keep programme milestones nearby.",
+      "highlights": [
+        "Choose courses within the published plan rules",
+        "Explore classes, rooms and exam sittings",
+        "Follow key dates and subscribe to a calendar"
+      ],
+      "actions": [
+        {
+          "label": "Build your Study Plan",
+          "href": "studyplan.html"
+        },
+        {
+          "label": "Find your classes",
+          "href": "timetable.html"
+        },
+        {
+          "label": "Check exam dates",
+          "href": "exams.html"
+        },
+        {
+          "label": "Open Calendar & Key Dates",
+          "href": "calendar.html"
+        },
+        {
+          "label": "Read Academic Rules",
+          "href": "academic-rules.html"
+        }
+      ],
+      "note": "Saving a plan does not submit it. Adding an exam to your calendar does not register you for it."
+    },
+    {
+      "id": "learn",
+      "title": "Read, experiment and practise",
+      "eyebrow": "Study actively",
+      "summary": "Move from the study library into course guides, interactive lessons and dedicated practice spaces.",
+      "highlights": [
+        "Find topics, concepts and source-linked resources",
+        "Use flashcards, quizzes and worked exercises",
+        "Review your locally saved learning progress"
+      ],
+      "actions": [
+        {
+          "label": "Browse Notes & Resources",
+          "href": "notes.html"
+        },
+        {
+          "label": "Open Statistics Study Centre",
+          "href": "statistics.html"
+        },
+        {
+          "label": "Open Fundamentals of Statistics",
+          "href": "fund-statistics.html"
+        },
+        {
+          "label": "Experiment in Statistics Lab",
+          "href": "statistics-lab.html"
+        },
+        {
+          "label": "Try the FHEM Exam Centre",
+          "href": "fhem-exam.html"
+        }
+      ],
+      "note": "Content coverage varies by course. Student-made guides and practice support learning; official materials and assessment instructions remain on university platforms."
+    },
+    {
+      "id": "tools",
+      "title": "Turn a question into a next step",
+      "eyebrow": "Your personal workbench",
+      "summary": "Find useful services, work through academic problems and organise your own study, moving and career plans.",
+      "highlights": [
+        "Save tools, build lists and compare options",
+        "Explore methods, Excel recipes and health-economics calculations",
+        "Use practical planners with local exports"
+      ],
+      "actions": [
+        {
+          "label": "Browse the Toolkit",
+          "href": "toolkit.html"
+        },
+        {
+          "label": "Find a statistical method",
+          "href": "toolkit.html?section=solve&solver=finder"
+        },
+        {
+          "label": "Explore Excel recipes",
+          "href": "toolkit.html?section=solve&solver=excel"
+        },
+        {
+          "label": "Try health-economics calculators",
+          "href": "toolkit.html?section=solve&solver=health"
+        },
+        {
+          "label": "Open your workbench",
+          "href": "toolkit.html?section=workbench"
+        }
+      ],
+      "note": "Workbench drafts stay in the current tab until you choose to save them on this device. Calculations depend on your inputs and each tool's stated assumptions."
+    },
+    {
+      "id": "research",
+      "title": "Connect your interests with what comes next",
+      "eyebrow": "Explore your direction",
+      "summary": "Compare specialisations and partner universities, develop research ideas and learn from historical thesis topics.",
+      "highlights": [
+        "Compare track routes, courses and elective rules",
+        "Explore research themes and past thesis titles",
+        "Build a private research plan and export a brief"
+      ],
+      "actions": [
+        {
+          "label": "Compare the tracks",
+          "href": "tracks.html"
+        },
+        {
+          "label": "Meet the universities",
+          "href": "universities.html"
+        },
+        {
+          "label": "Start the thesis guide",
+          "href": "thesis.html#guide-roadmap"
+        },
+        {
+          "label": "Explore past thesis titles",
+          "href": "thesis.html#guide-archive"
+        },
+        {
+          "label": "Preview Beyond EU-HEM",
+          "href": "beyond-euhem.html"
+        }
+      ],
+      "note": "Historical thesis titles and student-made classifications are inspiration. Confirm current supervision, ethics, submission and assessment requirements with your university."
+    },
+    {
+      "id": "life",
+      "title": "Prepare, arrive and feel at home",
+      "eyebrow": "Across the four cities",
+      "summary": "Explore everyday student life, prepare for your next move and find the right university support.",
+      "highlights": [
+        "Follow your programme route",
+        "Explore city-specific guidance and sources",
+        "Connect preparation checklists with practical tools"
+      ],
+      "actions": [
+        {
+          "label": "Follow the Programme Journey",
+          "href": "journey.html"
+        },
+        {
+          "label": "Read the Student Life Guide",
+          "href": "student-life.html"
+        },
+        {
+          "label": "Prepare your next move",
+          "href": "mobility-guide.html"
+        },
+        {
+          "label": "Compare the city guides",
+          "href": "city-guide.html"
+        },
+        {
+          "label": "Find university support",
+          "href": "support.html#universities"
+        }
+      ],
+      "note": "Guides and checklists help you prepare. Confirm residence, insurance, grants and other personal requirements with the relevant official service."
+    },
+    {
+      "id": "community",
+      "title": "Discover the community around EU-HEM",
+      "eyebrow": "People and perspectives",
+      "summary": "Explore the cohort overview, read student and alumni perspectives, and follow updates from the Hub.",
+      "highlights": [
+        "Explore the supplied cohort origins overview",
+        "Browse stories and contribute your experience",
+        "Follow announcements and future community spaces"
+      ],
+      "actions": [
+        {
+          "label": "Explore Students & Cohort Map",
+          "href": "students.html"
+        },
+        {
+          "label": "Read Student Experiences",
+          "href": "experiences.html"
+        },
+        {
+          "label": "Browse Announcements",
+          "href": "announcements.html"
+        },
+        {
+          "label": "Preview Events",
+          "href": "events.html"
+        },
+        {
+          "label": "Preview Gallery",
+          "href": "gallery.html"
+        }
+      ],
+      "note": "Individual directory profiles are fictional demos. Events and Gallery are previews; contributed experiences require separate review and author approval before publication."
+    },
+    {
+      "id": "project",
+      "title": "See the work and help shape the Hub",
+      "eyebrow": "An independent student project",
+      "summary": "Understand how the Hub is built, follow its development and find the current contact and privacy information.",
+      "highlights": [
+        "Distinguish released features from future plans",
+        "Explore the effort behind the project",
+        "Send corrections, questions and ideas"
+      ],
+      "actions": [
+        {
+          "label": "Follow Roadmap & Updates",
+          "href": "roadmap.html"
+        },
+        {
+          "label": "Go Behind the Build",
+          "href": "behind-the-build.html"
+        },
+        {
+          "label": "Read About the Hub",
+          "href": "index.html#about"
+        },
+        {
+          "label": "Find contact options",
+          "href": "contact.html"
+        },
+        {
+          "label": "Read privacy information",
+          "href": "privacy.html"
+        }
+      ],
+      "note": "Roadmap targets are estimates. Personal saved choices belong to their browser and web address; accounts and cross-device sync are not available."
+    }
+  ],
+  "routes": [
+    {
+      "id": "student",
+      "label": "I'm studying here",
+      "intro": "Start with your semester and your next study session.",
+      "links": [
+        {
+          "label": "Your Study Plan",
+          "href": "studyplan.html"
+        },
+        {
+          "label": "Timetable",
+          "href": "timetable.html"
+        },
+        {
+          "label": "Notes & Resources",
+          "href": "notes.html"
+        },
+        {
+          "label": "Exams",
+          "href": "exams.html"
+        }
+      ]
+    },
+    {
+      "id": "exploring",
+      "label": "I'm exploring EU-HEM",
+      "intro": "Get a feel for the specialisations, places and student perspectives.",
+      "links": [
+        {
+          "label": "Tracks Explorer",
+          "href": "tracks.html"
+        },
+        {
+          "label": "Partner Universities",
+          "href": "universities.html"
+        },
+        {
+          "label": "City Guides",
+          "href": "city-guide.html"
+        },
+        {
+          "label": "Student Experiences",
+          "href": "experiences.html"
+        }
+      ]
+    },
+    {
+      "id": "programme",
+      "label": "I want the programme overview",
+      "intro": "Understand the journey, academic rules and where to ask questions.",
+      "links": [
+        {
+          "label": "Programme Journey",
+          "href": "journey.html"
+        },
+        {
+          "label": "Academic Rules",
+          "href": "academic-rules.html"
+        },
+        {
+          "label": "Tracks Explorer",
+          "href": "tracks.html"
+        },
+        {
+          "label": "Support & Contacts",
+          "href": "support.html"
+        }
+      ]
+    }
+  ],
+  "extras": [
+    {
+      "id": "statistics-study",
+      "title": "Statistics Study Centre",
+      "group": "Resources",
+      "href": "statistics.html",
+      "icon": "notes",
+      "description": "Review Statistics for Healthcare with spaced practice, mixed quizzes, worked calculations and interpretation exercises.",
+      "status": "available"
+    },
+    {
+      "id": "fund-statistics-study",
+      "title": "Fundamentals of Statistics",
+      "group": "Resources",
+      "href": "fund-statistics.html",
+      "icon": "notes",
+      "description": "Explore the separate Fundamentals workspace: original guides, guided experiments, worked cases, lab readers and practice.",
+      "status": "available"
+    },
+    {
+      "id": "statistics-lab",
+      "title": "Statistics Lab",
+      "group": "Resources",
+      "href": "statistics-lab.html",
+      "icon": "calculator",
+      "description": "Explore probability, data summaries, intervals and tests with assumptions, visual explanations and worked steps.",
+      "status": "available"
+    },
+    {
+      "id": "fhem-exam",
+      "title": "FHEM Exam Centre",
+      "group": "Resources",
+      "href": "fhem-exam.html",
+      "icon": "notes",
+      "description": "Practise Fundamentals in Health Economics with student-made exercises and an illustrative timed mixed mock.",
+      "status": "available"
+    },
+    {
+      "id": "right-to-health-study",
+      "title": "Right to Health study workspace",
+      "group": "Resources",
+      "href": "course.html?course=right-to-health",
+      "icon": "scale",
+      "description": "Read original guides, explore source-linked cases and practise with questions, cards and written-answer scaffolds.",
+      "status": "available"
+    },
+    {
+      "id": "course-workspace-example",
+      "title": "Course workspace example",
+      "group": "Resources",
+      "href": "course.html?course=intro-economics",
+      "icon": "notes",
+      "description": "Explore a course's overview, published schedule, exam information, syllabus and source links. Study-content depth varies by course.",
+      "status": "available"
+    },
+    {
+      "id": "interactive-lecture",
+      "title": "Interactive lecture example",
+      "group": "Resources",
+      "href": "lecture.html?topic=statistics.sampling",
+      "icon": "notes",
+      "description": "Explore sampling through an original study guide, interactive activities and quiz practice.",
+      "status": "available"
+    },
+    {
+      "id": "create-study-content",
+      "title": "Create study content",
+      "group": "Resources",
+      "href": "create.html",
+      "icon": "plus",
+      "description": "Prepare flashcards, questions, concepts or resources as text to copy. This form does not send, save or publish an entry.",
+      "status": "available"
+    },
+    {
+      "id": "workbench-economics",
+      "title": "Economics graphs",
+      "group": "Resources",
+      "href": "toolkit.html?section=workbench&planner=economics-graphs",
+      "icon": "calculator",
+      "description": "Explore a hypothetical supply-and-demand market, shifts, surplus and elasticity; export results.",
+      "status": "available"
+    },
+    {
+      "id": "workbench-sample-size",
+      "title": "Sample precision planner",
+      "group": "Resources",
+      "href": "toolkit.html?section=workbench&planner=sample-size",
+      "icon": "calculator",
+      "description": "Estimate observations for mean or proportion confidence-interval precision, with assumptions and recruitment-loss allowance.",
+      "status": "available"
+    },
+    {
+      "id": "workbench-study-sessions",
+      "title": "Study session planner",
+      "group": "Resources",
+      "href": "toolkit.html?section=workbench&planner=study-session-planner",
+      "icon": "calendar",
+      "description": "Turn tasks, capacity and your target date into a personal session plan with explicit unscheduled work and calendar export.",
+      "status": "available"
+    },
+    {
+      "id": "workbench-city-budget",
+      "title": "City budget scenarios",
+      "group": "Resources",
+      "href": "toolkit.html?section=workbench&planner=four-city-budget",
+      "icon": "calculator",
+      "description": "Compare your own city budgets, deposits and cash needs using entered amounts and exchange-rate assumptions.",
+      "status": "available"
+    },
+    {
+      "id": "workbench-moving",
+      "title": "Moving checklist",
+      "group": "Resources",
+      "href": "toolkit.html?section=workbench&planner=moving-checklist",
+      "icon": "route",
+      "description": "Organise personal preparation, arrival and settling tasks with optional dates and custom entries.",
+      "status": "available"
+    },
+    {
+      "id": "workbench-document-dates",
+      "title": "Document dates",
+      "group": "Resources",
+      "href": "toolkit.html?section=workbench&planner=document-deadlines",
+      "icon": "calendar",
+      "description": "Track labels and dates you enter and export calendar reminders. The Hub sends no background notifications.",
+      "status": "available"
+    },
+    {
+      "id": "workbench-career",
+      "title": "Career application tracker",
+      "group": "Resources",
+      "href": "toolkit.html?section=workbench&planner=career-tracker",
+      "icon": "briefcase",
+      "description": "Organise opportunities, follow-ups and preparation checks. No CV upload or application submission.",
+      "status": "available"
+    },
+    {
+      "id": "solve-method",
+      "title": "Statistical Test Finder",
+      "group": "Resources",
+      "href": "toolkit.html?section=solve&solver=finder",
+      "icon": "calculator",
+      "description": "Work through a study-design question to find a method and its assumptions; follow links for further learning.",
+      "status": "available"
+    },
+    {
+      "id": "solve-excel",
+      "title": "Excel Formula Assistant",
+      "group": "Resources",
+      "href": "toolkit.html?section=solve&solver=excel",
+      "icon": "calculator",
+      "description": "Explore original formula recipes with input guidance, worked checks and spreadsheet conventions.",
+      "status": "available"
+    },
+    {
+      "id": "solve-health-economics",
+      "title": "Health-economics calculators",
+      "group": "Resources",
+      "href": "toolkit.html?section=solve&solver=health",
+      "icon": "calculator",
+      "description": "Explore cost-effectiveness comparisons, QALYs and discounting with transparent inputs and educational limits.",
+      "status": "available"
+    },
+    {
+      "id": "thesis-roadmap",
+      "title": "Thesis research roadmap",
+      "group": "Resources",
+      "href": "thesis.html#guide-roadmap",
+      "icon": "route",
+      "description": "Follow a student-made research workflow and identify what to confirm with your university and supervisor.",
+      "status": "available"
+    },
+    {
+      "id": "thesis-topics",
+      "title": "Thesis topic ideas",
+      "group": "Resources",
+      "href": "thesis.html#guide-topics",
+      "icon": "library",
+      "description": "Explore illustrative research questions and themes as starting points, rather than approved projects.",
+      "status": "available"
+    },
+    {
+      "id": "thesis-toolkit",
+      "title": "Thesis methods and writing toolkit",
+      "group": "Resources",
+      "href": "thesis.html#guide-toolkit",
+      "icon": "library",
+      "description": "Find method prompts, research checklists, writing guidance and source-linked support.",
+      "status": "available"
+    },
+    {
+      "id": "thesis-planner",
+      "title": "Personal thesis planner",
+      "group": "Resources",
+      "href": "thesis.html#guide-planner",
+      "icon": "calendar",
+      "description": "Develop a local research draft and checklist, then download a backup or research brief.",
+      "status": "available"
+    },
+    {
+      "id": "thesis-archive",
+      "title": "Historical thesis archive",
+      "group": "Resources",
+      "href": "thesis.html#guide-archive",
+      "icon": "library",
+      "description": "Search titles from earlier cohorts, with legacy tracks and clearly labelled title-based Hub classifications.",
+      "status": "available"
+    }
+  ]
+}

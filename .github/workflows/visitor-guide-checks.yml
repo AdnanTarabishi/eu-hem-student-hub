@@ -1,0 +1,73 @@
+name: Check Visitor Guide
+
+on:
+  push:
+    paths:
+      - 'visitor-guide.*'
+      - 'content/visitor-guide.json'
+      - 'site-nav.js'
+      - 'index.html'
+      - 'home.css'
+      - 'search.js'
+      - 'sw.js'
+      - 'tests/visitor-guide/**'
+      - '.github/workflows/visitor-guide-checks.yml'
+  pull_request:
+    paths:
+      - 'visitor-guide.*'
+      - 'content/visitor-guide.json'
+      - 'site-nav.js'
+      - 'index.html'
+      - 'home.css'
+      - 'search.js'
+      - 'sw.js'
+      - 'tests/visitor-guide/**'
+      - '.github/workflows/visitor-guide-checks.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: visitor-guide-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  visitor-guide:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Check guide syntax, content, colours and fingerprints
+        run: |
+          node --check visitor-guide.js
+          node scripts/check-content.js
+          node scripts/check-contrast.js
+          node scripts/stamp-versions.js --check
+      - name: Check feature coverage and guide references
+        run: node tests/visitor-guide/data.test.js .
+      - name: Check the interactive tour, directory and offline behavior
+        env:
+          VISITOR_SCREENSHOT_DIR: ${{ runner.temp }}/visitor-guide-previews
+          VISITOR_INLINE_PREVIEWS: ${{ github.ref != 'refs/heads/main' && '1' || '0' }}
+        run: node tests/visitor-guide/browser.test.js .
+      - name: Verify the published guide (read-only)
+        if: github.ref == 'refs/heads/main'
+        env:
+          VISITOR_SCREENSHOT_DIR: ${{ runner.temp }}/visitor-guide-live
+        run: node tests/visitor-guide/live.test.js .
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: visitor-guide-previews
+          path: |
+            ${{ runner.temp }}/visitor-guide-previews
+            ${{ runner.temp }}/visitor-guide-live
+          retention-days: 7
+          if-no-files-found: ignore

@@ -19,7 +19,8 @@
     "test:editor": "node tests/editor/data.test.js && node tests/editor/schema.test.mjs && node tests/editor/browser.test.js .",
     "test:experiences": "node scripts/check-content.js && node tests/experiences/submission.test.js && node tests/experiences/browser.test.js .",
     "test:tracks": "node scripts/check-content.js && node tests/tracks/data.test.js && node tests/tracks/browser.test.js .",
-    "test:life": "node scripts/check-content.js && node tests/life/data.test.js . && node tests/life/browser.test.js ."
+    "test:life": "node scripts/check-content.js && node tests/life/data.test.js . && node tests/life/browser.test.js .",
+    "test:visitor-guide": "node scripts/check-content.js && node tests/visitor-guide/data.test.js . && node tests/visitor-guide/browser.test.js ."
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.8",
