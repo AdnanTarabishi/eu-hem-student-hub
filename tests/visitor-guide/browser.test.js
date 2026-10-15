@@ -14,6 +14,14 @@ const GUIDE = JSON.parse(fs.readFileSync(path.join(ROOT, "content/visitor-guide.
 const CHAPTERS = ["welcome", "plan", "learn", "tools", "research", "life", "community", "project"];
 const GROUPS = ["Study", "Resources", "Community", "Life", "About"];
 const STATUSES = ["available", "preview", "demo", "not-open"];
+const SCENES = [
+  { id: "plan", href: "studyplan.html" },
+  { id: "learn", href: "notes.html" },
+  { id: "tools", href: "toolkit.html?section=workbench" },
+  { id: "research", href: "thesis.html#guide-roadmap" },
+  { id: "life", href: "student-life.html" },
+  { id: "community", href: "experiences.html" }
+];
 const navSource = fs.readFileSync(path.join(ROOT, "site-nav.js"), "utf8"), sandbox = {};
 vm.runInNewContext(navSource.slice(navSource.indexOf("const SITE_MENU"), navSource.indexOf("// An icon")) + "\nthis.menu = SITE_MENU;", sandbox);
 const MENU = JSON.parse(JSON.stringify(sandbox.menu));
@@ -92,7 +100,7 @@ async function close(fixture) {
   const origin = "http://127.0.0.1:" + server.address().port, base = origin + PREFIX;
   try {
     browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || (fs.existsSync("/usr/bin/chromium") ? "/usr/bin/chromium" : undefined) });
-    const open = async ({ hash = "", width = 1440, scheme = "light", scripts = true, dataIssue = "", offline = false } = {}) => {
+    const open = async ({ hash = "", width = 1440, scheme = "light", scripts = true, dataIssue = "", offline = false, holdData = false, clock = false } = {}) => {
       const context = await browser.newContext({ viewport: { width, height: width < 768 ? 844 : 1000 }, colorScheme: scheme,
         locale: "en-GB", reducedMotion: "reduce", serviceWorkers: offline ? "allow" : "block", javaScriptEnabled: scripts });
       contexts.add(context); context.setDefaultTimeout(12000);
@@ -107,7 +115,8 @@ async function close(fixture) {
           };
         }
       }, SENTINEL);
-      let attempts = 0;
+      let attempts = 0, releaseData;
+      const dataGate = holdData ? new Promise((resolve) => { releaseData = resolve; }) : null;
       const failedPaths = new Set();
       const unsafe = (request) => {
         const url = new URL(request.url());
@@ -115,9 +124,10 @@ async function close(fixture) {
       };
       context.on("request", (request) => { if (unsafe(request)) forbidden.push(request.method() + " " + request.url()); });
       // Keep the actual service-worker scenario free of interception.
-      if (!offline) await context.route("**/*", (route) => {
+      if (!offline) await context.route("**/*", async (route) => {
         const request = route.request(), url = new URL(request.url());
         if (unsafe(request)) return route.abort();
+        if (dataGate && url.pathname === PREFIX + "content/visitor-guide.json") await dataGate;
         if (url.pathname === PREFIX + "content/visitor-guide.json" && ++attempts === 1 && dataIssue) {
           if (dataIssue === "http") {
             failedPaths.add(url.pathname);
@@ -129,13 +139,14 @@ async function close(fixture) {
         return route.continue();
       });
       const page = await context.newPage(); lastPage = page;
+      if (clock) await page.clock.install();
       page.on("pageerror", (error) => errors.push(label + ": " + error.message));
       page.on("response", (response) => {
         if (response.status() >= 400 && !failedPaths.has(new URL(response.url()).pathname)) errors.push(label + ": HTTP " + response.status() + " " + response.url());
       });
       await page.goto(base + "visitor-guide.html" + (hash ? "#" + hash : ""), { waitUntil: "domcontentloaded" });
-      if (scripts && !dataIssue) await ready(page);
-      return { page, context };
+      if (scripts && !dataIssue && !holdData) await ready(page);
+      return { page, context, releaseData };
     };
 
     label = "tour-keyboard-history";
@@ -171,6 +182,8 @@ async function close(fixture) {
 
     label = "view-all-and-print";
     fixture = await open({ hash: "research" }); page = fixture.page; await chapter(page, "research");
+    await page.locator('[data-visitor-scene="tools"]').click();
+    const beforePrintScene = await page.locator('[data-visitor-scene][aria-pressed="true"]').getAttribute("data-visitor-scene");
     for (const all of [false, true]) {
       if (all) await page.locator("#visitor-all").click();
       assert.equal(await page.locator("#visitor-all").getAttribute("aria-pressed"), String(all));
@@ -183,6 +196,9 @@ async function close(fixture) {
       await page.evaluate(() => window.dispatchEvent(new Event("afterprint")));
       assert.deepEqual(await page.locator("#visitor-deck .visitor-chapter").evaluateAll((items) => items.map((item) => ({ id: item.id, hidden: item.hidden }))), before);
       assert.equal(page.url(), beforeURL, "printing preserves the chapter link");
+      assert.equal(await page.locator('[data-visitor-scene][aria-pressed="true"]').getAttribute("data-visitor-scene"), beforePrintScene,
+        "printing preserves the selected illustrative preview");
+      assert.equal(await page.locator(".vg-showcase-scene:visible").count(), 1);
       assert.equal(await page.locator("#visitor-all").getAttribute("aria-pressed"), String(all));
     }
     await page.locator("#visitor-all").click();
@@ -207,6 +223,102 @@ async function close(fixture) {
     assert.equal(await page.locator('[data-visitor-route="student"]').getAttribute("aria-pressed"), "true", "audience preference is in memory only");
     await close(fixture);
     ok("all three audience choices change suggested links with one pressed button and reset on reload without storage");
+
+    label = "interactive-feature-showcase";
+    fixture = await open({ hash: "learn", clock: true }); page = fixture.page; await chapter(page, "learn");
+    assert.equal(await page.locator('[data-visitor-scene="plan"]').getAttribute("aria-pressed"), "true");
+    assert.equal(await page.locator("#visitor-showcase-position").innerText(), "01 / 06");
+    assert.equal(await page.locator("[data-visitor-scene]").count(), 6);
+    assert.equal(await page.locator(".vg-showcase-scene").count(), 6);
+    assert.equal(await page.locator("#visitor-showcase-panel").count(), 1);
+    assert.equal(await page.getByText("Illustrative feature previews", { exact: true }).isVisible(), true);
+    const showcaseStatus = page.locator("#visitor-showcase-status");
+    const showcaseLive = await showcaseStatus.getAttribute("aria-live");
+    assert.ok(showcaseLive === "polite" || (showcaseLive === null && await showcaseStatus.getAttribute("role") === "status"),
+      "scene changes have a polite live announcement without an assertive override");
+    let previousSceneStatus = await showcaseStatus.innerText();
+    const showcaseURL = page.url();
+    for (const [index, scene] of SCENES.entries()) {
+      const control = page.locator('[data-visitor-scene="' + scene.id + '"]');
+      assert.equal(await control.getAttribute("aria-controls"), "visitor-showcase-panel");
+      assert.equal(await control.isEnabled(), true);
+      await control.focus(); await page.keyboard.press(index % 2 ? "Space" : "Enter");
+      const active = page.locator('.vg-showcase-scene[data-scene="' + scene.id + '"]');
+      await active.waitFor({ state: "visible" });
+      assert.equal(await page.locator(".vg-showcase-scene:visible").count(), 1);
+      assert.equal(await control.getAttribute("aria-pressed"), "true");
+      assert.equal(await page.locator('[data-visitor-scene][aria-pressed="true"]').count(), 1);
+      assert.ok((await active.locator("h3").innerText()).trim().length > 3);
+      assert.ok((await active.locator(".vg-showcase-description").innerText()).trim().length > 20);
+      assert.equal(await active.locator(".vg-showcase-link").getAttribute("href"), scene.href);
+      assert.equal(await page.locator("#visitor-showcase-position").innerText(), String(index + 1).padStart(2, "0") + " / 06");
+      const currentSceneStatus = await showcaseStatus.innerText();
+      assert.ok(currentSceneStatus.trim().length > 3);
+      if (index > 0) assert.notEqual(currentSceneStatus, previousSceneStatus, "changing the preview updates its live announcement");
+      previousSceneStatus = currentSceneStatus;
+      assert.equal(page.url(), showcaseURL, "preview choices do not change the address or current chapter");
+      assert.equal(await page.locator("#visitor-position").innerText(), "3 / 8");
+      assert.equal(await page.locator("#learn").isVisible(), true);
+      assert.equal(await page.locator("#visitor-deck .visitor-chapter:visible").count(), 1);
+      assert.equal(await page.getByText("Illustrative feature previews", { exact: true }).isVisible(), true);
+    }
+    await page.locator('[data-visitor-scene="tools"]').click();
+    await page.clock.fastForward(120000);
+    assert.equal(await page.locator('[data-visitor-scene="tools"]').getAttribute("aria-pressed"), "true");
+    assert.equal(await page.locator('.vg-showcase-scene[data-scene="tools"]').isVisible(), true);
+    assert.equal(await page.locator("#visitor-showcase-position").innerText(), "03 / 06", "previews do not advance automatically after two virtual minutes");
+    assert.equal(page.url(), showcaseURL);
+    await close(fixture);
+    ok("all six clearly labelled illustrative previews support Enter and Space, update their scene and real destination, and preserve the chapter and address without autoplay");
+
+    label = "directory-views-and-category-shortcuts";
+    fixture = await open(); page = fixture.page;
+    assert.equal(await page.locator("#visitor-directory").getAttribute("data-view"), "grid");
+    assert.equal(await page.locator('[data-visitor-view="grid"]').getAttribute("aria-pressed"), "true");
+    const shortcutRows = await cards(page).evaluateAll((items) => items.map((item) => ({
+      id: item.dataset.featureId, group: item.dataset.group, status: item.dataset.status, text: item.textContent.toLowerCase()
+    })));
+    const directoryURL = page.url();
+    await page.locator("#visitor-search").fill("thesis");
+    await page.locator("#visitor-status-filter").selectOption("available");
+    for (const group of ["all", ...GROUPS]) {
+      const chip = page.locator('[data-visitor-group="' + group + '"]');
+      await chip.focus(); await page.keyboard.press("Space");
+      assert.equal(await chip.getAttribute("aria-pressed"), "true");
+      assert.equal(await page.locator('[data-visitor-group][aria-pressed="true"]').count(), 1);
+      assert.equal(await page.locator("#visitor-group").inputValue(), group);
+      assert.equal(await page.locator("#visitor-search").inputValue(), "thesis", "category shortcuts preserve search");
+      assert.equal(await page.locator("#visitor-status-filter").inputValue(), "available", "category shortcuts preserve maturity");
+      const expected = shortcutRows.filter((item) => (group === "all" || item.group === group) && item.status === "available" && item.text.includes("thesis"));
+      assert.deepEqual(await visible(page).evaluateAll((items) => items.map((item) => item.dataset.featureId)), expected.map((item) => item.id));
+      await resultCount(page, expected.length);
+    }
+    await page.locator("#visitor-group").selectOption("Resources");
+    assert.equal(await page.locator('[data-visitor-group="Resources"]').getAttribute("aria-pressed"), "true", "the native select also updates category shortcuts");
+    const beforeViewChange = await visible(page).evaluateAll((items) => items.map((item) => item.dataset.featureId));
+    assert.ok(beforeViewChange.length > 0, "the layout comparison uses real matching destinations");
+    for (const view of ["list", "grid", "list"]) {
+      const control = page.locator('[data-visitor-view="' + view + '"]');
+      await control.focus(); await page.keyboard.press(view === "list" ? "Enter" : "Space");
+      assert.equal(await page.locator("#visitor-directory").getAttribute("data-view"), view);
+      assert.equal(await control.getAttribute("aria-pressed"), "true");
+      assert.equal(await page.locator('[data-visitor-view][aria-pressed="true"]').count(), 1);
+      assert.deepEqual(await visible(page).evaluateAll((items) => items.map((item) => item.dataset.featureId)), beforeViewChange,
+        "changing the directory layout preserves the combined filter result");
+      await resultCount(page, beforeViewChange.length);
+      const geometry = await visible(page).evaluateAll((items) => items.slice(0, 3).map((item) => {
+        const box = item.getBoundingClientRect(); return { top: box.top, bottom: box.bottom };
+      }));
+      assert.equal(geometry.length, 3, "the layout comparison has at least three matching destinations");
+      if (view === "list") assert.ok(geometry[2].top >= geometry[0].bottom - 1, "the compact desktop list starts a new row after two destinations");
+      else assert.ok(Math.abs(geometry[0].top - geometry[2].top) <= 1, "the desktop grid places three matching destinations in its first row");
+    }
+    await page.locator("#visitor-reset").click(); await resultCount(page, EXPECTED.length);
+    assert.equal(await page.locator('[data-visitor-group="all"]').getAttribute("aria-pressed"), "true");
+    assert.equal(await page.locator("#visitor-directory").getAttribute("data-view"), "list", "resetting filters preserves the chosen layout");
+    assert.equal(page.url(), directoryURL, "category and layout choices stay out of the address");
+    await close(fixture);
+    ok("category shortcuts stay in sync with the select while retaining search and maturity; grid/list views retain results and reset affects filters");
 
     label = "complete-directory-and-maturity";
     fixture = await open(); page = fixture.page;
@@ -258,11 +370,24 @@ async function close(fixture) {
     ok("search, group and status filters form an intersection, announce an explicit empty state, and reset together without publishing the query");
 
     label = "content-failure-retry";
+    fixture = await open({ holdData: true }); page = fixture.page;
+    try {
+      await page.locator('[data-visitor-scene="tools"]').click();
+      assert.equal(await page.locator('.vg-showcase-scene[data-scene="tools"]').isVisible(), true);
+      assert.equal(await page.locator("#visitor-main").getAttribute("aria-busy"), "true",
+        "local previews are interactive while the editorial JSON request is still pending");
+    } finally { fixture.releaseData(); }
+    await ready(page); await close(fixture);
     for (const dataIssue of ["http", "syntax", "schema"]) {
       fixture = await open({ dataIssue }); page = fixture.page;
       await page.locator("#visitor-retry").waitFor();
       assert.equal(await page.locator("#visitor-main").getAttribute("aria-busy"), "false");
       assert.equal(await page.locator("#visitor-deck .visitor-chapter:visible").count(), 8, "a failed enhancement keeps the complete static guide");
+      if (dataIssue === "http") {
+        await page.locator('[data-visitor-scene="life"]').click();
+        assert.equal(await page.locator('.vg-showcase-scene[data-scene="life"]').isVisible(), true,
+          "the local illustrative showcase works even when editorial JSON is unavailable");
+      }
       for (const href of ["timetable.html", "notes.html", "toolkit.html", "support.html"])
         assert.ok(await page.locator('main a[href="' + href + '"]').count() > 0, "fallback keeps " + href);
       await page.locator("#visitor-retry").click(); await ready(page);
@@ -276,6 +401,14 @@ async function close(fixture) {
     label = "no-javascript";
     fixture = await open({ scripts: false }); page = fixture.page;
     assert.equal(await page.locator("#visitor-deck .visitor-chapter:visible").count(), 8);
+    assert.equal(await page.getByText("Illustrative feature previews", { exact: true }).isVisible(), true);
+    assert.equal(await page.locator(".vg-showcase-scene:visible").count(), 1);
+    assert.equal(await page.locator('.vg-showcase-scene[data-scene="plan"]').isVisible(), true);
+    assert.equal(await page.locator('.vg-showcase-scene[data-scene="plan"] .vg-showcase-link').getAttribute("href"), "studyplan.html");
+    assert.ok((await page.locator('.vg-showcase-scene[data-scene="plan"] .vg-showcase-description').innerText()).trim().length > 20);
+    assert.equal(await page.locator("[data-visitor-scene]").count(), 6, "all six scene controls are present in the static page");
+    assert.ok(await page.locator("[data-visitor-scene]").evaluateAll((items) => items.every((item) => item.tagName === "BUTTON" && item.disabled)),
+      "script-free showcase controls are disabled native buttons");
     for (const id of CHAPTERS) {
       assert.ok((await page.locator("#" + id).innerText()).trim().length > 80, id + " has meaningful static text");
       assert.ok(await page.locator('#' + id + ' a[href$=".html"], #' + id + ' a[href*=".html#"], #' + id + ' a[href*=".html?"]').count() > 0, id + " has real next steps");
@@ -290,6 +423,12 @@ async function close(fixture) {
       fixture = await open({ width, scheme }); page = fixture.page;
       assert.equal(await page.evaluate(() => document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")), scheme);
       await noSideways(page, width + " " + scheme + " tour");
+      const longestScene = await page.locator(".vg-showcase-scene").evaluateAll((items) =>
+        items.map((item) => ({ id: item.dataset.scene, length: item.querySelector(".vg-showcase-description").textContent.length }))
+          .sort((a, b) => b.length - a.length)[0].id);
+      await page.locator('[data-visitor-scene="' + longestScene + '"]').click();
+      await page.locator('.vg-showcase-scene[data-scene="' + longestScene + '"]').waitFor({ state: "visible" });
+      await noSideways(page, width + " " + scheme + " longest illustrative preview");
       await page.locator("#visitor-search").focus(); await page.keyboard.press("Tab"); await page.keyboard.press("Shift+Tab");
       assert.equal(await page.locator("#visitor-search").evaluate((element) => document.activeElement === element), true);
       const focus = await page.locator("#visitor-search").evaluate((element) => {
@@ -300,13 +439,18 @@ async function close(fixture) {
       await page.locator("#visitor-all").click();
       assert.equal(await page.locator("#visitor-deck .visitor-chapter:visible").count(), 8);
       await noSideways(page, width + " " + scheme + " full guide");
+      for (const view of ["list", "grid"]) {
+        await page.locator('[data-visitor-view="' + view + '"]').click();
+        assert.equal(await page.locator("#visitor-directory").getAttribute("data-view"), view);
+        await noSideways(page, width + " " + scheme + " " + view + " directory");
+      }
       await page.locator("#visitor-search").fill("fictional-no-feature-can-match");
       await resultCount(page, 0); await noSideways(page, width + " " + scheme + " empty directory");
       await page.locator("#visitor-reset").click(); await page.locator("#visitor-all").click();
       await capture(page, "visitor-" + width + "-" + scheme, width === 390 && scheme === "dark");
       await close(fixture);
     }
-    ok("320px, 390px, tablet and desktop layouts fit both themes, including full-document and empty states, with visible keyboard focus");
+    ok("320px, 390px, tablet and desktop layouts fit both themes, including the longest preview, both directory views, full-document and empty states, with visible keyboard focus");
 
     label = "actual-service-worker-offline";
     fixture = await open({ offline: true }); page = fixture.page;
@@ -328,6 +472,10 @@ async function close(fixture) {
       catch { return true; }
     }), true, "an uncached local network request really fails offline");
     await page.reload({ waitUntil: "domcontentloaded" }); await ready(page);
+    await page.locator('[data-visitor-scene="community"]').click();
+    assert.equal(await page.locator('.vg-showcase-scene[data-scene="community"]').isVisible(), true, "illustrative previews work from the saved local assets");
+    await page.locator('[data-visitor-view="list"]').click();
+    assert.equal(await page.locator("#visitor-directory").getAttribute("data-view"), "list");
     await selectChapter(page, "life");
     await page.locator('[data-visitor-route="exploring"]').click();
     assert.deepEqual(await page.locator("#visitor-route-links a").evaluateAll((items) => items.map((item) => item.getAttribute("href"))),
