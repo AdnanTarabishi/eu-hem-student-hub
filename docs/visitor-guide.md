@@ -4,6 +4,14 @@ The Visitor Guide is an interactive introduction to the current public EU-HEM St
 
 The guide explains where existing features lead. It does not activate registration, accounts, editor publishing, uploads, new collection or remote saving.
 
+## Illustrated visitor edition
+
+The hero contains six manually selected feature previews: Plan, Learn, Tools, Research, Life and Connect. Each is an original decorative composition with a real destination link and a visible illustrative label. They do not show live records or calculate results. Standard buttons support keyboard activation; previews never rotate automatically and work independently of the optional directory JSON. Without JavaScript, the first preview and its destination remain readable.
+
+The eight chapters have distinct illustrations, and suggested starting routes are numbered pathways. An interactive section map shares the directory’s group filter; category shortcuts preserve the current search and availability filter. Cards and Compact list use the same records and result set. Layout changes, preview choices and filters stay in page memory and do not update student data or the URL. Reset filters preserves the chosen layout.
+
+Motion is limited to short transitions and a gentle pointer hover effect. Reduced-motion preferences remove these effects. Printed output hides the illustrative hero and discovery controls while preserving complete chapters, destinations, status labels and boundary notes.
+
 ## Content and navigation
 
 `content/visitor-guide.json` contains:

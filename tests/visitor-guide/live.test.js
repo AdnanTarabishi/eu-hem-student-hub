@@ -80,6 +80,27 @@ const EXPECTED_COUNT = MENU.flatMap((group) => group.items).filter((item) => ite
         assert.equal(new URL(page.url()).search, "");
         await page.locator("#visitor-reset").click();
         assert.equal(await page.locator("#visitor-directory .visitor-feature:visible").count(), EXPECTED_COUNT);
+        const chapterHash = new URL(page.url()).hash;
+        await page.locator('[data-visitor-scene="tools"]').focus(); await page.keyboard.press("Enter");
+        assert.equal(await page.locator(".vg-showcase-scene:visible").count(), 1);
+        assert.equal(await page.locator('.vg-showcase-scene[data-scene="tools"]').isVisible(), true);
+        assert.equal(await page.locator('.vg-showcase-scene[data-scene="tools"] .vg-showcase-link').getAttribute("href"), "toolkit.html?section=workbench");
+        assert.equal(await page.locator('[data-visitor-scene="tools"]').getAttribute("aria-pressed"), "true");
+        assert.equal(await page.locator("#visitor-showcase-position").innerText(), "03 / 06");
+        assert.equal(await page.getByText("Illustrative feature previews", { exact: true }).isVisible(), true);
+        await page.locator('[data-visitor-group="Resources"]').click();
+        assert.equal(await page.locator("#visitor-group").inputValue(), "Resources");
+        assert.equal(await page.locator('[data-visitor-group="Resources"]').getAttribute("aria-pressed"), "true");
+        assert.ok((await page.locator("#visitor-directory .visitor-feature:visible").evaluateAll((items) => items.map((item) => item.dataset.group)))
+          .every((group) => group === "Resources"));
+        await page.locator('[data-visitor-view="list"]').click();
+        assert.equal(await page.locator("#visitor-directory").getAttribute("data-view"), "list");
+        assert.equal(await page.locator('[data-visitor-view="list"]').getAttribute("aria-pressed"), "true");
+        await page.locator("#visitor-reset").click();
+        assert.equal(await page.locator('[data-visitor-group="all"]').getAttribute("aria-pressed"), "true");
+        assert.equal(await page.locator("#visitor-directory .visitor-feature:visible").count(), EXPECTED_COUNT);
+        assert.equal(new URL(page.url()).hash, chapterHash, "the visual preview, directory category and layout preserve the chapter");
+        assert.equal(new URL(page.url()).search, "");
         await fits(); await screenshot("live-visitor-desktop-" + scheme + ".png");
 
         await page.setViewportSize({ width: 390, height: 844 });
@@ -91,6 +112,16 @@ const EXPECTED_COUNT = MENU.flatMap((group) => group.items).filter((item) => ite
         assert.ok(await page.locator("#visitor-directory .visitor-feature:visible").count() > 0, "phone filters retain the matching Bologna guide");
         await fits();
         await page.locator("#visitor-reset").click();
+        await page.locator('[data-visitor-scene="community"]').focus(); await page.keyboard.press("Space");
+        assert.equal(await page.locator('.vg-showcase-scene[data-scene="community"]').isVisible(), true);
+        assert.equal(await page.locator('.vg-showcase-scene[data-scene="community"] .vg-showcase-link').getAttribute("href"), "experiences.html");
+        assert.equal(await page.locator("#life").isVisible(), true, "phone preview switching preserves the current tour chapter");
+        for (const view of ["grid", "list"]) {
+          await page.locator('[data-visitor-view="' + view + '"]').click();
+          assert.equal(await page.locator("#visitor-directory").getAttribute("data-view"), view);
+          assert.equal(await page.locator("#visitor-directory .visitor-feature:visible").count(), EXPECTED_COUNT);
+          await fits();
+        }
         await page.locator("#visitor-all").click();
         assert.equal(await page.locator("#visitor-deck .visitor-chapter:visible").count(), 8);
         await fits(); await screenshot("live-visitor-phone-" + scheme + ".png");
@@ -99,6 +130,6 @@ const EXPECTED_COUNT = MENU.flatMap((group) => group.items).filter((item) => ite
     }
     assert.deepEqual(unsafeRequests, [], "verification made only public GET requests to the deployed Hub");
     assert.deepEqual(errors, []);
-    console.log("Published Visitor Guide assets matched this commit; tour/history/focus, three audience routes, combined directory filters, empty/reset states and phone layouts verified in both themes without submission.");
+    console.log("Published Visitor Guide assets matched this commit; tour/history/focus, three audience routes, illustrative previews, category shortcuts, grid/list layouts, combined directory filters and phone layouts verified in both themes without submission.");
   } finally { await browser.close(); }
 })().catch((error) => { console.error(error); process.exitCode = 1; });

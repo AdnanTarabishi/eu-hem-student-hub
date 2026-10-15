@@ -6,7 +6,7 @@
   const chapterIds = ["welcome","plan","learn","tools","research","life","community","project"];
   const groups = ["Study","Resources","Community","Life","About"];
   const labels = { available:"Available", preview:"Preview", demo:"Demo data", "not-open":"Not open" };
-  const state = { data:null, index:0, all:false, route:"student", search:"", group:"all", status:"all", features:[], loading:false };
+  const state = { data:null, index:0, all:false, route:"student", search:"", group:"all", status:"all", view:"grid", features:[], loading:false };
   const make = (tag, cls, text) => { const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n; };
   const link = (item, cls) => { const a=make("a",cls,item.label);a.href=item.href;return a; };
   const normal = value => String(value).normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
@@ -99,6 +99,20 @@
     }
     filter();
   }
+  function drawMap() {
+    document.querySelectorAll("[data-visitor-group]").forEach(button=>{
+      const group=button.dataset.visitorGroup;
+      const count=state.features.filter(feature=>group==="all"||feature.group===group).length;
+      button.querySelector("[data-visitor-group-count]").textContent=count+" destinations";
+      button.disabled=false;
+    });
+    $("visitor-hub-map").hidden=false;
+    $("visitor-view-controls").hidden=false;
+  }
+  function drawView() {
+    $("visitor-directory").dataset.view=state.view;
+    document.querySelectorAll("[data-visitor-view]").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.visitorView===state.view)));
+  }
   function filter() {
     const words=normal(state.search.trim()).split(/\s+/).filter(Boolean);let count=0;
     for(const feature of state.features){
@@ -109,6 +123,7 @@
     $("visitor-results").textContent=count+" of "+state.features.length+" destinations"+(state.group==="all"?"":" · "+state.group)+(state.status==="all"?"":" · "+labels[state.status])+".";
     $("visitor-empty").hidden=count>0;
     $("visitor-reset").disabled=!(state.search||state.group!=="all"||state.status!=="all");
+    document.querySelectorAll("[data-visitor-group]").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.visitorGroup===state.group)));
   }
   function reset() {
     state.search="";state.group="all";state.status="all";
@@ -127,7 +142,7 @@
     try{
       const response=await fetch("content/visitor-guide.json",{signal:controller.signal});if(!response.ok)throw new Error("Unavailable guide");
       const data=await response.json();if(!valid(data))throw new Error("Incomplete guide");
-      state.data=data;drawChapters();drawDirectory();drawRoute();main.classList.add("visitor-enhanced");
+      state.data=data;drawChapters();drawDirectory();drawMap();drawView();drawRoute();main.classList.add("visitor-enhanced");
       for(const id of ["visitor-controls","visitor-all","visitor-tour-progress"])$(id).hidden=false;
       for(const id of ["visitor-search","visitor-group","visitor-status-filter"])$(id).disabled=false;
       document.querySelectorAll("[data-visitor-route]").forEach(b=>b.disabled=false);
@@ -155,11 +170,32 @@
   $("visitor-search").addEventListener("input",event=>{state.search=event.target.value;filter();});
   $("visitor-group").addEventListener("change",event=>{state.group=event.target.value;filter();});
   $("visitor-status-filter").addEventListener("change",event=>{state.status=event.target.value;filter();});
+  document.querySelectorAll("[data-visitor-group]").forEach(button=>button.addEventListener("click",()=>{
+    if(!state.data)return;
+    state.group=button.dataset.visitorGroup;$("visitor-group").value=state.group;filter();
+  }));
+  document.querySelectorAll("[data-visitor-view]").forEach(button=>button.addEventListener("click",()=>{
+    if(!state.data)return;
+    state.view=button.dataset.visitorView;drawView();
+  }));
   $("visitor-reset").addEventListener("click",()=>{reset();$("visitor-search").focus();});
   $("visitor-retry").addEventListener("click",load);
   window.addEventListener("popstate",revealHash);window.addEventListener("hashchange",revealHash);
   let beforePrint=null;
   window.addEventListener("beforeprint",()=>{if(state.data){beforePrint={all:state.all,index:state.index};state.all=true;drawTour();document.querySelectorAll(".visitor-feature").forEach(n=>n.hidden=false);}});
   window.addEventListener("afterprint",()=>{if(beforePrint){state.all=beforePrint.all;state.index=beforePrint.index;beforePrint=null;drawTour();filter();}});
+  // This static showcase works even if the optional directory JSON is unavailable.
+  // Normal buttons keep Enter/Space behavior; scenes never rotate automatically.
+  const previewButtons=[...document.querySelectorAll("[data-visitor-scene]")];
+  previewButtons.forEach((button,index)=>{
+    button.disabled=false;
+    button.addEventListener("click",()=>{
+      previewButtons.forEach(item=>item.setAttribute("aria-pressed",String(item===button)));
+      document.querySelectorAll(".vg-showcase-scene").forEach(scene=>{scene.hidden=scene.dataset.scene!==button.dataset.visitorScene;});
+      $("visitor-showcase-position").textContent=String(index+1).padStart(2,"0")+" / 06";
+      const active=document.querySelector('.vg-showcase-scene[data-scene="'+button.dataset.visitorScene+'"]');
+      $("visitor-showcase-status").textContent=active.querySelector("h3").textContent+" Preview "+(index+1)+" of 6.";
+    });
+  });
   load();
 })();
