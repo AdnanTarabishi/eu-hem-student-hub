@@ -18,16 +18,20 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Check and integrate Session 6
+      - name: Check Session 6 JavaScript syntax
         run: |
           node --check fhe-session-6.js
           node --check fhe-session-6-runtime.js
           node --check fhe-session-6-links.js
           node --check fhe-session-6-page.js
-          node scripts/integrate-session6.js
-          node scripts/build-content-index.js
-          node scripts/stamp-versions.js
-          node scripts/check-content.js
+      - name: Integrate canonical Session 6 data
+        run: node scripts/integrate-session6.js
+      - name: Rebuild content index
+        run: node scripts/build-content-index.js
+      - name: Stamp asset versions
+        run: node scripts/stamp-versions.js
+      - name: Validate integrated content
+        run: node scripts/check-content.js
       - name: Commit canonical content
         run: |
           if git diff --quiet; then
