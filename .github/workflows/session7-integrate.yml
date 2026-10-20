@@ -1,0 +1,46 @@
+name: Session 7 integrate
+on:
+  push:
+    branches: [feature/fhe-session-7]
+    paths:
+      - 'scripts/integrate-session7.js'
+      - '.github/workflows/session7-integrate.yml'
+permissions:
+  contents: write
+jobs:
+  integrate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/fhe-session-7
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check Session 7 JavaScript syntax
+        run: |
+          node --check fhe-session-7.js
+          node --check fhe-session-7-runtime.js
+          node --check fhe-session-7-page.js
+          node --check fhe-session-7-links.js
+          node --check scripts/integrate-session7.js
+      - name: Integrate canonical Session 7 data
+        run: node scripts/integrate-session7.js
+      - name: Rebuild content index
+        run: node scripts/build-content-index.js
+      - name: Stamp asset versions
+        run: node scripts/stamp-versions.js
+      - name: Validate integrated content
+        run: node scripts/check-content.js
+      - name: Commit canonical content
+        run: |
+          if git diff --quiet; then
+            echo 'No integration changes.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add content course.html notes.html fhem-exam.html fhe-session-7.html sw.js
+          git commit -m 'Integrate Session 7 into the FHEM study system'
+          git push origin HEAD:feature/fhe-session-7
