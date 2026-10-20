@@ -1,7 +1,0 @@
-PASS: keyboard reveal/rating, saved review intervals and browse controls.
-PASS: review progress starts at zero and advances relative to the actual two-card due set.
-PASS: stable card/question deep links, topic/difficulty/type filters, MCQ, True/False and model answers.
-PASS: shuffled quiz scoring, mistake explanations, retry and shared progress preservation.
-PASS: FHEM active MCQ selection, hidden answers, timer persistence, submission and result reload.
-PASS: all course banks, lecture quizzes and active mock renderers fit 320px in both themes.
-PASS: cached practice stylesheet and flashcards work after an offline reload.
