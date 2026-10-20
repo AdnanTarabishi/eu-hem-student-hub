@@ -1,5 +1,6 @@
 // One-time helper used while building Session 6. It copies the reviewed original
 // practice content from the Session 6 browser module into the canonical JSON banks.
+// Kept deterministic so rerunning it never duplicates IDs.
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
