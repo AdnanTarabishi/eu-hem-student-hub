@@ -263,3 +263,42 @@ Compulsory partial pooling can improve efficiency and welfare by moving low risk
 - When low risks are a large majority, the competitive market may have no equilibrium.
 - A suitable compulsory pooling base plus supplementary insurance can improve welfare by subsidising H and relaxing L rationing.
 - Premium risk is the risk of higher future premiums after health information reveals a persistently higher expected cost.
+
+## Advanced mastery: audit an insurance-market equilibrium
+
+Before calling an allocation an equilibrium, check four separate conditions:
+
+1. **Participation:** each type prefers its selected contract to the uninsured endowment.
+2. **Incentive compatibility:** the low-risk type prefers the low-risk contract and the high-risk type prefers the high-risk contract.
+3. **Break-even:** each contract earns zero expected profit for the type that selects it.
+4. **No profitable deviation:** no entrant can attract a profitable subset of consumers with another contract.
+
+### Worked pooling example
+
+Let (p_L=0.10), (p_H=0.30), (lambda=0.75), and (I=1000).
+
+[
+ar p=lambda p_L+(1-lambda)p_H
+      =0.75(0.10)+0.25(0.30)=0.15
+]
+
+[
+pi^P=ar p I=150
+]
+
+A low-risk enrollee has expected payout (p_LI=100), so pays (50) above own expected cost. A high-risk enrollee has expected payout (p_HI=300), so pays (150) below own expected cost. Aggregate transfers balance:
+
+[
+0.75(50)=0.25(150)=37.5
+]
+
+The contract therefore breaks even for the population while redistributing from low risks to high risks.
+
+### Common exam traps
+
+- High expected cost alone is not adverse selection; the mechanism requires hidden risk information and selection into plans.
+- A pooling contract that breaks even is not automatically an equilibrium; it must survive cream-skimming.
+- Separating equilibrium sorts types but is not first best because low risks remain partially insured.
+- Partial versus full concerns the indemnity; fair versus unfair concerns the premium.
+- The lecture does not provide a universal numerical threshold for the low-risk share above which equilibrium fails.
+- The welfare result concerns a suitably designed compulsory pooling policy, not every possible mandate.

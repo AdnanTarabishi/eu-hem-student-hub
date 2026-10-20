@@ -1000,5 +1000,77 @@
     "topic": "fund-health-economics.adverse-selection",
     "front": "What are the three major RS predictions emphasised in the conclusion?",
     "back": "Competition eliminates pooling equilibria; separating equilibria ration robust types and make insurance costly for frail types; and the market may fail to reach equilibrium."
+  },
+  {
+    "id": "fund-health-economics.fc.337",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What is the marginal rate of substitution between healthy- and sick-state income in Session 7 contract space?",
+    "back": "Along an indifference curve, dyS/dyH = −[(1−p)U′(yH)]/[pU′(yS)]. It is negative because income in one state can compensate for income in the other."
+  },
+  {
+    "id": "fund-health-economics.fc.338",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "How are the L, pooling and H zero-profit lines ordered by slope?",
+    "back": "Because pL < p̄ < pH, the low-risk line is steepest, the pooling line is intermediate, and the high-risk line is flattest."
+  },
+  {
+    "id": "fund-health-economics.fc.339",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "Why does the pooling transfer balance in aggregate?",
+    "back": "Each low risk pays (pH−pL)(1−λ)I above own expected cost and each high risk receives (pH−pL)λI below own expected cost; weighting by λ and 1−λ makes aggregate contributions equal aggregate subsidies."
+  },
+  {
+    "id": "fund-health-economics.fc.340",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What two forces can raise the premium of a more generous plan?",
+    "back": "A coverage effect—larger indemnity—and a composition effect—the plan attracts a larger share of high-risk enrollees."
+  },
+  {
+    "id": "fund-health-economics.fc.341",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "Write the two incentive-compatibility constraints for a separating menu.",
+    "back": "Low risk must prefer CL to CH, and high risk must prefer CH to CL: EUL(CL) ≥ EUL(CH) and EUH(CH) ≥ EUH(CL)."
+  },
+  {
+    "id": "fund-health-economics.fc.342",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "How does participation differ from incentive compatibility?",
+    "back": "Participation asks whether a type prefers an offered contract to remaining uninsured. Incentive compatibility asks whether each type prefers the contract intended for it to the other offered contract."
+  },
+  {
+    "id": "fund-health-economics.fc.343",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What is a cream-skimming deviation?",
+    "back": "A contract designed to attract profitable low risks away from a pooling contract while remaining unattractive to high risks."
+  },
+  {
+    "id": "fund-health-economics.fc.344",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What information is disclosed ex post in a separating equilibrium?",
+    "back": "A consumer's contract choice reveals the risk type implied by self-selection, even though the insurer could not observe type ex ante."
+  },
+  {
+    "id": "fund-health-economics.fc.345",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "Why is solving adverse selection through separation not first best?",
+    "back": "Sorting is achieved, but low risks receive only partial coverage and therefore bear residual risk; high-risk insurance also remains expensive."
+  },
+  {
+    "id": "fund-health-economics.fc.346",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "How does a compulsory pooling base change the starting point for supplementary insurance?",
+    "back": "The mandatory premium lowers healthy-state income and the mandatory indemnity raises sick-state income, moving the common endowment from A to a new point G."
+  },
+  {
+    "id": "fund-health-economics.fc.347",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "Why can supplementary private insurance coexist with compulsory basic insurance in the lecture?",
+    "back": "The compulsory layer creates pooling and cross-subsidy; supplementary contracts can then add coverage from the new endowment while preserving plan choice above the base."
+  },
+  {
+    "id": "fund-health-economics.fc.348",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What is the long-run institutional conclusion of Session 7?",
+    "back": "Keeping insurance affordable after people become high risk requires durable cross-subsidies from low-risk to high-risk individuals, which are difficult to sustain without collective or government-backed arrangements."
   }
 ]
