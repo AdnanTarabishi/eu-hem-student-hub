@@ -2222,5 +2222,229 @@
     "question": "Compare the three theoretical market responses to premium risk discussed in the lecture.",
     "answer": "A lifetime contract preserves pooling through a binding long-term commitment but restricts switching and may be hard to enforce. A guaranteed renewable contract front-loads premiums so consumers remain voluntarily, but switching and competitive pressure remain limited. A Cochrane-style contract adds premium insurance: a deterioration in health status triggers a payment that finances higher future premiums and can preserve mobility more directly.",
     "explanation": "Cover commitment, renewability and premium-insurance compensation."
+  },
+  {
+    "id": "fund-health-economics.q.331",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Plan premium decomposition",
+    "source": "EU-HEM Hub original practice · Session 7 mastery",
+    "question": "A fuller plan has both a larger indemnity and a lower fraction of low-risk enrollees. Which statement is correct?",
+    "options": [
+      "Its premium can rise only because indemnity rises",
+      "Its premium can rise through both the coverage effect and a less favourable enrollee mix",
+      "Its premium must fall because high risks value insurance more",
+      "The enrollee mix is irrelevant to expected cost"
+    ],
+    "answer": "B",
+    "explanation": "Session 7 separates the direct effect of more coverage from the adverse-selection composition effect."
+  },
+  {
+    "id": "fund-health-economics.q.332",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Pooling transfer",
+    "source": "EU-HEM Hub original practice · Session 7 mastery",
+    "question": "Let pL=0.10, pH=0.30, λ=0.75 and I=€1,000. What is the pooling premium?",
+    "options": [
+      "€100",
+      "€150",
+      "€225",
+      "€300"
+    ],
+    "answer": "B",
+    "explanation": "p̄=0.75×0.10+0.25×0.30=0.15, so πP=0.15×€1,000=€150."
+  },
+  {
+    "id": "fund-health-economics.q.333",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Pooling transfer",
+    "source": "EU-HEM Hub original practice · Session 7 mastery",
+    "question": "Using pL=0.10, pH=0.30, λ=0.75 and I=€1,000, how much does each low-risk enrollee pay above own expected payout?",
+    "options": [
+      "€25",
+      "€50",
+      "€100",
+      "€150"
+    ],
+    "answer": "B",
+    "explanation": "The pooling premium is €150 and the low-risk expected payout is €100, so the individual contribution above own cost is €50."
+  },
+  {
+    "id": "fund-health-economics.q.334",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Contract space",
+    "source": "EU-HEM Hub original practice · Session 7 mastery",
+    "question": "If y=100, M=60, π=12 and I=40, what are the contract coordinates (yH,yS)?",
+    "options": [
+      "(88,68)",
+      "(88,48)",
+      "(100,80)",
+      "(92,72)"
+    ],
+    "answer": "A",
+    "explanation": "yH=100−12=88 and yS=100−12−60+40=68."
+  },
+  {
+    "id": "fund-health-economics.q.335",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Zero-profit line",
+    "source": "EU-HEM Hub original practice · Session 7 mastery",
+    "question": "Which risk type has the flatter zero-profit line in yH–yS space?",
+    "options": [
+      "The lower-risk type",
+      "The higher-risk type",
+      "Both have slope −1",
+      "The slope does not depend on p"
+    ],
+    "answer": "B",
+    "explanation": "The absolute slope is (1−p)/p, which falls as p rises."
+  },
+  {
+    "id": "fund-health-economics.q.336",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Incentive compatibility",
+    "source": "EU-HEM Hub original practice · Session 7 mastery",
+    "question": "Which inequality is required to stop the high-risk type from imitating the low-risk contract?",
+    "options": [
+      "EUH(CH) ≥ EUH(CL)",
+      "EUL(CH) ≥ EUL(CL)",
+      "πH ≤ πL",
+      "IH = 0"
+    ],
+    "answer": "A",
+    "explanation": "The high-risk type must weakly prefer the contract intended for H."
+  },
+  {
+    "id": "fund-health-economics.q.337",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Cream-skimming",
+    "source": "EU-HEM Hub original practice · Session 7 mastery",
+    "question": "A deviation Q can destroy pooling when Q is:",
+    "options": [
+      "Preferred by both types and loss-making",
+      "Preferred by L, rejected by H and profitable when selected by L",
+      "Rejected by both types",
+      "Located above the H zero-profit line"
+    ],
+    "answer": "B",
+    "explanation": "That is the competitive cream-skimming logic used to show non-existence of pooling equilibrium."
+  },
+  {
+    "id": "fund-health-economics.q.338",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Government intervention",
+    "source": "EU-HEM Hub original practice · Session 7 mastery",
+    "question": "Why can a compulsory partial pooling base improve efficiency in the lecture model?",
+    "options": [
+      "It removes all risk without any transfer",
+      "It moderately subsidises H and can relax the coverage restriction imposed on L",
+      "It makes every consumer identical",
+      "It guarantees that no insurer ever earns zero profit"
+    ],
+    "answer": "B",
+    "explanation": "The policy can lower the informational cost of separating types while introducing a controlled cross-subsidy."
+  },
+  {
+    "id": "fund-health-economics.q.339",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "true-false",
+    "difficulty": "medium",
+    "category": "Single crossing",
+    "source": "EU-HEM Hub original practice · Session 7 mastery",
+    "question": "At a common contract point, the high-risk indifference curve is flatter because the high-risk type puts more probability weight on sick-state income.",
+    "answer": true,
+    "explanation": "This type-dependent slope supports self-selection between contracts."
+  },
+  {
+    "id": "fund-health-economics.q.340",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "true-false",
+    "difficulty": "medium",
+    "category": "Pooling",
+    "source": "EU-HEM Hub original practice · Session 7 mastery",
+    "question": "A pooling contract that breaks even for the whole population is actuarially fair for each risk type separately.",
+    "answer": false,
+    "explanation": "It is less favourable than type-specific fair pricing for L and more favourable for H."
+  },
+  {
+    "id": "fund-health-economics.q.341",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "true-false",
+    "difficulty": "hard",
+    "category": "Equilibrium",
+    "source": "EU-HEM Hub original practice · Session 7 mastery",
+    "question": "Session 7 provides a universal numerical threshold for λ above which equilibrium never exists.",
+    "answer": false,
+    "explanation": "The lecture states that a very large low-risk share can eliminate equilibrium, but it does not provide a universal threshold independent of preferences and other parameters."
+  },
+  {
+    "id": "fund-health-economics.q.342",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "true-false",
+    "difficulty": "medium",
+    "category": "Premium risk",
+    "source": "EU-HEM Hub original practice · Session 7 mastery",
+    "question": "Premium insurance is designed to help finance higher future premiums after a health-status shock reveals persistently higher expected costs.",
+    "answer": true,
+    "explanation": "That is the Cochrane-style solution described in the final part of the lecture."
+  },
+  {
+    "id": "fund-health-economics.q.343",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "category": "Worked derivation",
+    "source": "EU-HEM Hub original practice · Session 7 mastery",
+    "question": "Derive the pooling premium and the individual transfer for each type when pL=0.10, pH=0.30, λ=0.75 and I=€1,000.",
+    "answer": "The mixed probability is p̄=λpL+(1−λ)pH=0.75×0.10+0.25×0.30=0.15. Therefore πP=p̄I=€150. A low risk has expected payout pLI=€100 and pays €50 above own expected cost. A high risk has expected payout pHI=€300 and pays €150 below own expected cost. Aggregate contributions and subsidies balance: 0.75×€50=0.25×€150=€37.50 per member of the total population.",
+    "explanation": "Show both the per-person transfer and the population-weighted balance."
+  },
+  {
+    "id": "fund-health-economics.q.344",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "category": "Pooling non-existence",
+    "source": "EU-HEM Hub original practice · Session 7 mastery",
+    "question": "Explain the complete competitive logic by which a candidate pooling contract unravels.",
+    "answer": "The pooling contract charges an average premium and is therefore less favourable than type-specific fair pricing for low risks. Because low- and high-risk indifference curves have different slopes, an entrant can design a less generous contract that low risks prefer but high risks reject. If that contract lies below the low-risk zero-profit line, it earns positive expected profit when selected by low risks. Low risks leave the pool, the remaining pool becomes more expensive, and the original pooling contract cannot be an equilibrium.",
+    "explanation": "A strong answer links average pricing, single crossing, profitable entry and the change in the remaining risk mix."
+  },
+  {
+    "id": "fund-health-economics.q.345",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "category": "Separating equilibrium",
+    "source": "EU-HEM Hub original practice · Session 7 mastery",
+    "question": "State the participation and incentive-compatibility checks for a two-contract separating menu.",
+    "answer": "Participation requires each type to prefer its chosen contract to the uninsured endowment. Incentive compatibility requires EUL(CL)≥EUL(CH) and EUH(CH)≥EUH(CL). Competitive feasibility additionally requires that each contract break even for the type selecting it. In the standard separating outcome H receives fair full insurance, while L receives fair partial insurance restricted enough that H does not imitate it.",
+    "explanation": "Keep participation, self-selection and insurer break-even as separate conditions."
+  },
+  {
+    "id": "fund-health-economics.q.346",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "category": "Policy evaluation",
+    "source": "EU-HEM Hub original practice · Session 7 mastery",
+    "question": "Explain why compulsory basic pooling plus supplementary insurance can be welfare enhancing in the lecture model.",
+    "answer": "The compulsory base pools both types at the population break-even premium and creates a transfer from L to H. This makes coverage more affordable for H. It also moves the common endowment and can relax the incentive-compatibility restriction that previously forced L to accept very partial coverage. Supplementary contracts can then add coverage above the mandatory base. A suitable policy can therefore make H better off through subsidy and L better off through less rationing, although the result is conditional on the chosen policy and model assumptions.",
+    "explanation": "Do not claim that every mandate is beneficial; the welfare result concerns an appropriately chosen second-best policy."
   }
 ]

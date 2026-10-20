@@ -939,5 +939,45 @@
     "topics": [
       "fund-health-economics.adverse-selection"
     ]
+  },
+  {
+    "id": "concept.mixed-risk-break-even",
+    "term": "Mixed-risk break-even probability",
+    "explanation": "The population-weighted sickness probability p̄=λpL+(1−λ)pH used to price a contract chosen by both types.",
+    "topics": [
+      "fund-health-economics.adverse-selection"
+    ]
+  },
+  {
+    "id": "concept.cream-skimming",
+    "term": "Cream-skimming deviation",
+    "explanation": "A profitable entrant contract that attracts low risks away from a mixed pool without attracting high risks.",
+    "topics": [
+      "fund-health-economics.adverse-selection"
+    ]
+  },
+  {
+    "id": "concept.quantity-rationing-insurance",
+    "term": "Insurance quantity rationing",
+    "explanation": "A low-risk consumer is prevented from buying the preferred full amount of insurance because greater coverage would attract high risks.",
+    "topics": [
+      "fund-health-economics.adverse-selection"
+    ]
+  },
+  {
+    "id": "concept.equilibrium-nonexistence",
+    "term": "Equilibrium non-existence",
+    "explanation": "A situation in which neither a pooling nor a separating set of contracts survives all profitable competitive deviations.",
+    "topics": [
+      "fund-health-economics.adverse-selection"
+    ]
+  },
+  {
+    "id": "concept.compulsory-pooling-base",
+    "term": "Compulsory pooling base",
+    "explanation": "A mandatory basic contract priced at the population average risk, creating a common insured endowment before supplementary choice.",
+    "topics": [
+      "fund-health-economics.adverse-selection"
+    ]
   }
 ]
