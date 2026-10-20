@@ -803,5 +803,141 @@
     "topics": [
       "fund-health-economics.insurance-demand"
     ]
+  },
+  {
+    "id": "concept.social-insurance",
+    "term": "Social insurance",
+    "explanation": "Insurance-like transfers linked to events such as illness, disability, unemployment or ageing, often organised collectively.",
+    "topics": [
+      "fund-health-economics.adverse-selection"
+    ]
+  },
+  {
+    "id": "concept.systematic-risk-variation",
+    "term": "Systematic expenditure variation",
+    "explanation": "Predictable differences in expected healthcare spending across people or groups that affect premiums and redistribution.",
+    "topics": [
+      "fund-health-economics.adverse-selection"
+    ]
+  },
+  {
+    "id": "concept.random-expenditure-variation",
+    "term": "Random expenditure variation",
+    "explanation": "The unpredictable residual component of healthcare spending that creates demand for risk pooling.",
+    "topics": [
+      "fund-health-economics.adverse-selection"
+    ]
+  },
+  {
+    "id": "concept.low-high-risk-types",
+    "term": "Low- and high-risk types",
+    "explanation": "Robust L and frail H consumers with sickness probabilities pL<pH.",
+    "topics": [
+      "fund-health-economics.adverse-selection"
+    ]
+  },
+  {
+    "id": "concept.pooling-premium",
+    "term": "Pooling premium",
+    "explanation": "The break-even common premium based on the mixed pool: [λpL+(1−λ)pH]I.",
+    "topics": [
+      "fund-health-economics.adverse-selection"
+    ]
+  },
+  {
+    "id": "concept.contract-space",
+    "term": "yH–yS contract space",
+    "explanation": "A diagram representing income in healthy and sick states after an insurance contract.",
+    "topics": [
+      "fund-health-economics.adverse-selection"
+    ]
+  },
+  {
+    "id": "concept.endowment-point",
+    "term": "Endowment point",
+    "explanation": "The no-insurance combination of healthy- and sick-state income from which contracts move the consumer.",
+    "topics": [
+      "fund-health-economics.adverse-selection"
+    ]
+  },
+  {
+    "id": "concept.zero-profit-line",
+    "term": "Zero-profit line",
+    "explanation": "The set of contracts that break even for a given sickness probability, with slope −(1−p)/p in yH–yS space.",
+    "topics": [
+      "fund-health-economics.adverse-selection"
+    ]
+  },
+  {
+    "id": "concept.single-crossing",
+    "term": "Single-crossing property",
+    "explanation": "High-risk preferences are flatter in contract space because sick-state income is weighted more heavily, enabling self-selection.",
+    "topics": [
+      "fund-health-economics.adverse-selection"
+    ]
+  },
+  {
+    "id": "concept.pooling-equilibrium",
+    "term": "Pooling equilibrium",
+    "explanation": "An equilibrium in which all risk types choose the same insurance contract.",
+    "topics": [
+      "fund-health-economics.adverse-selection"
+    ]
+  },
+  {
+    "id": "concept.separating-equilibrium",
+    "term": "Separating equilibrium",
+    "explanation": "An equilibrium in which different hidden risk types self-select into different contracts.",
+    "topics": [
+      "fund-health-economics.adverse-selection"
+    ]
+  },
+  {
+    "id": "concept.incentive-compatibility",
+    "term": "Incentive compatibility",
+    "explanation": "A contract menu condition requiring each type to prefer the contract intended for it.",
+    "topics": [
+      "fund-health-economics.adverse-selection"
+    ]
+  },
+  {
+    "id": "concept.low-risk-rationing",
+    "term": "Low-risk rationing",
+    "explanation": "The restriction of low-risk coverage below full insurance to deter high-risk imitation.",
+    "topics": [
+      "fund-health-economics.adverse-selection"
+    ]
+  },
+  {
+    "id": "concept.compulsory-pooling",
+    "term": "Compulsory pooling",
+    "explanation": "A mandated common insurance contract that can sustain redistribution and improve welfare when private pooling is unstable.",
+    "topics": [
+      "fund-health-economics.adverse-selection"
+    ]
+  },
+  {
+    "id": "concept.premium-risk",
+    "term": "Premium risk",
+    "explanation": "The risk of facing persistently higher future premiums after becoming predictably high cost.",
+    "topics": [
+      "fund-health-economics.adverse-selection"
+    ]
+  },
+  {
+    "id": "concept.guaranteed-renewability",
+    "term": "Guaranteed renewability",
+    "explanation": "A long-term design with front-loaded premiums intended to keep consumers in the contract after risk is revealed.",
+    "topics": [
+      "fund-health-economics.adverse-selection"
+    ]
+  },
+  {
+    "id": "concept.premium-insurance",
+    "term": "Premium insurance",
+    "explanation": "Coverage that pays when health status worsens so the insured can afford higher future health-insurance premiums.",
+    "topics": [
+      "fund-health-economics.adverse-selection"
+    ]
   }
 ]

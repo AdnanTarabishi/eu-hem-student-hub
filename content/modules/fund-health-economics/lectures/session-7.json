@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "topic": "fund-health-economics.adverse-selection",
+  "classNumber": 7,
+  "updated": "2026-10-20",
+  "heroTitle": "Can competitive insurance\nprotect the frail?",
+  "intro": "Extend the fair-insurance benchmark to hidden risk types: plan selection, Rothschild–Stiglitz contract space, pooling and separating equilibria, compulsory insurance and premium risk.",
+  "guide": "lectures/session-7.html",
+  "activities": [],
+  "attribution": "Independent student-written study guide based on Daniele Fabbri’s Fundamentals in Health Economics, Session 7: Is healthcare insurance affordable to the frail? Official slides, charts and textbook materials are not reproduced. Always check Virtuale for the official materials."
+}

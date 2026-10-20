@@ -1,0 +1,255 @@
+<!-- Original student-written explanations. Official slides, charts and textbook materials are not reproduced. -->
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">01 / The policy question</p>
+    <h2>Why have social insurance instead of relying only on voluntary private contracts?</h2>
+  </div>
+  <p>Session 7 starts from the risk-reduction value of insurance, then asks why hidden risk types can prevent a competitive market from delivering the contracts people would want under complete information.</p>
+</div>
+
+<div class="grid3">
+  <article class="card"><span class="badge">R</span><h3>Risk reduction</h3><p>Insurance smooths consumption across illness, disability, unemployment and other adverse states.</p></article>
+  <article class="card"><span class="badge">I</span><h3>Incentive distortion</h3><p>Policies can change behaviour by workers, firms and insurers, creating deadweight loss.</p></article>
+  <article class="card"><span class="badge">2</span><h3>Second best</h3><p>Correcting one market failure can create new distortions, so the target becomes the best feasible policy rather than a frictionless first best.</p></article>
+</div>
+
+<div class="note"><strong>Lecture framing:</strong> social insurance transfers resources across states or time linked to events such as illness, disability, unemployment and ageing. Means-tested welfare is presented as redistribution across individuals.</div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">02 / Plan competition</p><h2>Competition can improve efficiency, but the identity of the buyer changes expected cost.</h2></div>
+  <p>Consumers searching for lower premiums can pressure plans to control costs and innovate. Health insurance is unusual because two people buying the same benefits may generate very different expected claims.</p>
+</div>
+
+<div class="selection-policy-flow">
+  <div><span>Competitive pressure</span><strong>Lower premiums and evolving plan design</strong></div><b aria-hidden="true">→</b>
+  <div><span>Hidden heterogeneity</span><strong>Different expected costs across buyers</strong></div><b aria-hidden="true">→</b>
+  <div><span>Selection response</span><strong>Plan composition becomes part of the price</strong></div>
+</div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">03 / Two kinds of variation</p><h2>Random variation creates insurance demand; systematic variation shapes who can afford it.</h2></div>
+</div>
+
+<div class="grid2">
+  <article class="card">
+    <span class="pill">RANDOM / RESIDUAL</span>
+    <h3 style="margin-top:16px">Why insurance exists</h3>
+    <p>Individuals do not know whether a costly event will occur. Pooling converts uncertain individual losses into more predictable group expenditure.</p>
+  </article>
+  <article class="card">
+    <span class="pill">SYSTEMATIC / PREDICTABLE</span>
+    <h3 style="margin-top:16px">Why insurance markets become difficult</h3>
+    <p>Age, health status and other predictors create persistent expected-cost differences. These differences affect premiums, selection and equity.</p>
+  </article>
+</div>
+
+<div class="note"><strong>Thought experiment:</strong> if variation were fully random, uniform premiums could work well. If each person's spending were perfectly predictable, insurance would no longer create utility gains from risk reduction; the issue would become prepayment and redistribution.</div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">04 / Asymmetric information</p><h2>Adverse selection begins when the consumer knows more about expected losses.</h2></div>
+</div>
+
+<article class="card">
+  <div class="selection-equation-chain">
+    <div><span>Low risk</span><strong>p<sub>L</sub></strong></div>
+    <div><span>High risk</span><strong>p<sub>H</sub> &gt; p<sub>L</sub></strong></div>
+    <div><span>Low-risk share</span><strong>λ</strong></div>
+    <div><span>Mixed-pool probability</span><strong>p̄ = λp<sub>L</sub> + (1−λ)p<sub>H</sub></strong></div>
+  </div>
+  <p>If risk were observable and type-specific pricing were used, fair premiums would be π<sub>L</sub>=p<sub>L</sub>I and π<sub>H</sub>=p<sub>H</sub>I. When plans charge an average premium, the low risk pays more than own expected cost and the high risk pays less.</p>
+</article>
+
+<div class="formula">π<sup>P</sup> = [λp<sub>L</sub> + (1−λ)p<sub>H</sub>]I</div>
+
+<p>More generous plans can therefore become expensive for two reasons: they pay a larger indemnity and they attract a sicker mix of enrollees. The second mechanism is adverse selection.</p>
+
+<div class="section-intro">
+  <div><p class="eyebrow">05 / Reframing the basic insurance model</p><h2>Represent a contract as income in the healthy and sick states.</h2></div>
+</div>
+
+<div class="grid2">
+  <article class="card"><span class="pill">ENDOWMENT</span><div class="formula">E=(y, y−M)</div><p>Before insurance, healthy-state income is y and sick-state income is y−M.</p></article>
+  <article class="card"><span class="pill">CONTRACT (π,I)</span><div class="formula">C=(y−π, y−π−M+I)</div><p>The premium moves the point left; the net payout I−π moves it upward.</p></article>
+</div>
+
+<article class="card selection-contract-diagram">
+  <svg viewBox="0 0 620 330" role="img" aria-labelledby="contract-space-title contract-space-desc">
+    <title id="contract-space-title">Original healthy-state and sick-state income diagram</title>
+    <desc id="contract-space-desc">The endowment point moves left and upward to a partial insurance contract. The diagonal is the full-insurance line.</desc>
+    <path d="M70 280V35M70 280H570" stroke="currentColor" stroke-width="2" opacity=".55"/>
+    <path d="M70 280L470 45" stroke="#6f5a9d" stroke-width="2" stroke-dasharray="7 6"/>
+    <circle cx="500" cy="240" r="8" fill="#6f7785"/><text x="514" y="246" fill="currentColor" font-size="14">E</text>
+    <circle cx="355" cy="145" r="8" fill="#d06d4f"/><text x="369" y="140" fill="currentColor" font-size="14">C</text>
+    <path d="M500 240L355 145" stroke="#6f5a9d" stroke-width="4" marker-end="url(#s7arrow)"/>
+    <defs><marker id="s7arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#6f5a9d"/></marker></defs>
+    <path d="M355 145V240M355 240H500" stroke="currentColor" opacity=".35" stroke-dasharray="5 5"/>
+    <text x="425" y="262" fill="currentColor" font-size="13">premium π</text>
+    <text x="270" y="192" fill="currentColor" font-size="13">net payout I−π</text>
+    <text x="465" y="58" fill="#6f5a9d" font-size="13">yS = yH</text>
+    <text x="545" y="305" fill="currentColor" font-size="13">yH</text><text x="30" y="43" fill="currentColor" font-size="13">yS</text>
+  </svg>
+</article>
+
+<div class="section-intro">
+  <div><p class="eyebrow">06 / Preferences in contract space</p><h2>Indifference curves are downward sloping, convex and type dependent.</h2></div>
+</div>
+
+<div class="grid3">
+  <article class="card"><h3>Downward sloping</h3><p>More income in one state can compensate for less income in the other.</p></article>
+  <article class="card"><h3>Convex</h3><p>Risk aversion makes balanced income across states valuable.</p></article>
+  <article class="card"><h3>Single crossing</h3><p>The high-risk/frail type places more relative weight on sick-state income, producing a flatter indifference curve.</p></article>
+</div>
+
+<div class="note"><strong>Economic meaning:</strong> for the same net indemnity, the frail type is willing to give up more healthy-state income because the sick state occurs more often.</div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">07 / Zero-profit lines</p><h2>Each risk probability generates a different break-even frontier.</h2></div>
+</div>
+
+<article class="card">
+  <div class="formula">p(I−π) = (1−p)π</div>
+  <p>Using the contract coordinates, the zero-profit line through the endowment is:</p>
+  <div class="formula">y<sub>S</sub> = y−M + [(1−p)/p](y−y<sub>H</sub>)</div>
+  <p>Its slope is <strong>−(1−p)/p</strong>. A higher p produces a flatter line. The pooling zero-profit line lies between the low-risk and high-risk lines.</p>
+</article>
+
+<div class="grid3">
+  <article class="card"><span class="pill">BELOW THE LINE</span><h3>Expected profit</h3><p>The contract charges enough relative to coverage for that risk type.</p></article>
+  <article class="card"><span class="pill">ON THE LINE</span><h3>Break even</h3><p>The premium equals expected payout.</p></article>
+  <article class="card"><span class="pill">ABOVE THE LINE</span><h3>Expected loss</h3><p>A competitive insurer will not voluntarily offer the contract.</p></article>
+</div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">08 / The feasible contract wedge</p><h2>Consumers and insurers must both be willing to participate.</h2></div>
+</div>
+
+<div class="grid3">
+  <article class="card"><h3>Exclude overinsurance</h3><p>Points above the 45-degree line give more income when sick than when healthy.</p></article>
+  <article class="card"><h3>Respect participation</h3><p>A consumer rejects contracts below the indifference curve through the no-insurance endowment.</p></article>
+  <article class="card"><h3>Respect profitability</h3><p>Firms reject contracts that lie in the expected-loss region.</p></article>
+</div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">09 / Rothschild–Stiglitz environment</p><h2>Two hidden risk types choose among contracts offered by competitive insurers.</h2></div>
+</div>
+
+<div class="selection-equilibrium-grid">
+  <article class="card"><span class="pill">PEOPLE</span><h3>Know their own type</h3><p>Low-risk L and high-risk H share the same income and loss but differ in p.</p></article>
+  <article class="card"><span class="pill">INSURERS</span><h3>Know only the population mix</h3><p>They observe λ but cannot identify each person's type.</p></article>
+  <article class="card"><span class="pill">MARKET</span><h3>Competitive and static</h3><p>No moral hazard, zero-profit firms and one contract purchased per individual.</p></article>
+</div>
+
+<div class="note"><strong>Equilibrium requires two things:</strong> consumers cannot find a preferred offered contract, and firms earn zero expected profit.</div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">10 / Why first best fails</p><h2>Type-specific full insurance cannot survive when the insurer cannot observe type.</h2></div>
+</div>
+
+<div class="selection-policy-flow">
+  <div><span>Symmetric information</span><strong>L buys fair full insurance at pL</strong></div><b aria-hidden="true">+</b>
+  <div><span>Symmetric information</span><strong>H buys fair full insurance at pH</strong></div><b aria-hidden="true">→</b>
+  <div><span>Hidden information</span><strong>H imitates the cheaper L contract</strong></div>
+</div>
+
+<p>Once high risks enter the low-risk contract, premium revenue no longer covers expected claims. The first-best menu is therefore not incentive compatible.</p>
+
+<div class="section-intro">
+  <div><p class="eyebrow">11 / Candidate pooling</p><h2>One contract can break even for the population while redistributing between types.</h2></div>
+</div>
+
+<div class="formula">π<sub>Z</sub> = [λp<sub>L</sub>+(1−λ)p<sub>H</sub>]I<sub>Z</sub></div>
+
+<div class="grid2">
+  <article class="card"><h3>Low-risk account</h3><div class="formula small-formula">π<sub>Z</sub>−p<sub>L</sub>I<sub>Z</sub> = (p<sub>H</sub>−p<sub>L</sub>)(1−λ)I<sub>Z</sub> &gt; 0</div><p>L contributes more than own expected payout.</p></article>
+  <article class="card"><h3>High-risk account</h3><div class="formula small-formula">π<sub>Z</sub>−p<sub>H</sub>I<sub>Z</sub> = −(p<sub>H</sub>−p<sub>L</sub>)λI<sub>Z</sub> &lt; 0</div><p>H contributes less than own expected payout.</p></article>
+</div>
+
+<div class="selection-transfer"><span>Low risks</span><b>cross-subsidy →</b><span>High risks</span></div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">12 / Why pooling is not a market equilibrium</p><h2>Competition can cream-skim the profitable low-risk group.</h2></div>
+</div>
+
+<div class="selection-equation-chain">
+  <div><span>Start</span><strong>Both types choose Z</strong></div>
+  <div><span>Low-risk problem</span><strong>Z is less than fair for L</strong></div>
+  <div><span>Entrant</span><strong>Offer Q preferred by L, rejected by H</strong></div>
+  <div><span>Result</span><strong>Q earns profit and Z unravels</strong></div>
+</div>
+
+<p>The single-crossing property makes it possible to design a contract that attracts the robust type without attracting the frail type. The pooling contract therefore cannot survive free entry in the standard argument.</p>
+
+<div class="section-intro">
+  <div><p class="eyebrow">13 / Separating equilibrium</p><h2>The market may sort types, but low risks pay for separation with incomplete coverage.</h2></div>
+</div>
+
+<div class="grid2">
+  <article class="card"><span class="pill">HIGH RISK H</span><h3>Fair full insurance</h3><p>The high-risk contract C<sub>H</sub> lies on the H zero-profit line and reaches the certainty line.</p></article>
+  <article class="card"><span class="pill">LOW RISK L</span><h3>Fair partial insurance</h3><p>The low-risk contract C′<sub>L</sub> lies on the L zero-profit line but is restricted so H does not prefer it.</p></article>
+</div>
+
+<div class="note"><strong>Quantity rationing:</strong> L cannot obtain its preferred full insurance even at its own fair premium. The missing coverage is the informational cost of making the menu incentive compatible.</div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">14 / Equilibrium may not exist</p><h2>The population composition λ changes whether separation is stable.</h2></div>
+</div>
+
+<p>When low risks are not too numerous, the separating pair can survive. When λ is large, an alternative pooling contract can attract enough low risks to be profitable and preferred, destabilising the separating menu. The lecture therefore allows a case in which the competitive market reaches no equilibrium.</p>
+
+<div class="selection-equilibrium-grid">
+  <article class="card"><h3>λ relatively small</h3><p>A separating equilibrium may exist.</p></article>
+  <article class="card"><h3>λ rises</h3><p>The welfare loss from low-risk rationing affects more people.</p></article>
+  <article class="card"><h3>λ sufficiently large</h3><p>A profitable deviation may destroy separation; no market equilibrium may remain.</p></article>
+</div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">15 / Government intervention</p><h2>A compulsory pooling base can be efficiency improving, not only redistributive.</h2></div>
+</div>
+
+<article class="card">
+  <p>The government can impose a basic pooling contract G that breaks even for the population:</p>
+  <div class="formula">π<sub>G</sub> = [λp<sub>L</sub>+(1−λ)p<sub>H</sub>]I<sub>G</sub></div>
+  <p>The mandate moves the common endowment, transfers from L to H and can reduce the coverage distortion required for later separation.</p>
+</article>
+
+<div class="selection-policy-flow">
+  <div><span>Layer 1</span><strong>Compulsory basic pooling</strong></div><b aria-hidden="true">+</b>
+  <div><span>Layer 2</span><strong>Supplementary private contracts</strong></div><b aria-hidden="true">→</b>
+  <div><span>Possible result</span><strong>H receives subsidy; L approaches fuller coverage</strong></div>
+</div>
+
+<div class="grid2">
+  <article class="card"><h3>Equivalent partial-coverage policy</h3><p>Tax partial insurance and subsidise fuller insurance to alter the separation cost.</p></article>
+  <article class="card"><h3>Route to full coverage</h3><p>Mandated pooling contracts or compulsory public insurance can prevent selection from excluding the frail.</p></article>
+</div>
+
+<div class="note"><strong>Important qualification:</strong> the model does not claim that every mandate improves welfare. The compulsory contract must be chosen so the new allocation is feasible and preferred.</div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">16 / Premium risk</p><h2>Insurance today does not automatically insure the risk of becoming expensive tomorrow.</h2></div>
+</div>
+
+<p>As information accumulates over the life course, expected remaining healthcare expenditure diverges across people. A competitive spot market tends to align each contract's premium with expected cost, exposing newly frail people to higher future premiums.</p>
+
+<div class="grid3">
+  <article class="card"><span class="pill">LIFETIME CONTRACT</span><h3>Bind the pool for life</h3><p>Solves repricing through commitment, but may be difficult to enforce and blocks switching.</p></article>
+  <article class="card"><span class="pill">GUARANTEED RENEWABLE</span><h3>Front-load premiums</h3><p>Keep both robust and frail consumers voluntarily, but insurer mobility and competitive pressure remain limited.</p></article>
+  <article class="card"><span class="pill">PREMIUM INSURANCE</span><h3>Compensate health-status shocks</h3><p>A deterioration triggers a payment that helps finance higher future premiums, as in the Cochrane-style idea presented in the lecture.</p></article>
+</div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">17 / Exam-ready synthesis</p><h2>Ten statements to retrieve quickly.</h2></div>
+</div>
+
+<div class="selection-quick-review">
+  <div>Random expenditure variation creates the basic value of insurance.</div>
+  <div>Systematic variation creates pricing, selection and equity problems.</div>
+  <div>Adverse selection requires hidden differences in expected risk.</div>
+  <div>The pooling premium uses p̄=λpL+(1−λ)pH.</div>
+  <div>High-risk indifference curves are flatter in yH–yS space.</div>
+  <div>Pooling breaks even overall but transfers from L to H.</div>
+  <div>Competition can destroy pooling through cream-skimming.</div>
+  <div>Separation gives H full insurance and rations L to partial insurance.</div>
+  <div>For some λ, no competitive equilibrium exists.</div>
+  <div>Compulsory pooling can improve welfare and protect against premium risk through long-run cross-subsidy.</div>
+</div>

@@ -57,7 +57,9 @@
   },
   {
     "id": "fund-health-economics.adverse-selection",
-    "title": "Adverse selection, competition and renewability"
+    "title": "Session 7: Insurance II — Adverse Selection, Social Insurance and Premium Risk",
+    "notes": "notes/adverse-selection.md",
+    "lecture": "lectures/session-7.json"
   },
   {
     "id": "fund-health-economics.government",

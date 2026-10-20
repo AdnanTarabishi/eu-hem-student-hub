@@ -128,17 +128,21 @@
     {
       "number": 7,
       "stage": "providers-insurance",
-      "topic": null,
-      "title": "Insurance 2: Adverse Selection & the Role of Government",
+      "topic": "fund-health-economics.adverse-selection",
+      "title": "Insurance II: Adverse Selection, Social Insurance & Premium Risk",
       "shortTitle": "Insurance II",
-      "summary": "Adverse selection, plan competition, pooling and separating equilibria, renewability and public intervention.",
+      "summary": "Hidden risk types, contract space, pooling and separating equilibria, compulsory insurance and premium risk.",
       "keywords": [
         "adverse selection",
         "Rothschild Stiglitz",
         "pooling",
-        "government"
+        "separating equilibrium",
+        "incentive compatibility",
+        "social insurance",
+        "premium risk",
+        "government intervention"
       ],
-      "status": "upcoming"
+      "status": "available"
     },
     {
       "number": 8,
