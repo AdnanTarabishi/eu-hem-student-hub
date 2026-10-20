@@ -1,0 +1,59 @@
+name: Session 7 mastery integrate
+on:
+  push:
+    branches: [feature/fhe-session-7-mastery]
+    paths:
+      - 'scripts/integrate-session7-mastery.js'
+      - '.github/workflows/session7-mastery-integrate.yml'
+permissions:
+  contents: write
+jobs:
+  integrate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/fhe-session-7-mastery
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check mastery JavaScript
+        run: |
+          node --check fhe-session-7-advanced.js
+          node --check scripts/integrate-session7-mastery.js
+      - name: Integrate mastery content
+        run: node scripts/integrate-session7-mastery.js
+      - name: Rebuild content index
+        run: node scripts/build-content-index.js
+      - name: Stamp asset versions
+        run: node scripts/stamp-versions.js
+      - name: Validate content and repaired script tags
+        run: |
+          node scripts/check-content.js
+          node scripts/stamp-versions.js --check
+          node - <<'NODE'
+          const fs = require('fs');
+          for (const file of ['course.html','notes.html','fhem-exam.html']) {
+            const text = fs.readFileSync(file,'utf8');
+            if (text.includes('<script defer src="fhe-session-6.js\n')) throw new Error(`${file}: malformed Session script tag remains`);
+            if (!text.includes('fhe-session-7.js')) throw new Error(`${file}: Session 7 data script missing`);
+          }
+          const page = fs.readFileSync('fhe-session-7.html','utf8');
+          if (!page.includes('fhe-session-7-advanced.css') || !page.includes('fhe-session-7-advanced.js')) {
+            throw new Error('Session 7 mastery assets are not linked.');
+          }
+          console.log('Session 7 mastery integration invariants pass.');
+          NODE
+      - name: Commit canonical mastery content
+        run: |
+          if git diff --quiet; then
+            echo 'No integration changes.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add content course.html notes.html fhem-exam.html fhe-session-7.html sw.js
+          git commit -m 'Integrate Session 7 mastery content'
+          git push origin HEAD:feature/fhe-session-7-mastery
