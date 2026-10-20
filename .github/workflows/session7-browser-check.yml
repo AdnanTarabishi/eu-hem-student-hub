@@ -61,7 +61,7 @@ jobs:
                 assert.match(await page.locator('.hero-meta').innerText(),/6 interactive tools/);
                 assert.equal(await page.locator('[data-session7-tab]').count(),4);
                 await page.locator('[data-session7-tab="explore"]').click();
-                assert.equal(await page.locator('[data-session7-view="explore"] .activity-card').count(),6);
+                assert.equal(await page.locator('[data-session7-view="explore"] .extended-activity').count(),6);
                 await page.locator('[data-session7-tab="practice"]').click();
                 await page.locator('[data-session7-view="practice"] .quiz-card h2').waitFor();
                 await page.locator('[data-session7-tab="flashcards"]').click();
