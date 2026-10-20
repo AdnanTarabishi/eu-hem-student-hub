@@ -1,0 +1,15 @@
+PASS Schedule: Rome-time filtering, ongoing/past sessions, module filter and calendar export.
+PASS Exam: official-date fixture, existing assessment text, registration separation and tab-memory checklist.
+PASS Topics: search, modules, syllabus-only state, original reader, saved IDs and progress filters.
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+5 !== 4
+
+    at /home/runner/work/eu-hem-student-hub/eu-hem-student-hub/tests/notes/course-interiors.test.js:86:87 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 5,
+  expected: 4,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
