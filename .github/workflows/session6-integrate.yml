@@ -1,0 +1,41 @@
+name: Session 6 integrate
+on:
+  push:
+    branches: [feature/fhe-session-6]
+    paths:
+      - 'scripts/integrate-session6.js'
+      - '.github/workflows/session6-integrate.yml'
+permissions:
+  contents: write
+jobs:
+  integrate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/fhe-session-6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check and integrate Session 6
+        run: |
+          node --check fhe-session-6.js
+          node --check fhe-session-6-runtime.js
+          node --check fhe-session-6-links.js
+          node --check fhe-session-6-page.js
+          node scripts/integrate-session6.js
+          node scripts/build-content-index.js
+          node scripts/stamp-versions.js
+          node scripts/check-content.js
+      - name: Commit canonical content
+        run: |
+          if git diff --quiet; then
+            echo 'No integration changes.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add content tests/notes/practice.test.js '*.html' sw.js
+          git commit -m 'Integrate Session 6 into canonical study banks'
+          git push origin HEAD:feature/fhe-session-6
