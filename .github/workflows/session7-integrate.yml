@@ -18,6 +18,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Apply deterministic Session 7 syntax correction
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          const file = 'fhe-session-7.js';
+          let text = fs.readFileSync(file, 'utf8');
+          const before = '["Risk status","revealed?"Higher risk revealed":"Risk not yet fully revealed"]';
+          const after = '["Risk status", revealed ? "Higher risk revealed" : "Risk not yet fully revealed"]';
+          if (text.includes(before)) text = text.replace(before, after);
+          if (!text.includes(after)) throw new Error('Session 7 premium-risk correction was not applied.');
+          fs.writeFileSync(file, text);
+          NODE
       - name: Check Session 7 JavaScript syntax
         run: |
           node --check fhe-session-7.js
@@ -41,6 +53,6 @@ jobs:
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add content course.html notes.html fhem-exam.html fhe-session-7.html sw.js
+          git add content course.html notes.html fhem-exam.html fhe-session-7.html fhe-session-7.js sw.js
           git commit -m 'Integrate Session 7 into the FHEM study system'
           git push origin HEAD:feature/fhe-session-7
