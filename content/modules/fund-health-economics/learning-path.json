@@ -109,17 +109,21 @@
     {
       "number": 6,
       "stage": "providers-insurance",
-      "topic": null,
-      "title": "Insurance 1: Demand for Healthcare Insurance",
+      "topic": "fund-health-economics.insurance-demand",
+      "title": "Insurance I: Demand for Healthcare Insurance",
       "shortTitle": "Insurance I",
-      "summary": "Risk, demand and supply of insurance, full versus partial coverage, and fair versus unfair contracts.",
+      "summary": "Risk aversion, expected utility, risk pooling, fair premiums, optimal indemnity and insurer profits.",
       "keywords": [
-        "risk",
-        "insurance demand",
+        "risk aversion",
+        "expected utility",
+        "certainty equivalent",
+        "risk premium",
+        "indemnity",
+        "fair insurance",
         "full insurance",
-        "partial insurance"
+        "risk pooling"
       ],
-      "status": "upcoming"
+      "status": "available"
     },
     {
       "number": 7,

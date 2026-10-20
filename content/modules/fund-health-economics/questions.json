@@ -1432,5 +1432,390 @@
     "question": "Why does physician-induced demand complicate welfare analysis using ordinary patient demand curves?",
     "answer": "If physicians can shift patient demand, the observed demand curve may not represent independent patient willingness to pay. The quantity demanded can partly reflect provider influence, so using that curve directly as a welfare measure becomes questionable.",
     "explanation": "This follows the lecture's public-policy discussion about whether demand curves remain meaningful under strong PID."
+  },
+  {
+    "id": "fund-health-economics.q.201",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Insurance principles",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "Which feature of medical expenditure gives health insurance its basic value in Session 6?",
+    "options": [
+      "Medical spending is perfectly predictable",
+      "Medical spending can be uncertain and financially catastrophic",
+      "Every person incurs the same treatment cost each year",
+      "Insurance removes the probability of illness"
+    ],
+    "answer": "B",
+    "explanation": "The lecture grounds insurance demand in uncertainty and the potentially large financial effect of medical spending."
+  },
+  {
+    "id": "fund-health-economics.q.202",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Risk aversion",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "Which utility-function properties represent risk aversion in the lecture?",
+    "options": [
+      "U′(y) < 0 and U″(y) > 0",
+      "U′(y) > 0 and U″(y) < 0",
+      "U′(y) = 0",
+      "U″(y) = 0 only"
+    ],
+    "answer": "B",
+    "explanation": "Utility rises with income, but marginal utility declines as income rises."
+  },
+  {
+    "id": "fund-health-economics.q.203",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Expected value",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "A prospect pays €200 with probability 0.5 and €0 otherwise. What is its expected monetary value?",
+    "options": [
+      "€0",
+      "€50",
+      "€100",
+      "€200"
+    ],
+    "answer": "C",
+    "explanation": "E[Y] = 0.5 × 200 + 0.5 × 0 = €100."
+  },
+  {
+    "id": "fund-health-economics.q.204",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Expected utility",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "Which expression is the expected utility of healthy income yₕ and sick income yₛ when sickness probability is p?",
+    "options": [
+      "pU(yₕ) + (1−p)U(yₛ)",
+      "(1−p)U(yₕ) + pU(yₛ)",
+      "U((1−p)yₕ + pyₛ) only",
+      "U(yₕ) + U(yₛ)"
+    ],
+    "answer": "B",
+    "explanation": "Expected utility weights the utility in each state by that state's probability."
+  },
+  {
+    "id": "fund-health-economics.q.205",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Certainty equivalent",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "The certainty equivalent y* is defined by which condition?",
+    "options": [
+      "y* = E[Y] in every case",
+      "U(y*) = E[U(Y)]",
+      "U(y*) = E[Y]",
+      "y* = pM"
+    ],
+    "answer": "B",
+    "explanation": "The certainty equivalent is the certain income that generates the same utility as the risky prospect."
+  },
+  {
+    "id": "fund-health-economics.q.206",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Risk premium",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "How is the risk premium represented in Session 6?",
+    "options": [
+      "y* − E[Y]",
+      "E[Y] − y*",
+      "π − I",
+      "p + M"
+    ],
+    "answer": "B",
+    "explanation": "It is the amount of expected income above the certainty equivalent that the person would give up to remove risk."
+  },
+  {
+    "id": "fund-health-economics.q.207",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Risk pooling",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "A pool has N identical enrollees, sickness probability p and indemnity I. Which premium exactly covers expected indemnity payments?",
+    "options": [
+      "π = I/p",
+      "π = pI",
+      "π = NI",
+      "π = pN"
+    ],
+    "answer": "B",
+    "explanation": "Nπ = pNI, so the fair premium per enrollee is π = pI."
+  },
+  {
+    "id": "fund-health-economics.q.208",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Indemnity contract",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "Which expression gives sick-state income after buying coverage I for premium π against medical loss M?",
+    "options": [
+      "y − π",
+      "y − M",
+      "y − π − M + I",
+      "y + π − I"
+    ],
+    "answer": "C",
+    "explanation": "The person pays the premium and medical loss, then receives the indemnity."
+  },
+  {
+    "id": "fund-health-economics.q.209",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Fair coverage",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "Under fair pricing π = pI, what happens to healthy-state income when I rises by €1?",
+    "options": [
+      "It rises by €1",
+      "It falls by p euros",
+      "It falls by 1−p euros",
+      "It does not change"
+    ],
+    "answer": "B",
+    "explanation": "Healthy income is yₕ = y − pI, so the marginal cost of another euro of coverage is p in that state."
+  },
+  {
+    "id": "fund-health-economics.q.210",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Optimal insurance",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "Why does the fair-insurance first-order condition lead to full coverage in the benchmark?",
+    "options": [
+      "Because the insurer sets I to zero",
+      "Because equal marginal utility under strict concavity requires equal income across states",
+      "Because sickness probability becomes zero",
+      "Because the premium is unrelated to coverage"
+    ],
+    "answer": "B",
+    "explanation": "U′(yₛ)=U′(yₕ) implies yₛ=yₕ; substituting state incomes yields I=M."
+  },
+  {
+    "id": "fund-health-economics.q.211",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Insurer profit",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "What is expected insurer profit for premium π, sickness probability p and indemnity I?",
+    "options": [
+      "π + pI",
+      "pπ − I",
+      "π − pI",
+      "I − π"
+    ],
+    "answer": "C",
+    "explanation": "The insurer always collects π and pays I with probability p, giving E[Π]=π−pI."
+  },
+  {
+    "id": "fund-health-economics.q.212",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Contract classification",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "A contract has π = pI and I < M. How is it classified?",
+    "options": [
+      "Fair and full",
+      "Fair and partial",
+      "Unfair and full",
+      "Loss-making and overinsured"
+    ],
+    "answer": "B",
+    "explanation": "Fairness depends on π=pI; partial coverage means I<M."
+  },
+  {
+    "id": "fund-health-economics.q.213",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Contract classification",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "A contract has π > pI and I = M. How is it classified in the lecture's terminology?",
+    "options": [
+      "Fair and partial",
+      "Unfair and full",
+      "Fair and full",
+      "Negative-profit and partial"
+    ],
+    "answer": "B",
+    "explanation": "The indemnity fully covers the loss, while the premium exceeds expected payout."
+  },
+  {
+    "id": "fund-health-economics.q.214",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Ideal contract",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "Which contract is the ideal benchmark for a risk-averse consumer in Session 6?",
+    "options": [
+      "Unfair and partial",
+      "Fair and full",
+      "No insurance",
+      "Any full contract regardless of premium"
+    ],
+    "answer": "B",
+    "explanation": "Fair full insurance removes state-dependent income without charging above expected payout in the benchmark."
+  },
+  {
+    "id": "fund-health-economics.q.215",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Non-ideal contracts",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "Why can a fair partial contract sometimes be preferred to a full but unfair contract?",
+    "options": [
+      "Partial insurance always gives state independence",
+      "A sufficiently high premium loading can outweigh the value of fuller coverage",
+      "Fair contracts always have zero indemnity",
+      "Risk aversion makes premiums irrelevant"
+    ],
+    "answer": "B",
+    "explanation": "Non-ideal contracts trade off coverage against price, so their ranking depends on the magnitude of both."
+  },
+  {
+    "id": "fund-health-economics.q.216",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "true-false",
+    "difficulty": "easy",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "A risk-averse person necessarily accepts every actuarially fair gamble.",
+    "answer": false,
+    "explanation": "False. A fair gamble can add risk without raising expected income, so concave utility makes it unattractive."
+  },
+  {
+    "id": "fund-health-economics.q.217",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "true-false",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "Full versus partial insurance is determined by premium size.",
+    "answer": false,
+    "explanation": "False. It is determined by indemnity size relative to the loss; premium size determines fairness in the benchmark."
+  },
+  {
+    "id": "fund-health-economics.q.218",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "true-false",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "Under fair full insurance, income is the same in the healthy and sick states.",
+    "answer": true,
+    "explanation": "True. With π=pM and I=M, both state incomes equal y−pM."
+  },
+  {
+    "id": "fund-health-economics.q.219",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "true-false",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "A profit-seeking insurer in the benchmark would willingly offer a contract with π < pI indefinitely.",
+    "answer": false,
+    "explanation": "False. Such a contract has negative expected profit."
+  },
+  {
+    "id": "fund-health-economics.q.220",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "true-false",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "A fair partial contract removes all financial risk across health states.",
+    "answer": false,
+    "explanation": "False. If I<M, sick-state income remains below healthy-state income."
+  },
+  {
+    "id": "fund-health-economics.q.221",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "true-false",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "In the indemnity model, the payout is contingent on the specified covered condition occurring.",
+    "answer": true,
+    "explanation": "True. Indemnity insurance is presented as a simple contingent-claims contract."
+  },
+  {
+    "id": "fund-health-economics.q.222",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "true-false",
+    "difficulty": "hard",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "The label 'unfair insurance' in Session 6 is a complete ethical judgement about every real-world premium above expected payout.",
+    "answer": false,
+    "explanation": "False. It is a technical model label; the simplified benchmark omits administration, capital and other real-world costs."
+  },
+  {
+    "id": "fund-health-economics.q.223",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "Explain why a risk-averse person can reject a fair gamble but prefer fair insurance.",
+    "answer": "A fair gamble adds risk to an initially certain position without increasing expected income. Fair insurance reduces an existing risk by transferring income from the healthy state to the sick state. Concave utility therefore makes the gamble unattractive but makes risk reduction valuable.",
+    "explanation": "The answer should distinguish the direction of the change in risk, not merely repeat that the person is risk-averse."
+  },
+  {
+    "id": "fund-health-economics.q.224",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "Derive the fair premium for a pool of N identical enrollees with sickness probability p and indemnity I.",
+    "answer": "Expected total payouts are pNI and total premium revenue is Nπ. Setting expected profit to zero gives Nπ=pNI, hence π=pI per enrollee.",
+    "explanation": "A strong answer should show both the group accounting and the per-person result."
+  },
+  {
+    "id": "fund-health-economics.q.225",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "An individual has y=100, p=0.2 and M=50. They buy I=30 at a fair premium. Calculate π, yₕ and yₛ, then classify the contract.",
+    "answer": "π=pI=0.2×30=6. Healthy income is yₕ=100−6=94. Sick income is yₛ=100−6−50+30=74. The contract is fair and partial because π=pI and I<M.",
+    "explanation": "The remaining state-income gap is M−I=20."
+  },
+  {
+    "id": "fund-health-economics.q.226",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "Show the logic that leads from the fair-insurance first-order condition to I*=M.",
+    "answer": "The first-order condition reduces to U′(yₛ)=U′(yₕ). With strictly diminishing marginal utility this implies yₛ=yₕ. Under fair pricing, yₕ=y−pI and yₛ=y−M+(1−p)I. Setting them equal gives y−pI=y−M+(1−p)I, so I=M.",
+    "explanation": "The derivation relies on strict concavity and fair pricing."
+  },
+  {
+    "id": "fund-health-economics.q.227",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "What does 'unfair insurance' mean technically in the Session 6 model, and what does it not necessarily mean?",
+    "answer": "Technically it means π>pI, so the contract generates positive expected profit in the simplified model. It does not by itself provide a complete ethical assessment of real premiums because the benchmark omits administrative costs, capital requirements and other expenses.",
+    "explanation": "Keep the mathematical definition separate from broader normative judgement."
+  },
+  {
+    "id": "fund-health-economics.q.228",
+    "topic": "fund-health-economics.insurance-demand",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "source": "EU-HEM Hub original practice · Session 6",
+    "question": "Why can two non-ideal contracts — one fuller but more expensive and one fairer but more partial — not be ranked using the labels alone?",
+    "answer": "Fullness reduces state-dependent risk, while a higher premium lowers income in both states. The preferred contract depends on the exact premium, indemnity, loss probability, loss size and the person's utility curvature. A sufficiently high loading can outweigh fuller protection, while modest loading may be worth paying for more coverage.",
+    "explanation": "The lecture's final comparison is about a trade-off, not a universal ordering of all non-ideal contracts."
   }
 ]

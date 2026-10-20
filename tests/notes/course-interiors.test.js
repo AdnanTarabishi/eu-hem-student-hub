@@ -7,6 +7,11 @@ const root = path.resolve(process.argv[2] || '.');
 const shots = process.env.COURSE_SCREENSHOT_DIR;
 const read = file => JSON.parse(fs.readFileSync(path.join(root, file), 'utf8'));
 const courses = read('content/programme.json').cohorts[0].terms[0].courses;
+const fhemResources = read('content/modules/fund-health-economics/resources.json');
+const expectedFhemUniversityResources = fhemResources.filter(resource => {
+  if (resource.sample || !resource.url) return false;
+  try { return new URL(resource.url).hostname.endsWith('unibo.it'); } catch { return false; }
+}).length;
 const mime = {'.html':'text/html','.js':'text/javascript','.css':'text/css','.svg':'image/svg+xml','.json':'application/json','.md':'text/plain','.csv':'text/csv','.ics':'text/calendar','.woff2':'font/woff2','.png':'image/png','.webp':'image/webp','.webmanifest':'application/manifest+json'};
 const session = (code, date, start, end) => ({cod_modulo:code,title:'Browser test class',start:`${date}T${start}:00`,end:`${date}T${end}:00`,time:`${start} - ${end}`,aule:[{des_edificio:'Test room',des_indirizzo:'Example address'}],docente:'Example instructor',teledidattica:false,note:''});
 const feed = [session('79060','2026-10-08','09:00','11:00'),session('79060','2026-10-09','08:00','10:00'),session('79060','2026-10-09','12:00','13:00'),session('79060','2026-10-12','09:00','11:00'),session('87428','2026-11-12','09:00','11:00')];
@@ -83,7 +88,7 @@ const exam = `<h3 role="tab" aria-controls="e1"><a><span class="code">97177</spa
     await p.getByRole('button',{name:'Saved only',exact:true}).click(); assert.equal(await p.locator('.cw-resource-card').count(),1); assert.equal(await p.locator('.cw-resource-card').getAttribute('id'),id);
     await p.locator('.cw-resource-card .save-button').click(); assert.equal(await p.locator('.cw-resource-card').count(),0);
     await p.getByRole('button',{name:'Clear filters',exact:true}).click();
-    await p.getByLabel('Source type',{exact:true}).selectOption('university'); assert.equal(await p.locator('.cw-source-university').count(),4);
+    await p.getByLabel('Source type',{exact:true}).selectOption('university'); assert.equal(await p.locator('.cw-source-university').count(),expectedFhemUniversityResources);
     await p.getByRole('button',{name:'Clear filters',exact:true}).click(); await p.getByRole('searchbox').fill('cost-sharing');
     assert.match(await p.locator('.cw-resource-grid').innerText(),/no file or external link supplied/);
     assert.equal(await p.locator('.cw-resource-card a[href="#"]').count(),0);

@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "topic": "fund-health-economics.insurance-demand",
+  "classNumber": 6,
+  "updated": "2026-10-20",
+  "heroTitle": "Turn a health shock\ninto a predictable payment.",
+  "intro": "Build the insurance benchmark from first principles: uncertainty, risk aversion, expected utility, risk pooling, fair premiums, optimal indemnity and the insurer's zero-profit condition.",
+  "guide": "lectures/session-6.html",
+  "activities": [],
+  "attribution": "Independent student-written study guide based on Daniele Fabbri’s Fundamentals in Health Economics, Session 6: Why and how do we insure against health shocks? Official slides, charts and textbook materials are not reproduced. Always check Virtuale for the official materials."
+}

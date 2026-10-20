@@ -14,6 +14,8 @@ const practiceStylesheet = process.env.STUDY_PRACTICE_STYLESHEET || "study-pract
 const read = file => JSON.parse(fs.readFileSync(path.join(root, file), "utf8"));
 const bank = read("content/modules/fund-health-economics/questions.json");
 const cards = read("content/modules/fund-health-economics/flashcards.json");
+const fhemPath = read("content/modules/fund-health-economics/learning-path.json");
+const quickObjectiveTotal = fhemPath.sessions.filter(session => session.status === "available").length * 3;
 const mcq = bank.find(q => q.type === "mcq");
 const trueFalse = bank.find(q => q.type === "true-false");
 const short = bank.find(q => q.type === "short-answer");
@@ -168,7 +170,7 @@ const rgbHex = colour => "#" + colour.match(/[\d.]+/g).slice(0, 3)
     await page.locator("#flashcards").getByRole("button", { name: /Previous/ }).click();
     assert.equal(await page.locator("#flashcards .flashcard").getAttribute("id"), beforeNext);
     await page.locator("#flashcards").getByRole("button", { name: /Shuffle/ }).click();
-    assert.match(await page.locator("#flashcards .flashcard-counter").innerText(), /1\s+(?:of|\/)\s+103/);
+    assert.match(await page.locator("#flashcards .flashcard-counter").innerText(), new RegExp(`1\\s+(?:of|/)\\s+${cards.length}`));
     await capture(page, "#flashcards", "flashcards-desktop.png");
     console.log("PASS: keyboard reveal/rating, saved review intervals and browse controls.");
 
@@ -282,7 +284,7 @@ const rgbHex = colour => "#" + colour.match(/[\d.]+/g).slice(0, 3)
     const selected = bank.find(q => q.id === active.questionIds[mcqIndex]);
     await page.locator(`input[name="exam-answer"][value="${selected.answer}"]`).check();
     assert.equal(await page.locator(".hem-exam-question-card .hem-review-answer").count(), 0);
-    assert.match(await page.locator(".hem-exam-toolbar-title").innerText(), /1 of 15 answered/);
+    assert.match(await page.locator(".hem-exam-toolbar-title").innerText(), new RegExp(`1 of ${quickObjectiveTotal} answered`));
     const deadline = active.deadline;
     await capture(page, ".hem-active-exam", "fhem-active-desktop.png");
     await page.reload(); await page.getByRole("button", { name: /Resume/ }).click();
@@ -292,13 +294,13 @@ const rgbHex = colour => "#" + colour.match(/[\d.]+/g).slice(0, 3)
     page.once("dialog", dialog => dialog.accept());
     await page.getByRole("button", { name: "Submit exam", exact: true }).click();
     await page.locator(".hem-exam-result-hero").waitFor();
-    assert.match(await page.locator(".hem-exam-result-hero h1").innerText(), /1 of 15 objective/);
+    assert.match(await page.locator(".hem-exam-result-hero h1").innerText(), new RegExp(`1 of ${quickObjectiveTotal} objective`));
     const savedExam = await page.evaluate(() => JSON.parse(localStorage.getItem("euhem-fhem-exam-v1")));
     assert.equal(savedExam.active.submitted, true);
     assert.equal(savedExam.history[0].objectiveCorrect, 1);
-    assert.equal(savedExam.history[0].objectiveTotal, 15);
+    assert.equal(savedExam.history[0].objectiveTotal, quickObjectiveTotal);
     await page.reload(); await page.locator(".hem-exam-result-hero").waitFor();
-    assert.match(await page.locator(".hem-exam-result-hero h1").innerText(), /1 of 15 objective/);
+    assert.match(await page.locator(".hem-exam-result-hero h1").innerText(), new RegExp(`1 of ${quickObjectiveTotal} objective`));
     console.log("PASS: FHEM active MCQ selection, hidden answers, timer persistence, submission and result reload.");
 
     // Both themes at the narrowest supported width cover every distinct practice renderer.

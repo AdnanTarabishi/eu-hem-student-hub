@@ -39,7 +39,9 @@
   },
   {
     "id": "fund-health-economics.insurance-demand",
-    "title": "Risk, risk aversion and demand for insurance"
+    "title": "Session 6: Insurance I — Demand for Healthcare Insurance",
+    "notes": "notes/insurance-demand.md",
+    "lecture": "lectures/session-6.json"
   },
   {
     "id": "fund-health-economics.insurers",
