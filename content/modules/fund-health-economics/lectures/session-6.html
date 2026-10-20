@@ -1,0 +1,375 @@
+<!-- Original student-written explanations. Official slides, charts and textbook materials are not reproduced. -->
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">01 / Start with the problem</p>
+    <h2>Medical expenditure is uncertain, concentrated and potentially catastrophic.</h2>
+  </div>
+  <p>Session 6 explains why people pay a predictable premium today to protect income against a large uncertain loss tomorrow.</p>
+</div>
+
+<div class="grid3">
+  <article class="card">
+    <span class="badge">?</span>
+    <h3>Uncertain timing</h3>
+    <p>People do not know with certainty whether the covered illness will occur.</p>
+  </article>
+  <article class="card">
+    <span class="badge">M</span>
+    <h3>Potentially large loss</h3>
+    <p>When illness occurs, the treatment cost can produce a sharp fall in disposable income.</p>
+  </article>
+  <article class="card">
+    <span class="badge">N</span>
+    <h3>Pooling</h3>
+    <p>A large group shares expected expenditure so that no single enrollee must self-finance the entire possible loss.</p>
+  </article>
+</div>
+
+<div class="note">
+  <strong>What insurance covers in this lecture:</strong> the financial risk associated with medical care. The contract does not remove illness itself.
+</div>
+
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">02 / Institutional context</p>
+    <h2>Health systems combine public and private insurance in different ways.</h2>
+  </div>
+  <p>The course uses historical cross-country illustrations to show that insurance becomes more important as direct out-of-pocket financing becomes less dominant.</p>
+</div>
+
+<article class="card insurance-context-card">
+  <div class="insurance-context-flow">
+    <div><span>Households / taxpayers</span><strong>Contribute resources</strong></div>
+    <b aria-hidden="true">→</b>
+    <div><span>Public or private insurer</span><strong>Collects premiums · pools risk</strong></div>
+    <b aria-hidden="true">→</b>
+    <div><span>Healthcare providers</span><strong>Deliver covered services</strong></div>
+  </div>
+  <p class="small muted">The lecture’s country charts are historical course examples. The Student Hub does not reproduce them or present them as a current 2026 ranking.</p>
+</article>
+
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">03 / Three responses to a health shock</p>
+    <h2>Borrow, save or insure.</h2>
+  </div>
+</div>
+
+<div class="grid3">
+  <article class="card">
+    <span class="pill">BORROW</span>
+    <h3 style="margin-top:16px">Pay after illness occurs</h3>
+    <p>Repayment can be difficult precisely when the person is debilitated or financially weakened.</p>
+  </article>
+  <article class="card">
+    <span class="pill">SAVE</span>
+    <h3 style="margin-top:16px">Self-insure in advance</h3>
+    <p>Everyone must restrict current consumption enough to prepare for a rare cost borne by only some people.</p>
+  </article>
+  <article class="card">
+    <span class="pill">POOL</span>
+    <h3 style="margin-top:16px">Share expected expenditure</h3>
+    <p>Each member pays a premium and the pool finances indemnities for those who become sick.</p>
+  </article>
+</div>
+
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">04 / Risk aversion</p>
+    <h2>The same expected income can produce different utility.</h2>
+  </div>
+  <p>Risk aversion is represented by an increasing, concave utility function.</p>
+</div>
+
+<div class="grid2">
+  <article class="card">
+    <div class="formula">U′(y) &gt; 0</div>
+    <h3>More income gives more utility.</h3>
+    <p>The utility curve slopes upward.</p>
+  </article>
+  <article class="card">
+    <div class="formula">U″(y) &lt; 0</div>
+    <h3>Marginal utility declines.</h3>
+    <p>A one-euro loss at low income hurts more than a one-euro gain at high income helps.</p>
+  </article>
+</div>
+
+<article class="card insurance-utility-visual">
+  <div>
+    <p class="eyebrow">THE KEY INEQUALITY</p>
+    <h3>Utility of expected income exceeds expected utility under risk.</h3>
+    <div class="formula">U(E[Y]) &gt; E[U(Y)]</div>
+    <p>For a non-degenerate risk and a strictly concave utility function, certainty is preferred to a risky prospect with the same expected income.</p>
+  </div>
+  <svg viewBox="0 0 520 290" role="img" aria-labelledby="insurance-utility-title insurance-utility-desc">
+    <title id="insurance-utility-title">Concave utility and expected utility</title>
+    <desc id="insurance-utility-desc">An original diagram showing a concave utility curve, sick and healthy income, expected income and the lower expected utility point on the chord.</desc>
+    <path d="M55 235V28M55 235H485" fill="none" stroke="currentColor" stroke-width="2" opacity=".55"/>
+    <path d="M67 220 C118 115 205 62 455 38" fill="none" stroke="#2f7b73" stroke-width="4"/>
+    <path d="M115 165 L405 58" fill="none" stroke="#c96548" stroke-width="2" stroke-dasharray="6 5"/>
+    <circle cx="115" cy="165" r="6" fill="#c96548"/>
+    <circle cx="405" cy="58" r="6" fill="#c96548"/>
+    <circle cx="318" cy="90" r="6" fill="#102f57"/>
+    <circle cx="318" cy="74" r="6" fill="#2f7b73"/>
+    <path d="M318 90V235M318 74V235" stroke="currentColor" opacity=".25" stroke-dasharray="4 5"/>
+    <text x="92" y="188" fill="currentColor" font-size="12">sick state</text>
+    <text x="383" y="48" fill="currentColor" font-size="12">healthy state</text>
+    <text x="328" y="105" fill="#c96548" font-size="12">E[U(Y)]</text>
+    <text x="328" y="69" fill="#2f7b73" font-size="12">U(E[Y])</text>
+    <text x="454" y="258" fill="currentColor" font-size="12">income</text>
+    <text x="18" y="32" fill="currentColor" font-size="12">utility</text>
+  </svg>
+</article>
+
+<div class="note">
+  <strong>Fair gamble versus fair insurance:</strong> a fair gamble adds risk to certainty; fair insurance removes risk from an already uncertain income. A risk-averse person can reject the first and prefer the second.
+</div>
+
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">05 / Expected value and expected utility</p>
+    <h2>Keep the monetary calculation separate from the utility calculation.</h2>
+  </div>
+</div>
+
+<div class="grid2">
+  <article class="card">
+    <span class="pill">EXPECTED INCOME</span>
+    <div class="formula small-formula">E[Y] = Σ pᵢyᵢ</div>
+    <p>A probability-weighted average of monetary outcomes.</p>
+  </article>
+  <article class="card">
+    <span class="pill">EXPECTED UTILITY</span>
+    <div class="formula small-formula">E[U(Y)] = Σ pᵢU(yᵢ)</div>
+    <p>A probability-weighted average of the utility generated by each outcome.</p>
+  </article>
+</div>
+
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">06 / Certainty equivalent</p>
+    <h2>Translate a risky prospect into a certain-income equivalent.</h2>
+  </div>
+</div>
+
+<div class="insurance-equation-chain">
+  <div><span>Risky income</span><strong>E[U(Y)]</strong></div>
+  <b aria-hidden="true">=</b>
+  <div><span>Same utility under certainty</span><strong>U(y*)</strong></div>
+  <b aria-hidden="true">→</b>
+  <div><span>Risk premium</span><strong>E[Y] − y*</strong></div>
+</div>
+
+<p>The risk premium is a utility-based willingness-to-pay measure. It is not the same thing as the insurance premium charged by a contract.</p>
+
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">07 / The benchmark contract</p>
+    <h2>Five symbols organise the whole session.</h2>
+  </div>
+</div>
+
+<div class="insurance-notation">
+  <div><strong>y</strong><span>Income before medical spending</span></div>
+  <div><strong>p</strong><span>Probability of sickness</span></div>
+  <div><strong>M</strong><span>Medical loss or treatment cost</span></div>
+  <div><strong>I</strong><span>Indemnity paid if sick</span></div>
+  <div><strong>π</strong><span>Premium paid in advance</span></div>
+</div>
+
+<article class="card">
+  <h3>Income after buying insurance</h3>
+  <div class="insurance-state-grid">
+    <div>
+      <span class="pill">HEALTHY</span>
+      <div class="formula">y<sub>h</sub> = y − π</div>
+      <p>The premium is paid, but no indemnity is received.</p>
+    </div>
+    <div>
+      <span class="pill">SICK</span>
+      <div class="formula">y<sub>s</sub> = y − π − M + I</div>
+      <p>The medical loss occurs and the insurer pays the indemnity.</p>
+    </div>
+  </div>
+</article>
+
+<div class="note">
+  <strong>Benchmark assumptions:</strong> one covered disease, one treatment, a fixed medical loss and no post-contract behavioural response. These assumptions isolate the demand for insurance.
+</div>
+
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">08 / The pool</p>
+    <h2>Individual uncertainty can become predictable group expenditure.</h2>
+  </div>
+</div>
+
+<div class="insurance-pool-visual" aria-label="Original risk-pooling illustration">
+  <div class="insurance-pool-members">
+    <span>π</span><span>π</span><span>π</span><span>π</span><span>π</span><span>π</span><span>π</span><span>π</span><span>π</span><span>π</span><span>π</span><span>π</span>
+  </div>
+  <div class="insurance-pool-arrow" aria-hidden="true">→</div>
+  <div class="insurance-pool-claims">
+    <strong>pN</strong>
+    <span>expected claimants</span>
+  </div>
+</div>
+
+<div class="formula">Nπ = pNI &nbsp; ⇒ &nbsp; π = pI</div>
+
+<p>A large pool collects premiums from all enrollees and pays indemnities to the expected fraction who become sick. Under the benchmark, the fair premium per person equals expected indemnity expenditure.</p>
+
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">09 / Demand for fair insurance</p>
+    <h2>As coverage rises, healthy income falls and sick income rises.</h2>
+  </div>
+</div>
+
+<article class="card">
+  <p>Under fair pricing, <strong>π = pI</strong>. Therefore:</p>
+  <div class="insurance-state-grid">
+    <div><div class="formula">y<sub>h</sub> = y − pI</div><p>One more euro of indemnity costs <em>p</em> euros in the healthy state.</p></div>
+    <div><div class="formula">y<sub>s</sub> = y − M + (1 − p)I</div><p>One more euro of indemnity raises net sick-state income by <em>1 − p</em>.</p></div>
+  </div>
+</article>
+
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">10 / The optimum</p>
+    <h2>A fair contract leads the risk-averse consumer to full insurance.</h2>
+  </div>
+</div>
+
+<div class="insurance-derivation">
+  <div><span>Choose I to maximise</span><strong>pU(y<sub>s</sub>) + (1−p)U(y<sub>h</sub>)</strong></div>
+  <div><span>First-order condition</span><strong>U′(y<sub>s</sub>) = U′(y<sub>h</sub>)</strong></div>
+  <div><span>Strict concavity implies</span><strong>y<sub>s</sub> = y<sub>h</sub></strong></div>
+  <div><span>Substitute state incomes</span><strong>I* = M</strong></div>
+</div>
+
+<div class="note">
+  Full insurance is the benchmark optimum because it equalises income and marginal utility across the healthy and sick states. This conclusion is conditional on fair pricing and the model assumptions.
+</div>
+
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">11 / Full insurance</p>
+    <h2>State independence is the defining result.</h2>
+  </div>
+</div>
+
+<div class="grid2">
+  <article class="card">
+    <span class="pill">FULL INSURANCE</span>
+    <div class="formula">I = M</div>
+    <p>Income is equal across states: <strong>y<sub>s</sub> = y<sub>h</sub></strong>.</p>
+  </article>
+  <article class="card">
+    <span class="pill">PARTIAL INSURANCE</span>
+    <div class="formula">I &lt; M</div>
+    <p>Some loss remains uninsured: <strong>y<sub>s</sub> &lt; y<sub>h</sub></strong>.</p>
+  </article>
+</div>
+
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">12 / The insurer</p>
+    <h2>Look at the same contract from the supply side.</h2>
+  </div>
+</div>
+
+<article class="card">
+  <div class="formula">E[Π] = (1−p)π + p(π−I) = π − pI</div>
+  <div class="grid3">
+    <div><h3>π = pI</h3><p>Zero expected profit: actuarially fair in the competitive benchmark.</p></div>
+    <div><h3>π &gt; pI</h3><p>Positive expected profit: called unfair in the lecture's technical terminology.</p></div>
+    <div><h3>π &lt; pI</h3><p>Negative expected profit: not sustainable for a profit-seeking insurer in this benchmark.</p></div>
+  </div>
+</article>
+
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">13 / Two separate dimensions</p>
+    <h2>Do not confuse fairness with fullness.</h2>
+  </div>
+</div>
+
+<div class="table-scroll insurance-contract-table">
+  <table>
+    <thead><tr><th></th><th>Fair premium</th><th>Unfair premium</th></tr></thead>
+    <tbody>
+      <tr><th>Full coverage</th><td>π = pI<br>I = M</td><td>π &gt; pI<br>I = M</td></tr>
+      <tr><th>Partial coverage</th><td>π = pI<br>I &lt; M</td><td>π &gt; pI<br>I &lt; M</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<p><strong>Full/partial</strong> is determined by the indemnity. <strong>Fair/unfair</strong> is determined by the premium relative to expected payout.</p>
+
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">14 / Ranking contracts</p>
+    <h2>The ideal contract is clear; non-ideal rankings are not.</h2>
+  </div>
+</div>
+
+<div class="grid2">
+  <article class="card">
+    <span class="pill">IDEAL BENCHMARK</span>
+    <h3>Fair and full</h3>
+    <p>For a risk-averse person in this model, it offers the greatest utility because it removes the risk at expected cost.</p>
+  </article>
+  <article class="card">
+    <span class="pill">NON-IDEAL COMPARISON</span>
+    <h3>Full but loaded versus fair but partial</h3>
+    <p>The ranking depends on both premium and coverage, together with the individual's risk aversion. Labels alone do not determine the winner.</p>
+  </article>
+</div>
+
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">15 / What the model can vary</p>
+    <h2>Four comparative-static questions.</h2>
+  </div>
+</div>
+
+<div class="grid4 insurance-comparative-grid">
+  <article class="card"><span class="badge">M</span><h3>Loss size</h3><p>What changes when the medical loss becomes larger?</p></article>
+  <article class="card"><span class="badge">U</span><h3>Utility shape</h3><p>How does a different utility function alter willingness to insure?</p></article>
+  <article class="card"><span class="badge">RA</span><h3>Risk aversion</h3><p>What changes when concavity becomes stronger?</p></article>
+  <article class="card"><span class="badge">p</span><h3>Loss probability</h3><p>How does a more likely loss affect expected cost and contract value?</p></article>
+</div>
+
+<div class="note">
+  The available slides list these comparative-static dimensions but do not derive every directional result in detail. The Student Hub therefore treats them as study prompts rather than adding unsupported claims.
+</div>
+
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">16 / Bridge to Session 7</p>
+    <h2>The benchmark works because the risk probability is known and shared.</h2>
+  </div>
+</div>
+
+<div class="insurance-bridge">
+  <div><span>SESSION 6</span><strong>One known risk probability</strong><p>Fair pricing, competitive zero profit and full insurance form the benchmark.</p></div>
+  <b aria-hidden="true">→</b>
+  <div><span>SESSION 7</span><strong>Hidden risk types</strong><p>Low-risk and high-risk consumers know more than insurers, creating adverse selection.</p></div>
+</div>
+
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">17 / Two-minute review</p>
+    <h2>The logic of Session 6.</h2>
+  </div>
+</div>
+
+<article class="card details-stack">
+  <details open><summary>Why insurance?</summary><p>Medical spending is uncertain and may produce a large income loss. Pooling converts that risk into a predictable premium.</p></details>
+  <details><summary>Why does risk aversion matter?</summary><p>Concave utility makes a low-income loss more painful than an equal high-income gain is valuable.</p></details>
+  <details><summary>What is the fair premium?</summary><p>π = pI: the premium equals expected indemnity expenditure.</p></details>
+  <details><summary>Why full insurance?</summary><p>At a fair premium, optimal coverage equalises income and marginal utility across states, giving I* = M.</p></details>
+  <details><summary>What is insurer profit?</summary><p>E[Π] = π − pI.</p></details>
+  <details><summary>What distinction must not be confused?</summary><p>Full versus partial depends on indemnity size; fair versus unfair depends on premium size.</p></details>
+</article>
