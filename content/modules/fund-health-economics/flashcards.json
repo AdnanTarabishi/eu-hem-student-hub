@@ -616,5 +616,173 @@
     "topic": "fund-health-economics.physician-agency",
     "front": "What do the SAV conclusions imply about physicians as agents?",
     "back": "Physicians may be imperfect agents not only because of self-interest but also because they can be incompletely informed."
+  },
+  {
+    "id": "fund-health-economics.fc.201",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "What financial problem does health insurance address in Session 6?",
+    "back": "It protects income against unpredictable medical expenditure that can be rare but financially large."
+  },
+  {
+    "id": "fund-health-economics.fc.202",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "Does the benchmark health-insurance contract remove illness itself?",
+    "back": "No. It covers the financial risk associated with medical care when the specified illness occurs."
+  },
+  {
+    "id": "fund-health-economics.fc.203",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "What is risk aversion?",
+    "back": "A preference for certain income over risky income with the same expected monetary value."
+  },
+  {
+    "id": "fund-health-economics.fc.204",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "How is risk aversion represented with utility from income?",
+    "back": "Utility rises with income but at a decreasing rate: U′(y) > 0 and U″(y) < 0."
+  },
+  {
+    "id": "fund-health-economics.fc.205",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "What is expected income?",
+    "back": "The probability-weighted average of monetary outcomes: E[Y] = Σ pᵢyᵢ."
+  },
+  {
+    "id": "fund-health-economics.fc.206",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "What is expected utility?",
+    "back": "The probability-weighted average of utility in each possible state: E[U(Y)] = Σ pᵢU(yᵢ)."
+  },
+  {
+    "id": "fund-health-economics.fc.207",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "What is an actuarially fair gamble?",
+    "back": "A gamble whose price equals its expected monetary value."
+  },
+  {
+    "id": "fund-health-economics.fc.208",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "Why does a risk-averse person reject a non-degenerate actuarially fair gamble?",
+    "back": "Because the gamble adds dispersion to certain income, and concave utility makes expected utility under risk lower than utility at expected income."
+  },
+  {
+    "id": "fund-health-economics.fc.209",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "Why can the same person prefer actuarially fair insurance?",
+    "back": "Insurance removes dispersion from an already risky income by transferring resources from the healthy state to the sick state."
+  },
+  {
+    "id": "fund-health-economics.fc.210",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "What is a certainty equivalent?",
+    "back": "The certain income y* that gives the same utility as the risky prospect: U(y*) = E[U(Y)]."
+  },
+  {
+    "id": "fund-health-economics.fc.211",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "What is the risk premium?",
+    "back": "The difference E[Y] − y*: the maximum expected income the person would give up to remove the risk while keeping the same utility."
+  },
+  {
+    "id": "fund-health-economics.fc.212",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "What three responses to medical-expenditure risk are compared in the lecture?",
+    "back": "Borrowing after illness, precautionary saving, and pooling risk through insurance."
+  },
+  {
+    "id": "fund-health-economics.fc.213",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "What is the law-of-large-numbers intuition for insurance?",
+    "back": "In a large pool of similar independent risks, the share becoming sick is more predictable even though each individual's outcome is uncertain."
+  },
+  {
+    "id": "fund-health-economics.fc.214",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "What is an indemnity insurance contract?",
+    "back": "A contract in which the insured pays a premium and receives a specified payout if the covered contingency occurs."
+  },
+  {
+    "id": "fund-health-economics.fc.215",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "What do p, M, I and π denote in Session 6?",
+    "back": "p is sickness probability, M the medical loss, I the indemnity or coverage, and π the premium."
+  },
+  {
+    "id": "fund-health-economics.fc.216",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "What is the healthy-state income after buying an indemnity contract?",
+    "back": "yₕ = y − π."
+  },
+  {
+    "id": "fund-health-economics.fc.217",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "What is the sick-state income after buying an indemnity contract?",
+    "back": "yₛ = y − π − M + I."
+  },
+  {
+    "id": "fund-health-economics.fc.218",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "What is the actuarially fair premium for indemnity I?",
+    "back": "π = pI, equal to expected indemnity expenditure per enrollee in the benchmark."
+  },
+  {
+    "id": "fund-health-economics.fc.219",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "Under fair pricing, how do the two state incomes depend on I?",
+    "back": "yₕ = y − pI and yₛ = y − M + (1 − p)I."
+  },
+  {
+    "id": "fund-health-economics.fc.220",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "What first-order condition determines optimal fair coverage?",
+    "back": "Marginal utility must be equal across states: U′(yₛ) = U′(yₕ)."
+  },
+  {
+    "id": "fund-health-economics.fc.221",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "Why does the fair-insurance optimum imply I* = M?",
+    "back": "Strict concavity means equal marginal utility requires yₛ = yₕ; substituting the state incomes then gives full coverage I = M."
+  },
+  {
+    "id": "fund-health-economics.fc.222",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "What is state independence?",
+    "back": "Income is the same whether the individual is healthy or sick; in the benchmark this occurs under full insurance."
+  },
+  {
+    "id": "fund-health-economics.fc.223",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "What is the insurer's expected profit on contract (π, I)?",
+    "back": "E[Π] = (1 − p)π + p(π − I) = π − pI."
+  },
+  {
+    "id": "fund-health-economics.fc.224",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "How does Session 6 define fair and unfair insurance?",
+    "back": "Fair insurance has π = pI. In the lecture's technical terminology, unfair insurance has π > pI and positive expected profit."
+  },
+  {
+    "id": "fund-health-economics.fc.225",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "What determines whether insurance is full or partial?",
+    "back": "The indemnity size: full coverage has I = M; partial coverage has I < M."
+  },
+  {
+    "id": "fund-health-economics.fc.226",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "What is the ideal insurance contract in the Session 6 benchmark?",
+    "back": "An actuarially fair and full contract for a risk-averse individual."
+  },
+  {
+    "id": "fund-health-economics.fc.227",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "Can a full but unfair contract always be ranked above a fair partial contract?",
+    "back": "No. The ranking depends on premium, coverage, loss probability, loss size and risk aversion."
+  },
+  {
+    "id": "fund-health-economics.fc.228",
+    "topic": "fund-health-economics.insurance-demand",
+    "front": "Which Session 6 assumption is relaxed in Session 7?",
+    "back": "Session 7 introduces heterogeneous hidden risk types, so consumers can know more about their sickness probability than insurers."
   }
 ]

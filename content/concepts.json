@@ -675,5 +675,133 @@
       "fund-statistics.hypothesis-tests",
       "fund-statistics.two-means"
     ]
+  },
+  {
+    "id": "concept.insurance-risk-aversion",
+    "term": "Risk aversion",
+    "explanation": "A preference for certain income over risky income with the same expected monetary value, represented by increasing and concave utility.",
+    "topics": [
+      "fund-health-economics.insurance-demand"
+    ]
+  },
+  {
+    "id": "concept.insurance-expected-value",
+    "term": "Expected value",
+    "explanation": "The probability-weighted average of possible monetary outcomes.",
+    "topics": [
+      "fund-health-economics.insurance-demand"
+    ]
+  },
+  {
+    "id": "concept.expected-utility",
+    "term": "Expected utility",
+    "explanation": "The probability-weighted average of utility across possible states, not the utility of the probability-weighted average income.",
+    "topics": [
+      "fund-health-economics.insurance-demand"
+    ]
+  },
+  {
+    "id": "concept.certainty-equivalent",
+    "term": "Certainty equivalent",
+    "explanation": "The certain income that gives the same utility as a risky prospect.",
+    "topics": [
+      "fund-health-economics.insurance-demand"
+    ]
+  },
+  {
+    "id": "concept.risk-premium",
+    "term": "Risk premium",
+    "explanation": "Expected income minus the certainty equivalent: a utility-based measure of willingness to pay to remove risk.",
+    "topics": [
+      "fund-health-economics.insurance-demand"
+    ]
+  },
+  {
+    "id": "concept.actuarially-fair-gamble",
+    "term": "Actuarially fair gamble",
+    "explanation": "A gamble whose price equals its expected monetary value.",
+    "topics": [
+      "fund-health-economics.insurance-demand"
+    ]
+  },
+  {
+    "id": "concept.indemnity-contract",
+    "term": "Indemnity insurance contract",
+    "explanation": "A contract paying a specified amount when a defined covered contingency occurs in exchange for an advance premium.",
+    "topics": [
+      "fund-health-economics.insurance-demand"
+    ]
+  },
+  {
+    "id": "concept.insurance-premium",
+    "term": "Insurance premium (π)",
+    "explanation": "The amount paid in advance for the insurance contract.",
+    "topics": [
+      "fund-health-economics.insurance-demand"
+    ]
+  },
+  {
+    "id": "concept.insurance-indemnity",
+    "term": "Indemnity (I)",
+    "explanation": "The specified insurance payout received when the covered sickness occurs.",
+    "topics": [
+      "fund-health-economics.insurance-demand"
+    ]
+  },
+  {
+    "id": "concept.actuarially-fair-premium",
+    "term": "Actuarially fair premium",
+    "explanation": "A premium equal to expected indemnity expenditure in the benchmark: π=pI.",
+    "topics": [
+      "fund-health-economics.insurance-demand"
+    ]
+  },
+  {
+    "id": "concept.risk-pooling",
+    "term": "Risk pooling",
+    "explanation": "Combining many uncertain individual risks so expected group expenditure can be financed through shared premiums.",
+    "topics": [
+      "fund-health-economics.insurance-demand"
+    ]
+  },
+  {
+    "id": "concept.state-independent-income",
+    "term": "State-independent income",
+    "explanation": "Income that is equal in the healthy and sick states, achieved by full insurance in the Session 6 benchmark.",
+    "topics": [
+      "fund-health-economics.insurance-demand"
+    ]
+  },
+  {
+    "id": "concept.full-insurance",
+    "term": "Full insurance",
+    "explanation": "Coverage for which the indemnity equals the medical loss, I=M, eliminating the income gap across states.",
+    "topics": [
+      "fund-health-economics.insurance-demand"
+    ]
+  },
+  {
+    "id": "concept.partial-insurance",
+    "term": "Partial insurance",
+    "explanation": "Coverage for which I<M, leaving some financial loss in the sick state.",
+    "topics": [
+      "fund-health-economics.insurance-demand"
+    ]
+  },
+  {
+    "id": "concept.unfair-insurance",
+    "term": "Unfair insurance (technical definition)",
+    "explanation": "A contract with π>pI and positive expected profit in the lecture's simplified model.",
+    "topics": [
+      "fund-health-economics.insurance-demand"
+    ]
+  },
+  {
+    "id": "concept.insurer-expected-profit",
+    "term": "Insurer expected profit",
+    "explanation": "Expected premium revenue net of expected indemnity payment: E[Π]=π−pI.",
+    "topics": [
+      "fund-health-economics.insurance-demand"
+    ]
   }
 ]

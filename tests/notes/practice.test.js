@@ -168,7 +168,7 @@ const rgbHex = colour => "#" + colour.match(/[\d.]+/g).slice(0, 3)
     await page.locator("#flashcards").getByRole("button", { name: /Previous/ }).click();
     assert.equal(await page.locator("#flashcards .flashcard").getAttribute("id"), beforeNext);
     await page.locator("#flashcards").getByRole("button", { name: /Shuffle/ }).click();
-    assert.match(await page.locator("#flashcards .flashcard-counter").innerText(), /1\s+(?:of|\/)\s+103/);
+    assert.match(await page.locator("#flashcards .flashcard-counter").innerText(), new RegExp(`1\\s+(?:of|/)\\s+${cards.length}`));
     await capture(page, "#flashcards", "flashcards-desktop.png");
     console.log("PASS: keyboard reveal/rating, saved review intervals and browse controls.");
 

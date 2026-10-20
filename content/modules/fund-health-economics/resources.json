@@ -71,5 +71,14 @@
     "url": "https://adnantarabishi.github.io/eu-hem-student-hub/toolkit.html?section=solve&solver=health",
     "date": "2026-10-08",
     "description": "Original supplementary cost-effectiveness, QALY and discounting models. Not a claim that these are required topics in the current introductory lectures."
+  },
+  {
+    "id": "fund-health-economics.r.206",
+    "title": "Official Session 6 materials on Virtuale",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/course/view.php?id=80559",
+    "date": "2026-10-20",
+    "topic": "fund-health-economics.insurance-demand",
+    "description": "Official University of Bologna materials for Fundamentals in Health Economics. Sign in with your UniBo account."
   }
 ]
