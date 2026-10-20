@@ -21,17 +21,28 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - name: Make university-resource expectation content-driven
+      - name: Make FHEM expectations content-driven
         run: |
           node - <<'NODE'
           const fs = require('fs');
-          const file = 'tests/notes/course-interiors.test.js';
-          let text = fs.readFileSync(file, 'utf8');
-          const anchor = "const courses = read('content/programme.json').cohorts[0].terms[0].courses;";
-          const addition = `${anchor}\nconst fhemResources = read('content/modules/fund-health-economics/resources.json');\nconst expectedFhemUniversityResources = fhemResources.filter(resource => {\n  if (resource.sample || !resource.url) return false;\n  try { return new URL(resource.url).hostname.endsWith('unibo.it'); } catch { return false; }\n}).length;`;
-          if (!text.includes('expectedFhemUniversityResources')) text = text.replace(anchor, addition);
-          text = text.replace("assert.equal(await p.locator('.cw-source-university').count(),4);", "assert.equal(await p.locator('.cw-source-university').count(),expectedFhemUniversityResources);");
-          fs.writeFileSync(file, text);
+
+          const courseFile = 'tests/notes/course-interiors.test.js';
+          let course = fs.readFileSync(courseFile, 'utf8');
+          const courseAnchor = "const courses = read('content/programme.json').cohorts[0].terms[0].courses;";
+          const courseAddition = `${courseAnchor}\nconst fhemResources = read('content/modules/fund-health-economics/resources.json');\nconst expectedFhemUniversityResources = fhemResources.filter(resource => {\n  if (resource.sample || !resource.url) return false;\n  try { return new URL(resource.url).hostname.endsWith('unibo.it'); } catch { return false; }\n}).length;`;
+          if (!course.includes('expectedFhemUniversityResources')) course = course.replace(courseAnchor, courseAddition);
+          course = course.replace("assert.equal(await p.locator('.cw-source-university').count(),4);", "assert.equal(await p.locator('.cw-source-university').count(),expectedFhemUniversityResources);");
+          fs.writeFileSync(courseFile, course);
+
+          const practiceFile = 'tests/notes/practice.test.js';
+          let practice = fs.readFileSync(practiceFile, 'utf8');
+          const practiceAnchor = 'const cards = read("content/modules/fund-health-economics/flashcards.json");';
+          const practiceAddition = `${practiceAnchor}\nconst fhemPath = read("content/modules/fund-health-economics/learning-path.json");\nconst quickObjectiveTotal = fhemPath.sessions.filter(session => session.status === "available").length * 3;`;
+          if (!practice.includes('quickObjectiveTotal')) practice = practice.replace(practiceAnchor, practiceAddition);
+          practice = practice.replace('    assert.match(await page.locator(".hem-exam-toolbar-title").innerText(), /1 of 15 answered/);', '    assert.match(await page.locator(".hem-exam-toolbar-title").innerText(), new RegExp(`1 of ${quickObjectiveTotal} answered`));');
+          practice = practice.replaceAll('    assert.match(await page.locator(".hem-exam-result-hero h1").innerText(), /1 of 15 objective/);', '    assert.match(await page.locator(".hem-exam-result-hero h1").innerText(), new RegExp(`1 of ${quickObjectiveTotal} objective`));');
+          practice = practice.replace('    assert.equal(savedExam.history[0].objectiveTotal, 15);', '    assert.equal(savedExam.history[0].objectiveTotal, quickObjectiveTotal);');
+          fs.writeFileSync(practiceFile, practice);
           NODE
       - name: Capture course-interiors output
         continue-on-error: true
@@ -43,10 +54,10 @@ jobs:
         env:
           STUDY_PRACTICE_SCREENSHOT_DIR: previews/practice
         run: node tests/notes/practice.test.js . > session6-practice-test.log 2>&1
-      - name: Commit test patch and diagnostics
+      - name: Commit test patches and diagnostics
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add tests/notes/course-interiors.test.js session6-course-test.log session6-practice-test.log
-          git commit -m 'Make FHEM resource test content-driven and record diagnostics'
+          git add tests/notes/course-interiors.test.js tests/notes/practice.test.js session6-course-test.log session6-practice-test.log
+          git commit -m 'Make FHEM browser tests content-driven and record diagnostics'
           git push origin HEAD:feature/fhe-session-6
