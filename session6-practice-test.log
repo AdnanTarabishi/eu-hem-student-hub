@@ -1,16 +1,22 @@
-Error: EACCES: permission denied, mkdir '/workspace/work/study-practice'
-    at Object.mkdirSync (node:fs:1370:26)
-    at /home/runner/work/eu-hem-student-hub/eu-hem-student-hub/tests/notes/practice.test.js:37:6
-    at Object.<anonymous> (/home/runner/work/eu-hem-student-hub/eu-hem-student-hub/tests/notes/practice.test.js:389:3)
-    at Module._compile (node:internal/modules/cjs/loader:1781:14)
-    at Object..js (node:internal/modules/cjs/loader:1913:10)
-    at Module.load (node:internal/modules/cjs/loader:1505:32)
-    at Function._load (node:internal/modules/cjs/loader:1309:12)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
-    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
-    at node:internal/main/run_main_module:36:49 {
-  errno: -13,
-  code: 'EACCES',
-  syscall: 'mkdir',
-  path: '/workspace/work/study-practice'
+PASS: keyboard reveal/rating, saved review intervals and browse controls.
+PASS: review progress starts at zero and advances relative to the actual two-card due set.
+PASS: stable card/question deep links, topic/difficulty/type filters, MCQ, True/False and model answers.
+PASS: shuffled quiz scoring, mistake explanations, retry and shared progress preservation.
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /1 of 15 answered/. Input:
+
+'EXAM IN PROGRESS\n' +
+  '\n' +
+  '20-minute quick drill\n' +
+  '1 of 18 answered · objective answers stay hidden until submission'
+
+    at /home/runner/work/eu-hem-student-hub/eu-hem-student-hub/tests/notes/practice.test.js:285:12 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'EXAM IN PROGRESS\n' +
+    '\n' +
+    '20-minute quick drill\n' +
+    '1 of 18 answered · objective answers stay hidden until submission',
+  expected: /1 of 15 answered/,
+  operator: 'match',
+  diff: 'simple'
 }
