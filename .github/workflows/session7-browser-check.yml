@@ -1,0 +1,76 @@
+name: Session 7 browser check
+on:
+  push:
+    branches: [feature/fhe-session-7]
+    paths:
+      - '.github/workflows/session7-browser-check.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/fhe-session-7
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Validate content and syntax
+        run: |
+          node --check fhe-session-7.js
+          node --check fhe-session-7-runtime.js
+          node --check fhe-session-7-page.js
+          node --check fhe-session-7-links.js
+          node scripts/check-content.js
+          node scripts/stamp-versions.js --check
+      - name: Test dedicated Session 7 workspace
+        run: |
+          node - <<'NODE'
+          const http = require('node:http');
+          const fs = require('node:fs');
+          const path = require('node:path');
+          const assert = require('node:assert/strict');
+          const { chromium } = require('playwright');
+          const root = process.cwd();
+          const mime = {'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.md':'text/plain','.svg':'image/svg+xml','.woff2':'font/woff2','.png':'image/png','.webp':'image/webp','.webmanifest':'application/manifest+json'};
+          (async()=>{
+            const server = http.createServer((req,res)=>{
+              const name = decodeURIComponent(new URL(req.url,'http://localhost').pathname).replace(/^\/eu-hem-student-hub\//,'');
+              const file = path.resolve(root,name||'index.html');
+              if(!file.startsWith(root+path.sep)||!fs.existsSync(file)||!fs.statSync(file).isFile()){res.writeHead(404);return res.end('missing');}
+              res.writeHead(200,{'Content-Type':mime[path.extname(file)]||'application/octet-stream'});res.end(fs.readFileSync(file));
+            }).listen(0,'127.0.0.1');
+            await new Promise((resolve,reject)=>{server.once('listening',resolve);server.once('error',reject);});
+            const browser=await chromium.launch({args:['--no-sandbox']});
+            const errors=[];
+            try {
+              for (const [width,scheme] of [[1440,'light'],[390,'dark'],[320,'light']]) {
+                const context=await browser.newContext({viewport:{width,height:900},colorScheme:scheme,serviceWorkers:'block',reducedMotion:'reduce'});
+                await context.route(/^https?:\/\//,route=>new URL(route.request().url()).hostname==='127.0.0.1'?route.continue():route.abort());
+                const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
+                await page.goto(`http://127.0.0.1:${server.address().port}/eu-hem-student-hub/fhe-session-7.html`);
+                await page.locator('#session7-page:not([hidden])').waitFor();
+                assert.match(await page.locator('.selection-session-hero h1').innerText(),/competitive insurance/i);
+                assert.match(await page.locator('.hero-meta').innerText(),/30 practice questions/);
+                assert.match(await page.locator('.hero-meta').innerText(),/36 flashcards/);
+                assert.match(await page.locator('.hero-meta').innerText(),/6 interactive tools/);
+                assert.equal(await page.locator('[data-session7-tab]').count(),4);
+                await page.locator('[data-session7-tab="explore"]').click();
+                assert.equal(await page.locator('[data-session7-view="explore"] .activity-card').count(),6);
+                await page.locator('[data-session7-tab="practice"]').click();
+                await page.locator('[data-session7-view="practice"] .quiz-card h2').waitFor();
+                await page.locator('[data-session7-tab="flashcards"]').click();
+                assert.match(await page.locator('.session6-flashcard .eyebrow').innerText(),/1 \/ 36/);
+                assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false);
+                await context.close();
+              }
+              assert.deepEqual(errors,[]);
+              console.log('PASS: Session 7 workspace loads all four modes, six tools, 30 questions and 36 flashcards without browser errors or mobile overflow.');
+            } finally { await browser.close(); await new Promise(r=>server.close(r)); }
+          })().catch(error=>{console.error(error);process.exitCode=1;});
+          NODE
