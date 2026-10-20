@@ -16,7 +16,8 @@ function extract(name, nextMarker) {
   const arrayStart = source.indexOf("[", start);
   const end = source.indexOf(`\n\n  ${nextMarker}`, arrayStart);
   if (end < 0) throw new Error(`Could not find the end of ${name}`);
-  return vm.runInNewContext(`(${source.slice(arrayStart, end).trim()})`, { TOPIC_ID });
+  const expression = source.slice(arrayStart, end).trim().replace(/;$/, "");
+  return vm.runInNewContext(`(${expression})`, { TOPIC_ID });
 }
 
 const additions = {
