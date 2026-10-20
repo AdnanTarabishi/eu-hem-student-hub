@@ -4,11 +4,19 @@ PASS Topics: search, modules, syllabus-only state, original reader, saved IDs an
 PASS Resources: pinned official links, source filters, saved-list integrity and honest reference-only entries.
 PASS Partial failure: a failed timetable does not hide a working exam feed.
 PASS Calendar fallback: explicit provenance, no invented times and no unconfirmed calendar export.
-PASS Empty and offline courses retain all four tabs and official recovery links.
-PASS A delayed feed does not erase topic searches or learner interactions.
-PASS Right to Health: all ten guide links, reader, reading caveats and supplied course notices preserved.
-PASS Deep links beyond pagination, invalid hashes, keyboard navigation and browser Back.
-PASS Session filtering stays in Bologna time even when the browser is abroad.
-PASS The shared design loads for all eight existing courses.
-PASS 32 layout cases: all four sections, four screen widths, both themes, no horizontal page overflow.
-PASS: 13 course-interior test groups; no uncaught browser errors.
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /could not be retrieved/. Input:
+
+'Checking exam dates…\n' +
+  '\n' +
+  'Assessment information is available below while dates load.'
+
+    at /home/runner/work/eu-hem-student-hub/eu-hem-student-hub/tests/notes/course-interiors.test.js:107:12 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'Checking exam dates…\n' +
+    '\n' +
+    'Assessment information is available below while dates load.',
+  expected: /could not be retrieved/,
+  operator: 'match',
+  diff: 'simple'
+}
