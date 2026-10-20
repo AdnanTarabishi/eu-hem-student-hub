@@ -6,6 +6,7 @@ const path = require("path");
 const vm = require("vm");
 
 const ROOT = path.join(__dirname, "..");
+const TOPIC_ID = "fund-health-economics.insurance-demand";
 const source = fs.readFileSync(path.join(ROOT, "fhe-session-6.js"), "utf8");
 
 function extract(name, nextMarker) {
@@ -15,7 +16,7 @@ function extract(name, nextMarker) {
   const arrayStart = source.indexOf("[", start);
   const end = source.indexOf(`\n\n  ${nextMarker}`, arrayStart);
   if (end < 0) throw new Error(`Could not find the end of ${name}`);
-  return vm.runInNewContext(`(${source.slice(arrayStart, end).trim()})`, Object.create(null));
+  return vm.runInNewContext(`(${source.slice(arrayStart, end).trim()})`, { TOPIC_ID });
 }
 
 const additions = {
