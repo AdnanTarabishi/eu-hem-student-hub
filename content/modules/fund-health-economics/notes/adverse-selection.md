@@ -1,3 +1,8 @@
+---
+topic: fund-health-economics.adverse-selection
+updated: 2026-10-20
+---
+
 # Session 7 — Insurance II: adverse selection, social insurance and premium risk
 
 ## Learning goals
@@ -244,3 +249,17 @@ The Rothschild–Stiglitz model produces three main predictions:
 3. the market may fail to reach an equilibrium.
 
 Compulsory partial pooling can improve efficiency and welfare by moving low risks closer to full coverage and moderately subsidising high risks. Long-run cross-subsidies are central to making coverage affordable after people become high risk.
+
+
+## 5-minute review
+
+- Random expenditure variation creates the core value of insurance; systematic variation drives pricing and selection problems.
+- With hidden risk, generous coverage attracts a higher-risk mix and can become expensive through adverse selection.
+- The mixed-pool break-even premium is `πP = [λpL + (1−λ)pH]I`.
+- In `yH–yS` space, full insurance lies on the 45-degree line and a type-p zero-profit line has slope `−(1−p)/p`.
+- First-best type-specific full insurance is not incentive compatible because high risks imitate the low-risk contract.
+- Competitive cream-skimming destroys pooling equilibria in the standard Rothschild–Stiglitz argument.
+- A separating equilibrium gives H fair full insurance and L fair partial insurance, so low risks are quantity constrained.
+- When low risks are a large majority, the competitive market may have no equilibrium.
+- A suitable compulsory pooling base plus supplementary insurance can improve welfare by subsidising H and relaxing L rationing.
+- Premium risk is the risk of higher future premiums after health information reveals a persistently higher expected cost.

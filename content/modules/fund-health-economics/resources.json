@@ -80,5 +80,14 @@
     "date": "2026-10-20",
     "topic": "fund-health-economics.insurance-demand",
     "description": "Official University of Bologna materials for Fundamentals in Health Economics. Sign in with your UniBo account."
+  },
+  {
+    "id": "fund-health-economics.r.207",
+    "title": "Official Session 7 materials on Virtuale",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/course/view.php?id=80559",
+    "date": "2026-10-20",
+    "topic": "fund-health-economics.adverse-selection",
+    "description": "Official University of Bologna materials for Fundamentals in Health Economics. Sign in with your UniBo account."
   }
 ]

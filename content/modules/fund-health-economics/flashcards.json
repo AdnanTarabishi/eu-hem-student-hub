@@ -784,5 +784,221 @@
     "topic": "fund-health-economics.insurance-demand",
     "front": "Which Session 6 assumption is relaxed in Session 7?",
     "back": "Session 7 introduces heterogeneous hidden risk types, so consumers can know more about their sickness probability than insurers."
+  },
+  {
+    "id": "fund-health-economics.fc.301",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What is social insurance in Session 7?",
+    "back": "Transfers linked to events such as unemployment, disability, ageing or illness; the lecture frames these mainly as transfers across states or time within an individual."
+  },
+  {
+    "id": "fund-health-economics.fc.302",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "How does social insurance contrast with means-tested welfare in the lecture?",
+    "back": "Social insurance is framed as a transfer within an individual across states or time, whereas welfare redistributes across individuals according to means tests."
+  },
+  {
+    "id": "fund-health-economics.fc.303",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What is the central second-best trade-off in social insurance?",
+    "back": "Risk reduction and smoother consumption versus incentive distortions, inefficient behaviour and deadweight loss."
+  },
+  {
+    "id": "fund-health-economics.fc.304",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "Which component of health expenditure creates the basic demand for insurance?",
+    "back": "The random or residual component, because it makes an individual's future expenditure uncertain."
+  },
+  {
+    "id": "fund-health-economics.fc.305",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "Why does systematic variation matter for insurance markets?",
+    "back": "Predictable differences in expected expenditure affect premiums, selection, affordability and the distribution of costs across risk groups."
+  },
+  {
+    "id": "fund-health-economics.fc.306",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What information problem generates adverse selection?",
+    "back": "Consumers know more about their probability of becoming sick or expected losses than insurers do, or insurers cannot use that information."
+  },
+  {
+    "id": "fund-health-economics.fc.307",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What is adverse selection in plan competition?",
+    "back": "More generous coverage disproportionately attracts higher-risk people, raising its average expected cost and premium."
+  },
+  {
+    "id": "fund-health-economics.fc.308",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What do pL and pH denote?",
+    "back": "The sickness probabilities of low-risk/robust and high-risk/frail individuals, with pL < pH."
+  },
+  {
+    "id": "fund-health-economics.fc.309",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What does λ denote in the Rothschild–Stiglitz setup?",
+    "back": "The fraction of low-risk individuals in the population or insurance pool."
+  },
+  {
+    "id": "fund-health-economics.fc.310",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What would type-specific fair premiums be if risk were observable?",
+    "back": "πL = pL I and πH = pH I."
+  },
+  {
+    "id": "fund-health-economics.fc.311",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What is the actuarially fair average premium for a mixed pool?",
+    "back": "π = [λpL + (1−λ)pH]I."
+  },
+  {
+    "id": "fund-health-economics.fc.312",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "Why can a full plan cost more than a partial plan for two separate reasons?",
+    "back": "It pays a larger indemnity and it may attract a higher-risk mix of enrollees."
+  },
+  {
+    "id": "fund-health-economics.fc.313",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What does the endowment point E represent in yH–yS space?",
+    "back": "Income in the healthy and sick states before purchasing insurance."
+  },
+  {
+    "id": "fund-health-economics.fc.314",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "How does contract (π,I) move the endowment point?",
+    "back": "Healthy-state income falls by π, while sick-state income rises by the net payout I−π."
+  },
+  {
+    "id": "fund-health-economics.fc.315",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What does the 45-degree line represent in contract space?",
+    "back": "State-independent income, yS = yH, corresponding to full insurance."
+  },
+  {
+    "id": "fund-health-economics.fc.316",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What is the slope of a type-p zero-profit line in yH–yS space?",
+    "back": "−(1−p)/p."
+  },
+  {
+    "id": "fund-health-economics.fc.317",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "Where are profitable contracts relative to a type's zero-profit line in the lecture diagram?",
+    "back": "Below the zero-profit line; contracts above it generate expected losses for the insurer."
+  },
+  {
+    "id": "fund-health-economics.fc.318",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "Why is the frail/high-risk indifference curve flatter at a common contract point?",
+    "back": "The high-risk type reaches the sick state more often and therefore values sick-state income more relative to healthy-state income."
+  },
+  {
+    "id": "fund-health-economics.fc.319",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What are the core Rothschild–Stiglitz assumptions used in Session 7?",
+    "back": "Two hidden risk types, a static model, no moral hazard, perfect competition, break-even insurers and one contract chosen per individual."
+  },
+  {
+    "id": "fund-health-economics.fc.320",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "How is a Rothschild–Stiglitz equilibrium defined in the lecture?",
+    "back": "Consumers choose their preferred offered contract and all firms earn zero expected profits."
+  },
+  {
+    "id": "fund-health-economics.fc.321",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What is a pooling equilibrium?",
+    "back": "Both risk types choose the same insurance contract."
+  },
+  {
+    "id": "fund-health-economics.fc.322",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What is a separating equilibrium?",
+    "back": "Different risk types self-select into different contracts."
+  },
+  {
+    "id": "fund-health-economics.fc.323",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "Why are the symmetric-information first-best contracts not an equilibrium under hidden types?",
+    "back": "High risks would imitate low risks and choose the low-risk full-insurance contract, causing insurer losses."
+  },
+  {
+    "id": "fund-health-economics.fc.324",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What transfer occurs in an actuarially fair pooling contract?",
+    "back": "Low risks pay more than their own expected payout and high risks pay less, producing a transfer from L to H."
+  },
+  {
+    "id": "fund-health-economics.fc.325",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "Why does competition drive out a candidate pooling equilibrium?",
+    "back": "A firm can offer a profitable contract preferred by low risks but not by high risks, cream-skimming the pool."
+  },
+  {
+    "id": "fund-health-economics.fc.326",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What contract does the high-risk type receive in a separating equilibrium?",
+    "back": "Its first-best, fair full-insurance contract with a high premium."
+  },
+  {
+    "id": "fund-health-economics.fc.327",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "Why does the low-risk type receive only partial insurance in a separating equilibrium?",
+    "back": "Coverage is restricted to make the low-risk contract unattractive to high risks; this is the incentive-compatibility price of separation."
+  },
+  {
+    "id": "fund-health-economics.fc.328",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What does it mean that low risks are quantity constrained or rationed?",
+    "back": "They cannot buy the full amount of insurance they prefer, even though they would pay their own fair premium for it."
+  },
+  {
+    "id": "fund-health-economics.fc.329",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "How can a large λ affect equilibrium existence?",
+    "back": "When low risks are a large majority, a profitable pooling deviation may destabilise the separating menu and the market may have no equilibrium."
+  },
+  {
+    "id": "fund-health-economics.fc.330",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "Why can compulsory pooling improve welfare?",
+    "back": "It can cross-subsidise high risks and relax the low-risk coverage constraint, allowing both types to reach a better feasible allocation."
+  },
+  {
+    "id": "fund-health-economics.fc.331",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What policy menu does Session 7 associate with partial pooling?",
+    "back": "Compulsory basic insurance plus supplementary private insurance, or an equivalent tax on partial coverage and subsidy to fuller coverage."
+  },
+  {
+    "id": "fund-health-economics.fc.332",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What is premium risk?",
+    "back": "The risk that a person's systematically expected future healthcare costs and therefore actuarial premium rise after their risk class worsens."
+  },
+  {
+    "id": "fund-health-economics.fc.333",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What is the main limitation of a lifetime insurance contract?",
+    "back": "It can preserve pooling but locks people into a long commitment, may be hard to enforce and limits switching and competition."
+  },
+  {
+    "id": "fund-health-economics.fc.334",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What is a guaranteed renewable contract?",
+    "back": "A contract with front-loaded premiums designed so both robust and frail consumers voluntarily remain, though switching remains limited."
+  },
+  {
+    "id": "fund-health-economics.fc.335",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What is the Cochrane lifetime-contract idea in the lecture?",
+    "back": "Insurers provide premium insurance: a health-status shock triggers a payment that helps finance higher future insurance premiums."
+  },
+  {
+    "id": "fund-health-economics.fc.336",
+    "topic": "fund-health-economics.adverse-selection",
+    "front": "What are the three major RS predictions emphasised in the conclusion?",
+    "back": "Competition eliminates pooling equilibria; separating equilibria ration robust types and make insurance costly for frail types; and the market may fail to reach equilibrium."
   }
 ]

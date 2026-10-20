@@ -1817,5 +1817,410 @@
     "question": "Why can two non-ideal contracts — one fuller but more expensive and one fairer but more partial — not be ranked using the labels alone?",
     "answer": "Fullness reduces state-dependent risk, while a higher premium lowers income in both states. The preferred contract depends on the exact premium, indemnity, loss probability, loss size and the person's utility curvature. A sufficiently high loading can outweigh fuller protection, while modest loading may be worth paying for more coverage.",
     "explanation": "The lecture's final comparison is about a trade-off, not a universal ordering of all non-ideal contracts."
+  },
+  {
+    "id": "fund-health-economics.q.301",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Social insurance",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "Which statement best matches the lecture's distinction between social insurance and means-tested welfare?",
+    "options": [
+      "Both are identical transfers across people",
+      "Social insurance mainly transfers across states or time within an individual, while welfare is means-tested across individuals",
+      "Social insurance never involves government",
+      "Welfare only covers health shocks"
+    ],
+    "answer": "B",
+    "explanation": "The lecture uses the within-versus-across distinction to motivate social insurance."
+  },
+  {
+    "id": "fund-health-economics.q.302",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Variation",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "Which component of healthcare expenditure is the primary reason insurance exists?",
+    "options": [
+      "The random residual component",
+      "Only age variation",
+      "Only provider prices",
+      "Perfectly predictable expenditure"
+    ],
+    "answer": "A",
+    "explanation": "Unpredictable variation creates utility gains from pooling risk."
+  },
+  {
+    "id": "fund-health-economics.q.303",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Asymmetric information",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "When consumers know their expected losses better than insurers, what problem may limit efficiency?",
+    "options": [
+      "Moral hazard only",
+      "Adverse selection",
+      "Perfect risk adjustment",
+      "State independence"
+    ],
+    "answer": "B",
+    "explanation": "Hidden risk type changes plan choice and the composition of insurance pools."
+  },
+  {
+    "id": "fund-health-economics.q.304",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Average premium",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "A pool contains fraction λ of low risks with probability pL and the rest high risks with probability pH. What is the break-even premium for indemnity I?",
+    "options": [
+      "(pH−pL)I",
+      "[λpL+(1−λ)pH]I",
+      "λpH I",
+      "pL pH I"
+    ],
+    "answer": "B",
+    "explanation": "The pooling premium uses the population-weighted average sickness probability."
+  },
+  {
+    "id": "fund-health-economics.q.305",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Adverse selection",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "Why can a generous health plan charge a higher premium even beyond the direct cost of greater coverage?",
+    "options": [
+      "It attracts a healthier mix",
+      "It disproportionately attracts sicker enrollees",
+      "Its indemnity is always zero",
+      "Competition forces all premiums to be identical"
+    ],
+    "answer": "B",
+    "explanation": "Adverse selection worsens the plan's risk mix."
+  },
+  {
+    "id": "fund-health-economics.q.306",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Contract space",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "A contract charges premium π and pays indemnity I. Relative to endowment E, what are the changes in healthy- and sick-state income?",
+    "options": [
+      "+π and −I",
+      "−π and +(I−π)",
+      "+I and −π",
+      "−I and +π"
+    ],
+    "answer": "B",
+    "explanation": "The premium is paid in both states; the indemnity is received only in the sick state."
+  },
+  {
+    "id": "fund-health-economics.q.307",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Zero-profit line",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "What is the slope of the zero-profit line for sickness probability p in yH–yS space?",
+    "options": [
+      "−p/(1−p)",
+      "−(1−p)/p",
+      "+(1−p)/p",
+      "−1"
+    ],
+    "answer": "B",
+    "explanation": "The break-even condition implies yS=y−M+[(1−p)/p](y−yH)."
+  },
+  {
+    "id": "fund-health-economics.q.308",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Preferences",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "At a common contract point, why is the high-risk/frail indifference curve flatter?",
+    "options": [
+      "The frail type values healthy income more",
+      "The frail type reaches the sick state more often and values sick-state income more",
+      "The frail type has no risk aversion",
+      "The low-risk type has a larger medical loss"
+    ],
+    "answer": "B",
+    "explanation": "Different state probabilities generate the single-crossing pattern used for self-selection."
+  },
+  {
+    "id": "fund-health-economics.q.309",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Equilibrium",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "Which two conditions define equilibrium in the lecture?",
+    "options": [
+      "Government profit and consumer equality",
+      "Consumer optimisation and zero expected profit for firms",
+      "Full insurance and identical premiums",
+      "Pooling and moral hazard"
+    ],
+    "answer": "B",
+    "explanation": "Consumers choose their best available contract and competition drives firms to break even."
+  },
+  {
+    "id": "fund-health-economics.q.310",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "First best",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "Why do first-best type-specific full-insurance contracts fail under hidden risk?",
+    "options": [
+      "Low risks imitate high risks",
+      "High risks imitate the cheaper low-risk contract",
+      "No one wants full insurance",
+      "Insurers observe risk perfectly"
+    ],
+    "answer": "B",
+    "explanation": "The low-risk contract is attractive to high risks but priced using pL, so it would generate losses."
+  },
+  {
+    "id": "fund-health-economics.q.311",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Pooling",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "In an actuarially fair pooling contract, which statement is correct?",
+    "options": [
+      "Both types pay exactly their own expected payout",
+      "Low risks subsidise high risks",
+      "High risks subsidise low risks",
+      "There is no redistribution"
+    ],
+    "answer": "B",
+    "explanation": "The common premium exceeds pL I and is below pH I."
+  },
+  {
+    "id": "fund-health-economics.q.312",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Pooling non-existence",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "What destabilises a candidate pooling equilibrium in the RS model?",
+    "options": [
+      "A loss-making contract preferred by everyone",
+      "A profitable cream-skimming contract preferred by low risks but not high risks",
+      "A mandatory public contract",
+      "A contract above every zero-profit line"
+    ],
+    "answer": "B",
+    "explanation": "Competitive entry can separate the profitable low-risk part of the pool."
+  },
+  {
+    "id": "fund-health-economics.q.313",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Separating equilibrium",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "What menu characterises the separating equilibrium described in the lecture?",
+    "options": [
+      "Full coverage for both types at one premium",
+      "Full high-premium coverage for H and partial low-premium coverage for L",
+      "No insurance for H and full insurance for L",
+      "Partial coverage for H and full coverage for L"
+    ],
+    "answer": "B",
+    "explanation": "The low-risk contract is deliberately limited to deter high-risk imitation."
+  },
+  {
+    "id": "fund-health-economics.q.314",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Low-risk rationing",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "Why is the low-risk type quantity constrained in a separating equilibrium?",
+    "options": [
+      "It dislikes insurance",
+      "It must accept partial coverage to separate from high risks",
+      "Its fair premium is higher than pH I",
+      "The insurer observes its type"
+    ],
+    "answer": "B",
+    "explanation": "The coverage restriction is an incentive-compatibility device, not the low-risk consumer's first-best choice."
+  },
+  {
+    "id": "fund-health-economics.q.315",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Government intervention",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "How can a compulsory partial pooling contract improve welfare in the lecture's model?",
+    "options": [
+      "By eliminating all cross-subsidies",
+      "By subsidising H and relaxing L's rationing constraint",
+      "By making risk types observable",
+      "By banning supplementary insurance"
+    ],
+    "answer": "B",
+    "explanation": "A suitable mandatory base contract can lower the cost of separation and move both types to preferred allocations."
+  },
+  {
+    "id": "fund-health-economics.q.316",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "true-false",
+    "difficulty": "easy",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "If all medical expenditure variation were random, uniform premiums and competitive insurance markets would work relatively well in the lecture's benchmark.",
+    "answer": true,
+    "explanation": "True. Predictable systematic differences are what complicate pricing and equity."
+  },
+  {
+    "id": "fund-health-economics.q.317",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "true-false",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "If spending were exactly predictable for each person, the usual risk-pooling utility gain from insurance would disappear.",
+    "answer": true,
+    "explanation": "True. Insurance against a known expense becomes prepayment rather than risk reduction."
+  },
+  {
+    "id": "fund-health-economics.q.318",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "true-false",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "A pooling premium is actuarially fair for each risk type individually.",
+    "answer": false,
+    "explanation": "False. It breaks even for the mixed pool but is too high for L and too low for H."
+  },
+  {
+    "id": "fund-health-economics.q.319",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "true-false",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "The 45-degree line in yH–yS space represents full insurance.",
+    "answer": true,
+    "explanation": "True. Points on it have equal income across health states."
+  },
+  {
+    "id": "fund-health-economics.q.320",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "true-false",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "Contracts above a type's zero-profit line are profitable for insurers.",
+    "answer": false,
+    "explanation": "False. In the lecture's orientation, they generate expected losses; profitable contracts lie below."
+  },
+  {
+    "id": "fund-health-economics.q.321",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "true-false",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "A separating equilibrium reveals risk type ex post through the contract each consumer selects.",
+    "answer": true,
+    "explanation": "True. Self-selection sorts types into different contracts."
+  },
+  {
+    "id": "fund-health-economics.q.322",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "true-false",
+    "difficulty": "hard",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "A separating equilibrium always exists regardless of the population share λ.",
+    "answer": false,
+    "explanation": "False. The lecture emphasises that equilibrium may fail when low risks are a large majority."
+  },
+  {
+    "id": "fund-health-economics.q.323",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "true-false",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "Compulsory pooling necessarily means that supplementary private insurance must be prohibited.",
+    "answer": false,
+    "explanation": "False. The lecture explicitly allows supplementary insurance on top of a mandatory basic policy."
+  },
+  {
+    "id": "fund-health-economics.q.324",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "Explain the distinction between random and systematic variation in healthcare expenditure and why each matters.",
+    "answer": "Random variation is the unpredictable residual component that creates demand for insurance. Systematic variation is predictable across people or groups and shapes premiums, selection, affordability and redistribution. If all variation were random, uniform premiums would work well; if every expense were perfectly predictable, the risk-reduction value of insurance would disappear.",
+    "explanation": "A strong answer connects random variation to risk pooling and systematic variation to market functioning."
+  },
+  {
+    "id": "fund-health-economics.q.325",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "Derive the fair pooling premium for two risk types.",
+    "answer": "Let λ be the low-risk share, pL the low-risk probability, pH the high-risk probability and I the indemnity. Expected payout per enrollee is [λpL+(1−λ)pH]I, so the break-even pooling premium is πP=[λpL+(1−λ)pH]I.",
+    "explanation": "State the weighted average probability before multiplying by coverage."
+  },
+  {
+    "id": "fund-health-economics.q.326",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "Why can no pooling equilibrium survive competitive entry in the standard RS argument?",
+    "answer": "The pooling contract cross-subsidises high risks and overcharges low risks relative to their own expected cost. Because preferences satisfy a single-crossing pattern, an entrant can design a slightly different partial contract that low risks prefer, high risks reject and that earns positive profit on the selected low-risk group. The deviation breaks the pool.",
+    "explanation": "Mention cream-skimming, profitability and different type preferences."
+  },
+  {
+    "id": "fund-health-economics.q.327",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "Describe the separating equilibrium and its welfare cost for low risks.",
+    "answer": "High risks obtain fair full insurance at their high actuarial premium. Low risks obtain a fair but partial contract chosen so high risks do not imitate it. The low-risk type is therefore quantity constrained: it receives less coverage than its first-best full insurance even though it would pay its own fair premium.",
+    "explanation": "The key welfare loss is incomplete insurance imposed for incentive compatibility."
+  },
+  {
+    "id": "fund-health-economics.q.328",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "How can compulsory basic pooling plus supplementary insurance create a Pareto improvement in the lecture's framework?",
+    "answer": "The mandatory base policy charges the population-average premium and transfers resources from low to high risks. Starting from that new endowment, supplementary separating contracts can give high risks the subsidy benefit while allowing low risks to buy more complete total coverage than under the original separating equilibrium. A suitably chosen policy can therefore make both types better off.",
+    "explanation": "Not every mandate is automatically Pareto improving; the contract must be appropriately chosen."
+  },
+  {
+    "id": "fund-health-economics.q.329",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "Define premium risk and explain why annual spot insurance does not fully insure it.",
+    "answer": "Premium risk is the risk that new information moves a person into a higher expected-cost class, making future actuarial premiums rise. Annual spot insurance covers current medical expenditure risk but reprices future contracts as expected costs change, so it does not protect the person against becoming persistently expensive to insure.",
+    "explanation": "Distinguish medical-expense risk from future-premium risk."
+  },
+  {
+    "id": "fund-health-economics.q.330",
+    "topic": "fund-health-economics.adverse-selection",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 7",
+    "question": "Compare the three theoretical market responses to premium risk discussed in the lecture.",
+    "answer": "A lifetime contract preserves pooling through a binding long-term commitment but restricts switching and may be hard to enforce. A guaranteed renewable contract front-loads premiums so consumers remain voluntarily, but switching and competitive pressure remain limited. A Cochrane-style contract adds premium insurance: a deterioration in health status triggers a payment that finances higher future premiums and can preserve mobility more directly.",
+    "explanation": "Cover commitment, renewability and premium-insurance compensation."
   }
 ]
