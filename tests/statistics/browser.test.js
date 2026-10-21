@@ -213,7 +213,7 @@ const mime = {
     await open("stata");
     assert.match(
       await page.locator("#study-view").innerText(),
-      /Upcoming in the course/,
+      /Workshop preparation examples/,
     );
     await page.locator('[data-workshop="7"]').check();
     await page.locator('input[name="stata-summary"][value="0"]').check();

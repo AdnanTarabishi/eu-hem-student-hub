@@ -66,7 +66,7 @@ const PLAN = JSON.stringify({ version: 1, cohort: "2026-27", term: "y1-s1", choi
     if (storageBlocked) await context.addInitScript(() => Object.defineProperty(window, "localStorage", { get() { throw new DOMException("Storage blocked", "SecurityError"); } }));
     if (Object.keys(storage).length) await context.addInitScript(items => { for (const [key, value] of Object.entries(items)) localStorage.setItem(key, value); }, storage);
     let failed = false;
-    let timetableFailures = 0;
+    let timetableFailures = 0, examFailures = 0;
     await context.route(/^https?:\/\//, route => {
       const address = new URL(route.request().url());
       if (failure === "programme" && !failed && address.hostname === "127.0.0.1" && address.pathname.endsWith("/content/programme.json")) {
@@ -80,11 +80,13 @@ const PLAN = JSON.stringify({ version: 1, cohort: "2026-27", term: "y1-s1", choi
         for (const cohort of programme.cohorts) for (const term of cohort.terms) for (const course of term.courses) delete course.assessmentNotice;
         return route.fulfill({ contentType: "application/json", body: JSON.stringify(programme) });
       }
+      // Outage cases deliberately have no published snapshot; dedicated copy tests cover recovery.
+      if (/\/calendar\/(?:timetable|exams)\.json$/.test(address.pathname)) return route.fulfill({status:404,body:"No fixture snapshot"});
       const feed = address.hostname === "corsi.unibo.it" && address.pathname.includes("@@orario_reale_json");
       const dates = address.hostname === "corsi.unibo.it" && address.pathname.endsWith("/exam-dates");
       if (feed || dates) {
         if (feed && failure === "timetable" && ++timetableFailures <= 3) return route.fulfill({ status: 503, body: "unavailable" });
-        if (dates && !failed && failure === "exams") { failed = true; return route.fulfill({ status: 503, body: "unavailable" }); }
+        if (dates && failure === "exams" && ++examFailures <= 3) return route.fulfill({ status: 503, body: "unavailable" });
         return route.fulfill({ contentType: feed ? "application/json" : "text/html", body: feed ? JSON.stringify(timetable) : examHtml });
       }
       return address.hostname === "127.0.0.1" ? route.continue() : route.abort();

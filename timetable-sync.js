@@ -1,7 +1,9 @@
 // Last verified PUBLIC UniBo sessions only. No student preferences or personal data.
 const TimetableSync = (() => {
   const STORAGE_KEY = "euhem-official-timetable-snapshot-v1";
-  const MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
+  // Keep a dated public copy through a prolonged source outage. It is always
+  // displayed as stale; this limit never establishes source freshness.
+  const MAX_AGE_MS = 90 * 24 * 60 * 60 * 1000;
 
   function read(storage, cohort, now = Date.now()) {
     try {

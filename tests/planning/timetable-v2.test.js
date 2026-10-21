@@ -26,6 +26,7 @@ const FEED = [make('96500','2026-10-07','07:00','QA Law Teacher'), make('96498',
     let attempts=0;
     await context.route('**/*',route=>{
       const u=new URL(route.request().url());
+      if (/\/calendar\/(?:timetable|exams)\.json$/.test(u.pathname)) return route.fulfill({status:404,body:"No fixture snapshot"});
       if(u.hostname==='corsi.unibo.it' && u.pathname.includes('@@orario_reale_json')) { attempts++; return fail && attempts<=3 ? route.fulfill({status:503,body:'unavailable'}) : route.fulfill({contentType:'application/json',body:JSON.stringify(feed)}); }
       return u.origin===new URL(base).origin ? route.continue() : route.abort();
     });

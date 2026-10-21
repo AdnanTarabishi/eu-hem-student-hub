@@ -10,6 +10,7 @@ const dash = {
   programme: null, index: null, mine: null,
   sessions: null, selectedDay: null, dayBounds: null, nextClassDay: false,
   exams: null, examIndex: 0, dayControls: null, examControls: null,
+  timetableSource:null, examSource:null,
 };
 
 // ----- Pure helpers (tested) -----
@@ -173,6 +174,7 @@ function renderToday(sessions, announce = false) {
     if (announce) dash.dayControls.status.textContent = `${dateLabel}. ${selected.length ? `${selected.length} class${selected.length === 1 ? "" : "es"}.` : "No classes scheduled."}`;
   }
   content.replaceChildren();
+  dashboardSourceNote(box,dash.timetableSource);
   if (!selected.length) {
     const noMore = isToday && !dash.sessions.some((session) => session.dateKey > today);
     content.appendChild(createElement("p", "dash-empty", noMore ? "No more classes this semester. 🎉" : "No classes scheduled for this day."));
@@ -186,6 +188,14 @@ function renderToday(sessions, announce = false) {
     content.appendChild(classRow(session, state));
   }
   if (selected.length > 4) content.appendChild(createElement("p", "schedule-meta", `+ ${selected.length - 4} more`));
+}
+
+function dashboardSourceNote(box, source) {
+  box.querySelector(".dash-source-copy")?.remove();
+  if(!source?.cachedAt&&(!source?.sourceType||source.sourceType==="live"))return;
+  const stamp=source.verifiedAt||source.cachedAt;
+  const date=stamp&&Number.isFinite(Date.parse(stamp))?formatDay(stamp.slice(0,10),{day:"numeric",month:"short",year:"numeric"}):"verification time unknown";
+  box.appendChild(createElement("p","schedule-meta dash-source-copy",`Saved copy · last verified ${date}. Check UniBo for changes.`));
 }
 
 function renderExam(exams, announce = false) {
@@ -214,6 +224,7 @@ function renderExam(exams, announce = false) {
       !dash.exams.length || dash.examIndex === dash.exams.length - 1);
   }
   content.replaceChildren();
+  dashboardSourceNote(box,dash.examSource);
   if (!dash.exams.length) {
     content.appendChild(createElement("p", "dash-empty", "No upcoming exam dates published."));
     return;
@@ -228,7 +239,7 @@ function renderExam(exams, announce = false) {
   content.appendChild(createElement("strong", "dash-exam-title", exam.title));
   content.appendChild(createElement("p", "schedule-meta",
     `${formatDay(exam.dateKey, { weekday: "short", day: "numeric", month: "short" })}${exam.time ? ", " + exam.time : ""} · ${exam.type || ""}`));
-  const registration = registrationText(exam, today);
+  const registration = dash.examSource?.cachedAt || dash.examSource?.sourceType&&dash.examSource.sourceType!=="live" ? null : registrationText(exam, today);
   if (registration) content.appendChild(createElement("span", registration.open ? "reg-chip is-open" : "reg-chip", registration.text));
 }
 
@@ -324,9 +335,9 @@ async function initDashboard() {
     const term = currentTerm(dash.programme);
     const isMine = (codes) => !dash.mine || codes.some((c) => dash.mine.includes(c));
     const [sessions, exams] = await Promise.allSettled([withTimeout(fetchTimetable(cohort.sources.timetableFeed)), withTimeout(fetchExams(cohort.sources.examDates))]);
-    if (sessions.status === "fulfilled") renderToday(sessions.value.filter((s) => isMine([s.moduleCode])));
+    if (sessions.status === "fulfilled") {dash.timetableSource=sessions.value.sourceMeta;renderToday(sessions.value.filter((s) => isMine([s.moduleCode])));}
     else document.getElementById("dash-today").replaceChildren(createElement("p", "dash-empty", "The timetable couldn't be loaded from UniBo right now."));
-    if (exams.status === "fulfilled") renderExam(matchExamsToTerm(exams.value, term).filter((e) => isMine(e.codes)));
+    if (exams.status === "fulfilled") {dash.examSource=exams.value.sourceMeta;renderExam(matchExamsToTerm(exams.value, term).filter((e) => isMine(e.codes)));}
     else document.getElementById("dash-exam").replaceChildren(createElement("p", "dash-empty", "Exam dates couldn't be loaded from UniBo right now."));
     // From programme.json, so it shows even when UniBo can't be reached
     const period = examPeriodText(cohort, todayKey());

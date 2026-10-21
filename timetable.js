@@ -549,7 +549,7 @@ function safeTimetableStorage() {
 function timetableCheckTime(iso) {
   if (!iso || !Number.isFinite(Date.parse(iso))) return "unknown time";
   return new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Rome",
-    day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }).format(new Date(iso)) + " Bologna time";
+    day: "numeric", month: "short", year:"numeric", hour: "2-digit", minute: "2-digit" }).format(new Date(iso)) + " Bologna time";
 }
 
 function renderTimetableSourceState() {
@@ -633,11 +633,12 @@ async function loadTimetable({ background = false } = {}) {
       : TimetableSync.read(safeTimetableStorage(), cohort.id);
 
     const sessions = await fetchTimetable(cohort.sources.timetableFeed);
-    const cachedAt = sessions.sourceMeta?.cachedAt;
+    const sourceMeta=sessions.sourceMeta||{};
+    const cachedAt = sourceMeta.cachedAt;
     // A service-worker fallback must never reset the 'verified' clock or
     // overwrite the last genuinely live snapshot with a potentially old copy.
-    timetable.stale = !!cachedAt;
-    timetable.verifiedAt = cachedAt || new Date().toISOString();
+    timetable.stale = !!cachedAt || !!sourceMeta.sourceType && sourceMeta.sourceType!=="live";
+    timetable.verifiedAt = sourceMeta.verifiedAt || cachedAt || (timetable.stale?null:new Date().toISOString());
     if (!timetable.stale) {
       const changes = TimetableSync.roomChanges(prior?.sessions, sessions);
       displayRoomChanges(changes);

@@ -306,11 +306,12 @@ function fillCourseExam(box, course) {
       actions.appendChild(register);
     } else actions.appendChild(officialExamLink());
     box.appendChild(actions);
-    box.appendChild(createElement("span", "notes-exam-source", landingExamState.source === "calendar" ? "Calendar copy · verify on UniBo" : "Source: UniBo exam dates"));
+    const copyDate=landingExamState.verifiedAt&&Number.isFinite(Date.parse(landingExamState.verifiedAt))?landingDate(landingExamState.verifiedAt.slice(0,10)):"verification time unknown";
+    box.appendChild(createElement("span", "notes-exam-source", landingExamState.source === "calendar" ? `Saved exam copy · last verified ${copyDate} · verify on UniBo` : "Source: UniBo exam dates"));
   } else {
     const message = !landingExamState.source && !landingExamState.error ? "Checking published exam dates…"
       : landingExamState.error && !landingExamState.source ? "Exam dates could not be loaded"
-      : landingExamState.source === "calendar" ? "No upcoming date in the calendar copy" : "No upcoming exam date published";
+      : landingExamState.source === "calendar" ? "No upcoming date in the saved copy" : "No upcoming exam date published";
     box.appendChild(createElement("p", "notes-exam-empty", message));
     if (landingExamState.source || landingExamState.error) box.appendChild(officialExamLink("Check official exam dates"));
   }
@@ -423,14 +424,10 @@ function loadLandingExams() {
   landingExamState.refreshing = true;
   updateLandingExamUI();
   landingExamRequest = (async () => {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 8000);
     try {
-      const response = await fetch(landingData.cohort.sources.examDates, { signal: controller.signal });
-      if (!response.ok) throw new Error("Official dates unavailable");
-      const text = await response.text();
-      if (!/<h3\b[^>]*role=["']tab["']/i.test(text) && !/no (?:upcoming |scheduled )?exam(?: dates)?s?\b|nessun appello|non sono presenti appelli/i.test(text)) throw new Error("Unrecognised exam page");
-      landingExamState = { source: "unibo", exams: matchExamsToTerm(parseExamsPage(text), landingData.term), refreshing: false, error: false };
+      const exams=await fetchExams(landingData.cohort.sources.examDates);
+      const meta=exams.sourceMeta||{},copy=!!meta.cachedAt||!!meta.sourceType&&meta.sourceType!=="live";
+      landingExamState = { source:copy?"calendar":"unibo", verifiedAt:meta.verifiedAt||meta.cachedAt||null, exams: matchExamsToTerm(exams, landingData.term), refreshing: false, error:copy };
     } catch {
       try {
         landingExamState = { source: "calendar", exams: await savedCalendarExams(), refreshing: false, error: true };
@@ -438,7 +435,6 @@ function loadLandingExams() {
         landingExamState = { source: "", exams: [], refreshing: false, error: true };
       }
     } finally {
-      clearTimeout(timer);
       landingExamRequest = null;
       updateLandingExamUI();
     }

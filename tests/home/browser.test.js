@@ -43,6 +43,8 @@ ok("no standalone-preview leftovers: one menu script, no demo dashboard text, no
     const context = await browser.newContext({ viewport, colorScheme: scheme, serviceWorkers: "block", reducedMotion: "reduce" });
     await context.clock.setFixedTime(new Date("2026-10-06T10:00:00+02:00"));
     await context.route(/unibo\.it/, (route) => route.abort());
+    // This fixture exercises a complete outage; dated-copy recovery is tested separately.
+    await context.route(/\/calendar\/(?:timetable|exams)\.json(?:\?|$)/,route=>route.fulfill({status:404,body:"No fixture snapshot"}));
     if (mapUnavailable) await context.route("**/assets/map/world-countries.svg", (route) => route.abort());
     if (storage) await context.addInitScript((items) => { for (const [k, v] of Object.entries(items)) localStorage.setItem(k, v); }, storage);
     const page = await context.newPage();

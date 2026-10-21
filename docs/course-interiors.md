@@ -16,7 +16,9 @@ Turn each course into a usable study workspace, continuing the resource-first No
 
 ## Sources, scope and boundaries
 
-Course facts still come from `content/programme.json` and course materials from the existing `content/modules/` files. No new dates, assessment rules, lectures, grades or source verification dates were invented. No professor files were reuploaded. Official materials stay on university platforms. No content JSON/Markdown records, saved IDs, progress keys, account features, tracking or remote storage were added or changed.
+Course facts come from `content/programme.json` and course materials from the existing `content/modules/` files. Correct dates and assessment records only against the relevant official source; never invent a verification time or an unpublished arrangement. Official materials stay on university platforms. Preserve student content IDs, saved progress keys and the existing privacy boundaries when updating a course.
+
+Schedule and Exam preserve each feed's `sourceMeta` before matching records to the course. Published or cached copies remain labelled with their recorded source-check time, or an explicit unknown time; browser connectivity does not establish live verification. Saved timetable copies remain browsable with a warning to confirm later changes. Saved exam copies do not claim registration is open or export an unconfirmed sitting. A failed request remains an unavailable-source state rather than an empty official schedule.
 
 A calendar entry is not exam registration. Live-feed exports reuse the existing calendar helper; where that helper estimates an end time or uses a missing-start placeholder, the interface says so. Calendar-copy fallback dates are not exported as confirmed sittings. Local progress is self-report, not proof of exam readiness. Resource host labels indicate the destination, not endorsement or independent fact checking.
 

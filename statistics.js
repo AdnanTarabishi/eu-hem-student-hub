@@ -338,12 +338,12 @@
     return (
       heading(
         "Read the output before drawing a conclusion.",
-        "Synthetic Stata-style outputs provide interpretation practice linked to upcoming workshops. Mark a workshop as covered when you have attended it, or open its preparation preview. Commands are shown as teaching references.",
+        "Synthetic Stata-style outputs provide interpretation practice linked to the course's Stata workshops. Mark a workshop as covered when you have attended it, or open its preparation examples. Commands are shown as teaching references.",
       ) +
       [7, 10]
         .map((number) => {
           const unlocked = state.workshops[number] === true;
-          return `<article class="study-card"><h3>Class ${number} · Stata workshop ${number === 7 ? 1 : 2}</h3><p class="study-meta">${unlocked ? "Marked covered on this device" : "Upcoming in the course · preparation examples"}</p><label class="study-check"><input type="checkbox" data-workshop="${number}" ${unlocked ? "checked" : ""}> I have covered this workshop</label><details ${unlocked ? "open" : ""}><summary>${unlocked ? "Workshop interpretation exercises" : "Preview preparation exercises"}</summary>${tools.stata
+          return `<article class="study-card"><h3>Class ${number} · Stata workshop ${number === 7 ? 1 : 2}</h3><p class="study-meta">${unlocked ? "Marked covered on this device" : "Workshop preparation examples"}</p><label class="study-check"><input type="checkbox" data-workshop="${number}" ${unlocked ? "checked" : ""}> I have covered this workshop</label><details ${unlocked ? "open" : ""}><summary>${unlocked ? "Workshop interpretation exercises" : "Preview preparation exercises"}</summary>${tools.stata
             .filter((ex) => ex.workshop === number)
             .map(
               (ex) =>

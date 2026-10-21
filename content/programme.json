@@ -14,7 +14,7 @@
       "lastChecked": "2026-10-03",
       "sources": {
         "structureDiagram": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/course-structure-diagram/piano/2026/6759/000/000/2026",
-        "timetableFeed": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/timetable/@@orario_reale_json?anno=1",
+        "timetableFeed": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/timetable/@@orario_reale_json?anno=1&start=2026-09-01&end=2026-12-31&calendar_view=",
         "examDates": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates"
       },
       "studyPlanSubmission": {
@@ -212,7 +212,7 @@
                     "Adelajda Matuka"
                   ],
                   "teachingStart": "2026-09-07",
-                  "teachingEnd": "2026-09-12",
+                  "teachingEnd": "2026-09-22",
                   "officialUrl": "https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/518755",
                   "virtualeUrl": "https://virtuale.unibo.it",
                   "description": "A short refresher on the core ideas of economics: how people and firms make choices, how markets reach equilibrium, and when markets fail.",

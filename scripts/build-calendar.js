@@ -5,7 +5,7 @@
 // - one calendar per possible study plan (e.g. eu-hem-2026-27-y1s1-96496-C8393-B1076.ics)
 // Courses, modules, study plan rules and the UniBo addresses all come from content/programme.json.
 //
-// Runs on GitHub Actions every few hours (see .github/workflows/update-calendar.yml).
+// Runs on GitHub Actions every hour (see .github/workflows/update-calendar.yml).
 // Run it yourself with:  node scripts/build-calendar.js
 //
 // The HTML reader mirrors unibo-data.js; sitting reconciliation and optional
@@ -16,6 +16,7 @@ const path = require("path");
 
 const programmeRules = require("../programme.js");
 const uniboData = require("../unibo-data.js");
+const examWorkspace = require("../exams-workspace.js");
 const PROGRAMME_FILE = path.join(__dirname, "..", "content", "programme.json");
 
 const OUTPUT_DIR = path.join(__dirname, "..", "calendar");
@@ -47,13 +48,20 @@ function htmlToText(html) {
 
 async function fetchTimetable(url) {
   // Shared retry policy with the live website, with longer backoff for Actions.
-  const { raw } = await uniboData.requestOfficialTimetable(url, {
+  const { raw, cachedAt, sourceUrl, sourceUrls } = await uniboData.requestOfficialTimetable(url, {
     attempts: 5, delayMs: 1500, timeoutMs: 20000,
   });
+  if (cachedAt) throw new Error("Timetable returned a saved response, not a fresh verification");
+  return { records: normalizeTimetableRecords(raw), sourceUrls: sourceUrls || [sourceUrl || url] };
+}
+
+function normalizeTimetableRecords(raw) {
   return raw.map((s) => {
     const classrooms = (s.aule || []).map(uniboData.timetableClassroomRecord);
     return {
       id: `${s.extCode}-${s.start}`,
+      dateKey: s.start.slice(0, 10),
+      time: s.time || `${s.start.slice(11, 16)} - ${s.end.slice(11, 16)}`,
       start: s.start, // "2026-09-07T09:00:00"
       end: s.end,
       moduleCode: s.cod_modulo,
@@ -68,15 +76,17 @@ async function fetchTimetable(url) {
 }
 
 async function fetchExams(url) {
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`Exams: HTTP ${response.status}`);
-  return parseExamsHtml(await response.text());
+  const { pages, cachedAt, sourceUrls } = await uniboData.requestOfficialExams(url, {
+    attempts: 4, delayMs: 1000, timeoutMs: 20000,
+  });
+  if (cachedAt) throw new Error("Exams returned a saved response, not a fresh verification");
+  return { records: mergeDuplicates(pages.flatMap(parseExamsHtml)), sourceUrls: sourceUrls || [url] };
 }
 
 function parseExamsHtml(html) {
   const exams = [];
   // Each course starts with <h3 ... role="tab"> and is followed by its exam tables
-  const courseBlocks = html.split(/<h3[^>]*role="tab"[^>]*>/).slice(1);
+  const courseBlocks = html.split(/<h3\b[^>]*\brole\s*=\s*["']tab["'][^>]*>/i).slice(1);
   for (const block of courseBlocks) {
     const [headingHtml, panelHtml] = block.split("</h3>");
     const code = htmlToText((headingHtml.match(/<span class="code">([\s\S]*?)<\/span>/) || [])[1] || "").toUpperCase();
@@ -139,9 +149,13 @@ function matchExamsToTerm(exams, term) {
     const modules = courses.flatMap((c) => c.modules.filter((m) => exam.codes.includes(m.code)));
     const course = courses[0];
     const title = course.integrated && modules.length ? [...new Set(modules.map((m) => m.name))].join(" / ") : course.name;
-    result.push({ ...exam, courseCodes: courses.map((c) => c.code), title });
+    result.push({ ...exam, courseCodes: courses.map((c) => c.code), courseIds: courses.map(c => c.id),
+      moduleCodes: modules.map(module => module.code), title });
   }
-  return result;
+  // Use the same lecturer-notice reconciliation as the public Exams workspace.
+  // The official date, time, booking window and assessment UID remain intact.
+  return examWorkspace.events(result, term).map(exam => ({ ...exam,
+    courseCodes: exam.courseCodes || term.courses.filter(course => exam.courseIds.includes(course.id)).map(course => course.code) }));
 }
 
 // Classes of this term's modules, named from programme.json
@@ -256,7 +270,7 @@ function buildCalendar(calendarName, sessions, exams, keyDates = []) {
       .filter(Boolean).join("\n");
     lines.push(
       "BEGIN:VEVENT",
-      `UID:${uid("class-" + s.id)}`,
+      `UID:${s.calendarUid || uid("class-" + s.id)}`,
       DTSTAMP,
       `DTSTART;TZID=Europe/Rome:${icsDateTime(s.start)}`,
       `DTEND;TZID=Europe/Rome:${icsDateTime(s.end)}`,
@@ -269,6 +283,33 @@ function buildCalendar(calendarName, sessions, exams, keyDates = []) {
 
   for (const exam of exams) {
     const title = exam.title;
+    if (exam.administrative) {
+      const description = [
+        "No final examination. This is an administrative Pass/Fail recording session, not a timed exam.",
+        "Complete the required enrolment separately. Saving this reminder does not register you.",
+        exam.notice?.virtualeInstruction, exam.notice?.recordingInstruction, exam.notice?.note,
+        exam.registrationOpens && `Registration opens: ${exam.registrationOpens}`,
+        exam.registrationCloses && `Registration closes: ${exam.registrationCloses}`,
+        exam.noticeTimeDiffers && `The lecturer notice gives ${exam.notice.sessionTime}; the official listing gives ${exam.time}. Confirm the current time before acting.`,
+        exam.origin === "lecturer" ? "Source: lecturer notice. No official booking window is inferred." : "Source: official UniBo listing, interpreted with the lecturer's recording notice.",
+      ].filter(Boolean).join("\n");
+      lines.push(
+        "BEGIN:VEVENT", `UID:${examUid(exam, "exam")}`, DTSTAMP,
+        exam.time ? `DTSTART;TZID=Europe/Rome:${icsDateTime(`${exam.dateKey}T${exam.time}:00`)}` : `DTSTART;VALUE=DATE:${icsDate(exam.dateKey)}`,
+        `SUMMARY:${icsEscape("Pass/Fail recording: " + title)}`,
+        `LOCATION:${icsEscape(exam.place || "")}`,
+        `DESCRIPTION:${icsEscape(description)}`, "TRANSP:TRANSPARENT", "END:VEVENT",
+      );
+      if (exam.registrationCloses) lines.push(
+        "BEGIN:VEVENT", `UID:${examUid(exam, "registration")}`, DTSTAMP,
+        `DTSTART;VALUE=DATE:${icsDate(exam.registrationCloses)}`,
+        `DTEND;VALUE=DATE:${icsDate(nextDayKey(exam.registrationCloses))}`,
+        `SUMMARY:${icsEscape("Last day to enrol for recording: " + title)}`,
+        `DESCRIPTION:${icsEscape(`Administrative recording on ${exam.dateKey}${exam.time ? " at " + exam.time : ""}. No final examination. Enrol separately; this reminder is not registration.`)}`,
+        "END:VEVENT",
+      );
+      continue;
+    }
     const timing = uniboData.examCalendarTimes(exam, EXAM_HOURS);
     const description = [
       exam.type && `Type: ${exam.type}`,
@@ -340,61 +381,189 @@ function reconcileEventRevisions(next, previous = "", stamp = new Date().toISOSt
 
 // --- Main ---
 
-function writeIfChanged(fileName, content) {
-  const full = path.join(OUTPUT_DIR, fileName);
+// Public source snapshots are separate: a failure in one source must not stop
+// healthy updates from the other. A verification timestamp only advances after
+// a complete successful official request, never after using a saved copy.
+function validRecords(kind, records) {
+  if (!Array.isArray(records) || records.length > 5000) return false;
+  if (kind === "timetable") return records.length > 0 && records.every(record =>
+    typeof record.moduleCode === "string" && record.moduleCode.length > 0 &&
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(record.start || "") &&
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(record.end || "") && record.end > record.start);
+  return records.every(record => Array.isArray(record.codes) && record.codes.length > 0 &&
+    Array.isArray(record.names) && Array.isArray(record.teachers) &&
+    /^\d{4}-\d{2}-\d{2}$/.test(record.dateKey || ""));
+}
+
+function readSnapshot(outputDir, kind, source, cohort) {
+  try {
+    const saved = JSON.parse(fs.readFileSync(path.join(outputDir, kind + ".json"), "utf8"));
+    const verified = typeof saved.verifiedAt === "string" && Number.isFinite(Date.parse(saved.verifiedAt));
+    const historical = saved.sourceType === "calendar-copy" && saved.verifiedAt === null;
+    return saved.version === 1 && saved.source === source && (!saved.cohort || saved.cohort === cohort) &&
+      (verified || historical) && validRecords(kind, saved.records) ? saved : null;
+  } catch { return null; }
+}
+
+function writeIfChanged(fileName, content, outputDir = OUTPUT_DIR) {
+  const full = path.join(outputDir, fileName);
   const previous = fs.existsSync(full) ? fs.readFileSync(full, "utf8") : "";
   if (fileName.endsWith(".ics")) content = reconcileEventRevisions(content, previous);
   if (previous === content) return false;
-  fs.writeFileSync(full, content);
+  const temporary = full + "." + process.pid + ".tmp";
+  fs.writeFileSync(temporary, content);
+  fs.renameSync(temporary, full);
   return true;
 }
 
-async function main() {
-  const programme = JSON.parse(fs.readFileSync(PROGRAMME_FILE, "utf8"));
+function jsonFile(fileName, value, outputDir) {
+  return writeIfChanged(fileName, JSON.stringify(value, null, 2) + "\n", outputDir);
+}
+
+function icsEvents(text) {
+  const unfolded = text.replace(/\r\n[ \t]/g, "").replace(/\r\n/g, "\n");
+  return [...unfolded.matchAll(/BEGIN:VEVENT\n[\s\S]*?END:VEVENT/g)].map(match => match[0]);
+}
+
+// On an outage, retain that source's existing events verbatim. In particular,
+// refreshing exams must not delete or relabel the last published class schedule.
+function retainFailedSourceEvents(next, previous, { timetable, exams }) {
+  const kind = event => {
+    const id = (event.match(/^UID:(.*)$/m) || [])[1] || "";
+    return id.startsWith("class-") ? "timetable" : /^(exam-|registration-)/.test(id) ? "exams" : "key";
+  };
+  const keep = event => (kind(event) === "timetable" && timetable) || (kind(event) === "exams" && exams);
+  const oldEvents = icsEvents(previous).filter(keep);
+  if (!oldEvents.length) return next;
+  const nextEvents = icsEvents(next).filter(event => !keep(event));
+  const withoutEvents = next.replace(/BEGIN:VEVENT\r?\n[\s\S]*?END:VEVENT\r?\n?/g, "");
+  const events = [...nextEvents, ...oldEvents].map(event => event.split("\n").map(foldLine).join("\r\n")).join("\r\n");
+  return withoutEvents.replace("END:VCALENDAR", events + "\r\nEND:VCALENDAR");
+}
+
+// Initial recovery only: old ICS files are historical public copies, not a new
+// source verification. No teacher, floor or verification date is guessed.
+function timetableFromCalendar(text, term) {
+  const clean = text => String(text || "").replace(/\\n/gi, "\n").replace(/\\([,;\\])/g, "$1");
+  const simple = text => clean(text).normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+  const modules = term.courses.flatMap(course => course.modules);
+  const iso = value => /^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})$/.test(value || "")
+    ? value.replace(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})$/, "$1-$2-$3T$4:$5:$6") : "";
+  return icsEvents(text).flatMap(event => {
+    const field = key => (event.match(new RegExp("^" + key + "(?:;[^:]*)?:(.*)$", "m")) || [])[1] || "";
+    const calendarUid = field("UID");
+    if (!calendarUid.startsWith("class-")) return [];
+    const matches = modules.filter(module => simple(module.name) === simple(field("SUMMARY")));
+    const start = iso(field("DTSTART")), end = iso(field("DTEND"));
+    if (matches.length !== 1 || !start || !end || end <= start) return [];
+    return [{ calendarUid, id: calendarUid.split("@")[0].slice(6), moduleCode: matches[0].code,
+      feedTitle: matches[0].name, dateKey: start.slice(0, 10), start, end,
+      time: start.slice(11, 16) + " - " + end.slice(11, 16),
+      classrooms: [], room: clean(field("LOCATION")), teacher: "", online: false, note: "" }];
+  });
+}
+
+async function syncCalendars(options = {}) {
+  const programme = options.programme || JSON.parse(fs.readFileSync(PROGRAMME_FILE, "utf8"));
+  const outputDir = options.outputDir || OUTPUT_DIR;
+  const checkedAt = (options.now || (() => new Date()))().toISOString();
+  const logger = options.logger || console;
   const cohort = programmeRules.currentCohort(programme);
   const term = programmeRules.currentTerm(programme);
-
-  const sessions = matchSessionsToTerm(await fetchTimetable(cohort.sources.timetableFeed), term)
-    .sort((a, b) => a.start.localeCompare(b.start));
-  if (sessions.length === 0) throw new Error("Timetable is empty, not updating the calendar");
-  const exams = matchExamsToTerm(mergeDuplicates(await fetchExams(cohort.sources.examDates)), term)
-    .sort((a, b) => (a.dateKey + a.time).localeCompare(b.dateKey + b.time));
-
-  fs.mkdirSync(OUTPUT_DIR, { recursive: true });
-  const entries = [];
-  let changed = 0;
-  const keyDates = calendarKeyDates(cohort);
-
-  // 1. The full calendar (same file name as before, so existing subscriptions keep working)
+  fs.mkdirSync(outputDir, { recursive: true });
   const fullFile = `eu-hem-${cohort.id}-year${term.year}.ics`;
-  changed += writeIfChanged(fullFile, buildCalendar(`EU-HEM 1st year ${cohort.label}`, sessions, exams, keyDates));
-  entries.push({ cohort: cohort.id, term: term.id, year: term.year, file: fullFile, plan: null });
+  const fullPath = path.join(outputDir, fullFile);
+  const oldFull = fs.existsSync(fullPath) ? fs.readFileSync(fullPath, "utf8") : "";
+  const sources = { timetable: cohort.sources.timetableFeed, exams: cohort.sources.examDates };
+  const loaders = { timetable: options.loadTimetable || fetchTimetable, exams: options.loadExams || fetchExams };
+  const sourceState = {};
 
-  // 2. One calendar per possible study plan (worked out from the rules)
+  await Promise.all(Object.keys(sources).map(async kind => {
+    const source = sources[kind];
+    let saved = readSnapshot(outputDir, kind, source, cohort.id);
+    try {
+      const loaded = await loaders[kind](source);
+      const records = Array.isArray(loaded) ? loaded : loaded.records;
+      if (!validRecords(kind, records)) throw new Error(kind + ": invalid or empty official records");
+      if (kind === "timetable" && matchSessionsToTerm(records, term).length === 0)
+        throw new Error("Timetable has no classes for the configured modules");
+      saved = { version: 1, cohort: cohort.id, source, sourceUrls: loaded.sourceUrls || [source],
+        sourceType: "official", verifiedAt: checkedAt, records };
+      jsonFile(kind + ".json", saved, outputDir);
+      sourceState[kind] = { ok: true, snapshot: saved, error: "" };
+    } catch (error) {
+      if (kind === "timetable" && !saved) {
+        const records = timetableFromCalendar(oldFull, term);
+        if (records.length) {
+          saved = { version: 1, cohort: cohort.id, source, sourceUrls: [source], sourceType: "calendar-copy", verifiedAt: null, records };
+          jsonFile(kind + ".json", saved, outputDir);
+        }
+      }
+      const message = String(error.message || error).replace(/\s+/g, " ").slice(0, 500);
+      sourceState[kind] = { ok: false, snapshot: saved, error: message };
+      logger.error(kind + " synchronization failed: " + message + ". Previous verified data is retained where available.");
+    }
+  }));
+
+  const status = { version: 1, cohort: cohort.id, checkedAt };
+  for (const [kind, current] of Object.entries(sourceState)) status[kind] = {
+    ok: current.ok, source: sources[kind], checkedAt,
+    verifiedAt: current.snapshot?.verifiedAt || null,
+    sourceType: current.snapshot?.sourceType || "unavailable",
+    recordCount: current.snapshot?.records.length || 0,
+    error: current.error,
+  };
+  // Stable key order keeps concurrent source timing out of the generated output.
+  const syncStatus = { version: status.version, cohort: status.cohort, checkedAt,
+    timetable: status.timetable, exams: status.exams };
+  jsonFile("sync-status.json", syncStatus, outputDir);
+
+  const sessions = matchSessionsToTerm(sourceState.timetable.snapshot?.records || [], term)
+    .sort((a, b) => a.start.localeCompare(b.start));
+  const exams = matchExamsToTerm(mergeDuplicates(sourceState.exams.snapshot?.records || []), term)
+    .sort((a, b) => (a.dateKey + a.time).localeCompare(b.dateKey + b.time));
+  const entries = [], keyDates = calendarKeyDates(cohort);
+  let changed = 0;
+  const writeCalendar = (file, name, mySessions, myExams) => {
+    const full = path.join(outputDir, file);
+    const previous = fs.existsSync(full) ? fs.readFileSync(full, "utf8") : "";
+    // Avoid creating an incomplete subscription if neither a verified snapshot
+    // nor the old subscription can supply an unavailable source.
+    if (!previous && Object.values(sourceState).some(source => !source.ok && !source.snapshot)) return false;
+    const next = retainFailedSourceEvents(buildCalendar(name, mySessions, myExams, keyDates), previous,
+      { timetable: !sourceState.timetable.ok, exams: !sourceState.exams.ok });
+    changed += Number(writeIfChanged(file, next, outputDir));
+    return true;
+  };
+  if (writeCalendar(fullFile, `EU-HEM 1st year ${cohort.label}`, sessions, exams))
+    entries.push({ cohort: cohort.id, term: term.id, year: term.year, file: fullFile, plan: null });
   for (const choices of programmeRules.allPlanCombinations(term)) {
     const key = programmeRules.planKey(term, choices);
     const codes = programmeRules.selectedCourseCodes(term, choices);
     const file = `eu-hem-${cohort.id}-y${term.year}s${term.semester}-${key}.ics`;
-    const mySessions = sessions.filter((s) => codes.includes(s.courseCode));
-    const myExams = exams.filter((e) => e.courseCodes.some((c) => codes.includes(c)));
-    changed += writeIfChanged(file, buildCalendar(`EU-HEM my courses ${cohort.label} (${key})`, mySessions, myExams, keyDates));
-    entries.push({ cohort: cohort.id, term: term.id, year: term.year, file, plan: key, courses: codes });
+    if (writeCalendar(file, `EU-HEM my courses ${cohort.label} (${key})`,
+      sessions.filter(session => codes.includes(session.courseCode)),
+      exams.filter(exam => exam.courseCodes.some(code => codes.includes(code)))))
+      entries.push({ cohort: cohort.id, term: term.id, year: term.year, file, plan: key, courses: codes });
   }
 
-  // A list of the calendars, so the website knows which file to link to.
-  // Entries of other cohorts/terms are kept.
-  const manifestPath = path.join(OUTPUT_DIR, "calendars.json");
+  const manifestPath = path.join(outputDir, "calendars.json");
   const old = fs.existsSync(manifestPath) ? JSON.parse(fs.readFileSync(manifestPath, "utf8")) : [];
-  const kept = old.filter((c) => !(c.cohort === cohort.id && (c.term === term.id || c.term === undefined)));
+  const updatedFiles = new Set(entries.map(entry => entry.file));
+  const kept = old.filter(entry => !updatedFiles.has(entry.file));
   const manifest = [...kept, ...entries].sort((a, b) => (a.cohort + (a.plan || "")).localeCompare(b.cohort + (b.plan || "")));
-  writeIfChanged("calendars.json", JSON.stringify(manifest, null, 2) + "\n");
-
-  console.log(`${entries.length} calendars (${changed} changed): ${sessions.length} classes, ${exams.length} exams in the full calendar`);
+  if (entries.length) jsonFile("calendars.json", manifest, outputDir);
+  logger.log(`${entries.length} calendars (${changed} changed): ${sessions.length} class records, ${exams.length} matched exam records. See calendar/sync-status.json for source verification.`);
+  return { ok: Object.values(sourceState).every(source => source.ok), changed, entries, status: syncStatus };
 }
 
-if (require.main === module) main().catch((error) => {
+if (require.main === module) syncCalendars().then(result => {
+  if (!result.ok) process.exitCode = 1; // healthy source outputs have already been safely written
+}).catch(error => {
   console.error(error);
-  process.exit(1); // marks the GitHub Actions run as failed, and the old calendar stays online
+  process.exitCode = 1;
 });
 
-module.exports = { parseExamsHtml, mergeDuplicates, matchExamsToTerm, buildCalendar, examUid, reconcileEventRevisions };
+module.exports = { parseExamsHtml, mergeDuplicates, matchExamsToTerm, buildCalendar, examUid,
+  reconcileEventRevisions, syncCalendars, retainFailedSourceEvents, timetableFromCalendar, readSnapshot,
+  normalizeTimetableRecords };

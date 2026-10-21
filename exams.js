@@ -11,7 +11,7 @@ const examsPage = {
   programme: null, exams: [], loaded: false, loading: false, scopeSwitch: null,
   view: "list", month: Planner.clock().slice(0, 7), day: "", calendarFocus: "", tableRound: null,
   studies: {}, studyStarted: false, openDetails: new Set(),
-  clockSignature: "", clockRefreshPending: false, feedFailed: false,
+  clockSignature: "", clockRefreshPending: false, feedFailed: false, rawExams:null, sourceMeta:null,
 };
 const controls = () => [examCourseFilter, examRegistrationFilter, examSearch, examReset,
   ...document.querySelectorAll("[data-exam-view]")];
@@ -64,7 +64,12 @@ function resetExamFilters() {
   examsPage.day = ""; render();
 }
 function coursePageLink(exam) { return ExamWorkspace.courseUrl(exam.courseIds[0], "exam"); }
+function savedExamSource() {
+  const meta=examsPage.sourceMeta||{};
+  return !!meta.cachedAt || !!meta.sourceType&&meta.sourceType!=="live";
+}
 function registrationNote(reg, exam) {
+  if(savedExamSource())return "Saved booking dates · confirm the current window on AlmaEsami.";
   if (reg.key === "open") return reg.days === 0 ? "Last day to book · check the closing time on AlmaEsami." : `Book by ${fullDate(exam.registrationCloses)}`;
   if (reg.key === "soon") return `Booking opens ${fullDate(exam.registrationOpens)}`;
   if (reg.key === "closed") return "The published booking window has ended.";
@@ -72,8 +77,9 @@ function registrationNote(reg, exam) {
 }
 function registrationWindow(exam, today) {
   const reg = Planner.registration(exam, today);
-  const box = el("div", `exam-registration is-${reg.key}`);
-  const label = exam.origin === "lecturer" && reg.key === "unknown" ? "Check registration" : reg.label;
+  const copied=savedExamSource();
+  const box = el("div", `exam-registration is-${copied?"unknown":reg.key}`);
+  const label = copied?"Saved booking window":exam.origin === "lecturer" && reg.key === "unknown" ? "Check registration" : reg.label;
   box.append(el("strong", "reg-chip", label), el("span", "exam-registration-note", registrationNote(reg, exam)));
   return box;
 }
@@ -116,8 +122,8 @@ function adminActions(exam) {
 function sittingActions(exam, today) {
   const reg = Planner.registration(exam, today);
   const actions = exam.administrative ? adminActions(exam) : examActions(exam, today);
-  if (reg.key === "open" || reg.key === "unknown") actions.prepend(link(
-    reg.key === "open" ? "Register on AlmaEsami" : "Check AlmaEsami", ALMAESAMI_URL, "exam-booking-link", true));
+  if (savedExamSource() || reg.key === "open" || reg.key === "unknown") actions.prepend(link(
+    !savedExamSource()&&reg.key === "open" ? "Register on AlmaEsami" : "Check AlmaEsami", ALMAESAMI_URL, "exam-booking-link", true));
   return actions;
 }
 function examCard(exam, today) {
@@ -276,11 +282,12 @@ function renderExamHighlight(exams, today) {
 function renderOpenRegistrations(exams, today) {
   const target = document.getElementById("open-registrations"); target.replaceChildren();
   if (!exams.length) return;
+  const copied=savedExamSource();
   const box = el("details", "exam-open-bookings");
-  box.appendChild(el("summary", null, `${exams.length} booking window${exams.length === 1 ? "" : "s"} open · nearest deadline ${fullDate(exams[0].registrationCloses)}`));
+  box.appendChild(el("summary", null, copied?`${exams.length} saved booking window${exams.length === 1 ? "" : "s"} · confirm on AlmaEsami`:`${exams.length} booking window${exams.length === 1 ? "" : "s"} open · nearest deadline ${fullDate(exams[0].registrationCloses)}`));
   const list = el("div", "exam-booking-list");
   for (const exam of exams) {
-    const row = el("div"); row.append(el("span", null, `${exam.title} · closes ${fullDate(exam.registrationCloses)}`), link("Register on AlmaEsami", ALMAESAMI_URL, "", true)); list.appendChild(row);
+    const row = el("div"); row.append(el("span", null, `${exam.title} · ${copied?"saved closing date":"closes"} ${fullDate(exam.registrationCloses)}`), link(copied?"Check AlmaEsami":"Register on AlmaEsami", ALMAESAMI_URL, "", true)); list.appendChild(row);
   }
   box.appendChild(list); target.appendChild(box);
 }
@@ -348,10 +355,11 @@ function render() {
   const open=upcoming.filter(exam=>Planner.registration(exam,today).key==="open").sort((a,b)=>a.registrationCloses.localeCompare(b.registrationCloses)||ExamWorkspace.sort(a,b));
   const deadline=open[0]?.registrationCloses;
   const admin=upcoming.filter(exam=>exam.administrative).length;
+  const copied=savedExamSource();
   Planner.summary(document.getElementById("exam-summary"),[
     {label:"Upcoming dates",value:upcoming.length,note:`${ExamWorkspace.groups(upcoming).length} courses${admin?` · ${admin} administrative`:""}`},
-    {label:"Registration open",value:open.length,note:"Check and book on AlmaEsami"},
-    {label:"Next deadline",value:deadline?fullDate(deadline):"—",note:deadline?(deadline===today?"Closes today · check the time":`${daysBetween(today,deadline)} days to register`):"No open booking windows"},
+    {label:copied?"Saved booking windows":"Registration open",value:open.length,note:copied?"Saved dates · confirm availability on AlmaEsami":"Check and book on AlmaEsami"},
+    {label:copied?"Saved closing date":"Next deadline",value:deadline?fullDate(deadline):"—",note:copied?"Confirm current dates on AlmaEsami":deadline?(deadline===today?"Closes today · check the time":`${daysBetween(today,deadline)} days to register`):"No open booking windows"},
   ]);
   renderExamHighlight(upcoming,today); renderOpenRegistrations(open,today);
   const monthView=examsPage.view==="month", tableView=examsPage.view==="table";
@@ -437,8 +445,18 @@ async function loadExams() {
     document.getElementById("exams-source").href=cohort.sources.examDates;
     let raw=[], timeout;
     examsPage.feedFailed=false;
-    try { raw=await Promise.race([fetchExams(cohort.sources.examDates),new Promise((_,reject)=>{timeout=setTimeout(()=>reject(Error("Exam feed timeout")),15000);})]); }
-    catch {examsPage.feedFailed=true;} finally{clearTimeout(timeout);}
+    try { raw=await Promise.race([fetchExams(cohort.sources.examDates),new Promise((_,reject)=>{timeout=setTimeout(()=>reject(Error("Exam feed timeout")),18000);})]); }
+    catch {
+      examsPage.feedFailed=true;
+      if(examsPage.rawExams){
+        raw=examsPage.rawExams.slice();
+        Object.defineProperty(raw,"sourceMeta",{value:{...examsPage.sourceMeta,sourceType:"memory-copy"},enumerable:false});
+      }
+    } finally{clearTimeout(timeout);}
+    const sourceMeta=raw.sourceMeta||{};
+    const savedCopy=!!sourceMeta.cachedAt || !!sourceMeta.sourceType&&sourceMeta.sourceType!=="live";
+    if(!examsPage.feedFailed)examsPage.rawExams=raw;
+    examsPage.sourceMeta=sourceMeta;
     examsPage.exams=ExamWorkspace.events(matchExamsToTerm(raw,term),term);
     const selected=examCourseFilter.value;
     examCourseFilter.replaceChildren(new Option("All courses",""));
@@ -448,7 +466,13 @@ async function loadExams() {
     for(const control of controls()) control.disabled=false;
     examsPage.loaded=true;
     const checked=document.getElementById("exam-checked");
-    if(examsPage.feedFailed){
+    if(savedCopy){
+      const when=sourceMeta.verifiedAt||sourceMeta.cachedAt;
+      const date=when&&Number.isFinite(Date.parse(when))?new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/Rome",day:"numeric",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}).format(new Date(when))+" Bologna time":"verification time unknown";
+      checked.textContent="Saved exam copy · last verified "+date;
+      const warning=el("div","exam-feed-warning");warning.append(el("p",null,"Live exam changes could not be verified. These saved dates may have changed; check UniBo and AlmaEsami before booking or travelling."),button("Retry official dates",loadExams));
+      document.getElementById("exam-feed-notice").appendChild(warning);
+    }else if(examsPage.feedFailed){
       checked.textContent="UniBo feed unavailable · lecturer-provided dates only";
       const warning=el("div","exam-feed-warning");warning.append(el("p",null,"Official exam dates could not be loaded. Any date below comes only from lecturer guidance; the calendar is incomplete."),button("Retry official dates",loadExams));
       document.getElementById("exam-feed-notice").appendChild(warning);
