@@ -139,8 +139,8 @@
   min-width: 1.4rem;
   padding: 0 0.4rem;
   border-radius: var(--radius-pill);
-  background: var(--danger);
-  color: #fff;
+  background: var(--danger-bg);
+  color: var(--danger);
   font-size: 0.75rem;
   font-weight: 700;
   text-align: center;

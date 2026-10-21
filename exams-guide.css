@@ -1,31 +1,29 @@
 /* Exams workspace only. Navy, terracotta and warm surfaces reuse the Hub tokens.
    All four views use the same filtered date collection. */
 .exams-page {
-  --ex-accent: #a74531;
-  --ex-accent-soft: #fff0e8;
-  --ex-navy: #17385b;
-  --ex-navy-soft: #ecf2f7;
+  --ex-accent: var(--color-brand-text);
+  --ex-accent-soft: var(--color-brand-soft);
+  --ex-navy: var(--color-primary);
+  --ex-navy-soft: var(--color-primary-light);
   --pl-ink: var(--text-primary);
   --pl-teal: var(--color-primary);
 }
-:root[data-theme="dark"] .exams-page { --ex-accent:#ffb89d;--ex-accent-soft:#392c29;--ex-navy:#b6d9ff;--ex-navy-soft:#22344c; }
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .exams-page{--ex-accent:#ffb89d;--ex-accent-soft:#392c29;--ex-navy:#b6d9ff;--ex-navy-soft:#22344c;}}
 .exams-page [hidden] { display:none!important; }
 .exams-page main.container { max-width:1280px;padding:24px 28px 56px; }
-.exams-page .planning-hero { background:#122d50;grid-template-columns:minmax(0,1.65fr) minmax(0,1fr);padding:25px 30px;gap:30px;border-radius:20px;margin-bottom:15px; }
+.exams-page .planning-hero { background:var(--surface-hero);grid-template-columns:minmax(0,1.65fr) minmax(0,1fr);padding:25px 30px;gap:30px;border-radius:var(--radius-xl);margin-bottom:15px; }
 .exams-page .planning-hero h1 { font-family:var(--font-serif);font-size:2.45rem;line-height:1.08;margin:0 0 10px; }
 .exams-page .planning-hero h1 br { display:none; }
-.exams-page .planning-hero h1 em { color:#ffc3a7;font-style:normal; }
-.exams-page .planning-hero .section-eyebrow { margin-bottom:8px; color:#d0ddef; }
+.exams-page .planning-hero h1 em { color:var(--color-hero-accent);font-style:normal; }
+.exams-page .planning-hero .section-eyebrow { margin-bottom:8px; color:var(--text-on-hero-muted); }
 .exams-page .planning-hero-lead { font-size:.85rem!important; }
 .exams-page .planning-hero-links { margin-top:15px;gap:6px; }
 .exams-page .planning-hero-links a { min-height:36px;padding:6px 10px;font-size:.73rem; }
-.exams-page .planning-hero-links .is-active { background:#fff0e8;border-color:#fff0e8;color:#632c20; }
+.exams-page .planning-hero-links .is-active { background:var(--color-hero-accent);border-color:var(--color-hero-accent);color:var(--navy-900); }
 .exams-page .planning-hero-actions { margin-top:5px;gap:0 18px; }
 .exams-page .planning-hero-actions a { min-height:32px;font-size:.72rem; }
-.exams-page .planning-hero-aside { padding:16px 22px;background:#ffffff08;border:1px solid #ffffff20; border-radius:12px; }
+.exams-page .planning-hero-aside { padding:16px 22px;background:var(--surface-hero-raised);border:1px solid var(--border-hero); border-radius:12px; }
 .exams-page .planning-aside-title { font-size:1.7rem;letter-spacing:-.03em; }
-.exams-page .planning-next-exam { color:#d9e5f6!important;font-size:.83rem!important;line-height:1.55; }
+.exams-page .planning-next-exam { color:var(--text-on-hero-muted)!important;font-size:.83rem!important;line-height:1.55; }
 .exams-page .planning-next-meta { font-size:.74rem;margin:7px 0 0; }
 .exams-page .planning-summary { margin-bottom:13px;gap:10px; }
 .exams-page .planning-stat { padding:13px 17px;border-radius:12px; }
@@ -60,7 +58,7 @@
 .exams-page .planning-panel-head p:not(.section-eyebrow) { font-size:.8rem; }
 .exams-page .exam-view-switch { display:flex;flex-shrink:0;gap:4px;padding:5px;border-radius:12px;border:1px solid var(--border-default);background:var(--surface-card); }
 .exams-page .exam-view-switch button { display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:8px 14px;border:0;border-radius:8px;background:transparent;color:var(--text-secondary);font:inherit;font-size:.8rem;font-weight:650;cursor:pointer; }
-.exams-page .exam-view-switch button[aria-pressed="true"] { background:var(--ex-navy);color:var(--surface-card); }
+.exams-page .exam-view-switch button[aria-pressed="true"] { background:var(--action-navy);color:var(--text-on-navy); }
 .exams-page .exam-view-switch button:disabled { opacity:.6;cursor:wait; }
 .exams-page .exam-view-switch .icon { width:16px;height:16px; }
 .exams-page .planning-toolbar { padding:14px 17px;background:var(--surface-card);border:1px solid var(--border-default);border-radius:12px; }

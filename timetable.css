@@ -4,7 +4,7 @@
   --pl-ink: var(--text-heading);
   --pl-teal: var(--color-primary);
   --pl-soft: var(--color-primary-light);
-  --pl-hero: var(--surface-navy);
+  --pl-hero: var(--surface-hero);
   --tt-tint: var(--color-primary-light);
   --tt-accent: var(--color-brand-text);
 }
@@ -13,7 +13,7 @@
   align-items: stretch;
   gap: clamp(24px, 4vw, 64px);
   padding: clamp(24px, 3.2vw, 44px);
-  background: var(--surface-navy);
+  background: var(--surface-hero);
   border-radius: 22px;
   position: relative;
 }
@@ -25,21 +25,21 @@
   letter-spacing: -.035em;
   margin-bottom: 14px;
 }
-.timetable-page .planning-hero h1 span { color: #efb59e; }
-.timetable-page .planning-hero .section-eyebrow { color: #d2deed; }
-.timetable-page .planning-hero .planning-lead { color: #d5deea; max-width: 510px; font-size: .875rem; }
+.timetable-page .planning-hero h1 span { color: var(--color-hero-accent); }
+.timetable-page .planning-hero .section-eyebrow { color: var(--text-on-hero-muted); }
+.timetable-page .planning-hero .planning-lead { color: var(--text-on-hero-muted); max-width: 510px; font-size: .875rem; }
 .timetable-page .planning-hero-links { margin-top: 20px; }
-.timetable-page .planning-hero-links a { color: #eff4fa; border-color: #526a8b; }
-.timetable-page .planning-hero-links .is-active { background: #fff8f3; color: #0f2b5b; border-color: #fff8f3; }
+.timetable-page .planning-hero-links a { color: var(--text-on-hero); border-color: var(--border-hero); }
+.timetable-page .planning-hero-links .is-active { background: var(--color-hero-accent); color: var(--navy-900); border-color: var(--color-hero-accent); }
 .timetable-page .planning-hero-actions { margin-top: 8px; }
-.timetable-page .planning-hero-actions a { color: #d5deea; }
-.timetable-page .planning-hero-aside { align-self: center; padding: 24px; background: rgb(255 255 255 / 5%); border-color: #526a8b; }
+.timetable-page .planning-hero-actions a { color: var(--text-on-hero-muted); }
+.timetable-page .planning-hero-aside { align-self: center; padding: 24px; background: rgb(255 255 255 / 5%); border-color: var(--border-hero); }
 .timetable-page .planning-hero-aside .now-next-item { padding: 0 0 0 16px; }
-.timetable-page .planning-hero-aside .now-next-label { color: #efb59e; font-size: .7rem; }
+.timetable-page .planning-hero-aside .now-next-label { color: var(--color-hero-accent); font-size: .7rem; }
 .timetable-page .planning-hero-aside .now-next-item strong { font-size: 1rem; }
-.timetable-page .planning-hero-aside .schedule-meta { color: #d5deea; }
-.timetable-page .planning-hero-aside .planning-aside-note { font-size: .7rem; color: #c8d5e6; border-top: 1px solid #526a8b; padding-top: 13px; }
-.timetable-page .tt-live-dot { display: inline-block; width: 7px; height: 7px; margin-left: 6px; border-radius: 50%; background: #efb59e; }
+.timetable-page .planning-hero-aside .schedule-meta { color: var(--text-on-hero-muted); }
+.timetable-page .planning-hero-aside .planning-aside-note { font-size: .7rem; color: var(--text-on-hero-muted); border-top: 1px solid var(--border-hero); padding-top: 13px; }
+.timetable-page .tt-live-dot { display: inline-block; width: 7px; height: 7px; margin-left: 6px; border-radius: 50%; background: var(--color-hero-accent); }
 .timetable-page .planning-summary { gap: 0; margin-bottom: 24px; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: 14px; overflow: hidden; }
 .timetable-page .planning-stat { display: block; border: 0; border-radius: 0; box-shadow: none; padding: 19px 24px; }
 .timetable-page .planning-stat + .planning-stat { border-left: 1px solid var(--border-default); }
@@ -70,7 +70,7 @@
 }
 .timetable-page .tt-sync-notice strong { color: var(--text-heading); }
 .timetable-page .tt-sync-notice a { color: var(--color-primary); font-weight: 700; }
-.timetable-page .tt-stale-notice { border-left: 4px solid #ad6a37; }
+.timetable-page .tt-stale-notice { border-left: 4px solid var(--warning); }
 .timetable-page .tt-change-notice { border-left: 4px solid var(--color-primary); background: var(--color-primary-light); }
 .timetable-page .tt-change-notice ul { padding-left: 19px; margin: 9px 0 0; }
 .timetable-page .tt-change-notice li + li { margin-top: 9px; }

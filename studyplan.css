@@ -1,52 +1,22 @@
 /* A two-year academic workspace. All selectors are scoped to the Study Plan page. */
 .study-plan-page {
-  --sp-page: #f3f5fa;
+  --sp-page: var(--surface-page);
   --sp-card: var(--surface-card);
-  --sp-soft: #f6f6fc;
-  --sp-ink: #18203b;
+  --sp-soft: var(--surface-warm);
+  --sp-ink: var(--text-heading);
   --sp-text: var(--text-primary);
-  --sp-muted: #5a6279;
-  --sp-line: #dde2ef;
-  --sp-accent: #6350b8;
-  --sp-accent-soft: #efecfb;
-  --sp-mint: #1c6759;
-  --sp-mint-soft: #e8f5ef;
-  --sp-warm: #946020;
-  --sp-warm-soft: #fbf1df;
-  --sp-shadow: 0 8px 32px rgb(28 37 66 / 4%);
+  --sp-muted: var(--text-secondary);
+  --sp-line: var(--border-default);
+  --sp-accent: var(--color-primary);
+  --sp-accent-soft: var(--color-primary-light);
+  --sp-mint: var(--success);
+  --sp-mint-soft: var(--success-bg);
+  --sp-warm: var(--warning);
+  --sp-warm-soft: var(--warning-bg);
+  --sp-shadow: var(--shadow-sm);
   background: var(--sp-page);
   color: var(--sp-text);
   font-family: var(--font-sans);
-}
-:root[data-theme="dark"] .study-plan-page {
-  --sp-page: #101622;
-  --sp-soft: #202738;
-  --sp-ink: #eef0fc;
-  --sp-muted: #bdc5d7;
-  --sp-line: #35405a;
-  --sp-accent: #c5b9ff;
-  --sp-accent-soft: #2d2949;
-  --sp-mint: #a5e1c8;
-  --sp-mint-soft: #203c36;
-  --sp-warm: #ebc188;
-  --sp-warm-soft: #3a3022;
-  --sp-shadow: none;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .study-plan-page {
-    --sp-page: #101622;
-    --sp-soft: #202738;
-    --sp-ink: #eef0fc;
-    --sp-muted: #bdc5d7;
-    --sp-line: #35405a;
-    --sp-accent: #c5b9ff;
-    --sp-accent-soft: #2d2949;
-    --sp-mint: #a5e1c8;
-    --sp-mint-soft: #203c36;
-    --sp-warm: #ebc188;
-    --sp-warm-soft: #3a3022;
-    --sp-shadow: none;
-  }
 }
 .study-plan-page main.container {
   max-width: 1320px;
@@ -76,8 +46,8 @@
   min-height: 44px;
   padding: 10px 16px;
   border-radius: 11px;
-  background: var(--sp-ink);
-  color: var(--sp-card);
+  background: var(--action-navy);
+  color: var(--text-on-hero);
   border: 1px solid transparent;
   font-size: 0.8rem;
   font-weight: 650;
@@ -100,7 +70,7 @@
   color: var(--color-danger-text);
 }
 
-/* The degree, as a constellation: deep ink, soft lilac, and mint progress. */
+/* The degree constellation keeps the Hub's navy and terracotta identity. */
 .study-plan-page .sp-hero {
   isolation: isolate;
   position: relative;
@@ -112,13 +82,13 @@
   margin-bottom: 25px;
   padding: clamp(28px, 4vw, 52px);
   overflow: hidden;
-  border: 1px solid #2e3556;
-  border-radius: 28px;
+  border: 1px solid var(--navy-800);
+  border-radius: var(--radius-xl);
   background:
-    radial-gradient(ellipse at 91% 15%, rgb(157 113 241 / 25%), transparent 49%),
-    radial-gradient(ellipse at 73% 104%, rgb(89 187 170 / 12%), transparent 51%),
-    linear-gradient(120deg, #131c35, #202342 67%, #242441);
-  color: #f5f5ff;
+    radial-gradient(ellipse at 91% 15%, rgb(199 91 58 / 17%), transparent 49%),
+    radial-gradient(ellipse at 73% 104%, rgb(116 167 223 / 12%), transparent 51%),
+    var(--surface-hero);
+  color: var(--text-on-hero);
 }
 .study-plan-page .sp-hero::before {
   content: "";
@@ -126,19 +96,20 @@
   inset: 0;
   z-index: -1;
   opacity: 0.18;
-  background-image: radial-gradient(#b6afdc 0.65px, transparent 0.65px);
+  background-image: radial-gradient(var(--color-hero-accent) 0.65px, transparent 0.65px);
   background-size: 24px 24px;
   mask-image: linear-gradient(90deg, transparent, #000);
   pointer-events: none;
 }
 .study-plan-page .sp-hero-copy { min-width: 0; }
+.study-plan-page .sp-hero :focus-visible { outline-color: var(--color-focus-on-hero); }
 .study-plan-page .sp-hero .section-eyebrow,
 .study-plan-page .sp-hero .sp-eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 9px;
   margin: 0 0 17px;
-  color: #c8bded;
+  color: var(--color-hero-accent);
   font-size: 0.69rem;
   font-weight: 700;
   letter-spacing: 0.13em;
@@ -150,13 +121,14 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #b4e8cd;
-  box-shadow: 0 0 0 4px rgb(180 232 205 / 10%);
+  background: var(--color-hero-accent);
+  box-shadow: 0 0 0 4px rgb(241 181 155 / 10%);
 }
 .study-plan-page .sp-hero h1 {
   display: block;
   margin: 0 0 17px;
-  color: #f7f7ff;
+  color: var(--text-on-hero);
+  font-family: var(--font-serif);
   font-size: clamp(2.2rem, 4.1vw, 3.7rem);
   font-weight: 620;
   letter-spacing: -0.055em;
@@ -164,14 +136,14 @@
 }
 .study-plan-page .sp-hero h1 span,
 .study-plan-page .sp-hero h1 em {
-  color: #c7b8fa;
+  color: var(--color-hero-accent);
   font-style: normal;
 }
 .study-plan-page .sp-hero .sp-lead,
 .study-plan-page .sp-hero-copy > p:not(.section-eyebrow):not(.sp-eyebrow) {
   max-width: 510px;
   margin: 0;
-  color: #c8cee3;
+  color: var(--text-on-hero-muted);
   font-size: 0.94rem;
   line-height: 1.75;
 }
@@ -189,10 +161,10 @@
   gap: 8px;
   min-height: 44px;
   padding: 10px 14px;
-  border: 1px solid rgb(211 208 243 / 25%);
+  border: 1px solid var(--border-hero);
   border-radius: 10px;
   background: rgb(255 255 255 / 4%);
-  color: #e1def2;
+  color: var(--text-on-hero);
   font-size: 0.77rem;
   font-weight: 550;
   text-decoration: none;
@@ -200,8 +172,8 @@
 }
 .study-plan-page .sp-hero-links a:hover,
 .study-plan-page .sp-hero-actions a:hover {
-  border-color: #c7b8fa;
-  background: rgb(213 192 255 / 12%);
+  border-color: var(--color-hero-accent);
+  background: var(--surface-hero-raised);
 }
 .study-plan-page .sp-hero-visual {
   position: relative;
@@ -237,7 +209,7 @@
   z-index: -1;
   width: 302px;
   height: 236px;
-  border: 1px solid rgb(201 194 243 / 16%);
+  border: 1px solid var(--border-hero);
   border-radius: 50%;
   transform: rotate(-28deg);
   pointer-events: none;
@@ -246,7 +218,7 @@
   width: 246px;
   height: 302px;
   transform: rotate(-32deg);
-  border-color: rgb(167 224 210 / 10%);
+  border-color: rgb(241 181 155 / 14%);
 }
 .study-plan-page #sp-degree-ring {
   --sp-progress: 0;
@@ -258,20 +230,20 @@
   width: 196px;
   height: 196px;
   flex: 0 0 auto;
-  border: 1px solid rgb(200 191 250 / 17%);
+  border: 1px solid var(--border-hero);
   border-radius: 50%;
-  background: conic-gradient(from -90deg, #b5ead4 calc(var(--sp-progress) * 1%), #55516f 0);
-  box-shadow: 0 0 0 10px rgb(206 196 255 / 3%), 0 0 58px rgb(166 145 231 / 13%);
-  color: #f4f2ff;
+  background: conic-gradient(from -90deg, var(--color-hero-accent) calc(var(--sp-progress) * 1%), var(--border-hero) 0);
+  box-shadow: 0 0 0 10px rgb(255 255 255 / 3%), 0 0 58px rgb(241 181 155 / 8%);
+  color: var(--text-on-hero);
   font-variant-numeric: tabular-nums;
 }
 .study-plan-page #sp-degree-ring::before {
   content: "";
   position: absolute;
   inset: 7px;
-  border: 1px solid rgb(210 209 246 / 7%);
+  border: 1px solid rgb(255 255 255 / 7%);
   border-radius: 50%;
-  background: radial-gradient(ellipse at 70% 20%, #302e50, #1b2340 90%);
+  background: var(--surface-hero);
 }
 .study-plan-page #sp-degree-ring > * { position: relative; z-index: 1; }
 .study-plan-page #sp-degree-ring svg {
@@ -283,10 +255,10 @@
 }
 .study-plan-page #sp-degree-ring:has(svg) { background: transparent; }
 .study-plan-page #sp-degree-ring:has(svg)::before { inset: 16px; }
-.study-plan-page .sp-ring-track { fill: none; stroke: #55516f; stroke-width: 7; }
-.study-plan-page .sp-ring-progress { fill: none; stroke: #b5ead4; stroke-width: 7; stroke-linecap: round; }
+.study-plan-page .sp-ring-track { fill: none; stroke: var(--border-hero); stroke-width: 7; }
+.study-plan-page .sp-ring-progress { fill: none; stroke: var(--color-hero-accent); stroke-width: 7; stroke-linecap: round; }
 .study-plan-page #sp-ring-value { font-size: 2.8rem; font-weight: 630; letter-spacing: -0.065em; line-height: 1.1; }
-.study-plan-page #sp-ring-label { max-width: 132px; margin-top: 8px; color: #c8cee3; text-align: center; font-size: 0.68rem; line-height: 1.6; }
+.study-plan-page #sp-ring-label { max-width: 132px; margin-top: 8px; color: var(--text-on-hero-muted); text-align: center; font-size: 0.68rem; line-height: 1.6; }
 .study-plan-page .sp-ring-content { text-align: center; }
 .study-plan-page .sp-ring-copy { text-align: center; }
 .study-plan-page .sp-ring-copy strong,
@@ -300,25 +272,25 @@
   min-width: 71px;
   min-height: 30px;
   padding: 5px 10px;
-  border: 1px solid #575471;
+  border: 1px solid var(--border-hero);
   border-radius: 10px;
-  background: #242c49;
-  color: #e0ddf0;
+  background: var(--surface-hero);
+  color: var(--text-on-hero);
   font-size: 0.62rem;
   font-weight: 650;
   letter-spacing: 0.025em;
   box-shadow: 0 5px 18px rgb(10 15 35 / 15%);
 }
-.study-plan-page .sp-orbit-node::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: #c8b3f5; }
+.study-plan-page .sp-orbit-node::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--color-hero-accent); }
 .study-plan-page .sp-orbit-node:nth-of-type(1),
 .study-plan-page .sp-orbit-node.is-bologna { top: 9px; left: 10px; }
 .study-plan-page .sp-orbit-node:nth-of-type(2) { top: 36px; right: -1px; }
 .study-plan-page .sp-orbit-node:nth-of-type(3) { bottom: 26px; right: 5px; }
 .study-plan-page .sp-orbit-node:nth-of-type(4) { bottom: 8px; left: 18px; }
-.study-plan-page .sp-orbit-node.is-active { border-color: #8cd8bb; color: #c2eddb; background: #263b46; }
-.study-plan-page .sp-orbit-node.is-active::before { background: #a8e7c8; }
-.study-plan-page .sp-hero-caption { margin: 13px 0 0; max-width: 270px; text-align: center; color: #b6bed5; font-size: 0.68rem; line-height: 1.65; }
-.study-plan-page .sp-hero-copy > .sp-hero-caption { max-width: none; margin-top: 20px !important; color: #b6bed5 !important; text-align: left; font-size: 0.65rem !important; }
+.study-plan-page .sp-orbit-node.is-active { border-color: var(--color-hero-accent); color: var(--text-on-hero); background: var(--surface-hero-raised); }
+.study-plan-page .sp-orbit-node.is-active::before { background: var(--color-hero-accent); }
+.study-plan-page .sp-hero-caption { margin: 13px 0 0; max-width: 270px; text-align: center; color: var(--text-on-hero-muted); font-size: 0.68rem; line-height: 1.65; }
+.study-plan-page .sp-hero-copy > .sp-hero-caption { max-width: none; margin-top: 20px !important; color: var(--text-on-hero-muted) !important; text-align: left; font-size: 0.65rem !important; }
 
 /* Controls are gathered into one cockpit; the roadmap remains visible on mobile. */
 .study-plan-page .sp-workspace {
@@ -330,7 +302,7 @@
   box-shadow: var(--sp-shadow);
 }
 .study-plan-page .sp-workspace-head { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 16px 24px; margin-bottom: 23px; }
-.study-plan-page .sp-workspace-head h2 { margin: 0 0 5px; font-size: 1.35rem; font-weight: 660; }
+.study-plan-page .sp-workspace-head h2 { font-family: var(--font-serif); margin: 0 0 5px; font-size: 1.35rem; font-weight: 660; }
 .study-plan-page .sp-workspace-head p { margin: 0; color: var(--sp-muted); font-size: 0.8rem; line-height: 1.6; }
 .study-plan-page .sp-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
 .study-plan-page .sp-tools .button,
@@ -369,7 +341,7 @@
   cursor: pointer;
   transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
 }
-.study-plan-page .sp-track-option:hover { border-color: var(--sp-accent); box-shadow: 0 2px 14px rgb(99 80 184 / 7%); }
+.study-plan-page .sp-track-option:hover { border-color: var(--sp-accent); box-shadow: 0 2px 14px var(--color-shadow); }
 .study-plan-page .sp-track-option[aria-pressed="true"] { border-color: var(--sp-accent); background: var(--sp-accent-soft); box-shadow: inset 0 0 0 1px var(--sp-accent); }
 .study-plan-page .sp-track-option[aria-pressed="true"]::after { content: "✓"; position: absolute; top: 11px; right: 12px; display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; color: var(--sp-card); background: var(--sp-accent); font-size: 0.7rem; font-weight: 700; }
 .study-plan-page .sp-track-abbr { color: var(--sp-accent); font-size: 0.71rem; font-weight: 750; letter-spacing: 0.03em; }
@@ -408,7 +380,7 @@
   transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
 }
 .study-plan-page .sp-semester-card:hover { border-color: var(--sp-accent); transform: translateY(-2px); }
-.study-plan-page .sp-semester-card[aria-selected="true"] { border-color: var(--sp-accent); background: var(--sp-accent-soft); box-shadow: 0 3px 15px rgb(104 84 182 / 8%), inset 0 0 0 1px var(--sp-accent); }
+.study-plan-page .sp-semester-card[aria-selected="true"] { border-color: var(--sp-accent); background: var(--sp-accent-soft); box-shadow: 0 3px 15px var(--color-shadow), inset 0 0 0 1px var(--sp-accent); }
 .study-plan-page .sp-semester-number { display: grid; place-items: center; width: 32px; height: 32px; margin-bottom: 9px; border: 1px solid var(--sp-line); border-radius: 10px; background: var(--sp-soft); color: var(--sp-muted); font-size: 0.75rem; font-weight: 650; font-variant-numeric: tabular-nums; }
 .study-plan-page .sp-semester-card[aria-selected="true"] .sp-semester-number { border-color: var(--sp-accent); background: var(--sp-accent); color: var(--sp-card); }
 .study-plan-page .sp-semester-label { font-size: 0.85rem; font-weight: 680; letter-spacing: -0.025em; }

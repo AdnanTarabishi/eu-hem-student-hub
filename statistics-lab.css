@@ -1,8 +1,8 @@
 /* Scoped visual system: nothing here changes other course pages. */
 .sl-lab {
-  --sl-ink: #142f50; --sl-muted: #53657a; --sl-border: #dce3e9;
-  --sl-surface: #ffffff; --sl-soft: #f3f6f7; --sl-accent: #076b64;
-  --sl-accent-soft: #e4f1ed; --sl-lime: #ddf59a; --sl-error: #a72c31;
+  --sl-ink: var(--text-heading, #0f2b5b); --sl-muted: var(--text-secondary, #5d6679); --sl-border: var(--border-default, #e4e7ec);
+  --sl-surface: var(--surface-card, #ffffff); --sl-soft: var(--surface-subtle, #fbfaf8); --sl-accent: var(--color-link, #1f5fae);
+  --sl-accent-soft: var(--color-info-soft, #eaf2fb); --sl-lime: var(--color-hero-accent, #f1b59b); --sl-error: var(--danger, #b42318);
   color: var(--sl-ink); font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 15px; line-height: 1.6; padding: 12px 0 40px; text-align: left;
 }
@@ -17,7 +17,7 @@
 .sl-lab button, .sl-lab input, .sl-lab select, .sl-lab textarea { font: inherit; }
 .sl-lab button { cursor: pointer; }
 .sl-lab button:disabled { cursor: not-allowed; opacity: .6; }
-.sl-lab :is(button, a, input, select, textarea, summary, [tabindex]):focus-visible { outline: 3px solid var(--sl-accent); outline-offset: 3px; }
+.sl-lab :is(button, a, input, select, textarea, summary, [tabindex]):focus-visible { outline: 3px solid var(--color-focus, #1f5fae); outline-offset: 3px; }
 .sl-lab button { transition: background .15s, border-color .15s; }
 .sl-header { display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding: 25px 0 32px; }
 .sl-header > div:first-child { max-width: 760px; }
@@ -32,7 +32,7 @@
 .sl-tabs { display: flex; gap: 5px; padding: 5px; background: var(--sl-soft); border: 1px solid var(--sl-border); border-radius: 13px; }
 .sl-tabs button { border: 0; padding: 12px 17px; color: var(--sl-muted); background: transparent; border-radius: 9px; font-size: .75rem; font-weight: 550; min-height: 44px; }
 .sl-tabs button span { margin-left: 8px; font-size: .875rem; font-weight: 650; }
-.sl-tabs button[aria-selected="true"] { background: var(--sl-ink); color: var(--sl-surface); box-shadow: 0 2px 5px #0f2b5b16; }
+.sl-tabs button[aria-selected="true"] { background: var(--action-navy, #0f2b5b); color: var(--text-on-navy, #ffffff); box-shadow: 0 2px 5px #0f2b5b16; }
 .sl-text-button { border: 0; background: none; padding: 8px 0; color: var(--sl-accent); font-weight: 650; font-size: .85rem !important; min-height: 44px; text-align: left; }
 .sl-text-button:hover, .sl-inline-link:hover { text-decoration: underline; text-underline-offset: 4px; }
 .sl-workspace, .sl-table-top { display: grid; grid-template-columns: minmax(265px, 340px) minmax(0, 1fr); gap: 22px; align-items: start; }
@@ -51,7 +51,7 @@
 .sl-sliders label { display: block; font-size: .77rem; font-weight: 600; color: var(--sl-muted); margin: 6px 0 13px; }
 .sl-sliders label span { float: right; font-weight: 500; font-variant-numeric: tabular-nums; }
 .sl-sliders input { display: block; width: 100%; accent-color: var(--sl-accent); margin: 10px 0 0; min-height: 22px; }
-.sl-button { display: flex; justify-content: space-between; align-items: center; gap: 15px; width: 100%; min-height: 46px; border: 1px solid var(--sl-ink); border-radius: 10px; padding: 11px 15px; color: var(--sl-surface); background: var(--sl-ink); font-weight: 650; font-size: .86rem !important; }
+.sl-button { display: flex; justify-content: space-between; align-items: center; gap: 15px; width: 100%; min-height: 46px; border: 1px solid var(--action-navy, #0f2b5b); border-radius: 10px; padding: 11px 15px; color: var(--text-on-navy, #ffffff); background: var(--action-navy, #0f2b5b); font-weight: 650; font-size: .86rem !important; }
 .sl-button:hover { filter: brightness(1.13); }
 .sl-error { padding: 11px; border: 1px solid var(--sl-error); color: var(--sl-error); font-size: .83rem; border-radius: 8px; margin: 12px 0 !important; }
 .sl-examples { padding-top: 22px; margin-top: 22px; border-top: 1px solid var(--sl-border); }
@@ -79,11 +79,11 @@
 .sl-legend span { display: flex; align-items: center; gap: 6px; }
 .sl-legend-area { display: inline-block; height: 10px; width: 15px; border-radius: 3px; background: var(--sl-accent); opacity: .4; }
 .sl-legend-line { display: inline-block; width: 16px; height: 3px; background: var(--sl-accent); border-radius: 2px; }
-.sl-answer { display: flex; gap: 25px; align-items: center; justify-content: space-between; background: #142f50; color: #fff; border-radius: 12px; padding: 23px; margin: 17px 0 12px; }
-.sl-answer .sl-eyebrow { color: #becce0; font-size: .62rem; margin-bottom: 7px !important; }
+.sl-answer { display: flex; gap: 25px; align-items: center; justify-content: space-between; background: var(--surface-hero, #0f2b5b); color: var(--text-on-hero, #fff); border-radius: 12px; padding: 23px; margin: 17px 0 12px; }
+.sl-answer .sl-eyebrow { color: var(--text-on-hero-muted, #dce7f5); font-size: .62rem; margin-bottom: 7px !important; }
 .sl-answer strong { display: block; font-size: clamp(1.8rem, 3vw, 2.6rem); letter-spacing: -.035em; line-height: 1.25; font-variant-numeric: tabular-nums; font-weight: 750; color: var(--sl-lime); }
 .sl-answer #sl-answer-percent { color: #fff; font-size: .9rem; font-variant-numeric: tabular-nums; }
-.sl-answer p { max-width: 225px; font-size: .83rem; line-height: 1.65; color: #d7e1ef; }
+.sl-answer p { max-width: 225px; font-size: .83rem; line-height: 1.65; color: var(--text-on-hero-muted, #dce7f5); }
 .sl-precision { display: flex; gap: 15px; padding: 21px 23px; background: var(--sl-accent-soft); }
 .sl-precision h3 { font-size: .87rem; margin-bottom: 7px; }
 .sl-precision p { font-size: .81rem; color: var(--sl-muted); }
@@ -115,7 +115,7 @@
 .sl-table-card { margin-top: 24px; }
 .sl-signs { display: flex; border: 1px solid var(--sl-border); border-radius: 9px; padding: 4px; gap: 4px; flex-shrink: 0; }
 .sl-signs button { border: 0; background: transparent; border-radius: 6px; padding: 9px 13px; font-size: .8rem; color: var(--sl-muted); min-height: 40px; }
-.sl-signs button[aria-pressed="true"] { background: var(--sl-ink); color: var(--sl-surface); }
+.sl-signs button[aria-pressed="true"] { background: var(--action-navy, #0f2b5b); color: var(--text-on-navy, #ffffff); }
 .sl-table-scroll { position: relative; overflow: auto; max-height: 510px; border: 1px solid var(--sl-border); border-radius: 11px; margin-top: 18px; overscroll-behavior-x: contain; }
 .sl-lab table { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 640px; font-variant-numeric: tabular-nums; font-size: .78rem; margin: 0; }
 .sl-lab table caption { text-align: left; background: var(--sl-soft); padding: 10px 14px; font-size: .75rem; color: var(--sl-muted); }
@@ -126,7 +126,7 @@
 .sl-lab td button { display: block; width: 100%; min-height: 42px; padding: 8px 6px; background: transparent; border: 2px solid transparent; color: var(--sl-ink); border-radius: 5px; font-size: .77rem; }
 .sl-lab td button:hover { border-color: var(--sl-accent); }
 .sl-lab tr.sl-selected-row > *, .sl-lab .sl-selected-col { background: var(--sl-accent-soft); }
-.sl-lab td button.sl-selected-cell { background: var(--sl-ink); color: var(--sl-lime); border-color: var(--sl-ink); font-weight: 750; }
+.sl-lab td button.sl-selected-cell { background: var(--action-navy, #0f2b5b); color: var(--text-on-navy, #ffffff); border-color: var(--action-navy, #0f2b5b); font-weight: 750; }
 .sl-info { border-left: 3px solid var(--sl-accent); background: var(--sl-accent-soft); color: var(--sl-muted); padding: 18px 22px; margin: 24px 0; font-size: .84rem; border-radius: 0 10px 10px 0; }
 .sl-info strong { color: var(--sl-ink); }
 .sl-methods { border-top: 1px solid var(--sl-border); margin-top: 30px; padding-top: 17px; }
@@ -135,30 +135,9 @@
 .sl-methods p { margin: 10px 0 !important; color: var(--sl-muted); font-size: .8rem; }
 .sl-status { font-size: .82rem; color: var(--sl-accent); margin: 15px 0 !important; }
 /* Standalone page only; the lab is also mounted natively in the course tab. */
-.sl-standalone { margin: 0; background: #f7f9fa; }
+.sl-standalone { margin: 0; background: var(--surface-page, #f7f5f1); }
 .sl-standalone .sl-shell { max-width: 1240px; padding: 0 30px; margin: 0 auto; }
-.sl-standalone .sl-site-header { border-bottom: 1px solid #dce3e9; padding: 18px 0; background: #fff; font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-.sl-site-header .sl-shell { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-.sl-site-header a { color: #142f50; text-decoration: none; font-size: .85rem; }
-.sl-site-header a:first-child { font-weight: 750; }
-.sl-standalone .sl-back { display: inline-block; color: #53657a; font-size: .84rem; margin: 24px 0 0; text-decoration: none; font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-.sl-standalone footer { color: #53657a; border-top: 1px solid #dce3e9; padding: 22px 0; font: .8rem Inter, sans-serif; }
-[data-theme="dark"] .sl-lab, .dark .sl-lab {
-  --sl-ink: #e2eaf6; --sl-muted: #adbbce; --sl-border: #30455e;
-  --sl-surface: #12233a; --sl-soft: #182e46; --sl-accent: #80d5c5;
-  --sl-accent-soft: #163d3d; --sl-error: #ffadb1;
-}
-[data-theme="dark"] .sl-standalone { background: #0b1b2e; }
-[data-theme="dark"] .sl-standalone .sl-site-header { background: #12233a; border-color: #30455e; }
-[data-theme="dark"] .sl-standalone :is(.sl-site-header a, .sl-back, footer) { color: #adbbce; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]):not([data-theme="dark"]) .sl-lab {
-    --sl-ink: #e2eaf6; --sl-muted: #adbbce; --sl-border: #30455e;
-    --sl-surface: #12233a; --sl-soft: #182e46; --sl-accent: #80d5c5;
-    --sl-accent-soft: #163d3d; --sl-error: #ffadb1;
-  }
-  :root:not([data-theme="light"]):not([data-theme="dark"]) .sl-standalone { background: #0b1b2e; }
-}
+.sl-standalone .sl-back { display: inline-flex; align-items: center; min-height: 44px; color: var(--text-secondary, #5d6679); font-size: .84rem; margin: 18px 0 0; text-decoration: none; }
 @media (max-width: 950px) {
   .sl-header-note { flex-basis: 190px; padding-left: 20px; }
   .sl-workspace, .sl-table-top { grid-template-columns: minmax(250px, 290px) minmax(0, 1fr); gap: 16px; }

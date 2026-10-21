@@ -17,16 +17,11 @@
   <meta property="og:image:alt" content="EU-HEM Student Hub: less searching, more learning, living and connecting.">
   <meta name="twitter:card" content="summary_large_image">
   <!-- /Social preview -->
-  <meta name="theme-color" content="#142f50">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="EU-HEM Student Hub">
-  <meta property="og:title" content="Interactive Statistics Lab – EU-HEM Student Hub">
-  <meta property="og:description" content="Twelve connected study tools with worked calculations, interactive plots and Fundamentals topic guidance.">
-  <meta property="og:image" content="https://adnantarabishi.github.io/eu-hem-student-hub/img/social-preview.png">
-  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0f2b5b">
   <link rel="icon" href="img/app-icon.svg?v=9629db81" type="image/svg+xml">
-  <style>@font-face{font-family:Inter;src:url('fonts/inter-latin.woff2') format('woff2');font-display:swap;font-style:normal;font-weight:100 900}</style>
-  <link rel="stylesheet" href="statistics-lab.css?v=ee102c66">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css?v=41ee57c2">
+  <link rel="stylesheet" href="statistics-lab.css?v=4955d68c">
   <link rel="stylesheet" href="statistics-lab-tools.css?v=b0fda8b7">
   <script src="theme.js?v=d51d4769"></script>
   <script defer src="statistics-lab-math.js?v=3f2cab48"></script>
@@ -39,8 +34,21 @@
   <link rel="stylesheet" href="statistics-lab-foundations.css?v=df807fe4">
 </head>
 <body class="sl-standalone">
-  <header class="sl-site-header"><div class="sl-shell"><a href="index.html">EU-HEM Student Hub</a><a href="course.html?course=quant-methods">Quantitative Methods ↗</a></div></header>
-  <main class="sl-shell"><a class="sl-back" href="course.html?course=quant-methods">← Back to the course</a><div id="statistics-lab"><p>Loading the interactive lab…</p><noscript>Enable JavaScript to calculate probabilities and use the interactive Z-table.</noscript></div></main>
-  <footer><div class="sl-shell">EU-HEM Student Hub · Unofficial student project · Educational use</div></footer>
+  <a class="skip-link" href="#main">Skip to study content</a>
+  <header class="site-header">
+    <div class="container">
+      <p class="site-title"><a href="index.html">EU-HEM Student Hub</a></p>
+      <p class="site-tagline">Unofficial, student-run resources for the EU-HEM master's program</p>
+      <nav class="site-nav" id="site-nav" data-current="notes" aria-label="Main menu"></nav>
+      <script src="site-nav.js?v=f761a0dc"></script>
+    </div>
+  </header>
+  <main class="sl-shell" id="main" tabindex="-1"><a class="sl-back" href="course.html?course=quant-methods">← Back to the course</a><div id="statistics-lab"><p>Loading the interactive lab…</p><noscript>Enable JavaScript to calculate probabilities and use the interactive Z-table.</noscript></div></main>
+  <footer class="site-footer"><div class="container">EU-HEM Student Hub · Unofficial student project · Educational use</div></footer>
+  <script defer src="utils.js?v=3f08bd92"></script>
+  <script defer src="ui.js?v=6d55e433"></script>
+  <script defer src="search.js?v=eeec3764"></script>
+  <script defer src="pwa.js?v=6f628bf6"></script>
+  <script defer src="announcements.js?v=5ec8eef9"></script>
 </body>
 </html>

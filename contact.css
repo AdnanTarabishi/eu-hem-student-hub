@@ -26,7 +26,7 @@
 .contact-email-panel { padding: clamp(24px, 3vw, 34px); }
 .contact-email-panel__top { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
 .contact-email-panel__top .academic-eyebrow { margin: 0; }
-.contact-email-panel__icon { width: 27px; height: 27px; color: #f0a184; flex: none; }
+.contact-email-panel__icon { width: 27px; height: 27px; color: var(--color-hero-accent); flex: none; }
 .contact-email-panel h2 { margin: 19px 0 13px; font-size: clamp(1.7rem, 2.2vw, 2.1rem); line-height: 1.2; letter-spacing: -.025em; }
 .contact-email-address {
   display: inline-flex;
@@ -47,7 +47,7 @@
 .contact-email-panel .button-primary { color: var(--color-on-brand); }
 .contact-copy-button { background: transparent; border-color: rgb(255 255 255 / .4); color: var(--text-on-navy); }
 .contact-copy-button:hover { background: rgb(255 255 255 / .1); border-color: var(--text-on-navy); color: var(--text-on-navy); }
-.contact-email-panel :is(a, button, input):focus-visible { outline-color: #b8d4f3; }
+.contact-email-panel :is(a, button, input):focus-visible { outline-color: var(--color-focus-on-hero); }
 .contact-email-panel .contact-copy-status { min-height: 1.65em; margin: 10px 0 0; color: var(--text-on-navy); font-size: .72rem; line-height: 1.65; }
 .contact-copy-fallback { margin: 10px 0 15px; }
 .contact-copy-fallback label { display: block; margin-bottom: 7px; font-size: .75rem; }
@@ -188,12 +188,12 @@
 .contact-hero-links .contact-write-link:hover { background: var(--action-navy-hover); text-decoration: none; }
 .contact-process ol { display: grid; gap: 17px; margin: 22px 0; padding: 0; list-style: none; }
 .contact-process li { display: flex; align-items: flex-start; gap: 13px; }
-.contact-process li > span { display: inline-grid; place-items: center; flex: none; width: 29px; height: 29px; border: 1px solid rgb(255 255 255 / .2); border-radius: 8px; color: #f0a184; font-size: .65rem; font-weight: 650; }
+.contact-process li > span { display: inline-grid; place-items: center; flex: none; width: 29px; height: 29px; border: 1px solid rgb(255 255 255 / .2); border-radius: 8px; color: var(--color-hero-accent); font-size: .65rem; font-weight: 650; }
 .contact-process li strong { font-size: .8rem; line-height: 1.6; }
 .contact-process li p { margin: 3px 0 0; color: var(--text-on-navy-muted); font-size: .75rem; line-height: 1.7; }
 .contact-process .contact-process-note { margin: 22px 0 0; padding-top: 18px; border-top: 1px solid rgb(255 255 255 / .17); color: var(--text-on-navy-muted); font-size: .73rem; line-height: 1.8; }
 .contact-process a { text-underline-offset: 3px; }
-.contact-process a:focus-visible { outline-color: #b8d4f3; }
+.contact-process a:focus-visible { outline-color: var(--color-focus-on-hero); }
 .contact-form-section { margin-bottom: 28px; scroll-margin-top: calc(var(--header-height) + 22px); }
 .contact-form-frame, .contact-topic-selector, .contact-conditional { min-width: 0; margin: 0; padding: 0; border: 0; }
 .contact-compose-layout { display: grid; grid-template-columns: minmax(225px, .7fr) minmax(0, 1.85fr); align-items: start; gap: 25px; }

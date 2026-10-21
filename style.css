@@ -146,6 +146,15 @@
   --surface-elevated: var(--white);
   --surface-navy: var(--navy-900);
 
+  /* Shared identity for dark editorial panels, in either theme. */
+  --surface-hero: var(--surface-navy);
+  --surface-hero-raised: rgba(255, 255, 255, 0.08);
+  --text-on-hero: var(--text-on-navy);
+  --text-on-hero-muted: #dce7f5;
+  --color-hero-accent: #f1b59b;
+  --border-hero: rgba(255, 255, 255, 0.24);
+  --color-focus-on-hero: #a7ccf7;
+
   /* Text */
   --text-primary: #20242a;
   --text-secondary: #5d6679; /* AA (4.5:1) on white, ivory and tinted surfaces */

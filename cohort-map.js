@@ -116,8 +116,9 @@
     panel.classList.toggle("has-country", Boolean(country));
     panel.append(make("p", "cm-eyebrow", "Country spotlight"));
     if (!country) {
-      const emblem = make("span", "cm-spotlight-icon", "↗");
+      const emblem = make("span", "cm-spotlight-icon");
       emblem.setAttribute("aria-hidden", "true");
+      emblem.innerHTML = '<svg class="icon"><use href="icons.svg#globe"></use></svg>';
       panel.append(emblem, make("h3", null, "Every country adds a perspective."),
         make("p", "cm-detail-copy", "Select a highlighted country or a row in the list to see its count and share of the cohort overview."));
       const foot = make("p", "cm-detail-foot");

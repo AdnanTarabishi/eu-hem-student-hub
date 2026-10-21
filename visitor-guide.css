@@ -1,5 +1,5 @@
 /* Visitor edition: an illustrated, interactive prospectus using the shared Hub palette. */
-.visitor-page { --vg-ink:#102d5c;--vg-paper:#fcfaf6;--vg-copper:#a9472d;--vg-peach:#f2b49b;--vg-line:#d5dfed; }
+.visitor-page { --vg-ink:var(--navy-900);--vg-paper:var(--ivory-white);--vg-copper:var(--terracotta-700);--vg-peach:var(--color-hero-accent);--vg-line:var(--color-primary-border); }
 .visitor-page .vg-main { padding-top:24px;padding-bottom:48px; }
 .visitor-page .vg-kicker { display:flex;align-items:center;gap:9px;margin:0 0 15px;color:var(--color-brand-text);font-size:.67rem;font-weight:750;letter-spacing:.12em;text-transform:uppercase; }
 .visitor-page .vg-edition-mark { display:inline-grid;place-items:center;width:28px;height:28px;border:1px solid var(--border-default);border-radius:7px; }.visitor-page .vg-edition-mark .icon { width:16px;height:16px; }
@@ -19,7 +19,7 @@
 .visitor-page .vg-hero-tags span::before { content:"";display:inline-block;margin-right:7px;width:5px;height:5px;border-radius:50%;background:var(--color-brand);vertical-align:middle; }
 /* The preview is illustrative. Every actual action is a normal destination link. */
 .visitor-page .vg-showcase { min-width:0;border:1px solid var(--border-input);border-radius:17px;background:var(--surface-card);box-shadow:0 26px 55px -25px var(--color-shadow-strong),0 7px 0 -2px var(--surface-page),0 8px 0 -2px var(--border-default);overflow:hidden; }
-.visitor-page .vg-showcase-top { display:flex;align-items:center;gap:12px;min-height:48px;padding:12px 17px;background:var(--vg-ink);color:#fff; }
+.visitor-page .vg-showcase-top { display:flex;align-items:center;gap:12px;min-height:48px;padding:12px 17px;background:var(--surface-hero);color:var(--text-on-hero); }
 .visitor-page .vg-showcase-top h2 { flex:1;margin:0;color:inherit;font-family:var(--font-sans);font-size:.67rem;font-weight:600;letter-spacing:.01em; }
 .visitor-page #visitor-showcase-position { color:#e0e9f6;font-size:.58rem;font-variant-numeric:tabular-nums;white-space:nowrap; }
 .visitor-page .vg-window-dots { display:flex;gap:4px; }.visitor-page .vg-window-dots i { display:block;width:5px;height:5px;background:#f2b49b;border-radius:50%; }.visitor-page .vg-window-dots i:nth-child(2) { opacity:.7; }.visitor-page .vg-window-dots i:nth-child(3) { opacity:.4; }

@@ -6,7 +6,7 @@
 .sv-workbench button,.sv-workbench input,.sv-workbench select,.sv-workbench textarea{font:inherit;}
 .sv-workbench button{cursor:pointer;}
 .sv-workbench button:disabled{cursor:not-allowed;opacity:.5;}
-.sv-workbench :is(a,button,input,select,textarea,summary,[tabindex]):focus-visible{outline:3px solid var(--color-link);outline-offset:3px;}
+.sv-workbench :is(a,button,input,select,textarea,summary,[tabindex]):focus-visible{outline:3px solid var(--color-focus);outline-offset:3px;}
 .sv-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin:9px 0 27px;}
 .sv-heading h2{font:600 clamp(30px,3.5vw,47px)/1.13 var(--font-serif);letter-spacing:-.035em;margin:10px 0 17px;color:var(--color-heading);}
 .sv-heading h2 em{font-style:normal;color:var(--color-link);}
@@ -42,7 +42,7 @@
 .sv-field>span{font-weight:650;color:var(--text-secondary);line-height:1.5;}
 .sv-field :is(input,select,textarea){width:100%;min-width:0;background:var(--surface-card);color:var(--text-primary);border:1px solid var(--border-input);border-radius:8px;padding:10px 11px;min-height:43px;font-size:12px;}
 .sv-field textarea{resize:vertical;line-height:1.9;min-height:140px;font-variant-numeric:tabular-nums;}
-.sv-field input[aria-invalid="true"]{border-color:var(--color-danger,#a82c37);}
+.sv-field input[aria-invalid="true"]{border-color:var(--color-danger-text);}
 .sv-fields{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
 .sv-route-status{display:inline-flex;border:1px solid var(--color-primary-border);padding:6px 11px;border-radius:7px;color:var(--color-link);background:var(--color-primary-light);font-size:11px;font-weight:650;}
 .sv-route-review{background:var(--surface-warm);color:var(--text-secondary);}
@@ -51,7 +51,7 @@
 .sv-reasons p span{font-size:10px;color:var(--color-link);font-weight:700;flex:0 0 22px;padding-top:4px;}
 .sv-checks{margin:13px 0 25px;padding-left:19px;color:var(--text-secondary);font-size:12px;line-height:1.85;}
 .sv-checks li{margin:8px 0;}
-.sv-error{padding:12px;border:1px solid var(--color-danger,#a82c37);color:var(--text-primary);border-radius:8px;font-size:12px;margin:12px 0;}
+.sv-error{padding:12px;border:1px solid var(--color-danger-text);color:var(--text-primary);border-radius:8px;font-size:12px;margin:12px 0;}
 .sv-note{border-left:3px solid var(--color-link);background:var(--surface-warm);border-radius:0 9px 9px 0;padding:15px 17px;margin:19px 0;font-size:12px;line-height:1.85;color:var(--text-secondary);}
 .sv-source{font-size:11px;color:var(--text-secondary);margin-top:20px;line-height:1.8;}
 .sv-source a,.sv-methods a{color:var(--color-link);text-underline-offset:3px;}

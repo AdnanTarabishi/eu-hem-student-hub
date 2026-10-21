@@ -1,14 +1,18 @@
-:root {
-  --paper: #f7f6f0;
-  --white: #fffefa;
-  --ink: #203730;
-  --muted: #68736c;
-  --green: #153d35;
-  --mint: #e2eee4;
-  --accent: #cc6f4f;
-  --line: #dce0d6;
-  --red: #a43b32;
-  --radius: 18px;
+.lecture-page {
+  --paper: var(--surface-page);
+  --lecture-card: var(--surface-card);
+  --ink: var(--text-primary);
+  --muted: var(--text-secondary);
+  --green: var(--color-link);
+  --mint: var(--color-info-soft);
+  --accent: var(--color-brand-text);
+  --line: var(--border-default);
+  --red: var(--danger);
+  --radius: var(--radius-lg);
+  --surface: var(--surface-card);
+  --surface-2: var(--surface-subtle);
+  --card: var(--surface-card);
+  --text: var(--text-primary);
 }
 * {
   box-sizing: border-box;
@@ -18,11 +22,7 @@ body {
   background: var(--paper);
   color: var(--ink);
   font:
-    16px/1.6 system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
+    16px/1.6 var(--font-sans);
 }
 button,
 input,
@@ -45,7 +45,7 @@ input:focus-visible,
 select:focus-visible,
 summary:focus-visible,
 [tabindex]:focus-visible {
-  outline: 3px solid #cc6f4f;
+  outline: 3px solid var(--color-focus);
   outline-offset: 4px;
 }
 h1,
@@ -57,7 +57,7 @@ p {
 h1,
 h2,
 .serif {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-serif);
   font-weight: 400;
 }
 h1 {
@@ -135,7 +135,7 @@ p {
   place-items: center;
   width: 39px;
   height: 39px;
-  background: var(--green);
+  background: var(--action-navy);
   color: white;
   border-radius: 11px;
   font:
@@ -161,7 +161,7 @@ p {
   display: flex;
   gap: 5px;
   border-radius: 12px;
-  background: #ebece5;
+  background: var(--surface-subtle);
   padding: 5px;
 }
 .nav button {
@@ -174,14 +174,14 @@ p {
   font-weight: 650;
 }
 .nav button[aria-current="page"] {
-  background: var(--white);
+  background: var(--lecture-card);
   color: var(--green);
   box-shadow: 0 2px 5px #2037300c;
 }
 .btn {
-  border: 1px solid var(--green);
-  background: var(--green);
-  color: var(--white);
+  border: 1px solid var(--action-navy);
+  background: var(--action-navy);
+  color: var(--text-on-hero);
   border-radius: 9px;
   padding: 12px 19px;
   font-size: 13px;
@@ -193,12 +193,12 @@ p {
   min-height: 44px;
 }
 .btn:hover {
-  background: #245247;
+  background: var(--action-navy-hover);
 }
 .btn.secondary {
   background: transparent;
   color: var(--green);
-  border-color: #b5c2b7;
+  border-color: var(--border-input);
 }
 .btn.secondary:hover {
   background: var(--mint);
@@ -237,16 +237,16 @@ p {
   flex-wrap: wrap;
 }
 .visual {
-  background: var(--green);
+  background: var(--surface-hero);
   border-radius: 22px;
-  color: #f4f5e9;
+  color: var(--text-on-hero);
   padding: 30px 30px 25px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 18px 38px #153d3512;
+  box-shadow: var(--shadow-md);
 }
 .visual .eyebrow {
-  color: #b8d2be;
+  color: var(--color-hero-accent);
   margin: 0 0 4px;
   font-size: 10px;
 }
@@ -264,14 +264,14 @@ p {
 .visual-note {
   border-top: 1px solid #ffffff26;
   padding-top: 17px;
-  color: #cad7c9;
+  color: var(--text-on-hero-muted);
   font-size: 12px;
 }
 .legend {
   display: flex;
   gap: 20px;
   font-size: 11px;
-  color: #d6e0d4;
+  color: var(--text-on-hero-muted);
 }
 .legend span:before {
   content: "";
@@ -316,7 +316,7 @@ p {
   gap: 20px;
 }
 .card {
-  background: var(--white);
+  background: var(--lecture-card);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 26px;
@@ -352,7 +352,7 @@ p {
   min-height: 217px;
 }
 .concept:hover {
-  background: #f0f4eb;
+  background: var(--surface-subtle);
 }
 .concept[aria-expanded="true"] {
   background: var(--mint);
@@ -364,7 +364,7 @@ p {
   line-height: 1.55;
   margin-top: 15px;
   padding-top: 14px;
-  border-top: 1px solid #becfbd;
+  border-top: 1px solid var(--border-default);
 }
 .concept[aria-expanded="true"] .reveal {
   display: block;
@@ -384,12 +384,14 @@ p {
   align-items: center;
   gap: 20px;
   padding: 24px 28px;
-  background: #eeeae0;
-  border: 1px solid #e3dece;
+  background: var(--surface-warm);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius);
   margin: 22px 0 0;
 }
 .flow-step {
+  min-width: 0;
+  overflow-wrap: anywhere;
   flex: 1;
 }
 .flow-step span {
@@ -407,10 +409,10 @@ p {
 }
 .flow-arrow {
   font-size: 22px;
-  color: #7d8e76;
+  color: var(--text-secondary);
 }
 .formula {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-serif);
   font-size: 27px;
   line-height: 1.5;
   color: var(--green);
@@ -428,10 +430,10 @@ p {
 }
 .note {
   border-left: 3px solid var(--accent);
-  background: #f5eade;
+  background: var(--color-brand-soft);
   padding: 15px 18px;
   font-size: 13px;
-  color: #655044;
+  color: var(--text-primary);
   border-radius: 0 9px 9px 0;
 }
 .note p:last-child {
@@ -457,8 +459,8 @@ p {
   font-size: 13px;
 }
 .cta {
-  background: var(--green);
-  color: var(--white);
+  background: var(--surface-hero);
+  color: var(--text-on-hero);
   padding: 30px 34px;
   border-radius: var(--radius);
   display: flex;
@@ -472,14 +474,14 @@ p {
   margin-bottom: 6px;
 }
 .cta p {
-  color: #c1d3c5;
+  color: var(--text-on-hero-muted);
   font-size: 13px;
   margin: 0;
 }
 .cta .btn {
-  background: #ecf1df;
+  background: var(--color-hero-accent);
   color: var(--green);
-  border-color: #ecf1df;
+  border-color: var(--color-hero-accent);
   white-space: nowrap;
 }
 .page-head {
@@ -524,10 +526,10 @@ p {
 input[type="number"],
 select {
   width: 100%;
-  border: 1px solid #bec8bc;
+  border: 1px solid var(--border-input);
   border-radius: 8px;
   padding: 10px 12px;
-  background: var(--white);
+  background: var(--lecture-card);
   color: var(--ink);
   min-height: 45px;
 }
@@ -556,7 +558,7 @@ input[type="range"] {
 }
 .stat {
   padding: 16px;
-  background: #f1f3eb;
+  background: var(--surface-subtle);
   border-radius: 11px;
 }
 .stat span {
@@ -572,7 +574,7 @@ input[type="range"] {
     serif;
 }
 .chart-box {
-  background: #f7f8f2;
+  background: var(--surface-warm);
   padding: 12px 15px;
   border-radius: 12px;
   border: 1px solid var(--line);
@@ -605,14 +607,14 @@ svg.chart {
   margin: 22px 0;
 }
 .ci-main {
-  background: var(--green);
-  color: var(--white);
+  background: var(--surface-hero);
+  color: var(--text-on-hero);
   border-radius: 12px;
   padding: 18px;
 }
 .ci-main span {
   font-size: 11px;
-  color: #c7dbca;
+  color: var(--text-on-hero-muted);
   display: block;
   margin-bottom: 5px;
 }
@@ -644,7 +646,7 @@ th {
 }
 td {
   padding: 10px 12px;
-  border-bottom: 1px solid #edf0e7;
+  border-bottom: 1px solid var(--border-subtle);
 }
 tr:last-child td {
   border-bottom: 0;
@@ -671,14 +673,14 @@ tr:last-child td {
 }
 .progress-track {
   height: 5px;
-  background: #e3e8dc;
+  background: var(--surface-subtle);
   border-radius: 8px;
   overflow: hidden;
   margin: 12px 0;
 }
 .progress-fill {
   height: 100%;
-  background: var(--green);
+  background: var(--action-navy);
   transition: width 0.2s;
 }
 .question-map {
@@ -689,7 +691,7 @@ tr:last-child td {
 }
 .question-map button {
   border: 1px solid var(--line);
-  background: #f6f6f0;
+  background: var(--surface-subtle);
   border-radius: 6px;
   min-height: 33px;
   font-size: 11px;
@@ -700,18 +702,18 @@ tr:last-child td {
   outline-offset: 2px;
 }
 .question-map button.correct {
-  background: #dfecdf;
-  border-color: #b9cdb6;
-  color: #254e30;
+  background: var(--success-bg);
+  border-color: var(--success);
+  color: var(--success);
 }
 .question-map button.incorrect {
-  background: #f7e7df;
-  border-color: #e4b9a6;
-  color: #934b31;
+  background: var(--danger-bg);
+  border-color: var(--danger);
+  color: var(--danger);
 }
 .question-map button.selected {
-  background: #eee9dc;
-  color: #655a37;
+  background: var(--warning-bg);
+  color: var(--warning);
 }
 .quiz-side .btn {
   width: 100%;
@@ -755,22 +757,22 @@ tr:last-child td {
   gap: 14px;
   padding: 15px 17px;
   min-height: 65px;
-  border: 1px solid #d3dbce;
+  border: 1px solid var(--border-default);
   border-radius: 10px;
   cursor: pointer;
-  background: var(--white);
+  background: var(--lecture-card);
   font-size: 14px;
   line-height: 1.5;
 }
 .option:hover {
-  background: #f4f6ee;
+  background: var(--surface-subtle);
 }
 .option:has(input:checked) {
   border-color: var(--green);
-  background: #edf3e9;
+  background: var(--color-info-soft);
 }
 .option:has(input:focus-visible) {
-  outline: 3px solid var(--accent);
+  outline: 3px solid var(--color-focus);
   outline-offset: 3px;
 }
 .option input {
@@ -782,7 +784,7 @@ tr:last-child td {
 .option-letter {
   width: 27px;
   height: 27px;
-  border: 1px solid #ced8c8;
+  border: 1px solid var(--border-input);
   border-radius: 6px;
   display: grid;
   place-items: center;
@@ -791,17 +793,17 @@ tr:last-child td {
   font-weight: 650;
 }
 .option:has(input:checked) .option-letter {
-  background: var(--green);
+  background: var(--action-navy);
   color: white;
   border-color: var(--green);
 }
 .option.correct-option {
-  background: #e5f0e2 !important;
-  border-color: #648b5e !important;
+  background: var(--success-bg) !important;
+  border-color: var(--success) !important;
 }
 .option.wrong-option {
-  background: #f8e9e1 !important;
-  border-color: #bc7256 !important;
+  background: var(--danger-bg) !important;
+  border-color: var(--danger) !important;
 }
 .option:has(input:disabled) {
   cursor: default;
@@ -810,13 +812,13 @@ tr:last-child td {
   margin-top: 20px;
   border-radius: 10px;
   padding: 17px 20px;
-  background: #e7f0e1;
+  background: var(--success-bg);
   font-size: 13px;
-  color: #294b2f;
+  color: var(--success);
 }
 .answer-feedback.wrong {
-  background: #f7e9e0;
-  color: #804530;
+  background: var(--danger-bg);
+  color: var(--danger);
 }
 .answer-feedback strong {
   display: block;
@@ -892,7 +894,7 @@ footer p {
   position: absolute;
   left: 12px;
   top: -80px;
-  background: var(--green);
+  background: var(--action-navy);
   color: white;
   padding: 12px;
   z-index: 10;
@@ -905,7 +907,7 @@ footer p {
 }
 .noscript {
   padding: 20px;
-  background: #f5eade;
+  background: var(--color-brand-soft);
 }
 .visually-hidden {
   position: absolute;
@@ -994,6 +996,8 @@ footer p {
     padding: 22px;
   }
   .flow {
+    flex-direction: column;
+    align-items: stretch;
     gap: 9px;
     padding: 20px 15px;
   }
@@ -1006,6 +1010,8 @@ footer p {
   }
   .flow-arrow {
     font-size: 16px;
+    align-self: center;
+    transform: rotate(90deg);
   }
   .cta {
     display: block;
@@ -1199,7 +1205,7 @@ footer p {
   text-decoration: none;
 }
 .lecture-page .lecture-sequence a[aria-current="page"] {
-  background: #153d35;
+  background: var(--surface-hero);
   color: #fffefa;
 }
 .extended-activity {
@@ -1218,7 +1224,7 @@ footer p {
   width: 100%;
   min-width: 0;
   border: 1px solid var(--line);
-  background: var(--white);
+  background: var(--lecture-card);
   color: var(--ink);
   border-radius: 8px;
   padding: 10px;
@@ -1256,7 +1262,7 @@ footer p {
   min-width: 0;
 }
 .lecture-page .event-buttons button[aria-pressed="true"] {
-  background: #153d35;
+  background: var(--surface-hero);
   color: #fffefa;
 }
 .lecture-page .footer-mark { color: var(--muted); }
@@ -1345,142 +1351,7 @@ footer p {
   color: #fffefa;
 }
 .lecture-page .cta .btn {
-  color: #153d35;
-}
-html[data-theme="dark"] .lecture-page .chart text {
-  fill: var(--muted);
-}
-html[data-theme="dark"] .lecture-page .pill,
-html[data-theme="dark"] .lecture-page .badge {
-  color: #dcebcf;
-}
-html[data-theme="dark"] .lecture-page .question-map button.selected {
-  background: #5a5131;
-  color: #f4ead8;
-}
-html[data-theme="dark"] {
-  --paper: #15231e;
-  --white: #1d3028;
-  --ink: #e0ebde;
-  --muted: #b2c0b4;
-  --mint: #304f3e;
-  --line: #3b5242;
-}
-html[data-theme="dark"] .lecture-page .nav {
-  background: #25382d;
-}
-html[data-theme="dark"] .lecture-page .nav button[aria-current="page"] {
-  color: #dcebcf;
-}
-html[data-theme="dark"] .lecture-page .card h3,
-html[data-theme="dark"] .lecture-page .formula,
-html[data-theme="dark"] .lecture-page .concept .reveal {
-  color: #dcebcf;
-}
-html[data-theme="dark"] .lecture-page .stat,
-html[data-theme="dark"] .lecture-page .chart-box,
-html[data-theme="dark"] .lecture-page .flow {
-  background: #263e30;
-}
-html[data-theme="dark"] .lecture-page .option:hover,
-html[data-theme="dark"] .lecture-page .concept:hover {
-  background: #304a39;
-}
-html[data-theme="dark"] .lecture-page .option:has(input:checked) {
-  color: #203730;
-}
-html[data-theme="dark"] .lecture-page .correct-option,
-html[data-theme="dark"] .lecture-page .wrong-option {
-  color: #203730;
-}
-html[data-theme="dark"] .lecture-page .btn.secondary {
-  color: #dcebcf;
-  border-color: #6d9073;
-}
-html[data-theme="dark"] .lecture-page .question-map button {
-  background: #263e30;
-  color: #dcebcf;
-}
-html[data-theme="dark"] .lecture-page .question-map button.correct {
-  background: #dfecdf;
-  color: #254e30;
-}
-html[data-theme="dark"] .lecture-page .question-map button.incorrect {
-  background: #f7e7df;
-  color: #934b31;
-}
-html[data-theme="dark"] .lecture-page .result-score {
-  color: #dcebcf;
-}
-@media (prefers-color-scheme: dark) {
-  html:not([data-theme="light"]) .lecture-page .chart text {
-    fill: var(--muted);
-  }
-  html:not([data-theme="light"]) .lecture-page .pill,
-  html:not([data-theme="light"]) .lecture-page .badge {
-    color: #dcebcf;
-  }
-  html:not([data-theme="light"]) .lecture-page .question-map button.selected {
-    background: #5a5131;
-    color: #f4ead8;
-  }
-  html:not([data-theme="light"]) {
-    --paper: #15231e;
-    --white: #1d3028;
-    --ink: #e0ebde;
-    --muted: #b2c0b4;
-    --mint: #304f3e;
-    --line: #3b5242;
-  }
-  html:not([data-theme="light"]) .lecture-page .nav {
-    background: #25382d;
-  }
-  html:not([data-theme="light"])
-    .lecture-page
-    .nav
-    button[aria-current="page"] {
-    color: #dcebcf;
-  }
-  html:not([data-theme="light"]) .lecture-page .card h3,
-  html:not([data-theme="light"]) .lecture-page .formula,
-  html:not([data-theme="light"]) .lecture-page .concept .reveal {
-    color: #dcebcf;
-  }
-  html:not([data-theme="light"]) .lecture-page .stat,
-  html:not([data-theme="light"]) .lecture-page .chart-box,
-  html:not([data-theme="light"]) .lecture-page .flow {
-    background: #263e30;
-  }
-  html:not([data-theme="light"]) .lecture-page .option:hover,
-  html:not([data-theme="light"]) .lecture-page .concept:hover {
-    background: #304a39;
-  }
-  html:not([data-theme="light"]) .lecture-page .option:has(input:checked) {
-    color: #203730;
-  }
-  html:not([data-theme="light"]) .lecture-page .correct-option,
-  html:not([data-theme="light"]) .lecture-page .wrong-option {
-    color: #203730;
-  }
-  html:not([data-theme="light"]) .lecture-page .btn.secondary {
-    color: #dcebcf;
-    border-color: #6d9073;
-  }
-  html:not([data-theme="light"]) .lecture-page .question-map button {
-    background: #263e30;
-    color: #dcebcf;
-  }
-  html:not([data-theme="light"]) .lecture-page .question-map button.correct {
-    background: #dfecdf;
-    color: #254e30;
-  }
-  html:not([data-theme="light"]) .lecture-page .question-map button.incorrect {
-    background: #f7e7df;
-    color: #934b31;
-  }
-  html:not([data-theme="light"]) .lecture-page .result-score {
-    color: #dcebcf;
-  }
+  color: var(--surface-hero);
 }
 @media (max-width: 680px) {
   .lecture-toolbar {
@@ -1493,3 +1364,10 @@ html[data-theme="dark"] .lecture-page .result-score {
     line-height: 1.8;
   }
 }
+
+/* Shared theme roles keep the legacy lesson layout within the Hub identity. */
+.lecture-page .btn:not(.secondary), .lecture-page .ci-main, .lecture-page .cta { color: var(--text-on-hero); }
+.lecture-page .btn.secondary { color: var(--color-link); }
+.lecture-page .cta .btn { color: var(--navy-900); }
+.lecture-page .question-map button.selected { background: var(--color-brand-soft); color: var(--color-brand-text); }
+.lecture-page .chart text { fill: var(--muted); }

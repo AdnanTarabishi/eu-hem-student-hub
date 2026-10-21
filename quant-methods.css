@@ -1,17 +1,16 @@
 /* Course 96525: a shared study-workspace identity. Scoped to the course and its lectures/tools. */
 .qm-page {
-  --q-bg: #f4f6f4;
-  --q-surface: #ffffff;
-  --q-text: #183238;
-  --q-muted: #52666b;
-  --q-line: #dce5df;
-  --q-primary: #245e50;
-  --q-soft: #e9f0e9;
-  --q-lime: #ddf59a;
-  --q-purple: #655c94;
-  --q-shadow: 0 7px 25px #21382d05;
+  --q-bg: var(--surface-page);
+  --q-surface: var(--surface-card);
+  --q-text: var(--text-primary);
+  --q-muted: var(--text-secondary);
+  --q-line: var(--border-default);
+  --q-primary: var(--color-link);
+  --q-soft: var(--color-info-soft);
+  --q-lime: var(--color-hero-accent);
+  --q-purple: var(--color-brand-text);
+  --q-shadow: var(--shadow-sm);
   --paper: var(--q-bg);
-  --white: var(--q-surface);
   --ink: var(--q-text);
   --muted: var(--q-muted);
   --green: var(--q-primary);
@@ -25,33 +24,11 @@
     system-ui,
     sans-serif;
 }
-:root[data-theme="dark"] .qm-page {
-  --q-bg: #101e23;
-  --q-surface: #172a30;
-  --q-text: #eaf3ec;
-  --q-muted: #a4bab6;
-  --q-line: #30474a;
-  --q-primary: #a6d3b0;
-  --q-soft: #233c3c;
-  --q-shadow: none;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .qm-page {
-    --q-bg: #101e23;
-    --q-surface: #172a30;
-    --q-text: #eaf3ec;
-    --q-muted: #a4bab6;
-    --q-line: #30474a;
-    --q-primary: #a6d3b0;
-    --q-soft: #233c3c;
-    --q-shadow: none;
-  }
-}
 .qm-page main h1,
 .qm-page main h2,
 .qm-page main h3,
 .qm-page main h4 {
-  color: var(--q-text);
+  color: var(--text-heading);
   font-family: "Inter", system-ui, sans-serif;
   letter-spacing: -0.035em;
   line-height: 1.2;
@@ -72,7 +49,7 @@
   color: var(--q-primary);
 }
 .qm-page :focus-visible {
-  outline: 3px solid #8177bf;
+  outline: 3px solid var(--color-focus);
   outline-offset: 4px;
 }
 .qm-page .site-header {
@@ -128,7 +105,7 @@
   justify-content: center;
   gap: 3px;
   padding: 11px;
-  background: #173e36;
+  background: var(--surface-hero);
   flex: 0 0 auto;
 }
 .qm-mark i {
@@ -207,9 +184,9 @@
     600 0.82rem/1.4 "Inter",
     system-ui,
     sans-serif;
-  background: #245e50;
+  background: var(--action-navy);
   color: white;
-  border: 1px solid #245e50;
+  border: 1px solid var(--action-navy);
   border-radius: 10px;
   text-decoration: none;
   cursor: pointer;
@@ -270,8 +247,8 @@
 .qm-evidence {
   border-radius: 23px;
   padding: 28px;
-  background: #173e36;
-  color: #d0ded4;
+  background: var(--surface-hero);
+  color: var(--text-on-hero-muted);
   position: relative;
   overflow: hidden;
 }
@@ -294,10 +271,10 @@
 }
 .qm-evidence .qm-kicker,
 .qm-evidence .qm-caption {
-  color: #c0d5c6;
+  color: var(--text-on-hero-muted);
 }
 .qm-page .qm-evidence h3 {
-  color: #f8fff4;
+  color: var(--text-on-hero);
   font-size: 1.55rem;
   font-weight: 500;
   letter-spacing: -0.04em;
@@ -312,14 +289,14 @@
   align-items: center;
   gap: 6px;
   font-size: 0.63rem;
-  color: #ddf59a;
+  color: var(--color-hero-accent);
 }
 .qm-live-dot:before {
   content: "";
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #ddf59a;
+  background: var(--color-hero-accent);
 }
 .qm-evidence svg {
   display: block;
@@ -333,7 +310,7 @@
 }
 .qm-evidence input {
   width: 100%;
-  accent-color: #ddf59a;
+  accent-color: var(--color-hero-accent);
 }
 .qm-range-labels {
   display: flex;
@@ -362,7 +339,7 @@
 }
 .qm-page .qm-evidence a {
   display: inline-block;
-  color: #ddf59a;
+  color: var(--color-hero-accent);
   font-size: 0.73rem;
   margin-top: 20px;
 }
@@ -679,7 +656,7 @@
 }
 .qm-lecture-page .nav button[aria-current] {
   color: white;
-  background: #245e50;
+  background: var(--action-navy);
 }
 .qm-lecture-page .qm-lesson-hero,
 .qm-lecture-page .qm-lesson-hero.no-visual {
@@ -733,9 +710,9 @@
   line-height: 1;
 }
 .qm-lecture-page .btn {
-  background: #245e50;
+  background: var(--action-navy);
   color: white;
-  border: 1px solid #245e50;
+  border: 1px solid var(--action-navy);
   border-radius: 9px;
   padding: 12px 18px;
   font:
@@ -1055,7 +1032,7 @@
   text-decoration: none;
 }
 .qm-study-page .study-nav a[aria-current] {
-  background: #245e50;
+  background: var(--action-navy);
   color: white;
 }
 .qm-study-page #study-view,
@@ -1075,9 +1052,9 @@
   color: var(--q-muted);
 }
 .qm-study-page .study-button {
-  background: #245e50;
+  background: var(--action-navy);
   color: white;
-  border-color: #245e50;
+  border-color: var(--action-navy);
   border-radius: 9px;
   font-size: 0.8rem;
 }
@@ -1087,7 +1064,7 @@
   border-color: var(--q-line);
 }
 .qm-study-page .study-hero .study-button {
-  background: #245e50;
+  background: var(--action-navy);
   color: white;
 }
 .qm-study-page .study-card {

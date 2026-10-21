@@ -2,29 +2,15 @@
    Scoped to .eh-home. Shared navigation and data renderers keep their original contracts.
    Navy, terracotta, local typefaces and the real cohort photo anchor the design. */
 .eh-home {
-  --eh-navy: #0f2b5b; --eh-navy-soft: #163a63; --eh-blue: #1f5fae;
-  --eh-brand: #c75b3a; --eh-brand-ink: #a9472d; --eh-brand-action: #a9472d; --eh-brand-hover: #923b26;
-  --eh-page: #f7f5f1; --eh-white: #fff; --eh-panel: #fff; --eh-soft: #f0f4f8;
-  --eh-text: #20242a; --eh-muted: #58677c; --eh-border: #e0e5ec;
-  --eh-warm: #f8e9e2; --eh-shadow: 0 12px 38px rgb(15 43 91 / .07);
-  --eh-focus: #1f5fae; --eh-max: 1320px; --eh-radius: 16px;
-  --eh-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-  --eh-serif: 'Source Serif 4', Georgia, 'Noto Serif', serif;
+  --eh-navy: var(--text-heading); --eh-navy-soft: var(--color-navy); --eh-blue: var(--color-link);
+  --eh-brand: var(--color-brand); --eh-brand-ink: var(--color-brand-text); --eh-brand-action: var(--color-brand-action); --eh-brand-hover: var(--color-brand-hover);
+  --eh-page: var(--surface-page); --eh-white: var(--white); --eh-panel: var(--surface-card); --eh-soft: var(--color-info-soft);
+  --eh-text: var(--text-primary); --eh-muted: var(--text-secondary); --eh-border: var(--border-default);
+  --eh-warm: var(--color-brand-soft); --eh-shadow: var(--shadow-md);
+  --eh-focus: var(--color-focus); --eh-max: var(--width-wide); --eh-radius: var(--radius-lg);
+  --eh-sans: var(--font-sans);
+  --eh-serif: var(--font-serif);
   color: var(--eh-text); background: var(--eh-page);
-}
-:root[data-theme='dark'] .eh-home {
-  --eh-navy: #e0eaf7; --eh-navy-soft: #c2d7ef; --eh-blue: #93bdec;
-  --eh-brand-ink: #efa68a; --eh-page: #111827; --eh-white: #f2f4f7; --eh-panel: #182230; --eh-soft: #202e40;
-  --eh-text: #f2f4f7; --eh-muted: #b0bfd1; --eh-border: #3e5067;
-  --eh-warm: #352723; --eh-shadow: 0 12px 38px rgb(0 0 0 / .16); --eh-focus: #a7ccf7;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .eh-home {
-    --eh-navy: #e0eaf7; --eh-navy-soft: #c2d7ef; --eh-blue: #93bdec;
-    --eh-brand-ink: #efa68a; --eh-page: #111827; --eh-white: #f2f4f7; --eh-panel: #182230; --eh-soft: #202e40;
-    --eh-text: #f2f4f7; --eh-muted: #b0bfd1; --eh-border: #3e5067;
-    --eh-warm: #352723; --eh-shadow: 0 12px 38px rgb(0 0 0 / .16); --eh-focus: #a7ccf7;
-  }
 }
 :where(.eh-home main) *, :where(.eh-home main) *::before, :where(.eh-home main) *::after { box-sizing: border-box; }
 :where(.eh-home main) [hidden] { display: none !important; }
@@ -49,8 +35,8 @@
 /* Buttons / links */
 .eh-home .eh-button { display: inline-flex; justify-content: center; align-items: center; gap: 10px; min-height: 46px; padding: 11px 20px; border: 1px solid transparent; border-radius: 9px; font: 600 13px/1.3 var(--eh-sans); transition: background 160ms, border-color 160ms, box-shadow 160ms; }
 .eh-home .eh-button .eh-icon { width: 17px; height: 17px; }
-.eh-home .eh-button-brand { color: var(--white); background: var(--eh-brand-action); }
-.eh-home .eh-button-brand:hover { color: var(--white); background: var(--eh-brand-hover); box-shadow: 0 4px 12px rgb(116 41 17 / .15); }
+.eh-home .eh-button-brand { color: var(--color-on-brand); background: var(--eh-brand-action); }
+.eh-home .eh-button-brand:hover { color: var(--color-on-brand); background: var(--eh-brand-hover); box-shadow: var(--shadow-sm); }
 .eh-home .eh-button-glass { color: var(--white); border-color: #bac9dc; background: rgb(15 43 91 / .3); }
 .eh-home .eh-button-glass:hover { color: var(--white); background: rgb(255 255 255 / .12); }
 .eh-home .eh-button-outline { background: transparent; border-color: var(--eh-navy); color: var(--eh-navy); }
