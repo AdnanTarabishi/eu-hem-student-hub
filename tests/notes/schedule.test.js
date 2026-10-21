@@ -1,5 +1,4 @@
 const assert = require("node:assert/strict");
-const fs = require("node:fs");
 const schedule = require("../../notes-schedule.js");
 const programme = require("../../content/programme.json");
 const cohort = programme.cohorts.at(-1), term = cohort.terms[0];
@@ -45,15 +44,35 @@ assert.equal(schedule.nextExam(exams, "a", "2026-11-01T10:00:00"), null);
 assert.equal(schedule.nextExam([{ dateKey: "2026-10-07", time: "", courseIds: ["a"] }], "a", "2026-10-07T23:00:00").dateKey, "2026-10-07");
 console.log("PASS: Bologna time across daylight-saving boundaries; past sittings excluded by time and shared course codes preserved.");
 
-const text = fs.readFileSync(`calendar/eu-hem-${cohort.id}-year${term.year}.ics`, "utf8");
+// Fictional calendar records isolate parsing from changes in the published university feed.
+const event = lines => ["BEGIN:VEVENT", ...lines, "END:VEVENT"];
+const source = "DESCRIPTION:Source: official UniBo exam dates\\nRegistration closes: 2026-10-25\\nType: Written";
+const text = [
+  "BEGIN:VCALENDAR", "VERSION:2.0",
+  ...event(["DTSTART;TZID=Europe/Rome:20261027T090000", "SUMMARY:Exam: Fundamentals in Health Econo", " mics", "LOCATION:Example\\, room\\; East\\\\Wing", source]),
+  ...event(["DTSTART;TZID=Europe/Rome:20261103T140000", "SUMMARY:Exam: Our Right to Health: Needs, Resources and Society", source]),
+  ...event(["DTSTART;TZID=Europe/Rome:20261218T100000", "SUMMARY:Exam: Fundamentals of Econometrics", source]),
+  ...event(["DTSTART;TZID=Europe/Rome:20270129T130000", "SUMMARY:Exam: Econometrics", source]),
+  ...event(["DTSTART;TZID=Europe/Rome:20261028T090000", "SUMMARY:Exam: Econometrics Advanced", source]),
+  ...event(["DTSTART;TZID=Europe/Rome:20261028T090000", "SUMMARY:Exam: Unlisted subject", source]),
+  ...event(["DTSTART;TZID=Europe/Rome:20261028T090000", "SUMMARY:Exam: Health Systems", "DESCRIPTION:Fictional event without official-source provenance"]),
+  ...event(["DTSTART;VALUE=DATE:20261029", "SUMMARY:Exam: Introduction to Economics", source]),
+  ...event(["DTSTART;TZID=Europe/Rome:20261029T090000", "SUMMARY:Administrative record: Introduction to Economics", source]),
+  ...event(["DTSTART;TZID=Europe/Rome:20261025T090000", "SUMMARY:Registration reminder: Fundamentals in Health Economics", source]),
+  "END:VCALENDAR", "",
+].join("\r\n");
 const cached = schedule.calendarExams(text, term);
-assert.equal(cached.length, 16);
+assert.equal(cached.length, 4, "only exact known exam titles with source provenance and timed DTSTART are parsed");
 assert.ok(cached.every(e => e.time === ""), "fallback must not assert the calendar export's default time");
+assert.equal(cached[0].title, "Fundamentals in Health Economics", "folded title is restored before course matching");
+assert.equal(cached[0].place, "Example, room; East\\Wing", "calendar text escaping is decoded");
+assert.equal(cached[0].registrationCloses, "2026-10-25");
+assert.equal(cached[0].type, "Written");
 assert.ok(cached.find(e => e.title === "Econometrics").courseIds.includes("quant-methods"));
 assert.ok(!cached.find(e => e.title === "Econometrics").courseIds.includes("fund-quant-methods"));
 assert.ok(cached.find(e => e.title === "Fundamentals of Econometrics").courseIds.includes("fund-quant-methods"));
 assert.equal(schedule.nextExam(cached, "fund-health-econ-management", "2026-10-07T10:00:00").dateKey, "2026-10-27");
-assert.equal(schedule.nextExam(cached, "right-to-health", "2026-10-07T10:00:00").dateKey, "2026-11-04");
+assert.equal(schedule.nextExam(cached, "right-to-health", "2026-10-07T10:00:00").dateKey, "2026-11-03");
 assert.equal(schedule.nextExam(cached, "health-systems", "2026-10-07T10:00:00"), null);
 assert.throws(() => schedule.calendarExams("an error page", term), /Invalid calendar/);
-console.log("PASS: real calendar folding/escaping, exact module matches, no guessed course matches or exam dates.");
+console.log("PASS: fictional calendar folding/escaping, exact module matches, source/date guards and no invented fallback times.");
