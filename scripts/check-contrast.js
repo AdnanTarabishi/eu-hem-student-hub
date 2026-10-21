@@ -25,6 +25,13 @@ const PAIRS = [
   ["--color-primary", "--color-primary-light", 4.5],
   ["--color-on-primary", "--color-primary", 4.5],
   ["--color-header-text", "--color-header-bg", 4.5],
+  ["--color-on-brand", "--color-brand-action", 4.5],
+  ["--color-on-brand", "--color-brand-hover", 4.5],
+  ["--color-brand-text", "--surface-card", 4.5],
+  ["--color-brand-text", "--surface-page", 4.5],
+  ["--text-on-hero", "--surface-hero", 4.5],
+  ["--text-on-hero-muted", "--surface-hero", 4.5],
+  ["--color-hero-accent", "--surface-hero", 4.5],
   ["--color-success-text", "--color-success-bg", 4.5],
   // City guide: the "Your next city" box and the sticky Contents menu
   ["--color-text", "--color-success-bg", 4.5],

@@ -4,7 +4,6 @@
   --line: var(--border-default);
   --ink: var(--text-primary);
   --muted: var(--text-secondary);
-  --white: var(--surface-card);
 }
 .fs-main { padding-bottom: 72px; }
 .fs-breadcrumb { display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; margin:28px 0; font-size:.85rem; color:var(--text-secondary); }

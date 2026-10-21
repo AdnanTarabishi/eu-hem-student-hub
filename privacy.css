@@ -11,7 +11,7 @@
 .privacy-overview h2 { font-size: clamp(1.7rem, 2.5vw, 2.2rem); line-height: 1.16; }
 .privacy-overview-list { display: grid; gap: 17px; margin: 24px 0; padding: 0; list-style: none; }
 .privacy-overview-list li { display: flex; gap: 12px; align-items: flex-start; font-size: .86rem; line-height: 1.65; }
-.privacy-overview-list .icon { flex: none; width: 19px; height: 19px; margin-top: 2px; color: #f0a184; }
+.privacy-overview-list .icon { flex: none; width: 19px; height: 19px; margin-top: 2px; color: var(--color-hero-accent); }
 .privacy-overview-note { margin: 0; padding-top: 19px; border-top: 1px solid rgb(255 255 255 / .2); font-size: .77rem; line-height: 1.7; }
 
 .privacy-section { font-size: .9rem; line-height: 1.8; }

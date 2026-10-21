@@ -6,38 +6,22 @@
   --cm-surface: var(--sx-surface);
   --cm-soft: var(--sx-soft);
   --cm-accent: var(--sx-teal);
-  --cm-sea: #e7f1f6;
-  --cm-land: #cddae3;
-  --cm-border: #8ca3b5;
-  --cm-1: #b6e0d3;
-  --cm-2: #72c5b3;
-  --cm-3: #288d80;
-  --cm-4: #09554f;
-  --cm-selected: #8051ba;
+  --cm-sea: var(--map-sea);
+  --cm-land: var(--map-0);
+  --cm-border: var(--border-input);
+  --cm-1: var(--map-1);
+  --cm-2: var(--map-2);
+  --cm-3: var(--map-3);
+  --cm-4: var(--map-4);
+  --cm-selected: var(--map-selected);
   scroll-margin-top: calc(var(--header-height) + 1rem);
-}
-:root[data-theme="dark"] .cohort-atlas {
-  --cm-sea: #152c40;
-  --cm-land: #2b465d;
-  --cm-border: #5d7b91;
-  --cm-1: #3a776a;
-  --cm-2: #51a590;
-  --cm-3: #7dcdb5;
-  --cm-4: #baf0dc;
-  --cm-selected: #e8baff;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .cohort-atlas {
-    --cm-sea: #152c40; --cm-land: #2b465d; --cm-border: #5d7b91;
-    --cm-1: #3a776a; --cm-2: #51a590; --cm-3: #7dcdb5; --cm-4: #baf0dc; --cm-selected: #e8baff;
-  }
 }
 .cohort-atlas [hidden] { display: none !important; }
 .cohort-atlas :is(ul, dl) { margin: 0; padding: 0; list-style: none; }
 .cohort-atlas p { margin: 0; }
 .cohort-atlas .cm-heading { display: flex; align-items: end; justify-content: space-between; gap: 1.5rem; margin-bottom: 1.25rem; }
 .cohort-atlas .cm-eyebrow { color: var(--cm-accent); font-size: .7rem; font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
-.cohort-atlas .cm-heading h2 { margin: .5rem 0 .55rem; font: 650 clamp(1.55rem, 3vw, 2.25rem)/1.18 var(--font-sans); letter-spacing: -.035em; }
+.cohort-atlas .cm-heading h2 { margin: .5rem 0 .55rem; font: 600 clamp(1.55rem, 3vw, 2.25rem)/1.18 var(--font-serif); letter-spacing: -.035em; }
 .cohort-atlas .cm-intro { max-width: 45rem; color: var(--cm-muted); font-size: .92rem; line-height: 1.7; }
 .cohort-atlas .cm-badge { display: inline-flex; flex: none; align-items: center; gap: .45rem; border: 1px solid var(--cm-line); background: var(--cm-surface); color: var(--cm-accent); padding: .55rem .75rem; border-radius: 99px; font-size: .75rem; font-weight: 650; }
 .cohort-atlas .cm-badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }

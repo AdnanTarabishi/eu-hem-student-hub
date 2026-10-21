@@ -1,11 +1,21 @@
 .fhe-session7-page {
-  --hem-accent: #6f5a9d;
-  --hem-accent-soft: rgba(111, 90, 157, .13);
+  --hem-accent: var(--color-brand-text);
+  --hem-accent-soft: var(--color-brand-soft);
 }
 
 .fhe-session7-page .selection-session-hero {
-  background: linear-gradient(135deg, #201834 0%, #34255f 58%, #43336d 100%);
+  background: var(--surface-hero);
+  color: var(--text-on-hero);
+  padding: clamp(24px, 4vw, 40px);
+  border-radius: var(--radius-xl);
+  margin-top: 26px;
 }
+.fhe-session7-page .selection-session-hero h1 { color: var(--text-on-hero); }
+.fhe-session7-page .selection-session-hero :is(.lead, .hero-meta) { color: var(--text-on-hero-muted); }
+.fhe-session7-page .selection-session-hero .eyebrow { color: var(--color-hero-accent); }
+.fhe-session7-page .selection-session-hero .btn.secondary { color: var(--text-on-hero); border-color: var(--border-hero); }
+.fhe-session7-page .selection-session-hero .btn.secondary:hover { background: var(--surface-hero-raised); }
+.fhe-session7-page .selection-session-hero :focus-visible { outline-color: var(--color-focus-on-hero); }
 
 .fhe-session7-page .selection-session-visual {
   background: linear-gradient(160deg, rgba(255,255,255,.11), rgba(255,255,255,.035));
@@ -13,8 +23,9 @@
 
 .fhe-session7-page .lecture-toolbar .nav button[aria-current="page"],
 .fhe-session7-page .btn:not(.secondary) {
-  background: #6f5a9d;
-  border-color: #6f5a9d;
+  background: var(--action-navy);
+  border-color: var(--action-navy);
+  color: var(--text-on-navy);
 }
 
 .selection-transfer {
@@ -31,7 +42,7 @@
 
 .selection-transfer b {
   font-size: 1.15rem;
-  color: #6f5a9d;
+  color: var(--color-brand-text);
 }
 
 .selection-chart {
@@ -141,7 +152,7 @@
   position: absolute;
   inset: 0 auto 0 0;
   width: 5px;
-  background: #6f5a9d;
+  background: var(--action-navy);
 }
 
 .selection-equation-chain {
@@ -218,7 +229,7 @@
   left: 17px;
   top: 18px;
   font-weight: 800;
-  color: #6f5a9d;
+  color: var(--color-brand-text);
 }
 
 @media (max-width: 760px) {

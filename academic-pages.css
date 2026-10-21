@@ -144,7 +144,7 @@
   pointer-events: none;
 }
 
-.academic-main .academic-hero__aside .academic-eyebrow { color: #f0a184; }
+.academic-main .academic-hero__aside .academic-eyebrow { color: var(--color-hero-accent); }
 .academic-hero__aside :is(h2, h3, strong, dt, dd) { color: inherit; }
 .academic-hero__aside h2 { margin: 0 0 18px; font-family: var(--font-serif); font-weight: 600; }
 .academic-hero__aside > p:not(.academic-eyebrow) { color: var(--text-on-navy-muted); }

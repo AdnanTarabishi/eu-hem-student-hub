@@ -1,0 +1,40 @@
+name: Check site visual identity
+on:
+  pull_request:
+    paths: ['*.css', '*.html', 'icons.svg', 'theme.js', 'site-nav.js', 'package.json', 'package-lock.json', 'tests/site/visual-identity*.js', 'scripts/check-contrast.js', '.github/workflows/visual-identity-checks.yml']
+  push:
+    branches: [main]
+    paths: ['*.css', '*.html', 'icons.svg', 'theme.js', 'site-nav.js', 'package.json', 'package-lock.json', 'tests/site/visual-identity*.js', 'scripts/check-contrast.js', '.github/workflows/visual-identity-checks.yml']
+permissions:
+  contents: read
+concurrency:
+  group: visual-identity-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  visual-identity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Check content, shared contrast and asset versions
+        run: |
+          node scripts/check-content.js
+          node scripts/check-contrast.js
+          node scripts/stamp-versions.js --check
+      - name: Audit every root page and specialist routes in both themes and widths
+        run: node tests/site/visual-identity.test.js .
+      - name: Verify the deployed identity and Statistics Lab navigation
+        if: github.ref == 'refs/heads/main'
+        run: node tests/site/visual-identity-live.test.js .
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: site-visual-review
+          path: work/visual-audit/
+          retention-days: 7

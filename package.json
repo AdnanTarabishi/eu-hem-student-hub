@@ -24,6 +24,8 @@
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.8",
+    "katex": "0.18.9",
+    "marked": "18.0.14",
     "playwright": "^1.49.0"
   }
 }

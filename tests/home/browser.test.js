@@ -198,7 +198,7 @@ ok("no standalone-preview leftovers: one menu script, no demo dashboard text, no
     assert.strictEqual(await page.evaluate(() => document.documentElement.dataset.theme), "dark");
     const statsBg = await page.$eval(".eh-stats", (el) => getComputedStyle(el).backgroundColor);
     assert.notStrictEqual(statsBg, "rgb(255, 255, 255)", "stats card follows dark mode");
-    assert.strictEqual(await page.$eval(".eh-hero .eh-button-brand", (el) => getComputedStyle(el).backgroundColor), "rgb(169, 71, 45)");
+    assert.strictEqual(await page.$eval(".eh-hero .eh-button-brand", (el) => getComputedStyle(el).backgroundColor), "rgb(231, 133, 98)");
     ok("theme choice survives a reload; dark mode recolours the cards and keeps the Terracotta button");
     await page.context().close();
 

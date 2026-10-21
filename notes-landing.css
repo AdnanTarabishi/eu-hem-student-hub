@@ -158,26 +158,26 @@
 .notes-page .is-list-view .notes-course-bottom, .notes-page .is-list-view .notes-course-planning { grid-column: 1 / -1; }
 
 /* A compact personal snapshot; data remains local and derives from real study content. */
-.notes-focus { background: var(--surface-navy); color: var(--text-on-navy); padding: 22px; border-radius: 16px; position: relative; overflow: hidden; min-width: 0; }
+.notes-focus { background: var(--surface-hero); color: var(--text-on-hero); padding: 22px; border-radius: 16px; position: relative; overflow: hidden; min-width: 0; }
 .notes-focus::before { content: ""; position: absolute; width: 160px; height: 160px; border: 1px solid #ffffff17; border-radius: 50%; top: -100px; right: -60px; box-shadow: 0 0 0 26px #ffffff05, 0 0 0 52px #ffffff04; pointer-events: none; }
-.notes-focus .section-eyebrow { color: #ecc6b7; font-size: .65rem; letter-spacing: .12em; margin: 0 0 12px; }
+.notes-focus .section-eyebrow { color: var(--color-hero-accent); font-size: .65rem; letter-spacing: .12em; margin: 0 0 12px; }
 .notes-focus h2 { font: 600 1.35rem/1.3 var(--font-serif); color: #fff; margin: 0; letter-spacing: -.02em; }
-.notes-focus-loading { font-size: .85rem; color: #d2dced; }
+.notes-focus-loading { font-size: .85rem; color: var(--text-on-hero-muted); }
 .notes-focus-overview { display: flex; align-items: center; gap: 13px; margin: 20px 0; }
-.notes-focus-ring { --ring-progress: 0deg; flex: 0 0 58px; width: 58px; height: 58px; display: grid; place-items: center; border-radius: 50%; background: conic-gradient(#efa184 var(--ring-progress), #ffffff25 0); position: relative; }
-.notes-focus-ring::before { content: ""; position: absolute; inset: 4px; border-radius: 50%; background: var(--surface-navy); }
+.notes-focus-ring { --ring-progress: 0deg; flex: 0 0 58px; width: 58px; height: 58px; display: grid; place-items: center; border-radius: 50%; background: conic-gradient(var(--color-hero-accent) var(--ring-progress), #ffffff25 0); position: relative; }
+.notes-focus-ring::before { content: ""; position: absolute; inset: 4px; border-radius: 50%; background: var(--surface-hero); }
 .notes-focus-ring span { position: relative; font-size: 1.06rem; font-weight: 650; }
 .notes-focus-summary strong { display: block; font-size: .8rem; line-height: 1.5; margin-bottom: 5px; }
-.notes-focus-summary p { color: #d2dced; font-size: .73rem; line-height: 1.6; margin: 0; }
+.notes-focus-summary p { color: var(--text-on-hero-muted); font-size: .73rem; line-height: 1.6; margin: 0; }
 .notes-focus-next { display: block; padding: 12px; border-radius: 9px; border: 1px solid #ffffff35; background: #ffffff09; color: #fff; text-decoration: none; position: relative; }
-.notes-focus-next:hover { color: #fff; background: #ffffff16; border-color: #efa184; }
-.notes-focus-next-label { display: flex; align-items: center; gap: 7px; color: #ecc6b7; font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; }
+.notes-focus-next:hover { color: #fff; background: #ffffff16; border-color: var(--color-hero-accent); }
+.notes-focus-next-label { display: flex; align-items: center; gap: 7px; color: var(--color-hero-accent); font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; }
 .notes-focus-next-label .icon { width: 15px; height: 15px; }
 .notes-focus-next-title { display: block; margin-top: 7px; font-size: .79rem; line-height: 1.6; padding-right: 15px; }
 .notes-focus-next > .icon { position: absolute; right: 12px; top: 50%; width: 15px; transform: translateY(-50%); }
-.notes-focus-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 8px; font-size: .7rem; line-height: 1.6; margin-top: 12px; color: #d2dced; }
+.notes-focus-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 8px; font-size: .7rem; line-height: 1.6; margin-top: 12px; color: var(--text-on-hero-muted); }
 .notes-focus-footer a { display: inline-flex; align-items: center; min-height: 40px; color: #fff; text-underline-offset: 4px; }
-.notes-focus :is(a, button):focus-visible { outline-color: #efa184; }
+.notes-focus :is(a, button):focus-visible { outline-color: var(--color-focus-on-hero); }
 .notes-inventory, .notes-side-tools { padding: 20px; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: 14px; }
 .notes-side-heading { margin-bottom: 13px; }
 .notes-side-heading h2, .notes-side-tools h2 { font: 650 .88rem var(--font-sans); color: var(--text-heading); margin: 0 0 5px; }

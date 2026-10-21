@@ -261,6 +261,7 @@
 
 .directory-join #submitButton {
   background: var(--color-brand-action);
+  color: var(--color-on-brand);
 }
 
 .directory-join #submitButton:hover {

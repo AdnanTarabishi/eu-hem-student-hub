@@ -1,5 +1,5 @@
 /* Student Toolkit — scoped visual identity built on the Hub's design tokens.
- * Navy / soft blue / ivory, with restrained amber and terracotta accents.
+ * Navy / soft blue / ivory, with restrained terracotta accents and semantic warning amber.
  */
 .tk-page { color:var(--text-primary); padding-bottom:36px; }
 .tk-page *, .tk-page *::before, .tk-page *::after { box-sizing:border-box; }
@@ -13,37 +13,38 @@
 .tk-eyebrow { font:700 10.5px/1.6 var(--font-sans); letter-spacing:.13em; color:var(--text-secondary); margin-bottom:9px!important; }
 .tk-meta { font-size:13px; color:var(--text-secondary); line-height:1.7; }
 .tk-small { font-size:11.5px; }
-.tk-button { display:inline-flex; align-items:center; justify-content:center; gap:16px; min-height:43px; padding:10px 16px; border:1px solid var(--action-navy); border-radius:9px; color:var(--text-on-navy)!important; background:var(--action-navy); font-size:12.5px!important; font-weight:650!important; text-decoration:none!important; transition:background .18s,transform .18s; }
+.tk-button { display:inline-flex; align-items:center; justify-content:center; gap:16px; min-height:44px; padding:10px 16px; border:1px solid var(--action-navy); border-radius:var(--radius-sm); color:var(--text-on-navy)!important; background:var(--action-navy); font-size:12.5px!important; font-weight:650!important; text-decoration:none!important; transition:background .18s,transform .18s; }
 .tk-button:hover { background:var(--action-navy-hover); }
 .tk-button span { margin-left:auto; }
 .tk-button-outline { background:transparent; color:var(--color-link)!important; border-color:var(--border-input); }
 .tk-button-outline:hover { background:var(--color-primary-light); }
-.tk-text-button { color:var(--color-link); background:transparent; border:0; padding:7px 0; font-size:12px!important; font-weight:650!important; min-height:36px; }
+.tk-text-button { color:var(--color-link); background:transparent; border:0; padding:7px 0; font-size:12px!important; font-weight:650!important; min-height:44px; }
 .tk-text-button:hover,.tk-text-link:hover { text-decoration:underline; text-underline-offset:4px; }
 .tk-text-link { color:var(--color-link); font-size:13px; font-weight:650; text-decoration:none; }
-.tk-icon-button { width:40px; height:40px; display:grid; place-items:center; background:transparent; color:var(--text-secondary); border:1px solid transparent; border-radius:9px; }
+.tk-icon-button { width:44px; height:44px; display:grid; place-items:center; background:transparent; color:var(--text-secondary); border:1px solid transparent; border-radius:9px; }
 .tk-icon-button:hover { background:var(--color-primary-light); }
 .tk-icon-button[aria-pressed="true"] { color:var(--warning); background:var(--warning-bg); }
 .tk-icon-button[aria-pressed="true"] .icon { fill:currentColor; }
 /* A real, credited four-city collage; not the fictional skyline of the concept. */
-.tk-hero { position:relative; overflow:hidden; min-height:280px; background:#0f2b5b; isolation:isolate; max-width:1760px; margin:auto; }
+.tk-hero { position:relative; overflow:hidden; min-height:280px; background:var(--surface-hero); isolation:isolate; max-width:1760px; margin:auto; }
 .tk-hero-photos { position:absolute; z-index:-2; inset:0 0 0 41%; display:grid; grid-template-columns:repeat(4,1fr); }
 .tk-hero-photos figure { height:100%; overflow:hidden; position:relative; }
 .tk-hero-photos img { height:100%; width:100%; object-fit:cover; display:block; }
 .tk-hero-photos figure::after { content:""; position:absolute; inset:0; background:linear-gradient(0deg,rgba(8,28,59,.87),rgba(8,28,59,.1) 60%); }
 .tk-hero-photos figcaption { position:absolute; z-index:1; bottom:42px; left:0; right:0; text-align:center; color:white; font-size:12px; font-weight:650; text-shadow:0 1px 3px #0f2b5b; }
 .tk-hero::before { content:""; position:absolute; z-index:-1; inset:0; background:linear-gradient(90deg,#0f2b5b 0%,#0f2b5b 32%,rgba(15,43,91,.97) 40%,rgba(15,43,91,.75) 52%,rgba(15,43,91,.04) 76%); }
+.tk-hero :focus-visible { outline-color:var(--color-focus-on-hero); }
 .tk-hero-copy { padding:26px max(var(--gutter),calc((100% - 1328px)/2)); }
-.tk-hero-copy .tk-eyebrow { color:#dce7f4; }
-.tk-hero-copy .tk-eyebrow span { margin:0 10px; color:#e9b776; }
+.tk-hero-copy .tk-eyebrow { color:var(--text-on-hero-muted); }
+.tk-hero-copy .tk-eyebrow span { margin:0 10px; color:var(--color-hero-accent); }
 .tk-hero h1 { color:white; font:600 clamp(40px,4.5vw,65px)/1.1 var(--font-serif); letter-spacing:-.025em; margin:10px 0 15px; }
-.tk-hero h1 span { color:#f2c176; }
-.tk-hero-copy > p:not(.tk-eyebrow) { font-size:17px; color:#e5edf9; line-height:1.6; max-width:510px; }
+.tk-hero h1 span { color:var(--color-hero-accent); }
+.tk-hero-copy > p:not(.tk-eyebrow) { font-size:17px; color:var(--text-on-hero-muted); line-height:1.6; max-width:510px; }
 .tk-hero-links { display:flex; align-items:center; gap:24px; margin-top:16px; }
-.tk-hero-links > a:not(.tk-button) { color:#fff; font-size:12px; text-decoration:none; }
+.tk-hero-links > a:not(.tk-button) { display:inline-flex; align-items:center; min-height:44px; color:var(--text-on-hero); font-size:12px; text-decoration:none; }
 .tk-button-light { background:#fff; border-color:white; color:#0f2b5b!important; }
 .tk-button-light:hover { background:#eaf2fb; }
-.tk-hero-note { color:#cedbeb; display:block; font-size:10.5px; margin-top:17px; letter-spacing:.02em; }
+.tk-hero-note { color:var(--text-on-hero-muted); display:block; font-size:10.5px; margin-top:17px; letter-spacing:.02em; }
 .tk-credit-link { position:absolute; bottom:10px; right:20px; color:#fff!important; background:#0f2b5bcc; border-radius:4px; padding:3px 6px; font-size:10px; }
 .tk-breadcrumb { display:flex; align-items:center; gap:10px; font-size:11.5px; padding:21px 0; color:var(--text-secondary); }
 .tk-breadcrumb a { text-decoration:none; }
@@ -60,7 +61,7 @@
 .tk-search-hint { font-size:10.5px; color:var(--text-secondary); white-space:nowrap; }
 .tk-search-submit { border:0; background:var(--action-navy); color:white; border-radius:9px; padding:12px; min-height:46px; font-size:12px!important; }
 .tk-chips { display:flex; flex-wrap:wrap; gap:7px; padding:15px 0 8px; }
-.tk-chip { border:1px solid var(--border-default); border-radius:999px; color:var(--color-heading); background:var(--surface-card); display:flex; gap:6px; align-items:center; padding:8px 12px; min-height:38px; font-size:11.5px!important; white-space:nowrap; }
+.tk-chip { border:1px solid var(--border-default); border-radius:999px; color:var(--color-heading); background:var(--surface-card); display:flex; gap:6px; align-items:center; padding:8px 12px; min-height:44px; font-size:11.5px!important; white-space:nowrap; }
 .tk-chip .icon { width:15px; height:15px; }
 .tk-chip:hover { border-color:var(--color-primary); background:var(--color-primary-light); }
 .tk-chip[aria-pressed="true"] { background:var(--action-navy); color:var(--text-on-navy); border-color:var(--action-navy); }
@@ -75,7 +76,7 @@
 .tk-collections button[aria-pressed="true"] { border-color:var(--color-brand); color:var(--color-heading); }
 .tk-collections span { display:inline-block; border-radius:999px; background:var(--color-primary-light); padding:1px 7px; margin-left:4px; font-size:10px; color:var(--color-link); }
 .tk-layout-toggle { display:flex; gap:4px; }
-.tk-layout-toggle button { display:grid; place-items:center; width:36px; height:36px; border:0; border-radius:7px; color:var(--text-secondary); background:transparent; }
+.tk-layout-toggle button { display:grid; place-items:center; width:44px; height:44px; border:0; border-radius:7px; color:var(--text-secondary); background:transparent; }
 .tk-layout-toggle button[aria-pressed="true"] { background:var(--color-primary-light); color:var(--color-link); }
 .tk-lab-feature { display:flex; align-items:center; gap:18px; border:1px solid var(--color-primary-border); border-radius:15px; padding:18px; background:linear-gradient(125deg,var(--color-primary-light),var(--surface-card)); margin-bottom:30px; }
 .tk-lab-feature h2 { font:600 24px/1.25 var(--font-serif); color:var(--color-heading); margin-bottom:9px; }
@@ -99,16 +100,16 @@
 .tk-tool-top { display:flex; gap:9px; align-items:center; margin-bottom:15px; }
 .tk-tool-symbol { display:flex; align-items:center; justify-content:center; width:43px; height:43px; border-radius:12px; flex-shrink:0; color:var(--color-link); background:var(--color-primary-light); }
 .tk-tool-symbol .icon { width:23px; height:23px; }
-.tk-tool[data-category="economics"] .tk-tool-symbol { color:var(--track-phm-text); background:var(--track-phm-soft); }
-.tk-tool[data-category="research"] .tk-tool-symbol,.tk-tool[data-category="writing"] .tk-tool-symbol { color:var(--track-ep-text); background:var(--track-ep-soft); }
-.tk-tool[data-category="life"] .tk-tool-symbol { color:var(--warning); background:var(--warning-bg); }
-.tk-tool[data-category="cities"] .tk-tool-symbol { color:var(--track-phm-text); background:var(--track-phm-soft); }
+.tk-tool[data-category="economics"] .tk-tool-symbol { color:var(--color-brand-text); background:var(--color-brand-soft); }
+.tk-tool[data-category="research"] .tk-tool-symbol,.tk-tool[data-category="writing"] .tk-tool-symbol { color:var(--color-link); background:var(--color-info-soft); }
+.tk-tool[data-category="life"] .tk-tool-symbol { color:var(--color-brand-text); background:var(--color-brand-soft); }
+.tk-tool[data-category="cities"] .tk-tool-symbol { color:var(--color-link); background:var(--color-info-soft); }
 .tk-tool[data-category="career"] .tk-tool-symbol { color:var(--color-brand-text); background:var(--color-brand-soft); }
-.tk-tool-top .tk-icon-button { width:32px; height:36px; margin-left:auto; flex-shrink:0; }
+.tk-tool-top .tk-icon-button { width:44px; height:44px; margin-left:auto; flex-shrink:0; }
 .tk-tool-top .tk-icon-button .icon { width:17px; height:17px; }
 .tk-badge { display:inline-flex; padding:4px 7px; border-radius:6px; font:600 9px/1.4 var(--font-sans); white-space:nowrap; }
 .tk-badge-builtin { background:var(--success-bg); color:var(--success); }
-.tk-badge-external { background:var(--track-ep-soft); color:var(--track-ep-text); }
+.tk-badge-external { background:var(--color-info-soft); color:var(--color-link); }
 .tk-badge-planned { background:var(--warning-bg); color:var(--warning); }
 .tk-tool h4 { font:700 14px/1.4 var(--font-sans); color:var(--color-heading); letter-spacing:-.015em; margin:0 0 9px; }
 .tk-tool-description { font-size:12px; color:var(--text-secondary); line-height:1.65; min-height:60px; }
@@ -134,7 +135,7 @@
 .tk-side-heading { display:flex; justify-content:space-between; align-items:baseline; gap:7px; }
 .tk-side-heading .tk-text-button { font-size:10px!important; white-space:nowrap; }
 .tk-side-card .tk-meta { font-size:11px; }
-.tk-starter { background:linear-gradient(140deg,var(--warning-bg),var(--surface-card) 78%); border-color:var(--border-input); }
+.tk-starter { background:linear-gradient(140deg,var(--color-brand-soft),var(--surface-card) 78%); border-color:var(--border-input); }
 .tk-starter > h2 { display:block; font:600 25px/1.25 var(--font-serif); margin:12px 0; }
 .tk-starter > .tk-eyebrow { font-size:9px; }
 .tk-quick { display:flex; align-items:center; gap:10px; width:100%; border:0; border-top:1px solid var(--border-subtle); background:transparent; padding:13px 0; text-align:left; color:var(--color-heading); text-decoration:none; }
@@ -214,7 +215,7 @@
   .tk-search input { font-size:13px; }
   .tk-search-submit { font-size:11px!important; padding:10px; min-height:44px; }
   .tk-chips { flex-wrap:nowrap; overflow-x:auto; padding-bottom:12px; scrollbar-width:thin; }
-  .tk-chip { padding:9px 12px; min-height:40px; font-size:11px!important; }
+  .tk-chip { padding:9px 12px; min-height:44px; font-size:11px!important; }
   .tk-refine-fields { grid-template-columns:1fr; }
   .tk-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
   .tk-tool { padding:14px; }
@@ -225,7 +226,7 @@
   .tk-tool h4 { font-size:13px; }
   .tk-tool-description { font-size:11.5px; min-height:0; }
   .tk-tool-actions { flex-direction:column; align-items:stretch; gap:0; }
-  .tk-tool-actions .tk-text-button { min-height:36px; }
+  .tk-tool-actions .tk-text-button { min-height:44px; }
   .tk-tool-meta { font-size:9.5px; }
   .tk-lab-feature { padding:20px; gap:0; }
   .tk-lab-illustration { display:none; }

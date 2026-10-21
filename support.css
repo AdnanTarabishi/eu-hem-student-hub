@@ -15,9 +15,9 @@
 }
 .support-page .support-start__links strong { display: block; font-size: .81rem; line-height: 1.6; }
 .support-page .support-start__links small { display: block; margin-top: 3px; color: var(--text-on-navy-muted); font-size: .73rem; line-height: 1.55; }
-.support-page .support-start__links > a > .icon { flex: none; width: 18px; height: 18px; color: #f0a184; }
+.support-page .support-start__links > a > .icon { flex: none; width: 18px; height: 18px; color: var(--color-hero-accent); }
 .support-page .support-start__links > a:hover strong { text-decoration: underline; text-underline-offset: 4px; }
-.support-page .support-start__links > a:focus-visible { outline-color: #a7c9f1; }
+.support-page .support-start__links > a:focus-visible { outline-color: var(--color-focus-on-hero); }
 
 /* Emergency information remains open, ahead of the question guide. */
 .support-page .academic-main .support-emergency {

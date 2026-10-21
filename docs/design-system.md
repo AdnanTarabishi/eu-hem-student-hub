@@ -34,7 +34,7 @@ Everything lives in plain CSS. There is no framework or build step.
 | Warm white (`--surface-warm`) | #FFFDF9 | #151F2C | Header, alternating sections |
 | Elevated (`--surface-elevated`) | #FFFFFF | #202B3A | Dropdowns, drawers, the stats strip |
 | Footer navy (`--surface-navy`) | #0F2B5B | #091D3A | Footer, navy blocks |
-| Text (`--text-primary` / `--text-secondary` / `--text-muted`) | #20242A / #667085 / #8A94A6 | #F2F4F7 / #CBD5E1 / #98A2B3 | Body / secondary / decorative only |
+| Text (`--text-primary` / `--text-secondary` / `--text-muted`) | #20242A / #5D6679 / #636D80 | #F2F4F7 / #CBD5E1 / #98A2B3 | Body / secondary / metadata |
 | Borders (`--border-default` / `--border-subtle` / `--border-input`) | #E4E7EC / #EEEAE4 / #D0D5DD | #344054 / #2A3546 / #475467 | |
 
 **Semantic states** (terracotta is never an error colour):
@@ -176,6 +176,33 @@ lighter blue / terracotta / green / purple, and lighter track colours.
 - The token blocks under `@media (prefers-color-scheme: dark)` and `:root[data-theme="dark"]` must stay
   identical.
 
+## Keeping page identities consistent
+
+Page-specific aliases must inherit the shared semantic tokens rather than define a second
+light/dark palette. Study Plan, Thesis, Students, course workspaces and the Statistics Lab now
+use the same warm page surfaces, navy structure, blue interactions and terracotta emphasis.
+Homepage and illustrated Visitor Guide layouts retain their distinctive compositions.
+
+Dark editorial panels use `--surface-hero`, `--surface-hero-raised`, `--text-on-hero`,
+`--text-on-hero-muted`, `--color-hero-accent`, `--border-hero` and `--color-focus-on-hero`.
+These stay readable on navy in either theme; ordinary headings and links use the normal
+theme-aware tokens. Local styles must not redefine global colours such as `--white` on `:root`.
+
+Colour differences remain where they communicate information: the four canonical tracks,
+city accents, map levels, chart series, correct/incorrect answers and warning/error/success
+states. Chapter illustrations and photographs may also retain their own colours. Do not use
+these exceptions as a separate page brand or replace them all with terracotta.
+
+The standalone Statistics Lab shares the global navigation, footer, search, local fonts,
+theme switch and skip link. Its embedded course workspace keeps the same scoped lab styles.
+
+`node tests/site/visual-identity.test.js .` audits all root pages and representative course,
+city, university and lecture states at desktop/phone widths in both themes. It blocks external
+requests and submissions, checks local assets, scripts, navigation, focus and overflow, and
+saves a report and visual contact sheets under ignored `work/visual-audit/`. Visual inspection
+complements these checks; the audit does not claim every interactive state or image pixel
+has the same palette. `scripts/check-contrast.js` also checks the shared hero and CTA pairs.
+
 ## Browser theme colour
 
 `<meta name="theme-color">` is #0F2B5B (light) / #091D3A (dark) on every page.
@@ -225,10 +252,11 @@ the shared header and existing academic pages are unchanged.
 ## Accessibility notes
 
 Contrast was checked for the main pairs (WCAG AA 4.5:1 for text):
-- Secondary text on ivory: 4.57.
+- Secondary text on ivory: 5.30.
 - Links on ivory: 5.83.
 - White on the CTA terracotta: 4.55.
 - Track text on its soft background: ≥ 4.8.
 - All dark-mode pairs: ≥ 5.3.
 
-`--text-muted` (#8A94A6, 3.1:1) is only for decorative dashes and placeholders, never for information.
+`--text-muted` also passes normal-text contrast on the shared page and card surfaces. Use it
+for supporting metadata; colour must not be the only way to communicate a status.

@@ -215,20 +215,19 @@ const root = path.resolve("."),
     await page.setViewportSize({ width: 390, height: 844 });
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.locator(".theme-toggle").click();
-    await page.waitForFunction(
-      () =>
-        getComputedStyle(document.body).backgroundColor === "rgb(16, 30, 35)",
-    );
+    await page.waitForFunction(() => document.documentElement.dataset.theme === "dark");
     assert.equal(
       await page.locator(".theme-toggle").getAttribute("aria-label"),
       "Switch to light mode",
     );
-    assert.equal(
-      await page.evaluate(
-        () => getComputedStyle(document.body).backgroundColor,
-      ),
-      "rgb(16, 30, 35)",
-    );
+    assert.equal(await page.evaluate(() => {
+      const sample=document.createElement("span");
+      sample.style.background="var(--surface-page)";
+      document.body.appendChild(sample);
+      const expected=getComputedStyle(sample).backgroundColor;
+      sample.remove();
+      return getComputedStyle(document.body).backgroundColor===expected;
+    }),true,"course background follows the shared dark surface");
     await page.screenshot({
       path: "/tmp/quant-methods-mobile-dark.png",
       fullPage: true,

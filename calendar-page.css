@@ -13,12 +13,13 @@
 .calendar-page .calendar-hero-links a,.calendar-page .calendar-inline-link{display:inline-flex;gap:7px;align-items:center;min-height:44px;color:var(--cal-ink);font-size:12px;font-weight:650;text-decoration:none}
 .calendar-page .calendar-hero-links a:hover,.calendar-page .calendar-inline-link:hover{color:var(--cal-accent);text-decoration:underline}
 .calendar-page .calendar-hero-links .icon,.calendar-page .calendar-inline-link .icon{width:16px;height:16px}
-.calendar-page .calendar-highlight{padding:29px 30px;border-radius:22px;background:#102d54;color:#dbe7f5;border:1px solid #284566;box-shadow:0 12px 28px #102d5410}
-.calendar-page .calendar-highlight .calendar-eyebrow{color:#f3b59d}
+.calendar-page .calendar-highlight{padding:29px 30px;border-radius:22px;background:var(--surface-hero);color:var(--text-on-hero-muted);border:1px solid var(--border-hero);box-shadow:var(--shadow-md)}
+.calendar-page .calendar-highlight .calendar-eyebrow{color:var(--color-hero-accent)}
 .calendar-page .calendar-highlight h2{color:white;font-size:clamp(1.5rem,2.2vw,2rem);margin:0 0 10px;line-height:1.25}
 .calendar-page .calendar-highlight>p:not(.calendar-eyebrow){font-size:13px;line-height:1.7;margin:0 0 15px}
-.calendar-page .calendar-highlight .source-badge{background:#274565;border-color:#5c7695;color:#e8f1fb;font-size:10px}
+.calendar-page .calendar-highlight .source-badge{background:var(--surface-hero-raised);border-color:var(--border-hero);color:var(--text-on-hero);font-size:10px}
 .calendar-page .calendar-highlight>a{display:block;width:fit-content;margin-top:16px;color:white;font-size:12px;font-weight:600;min-height:30px}
+.calendar-page :is(.calendar-highlight,.calendar-subscribe-intro) :focus-visible{outline-color:var(--color-focus-on-hero)}
 .calendar-page .calendar-section-nav{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:9px;background:var(--cal-card);border:1px solid var(--cal-line);border-radius:15px;margin-bottom:40px}
 .calendar-page .calendar-section-nav a{display:inline-flex;gap:9px;align-items:center;padding:11px 15px;min-height:44px;color:var(--cal-muted);text-decoration:none;font-size:10px;font-weight:600}
 .calendar-page .calendar-section-nav a span{font-size:12px;color:var(--cal-ink)}
@@ -93,10 +94,10 @@
 .calendar-page #key-month-approximate p{margin:8px 0 0}
 .calendar-page .calendar-month-panel .calendar-inline-link{font-size:10px}
 .calendar-page .calendar-subscription{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);border-radius:22px;overflow:hidden;border:1px solid var(--cal-line);background:var(--cal-card)}
-.calendar-page .calendar-subscribe-intro{background:#102d54;padding:34px;color:#dbe7f5}
-.calendar-page .calendar-subscribe-intro .calendar-eyebrow{color:#f3b59d}
+.calendar-page .calendar-subscribe-intro{background:var(--surface-hero);padding:34px;color:var(--text-on-hero-muted)}
+.calendar-page .calendar-subscribe-intro .calendar-eyebrow{color:var(--color-hero-accent)}
 .calendar-page .calendar-subscribe-intro h2{color:white;font-size:30px;line-height:1.2;margin:0 0 20px}
-.calendar-page .calendar-subscribe-intro h2 span{color:#f1bca8}
+.calendar-page .calendar-subscribe-intro h2 span{color:var(--color-hero-accent)}
 .calendar-page .calendar-subscribe-intro>p:not(.calendar-eyebrow){font-size:12px;line-height:1.8;margin-bottom:22px}
 .calendar-page .calendar-subscribe-intro a{color:white;min-height:44px;display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:600}
 .calendar-page .calendar-subscribe-intro a .icon{width:16px;height:16px}

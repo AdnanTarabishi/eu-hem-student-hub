@@ -94,6 +94,13 @@ then `node scripts/make-social-image.js` renders the updated sharing image.
 Shared helpers (toasts, skeletons, add-to-calendar files, map links) are in `ui.js`.
 Check colour contrast (WCAG AA, light and dark): `node scripts/check-contrast.js`.
 
+**Whole-site visual review:** `node tests/site/visual-identity.test.js .` checks root pages and
+specialist study/guide routes on desktop and phone in both themes, with reports and contact
+sheets under ignored `work/visual-audit/`. The test uses the existing Markdown and KaTeX
+renderers as development dependencies so content and formulas render with browser requests
+restricted to the local preview. The production site still uses its existing library loading.
+The visual-identity workflow also verifies the deployed CSS and shared Statistics Lab shell.
+
 **Toolkit validation:** `npm run test:toolkit` checks the catalogue, planning/calculation
 helpers and a real-browser workbench workflow, including mobile themes and offline reload.
 It uses fictional entries and blocks external requests. Browser tests need installed Chromium

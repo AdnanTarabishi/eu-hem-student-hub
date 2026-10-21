@@ -42,14 +42,14 @@
   top: 95px;
 }
 .session6-practice .question-map button.is-correct {
-  border-color: #4b946a;
-  background: rgba(75,148,106,.14);
-  color: #4b946a;
+  border-color: var(--success);
+  background: var(--success-bg);
+  color: var(--success);
 }
 .session6-practice .question-map button.is-revisit {
-  border-color: #cc6f4f;
-  background: rgba(204,111,79,.14);
-  color: #cc6f4f;
+  border-color: var(--danger);
+  background: var(--danger-bg);
+  color: var(--danger);
 }
 .session6-practice .question-map button.is-current {
   border-color: var(--accent);
@@ -70,12 +70,12 @@
   border-radius: 10px;
 }
 .session6-practice .feedback.correct {
-  background: rgba(75,148,106,.12);
-  color: #4b946a;
+  background: var(--success-bg);
+  color: var(--success);
 }
 .session6-practice .feedback.incorrect {
-  background: rgba(204,111,79,.12);
-  color: #b65e43;
+  background: var(--danger-bg);
+  color: var(--danger);
 }
 .session6-practice .quiz-actions {
   display: flex;
@@ -147,9 +147,11 @@
     width: 100%;
     overflow-x: auto;
     flex-wrap: nowrap;
+    justify-content: flex-start;
   }
   .insurance-session-toolbar .nav button {
     white-space: nowrap;
+    flex: 0 0 auto;
   }
   .session6-flashcard {
     min-height: 280px;
