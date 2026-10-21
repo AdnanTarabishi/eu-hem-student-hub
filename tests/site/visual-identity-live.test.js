@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs'), path = require('node:path');
 const { chromium } = require('playwright');
 const ROOT = path.resolve(process.argv[2] || '.');
-const BASE = 'https://adnantarabishi.github.io/eu-hem-student-hub/';
+const BASE = process.env.VISUAL_LIVE_BASE || 'https://adnantarabishi.github.io/eu-hem-student-hub/';
 const OUT = path.join(ROOT, 'work/visual-audit/live');
 const routes = ['index.html', 'studyplan.html', 'thesis.html', 'students.html', 'statistics.html', 'statistics-lab.html', 'fhe-session-7.html'];
 (async () => {
@@ -18,7 +18,7 @@ const routes = ['index.html', 'studyplan.html', 'thesis.html', 'students.html', 
     if (pending.length) await new Promise(resolve => setTimeout(resolve, 8000));
   }
   assert.deepEqual(pending, [], 'published styles and Statistics Lab shell match the reviewed release');
-  const browser = await chromium.launch();
+  const browser = await chromium.launch({ executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || (fs.existsSync('/usr/bin/chromium') ? '/usr/bin/chromium' : undefined), args:['--no-sandbox'] });
   const results = [];
   try {
     for (const theme of ['light', 'dark']) {
@@ -36,9 +36,11 @@ const routes = ['index.html', 'studyplan.html', 'thesis.html', 'students.html', 
         await page.locator('.header-bar').waitFor();
         await page.locator('main h1').first().waitFor({ state:'visible' });
         await page.evaluate(() => document.fonts.ready);
-        if (route === 'statistics-lab.html') await page.locator('.sl-lab').waitFor();
+        if (route === 'statistics-lab.html') await page.locator('#statistics-lab[data-sl3-mounted="true"]').waitFor();
         assert.equal(await page.locator('.theme-toggle').count(), 1, route + ' has the shared theme switch');
-        assert.equal(await page.locator('.site-footer').count(), 1, route + ' retains the shared footer');
+        // Study chapters retain their compact educational footer and source reminder.
+        const footer = route === 'fhe-session-7.html' ? 'body > footer' : '.site-footer';
+        assert.equal(await page.locator(footer).count(), 1, route + ' retains its footer');
         assert.ok(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth) <= 1, route + ' fits a phone');
         if (route === 'statistics-lab.html') {
           await page.locator('.theme-toggle').click();
