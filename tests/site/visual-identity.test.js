@@ -66,9 +66,15 @@ const cssCache = new Map();
 const results = [], issues = [], forbidden = [];
 function safeName(value) { return value.replace(/[^a-z0-9]+/gi, '-').replace(/-+$/, ''); }
 async function audit(page, base, route, view) {
-  const errors = [], missing = [];
+  const errors = [], missing = [], optionalMissing = [];
   const onError = error => errors.push(error.message);
-  const onResponse = response => { if (response.url().startsWith(base) && response.status() >= 400) missing.push(new URL(response.url()).pathname); };
+  const onResponse = response => {
+    if (response.url().startsWith(base) && response.status() >= 400) {
+      const pathname=new URL(response.url()).pathname;
+      // events.js explicitly keeps this section hidden while its optional publisher is inactive.
+      (pathname==='/data/events.json' ? optionalMissing : missing).push(pathname);
+    }
+  };
   page.on('pageerror', onError); page.on('response', onResponse);
   try {
     await page.goto(base + route, { waitUntil:'domcontentloaded', timeout:15000 });
@@ -79,7 +85,12 @@ async function audit(page, base, route, view) {
       const s=getComputedStyle(node), r=node.getBoundingClientRect();
       return !node.hidden && s.visibility!=='hidden' && r.width>0 && r.height>0 && /^(?:Loading|Checking)\b|^Loading…/i.test(node.textContent.trim());
     }), null, { timeout:20000 });
-    if (route.startsWith('course.html?')) await page.waitForSelector('#course-page h1', { timeout:20000 });
+    if (route.startsWith('course.html?')) await page.waitForFunction(() => {
+      // The lab deliberately lives beside #course-page so source refreshes preserve its inputs.
+      const lab=new URLSearchParams(location.search).get('tab')==='lab';
+      const panel=document.getElementById(lab?'statistics-lab-course-panel':'course-panel');
+      return panel && panel.getBoundingClientRect().height>0 && panel.textContent.trim().length>0;
+    }, null, { timeout:20000 });
     if (route.startsWith('lecture.html?')) await page.waitForSelector('#lecture-content:not([hidden])', { timeout:20000 });
     if (route.startsWith('city-guide.html?')) await page.waitForSelector('#guide[aria-busy="false"] .cg-hero, #guide[aria-busy="false"] .guide-hero, #guide[aria-busy="false"] .guide-cover', { timeout:20000 });
     await page.waitForTimeout(450);
@@ -120,7 +131,8 @@ async function audit(page, base, route, view) {
     if (data.overflow > 1) issues.push({ route, ...view, problem:'page overflow', pixels:data.overflow, elements:data.overflowing });
     if (errors.length) issues.push({ route, ...view, problem:'uncaught JavaScript', errors });
     if (missing.length) issues.push({ route, ...view, problem:'missing local assets', paths:[...new Set(missing)] });
-    results.push({ route, ...view, ...data, errors, missing:[...new Set(missing)] });
+    if (route==='calendar.html' && optionalMissing.length) assert.equal(await page.locator('#community-events').isHidden(), true, 'an inactive optional event publisher stays hidden');
+    results.push({ route, ...view, ...data, errors, missing:[...new Set(missing)], optionalMissing:[...new Set(optionalMissing)] });
     if (results.length % 20 === 0) console.log(`${PHASE}: ${results.length}/${routes.length * cases.length} browser states checked`);
   } catch (error) { issues.push({ route, ...view, problem:'audit navigation failed', error:error.message }); }
   finally { page.off('pageerror', onError); page.off('response', onResponse); }
