@@ -48,13 +48,14 @@ const SECOND_DATES = ['2027-01-01', '2027-01-22', '2027-01-22', '2027-02-06', '2
     context.setDefaultTimeout(7000);
     await context.clock.setFixedTime(new Date(now));
     if (plan) await context.addInitScript(value => localStorage.setItem('euhem-study-plan-v1', value), PLAN);
-    let failed = false;
+    let failed = 0;
     await context.route('**/*', route => {
       const url = new URL(route.request().url());
       if (url.hostname === 'corsi.unibo.it') {
-        if (failOnce && !failed) { failed = true; return route.fulfill({ status: 503, body: 'unavailable' }); }
-        return route.fulfill({ contentType: 'text/html', body: feed });
+        if (failOnce && ++failed <= 3) { return route.fulfill({ status: 503, body: 'unavailable' }); }
+        return route.fulfill({ contentType: 'text/html', body: feed || '<p>No scheduled exams</p>' });
       }
+      if (/\/calendar\/(?:timetable|exams)\.json$/.test(url.pathname)) return route.fulfill({status:404,body:'No fixture snapshot'});
       if (url.hostname !== '127.0.0.1') return route.abort();
       return route.continue();
     });

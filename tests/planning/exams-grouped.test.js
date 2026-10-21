@@ -9,7 +9,7 @@ assert.equal(m([item(["97177","79060"]),item(["79060"])]).length,1,"parent + mod
 assert.equal(m([item(["97177","79060"]),item(["97177","87428"])]).length,2,"different components remain separate");
 const p=JSON.parse(fs.readFileSync(path.join(root,"content/programme.json"),"utf8"));
 const c=p.cohorts.find(x=>x.id==="2026-27").terms.find(x=>x.id==="y1-s1").courses.find(x=>x.id==="intro-economics");
-assert.equal(c.modules[0].teachingEnd,"2026-09-12");
+assert.equal(c.modules[0].teachingEnd,"2026-09-22");
 assert.equal(c.assessmentNotice.sessionDate,"2026-10-27");
 assert.equal(c.assessmentNotice.sessionTime,"09:00");
 assert.equal(c.assessmentNotice.grading,"Pass/Fail");

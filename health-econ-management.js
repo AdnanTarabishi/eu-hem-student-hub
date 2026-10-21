@@ -198,7 +198,7 @@
     const badge = el("span", "hem-status");
     if (session.status === "upcoming") {
       badge.classList.add("is-upcoming");
-      badge.textContent = "Upcoming";
+      badge.textContent = "Hub guide pending";
     } else if (status === "understood") {
       badge.classList.add("is-complete");
       badge.textContent = "Understood";
@@ -254,7 +254,7 @@
       const note = el(
         "p",
         "hem-upcoming-note",
-        "Awaiting the official lecture materials. The syllabus topic is shown here so the learning path stays complete.",
+        "This Hub study guide is not available yet. The syllabus topic is shown for context; check Virtuale for the official materials.",
       );
       card.appendChild(note);
     }
@@ -306,7 +306,7 @@
     if (isEconomics) {
       const available = availableSessions(module).length;
       footer.append(
-        el("span", "hem-module-availability", `${available} of 8 sessions available`),
+        el("span", "hem-module-availability", `${available} of ${path.sessions.length} Hub guides available`),
         ctx.pageLink("Open learning path →", { tab: "lectures" }, "hem-button"),
       );
     } else {
@@ -314,7 +314,7 @@
         el(
           "span",
           "hem-module-availability is-upcoming",
-          "Study materials will be added when the official teaching content becomes available.",
+          "Study materials have not been added to the Hub yet. Check the official module page or Virtuale for current materials.",
         ),
       );
       if (module.info.officialUrl) {
@@ -370,8 +370,8 @@
       <p>One course, two connected modules. Start with the economics of health, healthcare demand, inequality and provider behaviour; then move into healthcare management in Cycle 2.</p>
       <div class="hem-hero-chips">
         <span>Current module · Health Economics</span>
-        <span>${summary.available}/8 sessions live</span>
-        <a href="fhem-exam.html">Sessions 1–5 mock ready →</a>
+        <span>${summary.available}/${path.sessions.length} Hub guides available</span>
+        <a href="fhem-exam.html">Current-content mock ready →</a>
       </div>
     `;
     const actions = el("div", "hem-actions");
@@ -444,9 +444,10 @@
     );
     panel.appendChild(modules);
 
+    const remaining = path.sessions.filter((session) => session.status !== "available");
     const pathHeading = el("div", "hem-section-heading");
     pathHeading.innerHTML =
-      '<div><p class="hem-kicker">HEALTH ECONOMICS / LEARNING PATH</p><h2>Five sessions ready. Three clearly marked as upcoming.</h2></div><p>The roadmap follows the course structure rather than presenting notes as a loose archive.</p>';
+      `<div><p class="hem-kicker">HEALTH ECONOMICS / LEARNING PATH</p><h2>${available.length} sessions ready. ${remaining.length ? `${remaining.length} Hub guide${remaining.length === 1 ? "" : "s"} pending.` : "All Hub guides available."}</h2></div><p>The roadmap follows the course structure rather than presenting notes as a loose archive.</p>`;
     pathHeading.appendChild(
       ctx.pageLink("Open full learning path →", { tab: "lectures" }, "hem-link"),
     );
@@ -454,15 +455,16 @@
 
     const preview = el("div", "hem-session-preview");
     available.forEach((session) => preview.appendChild(sessionCard(session, economics, true)));
-    const remaining = path.sessions.filter((session) => session.status === "upcoming");
-    const upcoming = el("article", "hem-upcoming-cluster");
-    upcoming.innerHTML = `
-      <p class="hem-kicker">NEXT / INSURANCE</p>
-      <h3>Sessions 6–8</h3>
-      <p>Demand for insurance, adverse selection and moral hazard are already placed in the roadmap. Detailed lecture pages will wait for the official slides.</p>
-      <div class="hem-upcoming-list">${remaining.map((session) => `<span>0${session.number} · ${esc(session.shortTitle)}</span>`).join("")}</div>
-    `;
-    preview.appendChild(upcoming);
+    if (remaining.length) {
+      const pending = el("article", "hem-upcoming-cluster");
+      pending.innerHTML = `
+        <p class="hem-kicker">NOT YET IN THE HUB</p>
+        <h3>${remaining.length} Hub guide${remaining.length === 1 ? "" : "s"} pending</h3>
+        <p>The remaining syllabus topics are shown for context. Check Virtuale for official materials while these Hub guides are not yet available.</p>
+        <div class="hem-upcoming-list">${remaining.map((session) => `<span>${String(session.number).padStart(2, "0")} · ${esc(session.shortTitle)}</span>`).join("")}</div>
+      `;
+      preview.appendChild(pending);
+    }
     panel.appendChild(preview);
 
     const tools = el("section", "hem-tool-shelf");
@@ -474,7 +476,7 @@
       toolCard("02 / RECALL", "Flashcards", "Review definitions, mechanisms and model intuition across the available sessions.", `course.html?course=${COURSE_ID}&tab=practice#flashcards`, String(flashcardCount)),
       toolCard("03 / APPLY", "Question bank", "Work through MCQs, true/false and short-answer practice written for this Student Hub.", `course.html?course=${COURSE_ID}&tab=practice#question-bank`, String(questionCount)),
       toolCard("04 / CONNECT", "Key concepts", "Jump across linked ideas such as information asymmetry, health capital, causality and physician agency.", `course.html?course=${COURSE_ID}&tab=concepts`, String(conceptCount)),
-      toolCard("05 / SIMULATE", "Exam centre", "Run a 90-minute mixed mock or a 20-minute objective drill using the current Sessions 1–5 question bank.", "fhem-exam.html", "90 min"),
+      toolCard("05 / SIMULATE", "Exam centre", "Run a 90-minute mixed mock or a 20-minute objective drill using the question bank from the available Hub sessions.", "fhem-exam.html", "90 min"),
     );
     tools.appendChild(toolGrid);
     panel.appendChild(tools);
@@ -524,9 +526,9 @@
     heading.innerHTML = `
       <div>
         <p class="hem-kicker">FUNDAMENTALS IN HEALTH ECONOMICS · 79060</p>
-        <h1>One path through<br>eight connected sessions.</h1>
+        <h1>One path through<br>${path.sessions.length} connected sessions.</h1>
       </div>
-      <p>Start with the system and healthcare demand, move into health and inequality, then finish with provider behaviour and insurance. Sessions 6–8 stay visible without pretending their lecture notes are available yet.</p>
+      <p>Start with the system and healthcare demand, move into health and inequality, then finish with provider behaviour and insurance. The status on each session shows whether its Hub guide is available.</p>
     `;
     panel.appendChild(heading);
 
@@ -537,7 +539,7 @@
     search.id = "hem-session-search";
     search.type = "search";
     search.placeholder = "Try: elasticity, Grossman, stress, physician…";
-    const count = el("p", "hem-caption", "8 sessions in the course roadmap");
+    const count = el("p", "hem-caption", `${path.sessions.length} sessions in the course roadmap`);
     count.id = "hem-session-count";
     count.setAttribute("role", "status");
     controls.append(searchLabel, search, count);

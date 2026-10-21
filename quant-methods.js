@@ -426,7 +426,7 @@
     panel.appendChild(centre);
     const upcoming = el("details", "qm-upcoming");
     upcoming.appendChild(
-      el("summary", null, "What comes next · sessions not taken yet"),
+      el("summary", null, "Official sessions · Hub guides pending"),
     );
     const entries = el("div", "qm-upcoming-list");
     module.topics
@@ -435,7 +435,7 @@
         const row = el("div");
         row.append(
           el("span", null, t.title),
-          el("span", "qm-status", "Upcoming"),
+          el("span", "qm-status", "Hub guide pending"),
         );
         const official = a("Virtuale →", t.virtualeUrl);
         official.target = "_blank";
@@ -448,7 +448,7 @@
       el(
         "p",
         "qm-caption",
-        "New guides will be added after these sessions are covered. Econometrics is the course's second module; its lecture materials are awaiting upload.",
+        "Open Virtuale for the official session materials. Hub guides for these sessions and the second module, Econometrics, have not been added yet.",
       ),
     );
     panel.appendChild(upcoming);

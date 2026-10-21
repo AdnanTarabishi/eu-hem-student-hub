@@ -80,7 +80,7 @@ const mime = {
     );
     assert.match(
       await page.locator(".course-panel").textContent(),
-      /not taken yet/,
+      /Hub guides pending/,
     );
     for (const topic of topics) {
       await open(topic.id);

@@ -57,13 +57,23 @@
   }
   function source(parent, ctx, type) {
     const status = type === 'schedule' ? ctx.page.timetableState : ctx.page.examState;
-    const labels = { loading: 'Checking university feed', ready: navigator.onLine ? 'University feed retrieved' : 'Offline feed copy', copy: 'Saved calendar copy', failed: 'University feed unavailable' };
+    const meta = type === 'schedule' ? ctx.page.timetableSource : ctx.page.examSource;
+    const labels = { loading: 'Checking university feed', ready: 'University feed retrieved', copy: copyLabel(meta, type), failed: 'University feed unavailable' };
     const box = add(parent, 'div', 'cw-source'); box.append(icon('info'));
     add(box, 'span', '', `${labels[status] || 'Check university sources'} · Europe/Rome`);
     const url = type === 'schedule' ? ctx.data.cohort.sources.timetableFeed.replace(/\/@@.*$/, '') : ctx.data.cohort.sources.examDates;
     box.append(safeLink('Official source ↗', url));
     if (status === 'failed' || status === 'copy') box.append(button('Retry live data', ctx.retry, 'cw-text-button'));
     return box;
+  }
+  function sourceTime(value) {
+    if (typeof value !== 'string' || !Number.isFinite(Date.parse(value))) return '';
+    return new Date(value).toLocaleString('en-GB', { timeZone: 'Europe/Rome', day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  }
+  function copyLabel(meta, type) {
+    const label = meta?.sourceType === 'calendar-copy' ? 'Saved calendar copy' : meta?.sourceType === 'published-copy' ? `Published ${type === 'schedule' ? 'timetable' : 'exam'} copy` : `Saved ${type === 'schedule' ? 'timetable' : 'exam'} copy`;
+    const verified = sourceTime(meta?.verifiedAt), cached = sourceTime(meta?.cachedAt);
+    return `${label} · ${verified ? `source checked ${verified}` : 'source verification time unknown'}${cached && !verified ? ` · saved ${cached}` : ''}`;
   }
   function select(parent, title, options, value, change) {
     const label = add(parent, 'label', 'cw-field', title), s = add(label, 'select');
@@ -139,7 +149,8 @@
     if (ctx.course.id === 'right-to-health' && root.RightToHealth?.ready()) root.RightToHealth.scheduleNotes(aside);
     const status = ctx.page.timetableState;
     if (status === 'loading') return empty(main, 'Checking the timetable…', 'Your course information is available while the university feed loads.');
-    if (status !== 'ready') return empty(main, 'The timetable is temporarily unavailable.', 'This does not mean there are no classes. Open the official timetable or retry the feed.', button('Retry timetable', ctx.retry));
+    if (status !== 'ready' && status !== 'copy') return empty(main, 'The timetable is temporarily unavailable.', 'This does not mean there are no classes. Open the official timetable or retry the feed.', button('Retry timetable', ctx.retry));
+    if (status === 'copy') add(main, 'p', 'cw-notice', 'These classes come from a saved source copy. Check the official timetable for later time, room or cancellation changes.');
     const sessions = ctx.sessions().slice().sort((a, b) => a.start.localeCompare(b.start));
     const now = clock();
     const future = item => (item.end || `${item.dateKey}T23:59:59`).slice(0, 19) >= now;
@@ -199,7 +210,7 @@
     if (status === 'loading') empty(main, 'Checking exam dates…', 'Assessment information is available below while dates load.');
     else if (status === 'failed') empty(main, 'Exam dates could not be retrieved.', 'No conclusion about published sittings can be drawn from a connection failure. Check AlmaEsami or the university exam page.', button('Retry exam dates', ctx.retry));
     else {
-      if (status === 'copy') add(main, 'p', 'cw-notice', 'These dates come from the existing exported calendar, not a successful live check. Times and registration windows must be confirmed on AlmaEsami.');
+      if (status === 'copy') add(main, 'p', 'cw-notice', ctx.page.examSource?.sourceType === 'calendar-copy' ? 'These dates come from the existing exported calendar, not a successful live check. Times and registration windows must be confirmed on AlmaEsami.' : 'These dates come from a saved source copy. Confirm current times, rooms and registration windows on AlmaEsami.');
       const now = clock(), today = now.slice(0, 10);
       const exams = ctx.exams().filter(e => e.dateKey >= today).sort((a, b) => `${a.dateKey}T${a.time || '23:59'}`.localeCompare(`${b.dateKey}T${b.time || '23:59'}`));
       const list = add(main, 'div', 'cw-exams');
@@ -270,7 +281,7 @@
         const questions = course.questions.filter(q => q.topic === t.id).length, cards = course.flashcards.filter(c => c.topic === t.id).length;
         if (questions) add(meta, 'span', 'cw-chip', plural(questions, 'question'));
         if (cards) add(meta, 'span', 'cw-chip', plural(cards, 'flashcard'));
-        if (!available(t)) add(body, 'p', 'cw-meta', t.status === 'upcoming' ? 'Upcoming topic · study material not added yet.' : 'Syllabus topic · no study material added yet.');
+        if (!available(t)) add(body, 'p', 'cw-meta', t.status === 'upcoming' ? 'Hub guide pending · open the official materials on Virtuale.' : 'Syllabus topic · no study material added yet.');
         if (notes?.meta.sample) body.append(sampleTag());
         const bottom = add(body, 'div', 'cw-topic-bottom');
         const current = getTopicStatus(progress, t.id); add(bottom, 'span', `cw-topic-status ${current ? 'is-started' : ''}`, `${STATUS_ICONS[current]} ${STATUS_LABELS[current]}`);

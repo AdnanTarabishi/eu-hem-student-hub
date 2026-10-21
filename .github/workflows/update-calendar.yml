@@ -5,6 +5,14 @@
 name: Update calendar
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/update-calendar.yml'
+      - 'scripts/build-calendar.js'
+      - 'unibo-data.js'
+      - 'exams-workspace.js'
+      - 'content/programme.json'
   schedule:
     - cron: "17 * * * *" # hourly at minute 17 UTC (GitHub schedules may run late)
   workflow_dispatch: # adds a "Run workflow" button
@@ -14,12 +22,13 @@ permissions:
   pages: write # request a Pages rebuild when needed
 
 concurrency:
-  group: update-calendar-main
+  group: update-calendar-${{ github.ref_name }}
   cancel-in-progress: false
 
 jobs:
   update-calendar:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Get the project files
         uses: actions/checkout@v4
@@ -29,30 +38,54 @@ jobs:
         with:
           node-version: 22
 
-      - name: Build the calendar
+      - name: Synchronize independent official sources
+        id: synchronize
+        continue-on-error: true
         run: node scripts/build-calendar.js
-      - name: Explain failed source synchronization
-        if: failure()
+
+      - name: Report source verification
+        if: always() && !cancelled()
         run: |
-          echo "::error::UniBo sync failed. The last published calendar remains available; check the official UniBo timetable."
-          echo "### UniBo timetable synchronization failed" >> "$GITHUB_STEP_SUMMARY"
-          echo "The previous calendar files were preserved. Inspect the HTTP error and try **Run workflow** again; check UniBo for recent room changes." >> "$GITHUB_STEP_SUMMARY"
+          node - <<'NODE'
+          const fs = require('node:fs');
+          if (!fs.existsSync('calendar/sync-status.json')) {
+            fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, '## Academic synchronization\nThe generator could not produce a status record. Inspect the synchronization step.\n');
+            process.exit(0);
+          }
+          const status = JSON.parse(fs.readFileSync('calendar/sync-status.json', 'utf8'));
+          const lines = ['## Academic synchronization', '', 'Checked: ' + status.checkedAt, ''];
+          for (const kind of ['timetable', 'exams']) {
+            const source = status[kind];
+            lines.push('- **' + kind + '**: ' + (source.ok ? 'verified from UniBo' : 'source unavailable; previous data retained where available') +
+              '. Last verified: ' + (source.verifiedAt || 'unknown') + '. Records: ' + source.recordCount + '.');
+            if (source.error) lines.push('  Source result: ' + source.error.replace(/[\r\n]/g, ' '));
+          }
+          lines.push('', 'Healthy source updates are saved even if the other source fails. Saved or historical copies are not marked as newly verified.');
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, lines.join('\n') + '\n');
+          NODE
 
       - name: Save changes and republish, if any
+        if: always() && !cancelled() && github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add calendar
+          git add -- calendar
           if git diff --staged --quiet; then
             echo "Calendar unchanged."
             exit 0
           fi
           git commit -m "Update calendar from UniBo"
           # Another robot (announcements) may have saved something meanwhile: get it first
-          git pull --rebase
-          git push
+          git pull --rebase origin main
+          git push origin HEAD:main
           # Ask GitHub Pages to publish the new version
-          curl -sS -X POST -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+          curl --fail-with-body --silent --show-error --retry 3 -X POST -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/${{ github.repository }}/pages/builds"
+
+      - name: Keep failed source checks visible
+        if: always() && !cancelled() && steps.synchronize.outcome == 'failure'
+        run: |
+          echo "::error::At least one academic source failed verification. Healthy updates and honest source status were saved; inspect the source report."
+          exit 1

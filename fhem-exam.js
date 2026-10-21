@@ -80,6 +80,32 @@
     return learningPath.sessions.find((session) => session.topic === topic) || null;
   }
 
+  function scopeLabel(sessions = sessionTopics()) {
+    const numbers = [...new Set(sessions.map((session) => session.number))].sort((a, b) => a - b);
+    if (!numbers.length) return "Available sessions";
+    if (numbers.length === 1) return `Session ${numbers[0]}`;
+    const consecutive = numbers.every((number, index) => !index || number === numbers[index - 1] + 1);
+    return `Sessions ${consecutive ? `${numbers[0]}–${numbers[numbers.length - 1]}` : numbers.join(", ")}`;
+  }
+
+  function activeScope(active) {
+    const topics = new Set(currentQuestions(active).map((question) => question.topic));
+    return scopeLabel(learningPath.sessions.filter((session) => topics.has(session.topic)));
+  }
+
+  // Describe the existing selection quotas from the current pools, without starting an attempt.
+  function modeCounts(kind) {
+    const sessions = sessionTopics(), quick = kind === "quick";
+    const poolSize = (session, type) => module.questions.filter((question) => question.topic === session.topic && question.type === type && !question.sample).length;
+    const mcq = sessions.reduce((sum, session) => sum + Math.min(poolSize(session, "mcq"), quick ? 2 : 3), 0);
+    const trueFalse = sessions.reduce((sum, session) => sum + Math.min(poolSize(session, "true-false"), quick ? 1 : 2), 0);
+    const selectedOpenSessions = quick ? 0 : Math.min(3, sessions.length);
+    const withoutOpen = sessions.filter((session) => !poolSize(session, "short-answer")).length;
+    const openMin = Math.max(0, selectedOpenSessions - withoutOpen);
+    const openMax = Math.min(selectedOpenSessions, sessions.length - withoutOpen);
+    return { mcq, trueFalse, openMin, openMax };
+  }
+
   function questionTypeLabel(question) {
     if (question.type === "mcq") return "Multiple choice";
     if (question.type === "true-false") return "True / False";
@@ -268,16 +294,21 @@
     const shell = el("div", "hem-exam-shell");
     const identity = renderIdentity();
     if (identity) shell.appendChild(identity);
+    const sessions = sessionTopics(), scope = scopeLabel();
+    const fullCounts = modeCounts("full"), quickCounts = modeCounts("quick");
+    const openCountLabel = fullCounts.openMin === fullCounts.openMax ? String(fullCounts.openMax) : `${fullCounts.openMin}–${fullCounts.openMax}`;
+    const topics = new Set(sessions.map((session) => session.topic));
+    const bankCount = module.questions.filter((question) => topics.has(question.topic) && !question.sample).length;
 
     const hero = el("section", "hem-exam-hero");
     const copy = el("div", "hem-exam-copy");
     copy.innerHTML = `
       <p class="hem-kicker">FHEM EXAM CENTRE / HEALTH ECONOMICS · 79060</p>
       <h1>Practise the format.<br><em>Keep the score honest.</em></h1>
-      <p>This centre uses the original Student Hub question bank from Sessions 1–5. The full mock is timed for 90 minutes and hides answers until you submit.</p>
+      <p>This centre uses the original Student Hub question bank from ${scope}. The full mock is timed for 90 minutes and hides answers until you submit.</p>
       <div class="hem-exam-facts">
-        <span>5 completed sessions</span>
-        <span>${module.questions.filter((q) => !q.sample).length} practice questions</span>
+        <span>${sessions.length} available Hub sessions</span>
+        <span>${bankCount} practice questions</span>
         <span>Progress stays on this device</span>
       </div>
     `;
@@ -292,7 +323,7 @@
         <div class="hem-official-item"><span>Conditions</span><strong>Closed book</strong></div>
         <div class="hem-official-item"><span>Question types</span><strong>Open · T/F · MCQ</strong></div>
       </div>
-      <p>The available course material does not specify the exact number or weighting of each question type. The Student Hub mock composition below is therefore practice design, not an official blueprint. Sessions 6–8 are not included until their official lecture materials are available.</p>
+      <p>The available course material does not specify the exact number or weighting of each question type. The Student Hub mock composition below is therefore practice design, not an official blueprint. Only sessions with an available Hub guide are included; pending guides remain outside this mock.</p>
     `;
     hero.append(copy, official);
     shell.appendChild(hero);
@@ -302,7 +333,7 @@
       const remaining = state.active.deadline - Date.now();
       resume.innerHTML = `
         <div><strong>Exam in progress.</strong><br>
-        ${state.active.kind === "full" ? "90-minute mock · Sessions 1–5" : "20-minute quick drill"} ·
+        ${state.active.kind === "full" ? `90-minute mock · ${activeScope(state.active)}` : "20-minute quick drill"} ·
         ${currentQuestions(state.active).filter((q) => isAnswered(q, state.active.answers[q.id])).length} of ${state.active.questionIds.length} answered ·
         ${timeText(remaining)} remaining.</div>
       `;
@@ -319,9 +350,9 @@
     full.innerHTML = `
       <p class="hem-kicker">90-MINUTE MOCK / CURRENT CONTENT</p>
       <h2>Full-length timing, current-content coverage</h2>
-      <p>Balanced across the five sessions currently published in the Student Hub. Answers stay hidden until submission. Objective questions are scored automatically; open questions are reviewed against model answers afterwards.</p>
+      <p>Balanced across the ${sessions.length} sessions currently published in the Student Hub. Answers stay hidden until submission. Objective questions are scored automatically; open questions are reviewed against model answers afterwards.</p>
       <div class="hem-mode-spec">
-        <span>15 MCQs</span><span>10 True / False</span><span>3 open questions</span><span>Sessions 1–5</span>
+        <span>${fullCounts.mcq} MCQs</span><span>${fullCounts.trueFalse} True / False</span><span>${openCountLabel} open questions</span><span>${scope}</span>
       </div>
     `;
     const fullActions = el("div", "hem-actions");
@@ -337,7 +368,7 @@
       <h2>Fast objective check</h2>
       <p>Use this when you want a shorter mixed run before returning to a weak session.</p>
       <div class="hem-mode-spec">
-        <span>10 MCQs</span><span>5 True / False</span><span>No open questions</span>
+        <span>${quickCounts.mcq} MCQs</span><span>${quickCounts.trueFalse} True / False</span><span>No open questions</span>
       </div>
     `;
     const quickActions = el("div", "hem-actions");
@@ -412,7 +443,7 @@
     const title = el("div", "hem-exam-toolbar-title");
     title.innerHTML = `
       <p class="hem-kicker">EXAM IN PROGRESS</p>
-      <h1>${active.kind === "full" ? "90-minute mock · Sessions 1–5" : "20-minute quick drill"}</h1>
+      <h1>${active.kind === "full" ? `90-minute mock · ${activeScope(active)}` : "20-minute quick drill"}</h1>
       <span>${answered} of ${questions.length} answered · objective answers stay hidden until submission</span>
     `;
     const clock = el("div", "hem-exam-clock");

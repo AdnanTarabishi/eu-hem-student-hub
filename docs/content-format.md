@@ -194,10 +194,13 @@ The referenced JSON lives in that module's `lectures/` folder:
   The last activity supports two-sided **one-mean** z/t tests only, displays the
   matching confidence interval, and checks the course's small-sample normality condition.
   New activity types must be registered in `notes-data.js` and implemented in a renderer.
-- A future session can be a topic with `status: "upcoming"` and a `virtualeUrl`
+- A session whose Hub guide is not yet available can use the existing
+  `status: "upcoming"` record and a `virtualeUrl`
   pointing to `https://virtuale.unibo.it/course/section.php?id=<number>`. It has no
-  notes or lecture field until covered. The Lectures tab labels these sessions
-  separately and supplies the official links; it creates no quiz for them.
+  notes or lecture field until its Hub guide is published. The Lectures tab labels
+  these sessions as having pending guides and supplies the official links; it
+  creates no quiz for them. This legacy content status does not establish a class
+  date or whether a student has attended it.
 - Put the lecture's MCQs in the module's existing `questions.json`, with the same `topic`
   ID. The lecture filters those questions; they also appear in the course question bank.
   Optional `category`, `source`, and `supplementary: true` fields give the lecture quiz

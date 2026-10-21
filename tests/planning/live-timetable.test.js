@@ -23,6 +23,7 @@ const DIR = process.env.PLANNING_SCREENSHOT_DIR;
     await page.goto(BASE+'timetable.html?view=month',{waitUntil:'domcontentloaded'});
     await page.waitForFunction(()=>typeof timetable!=='undefined' && (timetable.ready || document.querySelector('.planning-empty')), null, {timeout:45000});
     const ready=await page.evaluate(()=>timetable.ready);
+    const stale=await page.evaluate(()=>timetable.stale);
     if(ready) {
       assert.ok(await page.locator('.tt-month-day').count()>=28);
       await page.locator('#show-teacher').check();
@@ -34,9 +35,9 @@ const DIR = process.env.PLANNING_SCREENSHOT_DIR;
       await page.screenshot({path:path.join(DIR,'timetable-live-month.png'),fullPage:true});
       await page.setViewportSize({width:390,height:844});
       await page.screenshot({path:path.join(DIR,'timetable-live-phone.png'),fullPage:true});
-      fs.writeFileSync(path.join(DIR,'live-result.json'),JSON.stringify({scriptMatches:matches,officialFeedAvailable:ready,progressState:await page.locator('#monthly-progress').getAttribute('data-state'),sourceStatus:await page.locator('#timetable-checked').innerText(),errors},null,2));
+      fs.writeFileSync(path.join(DIR,'live-result.json'),JSON.stringify({scriptMatches:matches,officialFeedAvailable:ready&&!stale,savedCopyAvailable:ready&&stale,progressState:await page.locator('#monthly-progress').getAttribute('data-state'),sourceStatus:await page.locator('#timetable-checked').innerText(),errors},null,2));
     }
     assert.deepEqual(errors,[]);
-    console.log(ready ? 'Published Month / Day / Week / List and teacher control verified against the live official feed.' : 'Published code matches; UniBo feed unavailable in this check. No invented sessions or class highlights were shown.');
+    console.log(ready ? (stale?'Published Month / Day / Week / List and teacher control verified with an explicitly dated saved source copy.':'Published Month / Day / Week / List and teacher control verified against the live official feed.') : 'Published code matches; UniBo feed unavailable in this check. No invented sessions or class highlights were shown.');
   } finally {await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

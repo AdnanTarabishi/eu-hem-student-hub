@@ -39,10 +39,19 @@ teaching period and the study plan rules. Every section reads it; nothing about 
 written anywhere else. Check it with `node scripts/check-content.js`, and compare it with the
 live UniBo timetable with `node scripts/check-programme.js`.
 
-**Calendars** in `calendar/` are rebuilt every 6 hours by a GitHub Actions workflow
+**Calendars** in `calendar/` are checked hourly by a GitHub Actions workflow
 (`.github/workflows/update-calendar.yml`) running `scripts/build-calendar.js`: the full
 calendar plus one calendar per possible study plan. To rebuild them yourself:
 `node scripts/build-calendar.js` (needs Node.js 18 or newer).
+
+The timetable reader uses date windows of at most 31 days; unbounded or very long
+UniBo requests can fail with HTTP 503. Exams follow every same-origin results page.
+The sources update independently: a timetable outage cannot prevent exam updates.
+`calendar/timetable.json` and `calendar/exams.json` are dated copies of public
+university records; `calendar/sync-status.json` records each source's last actual
+verification and any failed attempt. Downloading a saved copy does not refresh its
+verification time. The website uses these labelled copies if the direct source is
+unavailable, without changing a student's saved choices.
 
 **Saved in the browser only (localStorage):** study plans and course statuses, Notes progress,
 My Study List, chosen track, Thesis workspace, Toolkit lists and explicitly saved planners,

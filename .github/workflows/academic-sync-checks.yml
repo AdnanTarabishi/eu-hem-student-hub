@@ -1,0 +1,50 @@
+name: Check academic synchronization
+on:
+  pull_request:
+    paths: ['unibo-data.js','timetable-sync.js','timetable.js','exams.js','dashboard.js','notes-landing.js','scripts/build-calendar.js','scripts/check-programme.js','content/programme.json','tests/planning/**','.github/workflows/academic-sync-checks.yml']
+  push:
+    branches: [main, codex/fix-academic-sync]
+    paths: ['unibo-data.js','timetable-sync.js','timetable.js','exams.js','dashboard.js','notes-landing.js','scripts/build-calendar.js','scripts/check-programme.js','content/programme.json','tests/planning/**','.github/workflows/academic-sync-checks.yml']
+permissions:
+  contents: read
+concurrency:
+  group: academic-sync-checks-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  source-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Check source integrity and refresh regressions
+        run: |
+          node scripts/check-content.js
+          node scripts/stamp-versions.js --check
+          node tests/planning/timetable-sync.test.js
+          node tests/planning/source-sync.test.js
+          node tests/planning/calendar-revisions.test.js
+          node tests/planning/exams-sync.test.js .
+          node tests/planning/academic-copy.test.js .
+      - name: Verify public course facts against the official bounded timetable
+        run: node scripts/check-programme.js
+      - name: Verify both complete official sources without publishing from this check
+        run: node scripts/build-calendar.js
+      - name: Verify the published academic data and source labels
+        if: github.ref == 'refs/heads/main'
+        run: node tests/planning/academic-live.test.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: academic-source-verification
+          path: |
+            calendar/sync-status.json
+            calendar/timetable.json
+            calendar/exams.json
+            work/academic-sync-previews
+          retention-days: 7

@@ -29,6 +29,11 @@ const executable = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || (fs.exists
       const address = new URL(route.request().url());
       if (address.hostname === "corsi.unibo.it" && examHtml !== undefined) return route.fulfill({ contentType: "text/html", body: examHtml });
       if (calendarError && address.pathname.includes("/calendar/")) return route.fulfill({ status: 503, body: "unavailable" });
+      if (address.hostname === "127.0.0.1" && address.pathname.endsWith("/calendar/exams.json")) {
+        const programme=JSON.parse(fs.readFileSync(path.join(ROOT,"content/programme.json"),"utf8"));
+        const source=programme.cohorts.find(c=>c.id==="2026-27").sources.examDates;
+        return route.fulfill({contentType:"application/json",body:JSON.stringify({version:1,source,verifiedAt:"2026-10-06T10:00:00Z",sourceType:"official",records:[{codes:["97177","79060"],names:["Fundamentals in Health Economics"],teachers:["Fictional lecturer"],dateKey:"2026-10-27",time:"09:00",place:"Fictional classroom",type:"Written"}]})});
+      }
       return address.hostname === "127.0.0.1" ? route.continue() : route.abort();
     });
     const page = await context.newPage();
@@ -62,7 +67,7 @@ const executable = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || (fs.exists
     await page.locator('[data-course-exam="fund-health-econ-management"].has-exam').waitFor({ state: "attached" });
     assert.match(await page.locator('[data-course-exam="fund-health-econ-management"]').textContent(), /27 Oct 2026/);
     assert.match(await page.locator("#notes-exam-feed-status").textContent(), /saved calendar copy/);
-    assert.match(await page.locator('[data-course-exam="health-systems"]').textContent(), /No upcoming date in the calendar copy/);
+    assert.match(await page.locator('[data-course-exam="health-systems"]').textContent(), /No upcoming date in the saved copy/);
     await page.locator('[data-teaching-filter="upcoming"]').click();
     assert.equal(await page.locator(".course-card").count(), 3);
     assert.equal(await page.getByLabel("Filter by teaching status").inputValue(), "upcoming");

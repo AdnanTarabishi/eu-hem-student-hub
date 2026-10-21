@@ -2,7 +2,7 @@
 // One page for every course: course.html?course=<course-id>
 // Schedule, Exam, Topics and Resources remain available with honest recovery states.
 // Other study tabs appear when their supporting content exists.
-// Course facts come from content/programme.json; Schedule and Exam are loaded live from UniBo;
+// Course facts come from content/programme.json; Schedule and Exam use UniBo or labelled saved copies;
 // notes and practice come from content/modules/<module-id>/ (Course -> Module -> Topic).
 
 const coursePage = document.getElementById("course-page");
@@ -12,6 +12,7 @@ const page = {
   unibo: "loading", // "loading" | "ready" | "failed"
   sessions: [], exams: [],
   timetableState: "loading", examState: "loading",
+  timetableSource: null, examSource: null,
 };
 
 const TABS = [
@@ -477,12 +478,13 @@ function renderLectures(panel) {
       list.appendChild(item);
     }
     panel.appendChild(list);
-    const upcoming = module.topics.filter(t => t.status === "upcoming");
-    if (upcoming.length) {
-      panel.appendChild(createElement("h4", "module-heading", "Upcoming classes · not taken yet"));
-      panel.appendChild(createElement("p", "schedule-meta", "Links supplied for the next sessions. Interactive guides and quizzes will be added after those classes are covered."));
-      const upcomingList = createElement("ul", "topic-list");
-      for (const topic of upcoming) {
+    // Legacy "upcoming" content records identify missing Hub guides, not future class dates.
+    const pendingGuides = module.topics.filter(t => t.status === "upcoming");
+    if (pendingGuides.length) {
+      panel.appendChild(createElement("h4", "module-heading", "Official sessions · Hub guides pending"));
+      panel.appendChild(createElement("p", "schedule-meta", "Open the official materials on Virtuale. Hub study guides and quizzes for these sessions have not been added yet."));
+      const pendingList = createElement("ul", "topic-list");
+      for (const topic of pendingGuides) {
         const item = createElement("li", "topic-row");
         const main = createElement("div", "topic-row-main");
         main.appendChild(createElement("span", "topic-title", topic.title));
@@ -492,10 +494,10 @@ function renderLectures(panel) {
         link.rel = "noopener";
         main.appendChild(link);
         item.appendChild(main);
-        item.appendChild(createElement("span", "schedule-meta", "Upcoming"));
-        upcomingList.appendChild(item);
+        item.appendChild(createElement("span", "schedule-meta", "Hub guide pending"));
+        pendingList.appendChild(item);
       }
-      panel.appendChild(upcomingList);
+      panel.appendChild(pendingList);
     }
   }
 }
@@ -525,7 +527,7 @@ function renderTopics(panel, params) {
       main.appendChild(notes ? pageLink(topic.title, { tab: "topics", topic: topic.id }, "topic-title") : createElement("span", "topic-title", topic.title));
       const cards = page.course.flashcards.filter((c) => c.topic === topic.id).length;
       const questions = page.course.questions.filter((q) => q.topic === topic.id).length;
-      const meta = [notes ? `Notes · ${readingMinutes(notes)} min read` : topic.status === "upcoming" ? "Upcoming · not taken yet" : "No notes yet"];
+      const meta = [notes ? `Notes · ${readingMinutes(notes)} min read` : topic.status === "upcoming" ? "Hub guide pending" : "No notes yet"];
       if (cards) meta.push(`${cards} flashcard${cards === 1 ? "" : "s"}`);
       if (questions) meta.push(`${questions} question${questions === 1 ? "" : "s"}`);
       main.appendChild(createElement("span", "schedule-meta", meta.join(" · ")));
@@ -810,7 +812,22 @@ function renderResources(panel) {
 
 // ----- Start -----
 
-// Loads the class schedule and exam dates from UniBo, then redraws (keeping the scroll position)
+// Keep provenance before course matching/filtering creates new arrays without feed metadata.
+function courseFeedSource(records) {
+  const source = records?.sourceMeta || {};
+  return {
+    sourceType: source.sourceType || (records?.cachedAt ? "cached" : "live"),
+    verifiedAt: source.verifiedAt || null,
+    cachedAt: source.cachedAt || records?.cachedAt || null,
+  };
+}
+
+function courseFeedState(result, source) {
+  if (result.status !== "fulfilled" || !Array.isArray(result.value)) return "failed";
+  return source.cachedAt || source.sourceType !== "live" ? "copy" : "ready";
+}
+
+// Loads independent feeds and their provenance, then redraws while preserving the current view.
 async function loadUniboData() {
   const sources = page.data.cohort.sources;
   // One failed endpoint must not silently erase the other. Slow feeds cannot hold the UI forever.
@@ -821,11 +838,12 @@ async function loadUniboData() {
   const [sessions, exams] = await Promise.allSettled([
     timed(fetchTimetable(sources.timetableFeed)), timed(fetchExams(sources.examDates)),
   ]);
-  page.timetableState = sessions.status === "fulfilled" ? "ready" : "failed";
-  page.examState = exams.status === "fulfilled" ? "ready" : "failed";
-  page.sessions = sessions.status === "fulfilled" ? sessions.value : [];
-  page.exams = exams.status === "fulfilled" ? matchExamsToTerm(exams.value, page.data.term) : [];
-  page.unibo = sessions.status === "rejected" && exams.status === "rejected" ? "failed" : "ready";
+  page.timetableSource = courseFeedSource(sessions.status === "fulfilled" ? sessions.value : null);
+  page.examSource = courseFeedSource(exams.status === "fulfilled" ? exams.value : null);
+  page.timetableState = courseFeedState(sessions, page.timetableSource);
+  page.examState = courseFeedState(exams, page.examSource);
+  page.sessions = page.timetableState === "failed" ? [] : sessions.value;
+  page.exams = page.examState === "failed" ? [] : matchExamsToTerm(exams.value, page.data.term);
   if (page.examState === "failed" && typeof NotesSchedule !== "undefined") {
     try {
       const manifest = await timed(readJson(fetchText, "calendar/calendars.json", []));
@@ -833,10 +851,14 @@ async function loadUniboData() {
       if (entry && /^[a-zA-Z0-9_.-]+\.ics$/.test(entry.file)) {
         const text = await timed(fetchText(`calendar/${entry.file}`));
         const copy = NotesSchedule.calendarExams(text || "", page.data.term);
-        if (copy.length) { page.exams = copy; page.examState = "copy"; }
+        if (copy.length) {
+          page.exams = copy; page.examState = "copy";
+          page.examSource = { sourceType: "calendar-copy", verifiedAt: null, cachedAt: null };
+        }
       }
     } catch (_) { /* Keep an explicit unavailable state, never fabricate a sitting. */ }
   }
+  page.unibo = page.timetableState === "failed" && page.examState === "failed" ? "failed" : "ready";
   // Do not erase search, a quiz, a reader position, or an unsaved workshop when feeds finish.
   if (!["", "overview", "schedule", "exam"].includes(currentParams().tab || "")) return;
   const y = window.scrollY;

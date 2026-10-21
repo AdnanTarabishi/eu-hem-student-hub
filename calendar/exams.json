@@ -1,0 +1,1204 @@
+{
+  "version": 1,
+  "cohort": "2026-27",
+  "source": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates",
+  "sourceUrls": [
+    "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates",
+    "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates?b_start:int=20"
+  ],
+  "sourceType": "official",
+  "verifiedAt": "2026-10-21T03:55:57.263Z",
+  "records": [
+    {
+      "codes": [
+        "B1076"
+      ],
+      "dateKey": "2026-10-27",
+      "time": "09:00",
+      "names": [
+        "Introduction To Economics"
+      ],
+      "teachers": [
+        "Matuka Adelajda"
+      ],
+      "type": "Written",
+      "place": "Aula 22 Scaravilli",
+      "registrationOpens": "2026-10-12",
+      "registrationCloses": "2026-10-23",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "B1076"
+    },
+    {
+      "codes": [
+        "97177",
+        "79060"
+      ],
+      "dateKey": "2026-10-27",
+      "time": "10:00",
+      "names": [
+        "Fundamental In Health Economics And Management (I.C.)",
+        "Fundamentals In Health Economics"
+      ],
+      "teachers": [
+        "Fabbri Daniele"
+      ],
+      "type": "Written",
+      "place": "BELMELORO B",
+      "registrationOpens": "2026-10-12",
+      "registrationCloses": "2026-10-23",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "79060"
+    },
+    {
+      "codes": [
+        "87427"
+      ],
+      "dateKey": "2026-10-27",
+      "time": "10:00",
+      "names": [
+        "Health Economics And Management (I.C.)"
+      ],
+      "teachers": [
+        "Fabbri Daniele"
+      ],
+      "type": "Written",
+      "place": "BELMELORO B",
+      "registrationOpens": "2026-10-12",
+      "registrationCloses": "2026-10-23",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "87427"
+    },
+    {
+      "codes": [
+        "96500"
+      ],
+      "dateKey": "2026-11-02",
+      "time": "14:00",
+      "names": [
+        "Our Right To Health: Needs, Resources And Society"
+      ],
+      "teachers": [
+        "Frischhut Markus"
+      ],
+      "type": "Written",
+      "place": "Aula C Berti Pichat",
+      "registrationOpens": "2026-10-13",
+      "registrationCloses": "2026-10-30",
+      "duration": "",
+      "notes": "The exam will take place at Berti Pichat Street, n.6-6/2",
+      "endTime": "",
+      "assessmentCode": "96500"
+    },
+    {
+      "codes": [
+        "96525",
+        "74948"
+      ],
+      "dateKey": "2026-11-03",
+      "time": "11:00",
+      "names": [
+        "Quantitative Methods In Health And Healthcare (I.C.)",
+        "Statistics For Healthcare"
+      ],
+      "teachers": [
+        "Forster Martin"
+      ],
+      "type": "Written",
+      "place": "RANZANI AULA \"A\"",
+      "registrationOpens": "2026-10-19",
+      "registrationCloses": "2026-10-30",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "74948"
+    },
+    {
+      "codes": [
+        "79157"
+      ],
+      "dateKey": "2026-11-03",
+      "time": "11:00",
+      "names": [
+        "Research Methods In Health And Health Care (I.C.)"
+      ],
+      "teachers": [
+        "Forster Martin"
+      ],
+      "type": "Written",
+      "place": "RANZANI AULA \"A\"",
+      "registrationOpens": "2026-10-19",
+      "registrationCloses": "2026-10-30",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "79157"
+    },
+    {
+      "codes": [
+        "96496",
+        "96498"
+      ],
+      "dateKey": "2026-11-04",
+      "time": "15:00",
+      "names": [
+        "Fundamentals Of Quantitative Methods In Health And Healthcare (I.C.)",
+        "Fundamentals Of Statistics For Healthcare"
+      ],
+      "teachers": [
+        "Capacci Sara"
+      ],
+      "type": "Written",
+      "place": "LAB G - LAB T (Via Ranzani, 1)",
+      "registrationOpens": "2026-10-20",
+      "registrationCloses": "2026-10-31",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "96498"
+    },
+    {
+      "codes": [
+        "96496",
+        "96498"
+      ],
+      "dateKey": "2026-11-04",
+      "time": "16:30",
+      "names": [
+        "Fundamentals Of Quantitative Methods In Health And Healthcare (I.C.)",
+        "Fundamentals Of Statistics For Healthcare"
+      ],
+      "teachers": [
+        "Capacci Sara"
+      ],
+      "type": "Written",
+      "place": "LAB G - LAB T (Via Ranzani, 1)",
+      "registrationOpens": "2026-10-20",
+      "registrationCloses": "2026-10-31",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "96498"
+    },
+    {
+      "codes": [
+        "B5429"
+      ],
+      "dateKey": "2026-11-05",
+      "time": "09:00",
+      "names": [
+        "Economics Of Risky Health Behaviours"
+      ],
+      "teachers": [
+        "Dragone Davide"
+      ],
+      "type": "Written",
+      "place": "LAB INFORMATICO N - BELMELORO",
+      "registrationOpens": "2026-10-26",
+      "registrationCloses": "2026-11-03",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "B5429"
+    },
+    {
+      "codes": [
+        "70138"
+      ],
+      "dateKey": "2026-11-05",
+      "time": "09:00",
+      "names": [
+        "Lifestyles And Health Outcomes"
+      ],
+      "teachers": [
+        "Dragone Davide"
+      ],
+      "type": "Written",
+      "place": "LAB INFORMATICO N - BELMELORO",
+      "registrationOpens": "2026-10-26",
+      "registrationCloses": "2026-11-03",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "70138"
+    },
+    {
+      "codes": [
+        "96526"
+      ],
+      "dateKey": "2026-12-17",
+      "time": "09:00",
+      "names": [
+        "Law And Economics Of Pharmaceutical Markets (I.C.)"
+      ],
+      "teachers": [
+        "Desogus Claudia"
+      ],
+      "type": "Written",
+      "place": "aula A EST, v. Irnerio 42",
+      "registrationOpens": "2026-12-02",
+      "registrationCloses": "2026-12-13",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "96526"
+    },
+    {
+      "codes": [
+        "79526"
+      ],
+      "dateKey": "2026-12-17",
+      "time": "09:00",
+      "names": [
+        "Law, Regulation And Planning In Healthcare (I.C.)"
+      ],
+      "teachers": [
+        "Desogus Claudia"
+      ],
+      "type": "Written",
+      "place": "aula A EST, v. Irnerio 42",
+      "registrationOpens": "2026-12-02",
+      "registrationCloses": "2026-12-13",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "79526"
+    },
+    {
+      "codes": [
+        "79075"
+      ],
+      "dateKey": "2026-12-17",
+      "time": "09:00",
+      "names": [
+        "Legal Issues In Pharmaceutical Markets"
+      ],
+      "teachers": [
+        "Desogus Claudia"
+      ],
+      "type": "Written",
+      "place": "aula A EST, v. Irnerio 42",
+      "registrationOpens": "2026-12-02",
+      "registrationCloses": "2026-12-13",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "79075"
+    },
+    {
+      "codes": [
+        "96496",
+        "96499"
+      ],
+      "dateKey": "2026-12-17",
+      "time": "11:00",
+      "names": [
+        "Fundamentals Of Quantitative Methods In Health And Healthcare (I.C.)",
+        "Fundamentals Of Econometrics"
+      ],
+      "teachers": [
+        "De Cao Elisabetta"
+      ],
+      "type": "Practical",
+      "place": "Laboratorio informatico",
+      "registrationOpens": "2026-12-02",
+      "registrationCloses": "2026-12-13",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "96499"
+    },
+    {
+      "codes": [
+        "96496",
+        "96499"
+      ],
+      "dateKey": "2026-12-17",
+      "time": "12:15",
+      "names": [
+        "Fundamentals Of Quantitative Methods In Health And Healthcare (I.C.)",
+        "Fundamentals Of Econometrics"
+      ],
+      "teachers": [
+        "De Cao Elisabetta"
+      ],
+      "type": "Practical",
+      "place": "Laboratorio informatico",
+      "registrationOpens": "2026-12-02",
+      "registrationCloses": "2026-12-13",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "96499"
+    },
+    {
+      "codes": [
+        "96525",
+        "32626"
+      ],
+      "dateKey": "2026-12-17",
+      "time": "14:00",
+      "names": [
+        "Quantitative Methods In Health And Healthcare (I.C.)",
+        "Econometrics"
+      ],
+      "teachers": [
+        "De Cao Elisabetta"
+      ],
+      "type": "Practical",
+      "place": "laboratorio informatico",
+      "registrationOpens": "2026-12-02",
+      "registrationCloses": "2026-12-13",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "32626"
+    },
+    {
+      "codes": [
+        "79157"
+      ],
+      "dateKey": "2026-12-17",
+      "time": "14:00",
+      "names": [
+        "Research Methods In Health And Health Care (I.C.)"
+      ],
+      "teachers": [
+        "De Cao Elisabetta"
+      ],
+      "type": "Practical",
+      "place": "laboratorio informatico",
+      "registrationOpens": "2026-12-02",
+      "registrationCloses": "2026-12-13",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "79157"
+    },
+    {
+      "codes": [
+        "96525",
+        "32626"
+      ],
+      "dateKey": "2026-12-17",
+      "time": "15:15",
+      "names": [
+        "Quantitative Methods In Health And Healthcare (I.C.)",
+        "Econometrics"
+      ],
+      "teachers": [
+        "De Cao Elisabetta"
+      ],
+      "type": "Practical",
+      "place": "laboratorio informatico",
+      "registrationOpens": "2026-12-02",
+      "registrationCloses": "2026-12-13",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "32626"
+    },
+    {
+      "codes": [
+        "79157"
+      ],
+      "dateKey": "2026-12-17",
+      "time": "15:15",
+      "names": [
+        "Research Methods In Health And Health Care (I.C.)"
+      ],
+      "teachers": [
+        "De Cao Elisabetta"
+      ],
+      "type": "Practical",
+      "place": "laboratorio informatico",
+      "registrationOpens": "2026-12-02",
+      "registrationCloses": "2026-12-13",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "79157"
+    },
+    {
+      "codes": [
+        "79077"
+      ],
+      "dateKey": "2026-12-18",
+      "time": "10:00",
+      "names": [
+        "Health Economics And Policy In Low And Middle Income Countries"
+      ],
+      "teachers": [
+        "Iorio Daniela"
+      ],
+      "type": "Oral",
+      "place": "TBA",
+      "registrationOpens": "2026-12-03",
+      "registrationCloses": "2026-12-14",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "79077"
+    },
+    {
+      "codes": [
+        "C9942"
+      ],
+      "dateKey": "2026-12-18",
+      "time": "11:00",
+      "names": [
+        "Seminars In Health Economics"
+      ],
+      "teachers": [
+        "Verzulli Rossella"
+      ],
+      "type": "Written",
+      "place": "Aula 22 Scaravilli",
+      "registrationOpens": "2026-10-12",
+      "registrationCloses": "2026-12-13",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "C9942"
+    },
+    {
+      "codes": [
+        "C8393"
+      ],
+      "dateKey": "2026-12-18",
+      "time": "14:00",
+      "names": [
+        "Health Systems"
+      ],
+      "teachers": [
+        "Verzulli Rossella"
+      ],
+      "type": "Written",
+      "place": "Aula 22 Scaravilli",
+      "registrationOpens": "2026-10-12",
+      "registrationCloses": "2026-12-13",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "C8393"
+    },
+    {
+      "codes": [
+        "70126"
+      ],
+      "dateKey": "2026-12-18",
+      "time": "14:00",
+      "names": [
+        "Health Systems"
+      ],
+      "teachers": [
+        "Verzulli Rossella"
+      ],
+      "type": "Written",
+      "place": "Aula 22 Scaravilli",
+      "registrationOpens": "2026-10-12",
+      "registrationCloses": "2026-12-13",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "70126"
+    },
+    {
+      "codes": [
+        "79077"
+      ],
+      "dateKey": "2026-12-19",
+      "time": "09:00",
+      "names": [
+        "Health Economics And Policy In Low And Middle Income Countries"
+      ],
+      "teachers": [
+        "Iorio Daniela"
+      ],
+      "type": "Oral",
+      "place": "TBA",
+      "registrationOpens": "2026-12-04",
+      "registrationCloses": "2026-12-15",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "79077"
+    },
+    {
+      "codes": [
+        "96526",
+        "79076"
+      ],
+      "dateKey": "2026-12-19",
+      "time": "09:00",
+      "names": [
+        "Law And Economics Of Pharmaceutical Markets (I.C.)",
+        "Economics Of The Biopharmaceutical Industry"
+      ],
+      "teachers": [
+        "Fabbri Daniele"
+      ],
+      "type": "Written",
+      "place": "AULA 2 Scaravilli",
+      "registrationOpens": "2026-12-04",
+      "registrationCloses": "2026-12-15",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "79076"
+    },
+    {
+      "codes": [
+        "97177",
+        "87428"
+      ],
+      "dateKey": "2026-12-22",
+      "time": "09:00",
+      "names": [
+        "Fundamental In Health Economics And Management (I.C.)",
+        "Fundamentals In Healthcare Management"
+      ],
+      "teachers": [
+        "Ciabuschi Francesco"
+      ],
+      "type": "Written",
+      "place": "lab G v. Ranzani 1",
+      "registrationOpens": "2026-12-07",
+      "registrationCloses": "2026-12-18",
+      "duration": "",
+      "notes": "lab G v. Ranzani 1)",
+      "endTime": "",
+      "assessmentCode": "87428"
+    },
+    {
+      "codes": [
+        "87427"
+      ],
+      "dateKey": "2026-12-22",
+      "time": "09:00",
+      "names": [
+        "Health Economics And Management (I.C.)"
+      ],
+      "teachers": [
+        "Ciabuschi Francesco"
+      ],
+      "type": "Written",
+      "place": "lab G v. Ranzani 1",
+      "registrationOpens": "2026-12-07",
+      "registrationCloses": "2026-12-18",
+      "duration": "",
+      "notes": "lab G v. Ranzani 1)",
+      "endTime": "",
+      "assessmentCode": "87427"
+    },
+    {
+      "codes": [
+        "97177",
+        "87428"
+      ],
+      "dateKey": "2026-12-22",
+      "time": "10:30",
+      "names": [
+        "Fundamental In Health Economics And Management (I.C.)",
+        "Fundamentals In Healthcare Management"
+      ],
+      "teachers": [
+        "Ciabuschi Francesco"
+      ],
+      "type": "Written",
+      "place": "lab G v. Ranzani 1",
+      "registrationOpens": "2026-12-07",
+      "registrationCloses": "2026-12-18",
+      "duration": "",
+      "notes": "lab G v. Ranzani 1)",
+      "endTime": "",
+      "assessmentCode": "87428"
+    },
+    {
+      "codes": [
+        "87427"
+      ],
+      "dateKey": "2026-12-22",
+      "time": "10:30",
+      "names": [
+        "Health Economics And Management (I.C.)"
+      ],
+      "teachers": [
+        "Ciabuschi Francesco"
+      ],
+      "type": "Written",
+      "place": "lab G v. Ranzani 1",
+      "registrationOpens": "2026-12-07",
+      "registrationCloses": "2026-12-18",
+      "duration": "",
+      "notes": "lab G v. Ranzani 1)",
+      "endTime": "",
+      "assessmentCode": "87427"
+    },
+    {
+      "codes": [
+        "97177",
+        "87428"
+      ],
+      "dateKey": "2027-01-13",
+      "time": "13:00",
+      "names": [
+        "Fundamental In Health Economics And Management (I.C.)",
+        "Fundamentals In Healthcare Management"
+      ],
+      "teachers": [
+        "Ciabuschi Francesco"
+      ],
+      "type": "Written",
+      "place": "LAB T (accesso Via Ranzani, 1)",
+      "registrationOpens": "2027-01-01",
+      "registrationCloses": "2027-01-09",
+      "duration": "",
+      "notes": "LAB T (accesso Via Ranzani, 1)",
+      "endTime": "",
+      "assessmentCode": "87428"
+    },
+    {
+      "codes": [
+        "87427"
+      ],
+      "dateKey": "2027-01-13",
+      "time": "13:00",
+      "names": [
+        "Health Economics And Management (I.C.)"
+      ],
+      "teachers": [
+        "Ciabuschi Francesco"
+      ],
+      "type": "Written",
+      "place": "LAB T (accesso Via Ranzani, 1)",
+      "registrationOpens": "2027-01-01",
+      "registrationCloses": "2027-01-09",
+      "duration": "",
+      "notes": "LAB T (accesso Via Ranzani, 1)",
+      "endTime": "",
+      "assessmentCode": "87427"
+    },
+    {
+      "codes": [
+        "96525",
+        "74948"
+      ],
+      "dateKey": "2027-01-14",
+      "time": "09:00",
+      "names": [
+        "Quantitative Methods In Health And Healthcare (I.C.)",
+        "Statistics For Healthcare"
+      ],
+      "teachers": [
+        "Forster Martin"
+      ],
+      "type": "Written",
+      "place": "aula 2, v. Del Guasto 3",
+      "registrationOpens": "2026-12-30",
+      "registrationCloses": "2027-01-10",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "74948"
+    },
+    {
+      "codes": [
+        "79157"
+      ],
+      "dateKey": "2027-01-14",
+      "time": "09:00",
+      "names": [
+        "Research Methods In Health And Health Care (I.C.)"
+      ],
+      "teachers": [
+        "Forster Martin"
+      ],
+      "type": "Written",
+      "place": "aula 2, v. Del Guasto 3",
+      "registrationOpens": "2026-12-30",
+      "registrationCloses": "2027-01-10",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "79157"
+    },
+    {
+      "codes": [
+        "C8393"
+      ],
+      "dateKey": "2027-01-14",
+      "time": "11:00",
+      "names": [
+        "Health Systems"
+      ],
+      "teachers": [
+        "Verzulli Rossella"
+      ],
+      "type": "Written",
+      "place": "Aula 1 Scaravilli",
+      "registrationOpens": "2026-10-12",
+      "registrationCloses": "2027-01-09",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "C8393"
+    },
+    {
+      "codes": [
+        "70126"
+      ],
+      "dateKey": "2027-01-14",
+      "time": "11:00",
+      "names": [
+        "Health Systems"
+      ],
+      "teachers": [
+        "Verzulli Rossella"
+      ],
+      "type": "Written",
+      "place": "Aula 1 Scaravilli",
+      "registrationOpens": "2026-10-12",
+      "registrationCloses": "2027-01-09",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "70126"
+    },
+    {
+      "codes": [
+        "79077"
+      ],
+      "dateKey": "2027-01-19",
+      "time": "10:00",
+      "names": [
+        "Health Economics And Policy In Low And Middle Income Countries"
+      ],
+      "teachers": [
+        "Iorio Daniela"
+      ],
+      "type": "Oral",
+      "place": "TBA",
+      "registrationOpens": "2027-01-04",
+      "registrationCloses": "2027-01-15",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "79077"
+    },
+    {
+      "codes": [
+        "96500"
+      ],
+      "dateKey": "2027-01-20",
+      "time": "13:00",
+      "names": [
+        "Our Right To Health: Needs, Resources And Society"
+      ],
+      "teachers": [
+        "Frischhut Markus"
+      ],
+      "type": "Written",
+      "place": "191_WP01_A11 - AULA 11",
+      "registrationOpens": "2027-01-06",
+      "registrationCloses": "2027-01-17",
+      "duration": "",
+      "notes": "The exam will take place at A. Scaravilli Square, n.1-2",
+      "endTime": "",
+      "assessmentCode": "96500"
+    },
+    {
+      "codes": [
+        "79516"
+      ],
+      "dateKey": "2027-01-21",
+      "time": "09:00",
+      "names": [
+        "Health Promotion And Policies (I.C.)"
+      ],
+      "teachers": [
+        "Mazzocchi Mario"
+      ],
+      "type": "Written",
+      "place": "Room 1 - Scaravilli",
+      "registrationOpens": "2026-12-18",
+      "registrationCloses": "2027-01-14",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "79516"
+    },
+    {
+      "codes": [
+        "96562"
+      ],
+      "dateKey": "2027-01-21",
+      "time": "09:00",
+      "names": [
+        "Planning And Evaluation Of Health Policy"
+      ],
+      "teachers": [
+        "Mazzocchi Mario"
+      ],
+      "type": "Written",
+      "place": "Room 1 - Scaravilli",
+      "registrationOpens": "2026-12-18",
+      "registrationCloses": "2027-01-14",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "96562"
+    },
+    {
+      "codes": [
+        "70139"
+      ],
+      "dateKey": "2027-01-21",
+      "time": "09:00",
+      "names": [
+        "Planning And Evaluation Of Health Promotion Programs"
+      ],
+      "teachers": [
+        "Mazzocchi Mario"
+      ],
+      "type": "Written",
+      "place": "Room 1 - Scaravilli",
+      "registrationOpens": "2026-12-18",
+      "registrationCloses": "2027-01-14",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "70139"
+    },
+    {
+      "codes": [
+        "97177",
+        "79060"
+      ],
+      "dateKey": "2027-01-22",
+      "time": "09:00",
+      "names": [
+        "Fundamental In Health Economics And Management (I.C.)",
+        "Fundamentals In Health Economics"
+      ],
+      "teachers": [
+        "Fabbri Daniele"
+      ],
+      "type": "Written",
+      "place": "Aula 3 Scaravilli",
+      "registrationOpens": "2027-01-07",
+      "registrationCloses": "2027-01-18",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "79060"
+    },
+    {
+      "codes": [
+        "87427"
+      ],
+      "dateKey": "2027-01-22",
+      "time": "09:00",
+      "names": [
+        "Health Economics And Management (I.C.)"
+      ],
+      "teachers": [
+        "Fabbri Daniele"
+      ],
+      "type": "Written",
+      "place": "Aula 3 Scaravilli",
+      "registrationOpens": "2027-01-07",
+      "registrationCloses": "2027-01-18",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "87427"
+    },
+    {
+      "codes": [
+        "96526",
+        "79076"
+      ],
+      "dateKey": "2027-01-22",
+      "time": "09:00",
+      "names": [
+        "Law And Economics Of Pharmaceutical Markets (I.C.)",
+        "Economics Of The Biopharmaceutical Industry"
+      ],
+      "teachers": [
+        "Fabbri Daniele"
+      ],
+      "type": "Written",
+      "place": "Aula 3 Scaravilli",
+      "registrationOpens": "2027-01-07",
+      "registrationCloses": "2027-01-18",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "79076"
+    },
+    {
+      "codes": [
+        "96496",
+        "96498"
+      ],
+      "dateKey": "2027-01-26",
+      "time": "11:00",
+      "names": [
+        "Fundamentals Of Quantitative Methods In Health And Healthcare (I.C.)",
+        "Fundamentals Of Statistics For Healthcare"
+      ],
+      "teachers": [
+        "Capacci Sara"
+      ],
+      "type": "Written",
+      "place": "LABORATORIO 2 (Via Zamboni, 34)",
+      "registrationOpens": "2027-01-11",
+      "registrationCloses": "2027-01-22",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "96498"
+    },
+    {
+      "codes": [
+        "96526"
+      ],
+      "dateKey": "2027-01-28",
+      "time": "11:00",
+      "names": [
+        "Law And Economics Of Pharmaceutical Markets (I.C.)"
+      ],
+      "teachers": [
+        "Desogus Claudia"
+      ],
+      "type": "Written",
+      "place": "aula 2 Scaravilli",
+      "registrationOpens": "2027-01-13",
+      "registrationCloses": "2027-01-24",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "96526"
+    },
+    {
+      "codes": [
+        "79526"
+      ],
+      "dateKey": "2027-01-28",
+      "time": "11:00",
+      "names": [
+        "Law, Regulation And Planning In Healthcare (I.C.)"
+      ],
+      "teachers": [
+        "Desogus Claudia"
+      ],
+      "type": "Written",
+      "place": "aula 2 Scaravilli",
+      "registrationOpens": "2027-01-13",
+      "registrationCloses": "2027-01-24",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "79526"
+    },
+    {
+      "codes": [
+        "79075"
+      ],
+      "dateKey": "2027-01-28",
+      "time": "11:00",
+      "names": [
+        "Legal Issues In Pharmaceutical Markets"
+      ],
+      "teachers": [
+        "Desogus Claudia"
+      ],
+      "type": "Written",
+      "place": "aula 2 Scaravilli",
+      "registrationOpens": "2027-01-13",
+      "registrationCloses": "2027-01-24",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "79075"
+    },
+    {
+      "codes": [
+        "96525",
+        "32626"
+      ],
+      "dateKey": "2027-01-29",
+      "time": "13:30",
+      "names": [
+        "Quantitative Methods In Health And Healthcare (I.C.)",
+        "Econometrics"
+      ],
+      "teachers": [
+        "De Cao Elisabetta"
+      ],
+      "type": "Practical",
+      "place": "Lab Inf. B (Accesso da Via Zamboni, 34)",
+      "registrationOpens": "2027-01-14",
+      "registrationCloses": "2027-01-25",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "32626"
+    },
+    {
+      "codes": [
+        "79157"
+      ],
+      "dateKey": "2027-01-29",
+      "time": "13:30",
+      "names": [
+        "Research Methods In Health And Health Care (I.C.)"
+      ],
+      "teachers": [
+        "De Cao Elisabetta"
+      ],
+      "type": "Practical",
+      "place": "Lab Inf. B (Accesso da Via Zamboni, 34)",
+      "registrationOpens": "2027-01-14",
+      "registrationCloses": "2027-01-25",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "79157"
+    },
+    {
+      "codes": [
+        "96496",
+        "96499"
+      ],
+      "dateKey": "2027-01-29",
+      "time": "15:00",
+      "names": [
+        "Fundamentals Of Quantitative Methods In Health And Healthcare (I.C.)",
+        "Fundamentals Of Econometrics"
+      ],
+      "teachers": [
+        "De Cao Elisabetta"
+      ],
+      "type": "Practical",
+      "place": "Lab Inf. B (Accesso da Via Zamboni, 34)",
+      "registrationOpens": "2027-01-14",
+      "registrationCloses": "2027-01-25",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "96499"
+    },
+    {
+      "codes": [
+        "B5429"
+      ],
+      "dateKey": "2027-02-02",
+      "time": "09:00",
+      "names": [
+        "Economics Of Risky Health Behaviours"
+      ],
+      "teachers": [
+        "Dragone Davide"
+      ],
+      "type": "Written",
+      "place": "LABORATORIO 3 (from Via Zamboni, 34)",
+      "registrationOpens": "2027-01-18",
+      "registrationCloses": "2027-01-29",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "B5429"
+    },
+    {
+      "codes": [
+        "70138"
+      ],
+      "dateKey": "2027-02-02",
+      "time": "09:00",
+      "names": [
+        "Lifestyles And Health Outcomes"
+      ],
+      "teachers": [
+        "Dragone Davide"
+      ],
+      "type": "Written",
+      "place": "LABORATORIO 3 (from Via Zamboni, 34)",
+      "registrationOpens": "2027-01-18",
+      "registrationCloses": "2027-01-29",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "70138"
+    },
+    {
+      "codes": [
+        "C9942"
+      ],
+      "dateKey": "2027-02-05",
+      "time": "11:00",
+      "names": [
+        "Seminars In Health Economics"
+      ],
+      "teachers": [
+        "Verzulli Rossella"
+      ],
+      "type": "Written",
+      "place": "Aula 1 Scaravilli",
+      "registrationOpens": "2026-10-12",
+      "registrationCloses": "2027-01-31",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "C9942"
+    },
+    {
+      "codes": [
+        "81863"
+      ],
+      "dateKey": "2027-04-08",
+      "time": "08:30",
+      "names": [
+        "Health Services Research"
+      ],
+      "teachers": [
+        "Fiorentini Gianluca"
+      ],
+      "type": "Written",
+      "place": "Aula 2, Piazza Scaravilli",
+      "registrationOpens": "2027-03-24",
+      "registrationCloses": "2027-04-04",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "81863"
+    },
+    {
+      "codes": [
+        "90078"
+      ],
+      "dateKey": "2027-04-08",
+      "time": "08:30",
+      "names": [
+        "The Economics Of Healthcare Organization (I.C.)"
+      ],
+      "teachers": [
+        "Fiorentini Gianluca"
+      ],
+      "type": "Written",
+      "place": "Aula 2, Piazza Scaravilli",
+      "registrationOpens": "2027-03-24",
+      "registrationCloses": "2027-04-04",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "90078"
+    }
+  ]
+}

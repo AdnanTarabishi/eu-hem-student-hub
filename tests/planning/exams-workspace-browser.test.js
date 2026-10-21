@@ -17,8 +17,8 @@ const PLAN=JSON.stringify({version:1,cohort:'2026-27',term:'y1-s1',choices:{quan
   context.setDefaultTimeout(7000);if(!nojs)await context.clock.setFixedTime(new Date('2026-10-09T17:20:00Z'));
   if(blocked)await context.addInitScript(()=>Object.defineProperty(window,'localStorage',{get(){throw Error('blocked')}}));
   if(plan)await context.addInitScript(p=>localStorage.setItem('euhem-study-plan-v1',p),PLAN);
-  let failed=false;
-  await context.route('**/*',route=>{const u=new URL(route.request().url());if(u.hostname==='corsi.unibo.it'){if(failOnce&&!failed){failed=true;return route.fulfill({status:503,body:'unavailable'});}return route.fulfill({contentType:'text/html',body:feed});}if(u.hostname!=='127.0.0.1')return route.abort();if(studyFailure&&u.pathname.includes('/content/modules/'))return route.fulfill({status:503,body:'unavailable'});return route.continue();});
+  let failed=0;
+  await context.route('**/*',route=>{const u=new URL(route.request().url());if(u.hostname==='corsi.unibo.it'){if(failOnce&&++failed<=3){return route.fulfill({status:503,body:'unavailable'});}return route.fulfill({contentType:'text/html',body:feed});}if(/\/calendar\/(?:timetable|exams)\.json$/.test(u.pathname))return route.fulfill({status:404,body:'No fixture snapshot'});if(u.hostname!=='127.0.0.1')return route.abort();if(studyFailure&&u.pathname.includes('/content/modules/'))return route.fulfill({status:503,body:'unavailable'});return route.continue();});
   const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));await page.goto(BASE+'exams.html');
   if(!nojs)await page.waitForFunction(()=>document.getElementById('exam-list').getAttribute('aria-busy')==='false');
   return {page,context};

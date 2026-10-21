@@ -8,6 +8,7 @@
 const fs = require("fs");
 const path = require("path");
 const rules = require("../programme.js");
+const uniboData = require("../unibo-data.js");
 
 const programme = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "content", "programme.json"), "utf8"));
 const cohort = rules.currentCohort(programme);
@@ -19,9 +20,8 @@ const sameName = (a, b) => simple(a).includes(simple(b)) || simple(b).includes(s
   simple(a).split("").sort().join("") === simple(b).split("").sort().join("");
 
 async function main() {
-  const response = await fetch(cohort.sources.timetableFeed);
-  if (!response.ok) throw new Error(`Timetable feed: HTTP ${response.status}`);
-  const feed = await response.json();
+  const {raw:feed,cachedAt}=await uniboData.requestOfficialTimetable(cohort.sources.timetableFeed);
+  if(cachedAt)throw new Error("Programme verification needs a fresh official timetable, not a cached copy");
 
   // Per module code in the feed: first/last class and teachers
   const byCode = {};

@@ -67,9 +67,10 @@ const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css
     await context.route(/unibo\.it/, (route) => {
       if (unavailable) return route.abort();
       if (route.request().url().includes("@@orario_reale_json")) return route.fulfill({ contentType: "application/json", body: JSON.stringify(timetable) });
-      if (route.request().url().endsWith("/exam-dates")) return route.fulfill({ contentType: "text/html", body: examsPage(exams) });
+      if (route.request().url().endsWith("/exam-dates")) return route.fulfill({ contentType: "text/html", body: exams.length?examsPage(exams):"<p>No scheduled exams</p>" });
       return route.abort();
     });
+    await context.route(/\/calendar\/(?:timetable|exams)\.json(?:\?|$)/,route=>route.fulfill({status:404,body:"No fixture snapshot"}));
     if (programmeUnavailable) await context.route("**/content/programme.json", (route) => route.fulfill({ status: 503, body: "Unavailable" }));
     const page = await context.newPage();
     page.on("pageerror", (error) => errors.push(error.message));

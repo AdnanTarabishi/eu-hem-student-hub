@@ -17,7 +17,8 @@ async function main() {
   assert.equal(sync.save(storage, "2026-27", old, new Date(now).toISOString()), true);
   assert.deepEqual(sync.read(storage, "2026-27", now).sessions, old);
   assert.equal(sync.read(storage, "2025-26", now), null);
-  assert.equal(sync.read(storage, "2026-27", now + 8 * 86400000), null);
+  assert.deepEqual(sync.read(storage, "2026-27", now + 8 * 86400000).sessions, old);
+  assert.equal(sync.read(storage, "2026-27", now + 91 * 86400000), null);
   assert.deepEqual(sync.roomChanges(old, updated).map(change => [change.before, change.after]),
     [[old[0].room, updated[0].room]]);
   assert.equal(sync.roomChanges(old, [{...updated[0], room: updated[0].room.toLowerCase()}]).length, 1);
@@ -61,5 +62,30 @@ async function main() {
   });
   assert.equal(cache.sourceMeta.cachedAt, "2026-10-11T20:00:00Z");
   console.log("  ok  Previously cached source is explicitly marked as cached");
+
+  const source="https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/timetable/@@orario_reale_json?anno=1&start=2026-09-01&end=2026-12-31&calendar_view=";
+  const windows=unibo.timetableRequestUrls(source).map(address=>new URL(address));
+  assert.equal(windows.length,4);
+  assert.equal(windows[0].searchParams.get("start"),"2026-09-01");
+  assert.equal(windows.at(-1).searchParams.get("end"),"2026-12-31");
+  for(let i=0;i<windows.length;i++){
+    const begin=Date.parse(windows[i].searchParams.get("start")),end=Date.parse(windows[i].searchParams.get("end"));
+    assert.ok(end>=begin&&end-begin<=30*86400000,"UniBo requests contain at most31inclusive days");
+    assert.equal(windows[i].searchParams.get("anno"),"1");
+    assert.equal(windows[i].searchParams.get("calendar_view"),"");
+    if(i)assert.equal(begin,Date.parse(windows[i-1].searchParams.get("end"))+86400000,"no missing or overlapping source dates");
+  }
+  let windowCalls=0;
+  const all=await unibo.requestOfficialTimetable(source,{attempts:1,fetcher:async address=>{
+    windowCalls++;
+    const date=new URL(address).searchParams.get("start");
+    return new Response(JSON.stringify([{extCode:"fictional-"+date,cod_modulo:"96498",start:date+"T09:00:00",end:date+"T11:00:00"}]));
+  }});
+  assert.equal(windowCalls,4);assert.equal(all.raw.length,4);assert.equal(all.sourceUrls.length,4);
+  await assert.rejects(unibo.requestOfficialTimetable(source,{attempts:1,fetcher:async address=>
+    new URL(address).searchParams.get("start")==="2026-10-02"?new Response("unavailable",{status:503}):new Response("[]")}),/503/,
+    "a later failed date window cannot be treated as a complete source refresh");
+  assert.throws(()=>unibo.timetableRequestUrls(source.replace("2026-12-31","2026-08-31")),/date range/);
+  console.log("  ok  Complete official timetable coverage uses bounded date windows and rejects partial refreshes");
 }
 main().catch(error=>{console.error(error);process.exitCode=1;});

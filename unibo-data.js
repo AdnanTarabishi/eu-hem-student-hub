@@ -37,10 +37,8 @@ function timetableClassroomsText(classrooms = []) {
   return classrooms.map(timetableClassroomText).filter(Boolean).join(" + ");
 }
 
-// The official UniBo endpoint may temporarily return 502/503/504 or throttle requests.
-// Retry transient errors with bounded backoff; never manufacture sessions on failure.
-// This reader is shared with the server-side .ics calendar builder.
-async function requestOfficialTimetable(url, options = {}) {
+// Both official sources use bounded requests and the same transient-error policy.
+async function requestOfficialPage(url, label, read, options = {}) {
   const attempts = options.attempts || 3;
   const delayMs = options.delayMs === undefined ? 500 : options.delayMs;
   const timeoutMs = options.timeoutMs || 15000;
@@ -53,32 +51,89 @@ async function requestOfficialTimetable(url, options = {}) {
       const request = { cache: "no-store" };
       if (typeof AbortSignal !== "undefined" && typeof AbortSignal.timeout === "function") {
         request.signal = AbortSignal.timeout(timeoutMs);
+        if(options.signal&&typeof AbortSignal.any==="function")request.signal=AbortSignal.any([request.signal,options.signal]);
       }
       const response = await fetcher(url, request);
       if (!response.ok) {
-        const error = new Error(`Timetable: HTTP ${response.status}`);
+        const error = new Error(`${label}: HTTP ${response.status}`);
         error.retryable = response.status === 408 || response.status === 429 || response.status >= 500;
         throw error;
       }
-      const raw = await response.json();
-      if (!Array.isArray(raw)) throw new Error("Timetable: invalid official response");
-      return {
-        raw,
-        // The service worker adds this only when it serves a previously cached response.
-        cachedAt: response.headers?.get("x-saved-at") || "",
-      };
+      return await read(response);
     } catch (error) {
       lastError = error;
-      if (error.retryable === false || attempt === attempts - 1) break;
+      if (options.signal?.aborted || error.retryable === false || attempt === attempts - 1) break;
       await pause(Math.min(delayMs * (2 ** attempt), 10000));
     }
   }
   throw lastError;
 }
 
+function oldestSavedAt(values) {
+  return values.filter(value=>value && Number.isFinite(Date.parse(value))).sort((a,b)=>Date.parse(a)-Date.parse(b))[0] || "";
+}
+
+// UniBo's timetable endpoint now needs a bounded date range. Longer ranges are
+// requested in <=31-day pieces; an incomplete set must never look like a full refresh.
+function timetableRequestUrls(url) {
+  const source=new URL(url),start=source.searchParams.get("start"),end=source.searchParams.get("end");
+  if(!start&&!end)return [source.href];
+  const valid=date=>/^\d{4}-\d{2}-\d{2}$/.test(date||"") && Number.isFinite(Date.parse(date)) && new Date(date+"T00:00:00Z").toISOString().slice(0,10)===date;
+  if(!valid(start)||!valid(end)||start>end||Date.parse(end)-Date.parse(start)>732*86400000)throw new Error("Timetable: invalid source date range");
+  const result=[];
+  for(let at=Date.parse(start+"T00:00:00Z"),last=Date.parse(end+"T00:00:00Z");at<=last;at+=31*86400000){
+    const next=new URL(source);
+    next.searchParams.set("start",new Date(at).toISOString().slice(0,10));
+    next.searchParams.set("end",new Date(Math.min(last,at+30*86400000)).toISOString().slice(0,10));
+    next.searchParams.set("calendar_view","");result.push(next.href);
+  }
+  return result;
+}
+
+async function requestOfficialTimetable(url, options = {}) {
+  const sourceUrls=timetableRequestUrls(url),rows=[],dates=[];
+  for(const source of sourceUrls){
+    const part=await requestOfficialPage(source,"Timetable",async response=>{
+      const raw=await response.json();
+      if(!Array.isArray(raw)||raw.some(s=>!s||typeof s.start!=="string"||typeof s.end!=="string"||!s.cod_modulo))throw new Error("Timetable: invalid official response");
+      return {raw,cachedAt:response.headers?.get("x-saved-at")||""};
+    },options);
+    rows.push(...part.raw);dates.push(part.cachedAt);
+  }
+  const raw=[...new Map(rows.map(s=>[[s.extCode||s.cod_modulo,s.start,s.end].join("|"),s])).values()];
+  return {raw,cachedAt:oldestSavedAt(dates),sourceUrls};
+}
+
+function publicSourceMeta(cachedAt="", extra={}) {
+  return {cachedAt,verifiedAt:cachedAt||new Date().toISOString(),sourceType:cachedAt?"cached":"live",...extra};
+}
+
+// Same-origin snapshots contain only public university records. Their verification
+// time is preserved; successfully downloading an old copy is not a live source check.
+async function publishedAcademicCopy(kind, source, options={}) {
+  const response=await (options.fetcher||fetch)(`calendar/${kind}.json`,{cache:"no-store",signal:AbortSignal.timeout(8000)});
+  if(!response.ok)throw new Error("Saved academic copy unavailable");
+  const snapshot=await response.json();
+  if(snapshot?.version!==1||snapshot.source!==String(source)||!Array.isArray(snapshot.records)||snapshot.records.length>5000||
+      !(snapshot.verifiedAt&&Number.isFinite(Date.parse(snapshot.verifiedAt)))&&snapshot.sourceType!=="calendar-copy")throw new Error("Invalid saved academic copy");
+  if(kind==="timetable"&&(!snapshot.records.length||snapshot.records.some(s=>!s.moduleCode||!/^\d{4}-\d{2}-\d{2}T/.test(s.start||"")||!s.end)))throw new Error("Invalid saved timetable");
+  if(kind==="exams"&&snapshot.records.some(e=>!Array.isArray(e.codes)||!/^\d{4}-\d{2}-\d{2}$/.test(e.dateKey||"")))throw new Error("Invalid saved exams");
+  const records=snapshot.records;
+  Object.defineProperty(records,"sourceMeta",{value:{cachedAt:snapshot.verifiedAt||"",verifiedAt:snapshot.verifiedAt||null,sourceType:snapshot.sourceType==="calendar-copy"?"calendar-copy":"published-copy"},enumerable:false});
+  return records;
+}
+
 // Every class in the feed includes the complete official classroom description.
-async function fetchTimetable(url, options) {
-  const { raw, cachedAt } = await requestOfficialTimetable(url, options);
+async function fetchTimetable(url, options = {}) {
+  let source;
+  const controller=typeof document!=="undefined"?new AbortController():null;
+  const timer=controller?setTimeout(()=>controller.abort(),9000):null;
+  try{source=await requestOfficialTimetable(url, {...options,...(controller?{signal:controller.signal}:{})});}
+  catch(error){
+    if(typeof document==="undefined"||options.fallback===false)throw error;
+    try{return await publishedAcademicCopy("timetable",url,options);}catch{throw error;}
+  }finally{if(timer)clearTimeout(timer);}
+  const {raw,cachedAt}=source;
   const sessions = raw
     .map((s) => {
       const classrooms = (s.aule || []).map(timetableClassroomRecord);
@@ -97,7 +152,7 @@ async function fetchTimetable(url, options) {
       };
     })
     .sort((a, b) => a.start.localeCompare(b.start));
-  Object.defineProperty(sessions, "sourceMeta", { value: { cachedAt }, enumerable: false });
+  Object.defineProperty(sessions, "sourceMeta", { value: publicSourceMeta(cachedAt), enumerable: false });
   return sessions;
 }
 
@@ -273,10 +328,53 @@ function mergeExamSittings(exams) {
   return result.sort((a, b) => (a.dateKey + a.time).localeCompare(b.dateKey + b.time));
 }
 
-async function fetchExams(url) {
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`Exams: HTTP ${response.status}`);
-  return parseExamsPage(await response.text());
+function nextExamPage(html, current, origin) {
+  let next="";
+  const parent=html.match(/<(?:li|span)\b[^>]*class=["'][^"']*\bnext\b[^"']*["'][^>]*>([\s\S]*?)<\/(?:li|span)>/i);
+  for(const match of html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)){
+    if(/\brel=["'][^"']*\bnext\b/i.test(match[1])||/\bclass=["'][^"']*\bnext\b/i.test(match[1])||/^\s*(?:Next|Successiv)/i.test(match[2].replace(/<[^>]*>/g,""))){next=(match[1].match(/\bhref=["']([^"']+)["']/i)||[])[1]||"";break;}
+  }
+  if(!next&&parent)next=(parent[1].match(/\bhref=["']([^"']+)["']/i)||[])[1]||"";
+  if(!next)return "";
+  const target=new URL(next.replace(/&amp;|&#38;/gi,"&"),current);
+  if(target.origin!==origin||target.pathname!==new URL(current).pathname||target.username||target.password)throw new Error("Exams: unsafe pagination source link");
+  target.hash="";return target.href;
+}
+
+async function requestOfficialExams(url,options={}) {
+  const origin=new URL(url).origin,pages=[],sourceUrls=[],dates=[],seen=new Set();let next=new URL(url).href;
+  while(next){
+    if(seen.has(next))throw new Error("Exams: pagination loop");
+    if(pages.length>=20)throw new Error("Exams: pagination page limit exceeded");
+    seen.add(next);
+    const part=await requestOfficialPage(next,"Exams",async response=>{
+      const html=await response.text();
+      if(!/<h3\b[^>]*role=["']tab["']/i.test(html)&&!/no (?:upcoming |scheduled )?exam(?: dates)?s?\b|nessun appello|non sono presenti appelli/i.test(html))throw new Error("Exams: unrecognised official response page");
+      const tables=[...html.matchAll(/<table\b[^>]*class=["'][^"']*\bsingle-item\b[^"']*["'][^>]*>([\s\S]*?)<\/table>/gi)];
+      for(const [,table] of tables){
+        const when=[...table.matchAll(/<th[^>]*>([\s\S]*?)<\/th>\s*<td[^>]*>([\s\S]*?)<\/td>/gi)].find(row=>row[1].replace(/<[^>]*>/g,"").trim().toLowerCase()==="when");
+        if(!when||!parseUniboDate(when[2].replace(/<[^>]*>/g," ").replace(/&nbsp;/g," ")))throw new Error("Exams: unrecognised date in a published sitting");
+      }
+      return {html,cachedAt:response.headers?.get("x-saved-at")||""};
+    },options);
+    pages.push(part.html);sourceUrls.push(next);dates.push(part.cachedAt);
+    next=nextExamPage(part.html,next,origin);
+  }
+  return {pages,sourceUrls,cachedAt:oldestSavedAt(dates)};
+}
+
+async function fetchExams(url,options={}) {
+  const controller=typeof document!=="undefined"?new AbortController():null;
+  const timer=controller?setTimeout(()=>controller.abort(),9000):null;
+  try{
+    const {pages,cachedAt}=await requestOfficialExams(url,{...options,...(controller?{signal:controller.signal}:{})});
+    const exams=mergeExamSittings(pages.flatMap(parseExamsPage));
+    Object.defineProperty(exams,"sourceMeta",{value:publicSourceMeta(cachedAt),enumerable:false});
+    return exams;
+  }catch(error){
+    if(typeof document==="undefined"||options.fallback===false)throw error;
+    try{return await publishedAcademicCopy("exams",url,options);}catch{throw error;}
+  }finally{if(timer)clearTimeout(timer);}
 }
 
 // ----- Matching to our courses (by official code) -----
@@ -524,5 +622,6 @@ if (typeof module !== "undefined") module.exports = {
   parseUniboDate, examPublishedDetails, mergeExamSittings,
   examSittingIdentity, examCalendarTimes,
   timetableClassroomRecord, timetableClassroomText, timetableClassroomsText,
-  requestOfficialTimetable, fetchTimetable,
+  requestOfficialTimetable, fetchTimetable, timetableRequestUrls,
+  requestOfficialExams, nextExamPage, publishedAcademicCopy,
 };

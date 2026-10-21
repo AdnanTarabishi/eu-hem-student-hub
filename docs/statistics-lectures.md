@@ -85,8 +85,9 @@ classes. A finished session's result is stored once, with up to 60 recent sessio
 Calculation grading states its rounding tolerance and derives worked solutions
 from the same parameters using the existing normal/t math. Interpretation text
 and rubrics are local self-assessment, without external AI calls. Stata outputs
-are synthetic educational examples; upcoming workshops stay globally upcoming.
-A learner can preview preparation or mark a workshop covered on their own device.
+are synthetic educational examples labelled as workshop preparation, without
+claiming that the course session is still in the future. A learner can preview
+preparation or mark a workshop covered on their own device.
 The regression example is explicitly a later-workshop preview.
 
 State is additive under `statistics` in the existing progress entry, so Notes

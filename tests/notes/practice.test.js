@@ -273,8 +273,39 @@ const rgbHex = colour => "#" + colour.match(/[\d.]+/g).slice(0, 3)
     }
     assert.equal((await page.locator("#quiz .quiz-score").innerText()).trim(), "100%");
 
-    // The separate FHEM timer/attempt store must survive its new answer-card presentation.
+    // Course labels and mock specifications follow the actual available session records.
+    const availableSessions = fhemPath.sessions.filter(session => session.status === "available" && session.topic);
+    const pendingSessions = fhemPath.sessions.filter(session => session.status !== "available");
+    await page.goto(base + `course.html?course=${courseId}`);
+    await page.locator(".hem-session-preview").waitFor();
+    assert.equal(await page.locator(".hem-session-preview .hem-session-card").count(), availableSessions.length);
+    assert.match(await page.locator(".hem-section-heading").allTextContents().then(items => items.join(" ")), new RegExp(`${availableSessions.length} sessions ready`));
+    assert.equal(await page.locator(".hem-upcoming-cluster").count(), pendingSessions.length ? 1 : 0);
+    if (pendingSessions.length) assert.match(await page.locator(".hem-upcoming-cluster").innerText(), new RegExp(`${pendingSessions.length} Hub guide`));
+
+    // Check displayed counts against a generated attempt, including newly available sessions.
     await page.goto(base + "fhem-exam.html");
+    await page.locator(".hem-exam-mode").first().waitFor();
+    const fullSpec = await page.locator(".hem-exam-mode").first().innerText();
+    assert.match(fullSpec, new RegExp(`${availableSessions.length * 3} MCQs`));
+    assert.match(fullSpec, new RegExp(`${availableSessions.length * 2} True / False`));
+    assert.match(await page.locator(".hem-exam-facts").innerText(), new RegExp(`${availableSessions.length} available Hub sessions`));
+    await page.getByRole("button", { name: /Start 90-minute mock/ }).click();
+    await page.locator(".hem-exam-question-card").waitFor();
+    const full = await page.evaluate(() => JSON.parse(localStorage.getItem("euhem-fhem-exam-v1")).active);
+    const fullQuestions = full.questionIds.map(id => bank.find(question => question.id === id));
+    assert.equal(fullQuestions.filter(question => question.type === "mcq").length, availableSessions.length * 3);
+    assert.equal(fullQuestions.filter(question => question.type === "true-false").length, availableSessions.length * 2);
+    assert.equal(fullQuestions.filter(question => question.type === "short-answer").length, Math.min(3, availableSessions.length));
+    assert.deepEqual([...new Set(fullQuestions.map(question => question.topic))].sort(), availableSessions.map(session => session.topic).sort());
+    await page.goto(base + "fhem-exam.html");
+    const quickSpec = await page.locator(".hem-exam-mode").nth(1).innerText();
+    assert.match(quickSpec, new RegExp(`${availableSessions.length * 2} MCQs`));
+    assert.match(quickSpec, new RegExp(`${availableSessions.length} True / False`));
+    console.log("PASS: FHEM current session counts, pending guide labels and displayed mock mix match an actual generated attempt.");
+
+    // The separate FHEM timer/attempt store must survive its new answer-card presentation.
+    page.once("dialog", dialog => dialog.accept()); // Replace this test's unanswered full attempt.
     await page.getByRole("button", { name: /Start quick drill/ }).click();
     await page.locator(".hem-exam-question-card").waitFor();
     let active = await page.evaluate(() => JSON.parse(localStorage.getItem("euhem-fhem-exam-v1")).active);

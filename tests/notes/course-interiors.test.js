@@ -32,6 +32,8 @@ const exam = `<h3 role="tab" aria-controls="e1"><a><span class="code">97177</spa
     await context.route(/^https?:\/\//, async route => {
       const u = new URL(route.request().url());
       if (u.hostname === '127.0.0.1') {
+        // These cases use fictional external feeds, never current production snapshots.
+        if (/\/calendar\/(timetable|exams)\.json$/.test(u.pathname)) return route.fulfill({status:503, body:'Test: published snapshots unavailable'});
         if (!calendar && u.pathname.includes('/calendar/')) return route.fulfill({status:503, body:'Test: calendar unavailable'});
         return route.continue();
       }
@@ -93,6 +95,28 @@ const exam = `<h3 role="tab" aria-controls="e1"><a><span class="code">97177</spa
     assert.match(await p.locator('.cw-resource-grid').innerText(),/no file or external link supplied/);
     assert.equal(await p.locator('.cw-resource-card a[href="#"]').count(),0);
     ok('Resources: pinned official links, source filters, saved-list integrity and honest reference-only entries.');
+    p = await open('course.html?course=fund-health-econ-management&tab=schedule'); await settled(p);
+    await p.evaluate(async () => {
+      const savedSessions = page.sessions.slice(), savedExams = page.exams.slice();
+      const sourceMeta = {sourceType:'published-copy',verifiedAt:'2026-10-07T07:00:00Z',cachedAt:'2026-10-07T07:00:00Z'};
+      Object.defineProperty(savedSessions,'sourceMeta',{value:sourceMeta});
+      Object.defineProperty(savedExams,'sourceMeta',{value:sourceMeta});
+      const originalTimetable = fetchTimetable, originalExams = fetchExams;
+      fetchTimetable = async () => savedSessions; fetchExams = async () => savedExams;
+      try { await loadUniboData(); }
+      finally { fetchTimetable = originalTimetable; fetchExams = originalExams; }
+    });
+    assert.equal(await p.evaluate(() => navigator.onLine),true);
+    assert.equal(await p.evaluate(() => page.timetableState),'copy');
+    assert.match(await p.locator('.cw-source').innerText(),/Published timetable copy.*7 Oct 2026/);
+    assert.doesNotMatch(await p.locator('.cw-source').innerText(),/University feed retrieved/);
+    assert.ok(await p.locator('.cw-session').count()>0,'a copied timetable remains usable');
+    await selectTab(p,'Exam');
+    assert.equal(await p.evaluate(() => page.examState),'copy');
+    assert.match(await p.locator('.cw-source').innerText(),/Published exam copy.*7 Oct 2026/);
+    assert.match(await p.locator('.cw-registration').innerText(),/not confirmed/);
+    assert.equal(await p.locator('.cw-exam-card').getByRole('button',{name:/Add exam/}).count(),0);
+    ok('Saved source metadata: dated copies remain visible while online without live, booking or export claims.');
     p = await open('course.html?course=fund-health-econ-management&tab=schedule',{timetable:null}); await settled(p);
     assert.match(await p.locator('.cw-empty').first().innerText(),/temporarily unavailable/);
     await selectTab(p,'Exam'); assert.equal(await p.locator('.cw-exam-card').count(),1);
