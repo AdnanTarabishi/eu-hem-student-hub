@@ -1,0 +1,61 @@
+name: Academic source probe
+on:
+  push:
+    branches: [codex/academic-source-probe]
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify the public official feeds
+        run: |
+          mkdir -p work/source-probe
+          node <<'JS'
+          const fs=require('node:fs');
+          const base='https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/';
+          const report={checkedAt:new Date().toISOString(),timetable:[],exams:[]};
+          async function get(url) {
+            for(let i=0;i<3;i++){
+              try {const r=await fetch(url,{signal:AbortSignal.timeout(25000),cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);return await r.text();}
+              catch(e){if(i===2)throw e;await new Promise(r=>setTimeout(r,1000*(i+1)));}
+            }
+          }
+          (async()=>{
+          try {const r=await fetch(base+'timetable/@@orario_reale_json?anno=1',{signal:AbortSignal.timeout(20000)});report.unbounded={status:r.status};}catch(e){report.unbounded={error:e.message};}
+          const all=[];
+          for(const [start,end] of [['2026-09-01','2026-09-30'],['2026-10-01','2026-10-31'],['2026-11-01','2026-11-30'],['2026-12-01','2026-12-31']]){
+            const u=new URL(base+'timetable/@@orario_reale_json?anno=1');u.searchParams.set('calendar_view','');u.searchParams.set('start',start);u.searchParams.set('end',end);
+            try{const raw=JSON.parse(await get(u));if(!Array.isArray(raw))throw Error('Not array');all.push(...raw);report.timetable.push({url:u.href,count:raw.length});}catch(e){report.timetable.push({url:u.href,error:e.message});}
+          }
+          let next=base+'exam-dates',page=0;const seen=new Set();
+          while(next&&page<10&&!seen.has(next)){
+            seen.add(next);try{
+              const html=await get(next);fs.writeFileSync('work/source-probe/exams-'+page+'.html',html);
+              report.exams.push({url:next,bytes:html.length,headings:(html.match(/<h3[^>]*role=["']tab["']/g)||[]).length});
+              const a=[...html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)].find(m=>/\brel=["'][^"']*next/i.test(m[1])||/\bclass=["'][^"']*next/i.test(m[1])||/^\s*(?:Next|Successiv)/i.test(m[2].replace(/<[^>]+>/g,'')));
+              const href=a&&a[1].match(/\bhref=["']([^"']+)["']/i)?.[1];next=href?new URL(href.replace(/&amp;/g,'&'),next).href:'';
+              if(next&&new URL(next).origin!==new URL(base).origin)throw Error('Cross origin pagination');
+              page++;
+            }catch(e){report.exams.push({url:next,error:e.message});break;}
+          }
+          const fields=['extCode','title','start','end','cod_modulo','time','aule','docente','teledidattica','note'];
+          const raw=[...new Map(all.map(s=>[s.cod_modulo+'|'+s.start+'|'+s.end, Object.fromEntries(fields.filter(k=>s[k]!==undefined).map(k=>[k,s[k]]))])).values()];
+          fs.writeFileSync('work/source-probe/timetable.json',JSON.stringify(raw,null,2));
+          fs.writeFileSync('work/source-probe/report.json',JSON.stringify(report,null,2));
+          console.log('ACADEMIC_PROBE_REPORT '+JSON.stringify(report));
+          console.log('ACADEMIC_PROBE_TIMETABLE '+JSON.stringify(raw));
+          if(!raw.length)process.exitCode=1;
+          })().catch(e=>{console.error(e);process.exitCode=1});
+          JS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: academic-official-source-probe
+          path: work/source-probe
+          retention-days: 7
