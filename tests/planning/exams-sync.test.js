@@ -135,6 +135,10 @@ test('the visible exam workspace identifies a dated cached source and refreshes 
     assert.match(checked, /2026|Oct|October|10-03|03\/10/i, 'the actual copy date is visible');
     assert.doesNotMatch(checked, /^Loaded 21 Oct/i, 'a cached response is never relabelled as a fresh current check');
     assert.equal(await page.locator('.exam-registration.is-open').count(),0,'a saved booking window is not a confirmed current registration opening');
+    assert.match(await page.locator('#exam-summary').innerText(),/Saved booking windows/i);
+    assert.doesNotMatch(await page.locator('#exam-summary').innerText(),/Registration open|days to register|Closes today/i);
+    assert.match(await page.locator('#open-registrations').innerText(),/saved booking window/i);
+    assert.doesNotMatch(await page.locator('#open-registrations').innerText(),/windows? open|Register on AlmaEsami/i);
     assert.equal(await page.locator('.exam-course-group[data-course="right-to-health"]').count(), 1);
     assert.equal(await page.locator('.exam-course-group[data-course="quant-methods"]').count(), 1, 'the second page contributes its distinct module');
     assert.ok(calls.some(url => new URL(url).searchParams.get('b_start:int') === '20'));
@@ -143,6 +147,7 @@ test('the visible exam workspace identifies a dated cached source and refreshes 
     cached = false; await retry.first().click();
     await page.waitForFunction(() => document.getElementById('exam-list')?.getAttribute('aria-busy') === 'false' && !/saved|cached|copy/i.test(document.getElementById('exam-checked').textContent));
     assert.match(await page.locator('#exam-checked').innerText(), /Loaded|Checked|retrieved/i);
+    assert.match(await page.locator('#exam-summary').innerText(),/Registration open/i,'fresh verification restores current booking labels');
     assert.equal(await page.locator('.exam-course-group[data-course="quant-methods"]').count(), 1);
     assert.deepEqual(errors, []); assert.deepEqual(forbidden, []);
   } finally {

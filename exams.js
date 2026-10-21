@@ -282,11 +282,12 @@ function renderExamHighlight(exams, today) {
 function renderOpenRegistrations(exams, today) {
   const target = document.getElementById("open-registrations"); target.replaceChildren();
   if (!exams.length) return;
+  const copied=savedExamSource();
   const box = el("details", "exam-open-bookings");
-  box.appendChild(el("summary", null, `${exams.length} booking window${exams.length === 1 ? "" : "s"} open · nearest deadline ${fullDate(exams[0].registrationCloses)}`));
+  box.appendChild(el("summary", null, copied?`${exams.length} saved booking window${exams.length === 1 ? "" : "s"} · confirm on AlmaEsami`:`${exams.length} booking window${exams.length === 1 ? "" : "s"} open · nearest deadline ${fullDate(exams[0].registrationCloses)}`));
   const list = el("div", "exam-booking-list");
   for (const exam of exams) {
-    const row = el("div"); row.append(el("span", null, `${exam.title} · closes ${fullDate(exam.registrationCloses)}`), link("Register on AlmaEsami", ALMAESAMI_URL, "", true)); list.appendChild(row);
+    const row = el("div"); row.append(el("span", null, `${exam.title} · ${copied?"saved closing date":"closes"} ${fullDate(exam.registrationCloses)}`), link(copied?"Check AlmaEsami":"Register on AlmaEsami", ALMAESAMI_URL, "", true)); list.appendChild(row);
   }
   box.appendChild(list); target.appendChild(box);
 }
@@ -354,10 +355,11 @@ function render() {
   const open=upcoming.filter(exam=>Planner.registration(exam,today).key==="open").sort((a,b)=>a.registrationCloses.localeCompare(b.registrationCloses)||ExamWorkspace.sort(a,b));
   const deadline=open[0]?.registrationCloses;
   const admin=upcoming.filter(exam=>exam.administrative).length;
+  const copied=savedExamSource();
   Planner.summary(document.getElementById("exam-summary"),[
     {label:"Upcoming dates",value:upcoming.length,note:`${ExamWorkspace.groups(upcoming).length} courses${admin?` · ${admin} administrative`:""}`},
-    {label:"Registration open",value:open.length,note:"Check and book on AlmaEsami"},
-    {label:"Next deadline",value:deadline?fullDate(deadline):"—",note:deadline?(deadline===today?"Closes today · check the time":`${daysBetween(today,deadline)} days to register`):"No open booking windows"},
+    {label:copied?"Saved booking windows":"Registration open",value:open.length,note:copied?"Saved dates · confirm availability on AlmaEsami":"Check and book on AlmaEsami"},
+    {label:copied?"Saved closing date":"Next deadline",value:deadline?fullDate(deadline):"—",note:copied?"Confirm current dates on AlmaEsami":deadline?(deadline===today?"Closes today · check the time":`${daysBetween(today,deadline)} days to register`):"No open booking windows"},
   ]);
   renderExamHighlight(upcoming,today); renderOpenRegistrations(open,today);
   const monthView=examsPage.view==="month", tableView=examsPage.view==="table";
