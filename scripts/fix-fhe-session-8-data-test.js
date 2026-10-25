@@ -1,3 +1,4 @@
+// One-time test compatibility adjustment for the authored Session 8 guide.
 const fs = require('node:fs');
 const path = require('node:path');
 const file = path.join(__dirname, '..', 'tests', 'fhe-session-8', 'data.test.js');
