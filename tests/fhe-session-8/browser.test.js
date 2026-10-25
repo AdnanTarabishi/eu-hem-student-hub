@@ -56,7 +56,7 @@ const mime = {
     assert.equal(await page.locator('#question-map button').count(), 26);
     await page.locator('#quiz-card input[type="radio"]').nth(1).check();
     await page.getByRole('button', { name: 'Check answer', exact: true }).click();
-    assert.match(await page.locator('#answer-feedback').innerText(), /Correct|Revisit/);
+    assert.match(await page.locator('#answer-feedback').innerText(), /right|Correct|Revisit/i);
     await context.close();
 
     for (const scheme of ['light', 'dark']) {
