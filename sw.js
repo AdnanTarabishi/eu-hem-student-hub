@@ -9,7 +9,7 @@
 //   "Update available · Reload", and old saved copies are deleted.
 // Nothing personal is stored here: only public site files and public data.
 
-const VERSION = "6a8a4f06";
+const VERSION = "2adad490";
 const SITE_CACHE = `site-${VERSION}`;
 const DATA_CACHE = "data"; // kept across versions, so offline data survives an update
 
@@ -50,6 +50,7 @@ const SITE_FILES = [
   "quant-methods.css", "quant-methods.js", "health-econ-management.css", "health-econ-management.js", "fhem-exam.css", "fhem-exam.js", "fhem-exam-v2.css", "fhem-exam-style-bank.js", "fhem-exam-v2.js",
   "fhe-session-7.html", "fhe-session-7.css", "fhe-session-7.js", "fhe-session-7-runtime.js", "fhe-session-7-page.js", "fhe-session-7-links.js",
   "fhe-session-7-advanced.css", "fhe-session-7-advanced.js",
+  "fhe-session-8.css", "fhe-session-8.js", "fhe-session-8-exam.js",
   "statistics.html", "statistics.css", "statistics.js", "statistics-study.js", "statistics-calculations.js",
   "calendar-page.css", "home-roadmap-preview.js", "home-roadmap-preview.css",
   "./", "index.html", "home.css", "studyplan.html", "timetable.html", "exams.html", "calendar.html",

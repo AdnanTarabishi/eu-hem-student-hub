@@ -1,0 +1,334 @@
+<!-- Original student-written explanations based on Session 8. Official slides and textbook figures are not reproduced. -->
+<div class="section-intro">
+  <div>
+    <p class="eyebrow">01 / The bridge from indemnity</p>
+    <h2>Insurance stops being a simple contingent claim when “the right treatment” is not known in advance.</h2>
+  </div>
+  <p>A fixed indemnity works cleanly when one event implies one known loss. Healthcare insurance must instead finance an uncertain package of clinically appropriate care after the patient becomes ill.</p>
+</div>
+
+<div class="grid3">
+  <article class="card"><span class="pill">SIMPLE BENCHMARK</span><h3>One disease</h3><p>The contingency is easy to define and price.</p></article>
+  <article class="card"><span class="pill">SIMPLE BENCHMARK</span><h3>One treatment</h3><p>The expenditure required in the sick state is predictable.</p></article>
+  <article class="card"><span class="pill">MODERN CARE</span><h3>Many feasible paths</h3><p>Diagnosis, severity, comorbidity and preferences change what care is appropriate.</p></article>
+</div>
+
+<div class="mh-pathway" aria-label="From indemnity to moral hazard">
+  <div><span>Fixed contingency</span><strong>Predetermined indemnity</strong></div><b aria-hidden="true">→</b>
+  <div><span>Clinical complexity</span><strong>Uncertain appropriate treatment</strong></div><b aria-hidden="true">→</b>
+  <div><span>Insurance flexibility</span><strong>Actual use may diverge from appropriate care</strong></div>
+</div>
+
+<div class="note"><strong>Core definition for this session:</strong> moral hazard is not simply “bad character.” It is a change in behaviour or utilisation caused by insurance protection, so expected loss becomes larger than it would have been under undistorted incentives.</div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">02 / Expected loss</p><h2>Insurance can act on the probability of illness, the cost after illness, or both.</h2></div>
+</div>
+
+<article class="card mh-equation-card">
+  <div class="formula">E[L] = p(e<sub>P</sub>) × L(e<sub>L</sub>)</div>
+  <div class="grid2">
+    <div><span class="pill">PREVENTION MARGIN</span><h3>e<sub>P</sub> changes p</h3><p>Vaccination, monitoring and preventive behaviour affect how likely the insured event is.</p></div>
+    <div><span class="pill">LOSS-REDUCTION MARGIN</span><h3>e<sub>L</sub> changes L</h3><p>Treatment intensity, substitution toward lower-cost alternatives and recovery effort affect the size of the realised loss.</p></div>
+  </div>
+</article>
+
+<div class="section-intro">
+  <div><p class="eyebrow">03 / Timing</p><h2>Ex-ante and ex-post moral hazard alter different parts of expected loss.</h2></div>
+</div>
+
+<div class="grid2 mh-timing-grid">
+  <article class="card"><span class="pill">BEFORE THE EVENT</span><h3>Ex-ante moral hazard</h3><p>Insurance weakens prevention and raises the probability of the event. Think of skipped preventive checks or vaccination.</p><div class="formula small-formula">e<sub>P</sub> ↓ ⇒ p(e<sub>P</sub>) ↑</div></article>
+  <article class="card"><span class="pill">AFTER THE EVENT</span><h3>Ex-post moral hazard</h3><p>Once sick, the insured uses a more costly recovery path or consumes care with positive private benefit but cost above that benefit.</p><div class="formula small-formula">e<sub>L</sub> ↓ ⇒ L(e<sub>L</sub>) ↑</div></article>
+</div>
+
+<div class="note"><strong>Exam distinction:</strong> adverse selection changes who buys which contract before risk is realised; moral hazard changes behaviour or care use because coverage changes incentives.</div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">04 / Standard FFS insurance</p><h2>Three design features reinforce one another.</h2></div>
+</div>
+
+<div class="mh-triad">
+  <article><span>01</span><strong>Providers paid fee for service</strong><small>More services generate more revenue.</small></article>
+  <article><span>02</span><strong>Low patient price at use</strong><small>Insurance reduces out-of-pocket cost per unit.</small></article>
+  <article><span>03</span><strong>Broad provider choice</strong><small>Patients can select providers with limited plan control.</small></article>
+</div>
+
+<p>The patient and provider may jointly favour additional care: the patient receives another service at a subsidised price, while the FFS provider receives additional payment. Once utilisation responds to coverage, the benchmark result that fair full insurance is first best no longer generally holds.</p>
+
+<div class="section-intro">
+  <div><p class="eyebrow">05 / The demand diagram</p><h2>Full insurance can push consumption beyond the quantity whose marginal benefit covers marginal cost.</h2></div>
+</div>
+
+<article class="card mh-demand-figure">
+  <svg viewBox="0 0 720 390" role="img" aria-labelledby="mh-demand-title mh-demand-desc">
+    <title id="mh-demand-title">Original diagram of moral hazard under full insurance</title>
+    <desc id="mh-demand-desc">A downward-sloping demand curve crosses marginal cost at the efficient quantity. A zero patient price leads to greater use and a triangular deadweight loss.</desc>
+    <path d="M80 330V42M80 330H660" stroke="currentColor" stroke-width="2" opacity=".55"/>
+    <path d="M105 75L610 330" stroke="#527b6a" stroke-width="4"/>
+    <path d="M80 190H650" stroke="#6f5a9d" stroke-width="3"/>
+    <path d="M80 328H650" stroke="#d06d4f" stroke-width="3" stroke-dasharray="7 6"/>
+    <path d="M333 190V330M610 330V330" stroke="currentColor" opacity=".35" stroke-dasharray="5 5"/>
+    <path d="M333 190L610 330L333 330Z" fill="rgba(208,109,79,.22)" stroke="#d06d4f" stroke-width="2"/>
+    <circle cx="333" cy="190" r="7" fill="#6f5a9d"/><circle cx="610" cy="330" r="7" fill="#d06d4f"/>
+    <text x="340" y="178" fill="currentColor" font-size="15">Efficient Q*</text>
+    <text x="535" y="315" fill="currentColor" font-size="15">Full-insurance QF</text>
+    <text x="422" y="270" fill="#b85a3d" font-size="15">DWL</text>
+    <text x="540" y="95" fill="#527b6a" font-size="15">Marginal benefit / demand</text>
+    <text x="500" y="180" fill="#6f5a9d" font-size="15">Marginal cost</text>
+    <text x="485" y="355" fill="#d06d4f" font-size="15">Patient price = 0</text>
+    <text x="25" y="50" fill="currentColor" font-size="14">Price / benefit</text><text x="610" y="372" fill="currentColor" font-size="14">Medical care</text>
+  </svg>
+  <p class="small muted">Original Student Hub illustration. The triangle represents services for which social marginal cost exceeds the consumer's marginal benefit.</p>
+</article>
+
+<div class="grid2">
+  <article class="card"><h3>Without insurance</h3><p>The patient pays the marginal cost and stops at Q*, where marginal benefit equals marginal cost.</p></article>
+  <article class="card"><h3>With full insurance</h3><p>The private marginal price falls toward zero. The patient continues while marginal benefit is positive, even when it is below the resource cost.</p></article>
+</div>
+
+<div class="note"><strong>Two determinants of moral hazard:</strong> the size of the price distortion created by insurance and the price responsiveness (elasticity) of demand.</div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">06 / Time inconsistency and mimicking</p><h2>The coverage people want before illness can differ from the care they choose after illness.</h2></div>
+</div>
+
+<div class="mh-timeline">
+  <div><span>EX ANTE</span><strong>Buy broad coverage at a premium based on expected appropriate care.</strong></div>
+  <b aria-hidden="true">→</b>
+  <div><span>HEALTH SHOCK</span><strong>Severity and treatment need are imperfectly observed by the insurer.</strong></div>
+  <b aria-hidden="true">→</b>
+  <div><span>EX POST</span><strong>Choose any covered care with positive private marginal benefit.</strong></div>
+</div>
+
+<p>If a mildly ill person can consume the high-intensity treatment intended for a more severe state, expected claims rise. The actuarially fair premium calculated after this behavioural response is therefore higher than the premium based only on first-best treatment levels.</p>
+
+<div class="section-intro">
+  <div><p class="eyebrow">07 / Coinsurance and deadweight loss</p><h2>A patient share moves the private price closer to the social marginal cost.</h2></div>
+</div>
+
+<div class="grid3">
+  <article class="card"><span class="pill">k = 1</span><h3>No insurance</h3><p>The patient pays the whole bill. Risk protection is absent, but the price signal is undistorted.</p></article>
+  <article class="card"><span class="pill">0 &lt; k &lt; 1</span><h3>Partial coverage</h3><p>The patient pays fraction k and the insurer pays 1−k. Use is higher than under full price but lower than under full coverage.</p></article>
+  <article class="card"><span class="pill">k = 0</span><h3>Full coverage</h3><p>The point-of-use price is zero, maximising risk protection and the incentive distortion.</p></article>
+</div>
+
+<div class="formula">Patient price = kP &nbsp;&nbsp;·&nbsp;&nbsp; Insurer share = (1−k)P</div>
+
+<p>Increasing k makes insurance less generous. Utilisation and insurer expenditure fall, and the deadweight-loss triangle generally shrinks. But the patient bears more financial risk.</p>
+
+<div class="section-intro">
+  <div><p class="eyebrow">08 / Second best</p><h2>The optimal contract balances two costs that move in opposite directions.</h2></div>
+</div>
+
+<div class="mh-tradeoff">
+  <article><span>More generous coverage</span><strong>↓ Cost of risk bearing</strong><small>Out-of-pocket expenditure is more predictable.</small></article>
+  <div class="mh-balance" aria-hidden="true">⇄</div>
+  <article><span>More generous coverage</span><strong>↑ Cost of moral hazard</strong><small>Subsidised use increases and resources can be misallocated.</small></article>
+</div>
+
+<div class="note"><strong>Second-best result:</strong> when moral hazard is material, optimal coverage is generally less than full. “Less than full” does not mean “no insurance”; it means accepting some patient exposure to preserve incentives.</div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">09 / Demand-side commitment devices</p><h2>Enrollees can prefer restrictions before they know whether they will need care.</h2></div>
+</div>
+
+<div class="grid3">
+  <article class="card"><span class="badge">%</span><h3>Coinsurance</h3><p>The patient pays a fraction of every covered bill.</p></article>
+  <article class="card"><span class="badge">€</span><h3>Copayment</h3><p>The patient pays a fixed amount for each unit or episode.</p></article>
+  <article class="card"><span class="badge">D</span><h3>Deductible</h3><p>The patient pays initial expenditure before coverage begins.</p></article>
+</div>
+
+<p>An alternative is a direct quantity restriction. Both approaches reduce moral hazard at a cost: greater financial exposure under cost sharing, or a greater risk of not receiving optimal care under quantity constraints.</p>
+
+<div class="section-intro">
+  <div><p class="eyebrow">10 / Price distortion</p><h2>The same clinical service can generate very different welfare loss under different copayments.</h2></div>
+</div>
+
+<div class="mh-rule-grid">
+  <article class="card"><span class="pill">SMALL PRICE GAP</span><h3>Patient price close to marginal cost</h3><p>Little extra utilisation and a small deadweight-loss area, but weaker risk protection.</p></article>
+  <article class="card"><span class="pill">LARGE PRICE GAP</span><h3>Patient price far below marginal cost</h3><p>More extra utilisation and a larger potential welfare loss, but stronger financial protection.</p></article>
+</div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">11 / Elasticity</p><h2>Price-responsive demand makes a given price subsidy more distortionary.</h2></div>
+</div>
+
+<div class="grid2">
+  <article class="card"><h3>Inelastic service</h3><p>Quantity changes little when the patient price falls. The utilisation distortion and DWL are relatively small, so more complete coverage is easier to justify.</p></article>
+  <article class="card"><h3>Elastic service</h3><p>Quantity changes strongly when the price falls. The utilisation distortion is larger, so the optimal patient share is generally higher.</p></article>
+</div>
+
+<div class="formula">More elastic demand ⇒ higher optimal coinsurance c*</div>
+<div class="formula">More inelastic demand ⇒ more complete optimal coverage</div>
+
+<div class="note"><strong>Do not overgeneralise:</strong> observed elasticity may reflect poor information rather than low clinical value. This is why the lecture later challenges uniform cost-sharing rules.</div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">12 / Interrelated demand</p><h2>Using more of one service can reduce—or increase—the use of another covered service.</h2></div>
+</div>
+
+<div class="grid2">
+  <article class="card"><span class="pill">SUBSTITUTES</span><h3>Offset effect</h3><p>If service A replaces an overused service B, generous coverage of A can create an efficiency gain through lower use of B.</p><div class="formula small-formula">c**<sub>sub</sub> &lt; c*</div></article>
+  <article class="card"><span class="pill">COMPLEMENTS</span><h3>Reinforcement effect</h3><p>If A triggers additional use of B, generous coverage of A can magnify total expenditure and distortion.</p><div class="formula small-formula">c**<sub>comp</sub> &gt; c*</div></article>
+</div>
+
+<div class="formula">c**<sub>sub</sub> &lt; c* &lt; c**<sub>comp</sub></div>
+
+<p>The same service can be a substitute in one health state and a complement in another. Physical therapy can replace pain medication in some chronic conditions but complement surgery during rehabilitation. A simple service-level copayment cannot fully encode this context.</p>
+
+<div class="section-intro">
+  <div><p class="eyebrow">13 / Limits of the welfare-loss argument</p><h2>The demand curve is an imperfect measure of patient value in healthcare.</h2></div>
+</div>
+
+<div class="grid3">
+  <article class="card"><h3>Information</h3><p>Patients may not know the true expected benefit of a test, drug or prevention programme.</p></article>
+  <article class="card"><h3>Agency</h3><p>Patients may delegate treatment decisions to providers, so observed demand is partly supplier shaped.</p></article>
+  <article class="card"><h3>Behaviour</h3><p>Fear, anxiety and present bias can separate willingness to pay from clinical value.</p></article>
+</div>
+
+<p>The traditional DWL calculation assumes that the observed demand curve reveals marginal utility. That assumption becomes fragile when patients are poorly informed and providers influence utilisation.</p>
+
+<div class="section-intro">
+  <div><p class="eyebrow">14 / Preventive care and VBID</p><h2>High elasticity does not automatically mean low value.</h2></div>
+</div>
+
+<div class="mh-vbid">
+  <div><span>Observed fact</span><strong>Preventive care can be highly price responsive.</strong></div>
+  <b aria-hidden="true">≠</b>
+  <div><span>Incorrect shortcut</span><strong>Therefore prevention should face high cost sharing.</strong></div>
+  <b aria-hidden="true">→</b>
+  <div><span>Value-based design</span><strong>Lower or subsidise cost sharing for high-value care.</strong></div>
+</div>
+
+<p><strong>Value-Based Insurance Design (VBID)</strong> sets patient prices according to expected clinical value rather than applying the same cost-sharing rule to every service. In some cases, the welfare-improving patient price can be zero or even negative through a subsidy.</p>
+
+<div class="section-intro">
+  <div><p class="eyebrow">15 / Where is the waste?</p><h2>Demand-side and provider-side theories imply different policy targets.</h2></div>
+</div>
+
+<div class="grid2">
+  <article class="card"><span class="pill">TRADITIONAL VIEW</span><h3>Patients demand too much</h3><p>Comprehensive coverage makes users insensitive to price.</p><p><strong>Policy:</strong> increase patient cost sharing.</p></article>
+  <article class="card"><span class="pill">ALTERNATIVE VIEW</span><h3>Providers deliver low-value care</h3><p>The problem is not simply patient volume but production of services with limited health value.</p><p><strong>Policy:</strong> redesign payment, review utilisation and reward value.</p></article>
+</div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">16 / Supply-side cost sharing</p><h2>Managed care shifts part of the constraint from the patient to the delivery system.</h2></div>
+</div>
+
+<p>Managed-care plans integrate insurance, provider networks and payment mechanisms. A typical managed plan limits provider choice and places some financial or organisational responsibility for resource use on providers.</p>
+
+<div class="grid3">
+  <article class="card"><h3>Network restriction</h3><p>Coverage terms steer patients toward contracted providers.</p></article>
+  <article class="card"><h3>Provider financial risk</h3><p>Payment is less purely volume based and can expose providers to the cost of additional care.</p></article>
+  <article class="card"><h3>Utilisation management</h3><p>The plan reviews appropriateness or requires authorisation before selected services.</p></article>
+</div>
+
+<div class="note"><strong>Different risk:</strong> demand-side cost sharing exposes patients mainly to financial risk; supply-side restrictions expose them mainly to the risk that useful care is delayed or denied because it is judged not cost-effective.</div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">17 / Heterogeneous need</p><h2>One copayment or one quantity cap cannot perfectly treat moderately and seriously ill patients.</h2></div>
+</div>
+
+<div class="mh-patient-types">
+  <article><span>M</span><div><strong>Moderately ill</strong><small>Lower marginal benefit and lower first-best quantity.</small></div></article>
+  <article><span>S</span><div><strong>Seriously ill</strong><small>Higher marginal benefit and higher first-best quantity.</small></div></article>
+</div>
+
+<p>If the insurer cannot distinguish the two types, a common copayment reduces use for both. A common quantity limit can deliver the correct total amount on average while giving too much to M and too little to S. Neither a pure demand-side rule nor a pure supply-side rule guarantees the first best for every patient.</p>
+
+<div class="note"><strong>Combination logic:</strong> a small copayment can deter low-value use by M before it deters high-value use by S. That screening effect can allow a higher quantity limit for patients who continue to demand care. Price and quantity instruments can therefore outperform either instrument alone.</div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">18 / How plans control cost and quality</p><h2>Managed care uses several mechanisms, not one single payment rule.</h2></div>
+</div>
+
+<ol class="mh-mechanism-list">
+  <li><span>01</span><div><strong>Selective contracting</strong><p>Negotiate prices and include selected hospitals and physicians in the network.</p></div></li>
+  <li><span>02</span><div><strong>Quality assurance</strong><p>Use accreditation and performance standards.</p></div></li>
+  <li><span>03</span><div><strong>Utilisation review</strong><p>Assess whether provider practices and requested services are appropriate.</p></div></li>
+  <li><span>04</span><div><strong>Gatekeeping and second opinions</strong><p>Require referral or additional review before selected specialist care.</p></div></li>
+</ol>
+
+<div class="section-intro">
+  <div><p class="eyebrow">19 / Organisational structure</p><h2>Network restriction and gatekeeping generate four familiar plan forms.</h2></div>
+</div>
+
+<div class="table-scroll">
+  <table class="mh-plan-table">
+    <thead><tr><th scope="col">Plan</th><th scope="col">Provider network</th><th scope="col">Gatekeeper</th><th scope="col">Patient choice / cost sharing</th><th scope="col">Relative restriction</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Standard FFS</th><td>No required network</td><td>No</td><td>Broad choice; payment usually tied to service volume</td><td>Least restrictive</td></tr>
+      <tr><th scope="row">PPO</th><td>Yes</td><td>No</td><td>Lower cost sharing in network; higher out of network</td><td>Moderate</td></tr>
+      <tr><th scope="row">POS</th><td>Two-tier network design</td><td>Yes for in-network terms</td><td>Combines PPO tiers with HMO-style gatekeeping</td><td>Moderate–high</td></tr>
+      <tr><th scope="row">HMO</th><td>Care generally through plan network</td><td>Usually yes</td><td>Comprehensive care and relatively low OOP, but limited choice</td><td>Most restrictive</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">20 / Managed plans as commitment devices</p><h2>Choosing a plan means choosing coverage, a provider network and provider incentives together.</h2></div>
+</div>
+
+<div class="mh-commitment-flow">
+  <div><span>At enrolment</span><strong>Consumer anticipates future time inconsistency</strong></div><b aria-hidden="true">→</b>
+  <div><span>Plan choice</span><strong>Selects network and payment rules in advance</strong></div><b aria-hidden="true">→</b>
+  <div><span>When sick</span><strong>Those rules constrain low-value additional use</strong></div>
+</div>
+
+<p>A consumer may rationally prefer an MCO ex ante even though, once sick, the same consumer would prefer unrestricted access. Precommitment can raise expected utility by lowering the premium and moderating moral hazard.</p>
+
+<div class="section-intro">
+  <div><p class="eyebrow">21 / Empirical evidence in the lecture</p><h2>Managed care can lower expenditure without necessarily lowering measured utilisation.</h2></div>
+</div>
+
+<div class="grid3 mh-evidence-grid">
+  <article class="card"><span class="pill">CUTLER &amp; SHEINER</span><h3>Spending growth</h3><p>The lecture reports that a 10-percentage-point increase in HMO enrolment was associated with 0.5% lower growth in hospital spending.</p></article>
+  <article class="card"><span class="pill">GLIED REVIEW</span><h3>Expenditure</h3><p>The review reported no clear lower utilisation rate, while MCO expenditure was 10–15% lower.</p></article>
+  <article class="card"><span class="pill">AMI / IHD STUDY</span><h3>Prices and quality</h3><p>Similar treatment patterns and little measured quality difference accompanied lower costs, mainly through lower negotiated prices per service.</p></article>
+</div>
+
+<div class="note"><strong>Interpretation:</strong> lower expenditure can come from lower negotiated prices, lower quantities through review, lower quality, or slower adoption of technology. Expenditure alone does not identify which mechanism is operating.</div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">22 / Innovation and long-run welfare</p><h2>Cost containment today can affect technology and quality tomorrow.</h2></div>
+</div>
+
+<div class="grid2">
+  <article class="card"><h3>Potential gain</h3><p>Slower adoption can prevent diffusion of expensive technologies with limited value and reduce wasteful price competition.</p></article>
+  <article class="card"><h3>Potential loss</h3><p>Lower profitability and weaker patient-centred competition can delay valuable innovation and forego future health improvements.</p></article>
+</div>
+
+<p>The concluding policy problem is therefore multidimensional: reduce moral hazard and reallocate surplus without sacrificing appropriate care, quality or socially valuable innovation.</p>
+
+<div class="section-intro">
+  <div><p class="eyebrow">EXAM SYNTHESIS</p><h2>Use this reasoning sequence in MCQs, binary traps and open policy questions.</h2></div>
+</div>
+
+<div class="mh-exam-chain">
+  <div><span>1</span><strong>Identify the information and incentive problem.</strong><small>Ex-ante MH, ex-post MH, provider incentive or selection?</small></div>
+  <div><span>2</span><strong>Locate the distorted margin.</strong><small>Probability p, loss L, patient price, service quantity or provider choice?</small></div>
+  <div><span>3</span><strong>Name the instrument.</strong><small>Copay, coinsurance, deductible, quantity cap, payment reform or managed-care control?</small></div>
+  <div><span>4</span><strong>State the intended mechanism.</strong><small>How does the instrument change behaviour, utilisation, price or plan design?</small></div>
+  <div><span>5</span><strong>Discuss the trade-off.</strong><small>Risk protection, access, equity, quality, innovation and administrative burden.</small></div>
+  <div><span>6</span><strong>Recommend a targeted mix.</strong><small>Avoid treating all services and all patients as identical.</small></div>
+</div>
+
+<div class="note"><strong>Common exam trap:</strong> “more utilisation with insurance” is evidence consistent with moral hazard, but it is not by itself proof of waste. Additional insured care may have high value, may substitute for other expenditure, or may reflect provider influence and unmet need.</div>
+
+<div class="section-intro">
+  <div><p class="eyebrow">5-MINUTE REVIEW</p><h2>The ten distinctions to retain.</h2></div>
+</div>
+
+<div class="mh-quick-review">
+  <div>Healthcare insurance covers uncertain appropriate treatment, not merely a fixed event loss.</div>
+  <div>Ex-ante moral hazard changes event probability; ex-post moral hazard changes loss after the event.</div>
+  <div>Full coverage can drive the private marginal price below social marginal cost and create overuse.</div>
+  <div>The extent of moral hazard depends on price distortion and demand elasticity.</div>
+  <div>More elastic demand generally calls for higher optimal coinsurance; inelastic services can be covered more fully.</div>
+  <div>Cost sharing preserves incentives but weakens risk protection and may reduce high-value care.</div>
+  <div>Substitution, complementarity, imperfect information and physician agency limit simple service-level rules.</div>
+  <div>VBID lowers patient prices for high-value care rather than treating all utilisation as equally wasteful.</div>
+  <div>Managed care combines networks, provider incentives, utilisation review and gatekeeping.</div>
+  <div>Lower MCO expenditure may reflect lower prices, quantities, quality or technology diffusion; welfare requires more than a spending comparison.</div>
+</div>

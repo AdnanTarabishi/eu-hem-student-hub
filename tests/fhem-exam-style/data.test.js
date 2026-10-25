@@ -7,12 +7,14 @@ const root = path.join(__dirname, '..', '..');
 const source = fs.readFileSync(path.join(root, 'fhem-exam-style-bank.js'), 'utf8');
 const context = { window: {} };
 vm.runInNewContext(source, context, { filename: 'fhem-exam-style-bank.js' });
+const session8 = fs.readFileSync(path.join(root, 'fhe-session-8-exam.js'), 'utf8');
+vm.runInNewContext(session8, context, { filename: 'fhe-session-8-exam.js' });
 const bank = context.window.FHEMExamStyleBank;
 assert.ok(bank, 'exam-style bank should load');
 assert.equal(bank.schemaVersion, 1);
-assert.equal(bank.mcqs.length, 24);
-assert.equal(bank.binaries.length, 12);
-assert.equal(bank.opens.length, 8);
+assert.equal(bank.mcqs.length, 30);
+assert.equal(bank.binaries.length, 15);
+assert.equal(bank.opens.length, 10);
 assert.equal(bank.fixedMocks.length, 2);
 assert.equal(bank.format.rawMax, 106);
 
@@ -54,4 +56,4 @@ const availableTopics = new Set(pathData.sessions.filter((session) => session.st
 for (const question of [...bank.mcqs, ...bank.binaries]) assert.ok(availableTopics.has(question.topic), `${question.id}: topic is available`);
 for (const question of bank.opens) for (const topic of question.relatedTopics) assert.ok(availableTopics.has(topic), `${question.id}: related topic ${topic} is available`);
 
-console.log('PASS: 24 MCQs, 12 binary traps, 8 open cases, two fixed 6+2+1 mocks and 60-point rubrics validate.');
+console.log('PASS: 30 MCQs, 15 binary traps, 10 open cases, two fixed 6+2+1 mocks and 60-point rubrics validate.');

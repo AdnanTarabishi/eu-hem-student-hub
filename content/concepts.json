@@ -18,20 +18,18 @@
   {
     "id": "concept.moral-hazard",
     "term": "Moral hazard",
-    "explanation": "When being insured changes behaviour: people use more care, or take less care of their health, because insurance lowers the price they face.",
+    "explanation": "When insurance protection changes prevention, treatment choice or healthcare utilisation, increasing expected loss relative to behaviour under undistorted incentives.",
     "topics": [
       "fund-health-economics.moral-hazard"
-    ],
-    "sample": true
+    ]
   },
   {
     "id": "concept.cost-sharing",
     "term": "Cost-sharing",
-    "explanation": "Making the insured person pay part of the cost of care, for example through deductibles, copayments or coinsurance.",
+    "explanation": "Rules that make patients or providers bear part of the cost or responsibility for care, including coinsurance, copayments, deductibles, quantity limits and provider-side controls.",
     "topics": [
       "fund-health-economics.moral-hazard"
-    ],
-    "sample": true
+    ]
   },
   {
     "id": "concept.adverse-selection",
@@ -978,6 +976,102 @@
     "explanation": "A mandatory basic contract priced at the population average risk, creating a common insured endowment before supplementary choice.",
     "topics": [
       "fund-health-economics.adverse-selection"
+    ]
+  },
+  {
+    "id": "concept.ex-ante-moral-hazard",
+    "term": "Ex-ante moral hazard",
+    "explanation": "Insurance reduces prevention effort before an insured event, increasing the probability that the loss occurs.",
+    "topics": [
+      "fund-health-economics.moral-hazard"
+    ]
+  },
+  {
+    "id": "concept.ex-post-moral-hazard",
+    "term": "Ex-post moral hazard",
+    "explanation": "Insurance changes behaviour after illness or loss, increasing treatment intensity or the cost of recovery.",
+    "topics": [
+      "fund-health-economics.moral-hazard"
+    ]
+  },
+  {
+    "id": "concept.insurance-deadweight-loss",
+    "term": "Insurance deadweight loss",
+    "explanation": "The loss from care consumed because the patient price is below marginal cost even though marginal benefit is lower than the resources used.",
+    "topics": [
+      "fund-health-economics.moral-hazard"
+    ]
+  },
+  {
+    "id": "concept.risk-incentive-tradeoff",
+    "term": "Risk-spreading versus incentive trade-off",
+    "explanation": "More complete insurance protects income better but can weaken incentives and increase inefficient use, making optimal coverage a second-best choice.",
+    "topics": [
+      "fund-health-economics.moral-hazard"
+    ]
+  },
+  {
+    "id": "concept.offset-effect",
+    "term": "Offset effect",
+    "explanation": "Greater use of one service reduces use of another service, potentially offsetting expenditure and changing optimal cost sharing.",
+    "topics": [
+      "fund-health-economics.moral-hazard"
+    ]
+  },
+  {
+    "id": "concept.value-based-insurance-design",
+    "term": "Value-Based Insurance Design (VBID)",
+    "explanation": "Setting patient cost sharing according to expected clinical value, with lower prices for high-value care and higher prices for low-value care.",
+    "topics": [
+      "fund-health-economics.moral-hazard"
+    ]
+  },
+  {
+    "id": "concept.managed-care",
+    "term": "Managed care",
+    "explanation": "An insurance and delivery structure that combines provider networks, payment rules, utilisation controls and quality mechanisms to influence cost and care.",
+    "topics": [
+      "fund-health-economics.moral-hazard"
+    ]
+  },
+  {
+    "id": "concept.utilization-review",
+    "term": "Utilisation review",
+    "explanation": "Assessment by a payer or plan of whether requested or delivered services are clinically appropriate and meet coverage criteria.",
+    "topics": [
+      "fund-health-economics.moral-hazard"
+    ]
+  },
+  {
+    "id": "concept.gatekeeping",
+    "term": "Gatekeeping",
+    "explanation": "A requirement that a designated clinician, commonly a primary-care physician, authorise access to selected specialist or network services.",
+    "topics": [
+      "fund-health-economics.moral-hazard"
+    ]
+  },
+  {
+    "id": "concept.hmo",
+    "term": "Health Maintenance Organization (HMO)",
+    "explanation": "A relatively restrictive managed plan that generally uses a provider network, gatekeeping and limited out-of-network coverage with comparatively low OOP for covered care.",
+    "topics": [
+      "fund-health-economics.moral-hazard"
+    ]
+  },
+  {
+    "id": "concept.ppo",
+    "term": "Preferred Provider Organization (PPO)",
+    "explanation": "A managed plan with preferred-provider network terms and higher patient cost sharing outside the network, normally without a physician gatekeeper.",
+    "topics": [
+      "fund-health-economics.moral-hazard"
+    ]
+  },
+  {
+    "id": "concept.pos-plan",
+    "term": "Point of Service plan (POS)",
+    "explanation": "A hybrid plan combining PPO-style network tiers with HMO-style gatekeeping for in-network coverage terms.",
+    "topics": [
+      "fund-health-economics.moral-hazard"
     ]
   }
 ]

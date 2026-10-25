@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "topic": "fund-health-economics.moral-hazard",
+  "classNumber": 8,
+  "updated": "2026-10-25",
+  "heroTitle": "Insure the risk.\nPreserve the incentive.",
+  "intro": "Move from the fair-indemnity benchmark to moral hazard, demand-side and supply-side cost sharing, value-based insurance design, managed-care structures and the evidence on expenditure, quality and innovation.",
+  "guide": "lectures/session-8.html",
+  "activities": [
+    "mh-expected-loss",
+    "mh-coinsurance-dwl",
+    "mh-elasticity",
+    "mh-control-mix",
+    "mh-plan-compare"
+  ],
+  "attribution": "Independent student-written study guide based on Daniele Fabbri’s Fundamentals in Health Economics, Session 8: What is Moral Hazard and how to deal with it? Official slides, charts and textbook materials are not reproduced. Numerical labs use transparent Student Hub teaching assumptions. Always check Virtuale for the official materials."
+}
