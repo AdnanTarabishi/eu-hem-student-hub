@@ -1,0 +1,54 @@
+name: FHEM Session 8 checks
+on:
+  push:
+    branches: [main, feature/fhe-session-8-moral-hazard]
+    paths:
+      - 'content/modules/fund-health-economics/**'
+      - 'content/concepts.json'
+      - 'fhe-session-8.js'
+      - 'fhe-session-8.css'
+      - 'fhe-session-8-exam.js'
+      - 'lecture.html'
+      - 'fhem-exam.html'
+      - 'sw.js'
+      - 'tests/fhe-session-8/**'
+      - 'tests/fhem-exam-style/data.test.js'
+      - '.github/workflows/fhe-session-8-checks.yml'
+  pull_request:
+    paths:
+      - 'content/modules/fund-health-economics/**'
+      - 'content/concepts.json'
+      - 'fhe-session-8.js'
+      - 'fhe-session-8.css'
+      - 'fhe-session-8-exam.js'
+      - 'lecture.html'
+      - 'fhem-exam.html'
+      - 'sw.js'
+      - 'tests/fhe-session-8/**'
+      - 'tests/fhem-exam-style/data.test.js'
+      - '.github/workflows/fhe-session-8-checks.yml'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Syntax, content and data validation
+        run: |
+          node --check fhe-session-8.js
+          node --check fhe-session-8-exam.js
+          node scripts/check-content.js
+          node scripts/stamp-versions.js --check
+          node tests/fhe-session-8/data.test.js
+          node tests/fhem-exam-style/data.test.js
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Browser validation
+        run: node tests/fhe-session-8/browser.test.js .
