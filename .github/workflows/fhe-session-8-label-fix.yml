@@ -1,0 +1,34 @@
+name: Expand FHEM Session 8 plan labels
+on:
+  push:
+    branches: [feature/fhe-session-8-moral-hazard]
+    paths:
+      - 'scripts/expand-session-8-plan-labels.js'
+      - '.github/workflows/fhe-session-8-label-fix.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/fhe-session-8-moral-hazard
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node scripts/expand-session-8-plan-labels.js
+      - run: node scripts/stamp-versions.js
+      - name: Commit expanded labels
+        run: |
+          if git diff --quiet; then
+            echo 'No changes.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add content/modules/fund-health-economics/lectures/session-8.html '*.html' '*.js'
+          git commit -m 'Expand Session 8 managed-plan labels'
+          git push origin HEAD:feature/fhe-session-8-moral-hazard
