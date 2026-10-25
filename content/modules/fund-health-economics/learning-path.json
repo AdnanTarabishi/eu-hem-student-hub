@@ -151,17 +151,28 @@
     {
       "number": 8,
       "stage": "providers-insurance",
-      "topic": null,
-      "title": "Insurance 3: Moral Hazard",
+      "topic": "fund-health-economics.moral-hazard",
+      "title": "Insurance III: Moral Hazard, Cost Sharing and Managed Care",
       "shortTitle": "Insurance III",
-      "summary": "Demand-side and supply-side cost sharing, moral hazard, value-based insurance and managed care.",
+      "summary": "Ex-ante and ex-post moral hazard, coinsurance and deadweight loss, risk-spreading versus incentives, VBID, managed-care structures and empirical evidence.",
       "keywords": [
         "moral hazard",
-        "cost sharing",
+        "ex ante",
+        "ex post",
+        "coinsurance",
+        "copayment",
+        "deductible",
+        "deadweight loss",
+        "elasticity",
+        "VBID",
         "managed care",
-        "VBID"
+        "HMO",
+        "PPO",
+        "POS",
+        "utilisation review",
+        "gatekeeping"
       ],
-      "status": "upcoming"
+      "status": "available"
     }
   ]
 }

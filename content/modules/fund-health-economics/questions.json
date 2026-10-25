@@ -2446,5 +2446,607 @@
     "question": "Explain why compulsory basic pooling plus supplementary insurance can be welfare enhancing in the lecture model.",
     "answer": "The compulsory base pools both types at the population break-even premium and creates a transfer from L to H. This makes coverage more affordable for H. It also moves the common endowment and can relax the incentive-compatibility restriction that previously forced L to accept very partial coverage. Supplementary contracts can then add coverage above the mandatory base. A suitable policy can therefore make H better off through subsidy and L better off through less rationing, although the result is conditional on the chosen policy and model assumptions.",
     "explanation": "Do not claim that every mandate is beneficial; the welfare result concerns an appropriately chosen second-best policy."
+  },
+  {
+    "id": "fund-health-economics.q.401",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Indemnity benchmark",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Under which simplified conditions is an actuarially fair fixed indemnity most likely to reproduce the first-best full-insurance benchmark?",
+    "options": [
+      "Many diseases and many treatments",
+      "One disease and one known treatment",
+      "Provider choice is unrestricted and prices are unknown",
+      "Patients can choose any severity category"
+    ],
+    "answer": "B",
+    "explanation": "A predetermined contingent payment works cleanly only when the event and associated loss are sufficiently well defined."
+  },
+  {
+    "id": "fund-health-economics.q.402",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Appropriate care",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Which statement best captures the lecture's idea of appropriate care?",
+    "options": [
+      "The most expensive available treatment",
+      "Any treatment with a positive private benefit",
+      "The efficacious option most likely to produce the outcomes desired by the individual patient",
+      "The treatment with the lowest insurer cost regardless of outcomes"
+    ],
+    "answer": "C",
+    "explanation": "Appropriateness combines efficacy with the patient's likely outcomes and circumstances; it is not synonymous with maximum intensity or minimum cost."
+  },
+  {
+    "id": "fund-health-economics.q.403",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Expected loss",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "In E[L] = p(eP) × L(eL), which change is an example of ex-ante moral hazard?",
+    "options": [
+      "A lower prevention effort raises p",
+      "A costlier drug raises L after illness",
+      "A provider negotiates a lower unit price",
+      "A plan restricts its network"
+    ],
+    "answer": "A",
+    "explanation": "Ex-ante moral hazard acts before the event through the probability term p."
+  },
+  {
+    "id": "fund-health-economics.q.404",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Ex-post moral hazard",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Which example most directly represents ex-post moral hazard?",
+    "options": [
+      "Skipping vaccination",
+      "Choosing a higher-cost recovery option after becoming ill when a lower-cost adequate option exists",
+      "Buying a generous plan because one expects high need",
+      "A low-risk person leaving a pooling contract"
+    ],
+    "answer": "B",
+    "explanation": "The behavioural change occurs after the insured event and raises the size of the loss."
+  },
+  {
+    "id": "fund-health-economics.q.405",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Standard FFS plan",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Why is standard fee-for-service insurance especially vulnerable to utilisation expansion?",
+    "options": [
+      "Patients face full marginal cost and providers lose revenue from extra care",
+      "Patients face a subsidised price while providers are paid more for additional services",
+      "All treatment decisions are made by the insurer",
+      "The patient cannot select a provider"
+    ],
+    "answer": "B",
+    "explanation": "Demand- and supply-side incentives point in the same direction: additional insured services benefit the patient privately and generate provider revenue."
+  },
+  {
+    "id": "fund-health-economics.q.406",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Full insurance",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "In the basic demand diagram, full insurance moves utilisation beyond the efficient quantity mainly because:",
+    "options": [
+      "Marginal cost falls to zero for society",
+      "The patient's private marginal price falls below social marginal cost",
+      "Demand becomes perfectly inelastic",
+      "Providers stop being paid"
+    ],
+    "answer": "B",
+    "explanation": "The resource cost remains, but the insured patient does not face it at the margin."
+  },
+  {
+    "id": "fund-health-economics.q.407",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Extent of moral hazard",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Which pair most completely determines the size of moral hazard in a standard insurance plan?",
+    "options": [
+      "Population size and provider density",
+      "Price distortion and demand elasticity",
+      "Income and age only",
+      "Premium loading and adverse selection only"
+    ],
+    "answer": "B",
+    "explanation": "The quantity response depends on how far the patient price is moved and how responsive demand is."
+  },
+  {
+    "id": "fund-health-economics.q.408",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Fair premium",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Why can the ex-post fair premium exceed the ex-ante premium based on first-best care?",
+    "options": [
+      "The probability of illness must become zero",
+      "Covered patients may consume additional care once sick, increasing expected claims",
+      "Coinsurance always increases utilisation",
+      "Insurers stop pooling risk"
+    ],
+    "answer": "B",
+    "explanation": "The fair premium must cover utilisation generated after insurance changes incentives."
+  },
+  {
+    "id": "fund-health-economics.q.409",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Coinsurance",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "A service costs €100 and the coinsurance rate is k=0.30. Ignoring other charges, how much does the patient pay per unit?",
+    "options": [
+      "€0",
+      "€30",
+      "€70",
+      "€100"
+    ],
+    "answer": "B",
+    "explanation": "The patient pays kP = 0.30 × €100 = €30."
+  },
+  {
+    "id": "fund-health-economics.q.410",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Less generous insurance",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "All else equal, raising the patient coinsurance rate from 20% to 60% is expected to:",
+    "options": [
+      "Lower the patient price and increase utilisation",
+      "Raise the patient price and reduce utilisation",
+      "Eliminate financial risk",
+      "Make demand more elastic by definition"
+    ],
+    "answer": "B",
+    "explanation": "A higher patient share moves the private price toward marginal cost and usually reduces quantity demanded."
+  },
+  {
+    "id": "fund-health-economics.q.411",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Second best",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Why is less-than-full coverage often second best when moral hazard exists?",
+    "options": [
+      "Because insurance has no risk-spreading value",
+      "Because some patient price exposure can reduce incentive losses while preserving part of the risk protection",
+      "Because full coverage is illegal",
+      "Because adverse selection and moral hazard are identical"
+    ],
+    "answer": "B",
+    "explanation": "The optimum balances the benefit of smoothing financial risk against the welfare cost of distorted use."
+  },
+  {
+    "id": "fund-health-economics.q.412",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Commitment device",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Why might an enrollee prefer a deductible before becoming ill?",
+    "options": [
+      "It guarantees that all care will be free",
+      "It can credibly limit future low-value use and lower the premium",
+      "It eliminates the chance of illness",
+      "It increases provider FFS revenue"
+    ],
+    "answer": "B",
+    "explanation": "Cost sharing can serve as an ex-ante commitment against the enrollee's own ex-post demand for subsidised care."
+  },
+  {
+    "id": "fund-health-economics.q.413",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Elasticity rule",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Other things equal, which service should face the higher optimal coinsurance rate?",
+    "options": [
+      "The service with more elastic demand",
+      "The service with more inelastic demand",
+      "The service with the highest marginal cost regardless of demand",
+      "All services must face the same rate"
+    ],
+    "answer": "A",
+    "explanation": "More elastic demand produces a larger utilisation response to a price subsidy and therefore a larger distortion."
+  },
+  {
+    "id": "fund-health-economics.q.414",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Price distortion",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Two services have identical demand elasticity. Service A has a patient price close to marginal cost; Service B has a patient price near zero. Which has the larger expected moral-hazard distortion?",
+    "options": [
+      "Service A",
+      "Service B",
+      "They must be equal",
+      "It cannot depend on the patient price"
+    ],
+    "answer": "B",
+    "explanation": "The larger price gap generally produces the larger quantity distortion."
+  },
+  {
+    "id": "fund-health-economics.q.415",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Offset effects",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Service A substitutes for another covered service B. What does the offset-effect argument imply, other things equal?",
+    "options": [
+      "A should always be excluded",
+      "A may merit more generous coverage because greater use can reduce overuse of B",
+      "A and B must have identical copayments",
+      "Substitution always increases total spending"
+    ],
+    "answer": "B",
+    "explanation": "The reduction in B can offset part of the cost of increased A use."
+  },
+  {
+    "id": "fund-health-economics.q.416",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Complementarity",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "If two insured services are complements, generous coverage of the first may:",
+    "options": [
+      "Reduce use of the second",
+      "Increase total utilisation through additional use of the second",
+      "Eliminate moral hazard",
+      "Make provider influence impossible"
+    ],
+    "answer": "B",
+    "explanation": "Complementarity works opposite to a cost offset: more use of A can induce more use of B."
+  },
+  {
+    "id": "fund-health-economics.q.417",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Welfare measurement",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Why may an observed healthcare demand curve fail to measure patient marginal utility accurately?",
+    "options": [
+      "Healthcare has no scarcity",
+      "Patients may be poorly informed and providers may shape treatment decisions",
+      "Prices are never observed",
+      "Insurance makes all patients risk neutral"
+    ],
+    "answer": "B",
+    "explanation": "Information, agency and behavioural factors can separate observed demand from independent informed willingness to pay."
+  },
+  {
+    "id": "fund-health-economics.q.418",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "Preventive care",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Preventive care is highly price responsive. What is the most complete policy interpretation?",
+    "options": [
+      "It must face high cost sharing",
+      "High responsiveness may reflect underestimation of long-run benefits, supporting targeted low cost sharing or subsidies",
+      "It has zero value",
+      "It should never be insured"
+    ],
+    "answer": "B",
+    "explanation": "Elasticity alone does not establish low value; VBID targets cost sharing to clinical value."
+  },
+  {
+    "id": "fund-health-economics.q.419",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "medium",
+    "category": "VBID",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Which policy is the clearest example of value-based insurance design?",
+    "options": [
+      "The same €40 copay for every service",
+      "Zero copay for a high-value chronic-disease medicine and higher cost sharing for low-value discretionary care",
+      "No coverage for preventive care",
+      "Paying every provider pure FFS"
+    ],
+    "answer": "B",
+    "explanation": "VBID differentiates patient prices according to expected health value."
+  },
+  {
+    "id": "fund-health-economics.q.420",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Provider influence",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Why are the implications of ordinary demand elasticity weakened in healthcare?",
+    "options": [
+      "Patients always choose treatment independently",
+      "Patients and physicians jointly determine utilisation, and physicians may induce demand",
+      "Marginal cost is always zero",
+      "Networks eliminate information asymmetry"
+    ],
+    "answer": "B",
+    "explanation": "Observed demand can partly reflect supplier influence rather than only patient preferences."
+  },
+  {
+    "id": "fund-health-economics.q.421",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Waste",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Which policy follows most directly from the alternative view that waste is low-value provision rather than excessive patient demand?",
+    "options": [
+      "Raise every patient copay equally",
+      "Redesign provider incentives and utilisation review to reward health value",
+      "Remove all quality monitoring",
+      "Expand pure FFS payment"
+    ],
+    "answer": "B",
+    "explanation": "The target shifts from patient price sensitivity to the provider's production of value."
+  },
+  {
+    "id": "fund-health-economics.q.422",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Supply-side control",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "What distinguishes supply-side cost sharing from a patient copayment?",
+    "options": [
+      "It places some financial or organisational responsibility for resource use on providers",
+      "It always raises patient OOP",
+      "It eliminates networks",
+      "It cannot affect quantity"
+    ],
+    "answer": "A",
+    "explanation": "Managed plans use provider payment, networks and review to influence care decisions."
+  },
+  {
+    "id": "fund-health-economics.q.423",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Managed-care risk",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Which risk is most closely associated with strong supply-side restrictions?",
+    "options": [
+      "Only higher patient financial loss",
+      "Useful care may be delayed or denied when judged not cost-effective",
+      "Adverse selection disappears",
+      "All technology diffuses faster"
+    ],
+    "answer": "B",
+    "explanation": "Supply-side control can reduce overuse but also create underprovision or access risk."
+  },
+  {
+    "id": "fund-health-economics.q.424",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "easy",
+    "category": "Plan structures",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Which description is correct?",
+    "options": [
+      "PPOs require physician gatekeepers for all care",
+      "HMOs generally combine a network with gatekeeping, while PPOs have network tiers without a gatekeeper",
+      "POS plans have neither network tiers nor gatekeepers",
+      "Standard FFS is the most restrictive structure"
+    ],
+    "answer": "B",
+    "explanation": "The network/gatekeeper matrix places HMO in the most restrictive cell and standard FFS in the least restrictive cell."
+  },
+  {
+    "id": "fund-health-economics.q.425",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Combining controls",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Why can a small copayment improve a common quantity-cap policy for heterogeneous patients?",
+    "options": [
+      "It can deter low-value moderate-type demand before high-value severe-type demand, allowing a higher cap",
+      "It makes both demand curves identical",
+      "It guarantees first best without information",
+      "It removes the need for premiums"
+    ],
+    "answer": "A",
+    "explanation": "Price can screen low marginal-value use, while the cap controls maximum quantity."
+  },
+  {
+    "id": "fund-health-economics.q.426",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "mcq",
+    "difficulty": "hard",
+    "category": "Empirical mechanisms",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Managed-care expenditure is lower but measured utilisation is similar. Which mechanism best reconciles the two findings?",
+    "options": [
+      "Lower negotiated prices per unit",
+      "Higher patient demand",
+      "No provider networks",
+      "More rapid adoption of every technology"
+    ],
+    "answer": "A",
+    "explanation": "Lower expenditure need not come from lower quantity; negotiated prices can be the main mechanism."
+  },
+  {
+    "id": "fund-health-economics.q.427",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "true-false",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Ex-ante moral hazard operates mainly by changing the probability of the insured event.",
+    "answer": true,
+    "explanation": "True. It acts before the event through prevention effort and the probability term p."
+  },
+  {
+    "id": "fund-health-economics.q.428",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "true-false",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Ex-post moral hazard operates mainly by changing the size of the loss after the event.",
+    "answer": true,
+    "explanation": "True. Treatment intensity and loss-reduction effort affect L after illness."
+  },
+  {
+    "id": "fund-health-economics.q.429",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "true-false",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Once insurance is actuarially fair, full coverage is always first best even when utilisation responds to coverage.",
+    "answer": false,
+    "explanation": "False. Moral hazard can make full coverage inefficient despite fair pricing."
+  },
+  {
+    "id": "fund-health-economics.q.430",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "true-false",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Other things equal, more elastic healthcare demand implies a higher optimal coinsurance rate.",
+    "answer": true,
+    "explanation": "True. The same price subsidy creates a larger quantity response when demand is more elastic."
+  },
+  {
+    "id": "fund-health-economics.q.431",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "true-false",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "When one covered service substitutes for another overused covered service, the offset effect can justify more generous coverage of the substitute.",
+    "answer": true,
+    "explanation": "True. Reduced use of the other service can offset part of the additional expenditure."
+  },
+  {
+    "id": "fund-health-economics.q.432",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "true-false",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "A PPO normally requires a primary-care gatekeeper to authorise specialist care.",
+    "answer": false,
+    "explanation": "False. In the lecture's classification, PPOs use network tiers but no physician gatekeeper."
+  },
+  {
+    "id": "fund-health-economics.q.433",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "true-false",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "An HMO generally provides unrestricted out-of-network care on the same terms as network care.",
+    "answer": false,
+    "explanation": "False. HMO care is generally delivered through the plan's network and commonly uses gatekeeping."
+  },
+  {
+    "id": "fund-health-economics.q.434",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "true-false",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Lower expenditure in managed-care plans proves that patients receive fewer services.",
+    "answer": false,
+    "explanation": "False. Lower negotiated prices can reduce expenditure even when utilisation and measured treatment are similar."
+  },
+  {
+    "id": "fund-health-economics.q.435",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Explain the risk-spreading versus incentive trade-off in healthcare insurance.",
+    "answer": "Insurance transfers resources toward the sick state and protects people from unpredictable medical spending. More complete coverage, however, lowers the price faced at the point of use and may reduce prevention or increase treatment intensity. The second-best contract therefore balances the welfare gain from risk protection against the welfare loss from moral hazard.",
+    "explanation": "A strong answer states both sides of the trade-off and explains why the optimum is generally partial rather than full coverage when utilisation responds to insurance."
+  },
+  {
+    "id": "fund-health-economics.q.436",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Compare coinsurance, copayment, deductible and a quantity restriction as moral-hazard controls.",
+    "answer": "Coinsurance makes the patient pay a percentage of each bill; a copayment is a fixed payment per service; a deductible makes the patient pay initial expenditure before coverage; a quantity restriction limits the amount of care directly. The first three increase financial risk and may deter high-value care, while a quantity restriction limits financial exposure but can deny clinically useful care.",
+    "explanation": "Do not list definitions only; compare the different risks created by price and quantity controls."
+  },
+  {
+    "id": "fund-health-economics.q.437",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "short-answer",
+    "difficulty": "medium",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Why can Value-Based Insurance Design be superior to uniform cost sharing?",
+    "answer": "Uniform cost sharing treats all utilisation as equally valuable and equally distortionary. VBID lowers patient prices for high-value services and may raise them for low-value discretionary care. This addresses cases such as prevention, where high price responsiveness may reflect underestimation of benefits rather than low clinical value.",
+    "explanation": "Connect VBID to imperfect patient information and the limitation of using elasticity alone."
+  },
+  {
+    "id": "fund-health-economics.q.438",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Explain why neither a common copayment nor a common quantity cap necessarily allocates care efficiently between moderately and seriously ill patients.",
+    "answer": "The two patient types have different marginal-benefit curves and different first-best quantities. A common copayment changes both quantities and may still leave overuse, while a common cap can give the moderate type too much and the severe type too little. Combining a small copayment with a cap can screen lower-value demand and allow more care for those with higher marginal benefit.",
+    "explanation": "The key is unobserved heterogeneity in optimal treatment, not simply average utilisation."
+  },
+  {
+    "id": "fund-health-economics.q.439",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Compare standard FFS, PPO, POS and HMO using networks and gatekeeping.",
+    "answer": "Standard FFS has no required network and no gatekeeper and is least restrictive. A PPO uses a preferred network with lower cost sharing in network but no gatekeeper. A POS plan combines network tiers with gatekeeping for in-network terms. An HMO generally requires network care and a gatekeeper and is most restrictive, with relatively low OOP for covered care.",
+    "explanation": "Include the patient-choice and provider-incentive implications, not just the labels."
+  },
+  {
+    "id": "fund-health-economics.q.440",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "The lecture reports lower expenditure in managed-care plans with little measured difference in utilisation or quality. How can this occur?",
+    "answer": "Managed care can negotiate lower unit prices, selectively contract with providers and alter payment arrangements. Similar quantities and treatment types can therefore be purchased at lower prices. Expenditure differences could also reflect utilisation review, quality changes or slower technology adoption, so spending alone cannot identify welfare effects.",
+    "explanation": "A strong answer distinguishes price, quantity, quality and innovation channels."
+  },
+  {
+    "id": "fund-health-economics.q.441",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Why does physician influence weaken a simple deadweight-loss calculation based on the patient demand curve?",
+    "answer": "The standard calculation treats demand as informed marginal willingness to pay. In healthcare, patients often delegate decisions to physicians, who may influence or induce demand. Observed quantity can therefore reflect provider incentives and information asymmetry rather than independent patient valuation, making the demand curve an imperfect welfare measure.",
+    "explanation": "Link this answer to physician agency from Session 5."
+  },
+  {
+    "id": "fund-health-economics.q.442",
+    "topic": "fund-health-economics.moral-hazard",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "source": "EU-HEM Hub original practice · Session 8",
+    "question": "Design a balanced policy package for a public plan with zero patient prices and private providers paid pure FFS.",
+    "answer": "Preserve broad protection against catastrophic and high-value care, introduce targeted rather than uniform patient cost sharing, use VBID for prevention and chronic care, replace pure FFS with a blended or prospective component, selectively contract and review low-value utilisation, and monitor access, quality and innovation. The package should reduce both patient-side and provider-side incentives without exposing vulnerable patients to unaffordable costs.",
+    "explanation": "Open-policy answers should state mechanisms and trade-offs, not merely name instruments."
   }
 ]

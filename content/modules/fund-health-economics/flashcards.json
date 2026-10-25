@@ -1072,5 +1072,305 @@
     "topic": "fund-health-economics.adverse-selection",
     "front": "What is the long-run institutional conclusion of Session 7?",
     "back": "Keeping insurance affordable after people become high risk requires durable cross-subsidies from low-risk to high-risk individuals, which are difficult to sustain without collective or government-backed arrangements."
+  },
+  {
+    "id": "fund-health-economics.fc.401",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What is the simple indemnity benchmark?",
+    "back": "A contract pays a predetermined amount when a specified contingency occurs; with one disease and one treatment, a fair indemnity can deliver full insurance in the benchmark."
+  },
+  {
+    "id": "fund-health-economics.fc.402",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "Why does modern healthcare move beyond a fixed indemnity?",
+    "back": "Many diagnoses, severities and treatment paths make the appropriate expenditure unpredictable before care is delivered."
+  },
+  {
+    "id": "fund-health-economics.fc.403",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "How does Session 8 define appropriate care?",
+    "back": "Selection from efficacious treatments of the option most likely to produce the health outcomes desired by the individual patient."
+  },
+  {
+    "id": "fund-health-economics.fc.404",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What is moral hazard in this lecture?",
+    "back": "Insurance changes behaviour or utilisation so expected loss or healthcare consumption is greater than under undistorted incentives."
+  },
+  {
+    "id": "fund-health-economics.fc.405",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What is the expected-loss expression used in Session 8?",
+    "back": "E[L] = p(eP) × L(eL), where prevention effort affects event probability and loss-reduction effort affects loss size."
+  },
+  {
+    "id": "fund-health-economics.fc.406",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What does prevention effort eP affect?",
+    "back": "It affects the probability p that the insured event occurs."
+  },
+  {
+    "id": "fund-health-economics.fc.407",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What does loss-reduction effort eL affect?",
+    "back": "It affects the size L of the loss or recovery cost after the event."
+  },
+  {
+    "id": "fund-health-economics.fc.408",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What is ex-ante moral hazard?",
+    "back": "Behaviour changes before the insured event in a way that makes it more likely; it operates mainly through p."
+  },
+  {
+    "id": "fund-health-economics.fc.409",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What is ex-post moral hazard?",
+    "back": "Behaviour changes after the insured event in a way that makes recovery more expensive; it operates mainly through L."
+  },
+  {
+    "id": "fund-health-economics.fc.410",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "Give an ex-ante moral-hazard example from the lecture.",
+    "back": "Skipping a flu vaccination or neglecting routine blood controls because insurance protects against later costs."
+  },
+  {
+    "id": "fund-health-economics.fc.411",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "Give an ex-post moral-hazard example from the lecture.",
+    "back": "Choosing a more expensive drug or more intensive treatment when a lower-cost clinically adequate option exists."
+  },
+  {
+    "id": "fund-health-economics.fc.412",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What three features characterise the standard FFS insurance plan in Session 8?",
+    "back": "Providers are paid fee for service, insurance lowers patient OOP per unit at use, and enrollees can choose providers broadly."
+  },
+  {
+    "id": "fund-health-economics.fc.413",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "Why can patient and provider incentives reinforce each other under standard FFS insurance?",
+    "back": "The patient receives extra care at a subsidised price while the FFS provider earns more revenue from delivering more services."
+  },
+  {
+    "id": "fund-health-economics.fc.414",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "Why does moral hazard break the general optimality of full coverage?",
+    "back": "Full coverage drives the patient price toward zero, increasing use beyond the quantity whose marginal benefit covers marginal cost."
+  },
+  {
+    "id": "fund-health-economics.fc.415",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "Without insurance, where is the efficient quantity in the demand diagram?",
+    "back": "At Q*, where marginal benefit equals marginal cost."
+  },
+  {
+    "id": "fund-health-economics.fc.416",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "With full insurance, what happens to the private marginal price?",
+    "back": "It falls toward zero, so the insured may continue consuming as long as private marginal benefit is positive."
+  },
+  {
+    "id": "fund-health-economics.fc.417",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What are the two determinants of the extent of moral hazard?",
+    "back": "The magnitude of the price distortion caused by insurance and the price responsiveness or elasticity of healthcare demand."
+  },
+  {
+    "id": "fund-health-economics.fc.418",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What is the time-inconsistency problem in health insurance?",
+    "back": "Ex ante, people want a contract limiting low-value use and premiums; ex post, once sick, they want any covered care with positive private benefit."
+  },
+  {
+    "id": "fund-health-economics.fc.419",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "Why can ex-post moral hazard raise the actuarially fair premium?",
+    "back": "Expected claims include additional care chosen under coverage, so the break-even premium exceeds the premium based only on first-best treatment levels."
+  },
+  {
+    "id": "fund-health-economics.fc.420",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What does coinsurance k represent?",
+    "back": "The fraction of healthcare expenditure paid by the consumer; the insurer pays 1−k."
+  },
+  {
+    "id": "fund-health-economics.fc.421",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What values of k represent no insurance and full insurance?",
+    "back": "k=1 means the consumer pays the full bill; k=0 means full coverage at the point of use."
+  },
+  {
+    "id": "fund-health-economics.fc.422",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "How does raising coinsurance generally affect utilisation and DWL?",
+    "back": "It raises the patient price, reduces utilisation and insurer spending, and shrinks the deadweight loss from overuse."
+  },
+  {
+    "id": "fund-health-economics.fc.423",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What is the risk-spreading versus incentive trade-off?",
+    "back": "More complete insurance protects income better but weakens price incentives and can increase inefficient utilisation."
+  },
+  {
+    "id": "fund-health-economics.fc.424",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What is the second-best coverage result when moral hazard matters?",
+    "back": "Optimal coverage is generally less than full, balancing risk protection against incentive costs."
+  },
+  {
+    "id": "fund-health-economics.fc.425",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What is demand-side cost sharing?",
+    "back": "Rules such as coinsurance, copayments and deductibles that make the patient bear part of the cost of care."
+  },
+  {
+    "id": "fund-health-economics.fc.426",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What is a copayment?",
+    "back": "A fixed amount paid by the patient per service, visit or episode."
+  },
+  {
+    "id": "fund-health-economics.fc.427",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What is a deductible?",
+    "back": "The amount the patient pays before insurance reimbursement begins."
+  },
+  {
+    "id": "fund-health-economics.fc.428",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What is the main cost of demand-side cost sharing?",
+    "back": "Greater financial risk and the possibility that patients reduce high-value as well as low-value care."
+  },
+  {
+    "id": "fund-health-economics.fc.429",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "How does price distortion affect moral-hazard DWL?",
+    "back": "A larger gap between marginal cost and the patient price generally creates a larger quantity distortion and deadweight loss."
+  },
+  {
+    "id": "fund-health-economics.fc.430",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "How does elasticity affect moral-hazard DWL?",
+    "back": "For the same price distortion, more elastic demand generates a larger utilisation response and larger welfare loss."
+  },
+  {
+    "id": "fund-health-economics.fc.431",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What is the general optimal-coverage result for inelastic services?",
+    "back": "They can be covered more completely because quantity responds less to the price subsidy."
+  },
+  {
+    "id": "fund-health-economics.fc.432",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What is the general optimal-coinsurance result for elastic services?",
+    "back": "Optimal coinsurance is higher because demand responds more strongly to the insurance-induced price reduction."
+  },
+  {
+    "id": "fund-health-economics.fc.433",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What is an offset effect?",
+    "back": "Use of one service reduces use of another service, so greater use of the first can save costs elsewhere."
+  },
+  {
+    "id": "fund-health-economics.fc.434",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "How should substitution affect optimal coverage?",
+    "back": "A service with large cost offsets on other covered services should generally be covered more generously."
+  },
+  {
+    "id": "fund-health-economics.fc.435",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "How should complementarity affect optimal coverage?",
+    "back": "If use of one service increases use of another, optimal cost sharing may be higher than when the service is considered alone."
+  },
+  {
+    "id": "fund-health-economics.fc.436",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What ordering summarises interrelated-demand cost sharing?",
+    "back": "c**sub < c* < c**comp: lower patient share for substitutes with offsets, higher for complements."
+  },
+  {
+    "id": "fund-health-economics.fc.437",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "Why is interrelated demand hard to address with simple cost sharing?",
+    "back": "The same service can be a substitute in one clinical state and a complement in another, while plans often set one price per service."
+  },
+  {
+    "id": "fund-health-economics.fc.438",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What assumption underlies the standard welfare-loss triangle?",
+    "back": "The observed demand curve accurately represents the patient's marginal utility or willingness to pay for additional care."
+  },
+  {
+    "id": "fund-health-economics.fc.439",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "Why is that welfare assumption fragile in healthcare?",
+    "back": "Patients may be poorly informed, influenced by fear and anxiety, and delegate treatment decisions to providers."
+  },
+  {
+    "id": "fund-health-economics.fc.440",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What is Value-Based Insurance Design (VBID)?",
+    "back": "Setting patient cost sharing according to expected clinical value rather than applying the same cost sharing to every service."
+  },
+  {
+    "id": "fund-health-economics.fc.441",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "Why can preventive care justify very low or negative cost sharing?",
+    "back": "Patients may underappreciate long-run benefits; subsidies can increase high-value prevention and reduce future costs or illness."
+  },
+  {
+    "id": "fund-health-economics.fc.442",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "Why is healthcare demand partly co-determined by providers?",
+    "back": "Patients often cede decision authority to physicians, and providers can influence which and how many services are used."
+  },
+  {
+    "id": "fund-health-economics.fc.443",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What is the traditional view of waste in medical care?",
+    "back": "Comprehensively insured patients demand too many services, so policy should make users more price sensitive."
+  },
+  {
+    "id": "fund-health-economics.fc.444",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What is the alternative provider-value view of waste?",
+    "back": "Waste arises from delivering services with limited patient value, so policy should make providers produce more health value."
+  },
+  {
+    "id": "fund-health-economics.fc.445",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What is supply-side cost sharing?",
+    "back": "A plan places financial or organisational responsibility for resource use on providers rather than relying only on patient payments."
+  },
+  {
+    "id": "fund-health-economics.fc.446",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What defines a managed-care plan in Session 8?",
+    "back": "An integrated delivery structure linking insurers, provider payment and networks through contracts, restrictions and utilisation controls."
+  },
+  {
+    "id": "fund-health-economics.fc.447",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What patient risk can supply-side control create?",
+    "back": "Useful care may be delayed or denied when the plan judges it not cost-effective, even though patient financial risk may be limited."
+  },
+  {
+    "id": "fund-health-economics.fc.448",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "How can a copayment and quantity cap complement each other?",
+    "back": "The copayment can deter low-value demand first, allowing the quantity cap to be raised for patients with higher marginal benefit."
+  },
+  {
+    "id": "fund-health-economics.fc.449",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "What are four managed-care cost/quality tools?",
+    "back": "Selective contracting, quality assurance, utilisation review, and gatekeeping or second-opinion programmes."
+  },
+  {
+    "id": "fund-health-economics.fc.450",
+    "topic": "fund-health-economics.moral-hazard",
+    "front": "How do HMO, PPO and POS differ?",
+    "back": "HMO generally uses a network and gatekeeper; PPO uses network tiers without a gatekeeper; POS combines network tiers with gatekeeping."
   }
 ]

@@ -49,7 +49,9 @@
   },
   {
     "id": "fund-health-economics.moral-hazard",
-    "title": "Moral hazard and demand-side cost-sharing"
+    "title": "Session 8: Insurance III — Moral Hazard, Cost Sharing and Managed Care",
+    "notes": "notes/moral-hazard.md",
+    "lecture": "lectures/session-8.json"
   },
   {
     "id": "fund-health-economics.supply-side",

@@ -21,7 +21,8 @@
     "test:tracks": "node scripts/check-content.js && node tests/tracks/data.test.js && node tests/tracks/browser.test.js .",
     "test:life": "node scripts/check-content.js && node tests/life/data.test.js . && node tests/life/browser.test.js .",
     "test:visitor-guide": "node scripts/check-content.js && node tests/visitor-guide/data.test.js . && node tests/visitor-guide/browser.test.js .",
-    "test:fhem-exam-style": "node scripts/check-content.js && node tests/fhem-exam-style/data.test.js && node tests/fhem-exam-style/browser.test.js ."
+    "test:fhem-exam-style": "node scripts/check-content.js && node tests/fhem-exam-style/data.test.js && node tests/fhem-exam-style/browser.test.js .",
+    "test:fhe-session-8": "node scripts/check-content.js && node tests/fhe-session-8/data.test.js && node tests/fhe-session-8/browser.test.js ."
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.8",
