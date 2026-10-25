@@ -299,7 +299,7 @@
       openReviews: {},
     };
     writeState(state);
-    render();
+    renderActive(state.active);
   }
 
   function persistAnswer(question, value) {
