@@ -1,0 +1,34 @@
+name: Integrate FHEM Exam Centre v2 mobile regression
+on:
+  push:
+    branches: [feature/fhem-exam-style-system]
+    paths:
+      - 'scripts/update-notes-mobile-exam-v2.js'
+      - '.github/workflows/fhem-exam-v2-mobile-regression-integrate.yml'
+permissions:
+  contents: write
+jobs:
+  integrate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/fhem-exam-style-system
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check scripts/update-notes-mobile-exam-v2.js
+      - run: node scripts/update-notes-mobile-exam-v2.js
+      - name: Commit mobile regression update
+        run: |
+          if git diff --quiet; then
+            echo 'No test changes.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add tests/notes/practice.test.js
+          git commit -m 'Update mobile FHEM exam regression for v2'
+          git push origin HEAD:feature/fhem-exam-style-system
