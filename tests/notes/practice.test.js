@@ -382,7 +382,7 @@ const rgbHex = colour => "#" + colour.match(/[\d.]+/g).slice(0, 3)
       await mobile.locator(".fs-mock-options input").first().waitFor();
       await sheetLoaded(mobile); await fits(mobile, "Fundamentals active mock, 320px " + scheme);
       await mobile.goto(base + "fhem-exam.html");
-      await mobile.getByRole("button", { name: /Start quick drill/ }).click();
+      await mobile.getByRole("button", { name: /Start Mock 3/ }).click();
       await mobile.locator(".hem-exam-question-card").waitFor();
       await mobile.locator(".hem-exam-option").first().waitFor();
       await sheetLoaded(mobile); await fits(mobile, "FHEM active mock, 320px " + scheme);
