@@ -1,0 +1,34 @@
+name: Integrate FHEM Exam Centre v2 regression contract
+on:
+  push:
+    branches: [feature/fhem-exam-style-system]
+    paths:
+      - 'scripts/update-notes-practice-for-exam-v2.js'
+      - '.github/workflows/fhem-exam-v2-regression-integrate.yml'
+permissions:
+  contents: write
+jobs:
+  integrate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/fhem-exam-style-system
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check scripts/update-notes-practice-for-exam-v2.js
+      - run: node scripts/update-notes-practice-for-exam-v2.js
+      - name: Commit updated regression test
+        run: |
+          if git diff --quiet; then
+            echo 'No test changes.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add tests/notes/practice.test.js
+          git commit -m 'Update Notes regression for FHEM Exam Centre v2'
+          git push origin HEAD:feature/fhem-exam-style-system
