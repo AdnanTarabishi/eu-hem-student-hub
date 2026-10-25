@@ -4,6 +4,7 @@ on:
     branches: [feature/fhe-session-8-moral-hazard]
     paths:
       - 'scripts/integrate-fhe-session-8.js'
+      - 'scripts/fix-fhe-session-8-data-test.js'
       - 'scripts/fhe-session-8-bundle.br.part*'
       - '.github/workflows/fhe-session-8-integrate.yml'
 permissions:
@@ -24,6 +25,7 @@ jobs:
         run: |
           node --check scripts/integrate-fhe-session-8.js
           node scripts/integrate-fhe-session-8.js
+          node scripts/fix-fhe-session-8-data-test.js
           node scripts/build-content-index.js
           node scripts/stamp-versions.js
       - name: Validate integrated repository
