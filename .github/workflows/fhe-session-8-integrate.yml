@@ -1,0 +1,45 @@
+name: Integrate FHEM Session 8
+on:
+  push:
+    branches: [feature/fhe-session-8-moral-hazard]
+    paths:
+      - 'scripts/integrate-fhe-session-8.js'
+      - 'scripts/fhe-session-8-bundle.br.part*'
+      - '.github/workflows/fhe-session-8-integrate.yml'
+permissions:
+  contents: write
+jobs:
+  integrate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/fhe-session-8-moral-hazard
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Integrate Session 8 content
+        run: |
+          node --check scripts/integrate-fhe-session-8.js
+          node scripts/integrate-fhe-session-8.js
+          node scripts/build-content-index.js
+          node scripts/stamp-versions.js
+      - name: Validate integrated repository
+        run: |
+          node scripts/check-content.js
+          node scripts/stamp-versions.js --check
+          node tests/fhe-session-8/data.test.js
+          node tests/fhem-exam-style/data.test.js
+      - name: Commit Session 8 integration
+        run: |
+          if git diff --quiet; then
+            echo 'No integration changes.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Integrate FHEM Session 8 moral hazard content'
+          git push origin HEAD:feature/fhe-session-8-moral-hazard
