@@ -1,0 +1,46 @@
+name: FHEM exam-style checks
+on:
+  pull_request:
+    paths:
+      - 'fhem-exam.html'
+      - 'fhem-exam-style-bank.js'
+      - 'fhem-exam-v2.js'
+      - 'fhem-exam-v2.css'
+      - 'fhem-exam.css'
+      - 'health-econ-management.js'
+      - 'content/modules/fund-health-economics/**'
+      - 'tests/fhem-exam-style/**'
+      - '.github/workflows/fhem-exam-style-checks.yml'
+  push:
+    branches: [feature/fhem-exam-style-system]
+    paths:
+      - 'fhem-exam.html'
+      - 'fhem-exam-style-bank.js'
+      - 'fhem-exam-v2.js'
+      - 'fhem-exam-v2.css'
+      - 'tests/fhem-exam-style/**'
+      - '.github/workflows/fhem-exam-style-checks.yml'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Syntax and data validation
+        run: |
+          node --check fhem-exam-style-bank.js
+          node --check fhem-exam-v2.js
+          node scripts/check-content.js
+          node scripts/stamp-versions.js --check
+          node tests/fhem-exam-style/data.test.js
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Browser validation
+        run: node tests/fhem-exam-style/browser.test.js .
