@@ -50,14 +50,17 @@ const mime = {
     // M01 option D is deliberately partly correct (+2).
     await page.locator('.hem-exam-option').nth(3).click();
     assert.equal(await page.locator('.exam-v2-answer-cell').first().locator('strong').innerText(), 'D');
-    await page.getByRole('button', { name: 'Submit' }).click();
+    await page.getByRole('button', { name: 'Submit', exact: true }).click();
     await page.locator('.exam-v2-results').waitFor();
     assert.match(await page.locator('.hem-objective-score').innerText(), /2\/46/);
     assert.match(await page.locator('.hem-review-list .hem-review-card').first().innerText(), /score 2\/5/);
     assert.equal(await page.locator('.exam-v2-rubric-card').count(), 6);
 
     const firstRubric = page.locator('.exam-v2-rubric-card').first().locator('input');
-    await firstRubric.fill('10');
+    await firstRubric.evaluate((input) => {
+      input.value = '10';
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    });
     assert.match(await page.locator('.exam-v2-rubric-total').innerText(), /10\/60/);
 
     await context.close();
