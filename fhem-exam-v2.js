@@ -39,6 +39,9 @@
     return copy;
   };
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+  const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  })[character]);
 
   function readState() {
     try {
@@ -750,7 +753,7 @@
     const section = el("section", "hem-review-section exam-v2-open-review");
     section.innerHTML = `<div class="hem-section-heading"><div><p class="hem-kicker">${ref.label} · OPEN QUESTION / 60</p><h2>${question.title}</h2></div><p>Move each slider only after comparing your answer with the model outline. This is a formative Student Hub rubric.</p></div>`;
     const response = el("article", "exam-v2-open-response");
-    response.innerHTML = `<p class="hem-kicker">YOUR RESPONSE</p><div>${(active.answers?.[question.id] || "No answer written.").replace(/\n/g, "<br>")}</div>`;
+    response.innerHTML = `<p class="hem-kicker">YOUR RESPONSE</p><div>${escapeHtml(active.answers?.[question.id] || "No answer written.").replace(/\n/g, "<br>")}</div>`;
     section.appendChild(response);
 
     const outline = el("details", "exam-v2-outline");
@@ -803,7 +806,7 @@
     const section = el("section", "hem-review-section");
     section.innerHTML = `<div class="hem-section-heading"><div><p class="hem-kicker">${ref.label} · OPEN PRACTICE</p><h2>${question.question}</h2></div></div>`;
     const card = el("article", "hem-review-card");
-    card.innerHTML = `<div class="hem-open-model"><strong>Your answer</strong><br>${(state.active.answers?.[question.id] || "No answer written.").replace(/\n/g, "<br>")}</div><div class="hem-open-model"><strong>Model answer</strong><br>${question.answer}</div>${question.explanation ? `<p class="hem-review-answer"><strong>What to look for:</strong> ${question.explanation}</p>` : ""}`;
+    card.innerHTML = `<div class="hem-open-model"><strong>Your answer</strong><br>${escapeHtml(state.active.answers?.[question.id] || "No answer written.").replace(/\n/g, "<br>")}</div><div class="hem-open-model"><strong>Model answer</strong><br>${question.answer}</div>${question.explanation ? `<p class="hem-review-answer"><strong>What to look for:</strong> ${question.explanation}</p>` : ""}`;
     section.appendChild(card);
     return section;
   }
