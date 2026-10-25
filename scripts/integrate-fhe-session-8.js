@@ -102,6 +102,23 @@ updateJson('content/concepts.json', (items) => {
   appendUnique(items, payload.concepts);
 });
 
+updateText('notes-data.js', (text) => {
+  const activities = [
+    'mh-expected-loss',
+    'mh-coinsurance-dwl',
+    'mh-elasticity',
+    'mh-control-mix',
+    'mh-plan-compare',
+  ];
+  const match = text.match(/const LECTURE_ACTIVITIES = \[([^\]]*)\];/);
+  if (!match) throw new Error('LECTURE_ACTIVITIES list not found.');
+  const existing = new Set([...match[1].matchAll(/\"([^\"]+)\"/g)].map((item) => item[1]));
+  const missing = activities.filter((activity) => !existing.has(activity));
+  if (!missing.length) return text;
+  const addition = missing.map((activity) => `\"${activity}\"`).join(',');
+  return text.replace(/const LECTURE_ACTIVITIES = \[([^\]]*)\];/, `const LECTURE_ACTIVITIES = [$1,${addition}];`);
+});
+
 updateText('lecture.html', (text) => {
   if (!text.includes('fhe-session-8.css')) {
     text = text.replace(
