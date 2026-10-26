@@ -141,6 +141,7 @@
       ["lectures", "Sessions", `course.html?course=${COURSE_ID}&tab=lectures`],
       ["practice", "Practice", `course.html?course=${COURSE_ID}&tab=practice`],
       ["exam", "Exam centre", "fhem-exam.html"],
+      ["review", "Final review", "fhem-final-review.html"],
       ["resources", "Resources", `course.html?course=${COURSE_ID}&tab=resources`],
     ];
     for (const [key, label, href] of items) {
@@ -372,6 +373,7 @@
         <span>Current module · Health Economics</span>
         <span>${summary.available}/${path.sessions.length} Hub guides available</span>
         <a href="fhem-exam.html">Current-content mock ready →</a>
+        <a href="fhem-final-review.html">Final review ready →</a>
       </div>
     `;
     const actions = el("div", "hem-actions");
@@ -388,6 +390,7 @@
       ctx.pageLink("View all sessions", { tab: "lectures" }, "hem-button hem-secondary"),
       ctx.pageLink("Practice", { tab: "practice" }, "hem-button hem-secondary"),
       link("Exam centre", "fhem-exam.html", "hem-button hem-secondary"),
+      link("Final review", "fhem-final-review.html", "hem-button hem-secondary"),
     );
     copy.appendChild(actions);
     if (next) {
@@ -477,6 +480,7 @@
       toolCard("03 / APPLY", "Question bank", "Work through MCQs, true/false and short-answer practice written for this Student Hub.", `course.html?course=${COURSE_ID}&tab=practice#question-bank`, String(questionCount)),
       toolCard("04 / CONNECT", "Key concepts", "Jump across linked ideas such as information asymmetry, health capital, causality and physician agency.", `course.html?course=${COURSE_ID}&tab=concepts`, String(conceptCount)),
       toolCard("05 / SIMULATE", "Exam centre", "Run a 90-minute mixed mock or a 20-minute objective drill using the question bank from the available Hub sessions.", "fhem-exam.html", "90 min"),
+      toolCard("06 / CONSOLIDATE", "Final review", "Review all eight sessions, TA clarifications, formulas, exam traps and open-answer structure in one exam-eve workspace.", "fhem-final-review.html", "8 sessions"),
     );
     tools.appendChild(toolGrid);
     panel.appendChild(tools);

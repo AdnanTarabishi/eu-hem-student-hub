@@ -245,3 +245,27 @@ PID focuses mainly on the first mechanism.
 Practice-style variation emphasizes the second.
 
 > **Student note:** This is an original EU-HEM Hub explanation of Session 5. It does not reproduce the official slides or the assigned textbook chapters. Use Virtuale for the official course materials.
+
+## TA review addendum: a fee cut in three moves
+
+The 22 October TA review separates an ordinary labour–leisure response from evidence of physician-induced demand.
+
+### Move 1: the budget line pivots inward
+
+A lower fee means that every hour of physician work produces less income.
+
+### Move 2: substitution effect
+
+Leisure has become cheaper in forgone income. The physician therefore tends to consume more leisure and supply fewer services.
+
+### Move 3: income effect
+
+The fee cut also makes the physician poorer. If leisure is a normal good, the physician tends to consume less leisure and supply more work or services.
+
+The two effects oppose each other. Which dominates is an empirical question.
+
+### Identification warning
+
+A fee cut followed by **more** services does not by itself prove physician-induced demand. The ordinary income effect can generate the same volume response. PID requires evidence that the physician influenced patient demand against the physician's own assessment of the patient's best interest.
+
+> **Exam answer:** first decompose the fee response into substitution and income effects; only then discuss inducement and the evidence needed to identify it.

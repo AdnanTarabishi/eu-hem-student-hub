@@ -188,3 +188,31 @@ The final slides emphasize several points:
 - supporting families with children and investing in education may address long-run disparities.
 
 > **Student note:** This is an original EU-HEM Hub explanation of Session 4. It does not reproduce the official slides or the textbook answer key. Use Virtuale for the official course materials.
+
+## TA notation addendum: identify Greek letters by role
+
+The TA review highlights a notation trap: authors may reuse $\delta$ and $\gamma$ differently across chapters. Do not identify a parameter by the letter alone.
+
+### Depreciation rate
+
+The depreciation rate is the parameter that physically wears down health capital. It appears in the stock constraint and in the user-cost hurdle:
+
+$$
+H_t=(1-\text{depreciation})H_{t-1}+I_{t-1}
+$$
+
+$$
+r+\text{depreciation}
+$$
+
+The **allostatic-load hypothesis** is a direct causal story: chronic stress raises physical depreciation, increases the hurdle and lowers optimal health.
+
+### Discount rate or time preference
+
+The discount rate appears in preferences and determines how future utility is weighted. The **Fuchs hypothesis** is a common-factor story: more impatient people place less weight on future returns and may invest less in both schooling and health.
+
+### Why the distinction matters
+
+Allostatic load and Fuchs can both help explain an education–health gradient, but they move different parts of the model and imply different policies. Stress reduction targets physical depreciation; education and long-term investment incentives address a preference or investment channel.
+
+> **Exam rule:** write the role of the parameter before writing its symbol.
