@@ -267,7 +267,7 @@
   }
 
   function buildExam(mode) {
-    if (mode === "mock-3" || mode === "mock-4") return fixedExam(mode);
+    if (bank.fixedMocks.some((mock) => mock.id === mode)) return fixedExam(mode);
     if (mode === "random-official") return randomExam();
     if (mode === "comprehensive") return comprehensiveDrill();
     if (mode === "bank-mcq" || mode === "bank-binary" || mode === "bank-open") return focusedBank(mode);
@@ -387,7 +387,7 @@
 
     const hero = el("section", "hem-exam-hero exam-v2-hero");
     const copy = el("div", "hem-exam-copy");
-    copy.innerHTML = `<p class="hem-kicker">FHEM EXAM CENTRE / FORMAT-INFORMED PRACTICE</p><h1>Train the reasoning.<br><em>Simulate the structure.</em></h1><p>The centre now separates true exam-style practice from broad revision. Two fixed original mocks, a random official-format simulation and a comprehensive drill serve different preparation goals.</p><div class="hem-exam-facts"><span>2 fixed original mocks</span><span>${bank.mcqs.length + bank.binaries.length + bank.opens.length} exam-style bank items</span><span>Local-only progress</span></div>`;
+    copy.innerHTML = `<p class="hem-kicker">FHEM EXAM CENTRE / FORMAT-INFORMED PRACTICE</p><h1>Train the reasoning.<br><em>Simulate the structure.</em></h1><p>The centre now separates true exam-style practice from broad revision. Two fixed original mocks, a random official-format simulation and a comprehensive drill serve different preparation goals.</p><div class="hem-exam-facts"><span>${bank.fixedMocks.length} fixed original mocks</span><span>${bank.mcqs.length + bank.binaries.length + bank.opens.length} exam-style bank items</span><span>Local-only progress</span></div>`;
     const blueprint = el("aside", "hem-exam-official exam-v2-blueprint");
     blueprint.innerHTML = `<p class="hem-kicker">PATTERN OBSERVED IN TWO 2026 PRACTICE MOCKS</p><h2>90 minutes · 3 sections</h2><div class="hem-official-grid"><div class="hem-official-item"><span>Section A</span><strong>6 MCQ · 30</strong></div><div class="hem-official-item"><span>Section B</span><strong>2 Binary · 16</strong></div><div class="hem-official-item"><span>Section C</span><strong>1 Open · 60</strong></div><div class="hem-official-item"><span>Raw maximum</span><strong>106</strong></div></div><p>MCQ: fully correct +5, partly correct +2, incorrect −1, blank 0. Binary: correct +8, incorrect −2, blank 0. The Student Hub open-question rubric is educational and not an official marking scheme.</p>`;
     hero.append(copy, blueprint);
@@ -408,10 +408,19 @@
     fixedHeading.innerHTML = `<div><p class="hem-kicker">FIXED ORIGINAL PAPERS</p><h2>Repeatable mocks for comparable progress.</h2></div><p>These papers imitate the observed structure and difficulty logic without reproducing the uploaded questions.</p>`;
     shell.appendChild(fixedHeading);
     const fixedGrid = el("div", "exam-v2-fixed-grid");
-    fixedGrid.append(
-      modeCard("MOCK EXAM 3 / 90 MIN", "Cost sharing, incentives and equity", "A cross-session paper on demand, Grossman, disparities, physician behaviour and insurance design.", ["6 MCQ", "2 Binary", "1 Open", "106 raw points"], "Start Mock 3 →", "mock-3", true),
-      modeCard("MOCK EXAM 4 / 90 MIN", "Plan competition and premium risk", "A second paper centred on causal identification, practice variation and insurance-market equilibrium.", ["6 MCQ", "2 Binary", "1 Open", "106 raw points"], "Start Mock 4 →", "mock-4"),
-    );
+    bank.fixedMocks.forEach((mock, index) => {
+      fixedGrid.appendChild(
+        modeCard(
+          `${mock.title.toUpperCase()} / 90 MIN`,
+          mock.subtitle,
+          mock.description,
+          ["6 MCQ", "2 Binary", "1 Open", "106 raw points"],
+          `Start ${mock.title.replace("Exam ", "")} →`,
+          mock.id,
+          index === 0,
+        ),
+      );
+    });
     shell.appendChild(fixedGrid);
 
     const modesHeading = el("div", "hem-section-heading");
@@ -429,9 +438,9 @@
     shell.appendChild(bankHeading);
     const bankGrid = el("div", "exam-v2-bank-grid");
     bankGrid.append(
-      modeCard("24 ITEMS", "MCQ Partial-Credit Lab", "Distinguish the most complete answer from options that are true but incomplete.", ["+5 full", "+2 partial", "−1 wrong"], "Practise 12 MCQs →", "bank-mcq"),
-      modeCard("12 ITEMS", "Binary Trap Lab", "Train assumptions, absolute wording and reversed causal directions.", ["+8 correct", "−2 wrong", "0 blank"], "Practise all Binary →", "bank-binary"),
-      modeCard("8 CASES", "Open-Question Workshop", "Write one policy answer and score it against a structured 60-point rubric.", ["Model outline", "Common misses", "Self-assessment"], "Open a case →", "bank-open"),
+      modeCard(`${bank.mcqs.length} ITEMS`, "MCQ Partial-Credit Lab", "Distinguish the most complete answer from options that are true but incomplete.", ["+5 full", "+2 partial", "−1 wrong"], "Practise 12 MCQs →", "bank-mcq"),
+      modeCard(`${bank.binaries.length} ITEMS`, "Binary Trap Lab", "Train assumptions, absolute wording and reversed causal directions.", ["+8 correct", "−2 wrong", "0 blank"], "Practise all Binary →", "bank-binary"),
+      modeCard(`${bank.opens.length} CASES`, "Open-Question Workshop", "Write one policy answer and score it against a structured 60-point rubric.", ["Model outline", "Common misses", "Self-assessment"], "Open a case →", "bank-open"),
     );
     shell.appendChild(bankGrid);
 
