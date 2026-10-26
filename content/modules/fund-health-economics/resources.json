@@ -98,5 +98,22 @@
     "date": "2026-10-25",
     "topic": "fund-health-economics.moral-hazard",
     "description": "Official University of Bologna materials for Fundamentals in Health Economics. Sign in with your UniBo account."
+  },
+  {
+    "id": "fund-health-economics.r.final-review",
+    "title": "Final Exam Review · 27 October 2026",
+    "type": "Website",
+    "url": "https://adnantarabishi.github.io/eu-hem-student-hub/review/fhem-final-review.html",
+    "date": "2026-10-26",
+    "description": "Complete last-day review of Sessions 1–8 with the exact 6+2+1 format, two study plans, confusion pairs, graph practice, 26 rapid questions, an exact-scoring diagnostic and a 60-point open-answer workshop."
+  },
+  {
+    "id": "fund-health-economics.r.ta-22oct",
+    "title": "TA 22 October · Grossman made simple",
+    "type": "Website",
+    "url": "https://adnantarabishi.github.io/eu-hem-student-hub/review/fhem-final-review.html#grossman-ta",
+    "date": "2026-10-26",
+    "topic": "fund-health-economics.health-capital",
+    "description": "Exam-focused integration of the five-step Grossman review, stock–flow–hurdle distinction, curve-versus-line comparative statics, depreciation versus discounting, and physician fee-cut income/substitution effects."
   }
 ]
