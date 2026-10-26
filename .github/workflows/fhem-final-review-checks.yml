@@ -1,0 +1,45 @@
+name: FHEM final review checks
+
+on:
+  pull_request:
+    paths:
+      - "review/fhem-final-review.html"
+      - "review/fhem-final-review.css"
+      - "review/fhem-final-review-data.js"
+      - "review/fhem-final-review.js"
+      - "content/modules/fund-health-economics/resources.json"
+      - "tests/fhem-final-review/**"
+      - ".github/workflows/fhem-final-review-checks.yml"
+  push:
+    branches: [main]
+    paths:
+      - "review/fhem-final-review.html"
+      - "review/fhem-final-review.css"
+      - "review/fhem-final-review-data.js"
+      - "review/fhem-final-review.js"
+      - "content/modules/fund-health-economics/resources.json"
+      - "tests/fhem-final-review/**"
+      - ".github/workflows/fhem-final-review-checks.yml"
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Content and final-review data validation
+        run: |
+          node scripts/check-content.js
+          node scripts/stamp-versions.js --check
+          node --check review/fhem-final-review-data.js
+          node --check review/fhem-final-review.js
+          node tests/fhem-final-review/data.test.js
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Browser validation
+        run: node tests/fhem-final-review/browser.test.js .
