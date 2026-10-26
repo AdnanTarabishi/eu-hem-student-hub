@@ -1,0 +1,48 @@
+name: Patch FHEM exam-eve Mock 5
+on:
+  push:
+    branches: [feature/fhem-exam-eve-review]
+    paths:
+      - 'scripts/patch-fhem-exam-eve.js'
+      - '.github/workflows/fhem-exam-eve-patch.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/fhem-exam-eve-review
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check scripts/patch-fhem-exam-eve.js
+      - run: node scripts/patch-fhem-exam-eve.js
+      - run: |
+          node --check fhem-exam-v2.js
+          node scripts/stamp-versions.js
+          node scripts/stamp-versions.js --check
+      - name: Validate Mock 5 integration
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          const assert = require('assert/strict');
+          const js = fs.readFileSync('fhem-exam-v2.js','utf8');
+          assert.ok(js.includes('bank.fixedMocks.some'));
+          assert.ok(js.includes('bank.fixedMocks.forEach'));
+          assert.ok(js.includes('bank.mcqs.length'));
+          assert.ok(js.includes('bank.binaries.length'));
+          assert.ok(js.includes('bank.opens.length'));
+          console.log('Mock 5 dynamic integration passes.');
+          NODE
+      - name: Commit patch
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fhem-exam-v2.js fhem-exam-v2.css fhem-exam.html sw.js
+          git commit -m 'Expose Mock Exam 5 in Exam Centre'
+          git push origin HEAD:feature/fhem-exam-eve-review
