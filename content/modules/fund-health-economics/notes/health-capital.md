@@ -190,3 +190,46 @@ The lecture acknowledges that the idea of people choosing an optimal health path
 Session 4 uses this framework to interpret socioeconomic disparities in health.
 
 > **Student note:** This is an original EU-HEM Hub explanation of Session 3. It does not reproduce the official slides or the textbook answer key. Use Virtuale for the official course materials.
+
+## TA review addendum: Grossman made simple
+
+The 22 October TA review compresses the Grossman model into five connected pictures. The key is to preserve the economic chain rather than memorise isolated arrows.
+
+### 1. Health is a machine that wears out
+
+Health capital is the **stock**. It depreciates at rate $\delta$ and is repaired by gross investment $I$:
+
+$$
+H_t=(1-\delta_t)H_{t-1}+I_{t-1}
+$$
+
+Gross investment is a chosen **flow**. Depreciation is wear that happens to the inherited stock. Net investment is $I-\delta H$ and can be negative.
+
+### 2. The machine produces time
+
+The service flow from health is healthy time. More health means fewer days lost to illness and more time for work, health production and the home good.
+
+### 3. The PPF bends
+
+At very low health, an improvement releases so much sick time that health and the home good can rise together. This is the free-lunch region. After the peak of the frontier, extra health uses resources that could have produced the home good, so the true trade-off begins. A person valuing both goods chooses on this downward-sloping section.
+
+### 4. The investment rule
+
+The MEC curve gives the return to the **last** unit of health at each possible stock. The hurdle is $r+\delta$. Invest while MEC exceeds the hurdle and stop at:
+
+$$
+MEC(H^*)=r+\delta
+$$
+
+The MEC curve is a menu of possible health stocks, not one person's health path through age.
+
+### 5. Comparative statics: curve or line?
+
+- Wage and education change the return/productivity side and shift the MEC curve.
+- A change in the price or productivity of medical inputs changes the return from producing health.
+- Age raises depreciation $\delta$ and therefore shifts the hurdle line.
+- The interest rate $r$ also shifts the hurdle line.
+
+Always separate **health wanted** from **healthcare purchased**. Healthcare is an input. Education and age have clear effects on optimal health but ambiguous effects on healthcare demand because desired output and input efficiency can move in opposite directions.
+
+> **Exam check:** identify the stock, the flows, the hurdle, the object that shifts, and whether the question asks about health or healthcare.

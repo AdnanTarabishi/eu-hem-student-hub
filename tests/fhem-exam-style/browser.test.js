@@ -38,7 +38,7 @@ const mime = {
     assert.match(await page.locator('.exam-v2-blueprint').innerText(), /6 MCQ/);
     assert.match(await page.locator('.exam-v2-blueprint').innerText(), /2 Binary/);
     assert.match(await page.locator('.exam-v2-blueprint').innerText(), /1 Open/);
-    assert.equal(await page.locator('.exam-v2-fixed-grid .exam-v2-mode').count(), 2);
+    assert.equal(await page.locator('.exam-v2-fixed-grid .exam-v2-mode').count(), 3);
     assert.equal(await page.locator('.exam-v2-bank-grid .exam-v2-mode').count(), 3);
 
     await page.getByRole('button', { name: 'Start Mock 3' }).click();

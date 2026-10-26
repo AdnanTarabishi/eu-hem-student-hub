@@ -12,8 +12,23 @@ const root = path.resolve(process.argv[2] || ".");
 const output = process.env.STUDY_PRACTICE_SCREENSHOT_DIR || "/workspace/work/study-practice";
 const practiceStylesheet = process.env.STUDY_PRACTICE_STYLESHEET || "study-practice.css";
 const read = file => JSON.parse(fs.readFileSync(path.join(root, file), "utf8"));
-const bank = read("content/modules/fund-health-economics/questions.json");
-const cards = read("content/modules/fund-health-economics/flashcards.json");
+const examEve = (() => {
+  const sandbox = { window: {} };
+  require("node:vm").runInNewContext(
+    fs.readFileSync(path.join(root, "fhem-exam-eve-data.js"), "utf8"),
+    sandbox,
+    { filename: "fhem-exam-eve-data.js" },
+  );
+  return sandbox.window.FHEMExamEve;
+})();
+const bank = [
+  ...read("content/modules/fund-health-economics/questions.json"),
+  ...(examEve?.questions || []),
+];
+const cards = [
+  ...read("content/modules/fund-health-economics/flashcards.json"),
+  ...(examEve?.flashcards || []),
+];
 const fhemPath = read("content/modules/fund-health-economics/learning-path.json");
 const quickObjectiveTotal = fhemPath.sessions.filter(session => session.status === "available").length * 3;
 const mcq = bank.find(q => q.type === "mcq");
@@ -289,7 +304,7 @@ const rgbHex = colour => "#" + colour.match(/[\d.]+/g).slice(0, 3)
     assert.match(await page.locator(".exam-v2-blueprint").innerText(), /6 MCQ/);
     assert.match(await page.locator(".exam-v2-blueprint").innerText(), /2 Binary/);
     assert.match(await page.locator(".exam-v2-blueprint").innerText(), /1 Open/);
-    assert.equal(await page.locator(".exam-v2-fixed-grid .exam-v2-mode").count(), 2);
+    assert.equal(await page.locator(".exam-v2-fixed-grid .exam-v2-mode").count(), 3);
     assert.equal(await page.locator(".exam-v2-bank-grid .exam-v2-mode").count(), 3);
 
     await page.getByRole("button", { name: /Start Mock 3/ }).click();

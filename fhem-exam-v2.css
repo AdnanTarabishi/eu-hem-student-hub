@@ -244,3 +244,7 @@
   .exam-v2-answer-cell,
   .exam-v2-question-card .hem-exam-option { transition: none; }
 }
+
+
+/* Exam-eve fixed-mock expansion */
+.exam-v2-fixed-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
