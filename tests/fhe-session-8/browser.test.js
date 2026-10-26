@@ -37,7 +37,7 @@ const mime = {
     await page.locator('#lecture-content').waitFor({ state: 'visible' });
     assert.match(await page.locator('#lecture-title').innerText(), /Insure the risk/);
     assert.match(await page.locator('#lecture-class-label').innerText(), /CLASS 08/);
-    assert.equal((await page.locator('#lecture-question-count').innerText()).trim(), '26 practice questions');
+    assert.equal((await page.locator('#lecture-question-count').innerText()).trim(), '27 practice questions');
     assert.equal((await page.locator('#lecture-activity-count').innerText()).trim(), '5 interactive activities');
     assert.equal(await page.locator('#lecture-guide .section-intro').count() >= 20, true);
     assert.match(await page.locator('#lecture-guide').innerText(), /Value-Based Insurance Design/);
@@ -53,7 +53,7 @@ const mime = {
 
     await page.locator('.lecture-toolbar [data-view="practice"]').click();
     await page.locator('#practice').waitFor({ state: 'visible' });
-    assert.equal(await page.locator('#question-map button').count(), 26);
+    assert.equal(await page.locator('#question-map button').count(), 27);
     await page.locator('#quiz-card input[type="radio"]').nth(1).check();
     await page.getByRole('button', { name: 'Check answer', exact: true }).click();
     assert.match(await page.locator('#answer-feedback').innerText(), /right|Correct|Revisit/i);
@@ -80,8 +80,8 @@ const mime = {
     await course.goto(base + 'course.html?course=fund-health-econ-management&tab=lectures');
     await course.locator('[data-session="8"]').waitFor();
     assert.match(await course.locator('[data-session="8"]').innerText(), /Moral Hazard/);
-    assert.match(await course.locator('[data-session="8"]').innerText(), /50 flashcards/);
-    assert.match(await course.locator('[data-session="8"]').innerText(), /42 questions/);
+    assert.match(await course.locator('[data-session="8"]').innerText(), /52 flashcards/);
+    assert.match(await course.locator('[data-session="8"]').innerText(), /44 questions/);
     assert.match(await course.locator('[data-session="8"]').innerText(), /5 interactive tools/);
     await courseContext.close();
 
