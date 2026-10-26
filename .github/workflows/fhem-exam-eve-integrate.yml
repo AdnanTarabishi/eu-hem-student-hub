@@ -45,6 +45,7 @@ jobs:
           const review = fs.readFileSync('fhem-final-review.html','utf8');
           assert.ok(review.includes('fhem-final-review.css'));
           assert.ok(review.includes('fhem-final-review.js'));
+          assert.ok(review.includes('og:title'));
           const hub = fs.readFileSync('health-econ-management.js','utf8');
           assert.ok(hub.includes('Final review'));
           const notes3 = fs.readFileSync('content/modules/fund-health-economics/notes/health-capital.md','utf8');
