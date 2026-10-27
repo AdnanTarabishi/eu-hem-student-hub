@@ -70,7 +70,7 @@
     add(title, "p", "rth-subtitle", "Needs, Resources and Society");
     const meta = add(top, "div", "rth-header-meta");
     add(meta, "span", "rth-pill", ctx.course.info.cfu + " CFU · " + ctx.course.modules[0].info.professors.join(", "));
-    add(meta, "span", "rth-meta", "Expanded study edition · " + data.updated);
+    add(meta, "span", "rth-meta", "Source-led study edition · " + data.updated);
     meta.append(saveButton(ID));
     const labels = { overview: "Course hub", lectures: "Study guides", topics: "Reader", concepts: "Glossary", casebook: "Casebook", explore: "Explore", workshop: "Workshop", practice: "Practice", schedule: "Schedule", exam: "Exam", resources: "Sources" };
     const nav = add(box, "nav", "rth-tabs"); nav.setAttribute("aria-label", "Right to Health sections");
@@ -105,10 +105,11 @@
     });
     const stats = add(panel, "div", "rth-stats");
     [[data.units.length, "study guides"], [ctx.course.questions.filter(q=>q.type==="mcq").length,"original MCQs"],[ctx.course.flashcards.length,"flashcards"],["4","country readings"]].forEach(([n,l])=>{const b=add(stats,"div");add(b,"strong",null,String(n));add(b,"span",null,l);});
+    guestUpdates(panel,ctx);
     const row=add(panel,"div","rth-overview-row");
     const start=section(row,"YOUR STUDY PATH","Understand. Apply. Reflect.","Read a guide, explore a scenario, then use active recall. Suggested times are planning estimates, not official class durations.");
     const steps=add(start,"div","rth-steps");
-    [["Read","Source-led explanations and seven-point reviews.","lectures"],["Apply","Reason through 12 cases, then test the course explorers.","casebook"],["Reflect","Build a policy proposal for the workshop.","workshop"]].forEach(([t,d,k])=>{
+    [["Read","Source-led explanations and seven-point reviews.","lectures"],["Apply","Reason through "+data.cases.length+" cases, then test the course explorers.","casebook"],["Reflect","Build a policy proposal for the workshop.","workshop"]].forEach(([t,d,k])=>{
       const step=add(steps,"div");step.append(ctx.pageLink(t+" →",{tab:k},"rth-step-link"));add(step,"p",null,d);
     });
     const tracker=section(row,"ON THIS DEVICE","Your progress",p.read+" of "+data.units.length+" guides marked read; "+p.understood+" understood.");
@@ -117,8 +118,8 @@
     tracker.append(ctx.pageLink("Practice & recall →",{tab:"practice"},"button button-light"));
     const path=section(panel,"THE FOUR PERSPECTIVES","Build the foundations","");cards(path,ctx,data.units.slice(0,4));
     const bottom=section(panel,"CONNECT THE IDEAS","Four countries. Different choices.","Move from the legal and ethical foundations to financing, service delivery, access and accountability.");
-    bottom.append(ctx.pageLink("Compare the systems →",{tab:"explore"},"button button-light"),ctx.pageLink("Browse all 10 guides →",{tab:"lectures"},"button button-light"));
-    const casesBox=section(panel,"NEW · CASEBOOK","Practise the argument, not just the answer.","Twelve source-linked cases: make a first choice, build your analysis and uncover the reasoning one step at a time. Hypothetical examples and reading-based cases are clearly labelled.");
+    bottom.append(ctx.pageLink("Compare the systems →",{tab:"explore"},"button button-light"),ctx.pageLink("Browse all "+data.units.length+" guides →",{tab:"lectures"},"button button-light"));
+    const casesBox=section(panel,"NEW · CASEBOOK","Practise the argument, not just the answer.",data.cases.length+" source-linked cases: make a first choice, build your analysis and uncover the reasoning one step at a time. Hypothetical examples and reading-based cases are clearly labelled.");
     casesBox.classList.add("rth-casebook-banner");
     casesBox.append(ctx.pageLink("Open the casebook →",{tab:"casebook"},"button"));
     notice(panel,data.editorialStatus+" "+data.scope);
@@ -129,17 +130,36 @@
     add(list,"p",null,"The supplied organizational deck lists 30 contact hours and a written exam with multiple-choice and open questions. Exam details will be communicated by the teaching assistant. The final Q&A on 23 October is not an independently confirmed exam date.");
     add(list,"p",null,"Contact the lecturer via markus.frischhut@mci.edu, not the Virtuale chat. For organisational and exam questions: Sergio Dino, sergio.dino2@unibo.it. Join Teams through Virtuale using UniBo credentials. Sessions start on time.");
     add(list,"p",null,"The course notice says some full slide versions will appear after the relevant session. Class discussions and Virtuale content may be exam-relevant. These study aids do not replace them.");
+    if(data.guestReview)add(list,"p","rth-meta",data.guestReview.organisation);
     sources(list,["org"]);
   }
+  function evidenceReview(parent) {
+    if(!data.guestReview)return;
+    const box=add(parent,"details","rth-evidence-review");
+    add(box,"summary",null,"Source review: dates, duplicates and numerical cautions");
+    add(box,"p",null,data.guestReview.method);
+    add(box,"p","rth-meta",data.guestReview.duplicate+" "+data.guestReview.organisation);
+    for(const x of data.guestReview.checks){const r=add(box,"section");add(r,"h4",null,x.title);add(r,"p","rth-locator",x.location);add(r,"p",null,x.detail);}
+  }
+  function guestUpdates(panel,ctx) {
+    const units=data.units.filter(u=>u.kind==="guest");if(!units.length)return;
+    const box=section(panel,"GUEST LECTURES · "+data.guestReview.date,"From the country readings to the lectures","Three source-led guides connect payment, governance and practical access. They complement, rather than overwrite, the earlier country pre-readings.");box.classList.add("rth-guest-updates");
+    const grid=add(box,"div","rth-guest-grid");
+    for(const u of units){const c=add(grid,"article","rth-guest-card");add(c,"p","rth-eyebrow",u.country.toUpperCase()+" · "+u.pages+" PDF PAGES");add(c,"h3",null,u.title);add(c,"p",null,u.intro);add(c,"p","rth-meta",u.sections.length+" lesson sections · "+ctx.course.questions.filter(q=>q.topic===u.id&&q.type==="mcq").length+" original MCQs");c.append(guideLink(ctx,u,"Study this lecture →","button button-light"));}
+    notice(box,data.guestReview.missing);evidenceReview(box);
+  }
   function learningPath(panel,ctx) {
-    section(panel,"10 ORIGINAL GUIDES","A structured path through the course", "Study explanations based on the supplied files. Country readings keep their historical dates; supplementary clarifications are explicitly identified.");
-    const label=add(panel,"label","rth-field","Find a study guide");
-    const input=add(label,"input");input.type="search";input.placeholder="Try waiting, proportionality or financing";
-    const count=add(panel,"p","rth-meta");count.setAttribute("role","status");
-    const host=add(panel,"div");
-    function draw(){const q=input.value.trim().toLocaleLowerCase();const units=data.units.filter(u=>[u.title,u.intro,...u.sections.map(x=>x.title)].join(" ").toLocaleLowerCase().includes(q));host.replaceChildren();count.textContent=units.length+" of "+data.units.length+" guides · "+data.units.reduce((n,u)=>n+u.sections.length,0)+" explanation sections in this edition";if(units.length)cards(host,ctx,units);else notice(host,"No matching guide. Try a broader word.");}
-    input.addEventListener("input",draw);draw();
-    notice(panel,"The guides are not official lecture transcripts or a statement that future sessions have already taken place. Check Virtuale for full slides and announcements.");
+    section(panel,data.units.length+" ORIGINAL GUIDES","A structured path through the course","Keep foundations and pre-readings separate from guest lectures. Source dates and unresolved numerical issues remain visible.");
+    const controls=add(panel,"div","rth-guide-filters");const label=add(controls,"label","rth-field","Find a study guide");const input=add(label,"input");input.type="search";input.placeholder="Try waiting, proportionality or financing";
+    const filter=labelledSelect(controls,"Guide collection",[["all","All study guides"],["guest","Guest lectures"],["core","Foundations & pre-readings"]]);
+    const count=add(panel,"p","rth-meta");count.setAttribute("role","status");const host=add(panel,"div");
+    function draw(){const q=input.value.trim().toLocaleLowerCase();const units=data.units.filter(u=>(filter.value==="all"||(filter.value==="guest"?u.kind==="guest":u.kind!=="guest"))&&[u.title,u.intro,...u.sections.map(x=>x.title)].join(" ").toLocaleLowerCase().includes(q));host.replaceChildren();count.textContent=units.length+" of "+data.units.length+" guides · "+data.units.reduce((n,u)=>n+u.sections.length,0)+" explanation sections in this edition";if(units.length)cards(host,ctx,units);else notice(host,"No matching guide. Try a broader word.");}
+    input.addEventListener("input",draw);filter.addEventListener("change",draw);draw();notice(panel,"Original study aids, not official lecture transcripts or a guarantee of exam coverage. Check Virtuale for full slides and announcements.");
+  }
+  function companion(parent,ctx,u) {
+    const slug=u.kind==="guest"?u.country:u.slug;
+    const other=data.units.find(x=>x.slug===(u.kind==="guest"?slug:slug+"-lecture"));if(!other)return;
+    const box=add(parent,"div","rth-companion-link");add(box,"p","rth-meta",u.kind==="guest"?"Companion reading: the earlier report remains a separate, source-dated guide.":"A separate guide now covers the supplied guest lecture. It does not replace this historical pre-reading.");box.append(guideLink(ctx,other,u.kind==="guest"?"Open the country pre-reading →":"Open the guest lecture →","button button-light"));
   }
   function reader(panel,ctx) {
     const requested=ctx.params.topic;
@@ -152,6 +172,7 @@
     const article=add(layout,"article","rth-reading");article.id=u.id;
     add(article,"p","rth-eyebrow",u.kicker);add(article,"h2",null,u.title);add(article,"p","rth-lead",u.intro);
     add(article,"p","rth-meta",u.minutes+" min suggested study time · Original, AI-assisted explanation · Not lecturer-reviewed");
+    companion(article,ctx,u);
     const review=add(article,"details","rth-review");review.open=true;add(review,"summary",null,"5-minute review");const ul=add(review,"ul");u.review.forEach(t=>add(ul,"li",null,t));
     const jump=labelledSelect(article,"Jump to a section",[["","Choose one of "+u.sections.length+" sections"],...u.sections.map((x,i)=>[String(i),x.title])]);
     jump.classList.add("rth-section-jump");
@@ -213,7 +234,7 @@
     add(parent,"h3",null,"Compare two health systems");add(parent,"p",null,"Qualitative comparison of the assigned readings. There is no ranking and no claim that their historical indicators are a live, comparable dataset.");
     const controls=add(parent,"div","rth-controls");const values=Object.entries(PROFILES).map(([k,v])=>[k,v.name]);const left=labelledSelect(controls,"First country",values);const right=labelledSelect(controls,"Second country",values);right.value="italy";
     const grid=add(parent,"div","rth-compare-grid");
-    function draw(){grid.replaceChildren();[left.value,right.value].forEach(k=>{const v=PROFILES[k],card=add(grid,"article","rth-compare-card");add(card,"p","rth-eyebrow",v.tag);add(card,"h4",null,v.name);for(const [field,label]of [["funding","Financing"],["governance","Governance & delivery"],["access","Practical access"],["challenge","Question to take to class"]]){add(card,"h5",null,label);add(card,"p",null,v[field]);}card.append(guideLink(ctx,data.units.find(u=>u.slug===k),"Read country guide →"));sources(card,v.source);});}
+    function draw(){grid.replaceChildren();[left.value,right.value].forEach(k=>{const v=PROFILES[k],card=add(grid,"article","rth-compare-card");add(card,"p","rth-eyebrow",v.tag);add(card,"h4",null,v.name);for(const [field,label]of [["funding","Financing"],["governance","Governance & delivery"],["access","Practical access"],["challenge","Question to take to class"]]){add(card,"h5",null,label);add(card,"p",null,v[field]);}card.append(guideLink(ctx,data.units.find(u=>u.slug===k),"Read country guide →"));const guest=data.units.find(u=>u.slug===k+"-lecture");if(guest)card.append(guideLink(ctx,guest,"Guest lecture →","button button-light"));sources(card,v.source);});}
     left.addEventListener("change",draw);right.addEventListener("change",draw);draw();
   }
   function aaaq(parent) {
@@ -248,9 +269,49 @@
       add(out,"p","rth-meta","Arithmetic: compensation − predicted claims. Try changing compensation from 5,500 to 7,000 while holding claims fixed.");}
     c.addEventListener("input",draw);cost.addEventListener("input",draw);draw();sources(parent,["risk","nl08"]);
   }
+  // Pure arithmetic helpers; all lab numbers are invented, not actual tariffs.
+  const validAmount=x=>typeof x==="number"&&Number.isFinite(x)&&x>=0&&x<=1e8;
+  function paymentModel(mode,v) {
+    if(!v||typeof v!=="object")return null;let revenue,base,activity;
+    if(mode==="capitation") {if(![v.people,v.rate,v.cost].every(validAmount)||!Number.isInteger(v.people))return null;revenue=v.people*v.rate;}
+    else if(mode==="drg") {if(![v.cases,v.base,v.weight,v.cost].every(validAmount)||!Number.isInteger(v.cases))return null;revenue=v.cases*v.base*v.weight;}
+    else if(mode==="blended") {if(![v.baseline,v.activityIndex].every(validAmount)||v.activityIndex>300)return null;base=.7*v.baseline;activity=.3*v.baseline*v.activityIndex/100;revenue=base+activity;}
+    else return null;
+    if(!Number.isFinite(revenue)||revenue>1e12)return null;
+    return {revenue,margin:mode==="blended"?null:revenue-v.cost,...(mode==="blended"?{base,activity}:{})};
+  }
+  function cappedPayment(charges,ceiling){return validAmount(charges)&&validAmount(ceiling)?{paid:Math.min(charges,ceiling),above:Math.max(0,charges-ceiling)}:null;}
+  function labNumber(parent,label,value,whole=false,max=1e8) {
+    const l=add(parent,"label","rth-field",label),n=add(l,"input");n.type="number";n.min="0";n.max=String(max);n.step=whole?"1":"any";n.value=String(value);return n;
+  }
+  function paymentLab(parent) {
+    add(parent,"h3",null,"Provider payment: change the incentive");notice(parent,"Original hypothetical arithmetic, not actual tariffs or a profit forecast. Models omit clinical quality, overhead detail and real contractual adjustments. No information is saved or submitted.");
+    const mode=labelledSelect(parent,"Payment model",[["capitation","Capitation — listed patients"],["drg","Relative-weight case payment"],["blended","Blended funding — 70% base / 30% activity"]]);const host=add(parent,"div");
+    function setup(){host.replaceChildren();const fields=add(host,"div","rth-lab-controls"),inputs={};let definitions;
+      if(mode.value==="capitation")definitions=[["people","Listed patients",40,true],["rate","Payment per listed patient (units)",200],["cost","Total assumed cost (units)",7000]];
+      else if(mode.value==="drg")definitions=[["cases","Number of cases",10,true],["base","Base case payment (units)",2000],["weight","Relative weight",1.4],["cost","Total assumed cost (units)",24000]];
+      else definitions=[["baseline","Baseline funding (million units)",100],["activityIndex","Activity index (100 = baseline)",120,false,300]];
+      for(const [key,label,value,whole,max] of definitions)inputs[key]=labNumber(fields,label,value,whole,max);
+      const out=add(host,"div","rth-output rth-lab-output");out.setAttribute("role","status");
+      function draw(){out.replaceChildren();const values={};let invalid=false;for(const [key,input]of Object.entries(inputs)){if(!input.value.trim()||!input.checkValidity())invalid=true;values[key]=input.valueAsNumber;}const x=invalid?null:paymentModel(mode.value,values);
+        if(!x){add(out,"p",null,"Enter valid non-negative amounts; counts must be whole numbers. Empty fields are not zero. Activity index is limited to 300.");return;}
+        const f=x=>new Intl.NumberFormat("en",{maximumFractionDigits:2}).format(x);add(out,"p","rth-eyebrow","SIMPLIFIED REVENUE");add(out,"strong","rth-number",f(x.revenue)+(mode.value==="blended"?" million units":" units"));
+        if(mode.value==="blended"){add(out,"p",null,"Fixed base: "+f(x.base)+"; activity component: "+f(x.activity)+". Only the activity component scales. This illustration holds the base fixed and omits other funding rules.");}
+        else add(out,"p",null,"Revenue minus assumed total cost = "+f(x.margin)+" units. This is a teaching margin, not a guarantee of real profit or evidence of actual provider behaviour.");
+      }
+      for(const n of Object.values(inputs))n.addEventListener("input",draw);draw();
+    }
+    mode.addEventListener("change",setup);setup();sources(parent,["italy-lecture26","norway-lecture26"]);
+  }
+  function ceilingLab(parent) {
+    add(parent,"h3",null,"Cost sharing: what a ceiling changes");notice(parent,"Invented units, not Norway’s actual ceiling or an eligibility check. Assume every entered charge qualifies and no exemptions or other rules apply. Nothing is saved or submitted.");
+    const fields=add(parent,"div","rth-lab-controls"),charges=labNumber(fields,"Eligible charges (invented units)",420),ceiling=labNumber(fields,"Assumed ceiling (invented units)",300),out=add(parent,"div","rth-output rth-lab-output");out.setAttribute("role","status");
+    function draw(){out.replaceChildren();const x=charges.value.trim()&&ceiling.value.trim()&&charges.checkValidity()&&ceiling.checkValidity()?cappedPayment(charges.valueAsNumber,ceiling.valueAsNumber):null;if(!x){add(out,"p",null,"Enter both finite, non-negative amounts up to 100,000,000. Empty fields are not zero.");return;}const f=n=>new Intl.NumberFormat("en",{maximumFractionDigits:2}).format(n);add(out,"p","rth-eyebrow","SIMPLIFIED PATIENT PAYMENT");add(out,"strong","rth-number",f(x.paid)+" units");add(out,"p",null,"Payment = min(eligible charges, ceiling). Charges above the assumed ceiling: "+f(x.above)+" units. The slide explains the capped shape, not a current amount or full scope of eligibility.");}
+    charges.addEventListener("input",draw);ceiling.addEventListener("input",draw);draw();sources(parent,["norway-lecture26"]);
+  }
   function explore(panel,ctx) {
-    section(panel,"LEARN BY TESTING IDEAS","Explore the course","Four lightweight activities. Sources, assumptions and limitations stay visible beside each tool.");
-    const tools=[["systems","Compare health systems",compare],["aaaq","AAAQ case practice",aaaq],["mobility","Patient-mobility routes",mobility],["risk","Risk-equalisation arithmetic",risk]];
+    section(panel,"LEARN BY TESTING IDEAS","Explore the course","Six lightweight activities. Sources, assumptions and limitations stay visible beside each tool.");
+    const tools=[["systems","Compare health systems",compare],["aaaq","AAAQ case practice",aaaq],["mobility","Patient-mobility routes",mobility],["risk","Risk-equalisation arithmetic",risk],["payment","Provider-payment lab",paymentLab],["ceiling","Cost-sharing ceiling",ceilingLab]];
     const select=labelledSelect(panel,"Choose an activity",tools.map(([k,t])=>[k,t]));const host=add(panel,"div","rth-tool");
     const draw=()=>{host.replaceChildren();tools.find(t=>t[0]===select.value)[2](host,ctx);};select.addEventListener("change",draw);draw();
   }
@@ -354,7 +415,7 @@
     d.append(external("Country-session notice on Virtuale ↗","https://virtuale.unibo.it/course/section.php?id=866428"),external("Workshop notice on Virtuale ↗","https://virtuale.unibo.it/course/section.php?id=866430"));
   }
   function render(panel,tab,ctx) {
-    if(!data)return false;panel.classList.add("rth-panel");
+    if(!data)return false;document.body.classList.add("rth-page");panel.classList.add("rth-panel");
     const handlers={overview,lectures:learningPath,topics:reader,concepts:glossary,casebook,explore,workshop,resources:sourceLibrary};
     if(handlers[tab]){handlers[tab](panel,ctx);return true;}
     if(tab==="practice") {section(panel,"ACTIVE RECALL","Practice with explanations",ctx.course.questions.filter(q=>q.type==="mcq").length+" original multiple-choice questions, "+ctx.course.questions.filter(q=>q.type==="short-answer").length+" open-answer scaffolds and "+ctx.course.flashcards.length+" flashcards. Every answer includes its source. Not past papers or predictions of the exam.");notice(panel,"Course sources are the basis; invented scenarios are labelled. The shared practice tools below keep their existing local-progress, topic filters and review controls.");}
@@ -363,5 +424,5 @@
     return false;
   }
   root.RightToHealth={prepare,ready:()=>Boolean(data),header,render,expectedMargin,cleanDraft,scheduleNotes,organisation,resourceCaveat};
-  if(typeof module!=="undefined"&&module.exports)module.exports={expectedMargin,cleanDraft};
+  if(typeof module!=="undefined"&&module.exports)module.exports={expectedMargin,cleanDraft,paymentModel,cappedPayment};
 })(typeof window!=="undefined"?window:globalThis);

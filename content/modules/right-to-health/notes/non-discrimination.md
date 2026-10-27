@@ -1,7 +1,7 @@
 ---
 topic: right-to-health.non-discrimination
 author: EU-HEM Student Hub (AI-assisted)
-updated: 2026-10-08
+updated: 2026-10-27
 ---
 
 ## 5-minute review

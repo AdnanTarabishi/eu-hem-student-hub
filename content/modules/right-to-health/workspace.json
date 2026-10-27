@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "course": "right-to-health",
-  "updated": "2026-10-08",
+  "updated": "2026-10-27",
   "editorialStatus": "Student-made, AI-assisted study edition; not reviewed or endorsed by the lecturer.",
   "scope": "Original explanations based on the supplied course materials and assigned readings. Historical findings keep their source dates. Supplementary public-source clarifications are labelled. Not legal or medical advice and not a complete exam syllabus.",
   "sources": [
@@ -196,6 +196,30 @@
       "kind": "Further reading",
       "locator": "Italian-language reading listed in the course notice",
       "note": "Listed by the lecturer as 2026 and open access. Publisher page could not be independently retrieved; publication details remain as supplied."
+    },
+    {
+      "id": "italy-lecture26",
+      "title": "Rosella Levaggi — Italy health system guest lecture (2026)",
+      "kind": "Guest lecture",
+      "url": "https://virtuale.unibo.it/course/section.php?id=866428",
+      "locator": "37 PDF pages; Health care system Italy 2026.pdf",
+      "note": "Supplied guest presentation. Original explanations cite PDF page positions, not printed slide labels; full slides remain on Virtuale. Student-use material: commercialisation forbidden in the deck. Duplicate Italian upload is byte-identical. Dates and unresolved denominators remain explicit."
+    },
+    {
+      "id": "austria-lecture26",
+      "title": "Lukas Kerschbaumer — Austria health system guest lecture (2026)",
+      "kind": "Guest lecture",
+      "url": "https://virtuale.unibo.it/course/section.php?id=866428",
+      "locator": "28 PDF pages; Austrian_Healthcare_Evolution_EN.pdf",
+      "note": "Supplied guest presentation. Original explanations cite PDF page positions, not printed slide labels; full slides remain on Virtuale. Internal numerical conflicts on PDF pp. 19 and 21–22 are flagged, not silently corrected or used as settled recall facts. Reform targets are not treated as completed outcomes."
+    },
+    {
+      "id": "norway-lecture26",
+      "title": "Terje P. Hagen — Norway health system guest lecture (2026)",
+      "kind": "Guest lecture",
+      "url": "https://virtuale.unibo.it/course/section.php?id=866428",
+      "locator": "73 PDF pages; The Norwegian health care system - Oct2026.pdf",
+      "note": "Supplied guest presentation. Original explanations cite PDF page positions, not printed slide labels; full slides remain on Virtuale. Presentation includes historical charts, dated policy amounts and inconsistent printed slide numbers. It is not an independently verified current-law or clinical guidance source."
     }
   ],
   "units": [
@@ -1233,6 +1257,444 @@
         "council06",
         "manifesto"
       ]
+    },
+    {
+      "id": "right-to-health.italy-lecture",
+      "slug": "italy-lecture",
+      "title": "Italy guest lecture: payments, regions & patient mobility",
+      "kicker": "11 / GUEST LECTURE",
+      "intro": "An original guide to Rosella Levaggi’s 37-page presentation. Follow its argument from payment units to regional organisation, access and patient flows. This complements the separate 2024 pre-reading.",
+      "minutes": 35,
+      "review": [
+        "Public financing and regional organisation must be analysed together.",
+        "Capitation pays for a listed patient; DRGs classify cases for relative payment.",
+        "A uniform payment need not create the same margin for every patient.",
+        "National LEA and regional resources connect solidarity with delivery.",
+        "The ASL models differ in purchasing, provision and patient choice.",
+        "The mobility examples mainly concern movement between Italian regions.",
+        "Keep observation years, units and denominators visible; unresolved figures are not a current dataset."
+      ],
+      "sections": [
+        {
+          "title": "1. Read the financing picture before explaining the incentives",
+          "paragraphs": [
+            "The presentation begins with a largely publicly financed health system organised regionally. It then places spending levels beside the composition of financing and the household burden. These are distinct questions: how much is spent, who provides the money, and how the burden is distributed. The charts use euros, purchasing-power standards, GDP shares and percentages of private spending. A comparison is meaningful only when the unit, denominator and year are retained.",
+            "The 2023 private-spending chart divides private expenditure into direct household payment and intermediated funding, comparing northern, central and southern/island areas. Its vertical axis starts above zero, so bar heights must not be read as absolute expenditure volumes. The regional impoverishment-risk figure illustrates distributional concerns. The supplementary-insurance slide then describes coverage of gaps, additional services and co-payments. These explanations do not establish every individual’s current insurance entitlement or tax treatment."
+          ],
+          "sources": [
+            "italy-lecture26"
+          ],
+          "locator": "Health care system Italy 2026.pdf, PDF pp. 2–8",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "2. Capitation: the payment unit and the patient mix",
+          "paragraphs": [
+            "In the lecture’s simplified capitation account, a doctor receives a fixed amount for each listed patient rather than a separate payment for every visit. The payment is intended to provide fair remuneration on average, while individual patients can require different resources. This is why the low-, medium- and high-cost groups in the teaching table have different margins. The size and composition of the list therefore matter alongside the nominal payment per patient.",
+            "An original example makes the arithmetic explicit: a fictional practice with 40 patients paid 200 units each receives 8,000 units. If its total costs are 7,000, the simplified margin is 1,000. Changing the patient mix can change costs without changing revenue. This illustrates a possible incentive, not proof that a doctor actually selects patients or reduces care. The lecture also mentions availability obligations and list limits; those are retained as source descriptions, not independently verified current contractual rules."
+          ],
+          "sources": [
+            "italy-lecture26"
+          ],
+          "locator": "Health care system Italy 2026.pdf, PDF pp. 9–11",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "3. DRGs: classification, relative payment and trade-offs",
+          "paragraphs": [
+            "The patient-classification diagram distinguishes grouping by severity from grouping by resources, placing DRGs on the resource-related side. The presentation describes a decision process based on the principal diagnosis, assignment to a DRG, and payment expressed relative to a reference group. The important distinction from capitation is the payment unit: a classified case rather than an enrolled person. It is not a promise that all cases in a group have identical costs or outcomes.",
+            "An original relative-payment illustration uses a base amount of 2,000 and weight 1.4 to obtain 2,800 units per case, before any other rules. The lecture lists reuse of existing data, transparency and possible efficiency gains, but also strategic behaviour, backward-looking classification, difficulties with new technology and questions about quality. A balanced answer explains both sides. The interactive exercise is not a working Italian tariff calculator and does not claim to reproduce the complete reimbursement system."
+          ],
+          "sources": [
+            "italy-lecture26"
+          ],
+          "locator": "Health care system Italy 2026.pdf, PDF pp. 12–15",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "4. National standards and regional fiscal responsibility",
+          "paragraphs": [
+            "The organisational diagram places national LEA and general rules above regional responsibility for organising services and financing them through own revenues and equalisation. Regions can organise purchasing and provision differently within that wider framework. The presentation’s fiscal-federalism question is how devolved delivery can coexist with national commitments and redistribution. Regional power and accountability are not automatically identical, which is why the lecture treats their relationship as a problem to examine.",
+            "The closing argument contrasts relatively similar spending with uneven revenues and a need for equalisation. The final fiscal-residuum table cites Ferrario and Zanardi (2009): it is a historical illustration, not a 2026 fiscal dataset. Page 18’s tax descriptions and rates are also not independently verified current tax guidance. The equipment table on page 21 lacks a clearly stated unit and year; do not convert it into a per-population ranking. The source supports an institutional argument without settling every contemporary numerical question."
+          ],
+          "sources": [
+            "italy-lecture26"
+          ],
+          "locator": "Health care system Italy 2026.pdf, PDF pp. 16–21 and 36–37",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "5. Three ASL models: who purchases and who provides?",
+          "paragraphs": [
+            "The internal-market discussion separates purchasing care from producing it. The presentation identifies three ASL models. In its third-payer account, associated with Lombardy, patients choose providers and private providers compete with public ones. In the sponsor account, purchasing involves agreements with external suppliers and budgets for facilities. These are organisational descriptions: naming a model should be followed by explaining the relevant relationship between payer, provider and patient.",
+            "The programmer account combines purchasing and production and describes decisions about contracted facilities on efficiency and economic grounds. Its discussion of indirect reimbursement outside those arrangements is explicitly not automatic and refers to the contracted price. An original comparison exercise should ask which actor chooses or contracts the provider, whether the purchaser also produces care, and how choice interacts with financing. Do not turn this typology into a guarantee that a particular patient can claim any private bill."
+          ],
+          "sources": [
+            "italy-lecture26"
+          ],
+          "locator": "Health care system Italy 2026.pdf, PDF pp. 22–26",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "6. Waiting-time evidence: do not merge unlike percentages",
+          "paragraphs": [
+            "The lecture lists quality, soft budget constraints, extra-regional mobility and equity as problems. Its waiting-time narrative discusses requests, pre-lists and treatment within prescribed time limits in the first seven months of 2025. The next page presents a regional table for categories B and D, with their own waiting-time definitions. These displays are adjacent but the slides do not provide enough methodological detail to establish identical populations, denominators or observation periods.",
+            "The appropriate study response is to identify what each measure claims to count and state what would be needed to compare them. The table defines B as within ten days and D as within thirty days for visits or sixty for instrumental services, in that source’s account. Do not silently replace the narrative percentages with the table’s higher values, infer a trend, or rank regions without the missing context. This is a source-interpretation task, not an independently verified statement of current patient rights."
+          ],
+          "sources": [
+            "italy-lecture26"
+          ],
+          "locator": "Health care system Italy 2026.pdf, PDF pp. 27–29",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "7. Mobility within Italy: patient choice also moves resources",
+          "paragraphs": [
+            "The heading “cross border mobility” is used here mainly for movement across Italian regional borders. The slide describes south-to-north flows and cites a value of EUR 5.04 billion for 2022. This should not be presented as spending on treatment abroad under an EU route. The analytical link is between unequal supply, individual access and the movement of financial resources: a patient’s choice can matter to both the destination provider and the home region.",
+            "The following pages show different historical balances, service categories and monetary amounts. They do not establish a common denominator for every percentage and total. In particular, page 32’s narrower categories and amounts should not be combined arithmetically with the 2022 total on page 30. The regional-deficit table is historical too. An original policy argument can discuss access opportunities and redistributive pressure, but cannot infer a single net welfare effect or a complete current mobility balance from these slides."
+          ],
+          "sources": [
+            "italy-lecture26"
+          ],
+          "locator": "Health care system Italy 2026.pdf, PDF pp. 30–33",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "8. Read the two cited mobility studies as bounded findings",
+          "paragraphs": [
+            "The lecture’s account of Berta et al. (2022) distinguishes patients from neighbouring regions and longer-distance patients in Lombardy. It describes differences in age, complexity, provider type, timing and reimbursement, and reports that residents were not discriminated against in that study’s account. This is a summary on a slide, not a fresh reading of the full article. It does not establish that mobility can never disadvantage residents in any place or period.",
+            "The account of Martini et al. (2021) concerns hip replacement in Lombardy, Veneto and Emilia-Romagna, considering quality, waiting time and distance. Different choice patterns are described across the three regions. A defensible answer preserves the procedure and geographical setting rather than generalising to all Italian patients. Original discussion prompt: what evidence would distinguish patients attracted by a destination from those pushed away by local barriers? The lecture introduces this question without providing a universal causal answer."
+          ],
+          "sources": [
+            "italy-lecture26"
+          ],
+          "locator": "Health care system Italy 2026.pdf, PDF pp. 34–35",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "9. Assemble the argument: solidarity, incentives and evidence",
+          "paragraphs": [
+            "The lecture can be read as a connected argument. National commitments and equalisation support solidarity; regional authorities organise delivery; contracts and payment methods create the operating environment of providers; waiting and mobility reveal possible differences between formal provision and practical access. The phrase “soft budget constraint” is listed among the concerns, but no quantified causal estimate is supplied. It should not be used by itself to explain every regional deficit.",
+            "Original answer structure: identify the responsibility and geographical level, define the payment unit, explain one plausible incentive, and discuss an access or equity consequence with an explicit evidence limit. Preserve questions where the source supplies no final answer. The 2024 country report remains a separate reading, and its details should be attributed separately. The objective is not to memorise a uniform national model, but to explain how standards, regional choices and financing interact."
+          ],
+          "sources": [
+            "italy-lecture26"
+          ],
+          "locator": "Health care system Italy 2026.pdf, PDF pp. 10–15, 17–19, 27 and 36–37",
+          "edition": "Guest lecture study guide"
+        }
+      ],
+      "sources": [
+        "italy-lecture26"
+      ],
+      "kind": "guest",
+      "sourceFile": "Health care system Italy 2026.pdf",
+      "country": "italy",
+      "pages": 37
+    },
+    {
+      "id": "right-to-health.austria-lecture",
+      "slug": "austria-lecture",
+      "title": "Austria guest lecture: institutions, access & transformation",
+      "kicker": "12 / GUEST LECTURE",
+      "intro": "An original guide to Lukas Kerschbaumer’s 28-page presentation. Preserve its four-part narrative: historical foundations, path dependency, fragmented governance and a digital-to-ambulatory reform strategy.",
+      "minutes": 32,
+      "review": [
+        "The historical foundations are contribution-based finance, self-administration and occupational grouping.",
+        "Path dependency explains persistence without claiming that change is impossible.",
+        "Fewer insurance carriers do not prove all intended savings or harmonisation occurred.",
+        "Federal government, Länder and social insurance have different responsibilities.",
+        "Coverage and access differ; a contracted reimbursement rate is not a private invoice.",
+        "The digital–ambulatory–inpatient sequence is a strategy, not proof of completed reform.",
+        "Internal numerical conflicts must be visible rather than silently corrected."
+      ],
+      "sections": [
+        {
+          "title": "1. Follow the narrative rather than memorising isolated numbers",
+          "paragraphs": [
+            "The opening figures provide demographic and health context using material attributed to the 2025 country profile. The explanatory narrative then follows historical foundations, institutional resilience, governance and transformation. This framing treats the health system as a set of persistent relationships, not just a financing label. Earlier arrangements affect who holds resources, how decisions are negotiated and which reforms can be implemented.",
+            "The Bismarckian foundation is described through mandatory employer and employee contributions, corporatist self-administration and occupational grouping. Later slides also show tax finance, so contribution-based does not mean tax-free. An original comparison question is why two systems associated with Bismarck can still differ in insurer membership, competition and choice. Use the separate Austrian and Dutch sources rather than assuming that a shared model label makes their institutions identical."
+          ],
+          "sources": [
+            "austria-lecture26"
+          ],
+          "locator": "Austrian_Healthcare_Evolution_EN.pdf, PDF pp. 3–8",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "2. Path dependency: European pressure meets national institutions",
+          "paragraphs": [
+            "The lecture places European patient-mobility pressure beside persistent national funding flows, labour rules, tariff systems and influential organisations. Its argument is that national actors may use European resources selectively while retaining core welfare-state structures. Path dependency therefore explains how previous arrangements condition later choices; it does not imply that cooperation or reform is impossible.",
+            "The Braunau/Simbach example pairs cooperation with labour-law barriers and duplicated tariffs. The Healthacross account pairs infrastructure cooperation with Austrian/Czech price and billing differences. These are the lecturer’s project summaries, not independently verified current project descriptions. The learning point is to name the specific barrier: a building, funding opportunity or mobility right does not automatically create a unified staffing or reimbursement arrangement."
+          ],
+          "sources": [
+            "austria-lecture26"
+          ],
+          "locator": "Austrian_Healthcare_Evolution_EN.pdf, PDF pp. 9–10",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "3. The 2020 fund merger: distinguish structure from performance",
+          "paragraphs": [
+            "The presentation describes consolidation from 18 health-insurance funds to three principal carriers and names ÖGK, SVS and BVAEB for their respective insured groups. It attributes an evaluation to the Court of Audit (2022), reporting fewer carriers and partial harmonisation while intended savings were not realised and state-level contracting remained fragmented. These findings remain attributed to the supplied slide; the audit itself has not been independently examined.",
+            "A merger can be assessed through the number of organisations, consistency of benefits, contracting arrangements and costs. A change on the first dimension does not establish success on all the others. An original evaluation question should separate implementation from outcomes and distinguish the organisation’s budget from total health expenditure. Do not infer that consolidation necessarily produces identical fees, a unified hospital budget or a specified reduction in national spending."
+          ],
+          "sources": [
+            "austria-lecture26"
+          ],
+          "locator": "Austrian_Healthcare_Evolution_EN.pdf, PDF p. 11",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "4. A governance matrix and the difficulty of coordination",
+          "paragraphs": [
+            "The governance matrix gives the federal level a regulatory and national-target role, the nine Länder responsibilities for hospitals, and social insurance responsibilities for contributions and outpatient finance, together with contributions to hospitals. The lecture calls the division of funding and provision a fragmentation dilemma. The problem is not simply having many organisations: a change in the setting of care can affect separate budgets and decision-makers.",
+            "Original explanatory example: moving an appropriate episode from hospital to outpatient care may reduce expenditure in one budget while requiring extra capacity in another. This illustrates a possible coordination problem, not measured savings. A policy answer should identify the affected actors and the mechanism needed to align their decisions. The simplified matrix does not show that every provider has identical ownership, contracts or operational arrangements."
+          ],
+          "sources": [
+            "austria-lecture26"
+          ],
+          "locator": "Austrian_Healthcare_Evolution_EN.pdf, PDF pp. 12 and 19",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "5. Coverage versus access: the wait-or-pay problem",
+          "paragraphs": [
+            "The lecture places near-universal insurance coverage beside a practical access problem: patients may wait for contracted care or pay privately. It describes reimbursement of roughly 80% of the contracted rate, not 80% of any private invoice. Because an invoice can exceed the reference rate, these percentages can imply very different patient costs. The source is a teaching account, not an individual reimbursement decision.",
+            "The service-specific chart asks another question: what share of spending on each category is financed by government and compulsory schemes? That is neither the proportion of people insured nor an automatic reimbursement rate for each service user. Original analytical prompt: distinguish population coverage, inclusion of a service, appointment availability and effective financial burden. High coverage in one sense does not demonstrate timely, local access without upfront payment."
+          ],
+          "sources": [
+            "austria-lecture26"
+          ],
+          "locator": "Austrian_Healthcare_Evolution_EN.pdf, PDF pp. 13 and 23",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "6. Resources, outcomes and risk factors measure different things",
+          "paragraphs": [
+            "The figures cover life expectancy, education-related differences, healthy life years, avoidable mortality, behavioural risks and professional density. Their reference years differ. They support a multidimensional description rather than a single score. An overall longevity figure can coexist with educational differences, while high professional density does not reveal whether contracted appointments are accessible in every locality or specialty.",
+            "The mortality displays distinguish preventable and treatable causes, whereas workforce and spending figures describe resources. An original assessment should specify whether a proposed reform targets prevention, treatment, geographical access or coordination. A cross-country chart does not by itself identify the causal effect of the financing model. These guides interpret the figures without copying their images or reconstructing a complete dataset from approximate bar heights."
+          ],
+          "sources": [
+            "austria-lecture26"
+          ],
+          "locator": "Austrian_Healthcare_Evolution_EN.pdf, PDF pp. 4–6 and 14–18",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "7. The reform package: means, targets and outcomes",
+          "paragraphs": [
+            "The presentation describes investment in hospital restructuring, contracted outpatient medicine, digital systems and long-term care/prevention. Its digital–ambulatory–inpatient sequence puts navigation and digital entry before outpatient treatment, reserving hospital care for the cases for which it is needed in that strategy. ELGA, the 1450 service and primary-care centres are presented as tools for networking a historically fragmented system.",
+            "These are the lecture’s plans and targets, not evidence that every component is complete or a clinical triage rule. Page 24 combines annual allocations and a five-year amount; they cannot simply be added as annual spending. Original evaluation design: identify intended beneficiaries, the actor responsible, an implementation measure and an outcome measure. An inclusion safeguard for people unable to use digital tools would be your proposed policy consideration, not an outcome already established by the slides."
+          ],
+          "sources": [
+            "austria-lecture26"
+          ],
+          "locator": "Austrian_Healthcare_Evolution_EN.pdf, PDF pp. 24–26",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "8. Evidence audit: retain conflicts instead of hiding them",
+          "paragraphs": [
+            "The supplied deck contains unresolved numerical discrepancies. Page 19’s revenue shares of 43%, 35%, 16.5% and 6% total 100.5%. Page 21 gives an EU spending comparator of EUR 1,001, while the chart on page 22 shows EUR 3,832 in EUR PPP for 2023. These figures are not silently normalised, replaced or turned into settled exam facts. A source-led explanation can retain the qualitative argument while identifying the inconsistent numerical support.",
+            "Page 21 also combines euro and dollar-PPP amounts and a bed comparison without a clearly compatible reference basis. Do not calculate ratios from them. Publication dates, observation years, currencies and population bases need to match before comparison. An original source-literacy question can ask what clarification is needed and why, but should not demand memorisation of the disputed comparator as the one correct fact. No external correction has been substituted for the lecturer’s slide."
+          ],
+          "sources": [
+            "austria-lecture26"
+          ],
+          "locator": "Austrian_Healthcare_Evolution_EN.pdf, PDF pp. 13, 16, 19 and 21–22",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "9. Synthesis: stability and change are not opposites",
+          "paragraphs": [
+            "The conclusion describes managed convergence rather than revolutionary replacement. Social protection and entrenched institutions remain foundations, while coordination and digital networking are intended to change how care is organised. The narrative thus connects historical persistence with selective transformation: continuity in values or membership need not imply that service delivery remains unchanged.",
+            "Original answer framework: explain one historical institution, identify a coordination problem, connect a proposed reform to that problem, and define evidence that would demonstrate improved access or resource use. Keep a structural change, an investment and a measured outcome distinct. Refer to the 2024/2025 pre-readings as separate snapshots when they provide additional detail. This avoids judging the entire system from either a favourable national indicator or one unresolved number."
+          ],
+          "sources": [
+            "austria-lecture26"
+          ],
+          "locator": "Austrian_Healthcare_Evolution_EN.pdf, PDF pp. 7–12 and 24–26",
+          "edition": "Guest lecture study guide"
+        }
+      ],
+      "sources": [
+        "austria-lecture26"
+      ],
+      "kind": "guest",
+      "sourceFile": "Austrian_Healthcare_Evolution_EN.pdf",
+      "country": "austria",
+      "pages": 28
+    },
+    {
+      "id": "right-to-health.norway-lecture",
+      "slug": "norway-lecture",
+      "title": "Norway guest lecture: responsibility, incentives & coordination",
+      "kicker": "13 / GUEST LECTURE",
+      "intro": "An original guide to Terje P. Hagen’s 73-page October 2026 deck: institutions, specialist care, municipal services, policy initiatives, international comparisons and future challenges. References use PDF pages, not the inconsistent printed slide numbers.",
+      "minutes": 45,
+      "review": [
+        "Municipalities, counties and the central state have different service responsibilities.",
+        "Follow funds, services and referrals as separate flows.",
+        "The somatic grant example combines 70% need adjustment with 30% activity funding.",
+        "The GP payment slides offer method and payer views of the same income.",
+        "Municipal care spans home-based support and institutional services.",
+        "Waiting and discharge policies must be evaluated alongside quality and municipal capacity.",
+        "Historical charts and policy amounts do not become current because the deck says October 2026."
+      ],
+      "sections": [
+        {
+          "title": "1. Institutions: assign the responsibility before following the money",
+          "paragraphs": [
+            "The lecture distinguishes central, county and municipal government. Municipalities handle primary, long-term and social care alongside other public services; counties include dental care; the central state holds hospital and specialist responsibilities. Hospital responsibility moved from counties to the central state in 2002. The stated institutional trade-off is between economies of scale and democratic participation, not an assumption that either centralisation or local control is always best.",
+            "The ministry, Directorate for Health, supervisory body, public-health institute and Audit General are given different policy, implementation, monitoring and accountability roles. An original institutional map should keep regulation, ownership, provision and supervision separate. The deck’s municipal and county counts are not independently checked current administrative facts, so they are not used as current-number recall questions. The durable learning task is to explain which actor does what within the supplied account."
+          ],
+          "sources": [
+            "norway-lecture26"
+          ],
+          "locator": "The Norwegian health care system - Oct2026.pdf, PDF pp. 4–11",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "2. Equity and efficiency use different policy instruments",
+          "paragraphs": [
+            "The flow diagram distinguishes funding, services and referrals. A tax-paying citizen, a patient receiving care and the institution purchasing services occupy different positions in those flows. The equity discussion includes taxation and equalisation of revenue, cost and need. These mechanisms seek to address differing local resources and population needs rather than simply distributing an identical sum to every area.",
+            "The efficiency discussion includes local preferences, central priorities, prospective payments, choice, capped user fees and some private provision. These tools can coexist with public finance. An original comparison should identify a policy’s objective and the behaviour or allocation it is intended to affect. Do not equate public financing with exclusively public provision, or the use of a payment incentive with a fully competitive national insurance market."
+          ],
+          "sources": [
+            "norway-lecture26"
+          ],
+          "locator": "The Norwegian health care system - Oct2026.pdf, PDF pp. 12–14",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "3. Specialist services: four RHAs and a blended funding model",
+          "paragraphs": [
+            "The presentation places public hospitals within local health enterprises owned by four regional health authorities, which can also contract private specialists and hospitals. For somatic care, the central-grant example combines 70% risk-adjusted capitation and 30% activity-based financing through DRGs, with special research grants mentioned separately. Need adjustment uses age, health and social indicators in the slide’s account; activity funding relates to delivered activity.",
+            "Original simplified calculation: a baseline of 100 units consists of a fixed base of 70 and activity funding of 30. If activity rises by 20% and only the activity component scales, revenue becomes 70 + 36 = 106, not 120. The teaching lab uses this invented assumption to separate a base from a marginal incentive. It does not reproduce every adjustment, budget constraint or actual hospital contract. Increased revenue also does not establish increased profit without considering costs."
+          ],
+          "sources": [
+            "norway-lecture26"
+          ],
+          "locator": "The Norwegian health care system - Oct2026.pdf, PDF pp. 16–20 and 43",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "4. Private contracts and elective choice are related but distinct",
+          "paragraphs": [
+            "The private-hospital account describes RHAs reserving a budget and using tendering for selected services, with cost-volume contracts and DRG descriptions. Competition in this account is among private providers for those contracts, not a universal competition among all public and private hospitals. The contract process evaluates price and quality; a historical price observation in the slides is not a guaranteed current discount on every treatment.",
+            "The choice discussion distinguishes acute catchment arrangements from elective choice among public and appropriately contracted private providers. Later slides separate the place of assessment from the place of treatment. An original question should identify which providers are in the relevant choice set and how the purchasing arrangement supports access. Do not assume that a patient-choice policy automatically finances any private provider or bypasses the referral and entitlement assessment."
+          ],
+          "sources": [
+            "norway-lecture26"
+          ],
+          "locator": "The Norwegian health care system - Oct2026.pdf, PDF pp. 21–22 and 44–46",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "5. The GP list scheme: two ways to decompose the same income",
+          "paragraphs": [
+            "The list-patient scheme connects patients to a GP, normally described as a private contractor, while some smaller municipalities use salaries. The lecture gives a payment-method split of 50% capitation and 50% fee-for-service. It then gives a payer split of 50% municipal capitation, 20% central fee-for-service reimbursement and 30% out-of-pocket payment. These are two views of the same simplified GP-income account, not separate sets to add together.",
+            "The method question is what triggers payment; the payer question is who supplies it. In the slide’s framework, the 20% and 30% components together form the service-related half. This does not say households finance 30% of all Norwegian health expenditure. An original explanation should compare incentives associated with list size and consultations while retaining the limited GP-income denominator and not treating the slide as a complete current contract."
+          ],
+          "sources": [
+            "norway-lecture26"
+          ],
+          "locator": "The Norwegian health care system - Oct2026.pdf, PDF pp. 24–26",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "6. Municipal care: a stairway, not a compulsory ladder",
+          "paragraphs": [
+            "The municipal account includes nursing homes, sheltered housing, home nursing, practical assistance and social support, funded mainly through global budgets. The stairway starts with mastering/education and home-based support, then moves through short stays and supported housing to institutional care. It illustrates levels and settings of assistance, not a rule that every patient must pass through every stage or an individual clinical placement tool.",
+            "The lecture calls services generic because they cover different users and needs, while allowing some professional specialisation such as cancer or palliative care. Historical figures show changes in service use and age composition, with different years and denominators. The account of transferred municipal responsibilities links these patterns to deinstitutionalisation and integrated support. Do not reduce municipal care to elderly care alone or infer a precise causal effect from the trend chart by itself."
+          ],
+          "sources": [
+            "norway-lecture26"
+          ],
+          "locator": "The Norwegian health care system - Oct2026.pdf, PDF pp. 27–33",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "7. Local revenue and user-fee ceilings",
+          "paragraphs": [
+            "The local-finance slides distinguish taxes, grants and user fees. The grant formula for care includes age structure, travel distances and health-related needs. The user-fee discussion presents two objectives: influencing demand and raising resources, while upper expenditure ceilings limit the payment burden in the illustrated framework. The financing source and the amount an individual ultimately pays are related but distinct questions.",
+            "Original arithmetic exercise: with 420 units of eligible charges and an invented ceiling of 300, simplified payment is min(420, 300) = 300. The graph’s capped shape is the concept being taught. The deck does not provide a complete current ceiling amount, eligibility definition or exemption list, so the lab cannot determine real entitlements. It assumes all entered charges are eligible and that no other rules apply; those assumptions stay visible."
+          ],
+          "sources": [
+            "norway-lecture26"
+          ],
+          "locator": "The Norwegian health care system - Oct2026.pdf, PDF pp. 34–38",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "8. Waiting: distinguish the indicator, the right and the pathway",
+          "paragraphs": [
+            "The lecture discusses long elective waiting times alongside activity funding, provider choice and private contracting. A historical waiting-time graph measures experience over a past period; an individual guarantee concerns a particular assessed entitlement and a binding start deadline. The receiving facility assesses the referral, and the slides distinguish a specialist-care entitlement from cases where primary-care options may instead be relevant.",
+            "The cancer-pathway example adds another type of timing: intervals for stages from referral to diagnosis and treatment. Its 8 + 21 + 14 = 43-day sequence illustrates a pathway in the presentation, not independently verified current clinical advice. A strong answer identifies which clock starts when, what population is measured and whether the figure is an observed average, an individual deadline or a pathway standard. None should silently substitute for the others."
+          ],
+          "sources": [
+            "norway-lecture26"
+          ],
+          "locator": "The Norwegian health care system - Oct2026.pdf, PDF pp. 40–50",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "9. Discharge coordination: moving responsibility, not simply costs",
+          "paragraphs": [
+            "The coordination-reform account links hospital demand to municipal responsibility. It describes notice of post-discharge needs and a municipal payment obligation when a patient is ready for discharge but cannot be received. Rates on the slide are expressly dated to 2012 and 2024; no 2026 fee is inferred. This is an incentive to organise the next care setting, not evidence that every delayed discharge is avoidable or that municipalities can instantly create capacity.",
+            "The results slides discuss hospital length of stay, selected patient groups, readmissions and mortality. They report increased readmissions for heart-failure patients among the selected groups and no significant changes for some others, while offering a caution about interpreting stroke mortality. Therefore a shorter stay alone is not an unqualified success measure. Original evaluation prompt: assess municipal capacity, continuity, readmissions and outcomes alongside the hospital activity and cost indicators."
+          ],
+          "sources": [
+            "norway-lecture26"
+          ],
+          "locator": "The Norwegian health care system - Oct2026.pdf, PDF pp. 40 and 52–54",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "10. Municipal acute units: design and staffing matter",
+          "paragraphs": [
+            "The slides describe a municipal duty to provide immediate-help overnight stays, with implementation before the stated 2016 start of the duty. Their reported effects are strongest for older patients acutely admitted to internal medicine, and the account distinguishes the overall estimate from settings with a doctor available around the clock. The population, service design and staffing condition all matter to the interpretation.",
+            "The educational point is not that a unit’s name guarantees a fixed reduction in admissions. An original evaluation should ask which patients the unit can appropriately manage, what staffing and support it has, and which hospital admissions are being counted. Preserve the lecture’s reported association and scope without converting it into a universal causal prediction or a recommendation to divert every older acute patient from hospital."
+          ],
+          "sources": [
+            "norway-lecture26"
+          ],
+          "locator": "The Norwegian health care system - Oct2026.pdf, PDF pp. 55–56",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "11. International comparisons: years, denominators and uncertainty",
+          "paragraphs": [
+            "The comparative section moves from expenditure and workforce inputs to mortality outcomes. Some early charts lack a clearly displayed observation year, while later figures are explicitly historical. Standardised rates, per-capita resources and percentages of GDP do not answer identical questions. A presentation dated October 2026 does not turn all of these observations into a current international ranking.",
+            "The regional outcome charts use historical 2009–2014 data and confidence intervals. They specify a reference patient population; their Italian observations concern four provinces of Friuli-Venezia-Giulia rather than the whole country. A comparison must preserve these boundaries and uncertainty. A scatterplot of expenditure and mortality may suggest questions, but does not identify the causal effect of a system model. These guides cite PDF page positions because printed slide numbers diverge near the end."
+          ],
+          "sources": [
+            "norway-lecture26"
+          ],
+          "locator": "The Norwegian health care system - Oct2026.pdf, PDF pp. 58–69",
+          "edition": "Guest lecture study guide"
+        },
+        {
+          "title": "12. Future challenges and a joined-up policy answer",
+          "paragraphs": [
+            "The final challenge slides combine population ageing with improving functional ability, shortages of personnel and increased demand from younger users. This framing avoids treating age alone as a complete forecast of care need. Earlier slides on municipal responsibilities and home-based services provide context: changing needs affect the mix of services, the workforce and the boundary between hospital and community care.",
+            "Original synthesis: choose one challenge, assign responsibilities, describe a funding or coordination mechanism, and specify both an access outcome and a possible unintended consequence. For example, a hospital-substitution proposal needs municipal capacity and continuity measures, not only a target for fewer admissions. Preserve the source’s unresolved questions and dated evidence. The earlier reforms chapter remains a complementary reading, not an interchangeable version of the guest lecture."
+          ],
+          "sources": [
+            "norway-lecture26"
+          ],
+          "locator": "The Norwegian health care system - Oct2026.pdf, PDF pp. 32–33, 40, 52–56 and 71–72",
+          "edition": "Guest lecture study guide"
+        }
+      ],
+      "sources": [
+        "norway-lecture26"
+      ],
+      "kind": "guest",
+      "sourceFile": "The Norwegian health care system - Oct2026.pdf",
+      "country": "norway",
+      "pages": 73
     }
   ],
   "glossary": [
@@ -1357,7 +1819,7 @@
       "source": "ehu"
     }
   ],
-  "edition": 2,
+  "edition": 3,
   "cases": [
     {
       "id": "rth-case-01",
@@ -1803,6 +2265,254 @@
         "answer": 1,
         "explanation": "The explanation distinguishes sufficient command for the job from an exaggerated level."
       }
+    },
+    {
+      "id": "rth-case-13",
+      "topic": "right-to-health.italy-lecture",
+      "title": "Same list, different care needs",
+      "kind": "Hypothetical application",
+      "scenario": "A fictional practice has 40 listed patients paid 200 units each. Its costs are 7,000. A change in patient mix raises costs to 8,500 while list size and payment stay unchanged. All numbers are invented.",
+      "locator": "Health care system Italy 2026.pdf, PDF pp. 10–11; original hypothetical scenario",
+      "sources": [
+        "italy-lecture26"
+      ],
+      "check": {
+        "question": "What happens to the simplified margin?",
+        "options": [
+          "It rises to 1,500.",
+          "It moves from+1,000 to−500.",
+          "It must stay unchanged."
+        ],
+        "answer": 1,
+        "explanation": "Revenue stays 8,000, while costs change. This is an arithmetic illustration, not evidence of actual patient selection."
+      },
+      "steps": [
+        {
+          "title": "Identify the unit",
+          "text": "Capitation attaches to listed patients, so unchanged list size and rate leave the fictional revenue unchanged."
+        },
+        {
+          "title": "Calculate both margins",
+          "text": "40×200=8,000; initial 8,000−7,000=1,000; later 8,000−8,500=−500."
+        },
+        {
+          "title": "Bound the inference",
+          "text": "Patient mix can create an incentive concern, but the calculation does not prove how a real doctor behaves."
+        }
+      ],
+      "conclusion": "The example illustrates why average payment and individual resource needs matter together.",
+      "trap": "A financial incentive is not evidence that harmful behaviour necessarily occurred."
+    },
+    {
+      "id": "rth-case-14",
+      "topic": "right-to-health.italy-lecture",
+      "title": "Two waiting-time percentages, one misleading headline",
+      "kind": "Hypothetical application",
+      "scenario": "A fictional student puts the percentages from Italy PDF pages 28 and 29 into a chart labelled “improvement over time”, without identifying their populations or periods.",
+      "locator": "Health care system Italy 2026.pdf, PDF pp. 28–29; original hypothetical scenario",
+      "sources": [
+        "italy-lecture26"
+      ],
+      "check": {
+        "question": "What should be checked first?",
+        "options": [
+          "Whether the measures have comparable definitions, denominators and periods.",
+          "Which number makes the better headline.",
+          "Whether averaging them removes uncertainty."
+        ],
+        "answer": 0,
+        "explanation": "The slides do not establish a common basis for the proposed trend."
+      },
+      "steps": [
+        {
+          "title": "Identify each measure",
+          "text": "Separate the narrative about requests/pre-lists from the regional B/D table."
+        },
+        {
+          "title": "Check comparability",
+          "text": "Look for observation period, eligible population, type of service and timing definition."
+        },
+        {
+          "title": "Report the limitation",
+          "text": "Without those details, describe the measures separately and do not claim an improvement trend."
+        }
+      ],
+      "conclusion": "The lecture supports discussion of waiting barriers, not this unsupported combined trend.",
+      "trap": "Adjacent slides are not necessarily a comparable time series."
+    },
+    {
+      "id": "rth-case-15",
+      "topic": "right-to-health.austria-lecture",
+      "title": "The reference rate is not the invoice",
+      "kind": "Hypothetical application",
+      "scenario": "A fictional private consultation costsEUR 180. Assume exactly 80% reimbursement of a contracted reference rate ofEUR 100 and no other conditions. These numbers are invented.",
+      "locator": "Austrian_Healthcare_Evolution_EN.pdf, PDF p. 13; original hypothetical scenario",
+      "sources": [
+        "austria-lecture26"
+      ],
+      "check": {
+        "question": "What remains payable by the patient in this simplified scenario?",
+        "options": [
+          "EUR 36.",
+          "EUR 80.",
+          "EUR 100."
+        ],
+        "answer": 2,
+        "explanation": "Reimbursement is 80;180−80=100 remains. Actual eligibility and other rules are not modelled."
+      },
+      "steps": [
+        {
+          "title": "Find the denominator",
+          "text": "The percentage refers to the contracted reference amount, not the unrestricted private charge."
+        },
+        {
+          "title": "Calculate two quantities",
+          "text": "0.8×100=80 reimbursed;180−80=100 remaining."
+        },
+        {
+          "title": "Connect coverage and access",
+          "text": "Broad insurance membership does not by itself remove upfront payment or all financial barriers."
+        }
+      ],
+      "conclusion": "The example explains a denominator, not an individual claim decision.",
+      "trap": "Do not automatically apply 80% to the private invoice."
+    },
+    {
+      "id": "rth-case-16",
+      "topic": "right-to-health.austria-lecture",
+      "title": "A merger is not an outcome evaluation",
+      "kind": "Hypothetical application",
+      "scenario": "A fictional briefing states that fewer insurance funds prove lower total health spending and identical benefits everywhere. Use the lecture’s merger discussion to assess the claim.",
+      "locator": "Austrian_Healthcare_Evolution_EN.pdf, PDF pp. 11–12; original hypothetical scenario",
+      "sources": [
+        "austria-lecture26"
+      ],
+      "check": {
+        "question": "Which response is most defensible?",
+        "options": [
+          "All intended outcomes follow automatically.",
+          "Separate structural change from savings and harmonisation evidence.",
+          "Fund numbers are the only legitimate outcome."
+        ],
+        "answer": 1,
+        "explanation": "The presentation distinguishes fewer carriers from unfulfilled expectations and continuing fragmentation."
+      },
+      "steps": [
+        {
+          "title": "Identify the measured change",
+          "text": "The number of organisations is a structural observation."
+        },
+        {
+          "title": "Specify other outcomes",
+          "text": "Benefit consistency, contracting arrangements and costs need their own evidence."
+        },
+        {
+          "title": "Use the source carefully",
+          "text": "Attribute the audit account to the lecture, without claiming an independent review of the full audit."
+        }
+      ],
+      "conclusion": "The merger can be implemented without every expected consequence being achieved.",
+      "trap": "Do not substitute an organisational count for a multidimensional evaluation."
+    },
+    {
+      "id": "rth-case-17",
+      "topic": "right-to-health.norway-lecture",
+      "title": "One GP income, two decompositions",
+      "kind": "Hypothetical application",
+      "scenario": "A fictional student adds the 50/50 payment-method split to the 50/20/30 payer split and concludes the lecture allocates 200% of GP income. Analyse the mistake.",
+      "locator": "The Norwegian health care system - Oct2026.pdf, PDF pp. 25–26; original hypothetical scenario",
+      "sources": [
+        "norway-lecture26"
+      ],
+      "check": {
+        "question": "What best resolves the apparent problem?",
+        "options": [
+          "They describe different views of the same simplified income.",
+          "All five figures are independent shares to add.",
+          "The 30% is the national household health-spending share."
+        ],
+        "answer": 0,
+        "explanation": "The payer view subdivides the service-related half; it is not an extra income total."
+      },
+      "steps": [
+        {
+          "title": "Name the two questions",
+          "text": "Payment method asks what triggers payment. Payer asks who supplies the money."
+        },
+        {
+          "title": "Align the common base",
+          "text": "Municipal capitation 50; state service-related 20 plus patient 30 form the other 50."
+        },
+        {
+          "title": "Retain the scope",
+          "text": "The denominator is GP income in this lecture account, not total Norwegian health expenditure."
+        }
+      ],
+      "conclusion": "No extra income is created by describing the same total in two ways.",
+      "trap": "Do not mix a GP-income denominator with national financing statistics."
+    },
+    {
+      "id": "rth-case-18",
+      "topic": "right-to-health.norway-lecture",
+      "title": "Shorter stays: success for whom?",
+      "kind": "Hypothetical application",
+      "scenario": "A fictional coordination programme reduces hospital stay length. Its evaluation also shows different readmission patterns across patient groups and pressure on municipal services. Use the Norwegian lecture’s evaluation approach.",
+      "locator": "The Norwegian health care system - Oct2026.pdf, PDF pp. 52–56; original hypothetical scenario",
+      "sources": [
+        "norway-lecture26"
+      ],
+      "check": {
+        "question": "What is the best assessment?",
+        "options": [
+          "Shorter stay alone proves complete success.",
+          "Readmissions and municipal capacity are irrelevant.",
+          "Assess several outcomes and groups, not just hospital stay length."
+        ],
+        "answer": 2,
+        "explanation": "The source reports more than one outcome and highlights group/staffing differences."
+      },
+      "steps": [
+        {
+          "title": "Identify the mechanism",
+          "text": "Discharge payments shift an incentive at the hospital–municipality boundary."
+        },
+        {
+          "title": "Check outcomes beyond the hospital",
+          "text": "Consider readmissions, mortality, continuity and available municipal capacity."
+        },
+        {
+          "title": "Keep the estimate bounded",
+          "text": "Results depend on populations, period and design; a reported association is not a universal prediction."
+        }
+      ],
+      "conclusion": "A coordination reform needs a patient- and system-level evaluation, not one favourable indicator.",
+      "trap": "A shorter hospital episode can coexist with burdens elsewhere."
     }
-  ]
+  ],
+  "guestReview": {
+    "date": "2026-10-27",
+    "newDecks": 3,
+    "newPages": 138,
+    "duplicate": "The two Italian uploads are byte-identical and counted once.",
+    "organisation": "The supplied 25-page organisational PDF is byte-identical to the earlier version; no new exam date is inferred.",
+    "missing": "The Netherlands guest slide deck has not been supplied. The Netherlands guide remains based on the three assigned pre-readings.",
+    "method": "Original source-led explanations, not official transcripts or a lecturer answer key. PDF page locators, historical years and unresolved numerical issues remain visible. Full slides and figures stay on Virtuale.",
+    "checks": [
+      {
+        "title": "Italy: denominators and historical illustrations",
+        "location": "PDF pp. 21, 28–32 and37",
+        "detail": "Equipment units/year and some waiting/mobility denominators are unclear. The final fiscal table cites 2009. No unsupported current ranking or combined percentage is generated."
+      },
+      {
+        "title": "Austria: internal numerical conflicts",
+        "location": "PDF pp. 19 and21–22",
+        "detail": "Revenue shares sum to 100.5%; the EU spending comparator differs between text and chart. These issues are not silently corrected or used as settled-number recall facts."
+      },
+      {
+        "title": "Norway: observation dates and scope",
+        "location": "PDF pp. 25–26, 52 and58–73",
+        "detail": "GP percentages retain their income denominator. Policy amounts and comparative charts keep their historical years. Locators use PDF positions, not inconsistent printed slide labels."
+      }
+    ]
+  }
 }

@@ -48,5 +48,20 @@
     "id": "right-to-health.european-health-union",
     "title": "European Health Union: from analysis to proposals",
     "notes": "notes/european-health-union.md"
+  },
+  {
+    "id": "right-to-health.italy-lecture",
+    "title": "Italy guest lecture: payments, regions & patient mobility",
+    "notes": "notes/italy-lecture.md"
+  },
+  {
+    "id": "right-to-health.austria-lecture",
+    "title": "Austria guest lecture: institutions, access & transformation",
+    "notes": "notes/austria-lecture.md"
+  },
+  {
+    "id": "right-to-health.norway-lecture",
+    "title": "Norway guest lecture: responsibility, incentives & coordination",
+    "notes": "notes/norway-lecture.md"
   }
 ]

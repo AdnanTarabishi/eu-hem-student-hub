@@ -238,5 +238,35 @@
     "date": "2026-10-08",
     "topic": "right-to-health.economic-rights",
     "description": "Further reading · Italian-language reading listed in the course notice. Listed by the lecturer as 2026 and open access. Publisher page could not be independently retrieved; publication details remain as supplied."
+  },
+  {
+    "id": "right-to-health.r.025",
+    "title": "Rosella Levaggi — Italy health system guest lecture (2026)",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/course/section.php?id=866428",
+    "contributor": "EU-HEM Student Hub",
+    "date": "2026-10-27",
+    "topic": "right-to-health.italy-lecture",
+    "description": "Guest lecture · 37 PDF pages. Supplied guest presentation. Original explanations cite PDF page positions, not printed slide labels; full slides remain on Virtuale. Student-use material: commercialisation forbidden in the deck. Duplicate Italian upload is byte-identical. Dates and unresolved denominators remain explicit. Link opens the course section; UniBo sign-in may be required."
+  },
+  {
+    "id": "right-to-health.r.026",
+    "title": "Lukas Kerschbaumer — Austria health system guest lecture (2026)",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/course/section.php?id=866428",
+    "contributor": "EU-HEM Student Hub",
+    "date": "2026-10-27",
+    "topic": "right-to-health.austria-lecture",
+    "description": "Guest lecture · 28 PDF pages. Supplied guest presentation. Original explanations cite PDF page positions, not printed slide labels; full slides remain on Virtuale. Internal numerical conflicts on PDF pp. 19 and 21–22 are flagged, not silently corrected or used as settled recall facts. Reform targets are not treated as completed outcomes. Link opens the course section; UniBo sign-in may be required."
+  },
+  {
+    "id": "right-to-health.r.027",
+    "title": "Terje P. Hagen — Norway health system guest lecture (2026)",
+    "type": "Website",
+    "url": "https://virtuale.unibo.it/course/section.php?id=866428",
+    "contributor": "EU-HEM Student Hub",
+    "date": "2026-10-27",
+    "topic": "right-to-health.norway-lecture",
+    "description": "Guest lecture · 73 PDF pages. Supplied guest presentation. Original explanations cite PDF page positions, not printed slide labels; full slides remain on Virtuale. Presentation includes historical charts, dated policy amounts and inconsistent printed slide numbers. It is not an independently verified current-law or clinical guidance source. Link opens the course section; UniBo sign-in may be required."
   }
 ]

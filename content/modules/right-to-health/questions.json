@@ -1468,5 +1468,815 @@
     "answer": "Define the affected group and need, identify the current framework, explain the proposed change and its value–principle connection, then identify actors, resources, trade-offs and evaluation evidence. Label unresolved points and do not claim the deck supplies an official final answer.",
     "explanation": "Define the affected group and need, identify the current framework, explain the proposed change and its value–principle connection, then identify actors, resources, trade-offs and evaluation evidence. Label unresolved points and do not claim the deck supplies an official final answer. Source: Frischhut — European Health Union workshop (2026/27); PDF pp. 3–10 and 24–26. This is a reasoning scaffold, not an official marking scheme.",
     "source": "Frischhut — European Health Union workshop (2026/27)"
+  },
+  {
+    "id": "right-to-health.q.101",
+    "topic": "right-to-health.italy-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which distinction is central to the Italy lecture’s reimbursement overview?",
+    "options": [
+      "All services use the same payment unit.",
+      "Regional boundaries determine every drug price.",
+      "All private invoices are reimbursed in full.",
+      "GP capitation, hospital DRGs and pharmaceutical negotiation are different mechanisms."
+    ],
+    "answer": "D",
+    "explanation": "The slide names distinct mechanisms rather than a single reimbursement formula. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF p. 9.",
+    "source": "Rosella Levaggi — Italy health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.102",
+    "topic": "right-to-health.italy-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "In the lecture’s capitation model, payment is primarily attached to:",
+    "options": [
+      "Each individual visit.",
+      "Each hospital bed-day.",
+      "A listed patient.",
+      "Each prescription."
+    ],
+    "answer": "C",
+    "explanation": "The fixed-per-patient unit differs from a payment triggered by each consultation. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF p. 10.",
+    "source": "Rosella Levaggi — Italy health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.103",
+    "topic": "right-to-health.italy-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "A fictional practice receives 200 units for each of 40 patients and incurs costs of 7,000. Its simplified margin is:",
+    "options": [
+      "8,000 units.",
+      "1,000 units.",
+      "7,000 units.",
+      "200 units."
+    ],
+    "answer": "B",
+    "explanation": "Revenue is 40 × 200 = 8,000; subtracting 7,000 gives 1,000. These numbers are invented. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF pp. 10–11.",
+    "source": "Rosella Levaggi — Italy health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.104",
+    "topic": "right-to-health.italy-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Why can uniform capitation produce different patient-level margins?",
+    "options": [
+      "Patients can require different amounts of resources.",
+      "The source says every patient has identical cost.",
+      "A uniform payment removes every incentive.",
+      "Capitation always equals each patient’s exact expenditure."
+    ],
+    "answer": "A",
+    "explanation": "The teaching table separates patient groups with different resource costs. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF pp. 10–11.",
+    "source": "Rosella Levaggi — Italy health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.105",
+    "topic": "right-to-health.italy-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Where does the patient-classification diagram place DRGs?",
+    "options": [
+      "As a direct measure of patient satisfaction.",
+      "As a guarantee of identical disease severity.",
+      "As a measure of regional tax revenue.",
+      "On the resource-related side."
+    ],
+    "answer": "D",
+    "explanation": "The diagram distinguishes severity-related and resource-related classifications. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF p. 12.",
+    "source": "Rosella Levaggi — Italy health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.106",
+    "topic": "right-to-health.italy-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "An invented case-payment base is 2,000 units and its relative weight is 1.4. Ignoring other rules, payment is:",
+    "options": [
+      "1,400 units.",
+      "2,001.4 units.",
+      "2,800 units.",
+      "3,400 units."
+    ],
+    "answer": "C",
+    "explanation": "The simplified relative-payment calculation multiplies base by weight, rather than adding them. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF p. 13.",
+    "source": "Rosella Levaggi — Italy health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.107",
+    "topic": "right-to-health.italy-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which assessment best preserves the lecture’s DRG discussion?",
+    "options": [
+      "DRGs guarantee better quality.",
+      "Potential efficiency gains coexist with strategic, innovation and quality concerns.",
+      "The presentation gives only disadvantages.",
+      "DRGs make classification irrelevant."
+    ],
+    "answer": "B",
+    "explanation": "The adjacent pros and cons slides require a balanced explanation. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF pp. 14–15.",
+    "source": "Rosella Levaggi — Italy health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.108",
+    "topic": "right-to-health.italy-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "In the organisational diagram, the central level principally defines:",
+    "options": [
+      "LEA and general rules.",
+      "Each GP’s daily appointment list.",
+      "Every private hospital’s staffing rota.",
+      "Every patient’s individual hospital choice."
+    ],
+    "answer": "A",
+    "explanation": "Regional organisation sits within national standards in the source diagram. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF p. 17.",
+    "source": "Rosella Levaggi — Italy health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.109",
+    "topic": "right-to-health.italy-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which feature matches the lecture’s ASL third-payer account?",
+    "options": [
+      "The ASL must directly produce every service.",
+      "No patient choice is described.",
+      "Every provider is necessarily privately owned.",
+      "Patients choose providers and private providers can compete with public ones."
+    ],
+    "answer": "D",
+    "explanation": "The lecture associates this model with Lombardy and distinguishes it from other ASL arrangements. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF pp. 24–25.",
+    "source": "Rosella Levaggi — Italy health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.110",
+    "topic": "right-to-health.italy-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "What characterises the ASL programmer account?",
+    "options": [
+      "All uncontracted bills are automatically paid in full.",
+      "It has no purchasing role.",
+      "It combines purchasing and production, with non-automatic indirect reimbursement outside contracts.",
+      "It abolishes public providers."
+    ],
+    "answer": "C",
+    "explanation": "The slide describes a specific contracted-price account, not an unrestricted claims entitlement. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF p. 26.",
+    "source": "Rosella Levaggi — Italy health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.111",
+    "topic": "right-to-health.italy-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "The private-spending chart on PDF page 6 primarily compares:",
+    "options": [
+      "Total national spending in euros.",
+      "The composition of private spending across geographical areas.",
+      "The exact population insured in each region.",
+      "A ranking of clinical quality."
+    ],
+    "answer": "B",
+    "explanation": "Its percentages divide private spending into categories; the denominator is not total national expenditure. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF p. 6.",
+    "source": "Rosella Levaggi — Italy health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.112",
+    "topic": "right-to-health.italy-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Before directly comparing the waiting percentages on pages 28 and 29, establish:",
+    "options": [
+      "The populations, denominators, definitions and periods.",
+      "That adjacent slides always use the same sample.",
+      "Which percentage is larger, then discard the smaller one.",
+      "That every statistic has a 2026 observation year."
+    ],
+    "answer": "A",
+    "explanation": "Adjacency alone does not establish comparable measurements. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF pp. 28–29.",
+    "source": "Rosella Levaggi — Italy health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.113",
+    "topic": "right-to-health.italy-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "The south-to-north mobility discussion chiefly concerns:",
+    "options": [
+      "Only treatment outside the EU.",
+      "Only migration of health professionals.",
+      "Only EHIC claims by visitors.",
+      "Movement between Italian regions."
+    ],
+    "answer": "D",
+    "explanation": "The source uses a cross-border heading for a regional Italian context. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF pp. 30–32.",
+    "source": "Rosella Levaggi — Italy health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.114",
+    "topic": "right-to-health.italy-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which conclusion about the Martini et al. account is appropriately bounded?",
+    "options": [
+      "It proves all Italian patients prefer the same provider.",
+      "It establishes one universal causal effect of distance.",
+      "It describes hip-replacement choice patterns in three specified regions.",
+      "It covers every treatment in every country."
+    ],
+    "answer": "C",
+    "explanation": "The procedure and geographical limits in the slide must remain visible. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF p. 35.",
+    "source": "Rosella Levaggi — Italy health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.115",
+    "topic": "right-to-health.italy-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "How should the final fiscal-residuum table be used?",
+    "options": [
+      "As a verified 2026 fiscal ranking.",
+      "As a historical illustration with its 2009 source date.",
+      "As a personal tax calculator.",
+      "As evidence that every region has identical revenues."
+    ],
+    "answer": "B",
+    "explanation": "The cited date does not change with the lecture’s filename. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF pp. 36–37.",
+    "source": "Rosella Levaggi — Italy health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.116",
+    "topic": "right-to-health.austria-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which set reflects the lecture’s historical foundations?",
+    "options": [
+      "Contribution-based finance, self-administration and occupational grouping.",
+      "A single tax-funded provider and no insurance.",
+      "Unrestricted patient pricing and no solidarity.",
+      "Digital triage as the original nineteenth-century institution."
+    ],
+    "answer": "A",
+    "explanation": "The lecture uses these three institutional pillars to explain continuity. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF pp. 7–8.",
+    "source": "Lukas Kerschbaumer — Austria health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.117",
+    "topic": "right-to-health.austria-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "What is the main path-dependency argument?",
+    "options": [
+      "European funding automatically abolishes all national rules.",
+      "No institutional change is possible.",
+      "All countries have identical tariffs.",
+      "European pressures interact with persistent national institutions."
+    ],
+    "answer": "D",
+    "explanation": "Persistence conditions reform without excluding selective cooperation. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF p. 9.",
+    "source": "Lukas Kerschbaumer — Austria health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.118",
+    "topic": "right-to-health.austria-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "In the Braunau/Simbach account, what limited integration?",
+    "options": [
+      "A complete absence of any cooperation opportunity.",
+      "A single already unified billing system.",
+      "Labour-law and duplicated-tariff barriers.",
+      "The absence of all national regulation."
+    ],
+    "answer": "C",
+    "explanation": "The slide pairs a cooperation opportunity with concrete institutional obstacles. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF p. 10.",
+    "source": "Lukas Kerschbaumer — Austria health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.119",
+    "topic": "right-to-health.austria-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Why should a merger not be judged only by the number of funds?",
+    "options": [
+      "Fewer organisations always prove lower total spending.",
+      "Structural consolidation and savings or harmonisation are different outcomes.",
+      "Fund counts directly measure patient health.",
+      "Every merger removes all contracting differences."
+    ],
+    "answer": "B",
+    "explanation": "The presentation distinguishes achieved structural changes from missed expectations. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF p. 11.",
+    "source": "Lukas Kerschbaumer — Austria health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.120",
+    "topic": "right-to-health.austria-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which pairing fits the governance matrix?",
+    "options": [
+      "Länder: hospital responsibilities; social insurance: outpatient financing.",
+      "Länder: no role in hospitals; municipalities: all national insurance.",
+      "Federal government: every GP appointment; insurers: no funding role.",
+      "Private insurers: all national legislation."
+    ],
+    "answer": "A",
+    "explanation": "The matrix distinguishes regulatory, hospital and insurance responsibilities. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF p. 12.",
+    "source": "Lukas Kerschbaumer — Austria health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.121",
+    "topic": "right-to-health.austria-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Why may separate budgets complicate moving care out of hospital?",
+    "options": [
+      "Changing the setting always requires zero resources.",
+      "All actors necessarily share one budget.",
+      "Outpatient capacity is guaranteed unlimited.",
+      "Savings and required new expenditure may fall on different actors."
+    ],
+    "answer": "D",
+    "explanation": "This is an original application of the lecture’s coordination argument, not an estimate of savings. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF pp. 12 and 19.",
+    "source": "Lukas Kerschbaumer — Austria health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.122",
+    "topic": "right-to-health.austria-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "A fictional private invoice is EUR 180. Reimbursement is assumed to be exactly 80% of a EUR 100 contracted rate. It equals:",
+    "options": [
+      "EUR 144.",
+      "EUR 180.",
+      "EUR 80.",
+      "EUR 100."
+    ],
+    "answer": "C",
+    "explanation": "The percentage applies to the reference rate, not the invoice. The scenario omits all other real conditions. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF p. 13.",
+    "source": "Lukas Kerschbaumer — Austria health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.123",
+    "topic": "right-to-health.austria-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Near-universal insurance coverage alone does not establish:",
+    "options": [
+      "That insurance membership is broad.",
+      "Timely access without substantial patient payment.",
+      "That the lecture discusses social protection.",
+      "That coverage and access can be analysed separately."
+    ],
+    "answer": "B",
+    "explanation": "Population membership and practical service access are different dimensions. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF p. 13.",
+    "source": "Lukas Kerschbaumer — Austria health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.124",
+    "topic": "right-to-health.austria-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "The service-specific public coverage chart measures:",
+    "options": [
+      "The government/compulsory share of spending in each service category.",
+      "The percentage of all citizens with a GP appointment today.",
+      "An automatic reimbursement percentage for every invoice.",
+      "The clinical success rate of every treatment."
+    ],
+    "answer": "A",
+    "explanation": "A financing share is not population coverage or a personal claims rule. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF p. 23.",
+    "source": "Lukas Kerschbaumer — Austria health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.125",
+    "topic": "right-to-health.austria-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "How is digital before ambulatory before inpatient used here?",
+    "options": [
+      "As proof that all reforms are already complete.",
+      "As individual clinical advice for every emergency.",
+      "As a ban on all inpatient care.",
+      "As a reform strategy and target direction."
+    ],
+    "answer": "D",
+    "explanation": "The guide distinguishes the intended sequence from measured implementation and outcomes. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF pp. 24–26.",
+    "source": "Lukas Kerschbaumer — Austria health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.126",
+    "topic": "right-to-health.austria-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Why not simply add the investment figures as annual spending?",
+    "options": [
+      "Money cannot be compared under any circumstances.",
+      "All are explicitly daily amounts.",
+      "They mix annual and multi-year time bases.",
+      "Every figure describes exactly the same year and scope."
+    ],
+    "answer": "C",
+    "explanation": "Comparable periods and possible overlap must be established first. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF p. 24.",
+    "source": "Lukas Kerschbaumer — Austria health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.127",
+    "topic": "right-to-health.austria-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "How should the conflicting EU spending comparator on pages 21–22 be handled?",
+    "options": [
+      "Silently choose one value and hide the conflict.",
+      "Flag the discrepancy and avoid a settled-number recall question.",
+      "Average the two values to create a new fact.",
+      "Treat both as identical currencies and years without checking."
+    ],
+    "answer": "B",
+    "explanation": "The slides do not support a single silently reconciled figure. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF pp. 21–22.",
+    "source": "Lukas Kerschbaumer — Austria health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.128",
+    "topic": "right-to-health.austria-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "The revenue shares on page 19 add to 100.5%. The defensible response is:",
+    "options": [
+      "State the unresolved basis rather than silently normalising.",
+      "Create an exact 100% pie chart without explanation.",
+      "Claim the extra 0.5% proves fraud.",
+      "Delete one category until the sum fits."
+    ],
+    "answer": "A",
+    "explanation": "Arithmetic inconsistency is a reason for clarification, not unsupported substantive conclusions. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF p. 19.",
+    "source": "Lukas Kerschbaumer — Austria health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.129",
+    "topic": "right-to-health.austria-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Why is high professional density insufficient to prove access everywhere?",
+    "options": [
+      "Density is itself a direct measure of waiting time.",
+      "All professionals are equally distributed by definition.",
+      "All doctors necessarily share the same contract.",
+      "It does not show local or contracted appointment availability."
+    ],
+    "answer": "D",
+    "explanation": "Aggregate resources and accessible capacity are distinct dimensions. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF pp. 13 and 18.",
+    "source": "Lukas Kerschbaumer — Austria health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.130",
+    "topic": "right-to-health.austria-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "What best captures managed convergence in the conclusion?",
+    "options": [
+      "Immediate abolition of the entire insurance system.",
+      "No changes to service organisation ever.",
+      "Networking and selective transformation while retaining historical foundations.",
+      "Uniform European national budgets already achieved."
+    ],
+    "answer": "C",
+    "explanation": "The conclusion combines continuity with a planned organisational shift. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF p. 26.",
+    "source": "Lukas Kerschbaumer — Austria health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.131",
+    "topic": "right-to-health.norway-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which responsibility mapping matches the Norwegian lecture?",
+    "options": [
+      "Municipal ownership of every national hospital.",
+      "Municipal primary/long-term care, county dental care and central specialist responsibilities.",
+      "County control of every GP list and no dental role.",
+      "Central government with no hospital role."
+    ],
+    "answer": "B",
+    "explanation": "The opening institutional account assigns different services to different levels. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 4–11.",
+    "source": "Terje P. Hagen — Norway health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.132",
+    "topic": "right-to-health.norway-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "The specialist-care 70/30 illustration refers to:",
+    "options": [
+      "Need-adjusted funding and activity-based financing of somatic care.",
+      "The share of national spending paid by patients and insurers.",
+      "The mortality rates of two groups.",
+      "The split of every GP’s personal income."
+    ],
+    "answer": "A",
+    "explanation": "The denominator is the specialist somatic-grant account; research grants are mentioned separately. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 18–20.",
+    "source": "Terje P. Hagen — Norway health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.133",
+    "topic": "right-to-health.norway-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "An invented baseline is 100: fixed funding 70 and activity funding 30. Activity rises 20%; only that part scales. New revenue is:",
+    "options": [
+      "120 units.",
+      "130 units.",
+      "90 units.",
+      "106 units."
+    ],
+    "answer": "D",
+    "explanation": "The calculation is 70 + 30 × 1.20 = 106; it is not a complete real contract. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 18 and 43.",
+    "source": "Terje P. Hagen — Norway health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.134",
+    "topic": "right-to-health.norway-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which is included in the need-adjustment account?",
+    "options": [
+      "Only the hospital’s advertising budget.",
+      "Only the patient’s preferred brand.",
+      "Age and health/social indicators.",
+      "Only the number of website visits."
+    ],
+    "answer": "C",
+    "explanation": "The source distinguishes population needs from activity measures. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF p. 20.",
+    "source": "Terje P. Hagen — Norway health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.135",
+    "topic": "right-to-health.norway-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "How is competition for the private-hospital contracts described?",
+    "options": [
+      "Every public and private hospital competes identically for every service.",
+      "Private providers tender for selected RHA contracts.",
+      "Patients automatically finance all hospitals themselves.",
+      "No purchaser is involved."
+    ],
+    "answer": "B",
+    "explanation": "The lecture specifies a bounded procurement arrangement, not an unrestricted national market. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 21 and 45.",
+    "source": "Terje P. Hagen — Norway health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.136",
+    "topic": "right-to-health.norway-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which choice distinction does the lecture make?",
+    "options": [
+      "Acute catchment arrangements differ from elective provider choice.",
+      "All emergency patients choose any foreign private provider without conditions.",
+      "Elective treatment has no provider choice.",
+      "Contracts are irrelevant to the choice set."
+    ],
+    "answer": "A",
+    "explanation": "Provider choice must be interpreted within the type of care and purchasing arrangements. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 22 and 46.",
+    "source": "Terje P. Hagen — Norway health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.137",
+    "topic": "right-to-health.norway-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "How can the GP-income splits on pages 25–26 be read together?",
+    "options": [
+      "The percentages must all be added to 150%.",
+      "30% is the national household share of all health expenditure.",
+      "70/30 specialist funding is identical to GP funding.",
+      "50% capitation plus 50% service-related, with the latter shown as 20% state and 30% patient payments."
+    ],
+    "answer": "D",
+    "explanation": "The slides give a method view and a payer view of a common simplified GP-income base. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 25–26.",
+    "source": "Terje P. Hagen — Norway health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.138",
+    "topic": "right-to-health.norway-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "What does the municipal stairway illustrate?",
+    "options": [
+      "A compulsory clinical route for every patient.",
+      "Only hospital surgical specialties.",
+      "Different levels and settings of care support.",
+      "An exact reimbursement formula."
+    ],
+    "answer": "C",
+    "explanation": "The diagram moves from support at home toward more intensive settings without establishing individual eligibility. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 27–28.",
+    "source": "Terje P. Hagen — Norway health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.139",
+    "topic": "right-to-health.norway-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Why are municipal services called generic?",
+    "options": [
+      "They serve only people over 90.",
+      "They serve diverse users and needs, with some professional specialisation.",
+      "They exclude all mental-health needs.",
+      "They have no nursing component."
+    ],
+    "answer": "B",
+    "explanation": "The lecture explicitly distinguishes broad coverage of users from disease-specific programmes. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 24 and 30–32.",
+    "source": "Terje P. Hagen — Norway health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.140",
+    "topic": "right-to-health.norway-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "In an invented exercise, eligible charges 420 and ceiling 300 imply simplified patient payment of:",
+    "options": [
+      "300 units.",
+      "420 units.",
+      "720 units.",
+      "120 units."
+    ],
+    "answer": "A",
+    "explanation": "Under the stated assumptions payment is the lower of the charges and the ceiling. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 37–38.",
+    "source": "Terje P. Hagen — Norway health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.141",
+    "topic": "right-to-health.norway-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "An individual waiting guarantee differs from a historical waiting graph because it:",
+    "options": [
+      "Is just the national average for an earlier year.",
+      "Guarantees every treatment without assessment.",
+      "Measures only hospital spending.",
+      "Concerns an assessed person’s entitlement and start deadline."
+    ],
+    "answer": "D",
+    "explanation": "The lecture distinguishes assessed rights from aggregate observations. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 42 and 48–50.",
+    "source": "Terje P. Hagen — Norway health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.142",
+    "topic": "right-to-health.norway-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "What mechanism applies in the lecture when a patient is ready for discharge but municipal reception is unavailable?",
+    "options": [
+      "An automatic discharge regardless of support.",
+      "A fee necessarily paid personally by the patient.",
+      "A municipal payment obligation under the described conditions.",
+      "A proof that no municipal resources are needed."
+    ],
+    "answer": "C",
+    "explanation": "The mechanism concerns coordination and municipal responsibility; source rates retain their stated years. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF p. 52.",
+    "source": "Terje P. Hagen — Norway health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.143",
+    "topic": "right-to-health.norway-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which evaluation best follows the discharge-reform results?",
+    "options": [
+      "Shorter stays alone prove success for every patient.",
+      "Read length of stay alongside readmissions, mortality and patient-group differences.",
+      "Ignore readmissions because they are inconvenient.",
+      "Treat all reported changes as universal causal estimates."
+    ],
+    "answer": "B",
+    "explanation": "The source presents several outcomes, including differing readmission findings. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 53–54.",
+    "source": "Terje P. Hagen — Norway health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.144",
+    "topic": "right-to-health.norway-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which qualifier matters for the municipal acute-unit results?",
+    "options": [
+      "Patient group and availability of round-the-clock medical staffing.",
+      "The unit’s name alone guarantees the same effect.",
+      "All age groups necessarily have identical results.",
+      "Every finding refers to elective surgery only."
+    ],
+    "answer": "A",
+    "explanation": "The strongest reported effects have a specified older acute-care context and staffing distinction. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 55–56.",
+    "source": "Terje P. Hagen — Norway health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.145",
+    "topic": "right-to-health.norway-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Why not label the regional mortality charts current national rankings?",
+    "options": [
+      "All figures are automatically from 2026.",
+      "Italian observations include every Italian region.",
+      "Confidence intervals can be discarded.",
+      "They use historical data, uncertainty and limited regional coverage."
+    ],
+    "answer": "D",
+    "explanation": "The charts preserve 2009–2014 observations and specify four Italian provinces, among other limits. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 64–69.",
+    "source": "Terje P. Hagen — Norway health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.146",
+    "topic": "right-to-health.italy-lecture",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Compare capitation and DRGs, including patient mix and one benefit and concern.",
+    "answer": "Identify the unit: listed patient versus classified case. Explain differing costs within the unit, potential efficiency and the lecture’s strategic, technology and quality concerns. Use a hypothetical calculation only as an illustration, not a real tariff.",
+    "explanation": "Identify the unit: listed patient versus classified case. Explain differing costs within the unit, potential efficiency and the lecture’s strategic, technology and quality concerns. Use a hypothetical calculation only as an illustration, not a real tariff. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF pp. 9–15. Original reasoning scaffold, not an official marking scheme.",
+    "source": "Rosella Levaggi — Italy health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.147",
+    "topic": "right-to-health.italy-lecture",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Explain the three ASL models in terms of purchasing, provision and patient choice.",
+    "answer": "Describe third payer, sponsor and programmer using the source terms. Separate selecting or contracting providers from producing care. Explain why the indirect reimbursement account is not automatic, and avoid personal claims advice.",
+    "explanation": "Describe third payer, sponsor and programmer using the source terms. Separate selecting or contracting providers from producing care. Explain why the indirect reimbursement account is not automatic, and avoid personal claims advice. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF pp. 22–26. Original reasoning scaffold, not an official marking scheme.",
+    "source": "Rosella Levaggi — Italy health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.148",
+    "topic": "right-to-health.italy-lecture",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Construct a balanced argument about interregional mobility and solidarity.",
+    "answer": "Start with national LEA and regional resources. Discuss individual access and movement of activity/funding. Separate nearby and long-distance patterns, bound the cited study summaries to their settings, and do not combine unclear denominators.",
+    "explanation": "Start with national LEA and regional resources. Discuss individual access and movement of activity/funding. Separate nearby and long-distance patterns, bound the cited study summaries to their settings, and do not combine unclear denominators. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF pp. 17–19 and 27–37. Original reasoning scaffold, not an official marking scheme.",
+    "source": "Rosella Levaggi — Italy health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.149",
+    "topic": "right-to-health.austria-lecture",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Use one cross-border example to explain path dependency.",
+    "answer": "Name the European opportunity and national barrier. Use Braunau/Simbach or Healthacross as the lecture describes it; distinguish infrastructure from staffing and billing integration. State that the original project documentation has not been independently reviewed.",
+    "explanation": "Name the European opportunity and national barrier. Use Braunau/Simbach or Healthacross as the lecture describes it; distinguish infrastructure from staffing and billing integration. State that the original project documentation has not been independently reviewed. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF pp. 9–10. Original reasoning scaffold, not an official marking scheme.",
+    "source": "Lukas Kerschbaumer — Austria health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.150",
+    "topic": "right-to-health.austria-lecture",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Explain wait-or-pay without confusing population coverage and reimbursement.",
+    "answer": "Separate insurance membership, service availability, waiting and financial burden. Explain the contracted-rate denominator, not a percentage of any private invoice. Keep the source description distinct from an individual entitlement decision.",
+    "explanation": "Separate insurance membership, service availability, waiting and financial burden. Explain the contracted-rate denominator, not a percentage of any private invoice. Keep the source description distinct from an individual entitlement decision. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF pp. 13 and 23. Original reasoning scaffold, not an official marking scheme.",
+    "source": "Lukas Kerschbaumer — Austria health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.151",
+    "topic": "right-to-health.austria-lecture",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Evaluate the digital–ambulatory–inpatient strategy and the limits of its evidence.",
+    "answer": "Link navigation and outpatient capacity to reduced hospital reliance. Identify responsible actors, a possible inclusion safeguard as your proposal, and an outcome indicator. Separate annual/multi-year funding and targets/results. Flag unresolved numerical conflicts.",
+    "explanation": "Link navigation and outpatient capacity to reduced hospital reliance. Identify responsible actors, a possible inclusion safeguard as your proposal, and an outcome indicator. Separate annual/multi-year funding and targets/results. Flag unresolved numerical conflicts. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF pp. 19–26. Original reasoning scaffold, not an official marking scheme.",
+    "source": "Lukas Kerschbaumer — Austria health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.152",
+    "topic": "right-to-health.norway-lecture",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Explain hospital and GP funding without mixing denominators.",
+    "answer": "For somatic grants, give the lecture’s 70/30 need/activity distinction and separate research grants. For GP income, contrast the 50/50 method view with the 50/20/30 payer view. Do not call the GP patient-payment share a national spending share.",
+    "explanation": "For somatic grants, give the lecture’s 70/30 need/activity distinction and separate research grants. For GP income, contrast the 50/50 method view with the 50/20/30 payer view. Do not call the GP patient-payment share a national spending share. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 18–20, 25–26 and 43. Original reasoning scaffold, not an official marking scheme.",
+    "source": "Terje P. Hagen — Norway health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.153",
+    "topic": "right-to-health.norway-lecture",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Evaluate discharge payments and municipal acute units as coordination tools.",
+    "answer": "Identify responsibilities and incentives. Discuss municipal capacity, intended substitution, staffing and patient groups. Read length of stay alongside readmissions and mortality. Preserve historical rates and avoid universal causal predictions.",
+    "explanation": "Identify responsibilities and incentives. Discuss municipal capacity, intended substitution, staffing and patient groups. Read length of stay alongside readmissions and mortality. Preserve historical rates and avoid universal causal predictions. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 40 and 52–56. Original reasoning scaffold, not an official marking scheme.",
+    "source": "Terje P. Hagen — Norway health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.154",
+    "topic": "right-to-health.norway-lecture",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Assess the claim that the presentation proves one system model is best.",
+    "answer": "Separate lecture date from observation years; check units, reference populations and regional coverage, including the Italian limitation. Distinguish inputs/outcomes and association/causation. The figures support bounded comparisons, not a complete causal league table.",
+    "explanation": "Separate lecture date from observation years; check units, reference populations and regional coverage, including the Italian limitation. Distinguish inputs/outcomes and association/causation. The figures support bounded comparisons, not a complete causal league table. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 58–69. Original reasoning scaffold, not an official marking scheme.",
+    "source": "Terje P. Hagen — Norway health system guest lecture (2026)"
   }
 ]

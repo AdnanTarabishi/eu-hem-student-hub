@@ -4,6 +4,50 @@ Course 96500, at the existing `course.html?course=right-to-health` address.
 This is an unofficial, AI-assisted original study edition, not lecturer-approved
 content, legal advice, an exam prediction, or a replacement for Virtuale.
 
+## Guest-lecture edition — 27 October 2026
+
+The three new supplied country presentations are separate, source-led guides
+linked to the existing pre-readings: Italy (37 PDF pages), Austria (28) and Norway
+(73). The Italian uploads are byte-identical; the organisational file is identical
+to the earlier version. The Netherlands guest deck is still missing and is not
+invented or conflated with the three Dutch pre-readings.
+
+This adds **30 located sections, 45 MCQs, nine open questions, 24 flashcards and
+six progressive cases**. Current totals are **13 guides, 100 sections, 125 MCQs,
+29 open prompts, 84 flashcards, 18 cases and 27 sources**. The 24 glossary entries
+remain unchanged. All old content IDs are retained. No original slides, figures,
+recordings, personal information or source PDF files are published.
+
+The course hub has three guest cards and an expandable source review. The guide
+library filters guest lectures versus foundations/pre-readings. Companion links
+connect each lecture with its country reading. A direct topic URL applies course
+styles even when the site's newer shared CourseWorkspace header is used. Long
+source names wrap at mobile widths. Shared topic/resource/exam/schedule views
+are retained, not replaced by another navigation system.
+
+Explore now offers six activities. Two new local-only arithmetic labs illustrate
+provider payment (capitation, relative-weight cases and a simplified 70/30 blend)
+and eligible cost sharing under an invented ceiling. Inputs and assumptions are
+explicit; invalid, blank, excessive or fractional-count values are rejected.
+These are teaching illustrations, not actual tariffs or eligibility tools. They
+create no storage keys and submit nothing. Existing on-device progress and
+Workshop saving remain unchanged; Casebook analysis remains page-local/exportable.
+
+See `right-to-health-guest-review.md` for the complete source inventory, coverage
+map and editorial cautions. In particular, Austrian conflicts are not silently
+corrected; Italian statistics with unclear denominators are not combined; and
+Norwegian historical figures retain their dates. Reform proposals and lecturer
+summaries of studies remain distinguished from independently established results.
+
+Validation in the authoring environment: 30 Node content/arithmetic tests and
+177 adapted inline Chromium checks passed, including all new guides and labs,
+existing interaction regressions and 320/390/768/1440px in both themes. Adapted
+checks use mocked URL/fetch/storage and do not establish real HTTP persistence.
+The separate `http-browser.py` suite is run in CI using real HTTP and browser
+storage; external feeds and service workers are excluded. Localhost browser
+navigation is blocked in the authoring environment. Actual CI/deployment outcomes
+are recorded in GitHub Actions rather than presumed by this document.
+
 ## Expanded edition — 8 October 2026
 
 The original ten guides now contain **70 explanation sections** (40 existing +

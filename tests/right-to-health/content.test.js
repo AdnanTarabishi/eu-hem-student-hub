@@ -11,18 +11,18 @@ const { expectedMargin, cleanDraft } = require(path.join(root, 'right-to-health.
 const sourceIds = new Set(workspace.sources.map(s => s.id));
 const oldIds = ['economic-rights','human-rights','non-discrimination','values-ethics','health-systems','european-health-union'].map(s=>'right-to-health.'+s);
 test('All six published topic IDs survive', () => oldIds.forEach(id => assert.ok(topics.some(t=>t.id===id))))
-test('Ten guides, one unique topic and notes file each', () => { assert.equal(workspace.units.length,10); assert.equal(new Set(topics.map(t=>t.id)).size,10); for(const t of topics) assert.ok(fs.existsSync(path.join(folder,t.notes))); });
+test('Thirteen guides, one unique topic and notes file each', () => { assert.equal(workspace.units.length,13); assert.equal(new Set(topics.map(t=>t.id)).size,13); for(const t of topics) assert.ok(fs.existsSync(path.join(folder,t.notes))); });
 test('Every guide has original explanations, 5–10 review points and valid sources', () => {
- for(const u of workspace.units){assert.ok(u.review.length>=5&&u.review.length<=10);assert.equal(u.sections.length,7);for(const s of u.sections){assert.ok(s.paragraphs.every(p=>p.length>80));assert.ok(s.sources.length>0);s.sources.forEach(id=>assert.ok(sourceIds.has(id)));}}
+ for(const u of workspace.units){assert.ok(u.review.length>=5&&u.review.length<=10);assert.equal(u.sections.length,u.slug==="norway-lecture"?12:u.kind==="guest"?9:7);for(const s of u.sections){assert.ok(s.paragraphs.every(p=>p.length>80));assert.ok(s.sources.length>0);s.sources.forEach(id=>assert.ok(sourceIds.has(id)));}}
 });
-test('All 24 source records use HTTPS and have provenance', () => {assert.equal(workspace.sources.length,24);for(const s of workspace.sources){assert.equal(new URL(s.url).protocol,'https:');assert.ok(s.kind&&s.locator&&s.note);}});
+test('All 27 source records use HTTPS and have provenance', () => {assert.equal(workspace.sources.length,27);for(const s of workspace.sources){assert.equal(new URL(s.url).protocol,'https:');assert.ok(s.kind&&s.locator&&s.note);}});
 test('Resource IDs are aligned with the source library', () => {assert.equal(resources.length,workspace.sources.length);resources.forEach((r,i)=>assert.equal(r.title,workspace.sources[i].title));});
-test('80 MCQs, 20 open prompts and 60 flashcards', () => {assert.equal(questions.filter(q=>q.type==='mcq').length,80);assert.equal(questions.filter(q=>q.type==='short-answer').length,20);assert.equal(cards.length,60);});
+test('125 MCQs, 29 open prompts and 84 flashcards', () => {assert.equal(questions.filter(q=>q.type==='mcq').length,125);assert.equal(questions.filter(q=>q.type==='short-answer').length,29);assert.equal(cards.length,84);});
 test('Unique IDs and unambiguous MCQ option arrays', () => {
- assert.equal(new Set([...questions,...cards,...resources].map(x=>x.id)).size,184);
+ assert.equal(new Set([...questions,...cards,...resources].map(x=>x.id)).size,265);
  for(const q of questions){assert.ok(topics.some(t=>t.id===q.topic));assert.ok(q.explanation.includes('Source:'));if(q.type==='mcq'){assert.equal(q.options.length,4);assert.equal(new Set(q.options).size,4);assert.match(q.answer,/^[ABCD]$/);}}
 });
-test('Each guide has eight MCQs, two open questions and six source-linked cards', () => {for(const t of topics){assert.equal(questions.filter(q=>q.topic===t.id&&q.type==='mcq').length,8);assert.equal(questions.filter(q=>q.topic===t.id&&q.type==='short-answer').length,2);assert.equal(cards.filter(c=>c.topic===t.id).length,6);}cards.forEach(c=>assert.match(c.back, /Sources?:/));});
+test('Foundation and guest practice counts are aligned', () => {for(const t of topics){assert.equal(questions.filter(q=>q.topic===t.id&&q.type==='mcq').length,t.id.endsWith('-lecture')?15:8);assert.equal(questions.filter(q=>q.topic===t.id&&q.type==='short-answer').length,t.id.endsWith('-lecture')?3:2);assert.equal(cards.filter(c=>c.topic===t.id).length,t.id.endsWith("-lecture")?8:6);}cards.forEach(c=>assert.match(c.back, /Sources?:/));});
 test('No replicated slides, copyrighted PDFs or external image dependencies in the module', () => { const walk=p=>fs.readdirSync(p,{withFileTypes:true}).flatMap(d=>d.isDirectory()?walk(path.join(p,d.name)):[path.join(p,d.name)]); for(const p of walk(folder))assert.ok(!/\.(pdf|pptx?|jpg|png|webp)$/i.test(p)); const js=fs.readFileSync(path.join(root,'right-to-health.js'),'utf8');assert.ok(!js.includes('.innerHTML')); });
 test('Historical and supplementary limitations are explicit', () => {assert.match(workspace.scope,/Historical/);assert.match(workspace.editorialStatus,/not reviewed/);assert.match(workspace.sources.find(s=>s.id==='austria25').note,/September 2025/);assert.match(workspace.sources.find(s=>s.id==='italian-reading').note,/could not/);});
 test('Glossary has 24 unique terms with sources', () => {assert.equal(workspace.glossary.length,24);assert.equal(new Set(workspace.glossary.map(t=>t.term)).size,24);workspace.glossary.forEach(t=>assert.ok(sourceIds.has(t.source)));});
@@ -41,9 +41,9 @@ test('All thirty expanded sections have specific reading locators', () => {
 test('Native notes are generated exactly from the published reader content', () => {
  for(const u of workspace.units){const t=topics.find(x=>x.id===u.id);assert.equal(fs.readFileSync(path.join(folder,t.notes),'utf8'),renderNote(u,workspace));}
 });
-test('Twelve unique cases cover all ten published topics', () => {
- assert.equal(workspace.cases.length,12);assert.equal(new Set(workspace.cases.map(c=>c.id)).size,12);
- assert.equal(new Set(workspace.cases.map(c=>c.topic)).size,10);
+test('Eighteen unique cases cover all thirteen topics', () => {
+ assert.equal(workspace.cases.length,18);assert.equal(new Set(workspace.cases.map(c=>c.id)).size,18);
+ assert.equal(new Set(workspace.cases.map(c=>c.topic)).size,13);
  for(const c of workspace.cases){assert.ok(topics.some(t=>t.id===c.topic));assert.match(c.id,/^rth-case-\d{2}$/);}
 });
 test('Every case distinguishes scenario, reasoning, bounded conclusion and sources', () => {
@@ -57,3 +57,13 @@ test('Published v1 question and flashcard IDs all remain available', () => {
  for(let i=1;i<=60;i++)assert.ok(questions.some(q=>q.id==='right-to-health.q.'+String(i).padStart(3,'0')));
  for(let i=1;i<=40;i++)assert.ok(cards.some(c=>c.id==='right-to-health.fc.'+String(i).padStart(3,'0')));
 });
+
+const {paymentModel,cappedPayment}=require(path.join(root,'right-to-health.js'));
+test('Guest edition retains all v2 question and card IDs and the actual upload scope',()=>{for(let i=1;i<=100;i++)assert.ok(questions.some(q=>q.id==='right-to-health.q.'+String(i).padStart(3,'0')));for(let i=1;i<=60;i++)assert.ok(cards.some(c=>c.id==='right-to-health.fc.'+String(i).padStart(3,'0')));assert.equal(workspace.guestReview.newDecks,3);assert.equal(workspace.guestReview.newPages,138);assert.match(workspace.guestReview.missing,/Netherlands/);assert.match(workspace.guestReview.organisation,/byte-identical/);assert.equal(workspace.units.flatMap(u=>u.sections).length,100);});
+test('Thirty guest sections have precise PDF locations and original explanations',()=>{const g=workspace.units.filter(u=>u.kind==='guest');assert.equal(g.length,3);assert.equal(g.flatMap(u=>u.sections).length,30);for(const u of g)for(const s of u.sections){assert.match(s.locator,/PDF p/);assert.equal(s.paragraphs.length,2);assert.ok(s.sources.includes(u.sources[0]));}assert.ok(!g.some(u=>u.slug.includes('netherlands')));});
+test('Conflicting figures and historical dates remain explicit',()=>{const a=JSON.stringify(workspace.units.find(u=>u.slug==='austria-lecture'));const n=JSON.stringify(workspace.units.find(u=>u.slug==='norway-lecture'));assert.match(a,/1,001/);assert.match(a,/3,832/);assert.match(a,/100.5%/);assert.match(a,/not silently/);assert.match(n,/2009–2014/);assert.match(n,/PDF page/);});
+test('Capitation and case-payment calculations are correct',()=>{assert.equal(paymentModel('capitation',{people:40,rate:200,cost:7000}).margin,1000);assert.equal(paymentModel('capitation',{people:0,rate:0,cost:0}).revenue,0);assert.equal(paymentModel('drg',{cases:10,base:2000,weight:1.4,cost:24000}).revenue,28000);assert.equal(paymentModel('drg',{cases:10,base:2000,weight:1.4,cost:24000}).margin,4000);});
+test('Blended funding only scales the activity component',()=>{const x=paymentModel('blended',{baseline:100,activityIndex:120});assert.equal(x.base,70);assert.equal(x.activity,36);assert.equal(x.revenue,106);assert.equal(x.margin,null);assert.equal(paymentModel('blended',{baseline:100,activityIndex:0}).revenue,70);assert.equal(paymentModel('blended',{baseline:100,activityIndex:100}).revenue,100);});
+test('Teaching arithmetic rejects invalid and fractional-count inputs',()=>{for(const v of [NaN,Infinity,-1,1e9,'100',null,undefined]){assert.equal(paymentModel('capitation',{people:v,rate:200,cost:7000}),null);assert.equal(cappedPayment(v,300),null);assert.equal(cappedPayment(100,v),null);}assert.equal(paymentModel('capitation',{people:1.5,rate:200,cost:0}),null);assert.equal(paymentModel('drg',{cases:1.5,base:2000,weight:1,cost:0}),null);assert.equal(paymentModel('blended',{baseline:100,activityIndex:301}),null);assert.equal(paymentModel('unknown',{}),null);});
+test('Ceiling arithmetic distinguishes below equal and above the assumed cap',()=>{assert.deepEqual(cappedPayment(100,300),{paid:100,above:0});assert.deepEqual(cappedPayment(300,300),{paid:300,above:0});assert.deepEqual(cappedPayment(420,300),{paid:300,above:120});assert.deepEqual(cappedPayment(0,0),{paid:0,above:0});});
+test('Guest question sources and locators align with the register',()=>{for(const u of workspace.units.filter(u=>u.kind==='guest')){const src=workspace.sources.find(s=>s.id===u.sources[0]);for(const q of questions.filter(q=>q.topic===u.id)){assert.equal(q.source,src.title);assert.match(q.explanation,/PDF p/);}}});

@@ -358,5 +358,149 @@
     "topic": "right-to-health.european-health-union",
     "front": "What does de lege ferenda signal in the workshop?",
     "back": "Future-oriented proposals for development, distinct from describing the existing framework under de lege lata. Source: Frischhut — European Health Union workshop (2026/27); PDF pp. 3–10 and 24–26."
+  },
+  {
+    "id": "right-to-health.fc.061",
+    "topic": "right-to-health.italy-lecture",
+    "front": "What is capitation’s payment unit?",
+    "back": "A listed person, not each visit. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF pp. 9–11."
+  },
+  {
+    "id": "right-to-health.fc.062",
+    "topic": "right-to-health.italy-lecture",
+    "front": "Why can equal capitation produce unequal margins?",
+    "back": "Resource needs and costs differ across patients. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF pp. 10–11."
+  },
+  {
+    "id": "right-to-health.fc.063",
+    "topic": "right-to-health.italy-lecture",
+    "front": "What unit does the simplified DRG account use?",
+    "back": "A classified case with payment relative to a reference. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF pp. 12–13."
+  },
+  {
+    "id": "right-to-health.fc.064",
+    "topic": "right-to-health.italy-lecture",
+    "front": "Name a DRG trade-off in the lecture.",
+    "back": "Possible efficiency versus strategy, innovation and quality concerns. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF pp. 14–15."
+  },
+  {
+    "id": "right-to-health.fc.065",
+    "topic": "right-to-health.italy-lecture",
+    "front": "What connects national standards and regional finance?",
+    "back": "LEA commitments and equalisation alongside regional revenues and organisation. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF pp. 17–19."
+  },
+  {
+    "id": "right-to-health.fc.066",
+    "topic": "right-to-health.italy-lecture",
+    "front": "Which ASL account combines purchasing and production?",
+    "back": "The programmer account. Indirect reimbursement outside contracts is not automatic. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF p. 26."
+  },
+  {
+    "id": "right-to-health.fc.067",
+    "topic": "right-to-health.italy-lecture",
+    "front": "What border is central to the Italian mobility discussion?",
+    "back": "The border between Italian regions, not necessarily an international border. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF pp. 30–32."
+  },
+  {
+    "id": "right-to-health.fc.068",
+    "topic": "right-to-health.italy-lecture",
+    "front": "Why keep the fiscal-residuum table dated?",
+    "back": "It cites 2009 and cannot establish current regional balances. Source: Rosella Levaggi — Italy health system guest lecture (2026); PDF p. 37."
+  },
+  {
+    "id": "right-to-health.fc.069",
+    "topic": "right-to-health.austria-lecture",
+    "front": "What are the three historical pillars?",
+    "back": "Contribution-based financing, corporatist self-administration and occupational grouping. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF pp. 7–8."
+  },
+  {
+    "id": "right-to-health.fc.070",
+    "topic": "right-to-health.austria-lecture",
+    "front": "What does path dependency explain?",
+    "back": "How established national institutions condition responses to European pressures and opportunities. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF pp. 9–10."
+  },
+  {
+    "id": "right-to-health.fc.071",
+    "topic": "right-to-health.austria-lecture",
+    "front": "Why is fund count not a complete merger evaluation?",
+    "back": "It is a structural measure, not proof of savings or full harmonisation. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF p. 11."
+  },
+  {
+    "id": "right-to-health.fc.072",
+    "topic": "right-to-health.austria-lecture",
+    "front": "Why is cross-setting coordination difficult?",
+    "back": "Responsibility and financing are split across actors and budgets. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF pp. 12 and 19."
+  },
+  {
+    "id": "right-to-health.fc.073",
+    "topic": "right-to-health.austria-lecture",
+    "front": "80% of what in the private-care example?",
+    "back": "Of the contracted reference rate, not automatically of the private invoice. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF p. 13."
+  },
+  {
+    "id": "right-to-health.fc.074",
+    "topic": "right-to-health.austria-lecture",
+    "front": "What does the service-coverage chart measure?",
+    "back": "Government and compulsory financing shares by service category, not personal entitlements. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF p. 23."
+  },
+  {
+    "id": "right-to-health.fc.075",
+    "topic": "right-to-health.austria-lecture",
+    "front": "What status does the digital-first sequence have?",
+    "back": "A lecture-described reform strategy and targets, not established complete implementation. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF pp. 24–26."
+  },
+  {
+    "id": "right-to-health.fc.076",
+    "topic": "right-to-health.austria-lecture",
+    "front": "How should contradictory slide statistics be treated?",
+    "back": "Flag differences in number, year or denominator; do not silently correct or memorise a disputed figure. Source: Lukas Kerschbaumer — Austria health system guest lecture (2026); PDF pp. 19 and 21–22."
+  },
+  {
+    "id": "right-to-health.fc.077",
+    "topic": "right-to-health.norway-lecture",
+    "front": "Which level handles primary and long-term care?",
+    "back": "Municipal government in the lecture’s institutional account. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 4–7."
+  },
+  {
+    "id": "right-to-health.fc.078",
+    "topic": "right-to-health.norway-lecture",
+    "front": "What is the somatic specialist-grant mix?",
+    "back": "70% need-adjusted capitation and 30% activity financing, with research grants separate. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 18–20."
+  },
+  {
+    "id": "right-to-health.fc.079",
+    "topic": "right-to-health.norway-lecture",
+    "front": "How does 70/30 react to 20% more activity in an invented 100-unit model?",
+    "back": "70+30×1.2=106, assuming only the activity part scales. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 18 and 43."
+  },
+  {
+    "id": "right-to-health.fc.080",
+    "topic": "right-to-health.norway-lecture",
+    "front": "What are the GP income’s two views?",
+    "back": "50/50 capitation/service method;50/20/30 municipal/state/patient payer view. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 25–26."
+  },
+  {
+    "id": "right-to-health.fc.081",
+    "topic": "right-to-health.norway-lecture",
+    "front": "Is the municipal stairway compulsory for every patient?",
+    "back": "No. It illustrates support settings, not an individual clinical rule. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 27–30."
+  },
+  {
+    "id": "right-to-health.fc.082",
+    "topic": "right-to-health.norway-lecture",
+    "front": "What does the ceiling graph demonstrate?",
+    "back": "A cap on eligible payments in a simplified framework, without establishing a current actual ceiling amount. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 37–38."
+  },
+  {
+    "id": "right-to-health.fc.083",
+    "topic": "right-to-health.norway-lecture",
+    "front": "What complements length of stay in reform evaluation?",
+    "back": "Readmissions, mortality, capacity, continuity and differences between patient groups. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 52–56."
+  },
+  {
+    "id": "right-to-health.fc.084",
+    "topic": "right-to-health.norway-lecture",
+    "front": "Why use PDF rather than printed slide numbers?",
+    "back": "Printed numbers diverge from PDF positions near the end; consistent locators avoid ambiguity. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 64–73."
   }
 ]
