@@ -1,0 +1,79 @@
+name: Validate Right to Health guest lecture edition
+on:
+  push:
+    branches: [codex/rth-guest-stage-20261027]
+permissions:
+  contents: write
+jobs:
+  review:
+    if: startsWith(github.event.head_commit.message, 'Validate guest lecture edition')
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Verify transport and preserve current main
+        run: python3 .rth-guest-v3/assemble.py
+      - name: Generate native notes and validate content
+        working-directory: /tmp/rth-guest-candidate
+        run: |
+          node scripts/build-right-to-health-notes.js
+          node scripts/build-content-index.js
+          node scripts/stamp-versions.js
+          node --test tests/right-to-health/content.test.js
+          node scripts/check-content.js
+          node scripts/check-contrast.js
+          node --check right-to-health.js
+      - name: Install browser test dependency
+        run: |
+          python3 -m pip install playwright==1.57.0
+          CHROME=$(command -v google-chrome || command -v chromium)
+          test -n "$CHROME"
+          echo "CHROMIUM_BINARY=$CHROME" >> "$GITHUB_ENV"
+      - name: Run responsive and interaction tests
+        working-directory: /tmp/rth-guest-candidate
+        env:
+          EUHEM_SITE_ROOT: /tmp/rth-guest-candidate
+          EUHEM_TEST_OUTPUT: /tmp/rth-guest-browser
+        run: python3 tests/right-to-health/browser.py
+      - name: Test real HTTP, exports and browser persistence
+        working-directory: /tmp/rth-guest-candidate
+        env:
+          EUHEM_SITE_ROOT: /tmp/rth-guest-candidate
+        run: python3 tests/right-to-health/http-browser.py
+      - name: Check reproducibility and restrict changed files
+        working-directory: /tmp/rth-guest-candidate
+        run: |
+          git diff HEAD --binary > /tmp/rth-guest-before.diff
+          node scripts/build-right-to-health-notes.js
+          node scripts/build-content-index.js
+          node scripts/stamp-versions.js
+          git diff HEAD --binary > /tmp/rth-guest-after.diff
+          cmp /tmp/rth-guest-before.diff /tmp/rth-guest-after.diff
+          python3 - <<'PY'
+          import json, os, pathlib, subprocess
+          root = pathlib.Path(os.environ['GITHUB_WORKSPACE'])
+          allowed = set(json.loads((root / '.rth-guest-v3/manifest.json').read_text()))
+          allowed.update({'course.html', 'sw.js', 'content/index.json'})
+          topic_data = json.loads(pathlib.Path('content/modules/right-to-health/topics.json').read_text())
+          allowed.update('content/modules/right-to-health/' + t['notes'] for t in topic_data)
+          changed = subprocess.check_output(['git','diff','--name-only','HEAD'],text=True).splitlines()
+          untracked = subprocess.check_output(['git','ls-files','--others','--exclude-standard'],text=True).splitlines()
+          unexpected = set(changed + untracked) - allowed
+          assert not unexpected, 'Unexpected changed files: ' + repr(unexpected)
+          print('Reviewed scope:',len(set(changed + untracked)),'files')
+          PY
+          git diff HEAD --check
+      - name: Publish clean candidate branch, never main
+        working-directory: /tmp/rth-guest-candidate
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add content/modules/right-to-health content/index.json course.html sw.js docs/right-to-health.md docs/right-to-health-guest-review.md right-to-health.js right-to-health.css tests/right-to-health
+          git diff --cached --check
+          git commit -m 'feat: integrate three source-led health system guest lectures' -m 'Add 30 sections in three companion guides, 45 MCQs, nine open prompts, 24 flashcards and six cases. Add original provider-payment and fee-ceiling teaching tools. Preserve prior IDs, progress and shared course architecture. Document duplicate Italy and organizational files, missing Netherlands slides, internal numeric conflicts and dated evidence. No lecture PDFs, images or student data are published.'
+          CANDIDATE="codex/rth-guest-ready-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          git push origin "HEAD:refs/heads/$CANDIDATE"
+          echo "BASE=$(cat /tmp/rth-guest-base.txt)"
+          echo "CANDIDATE=$CANDIDATE"
+          echo "COMMIT=$(git rev-parse HEAD)"
+          printf 'Base: %s\nCandidate: %s\nCommit: %s\n' "$(cat /tmp/rth-guest-base.txt)" "$CANDIDATE" "$(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
