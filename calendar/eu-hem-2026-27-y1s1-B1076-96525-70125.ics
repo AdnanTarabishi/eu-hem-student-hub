@@ -933,14 +933,14 @@ LOCATION:AULA S. GIACOMO · Piano Terra · Via San Giacomo\, 3 - Bologna
 DESCRIPTION:Elisabetta De Cao\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
-UID:exam-b1076--2026%2010%2027--09%2000--aula%2022%20scaravilli--written--2
- 026%2010%2012--2026%2010%2023------@eu-hem-student-hub
+UID:exam-b1076--2026%2010%2027--09%2000----pass%20fail%20recording---------
+ -@eu-hem-student-hub
 SEQUENCE:0
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
+DTSTAMP:20261028T010533Z
+LAST-MODIFIED:20261028T010533Z
 DTSTART;TZID=Europe/Rome:20261027T090000
 SUMMARY:Pass/Fail recording: Introduction to Economics
-LOCATION:Aula 22 Scaravilli
+LOCATION:
 DESCRIPTION:No final examination. This is an administrative Pass/Fail recor
  ding session\, not a timed exam.\nComplete the required enrolment separate
  ly. Saving this reminder does not register you.\nEnrol in the lecturer's V
@@ -951,47 +951,9 @@ DESCRIPTION:No final examination. This is an administrative Pass/Fail recor
  n and corresponding credits can be recorded.\nThe lecturer confirmed no fi
  nal exam\, but did not explicitly guarantee automatic Pass for everyone. U
  niBo lists 3 CFU\; the programme handbook treats optional crash courses se
- parately from the 120 ECTS degree requirement.\nRegistration opens: 2026-1
- 0-12\nRegistration closes: 2026-10-23\nSource: official UniBo listing\, in
- terpreted with the lecturer's recording notice.
+ parately from the 120 ECTS degree requirement.\nSource: lecturer notice. N
+ o official booking window is inferred.
 TRANSP:TRANSPARENT
-END:VEVENT
-BEGIN:VEVENT
-UID:registration-b1076--2026%2010%2027--09%2000--aula%2022%20scaravilli--wr
- itten--2026%2010%2012--2026%2010%2023------@eu-hem-student-hub
-SEQUENCE:0
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
-DTSTART;VALUE=DATE:20261023
-DTEND;VALUE=DATE:20261024
-SUMMARY:Last day to enrol for recording: Introduction to Economics
-DESCRIPTION:Administrative recording on 2026-10-27 at 09:00. No final exami
- nation. Enrol separately\; this reminder is not registration.
-END:VEVENT
-BEGIN:VEVENT
-UID:exam-79060--2026%2010%2027--10%2000--belmeloro%20b--written--2026%2010%
- 2012--2026%2010%2023------@eu-hem-student-hub
-SEQUENCE:0
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
-DTSTART;TZID=Europe/Rome:20261027T100000
-DTEND;TZID=Europe/Rome:20261027T120000
-SUMMARY:Exam: Fundamentals in Health Economics
-LOCATION:BELMELORO B
-DESCRIPTION:Type: Written\nTeacher: Fabbri Daniele\nRegistration closes: 20
- 26-10-23\nEnd time is an estimate (2 h). Register on AlmaEsami.\nSource: o
- fficial UniBo exam dates
-END:VEVENT
-BEGIN:VEVENT
-UID:registration-79060--2026%2010%2027--10%2000--belmeloro%20b--written--20
- 26%2010%2012--2026%2010%2023------@eu-hem-student-hub
-SEQUENCE:0
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
-DTSTART;VALUE=DATE:20261023
-DTEND;VALUE=DATE:20261024
-SUMMARY:Last day to register: Fundamentals in Health Economics
-DESCRIPTION:Exam on 2026-10-27 at 10:00. Register on AlmaEsami.
 END:VEVENT
 BEGIN:VEVENT
 UID:exam-96500--2026%2011%2002--14%2000--aula%20c%20berti%20pichat--written

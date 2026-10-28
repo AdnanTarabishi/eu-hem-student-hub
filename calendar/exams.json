@@ -7,73 +7,8 @@
     "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates?b_start:int=20"
   ],
   "sourceType": "official",
-  "verifiedAt": "2026-10-27T23:40:06.612Z",
+  "verifiedAt": "2026-10-28T01:05:31.342Z",
   "records": [
-    {
-      "codes": [
-        "B1076"
-      ],
-      "dateKey": "2026-10-27",
-      "time": "09:00",
-      "names": [
-        "Introduction To Economics"
-      ],
-      "teachers": [
-        "Matuka Adelajda"
-      ],
-      "type": "Written",
-      "place": "Aula 22 Scaravilli",
-      "registrationOpens": "2026-10-12",
-      "registrationCloses": "2026-10-23",
-      "duration": "",
-      "notes": "",
-      "endTime": "",
-      "assessmentCode": "B1076"
-    },
-    {
-      "codes": [
-        "97177",
-        "79060"
-      ],
-      "dateKey": "2026-10-27",
-      "time": "10:00",
-      "names": [
-        "Fundamental In Health Economics And Management (I.C.)",
-        "Fundamentals In Health Economics"
-      ],
-      "teachers": [
-        "Fabbri Daniele"
-      ],
-      "type": "Written",
-      "place": "BELMELORO B",
-      "registrationOpens": "2026-10-12",
-      "registrationCloses": "2026-10-23",
-      "duration": "",
-      "notes": "",
-      "endTime": "",
-      "assessmentCode": "79060"
-    },
-    {
-      "codes": [
-        "87427"
-      ],
-      "dateKey": "2026-10-27",
-      "time": "10:00",
-      "names": [
-        "Health Economics And Management (I.C.)"
-      ],
-      "teachers": [
-        "Fabbri Daniele"
-      ],
-      "type": "Written",
-      "place": "BELMELORO B",
-      "registrationOpens": "2026-10-12",
-      "registrationCloses": "2026-10-23",
-      "duration": "",
-      "notes": "",
-      "endTime": "",
-      "assessmentCode": "87427"
-    },
     {
       "codes": [
         "96500"
