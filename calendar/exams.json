@@ -7,7 +7,7 @@
     "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates?b_start:int=20"
   ],
   "sourceType": "official",
-  "verifiedAt": "2026-10-29T15:59:50.482Z",
+  "verifiedAt": "2026-10-29T16:59:24.411Z",
   "records": [
     {
       "codes": [
@@ -442,27 +442,6 @@
       "notes": "",
       "endTime": "",
       "assessmentCode": "70126"
-    },
-    {
-      "codes": [
-        "79077"
-      ],
-      "dateKey": "2026-12-19",
-      "time": "09:00",
-      "names": [
-        "Health Economics And Policy In Low And Middle Income Countries"
-      ],
-      "teachers": [
-        "Iorio Daniela"
-      ],
-      "type": "Oral",
-      "place": "TBA",
-      "registrationOpens": "2026-12-04",
-      "registrationCloses": "2026-12-15",
-      "duration": "",
-      "notes": "",
-      "endTime": "",
-      "assessmentCode": "79077"
     },
     {
       "codes": [
