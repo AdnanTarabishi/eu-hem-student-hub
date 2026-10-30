@@ -1036,33 +1036,35 @@ DESCRIPTION:No final examination. This is an administrative Pass/Fail recor
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:exam-96500--2026%2011%2002--14%2000--aula%20c%20berti%20pichat--written
- --2026%2010%2013--2026%2010%2030------the%20exam%20will%20take%20place%20a
- t%20berti%20pichat%20street%20n%206%206%202@eu-hem-student-hub
+UID:exam-96500--2026%2011%2002--16%2000--lab%20g%20t%20camillo%20ranzani%20
+ street%20n%201--written--2026%2010%2013--2026%2010%2030------the%20exam%20
+ will%20take%20place%20at%20camillo%20ranzani%20street%20n%201@eu-hem-stude
+ nt-hub
 SEQUENCE:0
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
-DTSTART;TZID=Europe/Rome:20261102T140000
-DTEND;TZID=Europe/Rome:20261102T160000
+DTSTAMP:20261030T185317Z
+LAST-MODIFIED:20261030T185317Z
+DTSTART;TZID=Europe/Rome:20261102T160000
+DTEND;TZID=Europe/Rome:20261102T180000
 SUMMARY:Exam: Our Right to Health: Needs\, Resources and Society
-LOCATION:Aula C Berti Pichat
+LOCATION:lab. G+T (Camillo Ranzani Street n.1)
 DESCRIPTION:Type: Written\nTeacher: Frischhut Markus\nRegistration closes: 
- 2026-10-30\nNotes: The exam will take place at Berti Pichat Street\, n.6-6
- /2\nEnd time is an estimate (2 h). Register on AlmaEsami.\nSource: officia
- l UniBo exam dates
+ 2026-10-30\nNotes: The exam will take place at Camillo Ranzani Street n.1\
+ nEnd time is an estimate (2 h). Register on AlmaEsami.\nSource: official U
+ niBo exam dates
 END:VEVENT
 BEGIN:VEVENT
-UID:registration-96500--2026%2011%2002--14%2000--aula%20c%20berti%20pichat-
- -written--2026%2010%2013--2026%2010%2030------the%20exam%20will%20take%20p
- lace%20at%20berti%20pichat%20street%20n%206%206%202@eu-hem-student-hub
+UID:registration-96500--2026%2011%2002--16%2000--lab%20g%20t%20camillo%20ra
+ nzani%20street%20n%201--written--2026%2010%2013--2026%2010%2030------the%2
+ 0exam%20will%20take%20place%20at%20camillo%20ranzani%20street%20n%201@eu-h
+ em-student-hub
 SEQUENCE:0
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
+DTSTAMP:20261030T185317Z
+LAST-MODIFIED:20261030T185317Z
 DTSTART;VALUE=DATE:20261030
 DTEND;VALUE=DATE:20261031
 SUMMARY:Last day to register: Our Right to Health: Needs\, Resources and So
  ciety
-DESCRIPTION:Exam on 2026-11-02 at 14:00. Register on AlmaEsami.
+DESCRIPTION:Exam on 2026-11-02 at 16:00. Register on AlmaEsami.
 END:VEVENT
 BEGIN:VEVENT
 UID:exam-96498--2026%2011%2004--15%2000--lab%20g%20lab%20t%20via%20ranzani%

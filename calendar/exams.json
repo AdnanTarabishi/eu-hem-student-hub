@@ -7,14 +7,14 @@
     "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates?b_start:int=20"
   ],
   "sourceType": "official",
-  "verifiedAt": "2026-10-30T17:50:08.828Z",
+  "verifiedAt": "2026-10-30T18:53:14.495Z",
   "records": [
     {
       "codes": [
         "96500"
       ],
       "dateKey": "2026-11-02",
-      "time": "14:00",
+      "time": "16:00",
       "names": [
         "Our Right To Health: Needs, Resources And Society"
       ],
@@ -22,11 +22,11 @@
         "Frischhut Markus"
       ],
       "type": "Written",
-      "place": "Aula C Berti Pichat",
+      "place": "lab. G+T (Camillo Ranzani Street n.1)",
       "registrationOpens": "2026-10-13",
       "registrationCloses": "2026-10-30",
       "duration": "",
-      "notes": "The exam will take place at Berti Pichat Street, n.6-6/2",
+      "notes": "The exam will take place at Camillo Ranzani Street n.1",
       "endTime": "",
       "assessmentCode": "96500"
     },
