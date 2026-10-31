@@ -1,0 +1,39 @@
+{
+  "sha256": "adbf1a079b19c6f6db73b57e4cd10e2d45fdecb1d5013ea98da1df78898f7165",
+  "patchSha256": "00884eebf0375e3f8fe6ad83eb13dc5e6ad072b68de41e5c8413eb2c6ecc07d8",
+  "expected": {
+    "content/modules/right-to-health/flashcards.json": "d62b23bf2950d6a80edca3611a3becfa7262f61a",
+    "content/modules/right-to-health/questions.json": "68f25b94d696bb8fce646e5c91570b0b001a5849",
+    "content/modules/right-to-health/resources.json": "3eb5d099c4b7554715e13b50801b8c1a06d639b9",
+    "content/modules/right-to-health/topics.json": "1fd3eb3065728888df20be5842c72ab7fe903c9f",
+    "content/modules/right-to-health/workspace.json": "63eb76dbd1eb120270db5ac4cfe722cdbe9ee44f",
+    "docs/right-to-health-guest-review.md": "c21cfd7e797cdeb37dc7c3c4f66481bb789d40ac",
+    "docs/right-to-health-netherlands-review.md": null,
+    "docs/right-to-health.md": "41a2912d17a327c712ab835202b50c34d3c161c1",
+    "right-to-health.css": "2e10dda276339ca605c4dcadbccefd7267a8f2b6",
+    "right-to-health.js": "bd87160c2b87c1d697e7d8471b9dd22b345fec43",
+    "scripts/build-right-to-health-notes.js": "ad170ffeda47bb52f3a34add7b11bca197824fd0",
+    "tests/right-to-health/browser.py": "ccfddb7bdc8b3e3a2192ce0e963c0ffeb5186c8b",
+    "tests/right-to-health/content.test.js": "741e9c0a470a2372deb853d0b37694f3821603c7",
+    "tests/right-to-health/http-browser.py": "d1f472331b60209caefee6f1662aab3597b87bc2"
+  },
+  "generated": [
+    "content/index.json",
+    "content/modules/right-to-health/notes/austria-lecture.md",
+    "content/modules/right-to-health/notes/austria.md",
+    "content/modules/right-to-health/notes/economic-rights.md",
+    "content/modules/right-to-health/notes/european-health-union.md",
+    "content/modules/right-to-health/notes/health-systems.md",
+    "content/modules/right-to-health/notes/human-rights.md",
+    "content/modules/right-to-health/notes/italy-lecture.md",
+    "content/modules/right-to-health/notes/italy.md",
+    "content/modules/right-to-health/notes/netherlands-lecture.md",
+    "content/modules/right-to-health/notes/netherlands.md",
+    "content/modules/right-to-health/notes/non-discrimination.md",
+    "content/modules/right-to-health/notes/norway-lecture.md",
+    "content/modules/right-to-health/notes/norway.md",
+    "content/modules/right-to-health/notes/values-ethics.md",
+    "course.html",
+    "sw.js"
+  ]
+}
