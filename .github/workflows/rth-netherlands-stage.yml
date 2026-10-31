@@ -1,0 +1,100 @@
+name: Validate Netherlands guest lecture
+on:
+  push:
+    branches: [codex/rth-netherlands-stage-20261031]
+permissions:
+  contents: write
+jobs:
+  review:
+    if: startsWith(github.event.head_commit.message, 'Validate Netherlands')
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Verify exact patch and preserve current main
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64, hashlib, json, lzma, subprocess
+          here = Path('.rth-nl')
+          manifest = json.loads((here / 'manifest.json').read_text())
+          encoded = ''.join((here / f'part-{i}.b64').read_text().strip() for i in range(3))
+          compressed = base64.b64decode(encoded, validate=True)
+          assert hashlib.sha256(compressed).hexdigest() == manifest['sha256'], 'Transport checksum mismatch'
+          patch = lzma.decompress(compressed)
+          assert hashlib.sha256(patch).hexdigest() == manifest['patchSha256'], 'Patch checksum mismatch'
+          Path('/tmp/rth-nl.patch').write_bytes(patch)
+          subprocess.run(['git', 'fetch', 'origin', 'main'], check=True)
+          base = subprocess.check_output(['git', 'rev-parse', 'FETCH_HEAD'], text=True).strip()
+          Path('/tmp/rth-nl-base.txt').write_text(base)
+          target = '/tmp/rth-nl-candidate'
+          subprocess.run(['git', 'worktree', 'add', '--detach', target, base], check=True)
+          for path, expected in manifest['expected'].items():
+              result = subprocess.run(['git', 'rev-parse', '--verify', f'HEAD:{path}'], cwd=target, text=True, capture_output=True)
+              actual = result.stdout.strip() if result.returncode == 0 else None
+              assert actual == expected, f'Concurrent change: {path}; expected {expected}, found {actual}'
+          subprocess.run(['git', 'apply', '--unidiff-zero', '--index', '/tmp/rth-nl.patch'], cwd=target, check=True)
+          print('Verified patch on main', base)
+          PY
+      - name: Generate notes and validate content and scripts
+        working-directory: /tmp/rth-nl-candidate
+        run: |
+          node scripts/build-right-to-health-notes.js
+          node scripts/build-content-index.js
+          node scripts/stamp-versions.js
+          node --test tests/right-to-health/content.test.js
+          node scripts/check-content.js
+          node scripts/check-contrast.js
+          node --check right-to-health.js
+          node --check scripts/build-right-to-health-notes.js
+      - name: Install browser test dependency
+        run: |
+          python3 -m pip install playwright==1.57.0
+          CHROME=$(command -v google-chrome || command -v chromium)
+          test -n "$CHROME"
+          echo "CHROMIUM_BINARY=$CHROME" >> "$GITHUB_ENV"
+      - name: Test interactions and responsive layouts
+        working-directory: /tmp/rth-nl-candidate
+        env:
+          EUHEM_SITE_ROOT: /tmp/rth-nl-candidate
+          EUHEM_TEST_OUTPUT: /tmp/rth-nl-browser
+        run: python3 tests/right-to-health/browser.py
+      - name: Test real HTTP downloads and persistent progress
+        working-directory: /tmp/rth-nl-candidate
+        env:
+          EUHEM_SITE_ROOT: /tmp/rth-nl-candidate
+        run: python3 tests/right-to-health/http-browser.py
+      - name: Check scope and reproducible generation
+        working-directory: /tmp/rth-nl-candidate
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, subprocess
+          manifest = json.loads((pathlib.Path(os.environ['GITHUB_WORKSPACE']) / '.rth-nl/manifest.json').read_text())
+          allowed = set(manifest['expected']) | set(manifest['generated'])
+          def snapshot():
+              return {p: hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest() for p in sorted(allowed) if pathlib.Path(p).is_file()}
+          before = snapshot()
+          for script in ['build-right-to-health-notes.js', 'build-content-index.js', 'stamp-versions.js']:
+              subprocess.run(['node', 'scripts/' + script], check=True)
+          assert snapshot() == before, 'Generated output is not reproducible'
+          changed = subprocess.check_output(['git', 'diff', '--name-only', 'HEAD'], text=True).splitlines()
+          untracked = subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard'], text=True).splitlines()
+          unexpected = set(changed + untracked) - allowed
+          assert not unexpected, 'Unexpected changes: ' + repr(unexpected)
+          print('Reviewed scope:', len(set(changed + untracked)), 'files')
+          PY
+          git diff HEAD --check
+      - name: Commit clean candidate branch without updating main
+        working-directory: /tmp/rth-nl-candidate
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add content/modules/right-to-health content/index.json course.html sw.js docs/right-to-health.md docs/right-to-health-guest-review.md docs/right-to-health-netherlands-review.md right-to-health.js right-to-health.css scripts/build-right-to-health-notes.js tests/right-to-health
+          git diff --cached --check
+          git commit -m 'feat: add Netherlands guest lecture and sourced practice' -m 'Add twelve sections, two accessible comparison tables, twenty MCQs, four open prompts, twelve flashcards and three progressive cases. Retain existing readings and IDs. Distinguish lecture claims from two official supplementary checks. Validate content, responsive interactions and real HTTP/storage checks before publication. No original lecture PDF or images included.'
+          CANDIDATE="codex/rth-netherlands-ready-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          git push origin "HEAD:refs/heads/$CANDIDATE"
+          echo "BASE=$(cat /tmp/rth-nl-base.txt)"
+          echo "CANDIDATE=$CANDIDATE"
+          echo "COMMIT=$(git rev-parse HEAD)"
+          printf 'Base: %s\nCandidate: %s\nCommit: %s\n' "$(cat /tmp/rth-nl-base.txt)" "$CANDIDATE" "$(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
