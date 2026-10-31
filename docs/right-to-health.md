@@ -4,13 +4,40 @@ Course 96500, at the existing `course.html?course=right-to-health` address.
 This is an unofficial, AI-assisted original study edition, not lecturer-approved
 content, legal advice, an exam prediction, or a replacement for Virtuale.
 
+## Netherlands guest lecture — 31 October 2026
+
+The supplied 46-page van de Ven presentation now completes the four listed guest
+country decks. Its scope remains somatic healthcare and cross-border care, not a
+comprehensive account of long-term care. A separate twelve-section guide links to
+the existing Dutch pre-readings; none of their content or published IDs is replaced.
+
+Adds **20 MCQs, four open-answer scaffolds, 12 flashcards, three progressive cases
+and two accessible comparison tables**. Current totals: **14 guides, 112 sections,
+145 MCQs, 33 open prompts, 96 flashcards, 21 cases and 30 sources**. All four guest
+decks total **184 PDF pages**. The shared glossary remains at 24 terms.
+
+The two-part lecture framing and source percentages are retained. Two separately
+labelled official checks clarify pure-reimbursement product availability (NZa
+2026 table) and EHIC medically necessary temporary-stay care (European Commission).
+They are not silently substituted for slide text or claimed to extend the assessed
+syllabus. See `right-to-health-netherlands-review.md` for source mapping and limits.
+
+The guest-card count is data-derived, the four cards use a two-column desktop grid,
+and optional source-led tables have captions, column/row headers and labelled
+keyboard-scrollable regions. Native Markdown notes contain the same table data.
+No new storage keys, network submissions, frameworks or original PDF uploads.
+
+Validation is recorded from actual test runs, not assumed here. Run the content,
+adapted-browser and real-HTTP suites as described below; external feeds and service
+workers remain outside the HTTP suite's coverage.
+
 ## Guest-lecture edition — 27 October 2026
 
 The three new supplied country presentations are separate, source-led guides
 linked to the existing pre-readings: Italy (37 PDF pages), Austria (28) and Norway
 (73). The Italian uploads are byte-identical; the organisational file is identical
-to the earlier version. The Netherlands guest deck is still missing and is not
-invented or conflated with the three Dutch pre-readings.
+to the earlier version. At this historical release the Netherlands guest deck was still missing. It was
+added separately on 31 October 2026; the three Dutch pre-readings remain intact.
 
 This adds **30 located sections, 45 MCQs, nine open questions, 24 flashcards and
 six progressive cases**. Current totals are **13 guides, 100 sections, 125 MCQs,

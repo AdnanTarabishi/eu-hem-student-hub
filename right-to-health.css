@@ -213,7 +213,7 @@
 
 /* Guest lecture cards and source-led local teaching labs. */
 .rth-guest-updates { border:1px solid var(--border-default);border-radius:22px;padding:clamp(18px,3vw,32px);background:var(--surface-warm); }
-.rth-guest-grid { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:22px 0; }
+.rth-guest-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:22px 0; }
 .rth-guest-card { display:flex;flex-direction:column;min-width:0;padding:22px;border-radius:16px;border:1px solid var(--border-default);background:var(--surface-card); }
 .rth-guest-card h3 { font-family:var(--font-serif);line-height:1.3;font-size:1.35rem;margin:0 0 12px; }
 .rth-guest-card .button { margin-top:auto;align-self:flex-start;white-space:normal; }
@@ -230,3 +230,14 @@
 .rth-lab-output .rth-number { overflow-wrap:anywhere; }
 @media(max-width:900px) { .rth-guest-grid { grid-template-columns:1fr; } }
 @media(max-width:600px) { .rth-guide-filters,.rth-lab-controls { grid-template-columns:1fr; } .rth-guest-card { padding:18px; } }
+
+/* Source-led comparisons: semantic tables, keyboard-scrollable on small screens. */
+.rth-study-table-wrap { max-width:100%; min-width:0; overflow-x:auto; margin:24px 0; border:1px solid var(--border-default); border-radius:12px; }
+.rth-study-table-wrap:focus-visible { outline:3px solid var(--color-brand-action); outline-offset:3px; }
+.rth-study-table { width:100%; min-width:500px; border-collapse:collapse; background:var(--surface-card); font-size:.93rem; line-height:1.6; }
+.rth-study-table caption { padding:16px; text-align:left; font-weight:650; color:var(--text-heading); background:var(--surface-warm); }
+.rth-study-table th,.rth-study-table td { padding:14px 16px; text-align:left; vertical-align:top; border-top:1px solid var(--border-default); }
+.rth-study-table thead th { background:var(--surface-warm); color:var(--text-heading); }
+.rth-study-table tbody th { width:22%; font-weight:650; }
+.rth-study-table td { overflow-wrap:anywhere; }
+@media print { .rth-study-table-wrap { overflow:visible; } .rth-study-table { min-width:0; font-size:.85em; } }

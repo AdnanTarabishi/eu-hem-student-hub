@@ -2278,5 +2278,365 @@
     "answer": "Separate lecture date from observation years; check units, reference populations and regional coverage, including the Italian limitation. Distinguish inputs/outcomes and association/causation. The figures support bounded comparisons, not a complete causal league table.",
     "explanation": "Separate lecture date from observation years; check units, reference populations and regional coverage, including the Italian limitation. Distinguish inputs/outcomes and association/causation. The figures support bounded comparisons, not a complete causal league table. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 58–69. Original reasoning scaffold, not an official marking scheme.",
     "source": "Terje P. Hagen — Norway health system guest lecture (2026)"
+  },
+  {
+    "id": "right-to-health.q.155",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "mcq",
+    "difficulty": "easy",
+    "question": "What scope does the Dutch lecture explicitly set for its system overview?",
+    "options": [
+      "Only long-term care and nursing homes.",
+      "Only the prices of travel-insurance policies.",
+      "All social services with equal detail.",
+      "Somatic healthcare, not a complete account of long-term care."
+    ],
+    "answer": "D",
+    "explanation": "The agenda explicitly limits the system discussion to somatic healthcare. The second part concerns cross-border care. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 1–2 and 33.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
+  },
+  {
+    "id": "right-to-health.q.156",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "mcq",
+    "difficulty": "easy",
+    "question": "Which sequence matches the three reform waves in the lecture?",
+    "options": [
+      "Universal coverage; controls and expenditure caps; incentives and competition.",
+      "Private supplements; emergency cards; hospital mergers.",
+      "A single unchanging free-market system.",
+      "Competition, then abolition of insurance, then universal coverage."
+    ],
+    "answer": "A",
+    "explanation": "Each wave addresses a different policy problem. Competition does not mean the other objectives disappear. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 4–12.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
+  },
+  {
+    "id": "right-to-health.q.157",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "How should the 1987 and 2006 dates be distinguished?",
+    "options": [
+      "1987 refers to the Dekker proposals; 2006 to the new insurance arrangement.",
+      "The national reform was implemented before it was proposed.",
+      "2006 marks the introduction of the 1941 sickness-fund scheme.",
+      "Both dates mark the same completed law."
+    ],
+    "answer": "A",
+    "explanation": "The slides distinguish the proposal and the later implementation after a long transition. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 13 and 16–17.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
+  },
+  {
+    "id": "right-to-health.q.158",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "In the lecture, regulated competition means:",
+    "options": [
+      "Government has no remaining role.",
+      "Insurers must reimburse every invoice without conditions.",
+      "Insurers purchase care within rules intended to protect affordability, access and quality.",
+      "All providers must be government employees."
+    ],
+    "answer": "C",
+    "explanation": "The purchaser role changes, but public goals and regulatory safeguards remain. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 14–15.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
+  },
+  {
+    "id": "right-to-health.q.159",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "What is the purpose of describing the basic package by functions of care?",
+    "options": [
+      "To permit flexibility in how covered care is delivered.",
+      "To remove the benefits package.",
+      "To make all supplementary benefits compulsory.",
+      "To restrict every service to one named institution."
+    ],
+    "answer": "A",
+    "explanation": "A function-based definition need not tie a benefit to one particular provider organisation. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF p. 17.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
+  },
+  {
+    "id": "right-to-health.q.160",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "mcq",
+    "difficulty": "easy",
+    "question": "Which pair belongs to the basic-insurance architecture described in the lecture?",
+    "options": [
+      "Health-based refusal and individually risk-rated basic premiums.",
+      "Identical premiums across every insurer and product.",
+      "No enrolment requirement and no regulation.",
+      "Open enrolment and community rating."
+    ],
+    "answer": "D",
+    "explanation": "Acceptance and rating safeguards are not a requirement for every insurer’s products to have the same price. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF p. 17.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
+  },
+  {
+    "id": "right-to-health.q.161",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Using only the figures on slides 17 and 21, what is the largest combined adult deductible illustrated?",
+    "options": [
+      "A percentage of the Dutch national budget.",
+      "€885: €385 mandatory plus up to €500 voluntary.",
+      "€500 in total.",
+      "€385 plus another mandatory €885."
+    ],
+    "answer": "B",
+    "explanation": "The optional amount is an addition, not the total. The calculation is source-dated and does not describe exemptions. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 17 and 21.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
+  },
+  {
+    "id": "right-to-health.q.162",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "What does the in-kind duty of care emphasise in the slides?",
+    "options": [
+      "Arranging delivery of care within acceptable waiting-time norms.",
+      "Only reimbursing any provider at any price.",
+      "No responsibility for waiting times.",
+      "Only maintaining an information website."
+    ],
+    "answer": "A",
+    "explanation": "The lecture contrasts a delivery obligation with the assistance/effort account used for reimbursement contracts. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 22 and 25.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
+  },
+  {
+    "id": "right-to-health.q.163",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "What is the reference for the general 70–80% range in the non-contracted-care slides?",
+    "options": [
+      "The household’s annual income.",
+      "The risk-equalisation budget.",
+      "Every foreign invoice, regardless of its amount.",
+      "Costs considered reasonable in the Dutch market."
+    ],
+    "answer": "D",
+    "explanation": "The calculation base is central. The slides also mention contract conditions and litigation. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 24 and 43.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
+  },
+  {
+    "id": "right-to-health.q.164",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "mcq",
+    "difficulty": "hard",
+    "question": "How should the slide about reimbursement contracts and court action be read?",
+    "options": [
+      "The same judgement is guaranteed for every claimant.",
+      "It concerns the described waiting-time/delivery distinction, not every possible claim.",
+      "No policyholder can ever bring any insurance dispute.",
+      "It abolishes all duties to reimburse costs."
+    ],
+    "answer": "B",
+    "explanation": "The context is the difference between delivery and assistance obligations. Do not generalise the short slide statement into immunity from any legal challenge. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 22 and 25–26.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
+  },
+  {
+    "id": "right-to-health.q.165",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which statement best reads the REF financing diagram?",
+    "options": [
+      "Every patient must pay 45% of every bill.",
+      "Income-related contributions go to the fund, adult premiums to insurers, and risk-adjusted payments from the fund to insurers.",
+      "All contributions are handed directly to households.",
+      "Risk-adjusted payments and household care allowances are identical."
+    ],
+    "answer": "B",
+    "explanation": "The arrows separate funding flows and recipients. The percentages are not patient copayment rates. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF p. 28.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
+  },
+  {
+    "id": "right-to-health.q.166",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "What distinguishes the care allowance from risk equalisation?",
+    "options": [
+      "Neither concerns affordability or risk.",
+      "Both use the same recipient and purpose.",
+      "Both are payments only to hospitals.",
+      "The allowance supports eligible households; equalisation compensates insurers for risk."
+    ],
+    "answer": "D",
+    "explanation": "The slide places household affordability support alongside, but separate from, insurer risk compensation. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF p. 28.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
+  },
+  {
+    "id": "right-to-health.q.167",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "mcq",
+    "difficulty": "easy",
+    "question": "Which is a risk adjuster listed in the deck?",
+    "options": [
+      "An automatic right to refuse chronically ill applicants.",
+      "The patient’s favourite holiday destination.",
+      "Pharmacy-based Cost Groups.",
+      "The absence of all previous health-use information."
+    ],
+    "answer": "C",
+    "explanation": "The list includes pharmacy, diagnosis, medical-device and other demographic/health-use indicators. An adjuster is not an exclusion rule. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF p. 29.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
+  },
+  {
+    "id": "right-to-health.q.168",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Why can risk selection threaten efficiency as well as quality?",
+    "options": [
+      "Community rating makes selection logically impossible.",
+      "Only the number of hospitals matters for efficiency.",
+      "Attracting favourable risks can become more rewarding than improving care or purchasing.",
+      "Selection necessarily lowers the treatment cost of every patient."
+    ],
+    "answer": "C",
+    "explanation": "The lecture lists threats to quality, efficiency and solidarity through different mechanisms. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF p. 30.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
+  },
+  {
+    "id": "right-to-health.q.169",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "What does “as far as not in the basket” mean in the supplementary-insurance examples?",
+    "options": [
+      "Only the portion outside the basic basket is being described as supplementary.",
+      "No contract conditions can apply.",
+      "All supplementary benefits become mandatory.",
+      "All physiotherapy and dental care are necessarily excluded from basic cover."
+    ],
+    "answer": "A",
+    "explanation": "Preserve the qualifier rather than turning an example into an absolute exclusion. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 31–32.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
+  },
+  {
+    "id": "right-to-health.q.170",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "Which entitlement basis does the coordination route emphasise?",
+    "options": [
+      "One identical EU benefit package.",
+      "Only the wording of a Dutch supplementary policy.",
+      "Any amount chosen by the foreign provider.",
+      "The statutory system of the country where treatment is delivered."
+    ],
+    "answer": "D",
+    "explanation": "The lecture contrasts host statutory entitlements under coordination with the Dutch home-contract route. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 35–36.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
+  },
+  {
+    "id": "right-to-health.q.171",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "mcq",
+    "difficulty": "medium",
+    "question": "What does the lecture connect with planned/non-urgent care under S2?",
+    "options": [
+      "A card that authorises every planned treatment without review.",
+      "Prior authorisation, home coverage and the assessment of waiting at home.",
+      "A rule that the Directive abolished coordination.",
+      "A right created solely by choosing an expensive hospital."
+    ],
+    "answer": "B",
+    "explanation": "The slides state these conditions but do not give a universal numerical waiting threshold or a complete individual decision procedure. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 35–36.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
+  },
+  {
+    "id": "right-to-health.q.172",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "mcq",
+    "difficulty": "easy",
+    "question": "What happened to coordination when the Patients’ Directive was introduced, according to the deck?",
+    "options": [
+      "It guaranteed identical national implementation everywhere.",
+      "It became a private travel-insurance policy.",
+      "It remained alongside the Directive.",
+      "It ceased to exist."
+    ],
+    "answer": "C",
+    "explanation": "The lecture explicitly retains coordination and separately discusses national transposition of the Directive. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 37–39.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
+  },
+  {
+    "id": "right-to-health.q.173",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "mcq",
+    "difficulty": "hard",
+    "question": "What qualification accompanies the Dutch worldwide-coverage account?",
+    "options": [
+      "Outside the EU, the slides use EHIC as the general worldwide route.",
+      "Every foreign invoice must be repaid in full.",
+      "The Dutch-cost reference and relevant policy/provider conditions still matter.",
+      "No provider or contract conditions can matter abroad."
+    ],
+    "answer": "C",
+    "explanation": "The deck distinguishes geographic reach from unlimited payment and retains the contract-type distinction. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 40–45.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
+  },
+  {
+    "id": "right-to-health.q.174",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "mcq",
+    "difficulty": "hard",
+    "question": "In an invented example, the bill is €1,500, the Dutch reference is €1,000 and the contract pays 75% of that reference. Ignoring all other charges, what is reimbursed?",
+    "options": [
+      "€1,125, because the percentage always applies to the invoice.",
+      "€750; the example uses the Dutch reference as its base.",
+      "€250, because only the reference gap counts.",
+      "€1,500, because worldwide means unlimited."
+    ],
+    "answer": "B",
+    "explanation": "0.75 × €1,000 = €750. The remainder is €750 under the stated assumptions. This is a teaching calculation, not an actual policy quote. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 24 and 40–43; original hypothetical example.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
+  },
+  {
+    "id": "right-to-health.q.175",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Explain how the three reform waves lead to the insurer-purchaser model.",
+    "answer": "Distinguish the access problem from cost control and efficiency incentives. Describe the old two-tier system, the reasons given for reform, the 1987 proposal and the 2006 arrangement. Explain the purchaser shift and public safeguards without calling it a free market or assuming success from the design alone.",
+    "explanation": "Distinguish the access problem from cost control and efficiency incentives. Describe the old two-tier system, the reasons given for reform, the 1987 proposal and the 2006 arrangement. Explain the purchaser shift and public safeguards without calling it a free market or assuming success from the design alone. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 4–17 and 27. Original answer scaffold, not a lecturer marking scheme.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
+  },
+  {
+    "id": "right-to-health.q.176",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Compare in-kind and reimbursement contracts as they are taught in the lecture.",
+    "answer": "Separate delivery, assistance and payment obligations. Explain contracted versus non-contracted providers, reasonable Dutch reference costs and stated conditions. Keep the court discussion in its waiting-time context. Treat current product availability as a separately labelled check, not as a claim established by these conceptual slides.",
+    "explanation": "Separate delivery, assistance and payment obligations. Explain contracted versus non-contracted providers, reasonable Dutch reference costs and stated conditions. Keep the court discussion in its waiting-time context. Treat current product availability as a separately labelled check, not as a claim established by these conceptual slides. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 21–26 and 42–44. Original answer scaffold, not a lecturer marking scheme.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
+  },
+  {
+    "id": "right-to-health.q.177",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Explain why risk equalisation and household affordability support are both present.",
+    "answer": "Trace the fund, insurer and insured arrows. Distinguish recipients and purposes of risk-adjusted transfers and care allowances. Discuss the adjusters and the quality, efficiency and solidarity risks from residual selection. Do not interpret the financing shares as patient copayment rates or assume that listing many adjusters proves perfect compensation.",
+    "explanation": "Trace the fund, insurer and insured arrows. Distinguish recipients and purposes of risk-adjusted transfers and care allowances. Discuss the adjusters and the quality, efficiency and solidarity risks from residual selection. Do not interpret the financing shares as patient copayment rates or assume that listing many adjusters proves perfect compensation. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 28–30. Original answer scaffold, not a lecturer marking scheme.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
+  },
+  {
+    "id": "right-to-health.q.178",
+    "topic": "right-to-health.netherlands-lecture",
+    "type": "short-answer",
+    "difficulty": "hard",
+    "question": "Structure an answer for a hypothetical insured person considering treatment abroad.",
+    "answer": "Identify the route and purpose of travel; distinguish coordination entitlements from Dutch home-contract terms. Check home coverage, prior approval where relevant, waiting-time assessment and provider status. State the Dutch-cost limit in the contractual route, distinguish the bill from its reimbursement base, and identify what the slides cannot decide. Do not promise double reimbursement or treat nationality alone as sufficient.",
+    "explanation": "Identify the route and purpose of travel; distinguish coordination entitlements from Dutch home-contract terms. Check home coverage, prior approval where relevant, waiting-time assessment and provider status. State the Dutch-cost limit in the contractual route, distinguish the bill from its reimbursement base, and identify what the slides cannot decide. Do not promise double reimbursement or treat nationality alone as sufficient. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 34–45. Original answer scaffold, not a lecturer marking scheme.",
+    "source": "Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026)"
   }
 ]

@@ -63,5 +63,10 @@
     "id": "right-to-health.norway-lecture",
     "title": "Norway guest lecture: responsibility, incentives & coordination",
     "notes": "notes/norway-lecture.md"
+  },
+  {
+    "id": "right-to-health.netherlands-lecture",
+    "title": "Netherlands guest lecture: insurance contracts & cross-border care",
+    "notes": "notes/netherlands-lecture.md"
   }
 ]

@@ -22,6 +22,13 @@ function renderNote(unit, workspace) {
     lines.push('## ' + s.title, '');
     if (s.edition) lines.push('*' + s.edition + '*', '');
     for (const paragraph of s.paragraphs) lines.push(paragraph, '');
+    if (s.table) {
+      // Escape data cells, not Markdown syntax, so repository text stays portable.
+      const cell = text => String(text).replace(/\|/g, '&#124;').replace(/\r?\n/g, ' ');
+      const row = values => '| ' + values.map(cell).join(' | ') + ' |';
+      lines.push('**' + s.table.caption + '**', '', row(s.table.headers),
+        row(s.table.headers.map(() => '---')), ...s.table.rows.map(row), '');
+    }
     if (s.locator) lines.push('Reading location: ' + s.locator, '');
     lines.push('Sources: ' + s.sources.map(citation).join(' · '), '');
   }

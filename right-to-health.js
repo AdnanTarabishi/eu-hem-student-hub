@@ -143,7 +143,7 @@
   }
   function guestUpdates(panel,ctx) {
     const units=data.units.filter(u=>u.kind==="guest");if(!units.length)return;
-    const box=section(panel,"GUEST LECTURES · "+data.guestReview.date,"From the country readings to the lectures","Three source-led guides connect payment, governance and practical access. They complement, rather than overwrite, the earlier country pre-readings.");box.classList.add("rth-guest-updates");
+    const box=section(panel,"GUEST LECTURES · "+data.guestReview.date,"From the country readings to the lectures",units.length+" source-led guides connect payment, insurance contracts, governance and practical access. They complement, rather than overwrite, the earlier country pre-readings.");box.classList.add("rth-guest-updates");
     const grid=add(box,"div","rth-guest-grid");
     for(const u of units){const c=add(grid,"article","rth-guest-card");add(c,"p","rth-eyebrow",u.country.toUpperCase()+" · "+u.pages+" PDF PAGES");add(c,"h3",null,u.title);add(c,"p",null,u.intro);add(c,"p","rth-meta",u.sections.length+" lesson sections · "+ctx.course.questions.filter(q=>q.topic===u.id&&q.type==="mcq").length+" original MCQs");c.append(guideLink(ctx,u,"Study this lecture →","button button-light"));}
     notice(box,data.guestReview.missing);evidenceReview(box);
@@ -182,6 +182,24 @@
       if(s.edition)add(box,"p","rth-eyebrow",s.edition);
       const heading=add(box,"h3",null,s.title);heading.tabIndex=-1;headings.push(heading);
       s.paragraphs.forEach(t=>add(box,"p",null,t));
+      if (s.table) {
+        const wrap = add(box, "div", "rth-study-table-wrap");
+        wrap.tabIndex = 0;
+        wrap.setAttribute("role", "region");
+        wrap.setAttribute("aria-label", s.table.caption);
+        const table = add(wrap, "table", "rth-study-table");
+        add(table, "caption", null, s.table.caption);
+        const head = add(add(table, "thead"), "tr");
+        s.table.headers.forEach(text => add(head, "th", null, text).scope = "col");
+        const body = add(table, "tbody");
+        s.table.rows.forEach(row => {
+          const tr = add(body, "tr");
+          row.forEach((text, column) => {
+            const cell = add(tr, column === 0 ? "th" : "td", null, text);
+            if (column === 0) cell.scope = "row";
+          });
+        });
+      }
       if(s.locator)add(box,"p","rth-locator","Reading location: "+s.locator);
       sources(box,s.sources);
     }

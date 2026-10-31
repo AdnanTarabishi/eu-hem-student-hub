@@ -502,5 +502,77 @@
     "topic": "right-to-health.norway-lecture",
     "front": "Why use PDF rather than printed slide numbers?",
     "back": "Printed numbers diverge from PDF positions near the end; consistent locators avoid ambiguity. Source: Terje P. Hagen — Norway health system guest lecture (2026); PDF pp. 64–73."
+  },
+  {
+    "id": "right-to-health.fc.085",
+    "topic": "right-to-health.netherlands-lecture",
+    "front": "What are the lecture’s two main parts?",
+    "back": "The somatic healthcare system, then cross-border care. Long-term care is outside the stated system scope. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 1–2."
+  },
+  {
+    "id": "right-to-health.fc.086",
+    "topic": "right-to-health.netherlands-lecture",
+    "front": "What are the three reform waves?",
+    "back": "Coverage/equal access; controls and caps; incentives and competition. They represent different policy tasks, not the disappearance of earlier goals. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 4–12."
+  },
+  {
+    "id": "right-to-health.fc.087",
+    "topic": "right-to-health.netherlands-lecture",
+    "front": "What separates 1987 from 2006 in the reform story?",
+    "back": "1987 is the Dekker proposal; 2006 is the insurance reform implementation described in the lecture. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 13 and 17."
+  },
+  {
+    "id": "right-to-health.fc.088",
+    "topic": "right-to-health.netherlands-lecture",
+    "front": "Why is this regulated competition rather than a free market?",
+    "back": "Competing purchasers and providers operate within rules intended to protect affordability, access and quality. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 14–15."
+  },
+  {
+    "id": "right-to-health.fc.089",
+    "topic": "right-to-health.netherlands-lecture",
+    "front": "What are the two contracts in the purchaser triangle?",
+    "back": "The insured–insurer policy and the insurer–provider contract. Coverage and provider-network terms are distinct. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF p. 27."
+  },
+  {
+    "id": "right-to-health.fc.090",
+    "topic": "right-to-health.netherlands-lecture",
+    "front": "What does the in-kind duty emphasise?",
+    "back": "Delivery of care within acceptable waiting times; not merely reimbursement of a bill. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF p. 22."
+  },
+  {
+    "id": "right-to-health.fc.091",
+    "topic": "right-to-health.netherlands-lecture",
+    "front": "What limits the lecture’s reimbursement-contract model?",
+    "back": "Covered costs are tied to the Dutch reasonable-price reference; the waiting-time duty is described differently from the in-kind delivery guarantee. The concept is not a current product catalogue. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 25–26 and 44."
+  },
+  {
+    "id": "right-to-health.fc.092",
+    "topic": "right-to-health.netherlands-lecture",
+    "front": "Risk equalisation versus care allowance: who receives each?",
+    "back": "Risk-adjusted compensation goes to insurers; the income-related care allowance supports eligible households. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF p. 28."
+  },
+  {
+    "id": "right-to-health.fc.093",
+    "topic": "right-to-health.netherlands-lecture",
+    "front": "Which three values can risk selection threaten in the deck?",
+    "back": "Quality of care for high-risk groups, efficiency and solidarity through segmentation. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF p. 30."
+  },
+  {
+    "id": "right-to-health.fc.094",
+    "topic": "right-to-health.netherlands-lecture",
+    "front": "Can basic-insurance rules simply be applied to supplementary cover?",
+    "back": "No. The lecture describes different freedom to define benefits, premiums and selection outside the mandatory basket. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 31–32."
+  },
+  {
+    "id": "right-to-health.fc.095",
+    "topic": "right-to-health.netherlands-lecture",
+    "front": "Coordination or home-contract route: whose rules are emphasised?",
+    "back": "Coordination uses the treatment country’s statutory entitlements; the Dutch contract route uses relevant home-policy terms and Dutch price limits. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 35–36 and 40–45."
+  },
+  {
+    "id": "right-to-health.fc.096",
+    "topic": "right-to-health.netherlands-lecture",
+    "front": "Does worldwide coverage mean unlimited reimbursement?",
+    "back": "No. The lecture keeps a Dutch-cost ceiling and relevant contract conditions. A foreign invoice may exceed the reimbursable reference. Source: Wynand P.M.M. van de Ven — Dutch healthcare system and cross-border care (20 October 2026); PDF pp. 40–44."
   }
 ]

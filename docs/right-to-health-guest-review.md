@@ -1,3 +1,7 @@
+> Update, 31 October 2026: the Netherlands deck has now been supplied and integrated.
+> The inventory below describes the earlier three-deck review. See
+> `right-to-health-netherlands-review.md` for the fourth deck and separate verification.
+
 # Guest lecture review — Course 96500
 
 Review: 27 October 2026. Unofficial AI-assisted original study explanations,

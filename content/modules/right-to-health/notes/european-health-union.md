@@ -1,7 +1,7 @@
 ---
 topic: right-to-health.european-health-union
 author: EU-HEM Student Hub (AI-assisted)
-updated: 2026-10-27
+updated: 2026-10-31
 ---
 
 ## 5-minute review
