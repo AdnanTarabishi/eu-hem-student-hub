@@ -1170,7 +1170,9 @@
     ],
     "answer": "A",
     "explanation": "β is the probability of failing to reject a false null at a specified alternative.",
-    "source": "Supplementary original practice · Type II error and power; additional context beyond Topic 5 slides"
+    "source": "Supplementary original practice · Type II error and power; additional context beyond Topic 5 slides",
+    "supplementary": true,
+    "supplementaryNote": "Supplementary Type II error and power context. The supplied Topic 5 slides focus on Type I error; confirm the assessed scope with the teacher."
   },
   {
     "id": "fund-statistics.q.070",

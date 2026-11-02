@@ -282,6 +282,10 @@ Student-written practice questions. **Never copy real exam questions.**
 ]
 ```
 
+### Fundamentals mixed-format supplement
+
+`content/modules/fund-statistics/self-tests.json` supplements the shared lecture bank with original numeric, multiple-select and rubric-based written practice. It is consumed only by the Fundamentals Practice & quizzes workspace; it does not extend the shared `questions.json` types. See [fund-statistics-quizzes.md](fund-statistics-quizzes.md) for its fields, grading and saved-state contract.
+
 ## resources.json
 
 ```json

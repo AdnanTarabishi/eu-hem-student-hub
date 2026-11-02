@@ -276,7 +276,7 @@ function renderQuiz(focus = false) {
       <span class="pill question-position">Question ${String(i + 1).padStart(2, "0")} / ${questions.length}</span>
     </div>
     <p class="question-status ${done ? (right ? "correct" : "wrong") : "unanswered"}">${done ? (right ? "✓ Checked · Correct" : "↺ Checked · Revisit") : "Single-answer question"}</p>
-    ${q.supp ? '<div class="note small practice-supplementary">Supplementary: assume independent sampling, known population SD, and a normal or approximately normal sampling distribution.</div>' : ""}
+    ${q.supp ? `<div class="note small practice-supplementary">${esc(q.suppNote || 'Supplementary: assume independent sampling, known population SD, and a normal or approximately normal sampling distribution.')}</div>` : ""}
     <h2 id="question-heading" class="question-title" tabindex="-1">${esc(q.q)}</h2>
     <p id="question-instruction" class="question-instruction">${done ? "Your answer has been checked. Read the explanation before moving on." : "Choose the one best answer, then check your reasoning."}</p>
     <div class="options" role="radiogroup" aria-labelledby="question-heading" aria-describedby="question-instruction">
@@ -440,6 +440,7 @@ async function startLecture() {
         e: q.explanation,
         ref: q.source || "Student practice question",
         supp: !!q.supplementary,
+        suppNote: q.supplementaryNote || "",
       }));
     // Reset only this lecture when its question wording, options, or answer key changes.
     quizSignature = JSON.stringify(questions.map((q) => [q.id, q.q, q.o, q.a]));

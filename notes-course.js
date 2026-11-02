@@ -254,7 +254,18 @@ function renderPage() {
   if (tab === "lectures" && !custom) renderLectures(panel);
   if (tab === "topics" && !custom) renderTopics(panel, params);
   if (tab === "concepts" && !custom) renderConcepts(panel);
-  if (tab === "practice") renderPractice(panel, { course: page.course, params, topicTitle, topicLink, navigate });
+  if (tab === "practice") {
+    if (page.course.modules?.some(module => module.id === "fund-statistics")) {
+      const callout = createElement("section", "fc-source-card");
+      callout.appendChild(createElement("h2", null, "Learn statistics by solving"));
+      callout.appendChild(createElement("p", null, "Practise numerical answers, multiple selections and written interpretations. Choose immediate feedback or a self-test, resume your session and revisit mistakes. Core Topics 1–5 are selected by default."));
+      const start = createElement("a", "button", "Open Practice & quizzes →");
+      start.href = "fund-statistics.html#quizzes";
+      callout.appendChild(start);
+      panel.appendChild(callout);
+    }
+    renderPractice(panel, { course: page.course, params, topicTitle, topicLink, navigate });
+  }
   if (tab === "resources" && !custom) renderResources(panel);
   highlightTarget();
 }

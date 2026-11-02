@@ -3,41 +3,90 @@
   'use strict';
   const $=id=>document.getElementById(id);
   const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const views=['learn','lab-guides','cases','methods','cards','explore','mock','reference','sources'];
+  const views=['learn','quizzes','lab-guides','cases','methods','cards','explore','mock','reference','sources'];
   const titles={learn:'Your topic pathway',cases:'Solve it. Then explain it.',methods:'Choose the method from the question',cards:'Make the concepts stick',explore:'Change a number. See the idea.',mock:'Practise the exam format',reference:'Keep the essentials together',sources:'The materials behind your study guides'};
   const intros={learn:'Six syllabus topics across 11 lectures and four exercise sessions. Each guide connects explanations, comparisons, experiments, two worked cases and 15 original questions.',cases:'Twelve original cases connect calculations with healthcare interpretation. Use hints, check your numbers, then compare your explanation with the worked solution and rubric.',methods:'Identify the parameter, goal and design before selecting a formula. This interactive guide covers the course mean, proportion and independent-group recipes.',cards:'Recall before you reveal. Review due cards with the same schedule used in your course Notes page.',explore:'Use original examples to investigate descriptive statistics, probability, sampling, confidence intervals and tests.',mock:'An original 90-minute rehearsal with six questions, two output interpretations and two applied tasks. It is separate from the teacher’s mock paper.',reference:'Original summaries of notation, method selection and Excel functions. Open the teacher’s printed-reference files to practise using what is permitted in the exam.',sources:'Supplied workbooks, lab tasks and answers have been checked. Report methods and key tables have been reviewed from full-text extraction, including repeated-copy checks. Official files are linked on Virtuale; the explanations and questions here are original student material.'};
+  titles.quizzes='Learn by solving. Find your next step.';
+  intros.quizzes='Mix concepts, calculations and written interpretations. Learn with feedback, test yourself before revealing answers, and return to mistakes. Core Topics 1–5 are selected by default; additional material is optional.';
   const MOCK_KEY='euhem-fund-mock-v1';
   titles['lab-guides']='Work with data. Read the evidence.';
   intros['lab-guides']='Seven dataset workflows and four report readers connect the supplied files with the six topics. Inspect checked calculations, follow Excel ranges, read interactive interval charts and answer 22 original review questions.';
-  let data, moduleData, study, sourceReview, extension, practical, active='learn', lab='fund-descriptive', mock=null, mockStorage=true;
-  const mockQuestionIds=['012','026','040','053','074','088'].map(id=>'fund-statistics.q.'+id);
-  const interpretations=[
+  let data, moduleData, study, sourceReview, extension, practical, selfTests, quizView=null, quizMemory=null, quizStorageFailed=false, active='learn', lab='fund-descriptive', mock=null, mockStorage=true;
+  const legacyMockQuestionIds=['012','026','040','053','074','088'].map(id=>'fund-statistics.q.'+id);
+  const baseInterpretations=[
     {title:'Two groups, one reported contrast',html:'<p>An observational study compares independent groups. Group 1: n=160, mean=125 mmHg, adjusted SD=12. Group 2: n=180, mean=129 mmHg, adjusted SD=15.</p><div class="table-wrap"><table><thead><tr><th>Contrast</th><th>SE</th><th>z</th><th>Two-sided p</th><th>95% CI</th></tr></thead><tbody><tr><td>Group 1 − group 2: −4 mmHg</td><td>1.4663</td><td>−2.7280</td><td>0.00637</td><td>[−6.8739, −1.1261] mmHg</td></tr></tbody></table></div><p>Interpret the direction, decision at 5%, confidence interval and limits of the study design.</p>',answer:'Group 1 has an estimated population mean 4 mmHg lower than group 2. Reject H₀: μ₁−μ₂=0 at 5% (p≈0.00637). The interval estimates a difference from approximately −6.87 to −1.13 mmHg. It excludes zero. Observational group differences alone do not establish causation or clinical importance.',rubric:['Names the contrast and interprets the −4 mmHg direction and units','Rejects at 5% and interprets the CI as uncertainty about the population mean difference','Mentions observational design/confounding and distinguishes statistical from clinical importance']},
     {title:'A confidence interval in a report',html:'<p>A random sample of 400 independent eligible adults includes 248 who support a proposed health programme. A report gives p̂=0.62 and a 95% Wald confidence interval of approximately [0.572, 0.668].</p><p>Explain the target population quantity and the confidence level. Give one claim this interval cannot support.</p>',answer:'The estimated proportion of eligible adults supporting the programme is 62%; the approximate interval for that population proportion is 57.2%–66.8%. In repeated sampling, about 95% of intervals produced by this procedure would cover the fixed population proportion under the assumptions. It does not describe 95% of individuals or assign a frequentist 95% probability to the fixed parameter in this realised interval.',rubric:['Identifies the population proportion and estimates 62%, with endpoints about 57.2%–66.8%','Explains confidence through repeated-sampling coverage','Rejects an individual-level interpretation or a probability claim about the fixed realised parameter']}
   ];
-  const applied=[
+  const baseApplied=[
     {title:'A mean interval and test using Excel',html:'<p>Illustrative baseline heart rates (bpm): <strong>68, 70, 72, 74, 76, 78, 80, 82</strong>. Assume independent observations from an approximately normal population with unknown variance.</p><p>Use Excel to find the mean, a 95% t confidence interval and the two-sided t statistic for H₀: μ=70 bpm. Explain your test decision in a Word-style answer.</p><a class="fs-button fs-secondary" href="content/modules/fund-statistics/practice-heart-rates.csv" download>Download original practice CSV ↓</a>',fields:[['Sample mean (bpm)',75,.01],['95% CI lower endpoint (bpm)',70.9043506554,.02],['95% CI upper endpoint (bpm)',79.0956493446,.02],['Observed t statistic',2.88675134595,.02]],answer:'n=8; mean=75; adjusted SD=4.89898; SE=1.73205; df=7; t critical≈2.36462. The 95% interval is [70.90435,79.09565] bpm. t=(75−70)/1.73205≈2.88675, two-sided p≈0.02342. Reject at 5%; the data support a population mean different from (and estimated above) 70 bpm under the stated model.',excel:'=AVERAGE(A2:A9); =STDEV.S(A2:A9)/SQRT(COUNT(A2:A9)); =T.INV(0.975,7); =T.DIST.2T(ABS(t),7)',rubric:'States the two-sided hypotheses and rejects at 5%, with a population-level conclusion and the normality/independence assumptions'},
     {title:'A proportion test using Excel',html:'<p>A sample of <strong>200 independent adults</strong> contains <strong>120 successes</strong>. Test H₀: π=0.50 against Hₐ: π≠0.50 at 5% using the course normal approximation.</p><p>Check expected counts under H₀, calculate the quantities below and write a conclusion. Use the null proportion in the test SE.</p>',fields:[['Observed proportion p̂',.6,.0005],['Null-based standard error',.0353553390593,.00005],['Observed z statistic',2.82842712475,.005],['Two-sided p-value',.00467773498105,.0001]],answer:'p̂=120/200=0.60. Expected null successes and failures are 100 each. SE₀=√(0.50×0.50/200)=0.03535534. z≈2.82843 and p≈0.0046777. Reject at 5%; evidence that the population proportion differs from 0.50, with an observed estimate above it. This test does not establish a causal effect.',excel:'=120/200; =SQRT(0.5*(1-0.5)/200); =(0.6-0.5)/SE; =2*NORM.S.DIST(-ABS(z),TRUE)',rubric:'Checks the null expected counts and rejects at 5%, with a population-proportion conclusion and the independence assumption'}
   ];
+  let interpretations=baseInterpretations,applied=baseApplied;
+  function setMockForm(id) {
+    const form=(window.FundStudyMockForms||[]).find(item=>item.id===id);
+    interpretations=form?.interpretations||baseInterpretations;
+    applied=form?.applied||baseApplied;
+  }
+  function mixed(list) {
+    const result=list.slice();
+    for(let i=result.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[result[i],result[j]]=[result[j],result[i]];}
+    return result;
+  }
+  function mockSignature(ids,form) {
+    const detail=JSON.stringify([ids.map(id=>moduleData.questions.find(q=>q.id===id)),form,interpretations,applied]);
+    let value=2166136261;
+    for(let i=0;i<detail.length;i++)value=Math.imul(value^detail.charCodeAt(i),16777619);
+    return String(value>>>0);
+  }
+  function quizzes() {
+    $('fs-view').innerHTML=header('quizzes')+'<div id="fs-quiz-workspace"></div>';
+    if(!window.FundStudyQuizzes){$('fs-quiz-workspace').textContent='The quiz tools are unavailable in this saved copy. Reconnect and refresh to update the app.';return;}
+    quizView=FundStudyQuizzes.mount($('fs-quiz-workspace'),{
+      questions:moduleData.questions,bank:selfTests||{questions:[]},topics:moduleData.topics,
+      initialTopic:new URLSearchParams(location.search).get('quizTopic'),
+      topicLink:id=>link(id),
+      storage:{
+        read:()=>quizStorageFailed?quizMemory:loadProgress().statistics['fund-statistics.quiz-v1'],
+        save:(value,activity)=>{
+          quizMemory=value;
+          const progress=loadProgress();progress.statistics['fund-statistics.quiz-v1']=value;
+          if(activity)recordActivity(progress,todayKey());
+          const saved=saveProgress(progress);quizStorageFailed=!saved;if(!saved)$('fs-storage-warning').hidden=false;
+          return saved;
+        }
+      }
+    });
+  }
   function header(key) { return `<div class="fs-heading"><div><p class="fs-kicker">Fundamentals / ${esc(key)}</p><h2 id="fs-view-title" tabindex="-1">${titles[key]}</h2><p>${intros[key]}</p></div></div>`; }
   function link(topic,hash='') { return 'lecture.html?topic='+encodeURIComponent(topic)+hash; }
   function saveMock() { try { sessionStorage.setItem(MOCK_KEY,JSON.stringify(mock)); } catch (_) { mockStorage=false; } }
   function restoreMock() {
     try {
       const value=JSON.parse(sessionStorage.getItem(MOCK_KEY)||'null');
-      if(value&&value.version===1&&Number.isFinite(value.started)&&Number.isFinite(value.deadline)&&value.deadline-value.started===5400000&&typeof value.finished==='boolean'&&Array.isArray(value.mcq)&&value.mcq.length===6&&value.mcq.every(x=>x===null||Number.isInteger(x)&&x>=0&&x<4)&&Array.isArray(value.text)&&value.text.length===4&&value.text.every(x=>typeof x==='string'&&x.length<=10000)&&Array.isArray(value.numbers)&&value.numbers.length===2&&value.numbers.every(x=>Array.isArray(x)&&x.length===4&&x.every(s=>typeof s==='string'&&s.length<=100))&&Array.isArray(value.rubric)&&value.rubric.length===8&&value.rubric.every(x=>typeof x==='boolean')) mock=value;
+      if(!value||![1,2].includes(value.version)||!Number.isFinite(value.started)||!Number.isFinite(value.deadline)||value.deadline-value.started!==5400000||typeof value.finished!=='boolean')return;
+      if(!Array.isArray(value.mcq)||value.mcq.length!==6||!value.mcq.every(x=>x===null||Number.isInteger(x)&&x>=0&&x<4))return;
+      if(!Array.isArray(value.text)||value.text.length!==4||!value.text.every(x=>typeof x==='string'&&x.length<=10000))return;
+      if(!Array.isArray(value.numbers)||value.numbers.length!==2||!value.numbers.every(x=>Array.isArray(x)&&x.length===4&&x.every(t=>typeof t==='string'&&t.length<=100)))return;
+      if(!Array.isArray(value.rubric)||value.rubric.length!==8||!value.rubric.every(x=>typeof x==='boolean'))return;
+      if(value.version===1){value.questionIds=legacyMockQuestionIds.slice();value.orders=value.questionIds.map(()=>[0,1,2,3]);value.form='legacy';}
+      if(!Array.isArray(value.questionIds)||value.questionIds.length!==6||new Set(value.questionIds).size!==6||!value.questionIds.every(id=>moduleData.questions.some(q=>q.id===id&&q.type==='mcq')))return;
+      if(!Array.isArray(value.orders)||value.orders.length!==6||!value.orders.every(order=>Array.isArray(order)&&order.length===4&&new Set(order).size===4&&order.every(x=>Number.isInteger(x)&&x>=0&&x<4)))return;
+      if(value.form!=='legacy'&&!(window.FundStudyMockForms||[]).some(form=>form.id===value.form))return;
+      setMockForm(value.form);
+      if(value.version===2&&value.signature!==mockSignature(value.questionIds,value.form)){setMockForm('legacy');return;}
+      mock=value;
     } catch (_) { mockStorage=false; }
   }
   function lessons() {
     const progress=loadProgress();
     const checked=study.lessons.reduce((a,l)=>a+(progress.lectures[l.topic]?.checked||[]).filter(Boolean).length,0);
     const due=dueCards(progress,moduleData.flashcards,todayKey()).length;
-    let html=header('learn')+`<dl class="fs-stats"><div><dt>Questions checked in the topic quizzes</dt><dd>${checked} / 90</dd></div><div><dt>Flashcards due today</dt><dd>${due}</dd></div><div><dt>Official exercise book</dt><dd>64 exercises</dd></div></dl><div class="fs-grid">`;
+    let html=header('learn')+`<dl class="fs-stats"><div><dt>Questions checked in the topic quizzes</dt><dd>${checked} / 90</dd></div><div><dt>Flashcards due today</dt><dd>${due}</dd></div><div><dt>Official exercise book</dt><dd>${study.sourceReview.exerciseCount} exercises</dd></div></dl><div class="fs-grid">`;
     for(const l of study.lessons) {
       const count=(progress.lectures[l.topic]?.checked||[]).filter(Boolean).length;
       const cards=moduleData.flashcards.filter(c=>c.topic===l.topic).length;
       const firstCase=extension?.cases.find(c=>c.topic===l.topic);
-      html+=`<article class="fs-card"><div class="fs-topic-top"><span class="fs-number">${String(l.number).padStart(2,'0')}</span><span class="fs-tag ${!l.slides?'fs-pending':''}">${!l.slides?'Slides pending':l.number===6?'Additional topic, time permitting':l.slides+' slides reviewed'}</span></div><h3>${esc(l.title)}</h3><p>${esc(l.intro)}</p><ul>${l.outcomes.map(x=>'<li>'+esc(x)+'</li>').join('')}</ul><p class="fs-meta">Exercise Book: ${esc(l.exercises)} · 15 original questions · ${cards} cards${firstCase?' · 2 worked cases':''}</p><progress max="15" value="${count}" aria-label="${count} of 15 questions checked in Topic ${l.number}"></progress><p class="fs-meta">${count}/15 questions checked</p><div class="button-row"><a class="fs-button" href="${link(l.topic)}">Open topic guide →</a><a class="fs-button fs-secondary" href="${link(l.topic,'#practice')}">Practise</a><a href="fund-statistics.html?guide=${practical?.guides.find(g=>g.topics.includes(l.topic))?.id||'oecd-lab'}#lab-guides">Apply it in a lab or report →</a>${firstCase?`<a href="fund-statistics.html?case=${firstCase.id}#cases">Work a case →</a>`:''}</div></article>`;
+      html+=`<article class="fs-card"><div class="fs-topic-top"><span class="fs-number">${String(l.number).padStart(2,'0')}</span><span class="fs-tag ${!l.slides?'fs-pending':''}">${!l.slides?'Slides pending':l.number===6?'Additional topic, time permitting':l.slides+' slides reviewed'}</span></div><h3>${esc(l.title)}</h3><p>${esc(l.intro)}</p><ul>${l.outcomes.map(x=>'<li>'+esc(x)+'</li>').join('')}</ul><p class="fs-meta">Exercise Book: ${esc(l.exercises)} · 15 original questions · ${cards} cards${firstCase?' · 2 worked cases':''}</p><progress max="15" value="${count}" aria-label="${count} of 15 questions checked in Topic ${l.number}"></progress><p class="fs-meta">${count}/15 questions checked</p><div class="button-row"><a class="fs-button" href="${link(l.topic)}">Open topic guide →</a><a class="fs-button fs-secondary" href="fund-statistics.html?quizTopic=${encodeURIComponent(l.topic)}#quizzes">Practise</a><a href="fund-statistics.html?guide=${practical?.guides.find(g=>g.topics.includes(l.topic))?.id||'oecd-lab'}#lab-guides">Apply it in a lab or report →</a>${firstCase?`<a href="fund-statistics.html?case=${firstCase.id}#cases">Work a case →</a>`:''}</div></article>`;
     }
     return html+'</div><p class="fs-notice">All six topic slide decks have been reviewed. Topics describe syllabus sections, not individual class dates. The Materials &amp; review tab lists other referenced resources that have not yet been supplied.</p>';
   }
@@ -82,28 +131,48 @@
   }
   function examRules() {
     const exam=study.exam;
-    return `<details class="fs-card"><summary>Official exam structure, dates and permitted materials</summary><p>${exam.minutes} minutes. Pass mark ${esc(exam.passMark)}. Register using <a href="https://almaesami.unibo.it/">AlmaEsami ↗</a>.</p><div class="table-wrap"><table><thead><tr><th>Part</th><th>Weight</th></tr></thead><tbody>${exam.sections.map(s=>`<tr><td>${esc(s.label)}</td><td>${s.weight}%</td></tr>`).join('')}</tbody></table></div><div class="fs-grid"><div><h3>Permitted</h3><ul>${exam.permitted.map(x=>'<li>'+esc(x)+'</li>').join('')}</ul></div><div><h3>Not permitted during the exam</h3><ul>${exam.prohibited.map(x=>'<li>'+esc(x)+'</li>').join('')}</ul></div></div><div class="table-wrap"><table><caption>Dates in Europe/Rome, from the supplied course notice</caption><thead><tr><th>Date</th><th>Time</th><th>Location</th></tr></thead><tbody>${exam.dates.map(d=>`<tr><td>${new Date(d.date+'T12:00:00Z').toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric',timeZone:'Europe/Rome'})}</td><td>${esc(d.time)}</td><td>${esc(d.place)}</td></tr>`).join('')}</tbody></table></div><ul>${exam.notes.map(x=>'<li>'+esc(x)+'</li>').join('')}</ul><p class="fs-meta">${esc(exam.source)}</p></details>`;
+    return `<details class="fs-card"><summary>Exam structure and permitted materials</summary><p>${exam.minutes} minutes. Pass mark ${esc(exam.passMark)}. Register using <a href="https://almaesami.unibo.it/">AlmaEsami ↗</a>.</p><div class="table-wrap"><table><thead><tr><th>Part</th><th>Weight</th></tr></thead><tbody>${exam.sections.map(s=>`<tr><td>${esc(s.label)}</td><td>${s.weight}%</td></tr>`).join('')}</tbody></table></div><div class="fs-grid"><div><h3>Permitted</h3><ul>${exam.permitted.map(x=>'<li>'+esc(x)+'</li>').join('')}</ul></div><div><h3>Not permitted during the exam</h3><ul>${exam.prohibited.map(x=>'<li>'+esc(x)+'</li>').join('')}</ul></div></div><p><a href="exams.html">Check the current exam listing →</a> Confirm your assigned sitting, time, room and enrolment on AlmaEsami; this practice tool does not maintain a separate exam timetable.</p><ul>${exam.notes.map(x=>'<li>'+esc(x)+'</li>').join('')}</ul><p class="fs-meta">${esc(exam.source)}</p></details>`;
   }
   function startMock() {
+    const includeExtra=$('fs-mock-extra')?.checked===true;
+    const previous=new Set(mock?.questionIds||[]);
+    const pool=moduleData.questions.filter(q=>q.type==='mcq'&&!q.supplementary&&(includeExtra||q.topic!=='fund-statistics.two-means'));
+    const topics=mixed([...new Set(pool.map(q=>q.topic))]);
+    const groups=topics.map(topic=>{
+      const all=pool.filter(q=>q.topic===topic),fresh=all.filter(q=>!previous.has(q.id));
+      return mixed(fresh.length>=2?fresh:all);
+    });
+    const questionIds=[];
+    for(let round=0;questionIds.length<6&&round<pool.length;round++)for(const group of groups){if(group[round])questionIds.push(group[round].id);if(questionIds.length===6)break;}
+    const forms=[...(includeExtra?['legacy']:[]),...(window.FundStudyMockForms||[]).map(form=>form.id)];
+    if(!forms.length){$('fs-view').insertAdjacentHTML('beforeend','<p class="fs-notice" role="status">The core practice forms are unavailable in this saved copy. Reconnect and refresh to load them.</p>');return;}
+    const candidates=forms.filter(id=>id!==mock?.form);const form=mixed(candidates.length?candidates:forms)[0];
+    setMockForm(form);
     const started=Date.now();
-    mock={version:1,started,deadline:started+5400000,finished:false,mcq:Array(6).fill(null),text:Array(4).fill(''),numbers:[Array(4).fill(''),Array(4).fill('')],rubric:Array(8).fill(false)};
+    mock={version:2,started,deadline:started+5400000,finished:false,questionIds,orders:questionIds.map(()=>mixed([0,1,2,3])),form,includeExtra,signature:mockSignature(questionIds,form),mcq:Array(6).fill(null),text:Array(4).fill(''),numbers:[Array(4).fill(''),Array(4).fill('')],rubric:Array(8).fill(false)};
     saveMock();renderMock();$('fs-mock-top')?.focus();
+  }
+  function editableMock() {
+    if(!mock||mock.finished)return false;
+    if(Date.now()>=mock.deadline){finishMock(true);return false;}
+    return true;
   }
   function finishMock(expired=false) {
     if(!mock||mock.finished)return;
+    expired=expired||Date.now()>=mock.deadline;
     mock.finished=true;mock.expired=expired;saveMock();
     if(active==='mock'){renderMock();$('fs-score')?.focus();}
   }
   function numericCorrect(a,j) {
     const text=mock.numbers[a][j].trim(),expected=applied[a].fields[j];
-    return text!==''&&Number.isFinite(Number(text))&&Math.abs(Number(text)-expected[1])<=expected[2];
+    return /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i.test(text)&&Number.isFinite(Number(text))&&Math.abs(Number(text))<=1e12&&Math.abs(Number(text)-expected[1])<=expected[2];
   }
   function mockQuestionHeader(number,kind,context='') {
     return `<div class="study-question-header"><span class="study-question-number" aria-hidden="true">${String(number).padStart(2,'0')}</span><div class="study-question-meta"><p class="fs-meta">Question ${number} / 10${context?' · '+esc(context):''}</p><span class="study-question-kind">${esc(kind)}</span></div></div>`;
   }
   function updateScore() {
     if(!mock?.finished)return;
-    const correct=mockQuestionIds.filter((id,i)=>mock.mcq[i]===moduleData.questions.find(q=>q.id===id).answer.charCodeAt(0)-65).length;
+    const correct=mock.questionIds.filter((id,i)=>mock.mcq[i]===moduleData.questions.find(q=>q.id===id).answer.charCodeAt(0)-65).length;
     const manual=mock.rubric.slice(0,6).filter(Boolean).length;
     const numerical=applied.reduce((s,a,i)=>s+a.fields.filter((_,j)=>numericCorrect(i,j)).length,0);
     const appliedPoints=numerical+mock.rubric.slice(6).filter(Boolean).length;
@@ -113,14 +182,15 @@
   function renderMock() {
     if(mock&&!mock.finished&&Date.now()>=mock.deadline) {mock.finished=true;mock.expired=true;saveMock();}
     let html=header('mock')+examRules();
+    if(mock?.form==='legacy')html+='<p class="fs-notice">This original practice form includes an additional Topic 6 interpretation. It is retained for saved sessions and optional extended practice.</p>';
     if(!mock) {
-      $('fs-view').innerHTML=html+'<article class="fs-card study-exam-start"><p class="fs-kicker">Your exam rehearsal</p><h3>A full-format practice session</h3><div class="study-review-metrics"><div class="study-review-metric"><span>Session length</span><strong>90 min</strong></div><div class="study-review-metric"><span>Practice questions</span><strong>10</strong></div><div class="study-review-metric"><span>Feedback</span><strong>After submission</strong></div></div><p>6 multiple-choice questions (35%), 2 written interpretations (30%), and 2 applied tasks (35%). Feedback stays hidden until you finish or the timer ends. Interpretations and written conclusions are self-assessed with a rubric.</p><p>Use Excel and practise writing equations and conclusions in Word. Topic 6 is included as extra practice; confirm its assessed scope with the teacher.</p><p class="fs-meta">Mock answers remain in this tab and survive refresh when session storage is available. They are separate from the Notes progress backup. The timer continues while you visit another tab or study view.</p><button type="button" class="fs-button" id="fs-start-mock">Start 90-minute mock →</button></article>';
+      $('fs-view').innerHTML=html+'<article class="fs-card study-exam-start"><p class="fs-kicker">Your exam rehearsal</p><h3>A full-format practice session</h3><div class="study-review-metrics"><div class="study-review-metric"><span>Session length</span><strong>90 min</strong></div><div class="study-review-metric"><span>Practice questions</span><strong>10</strong></div><div class="study-review-metric"><span>Feedback</span><strong>After submission</strong></div></div><p>6 multiple-choice questions (35%), 2 written interpretations (30%), and 2 applied tasks (35%). Feedback stays hidden until you finish or the timer ends. Interpretations and written conclusions are self-assessed with a rubric.</p><p>Use Excel and practise writing equations and conclusions in Word. New sessions balance the topic mix, shuffle choices and vary the original applied cases. Topics 1–5 are selected by default.</p><p class="fs-meta">Mock answers remain in this tab and survive refresh when session storage is available. They are separate from the Notes progress backup. The timer continues while you visit another tab or study view.</p><label class="fund-check"><input type="checkbox" id="fs-mock-extra">Include additional Topic 6 questions (time permitting in the course)</label><button type="button" class="fs-button" id="fs-start-mock">Start 90-minute mock →</button></article>';
       $('fs-start-mock').addEventListener('click',startMock);return;
     }
-    html+=`<div class="fs-mock-toolbar" id="fs-mock-top" tabindex="-1"><div><p class="fs-meta">${mock.finished?'Session submitted':'Time remaining · answers editable until submission'}</p><output class="fs-timer" id="fs-timer" aria-label="Time remaining"></output></div><div class="button-row">${mock.finished?'<button class="fs-button fs-secondary" id="fs-new-mock" type="button">Start another session</button>':'<button class="fs-button" id="fs-finish-mock" type="button">Submit &amp; review</button>'}</div></div>${!mockStorage?'<p class="fs-notice">Session storage is unavailable. Keep this page open; a refresh will lose this mock.</p>':''}${mock.finished?'<div class="fs-card" id="fs-score" tabindex="-1" role="status"></div>':''}<section class="study-exam-section" aria-labelledby="fs-mock-part-a"><h3 class="study-exam-section-label" id="fs-mock-part-a">Part A · Six questions · 35%</h3>`;
-    mockQuestionIds.forEach((id,i)=>{
+    html+=`<div class="fs-mock-toolbar" id="fs-mock-top" tabindex="-1"><div><p class="fs-meta">${mock.finished?'Session submitted':'Time remaining · answers editable until submission'}</p><output class="fs-timer" id="fs-timer" aria-label="Time remaining"></output></div><div class="button-row">${mock.finished?'<button class="fs-button fs-secondary" id="fs-new-mock" type="button">Start another session</button><label class="fund-check"><input type="checkbox" id="fs-mock-extra">Include additional Topic 6</label>':'<button class="fs-button" id="fs-finish-mock" type="button">Submit &amp; review</button>'}</div></div>${!mockStorage?'<p class="fs-notice">Session storage is unavailable. Keep this page open; a refresh will lose this mock.</p>':''}${mock.finished?'<div class="fs-card" id="fs-score" tabindex="-1" role="status"></div>':''}<section class="study-exam-section" aria-labelledby="fs-mock-part-a"><h3 class="study-exam-section-label" id="fs-mock-part-a">Part A · Six questions · 35%</h3>`;
+    mock.questionIds.forEach((id,i)=>{
       const q=moduleData.questions.find(q=>q.id===id),correct=q.answer.charCodeAt(0)-65;
-      html+=`<article class="fs-card fs-mock-question study-question">${mockQuestionHeader(i+1,'Multiple choice',q.category)}<h4 class="study-question-prompt" id="fs-mcq-${i}">${esc(q.question)}</h4><div class="fs-mock-options" role="radiogroup" aria-labelledby="fs-mcq-${i}">${q.options.map((o,j)=>`<label class="${mock.finished&&j===correct?'fs-correct':''}${mock.finished&&mock.mcq[i]===j&&j!==correct?' fs-incorrect':''}"><input type="radio" name="fs-answer-${i}" value="${j}" data-mcq="${i}" ${mock.mcq[i]===j?'checked':''} ${mock.finished?'disabled':''}><span class="study-option-letter">${String.fromCharCode(65+j)}</span><span class="study-option-text">${esc(o)}</span></label>`).join('')}</div>${mock.finished?`<div class="fs-feedback study-feedback" data-result="${mock.mcq[i]===correct?'correct':'revisit'}"><p><strong>${mock.mcq[i]===correct?'Correct.':mock.mcq[i]===null?'Unanswered.':'Revisit this idea.'}</strong> Answer: ${q.answer}.</p><p>${esc(q.explanation)}</p><a href="${link(q.topic)}">Return to this topic →</a></div>`:''}</article>`;
+      html+=`<article class="fs-card fs-mock-question study-question">${mockQuestionHeader(i+1,'Multiple choice',q.category)}<h4 class="study-question-prompt" id="fs-mcq-${i}">${esc(q.question)}</h4><div class="fs-mock-options" role="radiogroup" aria-labelledby="fs-mcq-${i}">${mock.orders[i].map((j,position)=>`<label class="${mock.finished&&j===correct?'fs-correct':''}${mock.finished&&mock.mcq[i]===j&&j!==correct?' fs-incorrect':''}"><input type="radio" name="fs-answer-${i}" value="${j}" data-mcq="${i}" ${mock.mcq[i]===j?'checked':''} ${mock.finished?'disabled':''}><span class="study-option-letter">${String.fromCharCode(65+position)}</span><span class="study-option-text">${esc(q.options[j])}</span></label>`).join('')}</div>${mock.finished?`<div class="fs-feedback study-feedback" data-result="${mock.mcq[i]===correct?'correct':'revisit'}"><p><strong>${mock.mcq[i]===correct?'Correct.':mock.mcq[i]===null?'Unanswered.':'Revisit this idea.'}</strong> Answer: ${esc(q.options[correct])}.</p><p>${esc(q.explanation)}</p><a href="${link(q.topic)}">Return to this topic →</a></div>`:''}</article>`;
     });
     html+='</section><section class="study-exam-section" aria-labelledby="fs-mock-part-b"><h3 class="study-exam-section-label" id="fs-mock-part-b">Part B · Interpret two outputs · 30%</h3>';
     interpretations.forEach((item,i)=>{
@@ -133,9 +203,9 @@
     html+='</section>';
     if(!mock.finished)html+='<button class="fs-button" id="fs-finish-bottom" type="button">Submit &amp; review all ten questions →</button><p class="fs-meta">Unanswered items receive zero. Answers and model solutions appear after submission.</p>';
     $('fs-view').innerHTML=html;
-    $('fs-view').querySelectorAll('[data-mcq]').forEach(el=>el.addEventListener('change',()=>{if(mock.finished)return;mock.mcq[Number(el.dataset.mcq)]=Number(el.value);saveMock();}));
-    $('fs-view').querySelectorAll('[data-text]').forEach(el=>el.addEventListener('input',()=>{if(mock.finished)return;mock.text[Number(el.dataset.text)]=el.value;saveMock();}));
-    $('fs-view').querySelectorAll('[data-applied]').forEach(el=>el.addEventListener('input',()=>{if(mock.finished)return;mock.numbers[Number(el.dataset.applied)][Number(el.dataset.field)]=el.value;saveMock();}));
+    $('fs-view').querySelectorAll('[data-mcq]').forEach(el=>el.addEventListener('change',()=>{if(!editableMock())return;mock.mcq[Number(el.dataset.mcq)]=Number(el.value);saveMock();}));
+    $('fs-view').querySelectorAll('[data-text]').forEach(el=>el.addEventListener('input',()=>{if(!editableMock())return;mock.text[Number(el.dataset.text)]=el.value;saveMock();}));
+    $('fs-view').querySelectorAll('[data-applied]').forEach(el=>el.addEventListener('input',()=>{if(!editableMock())return;mock.numbers[Number(el.dataset.applied)][Number(el.dataset.field)]=el.value;saveMock();}));
     $('fs-view').querySelectorAll('[data-rubric]').forEach(el=>el.addEventListener('change',()=>{mock.rubric[Number(el.dataset.rubric)]=el.checked;saveMock();updateScore();}));
     for(const id of ['fs-finish-mock','fs-finish-bottom'])$(id)?.addEventListener('click',()=>finishMock());
     $('fs-new-mock')?.addEventListener('click',startMock);
@@ -162,19 +232,21 @@
     return html;
   }
   function render(focus=false) {
+    if(quizView){quizView.destroy?.();quizView=null;}
     active=views.includes(location.hash.slice(1))?location.hash.slice(1):'learn';
     document.querySelectorAll('.fs-nav a').forEach(a=>{if(a.hash==='#'+active)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
-    if(active==='lab-guides')labGuides();else if(active==='cases')cases();else if(active==='methods')methods();else if(active==='cards')cards();else if(active==='explore')explore();else if(active==='mock')renderMock();else $('fs-view').innerHTML=active==='learn'?lessons():active==='reference'?reference():sources();
+    if(active==='quizzes')quizzes();else if(active==='lab-guides')labGuides();else if(active==='cases')cases();else if(active==='methods')methods();else if(active==='cards')cards();else if(active==='explore')explore();else if(active==='mock')renderMock();else $('fs-view').innerHTML=active==='learn'?lessons():active==='reference'?reference():sources();
     if(focus)$('fs-view-title')?.focus({preventScroll:true});
   }
   async function init() {
     try {
-      [data,study,sourceReview,extension,practical]=await Promise.all([loadAll(),readJson(fetchText,'content/modules/fund-statistics/course-study.json',null),readJson(fetchText,'content/modules/fund-statistics/source-review.json',null),readJson(fetchText,'content/modules/fund-statistics/extended-practice.json',null),readJson(fetchText,'content/modules/fund-statistics/practical-study.json',null)]);
+      [data,study,sourceReview,extension,practical,selfTests]=await Promise.all([loadAll(),readJson(fetchText,'content/modules/fund-statistics/course-study.json',null),readJson(fetchText,'content/modules/fund-statistics/source-review.json',null),readJson(fetchText,'content/modules/fund-statistics/extended-practice.json',null),readJson(fetchText,'content/modules/fund-statistics/practical-study.json',null),readJson(fetchText,'content/modules/fund-statistics/self-tests.json',null)]);
       const requestedLab=new URLSearchParams(location.search).get('lab');
       if(['fund-descriptive','normal-distribution','fund-table','fund-sampling','fund-confidence','hypothesis-test','fund-evidence','fund-proportion-test','fund-two-means'].includes(requestedLab))lab=requestedLab;
       moduleData=data.modules.find(m=>m.id==='fund-statistics');
       if(!moduleData||!study||!sourceReview)throw new Error('Study files are unavailable.');
       try{const key='euhem-fund-storage-check';localStorage.setItem(key,'1');localStorage.removeItem(key);}catch(_){$('fs-storage-warning').hidden=false;}
+      if($('fs-question-total'))$('fs-question-total').textContent=String(moduleData.questions.length+(selfTests?.questions?.length||0));
       restoreMock();$('fs-status').hidden=true;$('fs-content').hidden=false;render();
       window.addEventListener('hashchange',()=>render(true));
       document.addEventListener('visibilitychange',tick);setInterval(tick,1000);

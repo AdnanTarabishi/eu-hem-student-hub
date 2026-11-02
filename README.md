@@ -146,6 +146,7 @@ as JSON and Markdown files. Adding content never requires code changes.
   the term's exam period. Date calculations use Bologna time and update in an open tab.
   Styles live in `notes-landing.css`, scheduling helpers in `notes-schedule.js`.
 - Check scheduling, library interactions, responsive layouts and offline reload: `npm run test:notes`.
+- **Statistics Practice & quizzes:** the existing 90 lecture MCQs connect to 50 original numerical, multiple-select and written questions. Learn and Self-test modes, stable shuffled options, saved sessions, topic feedback and a mistake queue support revision. The full mock rotates original case forms; core Topics 1–5 are the default. See [docs/fund-statistics-quizzes.md](docs/fund-statistics-quizzes.md).
 - Study tools share `study-practice.css`: course flashcards and question banks, lecture quizzes,
   statistics practice, lab checks and mock exams. Check recall, answer feedback, keyboard focus,
   mobile themes and offline delivery with `npm run test:practice`.

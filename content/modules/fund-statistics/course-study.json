@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-10-07",
+  "updated": "2026-11-02",
   "module": "fund-statistics",
   "sourceReview": {
     "uploads": 53,
     "uniqueFiles": 37,
-    "slides": 274,
-    "exerciseCount": 64,
+    "slides": 275,
+    "exerciseCount": 77,
     "workbooks": 17,
-    "note": "Three batches: all six decks (274 slides); 17 workbook files checked. The 16 new files supply both lab problem sets, the descriptive lab answers, workbook answer variants, standalone examples and four reports. Report methods and key confidence-interval tables were examined from their full extracted text.",
+    "note": "Three batches: all six decks (275 slides); 17 workbook files checked. The 16 new files supply both lab problem sets, the descriptive lab answers, workbook answer variants, standalone examples and four reports. Report methods and key confidence-interval tables were examined from their full extracted text.",
     "slideDecks": 6,
     "reports": 4,
     "reportPages": 363
@@ -75,7 +75,7 @@
       "topic": "fund-statistics.hypothesis-tests",
       "title": "Hypothesis tests for one population mean and proportion",
       "intro": "Work from hypotheses to a test statistic, p-value and decision, then explain what the result means in healthcare.",
-      "slides": 36,
+      "slides": 37,
       "exercises": "51–60",
       "outcomes": [
         "Specify two-sided null and alternative hypotheses",

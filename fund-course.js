@@ -16,6 +16,7 @@
   };
   const icon=paths=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
   const icons={
+    quizzes:icon('<path d="M6 3h12v18H6zM9 7h6M9 11h6M9 15h3"/><path d="m14 16 2 2 4-4"/>'),
     cases:icon('<path d="M7 4h10v16H7zM9 2h6v4H9zM10 10h4M10 14h4"/>'),
     labs:icon('<path d="M4 20V4M4 20h16M8 15l4-6 4 3 4-7"/><circle cx="12" cy="9" r="1.3"/>'),
     cards:icon('<rect x="4" y="7" width="14" height="13" rx="2"/><path d="M8 4h12v12M8 12h6M8 16h4"/>'),
@@ -121,6 +122,7 @@
     const toolsGrid=el('div','fc-tools-grid');
     const development=study?.development;
     const items=[
+      ['quizzes','Practice & quizzes','Mix concepts, calculations and interpretations. Learn with feedback or test yourself, then revisit mistakes.','#quizzes','Core Topics 1–5 · progress stays on this device'],
       ['cases','Worked cases','Calculate, use a hint and compare your explanation with a worked solution.','#cases',development?`${development.originalCases} cases · ${development.numericCheckpoints} numerical checks`:'Guided calculations & interpretations'],
       ['labs','Labs & reports','Follow the Excel workflows and read uncertainty in published reports.','#lab-guides',Number.isFinite(guides)?`${development.labGuides} lab guides · ${development.reportReaders} report readers`:'Datasets, tables & interval charts'],
       ['cards','Flashcards','Recall the idea before revealing the answer. Keep up with your due cards.','#cards',`${module.flashcards.length} cards · spaced review`],
@@ -161,7 +163,7 @@
       const parts=el('ol','fc-exam-parts');
       for(const part of e.sections){const item=el('li');item.append(el('strong',null,part.weight+'%'),el('span',null,part.label));parts.appendChild(item);}box.appendChild(parts);
       const next=e.dates.find(d=>d.date>=todayKey());
-      if(next){const date=el('p','fc-exam-date');date.append(el('strong',null,formatDay(next.date,{day:'numeric',month:'long',year:'numeric'})),el('span',null,`${next.time} · Europe/Rome`));box.appendChild(date);}
+      if(next){const date=el('p','fc-exam-date');date.append(el('strong',null,formatDay(next.date,{day:'numeric',month:'long',year:'numeric'})),el('span',null,'Confirm your assigned time and room on AlmaEsami'));box.appendChild(date);}
       box.appendChild(el('p','fc-example-label','Dates from the supplied course notice. Confirm the sitting and register on AlmaEsami.'));
     } else box.appendChild(el('p',null,'Review the syllabus for the current structure, permitted materials and exam dates.'));
     box.append(link('Try the practice mock →','fund-statistics.html#mock','fc-utility-link'),link('Exam dates & enrolment →','https://almaesami.unibo.it/','fc-utility-link',true));return box;

@@ -1,0 +1,1030 @@
+{
+  "schemaVersion": 1,
+  "module": "fund-statistics",
+  "updated": "2026-11-02",
+  "attribution": "Original student-authored practice, informed by the supplied course topics. Not an official examination paper.",
+  "questions": [
+    {
+      "id": "fund-statistics.self.001",
+      "topic": "fund-statistics.descriptive",
+      "type": "mcq",
+      "difficulty": "easy",
+      "question": "A hospital file has one row for each emergency-department attendance. A person who returns twice has two rows. What is the statistical unit in this file?",
+      "answer": 1,
+      "hint": "Ask what one row represents before naming the population or calculating a summary.",
+      "explanation": "The unit is the entity observed in each record. Calling attendances “patients” without checking repeated visits can confuse the target and the independence assumption.",
+      "source": "Original student practice · Topic 1",
+      "options": [
+        "A distinct person, regardless of visits",
+        "One emergency-department attendance",
+        "The hospital mean waiting time",
+        "The set of all hospitals"
+      ],
+      "rationales": [
+        "The file may contain more than one row per person, so a distinct person is not its row-level unit.",
+        "Each recorded row represents one attendance; repeated visits remain separate units in this description.",
+        "A mean summarizes units; it is not itself the entity recorded in each row.",
+        "The data describe attendances at one hospital, not one row per hospital."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.002",
+      "topic": "fund-statistics.descriptive",
+      "type": "mcq",
+      "difficulty": "medium",
+      "question": "A ward’s discharge-delay distribution has a long right tail. One unusually long delay is added. Which statement about a useful summary of typical delay is most defensible?",
+      "answer": 2,
+      "hint": "Compare how the mean uses magnitudes with how the median uses positions.",
+      "explanation": "A median is often useful for a skewed distribution when “typical” means a central ordered value. A mean can still be relevant for total resource planning; the choice depends on the target.",
+      "source": "Original student practice · Topic 1",
+      "options": [
+        "The median must increase more than the mean",
+        "The mean and median must remain equal",
+        "The median is usually less sensitive to the extreme value than the mean",
+        "The mean becomes a measure of spread"
+      ],
+      "rationales": [
+        "An extreme observation can pull the mean strongly; the median depends on ordered positions.",
+        "A long right tail does not require equality, and adding an extreme observation does not enforce it.",
+        "The median is resistant to the size of an extreme tail value, while the mean uses its full magnitude.",
+        "The mean remains a measure of centre; it does not become a variance or SD."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.003",
+      "topic": "fund-statistics.descriptive",
+      "type": "multi-select",
+      "difficulty": "hard",
+      "question": "For a continuous population distribution of waiting time T, the CDF is strictly increasing and the 25th, 50th, 75th and 90th percentiles are 18, 24, 36 and 54 minutes. Select ALL FALSE statements.",
+      "answer": [
+        0,
+        2
+      ],
+      "hint": "A percentile gives the cumulative fraction at or below a cutoff; this prompt asks for false statements.",
+      "explanation": "With the stated continuous, strictly increasing model, quantiles identify exact cumulative probabilities. Do not confuse “at or below the cutoff” with “exactly the cutoff”, or reverse upper and lower tails.",
+      "source": "Original student practice · Topic 1",
+      "options": [
+        "75% of waits are longer than 36 minutes.",
+        "50% of waits are at most 24 minutes.",
+        "90% of waits are exactly 54 minutes.",
+        "25% of waits lie between 24 and 36 minutes."
+      ],
+      "rationales": [
+        "False: 36 is the 75th percentile, leaving 25%, not 75%, above it.",
+        "True: the median is the cutoff with cumulative probability 0.50.",
+        "False: 90% are at or below 54; an exact point has probability zero in this continuous model.",
+        "True: the area between the 50th and 75th percentiles is 0.75−0.50=0.25."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.004",
+      "topic": "fund-statistics.descriptive",
+      "type": "multi-select",
+      "difficulty": "medium",
+      "question": "Every temperature reading X is transformed to Y=2X+5 for a calibration exercise. Select ALL statements that must be true for the same observations.",
+      "answer": [
+        0,
+        2
+      ],
+      "hint": "Separate the effect of a shift from the effect of a multiplier.",
+      "explanation": "For Y=a+bX, mean(Y)=a+b mean(X), SD(Y)=|b|SD(X), and Var(Y)=b²Var(X). These relationships apply to the same descriptive observations as well as to population moments when defined.",
+      "source": "Original student practice · Topic 1",
+      "options": [
+        "The new mean is twice the old mean plus 5.",
+        "The new SD is twice the old SD plus 5.",
+        "The new variance is four times the old variance.",
+        "The ordering of the readings is reversed."
+      ],
+      "rationales": [
+        "True: an affine transformation changes the mean by the same scaling and shift.",
+        "False: adding a constant changes location but does not add to SD; the new SD is twice the old SD.",
+        "True: variance scales by the square of the multiplier, 2²=4.",
+        "False: multiplying by a positive number preserves ordering; a negative multiplier would reverse it."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.005",
+      "topic": "fund-statistics.descriptive",
+      "type": "numeric",
+      "difficulty": "easy",
+      "question": "Six fictional clinic visits take 3, 5, 5, 7, 10 and 12 minutes. What is their arithmetic mean? Enter minutes to two decimal places.",
+      "answer": 7.0,
+      "hint": "Add every visit time, then divide by the number of visits.",
+      "explanation": "The mean uses all six observations, including the repeated value 5.",
+      "source": "Original student practice · Topic 1",
+      "tolerance": 0.005,
+      "unit": "minutes",
+      "steps": [
+        "Count n=6 observations.",
+        "Add the times: 3+5+5+7+10+12=42 minutes.",
+        "Divide: x̄=42/6=7.00 minutes."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.006",
+      "topic": "fund-statistics.descriptive",
+      "type": "numeric",
+      "difficulty": "medium",
+      "question": "Observed referral delays are 1, 3, 6 and 10 days. Calculate the descriptive variance with denominator n, not the adjusted variance. Enter days² to two decimal places.",
+      "answer": 11.5,
+      "hint": "Find the mean first, then add squared deviations and divide by four.",
+      "explanation": "The question asks to describe these four observations using n. Dividing by n−1 would answer the different adjusted-variance question.",
+      "source": "Original student practice · Topic 1",
+      "tolerance": 0.005,
+      "unit": "days²",
+      "steps": [
+        "The mean is (1+3+6+10)/4=5 days.",
+        "Squared deviations are 16, 4, 1 and 25, summing to 46 days².",
+        "The descriptive variance is 46/4=11.50 days²."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.007",
+      "topic": "fund-statistics.descriptive",
+      "type": "numeric",
+      "difficulty": "easy",
+      "question": "The SD of ambulance-trip distances is 4.2 miles. For this exercise, use the conversion 1 mile=1.6 km. What is the SD in km? Enter two decimal places.",
+      "answer": 6.720000000000001,
+      "hint": "SD changes by the absolute unit-conversion multiplier, not its square.",
+      "explanation": "Distances and their SD both scale by 1.6. The squared multiplier would apply to variance.",
+      "source": "Original student practice · Topic 1",
+      "tolerance": 0.005,
+      "unit": "km",
+      "steps": [
+        "The positive distance conversion multiplies each value by 1.6.",
+        "Apply SD(km)=1.6×SD(miles).",
+        "Calculate 1.6×4.2=6.72 km."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.008",
+      "topic": "fund-statistics.descriptive",
+      "type": "numeric",
+      "difficulty": "medium",
+      "question": "A waiting-time summary has Q1=12 minutes and Q3=22 minutes. What is the upper 1.5-IQR fence? Enter minutes to two decimal places.",
+      "answer": 37.0,
+      "hint": "The fence is Q3 plus 1.5 times the distance from Q1 to Q3.",
+      "explanation": "The fence is a threshold. The upper whisker is the largest observed value inside that threshold and cannot be located without the actual observations.",
+      "source": "Original student practice · Topic 1",
+      "tolerance": 0.005,
+      "unit": "minutes",
+      "steps": [
+        "Compute IQR=22−12=10 minutes.",
+        "Multiply: 1.5×IQR=15 minutes.",
+        "Add to Q3: upper fence=22+15=37.00 minutes."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.009",
+      "topic": "fund-statistics.descriptive",
+      "type": "written",
+      "difficulty": "medium",
+      "question": "A fictional clinic reports waiting time in minutes: mean 40, median 28, Q1=18 and Q3=44. Write a short descriptive interpretation of centre, spread and likely shape. Do not invent a sample size or a Normal distribution.",
+      "answer": "The median wait is 28 minutes and the mean is 40 minutes. Approximately the central 50% of waits lie between 18 and 44 minutes, an IQR of 26 minutes. A mean above the median is consistent with a right-skewed distribution and some long waits, but a graph is needed to assess the shape. This summary describes waiting times; it is not a confidence interval for a population mean.",
+      "hint": "Use the median and quartiles as ordered summaries, and treat shape as an inference to check with a graph.",
+      "explanation": "A descriptive interpretation names the quantity and units, explains the quartile interval, and avoids treating an IQR as a confidence interval or assuming Normality.",
+      "source": "Original student practice · Topic 1",
+      "rubric": [
+        "States the mean of 40 minutes and median of 28 minutes.",
+        "Explains that the quartiles describe approximately the central 50% from 18 to 44 minutes and/or calculates IQR=26 minutes.",
+        "Describes a right tail as consistent with the summaries, without claiming the exact shape is proven.",
+        "Does not reinterpret the quartiles as a population-mean confidence interval."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.010",
+      "topic": "fund-statistics.descriptive",
+      "type": "written",
+      "difficulty": "medium",
+      "question": "A spreadsheet codes hospital wards as North=1, South=2 and East=3, and also records each attendance’s waiting time in minutes. Explain why a mean ward code is not a useful ward summary, and suggest appropriate summaries or graphs for both variables.",
+      "answer": "Ward is a nominal category; the numbers are arbitrary labels and their differences have no quantitative meaning. Summarize wards with counts or relative frequencies and a bar chart. Waiting time is quantitative, so measures such as mean or median and a histogram or box plot can summarize its centre and distribution. Choose the centre after checking skewness and unusual waits.",
+      "hint": "Distinguish a numeric label from a measurement with meaningful distances.",
+      "explanation": "The storage format does not determine a variable’s measurement scale. Appropriate summaries depend on what the values mean.",
+      "source": "Original student practice · Topic 1",
+      "rubric": [
+        "Identifies ward as nominal despite its numeric codes.",
+        "Explains that averaging arbitrary ward labels has no meaningful units or distances.",
+        "Suggests ward frequencies and/or a bar chart.",
+        "Suggests quantitative waiting-time summaries and a suitable histogram or box plot."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.011",
+      "topic": "fund-statistics.distributions",
+      "type": "mcq",
+      "difficulty": "easy",
+      "question": "A regional patient registry is divided into three age groups. A random sample is selected separately within every age group. Which sampling design is described?",
+      "answer": 2,
+      "hint": "Ask whether every group contributes observations or only selected groups do.",
+      "explanation": "Stratified sampling takes samples within all defined strata. Cluster sampling selects clusters and then observes all or some units within the selected clusters.",
+      "source": "Original student practice · Topic 2",
+      "options": [
+        "A volunteer sample",
+        "A cluster sample that selects only some age groups",
+        "A stratified random sample",
+        "A census of all registry records"
+      ],
+      "rationales": [
+        "Selection is random within defined groups, not based on volunteering.",
+        "The design samples inside every group; it does not randomly select only some groups as clusters.",
+        "Age groups act as strata, and each stratum contributes a random sample.",
+        "Only samples are taken; a census would observe every eligible registry record."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.012",
+      "topic": "fund-statistics.distributions",
+      "type": "mcq",
+      "difficulty": "medium",
+      "question": "A standard Normal calculation needs P(Z≤0.8). Which English Excel expression directly returns that probability?",
+      "answer": 1,
+      "hint": "The cumulative argument controls whether Excel returns an area or a density.",
+      "explanation": "NORM.S.DIST(z,TRUE) is the standard Normal CDF. A density height and an upper-tail probability answer different questions.",
+      "source": "Original student practice · Topic 2",
+      "options": [
+        "=NORM.S.DIST(0.8,FALSE)",
+        "=NORM.S.DIST(0.8,TRUE)",
+        "=1-NORM.S.DIST(0.8,TRUE)",
+        "=T.INV(0.8,10)"
+      ],
+      "rationales": [
+        "FALSE returns the density height, not a cumulative probability.",
+        "TRUE requests the cumulative area at or below z=0.8.",
+        "The complement is the upper-tail probability P(Z>0.8).",
+        "This returns a Student t quantile with 10 degrees of freedom, not a standard Normal CDF value."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.013",
+      "topic": "fund-statistics.distributions",
+      "type": "multi-select",
+      "difficulty": "hard",
+      "question": "For a fictional follow-up model, X is the number of extra contacts: P(X=0)=0.10, P(X=1)=0.55 and P(X=2)=0.35. Select ALL TRUE statements.",
+      "answer": [
+        0,
+        2
+      ],
+      "hint": "Calculate E(X) and E(X²) separately, and include every outcome in a compound event.",
+      "explanation": "The probabilities sum to one. The expectation is 1.25, while the variance is E(X²)−[E(X)]². A long-run average need not equal an observed contact count.",
+      "source": "Original student practice · Topic 2",
+      "options": [
+        "E(X)=1.25 contacts.",
+        "P(X≥1)=0.55.",
+        "Var(X)=0.3875 contacts².",
+        "The expected value must be one of 0, 1 or 2."
+      ],
+      "rationales": [
+        "True: 0×0.10+1×0.55+2×0.35=1.25.",
+        "False: both one and two contacts count, so P(X≥1)=0.55+0.35=0.90.",
+        "True: E(X²)=0.55+4×0.35=1.95, and 1.95−1.25²=0.3875.",
+        "False: an expectation is a probability-weighted average and need not be a possible individual outcome."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.014",
+      "topic": "fund-statistics.distributions",
+      "type": "multi-select",
+      "difficulty": "medium",
+      "question": "Let Φ be the standard Normal CDF. Select ALL TRUE statements about Z~N(0,1).",
+      "answer": [
+        0,
+        2,
+        3
+      ],
+      "hint": "Sketch the left area, right tail and central band before manipulating the CDF.",
+      "explanation": "The CDF always accumulates from the left. Symmetry and complements convert its value into negative-tail or central-band probabilities.",
+      "source": "Original student practice · Topic 2",
+      "options": [
+        "Φ(−1.4)=1−Φ(1.4).",
+        "P(Z>1.4)=Φ(1.4).",
+        "The 95th percentile leaves 5% probability to its right.",
+        "P(−1.4<Z<1.4)=2Φ(1.4)−1."
+      ],
+      "rationales": [
+        "True: symmetry links the left tail at −1.4 to the right tail at +1.4.",
+        "False: Φ(1.4) is the left cumulative area; the right tail is its complement.",
+        "True: cumulative probability 0.95 means remaining upper-tail probability 0.05.",
+        "True: subtract Φ(−1.4)=1−Φ(1.4) from Φ(1.4)."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.015",
+      "topic": "fund-statistics.distributions",
+      "type": "numeric",
+      "difficulty": "easy",
+      "question": "A model for extra nurse calls gives X=0, 1 or 3 calls with probabilities 0.20, 0.50 and 0.30. What is E(X)? Enter calls to two decimal places.",
+      "answer": 1.4,
+      "hint": "Multiply each possible value by its own probability, then add.",
+      "explanation": "The expected count is a probability-weighted average, not an unweighted average of the three possible values.",
+      "source": "Original student practice · Topic 2",
+      "tolerance": 0.005,
+      "unit": "calls",
+      "steps": [
+        "Check that 0.20+0.50+0.30=1.",
+        "Compute E(X)=0×0.20+1×0.50+3×0.30.",
+        "Add 0+0.50+0.90=1.40 calls."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.016",
+      "topic": "fund-statistics.distributions",
+      "type": "numeric",
+      "difficulty": "medium",
+      "question": "An individual clinical score X follows N(72,36), with 36 explicitly denoting the variance. Calculate P(X>81). Enter a decimal probability to four decimal places, not a percentage.",
+      "answer": 0.06680720126885807,
+      "hint": "Take the square root of the variance, standardize 81, then use the upper tail.",
+      "explanation": "The individual SD is 6. Standardization gives z=1.5, whose upper-tail area is about 0.0668.",
+      "source": "Original student practice · Topic 2",
+      "tolerance": 5e-05,
+      "unit": "probability (decimal)",
+      "steps": [
+        "Obtain σ=√36=6.",
+        "Calculate z=(81−72)/6=1.5.",
+        "Use P(X>81)=1−Φ(1.5)≈0.0668072, or 0.0668."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.017",
+      "topic": "fund-statistics.distributions",
+      "type": "numeric",
+      "difficulty": "hard",
+      "question": "An individual score X follows N(100,225), where 225 is the variance. Calculate P(85<X<130). Enter a decimal probability to four decimal places.",
+      "answer": 0.8185946141203637,
+      "hint": "Standardize both endpoints using σ=√225, then subtract the two cumulative areas.",
+      "explanation": "An interval probability is the difference between the CDF at the upper and lower cutoffs. It is not the sum of their upper tails.",
+      "source": "Original student practice · Topic 2",
+      "tolerance": 5e-05,
+      "unit": "probability (decimal)",
+      "steps": [
+        "The SD is √225=15.",
+        "The standardized cutoffs are (85−100)/15=−1 and (130−100)/15=2.",
+        "Subtract Φ(2)−Φ(−1)=0.9772499−0.1586553≈0.8185946, or 0.8186."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.018",
+      "topic": "fund-statistics.distributions",
+      "type": "numeric",
+      "difficulty": "medium",
+      "question": "For a Student t distribution with 18 degrees of freedom, find the positive cutoff that leaves 10% probability to its right. Enter the cutoff to three decimal places.",
+      "answer": 1.3303909435699093,
+      "hint": "Convert the right-tail probability to a left cumulative probability before using T.INV.",
+      "explanation": "A 10% right tail corresponds to cumulative probability 0.90. It is a percentile question, not a two-sided 10% critical-value question.",
+      "source": "Original student practice · Topic 2",
+      "tolerance": 0.0005,
+      "unit": "t cutoff",
+      "steps": [
+        "Convert the requested tail: left cumulative area=1−0.10=0.90.",
+        "Look up the 90th percentile with df=18, or use T.INV(0.90,18).",
+        "The cutoff is approximately 1.3303909, which rounds to 1.330."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.019",
+      "topic": "fund-statistics.distributions",
+      "type": "written",
+      "difficulty": "medium",
+      "question": "Researchers randomly select 8 of 40 clinics, then include eligible attendances within those selected clinics. Name the main sampling design and explain why randomly choosing clinics does not automatically make all attendance records independent.",
+      "answer": "This is a cluster-based design: clinics are selected as clusters, with attendances observed within the selected clinics. Records within a clinic may share staff, procedures or local populations and can be correlated. Random cluster selection does not remove that within-clinic dependence. Precision calculations should reflect the design rather than simply treating every attendance as an independent draw.",
+      "hint": "Identify the first unit selected at random and think about what observations within it share.",
+      "explanation": "Probability sampling and independence are different properties. No numerical design-effect formula is required for this recognition question.",
+      "source": "Original student practice · Topic 2",
+      "rubric": [
+        "Identifies clinics as clusters and the design as cluster-based.",
+        "Notes that only selected clinics, not every clinic stratum, contribute observations.",
+        "Explains a plausible source of dependence within clinics.",
+        "States that simple independent-observation precision formulas need a design check."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.020",
+      "topic": "fund-statistics.distributions",
+      "type": "written",
+      "difficulty": "medium",
+      "question": "For a continuous waiting-time model, software reports a density of 0.06 per minute at 12 minutes and a CDF value F(12)=0.70. Explain what each number means, and state P(X>12) and P(X=12).",
+      "answer": "F(12)=0.70 means a 70% probability that waiting time is at most 12 minutes. Therefore P(X>12)=1−0.70=0.30. The density height 0.06 per minute is not the probability of exactly 12 minutes; probabilities are areas over intervals. In this continuous model, P(X=12)=0.",
+      "hint": "A density is a curve height with inverse measurement units; a CDF is already a probability.",
+      "explanation": "Density, CDF and exact-value probability are distinct. The complement gives the upper tail, while an individual point has zero area under a continuous density.",
+      "source": "Original student practice · Topic 2",
+      "rubric": [
+        "Interprets F(12)=0.70 as probability at or below the cutoff.",
+        "Calculates P(X>12)=0.30.",
+        "Distinguishes density height from probability and/or mentions area over an interval.",
+        "States P(X=12)=0 for the continuous model."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.021",
+      "topic": "fund-statistics.estimation",
+      "type": "mcq",
+      "difficulty": "easy",
+      "question": "For independent observations from a common population with a finite mean, E(X̄)=μ. What does this say about sample-mean estimation?",
+      "answer": 2,
+      "hint": "Read E(·) as an average over repeated samples, not a guarantee for one sample.",
+      "explanation": "Unbiasedness is a property of an estimator’s sampling distribution. It does not guarantee an exact estimate from a particular sample.",
+      "source": "Original student practice · Topic 3",
+      "options": [
+        "Every observed mean must equal μ",
+        "The sample mean has no sampling variability",
+        "The sample mean is unbiased across repeated samples",
+        "Individual observations must be Normally distributed"
+      ],
+      "rationales": [
+        "Individual sample means can lie above or below the target.",
+        "Unbiasedness concerns the expected centre, not whether variance is zero.",
+        "Its expectation over the sampling distribution equals the target population mean.",
+        "Normality is not required for the expectation identity under the stated assumptions."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.022",
+      "topic": "fund-statistics.estimation",
+      "type": "mcq",
+      "difficulty": "medium",
+      "question": "A study targets the unknown mean consultation length μ. Before sampling, it plans to use X̄=(ΣXᵢ)/n. After collecting data, it reports x̄=18.7 minutes. Which description is correct?",
+      "answer": 3,
+      "hint": "Separate the target from the rule and from the number produced by the rule.",
+      "explanation": "A population mean is the estimand. The sample-mean formula is the estimator. Applying it to a specific sample produces an estimate in the outcome’s units.",
+      "source": "Original student practice · Topic 3",
+      "options": [
+        "18.7 is the estimand and μ is an observed statistic",
+        "The formula is an observed number and 18.7 is a random population parameter",
+        "μ and 18.7 are both fixed population parameters",
+        "μ is the estimand, X̄ is the estimator, and 18.7 is the estimate"
+      ],
+      "rationales": [
+        "The estimand is the target population parameter, not the observed sample result.",
+        "The estimator is the rule before sampling; the result is its observed realization.",
+        "The observed sample mean is not a population parameter.",
+        "These are respectively the target, the sample-based rule and its realized numerical output."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.023",
+      "topic": "fund-statistics.estimation",
+      "type": "multi-select",
+      "difficulty": "hard",
+      "question": "Consider sample means from independent observations with the same population distribution. Select ALL TRUE statements.",
+      "answer": [
+        0,
+        2
+      ],
+      "hint": "Separate distributional shape, precision and selection quality.",
+      "explanation": "Exact Normal sampling, a CLT approximation and representativeness are different questions. A larger n does not settle all three.",
+      "source": "Original student practice · Topic 3",
+      "options": [
+        "If the population is Normal, its sample mean is exactly Normal for every positive n.",
+        "n=30 guarantees a useful Normal approximation for every possible population.",
+        "Increasing a volunteer sample’s size does not by itself remove selection bias.",
+        "The central limit theorem turns the individual observations into Normal data."
+      ],
+      "rationales": [
+        "True: averaging independent Normal observations preserves Normality.",
+        "False: the course n≥30 convention is a heuristic; distribution shape and moments still matter.",
+        "True: reducing random sampling variability does not automatically correct a biased selection mechanism.",
+        "False: the theorem concerns the sampling distribution of sums or means, not a transformation of each individual value."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.024",
+      "topic": "fund-statistics.estimation",
+      "type": "multi-select",
+      "difficulty": "hard",
+      "question": "Let Vₙ=Σ(Xᵢ−X̄)²/n and S²=Σ(Xᵢ−X̄)²/(n−1), for independent observations from the same population with finite variance σ² and n≥2. Select ALL TRUE statements.",
+      "answer": [
+        0,
+        1,
+        2
+      ],
+      "hint": "Keep the expectation of a variance estimator separate from the expectation of its square root.",
+      "explanation": "The n−1 adjustment targets population variance. It does not imply that every observed s² equals σ², that S is unbiased, or that sampling variability disappears.",
+      "source": "Original student practice · Topic 3",
+      "options": [
+        "E(S²)=σ².",
+        "The square root S is not generally an unbiased estimator of σ.",
+        "E(Vₙ)=((n−1)/n)σ².",
+        "An unbiased estimator must have zero sampling variance."
+      ],
+      "rationales": [
+        "True: dividing by n−1 corrects the variance-estimation bias under the stated assumptions.",
+        "True: unbiasedness does not generally survive the nonlinear square-root transformation.",
+        "True: the denominator-n statistic is downward biased for the population variance.",
+        "False: an estimator may have the right expected centre and still vary considerably across samples."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.025",
+      "topic": "fund-statistics.estimation",
+      "type": "numeric",
+      "difficulty": "easy",
+      "question": "A population has SD 15 mmHg. A study draws 64 independent observations from it. What is the standard error of the sample mean? Enter mmHg to three decimal places.",
+      "answer": 1.875,
+      "hint": "The spread of sample means divides the population SD by √n.",
+      "explanation": "Population SD describes individual measurements. Standard error describes the repeated-sampling spread of the mean.",
+      "source": "Original student practice · Topic 3",
+      "tolerance": 0.0005,
+      "unit": "mmHg",
+      "steps": [
+        "Use SE(X̄)=σ/√n.",
+        "Calculate √64=8.",
+        "Divide 15/8=1.875 mmHg."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.026",
+      "topic": "fund-statistics.estimation",
+      "type": "numeric",
+      "difficulty": "easy",
+      "question": "An independent sample of 36 follow-up times has adjusted sample SD s=9.6 days. Calculate the estimated SE of its mean. Enter days to two decimal places.",
+      "answer": 1.5999999999999999,
+      "hint": "Use the adjusted sample SD, not its square, and divide by √n.",
+      "explanation": "When population SD is unknown, s/√n estimates the sampling variability of the sample mean. It has the original measurement units.",
+      "source": "Original student practice · Topic 3",
+      "tolerance": 0.005,
+      "unit": "days",
+      "steps": [
+        "Use estimated SE=s/√n.",
+        "Calculate √36=6.",
+        "Divide 9.6/6=1.60 days."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.027",
+      "topic": "fund-statistics.estimation",
+      "type": "numeric",
+      "difficulty": "medium",
+      "question": "For 8 independent observations, the sum of squared deviations from the observed sample mean is 84 minutes². Calculate the adjusted sample variance s². Enter minutes² to two decimal places.",
+      "answer": 12.0,
+      "hint": "The mean was estimated from these observations, so the adjusted variance uses n−1.",
+      "explanation": "The requested statistic is a variance, so do not take a square root. Denominator n would give the descriptive variance instead.",
+      "source": "Original student practice · Topic 3",
+      "tolerance": 0.005,
+      "unit": "minutes²",
+      "steps": [
+        "Identify the adjusted-variance formula: s²=SSE/(n−1).",
+        "The denominator is 8−1=7.",
+        "Calculate 84/7=12.00 minutes²."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.028",
+      "topic": "fund-statistics.estimation",
+      "type": "numeric",
+      "difficulty": "hard",
+      "question": "Individual recovery scores follow a Normal population with mean 64 and SD 12. For 36 independent observations, calculate P(X̄>68). Enter a decimal probability to four decimal places.",
+      "answer": 0.022750131948179195,
+      "hint": "This question concerns a sample mean, so first find its SE rather than using the individual SD directly.",
+      "explanation": "Normality of the population makes the independent-sample mean exactly Normal. Its variance is 12²/36 and its SE is 2.",
+      "source": "Original student practice · Topic 3",
+      "tolerance": 5e-05,
+      "unit": "probability (decimal)",
+      "steps": [
+        "The sample-mean distribution is Normal with mean 64 and SE=12/√36=2.",
+        "Standardize the mean cutoff: z=(68−64)/2=2.",
+        "Use the right tail: P(X̄>68)=1−Φ(2)≈0.0227501, or 0.0228."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.029",
+      "topic": "fund-statistics.estimation",
+      "type": "written",
+      "difficulty": "medium",
+      "question": "Two independent random-sampling plans target the same population mean. Population SD is 10 minutes. Plan A uses n=25 and plan B uses n=100. Explain their difference in precision and what does not change about individual variation.",
+      "answer": "Plan A has SE=10/√25=2 minutes, while plan B has SE=10/√100=1 minute. Quadrupling sample size halves SE and reduces the variance of the sample mean to one quarter. The population SD remains 10 minutes: a bigger sample does not make individual consultation lengths less variable. Under suitable common-population random sampling, both sample means remain unbiased for the same population mean.",
+      "hint": "Compare √n for the two plans and distinguish individual SD from mean SE.",
+      "explanation": "Precision changes with the sampling distribution of the estimator. Population characteristics do not mechanically shrink when more people are observed.",
+      "source": "Original student practice · Topic 3",
+      "rubric": [
+        "Calculates SE=2 minutes for n=25.",
+        "Calculates SE=1 minute for n=100.",
+        "Explains that quadrupling n halves SE (or quarters the mean variance).",
+        "Keeps individual population SD at 10 minutes and distinguishes it from SE."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.030",
+      "topic": "fund-statistics.estimation",
+      "type": "written",
+      "difficulty": "medium",
+      "question": "A researcher says: “Our observed mean referral time is 18.4 days. Because the sample mean is unbiased, this one number must equal the unknown population mean.” Explain the mistake using estimator, estimate and repeated sampling.",
+      "answer": "The sample-mean rule is an estimator; 18.4 days is its estimate from this particular sample. Unbiasedness means that, under the stated sampling assumptions, the estimator’s expectation across repeated samples equals the population mean. It does not require each observed estimate to equal that parameter. Sample means vary, and one realized value cannot establish either zero error or the unbiasedness of a sampling procedure.",
+      "hint": "An expectation across repeated samples is not an equality guaranteed for one observed dataset.",
+      "explanation": "The distinction between a random estimator and its realized estimate prevents an unbiasedness claim from becoming a false guarantee of certainty.",
+      "source": "Original student practice · Topic 3",
+      "rubric": [
+        "Identifies 18.4 days as an observed estimate and the sample-mean rule as the estimator.",
+        "Defines unbiasedness through repeated-sampling expectation.",
+        "States that a single estimate can differ from the population mean.",
+        "Does not use one realized value to prove that the sampling procedure is unbiased or perfectly precise."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.031",
+      "topic": "fund-statistics.confidence-intervals",
+      "type": "mcq",
+      "difficulty": "medium",
+      "question": "A rehabilitation researcher has 18 independent observations from a Normal population. The population SD is unknown and is estimated with the adjusted sample SD. Which reference gives the exact two-sided 95% mean interval?",
+      "answer": 2,
+      "hint": "Identify what is known about population variability, then count the degrees of freedom.",
+      "explanation": "Replacing the unknown population SD with the adjusted sample SD gives a Student t pivot. For one mean, df=n−1=17; the positive two-sided 95% cutoff has cumulative probability 0.975.",
+      "source": "Original student practice · Topic 4",
+      "options": [
+        "Standard Normal, using the 95th percentile",
+        "Student t with 18 df, using the 97.5th percentile",
+        "Student t with 17 df, using the 97.5th percentile",
+        "Student t with 17 df, using the 95th percentile"
+      ],
+      "rationales": [
+        "Incorrect: unknown SD calls for t under this Normal model; 0.95 is also the wrong cumulative cutoff for a two-sided 95% interval.",
+        "Incorrect: the cumulative probability is right, but one-mean df is n−1, not n.",
+        "Correct: the exact Normal-sampling pivot uses t17 and splits the excluded 5% equally between the tails.",
+        "Incorrect: the 95th t percentile gives central 90% coverage, not 95%."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.032",
+      "topic": "fund-statistics.confidence-intervals",
+      "type": "mcq",
+      "difficulty": "easy",
+      "question": "A valid 95% confidence interval for a population mean length of stay is [6.2, 7.8] days. Which statement identifies what the interval estimates?",
+      "answer": 1,
+      "hint": "Distinguish the population mean from individual patient stays.",
+      "explanation": "The endpoints estimate the population mean stay. The 95% level describes the long-run coverage of the interval procedure under its assumptions.",
+      "source": "Original student practice · Topic 4",
+      "options": [
+        "The middle 95% of individual patient stays",
+        "A plausible range for the population mean stay",
+        "The range containing exactly 95% of the observed sample",
+        "A 95% posterior probability distribution for the fixed mean"
+      ],
+      "rationales": [
+        "Incorrect: a mean confidence interval is not a reference interval for individual patients.",
+        "Correct: the unknown target is the population mean, measured in days.",
+        "Incorrect: interval construction does not aim to contain a fixed percentage of the observed records.",
+        "Incorrect: an ordinary frequentist confidence interval does not give a posterior distribution or a probability assigned to the fixed parameter."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.033",
+      "topic": "fund-statistics.confidence-intervals",
+      "type": "multi-select",
+      "difficulty": "medium",
+      "question": "An independent binary sample contains 4 follow-up attenders out of 80 eligible patients. For the course Normal/Wald proportion interval, select all correct statements.",
+      "answer": [
+        0,
+        2
+      ],
+      "hint": "Check observed successes and failures, not only the total sample size.",
+      "explanation": "There are four observed successes and 76 failures. The supplied course guideline requires at least five of each for this Wald approximation. A large total n cannot repair the sparse success count.",
+      "source": "Original student practice · Topic 4",
+      "options": [
+        "The observed success count fails the course minimum of five.",
+        "Using a Student t critical value automatically fixes the sparse count.",
+        "The fact that n exceeds 30 does not by itself justify this Wald interval.",
+        "The interval SE should be calculated with a hypothetical null proportion of 0.50."
+      ],
+      "rationales": [
+        "Correct: only four successes are observed, below the stated course guideline.",
+        "Incorrect: changing z to t does not solve the boundary and sparse-count problem for this proportion method.",
+        "Correct: the binary outcome can remain too sparse even when the total sample is larger than 30.",
+        "Incorrect: a Wald confidence interval uses the observed proportion, not an arbitrary null value."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.034",
+      "topic": "fund-statistics.confidence-intervals",
+      "type": "multi-select",
+      "difficulty": "medium",
+      "question": "Using the same sample and the same mean-interval method, an analyst changes only the confidence level from 90% to 99%. Select all correct statements.",
+      "answer": [
+        1,
+        3
+      ],
+      "hint": "Separate the critical value from quantities calculated from the unchanged observations.",
+      "explanation": "The increased confidence level raises the critical multiplier. The sample estimate and its SE are unchanged, so the interval becomes wider.",
+      "source": "Original student practice · Topic 4",
+      "options": [
+        "The sample mean must move closer to the population mean.",
+        "The critical multiplier becomes larger.",
+        "The change guarantees that 99% of individual outcomes fall between the endpoints.",
+        "The standard error calculated from the same data stays the same."
+      ],
+      "rationales": [
+        "Incorrect: changing a confidence setting does not change the observed sample mean.",
+        "Correct: central 99% coverage requires a more extreme positive critical cutoff than central 90%.",
+        "Incorrect: the interval still targets a population mean, not an individual-outcome percentage.",
+        "Correct: the observations and variance estimate are unchanged; only the critical multiplier changes."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.035",
+      "topic": "fund-statistics.confidence-intervals",
+      "type": "numeric",
+      "difficulty": "medium",
+      "question": "A random sample of 81 independent clinic visits has mean duration 68 minutes. The population is Normal and its known SD is 9 minutes. Using z*=1.96, calculate the LOWER endpoint of the two-sided 95% mean CI. Enter minutes to two decimal places.",
+      "answer": 66.04,
+      "hint": "Calculate the mean SE first, then subtract the margin of error from the observed mean.",
+      "explanation": "The mean SE is 9/√81=1 minute. The margin is 1.96 minutes, so the lower endpoint is 68−1.96=66.04 minutes.",
+      "source": "Original student practice · Topic 4",
+      "tolerance": 0.005,
+      "unit": "minutes",
+      "steps": [
+        "Find SE=σ/√n=9/9=1 minute.",
+        "Calculate the margin of error: 1.96×1=1.96 minutes.",
+        "Subtract from the sample mean: lower bound=68−1.96=66.04 minutes."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.036",
+      "topic": "fund-statistics.confidence-intervals",
+      "type": "numeric",
+      "difficulty": "hard",
+      "question": "A Normal-population study records 25 independent recovery scores, with mean 42 points and adjusted sample SD 6 points. The population SD is unknown. Calculate the UPPER endpoint of the two-sided 95% mean CI using the exact t percentile. Enter points to three decimal places.",
+      "answer": 44.47667827395363,
+      "hint": "Use n−1 degrees of freedom and retrieve the positive cutoff at cumulative probability 0.975.",
+      "explanation": "There are 24 df. The critical t value is approximately 2.063899 and SE=6/5=1.2 points, giving an upper endpoint of approximately 44.476678 points.",
+      "source": "Original student practice · Topic 4",
+      "tolerance": 0.0005,
+      "unit": "points",
+      "steps": [
+        "Use estimated SE=s/√n=6/5=1.2 points and df=25−1=24.",
+        "Retrieve t(24,0.975)≈2.063898562.",
+        "Calculate upper bound=42+2.063898562×1.2≈44.476678274, which rounds to 44.477 points."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.037",
+      "topic": "fund-statistics.confidence-intervals",
+      "type": "numeric",
+      "difficulty": "medium",
+      "question": "Among 180 independently sampled eligible patients, 108 attend follow-up. Both outcome counts meet the course count guideline. Using z*=1.96, calculate the MARGIN OF ERROR for a two-sided 95% Wald CI for the attendance proportion. Enter a decimal proportion to four decimal places, not a percentage.",
+      "answer": 0.0715690808473417,
+      "hint": "Compute the observed proportion, then its estimated SE. The requested quantity is the margin, not an endpoint or the full width.",
+      "explanation": "The estimate is 108/180=0.60. Estimated SE=√(0.60×0.40/180)≈0.03651484. Multiplying by 1.96 gives margin≈0.07156908, or 0.0716 when rounded.",
+      "source": "Original student practice · Topic 4",
+      "tolerance": 5e-05,
+      "unit": "decimal proportion",
+      "steps": [
+        "Calculate p̂=108/180=0.60; observed successes and failures are 108 and 72.",
+        "Find estimated SE=√[0.60×0.40/180]≈0.0365148372.",
+        "Multiply by the critical value: margin=1.96×0.0365148372≈0.0715690808; enter 0.0716."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.038",
+      "topic": "fund-statistics.confidence-intervals",
+      "type": "numeric",
+      "difficulty": "medium",
+      "question": "For mean haemoglobin concentration in a Normal population with known SD 14 g/L, a random sample has 196 independent patients. Using z*=2.576, what is the FULL WIDTH of its two-sided 99% mean CI? Enter g/L to three decimal places.",
+      "answer": 5.152,
+      "hint": "Full width is twice the margin of error; the sample mean is not needed to find the width.",
+      "explanation": "SE=14/√196=1 g/L. The margin is 2.576 g/L and the full width is 2×2.576=5.152 g/L.",
+      "source": "Original student practice · Topic 4",
+      "tolerance": 0.0005,
+      "unit": "g/L",
+      "steps": [
+        "Find SE=14/14=1 g/L.",
+        "Calculate the margin: 2.576×1=2.576 g/L.",
+        "Double the margin to obtain the full width: 5.152 g/L."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.039",
+      "topic": "fund-statistics.confidence-intervals",
+      "type": "written",
+      "difficulty": "medium",
+      "question": "A random sample of 144 independent home-care appointments gives a mean duration of 31 minutes and a valid 95% mean CI of [29.3, 32.7] minutes. Write a short interpretation for a service manager. Explain both the target quantity and what 95% confidence means; identify one incorrect individual-level claim to avoid.",
+      "answer": "The estimated population mean appointment duration is 31 minutes, with a 95% confidence interval from 29.3 to 32.7 minutes. Under the sampling and model assumptions, approximately 95% of intervals constructed by this procedure in repeated sampling would contain the fixed population mean. This does not say that 95% of individual appointments last between 29.3 and 32.7 minutes, and it does not assign a 95% frequentist probability to the fixed mean after observing this interval.",
+      "hint": "Name the population mean and units before explaining the repeated-sampling procedure.",
+      "explanation": "A useful interpretation connects the estimate and endpoints to the population mean, describes repeated-sampling coverage and separates individual variation from uncertainty in a mean.",
+      "source": "Original student practice · Topic 4",
+      "rubric": [
+        "Identifies the target as the population mean appointment duration and reports minutes.",
+        "Reports the estimate 31 minutes and interval endpoints 29.3 and 32.7 minutes.",
+        "Explains 95% as repeated-sampling coverage of the procedure under its assumptions.",
+        "Rejects the claim that the interval contains 95% of individual appointment durations or gives a posterior probability for the fixed mean."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.040",
+      "topic": "fund-statistics.confidence-intervals",
+      "type": "written",
+      "difficulty": "hard",
+      "question": "A team has 16 independent measurements of a rehabilitation outcome from a Normal population. Its SD of 8 points was estimated from those same data using STDEV.S. A colleague proposes a 95% mean interval with z*=1.96 because the SD is now a known number on the spreadsheet. Explain which method should be used and why.",
+      "answer": "The number 8 is an observed adjusted sample SD, not a known population SD. Under independent Normal sampling with unknown population variance, use x̄ ± t(15,0.975)×8/√16. The 15 df account for estimating the mean and the SD-based uncertainty is represented by the t reference. Its critical value is larger than 1.96 at this sample size, so the corresponding t interval is wider. These conclusions rely on the stated independence and Normal-population assumptions.",
+      "hint": "A sample estimate can be observed without making the underlying population parameter known.",
+      "explanation": "Knowing the numerical sample SD does not remove the uncertainty from estimating population variability. The correct exact small-sample Normal model uses t with n−1 df.",
+      "source": "Original student practice · Topic 4",
+      "rubric": [
+        "Distinguishes the sample SD 8 from a known population SD σ.",
+        "Selects a t mean interval with df=16−1=15 and positive cumulative critical probability 0.975.",
+        "Uses estimated SE=8/√16 in the interval structure.",
+        "Explains why the t interval is wider than the z interval here and identifies the independence/Normal assumptions."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.041",
+      "topic": "fund-statistics.hypothesis-tests",
+      "type": "mcq",
+      "difficulty": "easy",
+      "question": "A hospital wants to test whether the population mean appointment duration differs from 18 minutes. Which hypotheses match that two-sided question?",
+      "answer": 0,
+      "hint": "The claim concerns the population parameter, not the already observed sample mean.",
+      "explanation": "A two-sided question about a population mean uses H₀: μ=18 versus Hₐ: μ≠18.",
+      "source": "Original student practice · Topic 5",
+      "options": [
+        "H₀: μ=18; Hₐ: μ≠18",
+        "H₀: x̄=18; Hₐ: x̄≠18",
+        "H₀: μ>18; Hₐ: μ>18",
+        "H₀: p-value=0.05; Hₐ: p-value<0.05"
+      ],
+      "rationales": [
+        "Correct: the null specifies a population mean and the alternative permits a difference in either direction.",
+        "Incorrect: the sample mean is observed evidence, not the unknown population parameter being tested.",
+        "Incorrect: this repeats the same directional statement instead of giving the specified two-sided comparison.",
+        "Incorrect: the p-value is an output of a test, not the population parameter hypothesized here."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.042",
+      "topic": "fund-statistics.hypothesis-tests",
+      "type": "mcq",
+      "difficulty": "easy",
+      "question": "A valid two-sided mean test reports p=0.11. The significance level was set to 0.05 before seeing the data. Which conclusion is defensible?",
+      "answer": 3,
+      "hint": "Compare the p-value with the pre-specified threshold, then distinguish nonrejection from proof.",
+      "explanation": "Because 0.11 exceeds 0.05, the test does not reject H₀ at 5%. That decision does not prove equality or assign a probability to H₀.",
+      "source": "Original student practice · Topic 5",
+      "options": [
+        "H₀ has an 89% probability of being true.",
+        "The population means or values are proven equal.",
+        "The test must be repeated at a new α chosen to obtain rejection.",
+        "There is insufficient evidence to reject H₀ at the 5% level."
+      ],
+      "rationales": [
+        "Incorrect: 1−p is not a posterior probability of the null.",
+        "Incorrect: nonrejection is not proof of equality.",
+        "Incorrect: choosing the threshold after looking for a desired result changes the planned testing procedure.",
+        "Correct: the p-value exceeds the pre-specified significance level, so evidence is insufficient for rejection at that level."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.043",
+      "topic": "fund-statistics.hypothesis-tests",
+      "type": "multi-select",
+      "difficulty": "medium",
+      "question": "Under a valid two-sided test, an analyst obtains p=0.008. Select all correct statements about this result.",
+      "answer": [
+        0,
+        1
+      ],
+      "hint": "A p-value can be compared with more than one stated threshold, but it does not measure effect size or the probability of the null.",
+      "explanation": "The p-value is below both 0.01 and 0.05, so the result rejects at either threshold. Its interpretation remains conditional on the null model and assumptions; it does not establish a posterior null probability or clinical importance.",
+      "source": "Original student practice · Topic 5",
+      "options": [
+        "The result rejects H₀ at a pre-specified 1% significance level.",
+        "The result rejects H₀ at a pre-specified 5% significance level.",
+        "The probability that H₀ is true is exactly 0.008.",
+        "The result alone guarantees a clinically important effect."
+      ],
+      "rationales": [
+        "Correct: 0.008<0.01.",
+        "Correct: 0.008<0.05.",
+        "Incorrect: p measures a tail probability under H₀, not the probability of H₀.",
+        "Incorrect: statistical evidence alone does not establish the size or clinical importance of an effect."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.044",
+      "topic": "fund-statistics.hypothesis-tests",
+      "type": "multi-select",
+      "difficulty": "hard",
+      "question": "An independent binary sample has n=160 and 64 recorded successes. The course Normal test concerns H₀: π=0.30 versus Hₐ: π≠0.30. Select all correct statements about the test calculation.",
+      "answer": [
+        1,
+        3
+      ],
+      "hint": "Calculate the observed estimate separately from the variability assumed under the null.",
+      "explanation": "The observed proportion is 0.40, but the null-based test SE uses π₀=0.30. Expected null counts are 48 successes and 112 failures, meeting the course minimum-of-five check.",
+      "source": "Original student practice · Topic 5",
+      "options": [
+        "The test SE must use √[0.40×0.60/160].",
+        "The null-based test SE is √[0.30×0.70/160].",
+        "The expected null success count is the observed value 64.",
+        "The expected null counts 48 and 112 satisfy the course minimum count guideline."
+      ],
+      "rationales": [
+        "Incorrect: this uses the observed proportion, as in the earlier Wald interval, rather than the null reference variance of this test.",
+        "Correct: π₀, not p̂, determines the null-based SE.",
+        "Incorrect: under H₀ the expected count is nπ₀=48; 64 is the observed count.",
+        "Correct: both null expected counts are at least five, assuming the other design conditions hold."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.045",
+      "topic": "fund-statistics.hypothesis-tests",
+      "type": "numeric",
+      "difficulty": "medium",
+      "question": "A Normal population has known SD 12 minutes. A random sample of 144 independent observations has mean 97.5 minutes. For H₀: μ=100 minutes, calculate the SIGNED observed z statistic. Enter three decimal places.",
+      "answer": -2.5,
+      "hint": "Use the SE of the mean rather than the SD of an individual observation, and keep the sign of the numerator.",
+      "explanation": "SE=12/√144=1 minute. Therefore z=(97.5−100)/1=−2.500. A two-sided rejection comparison would use its magnitude, but the signed statistic is negative.",
+      "source": "Original student practice · Topic 5",
+      "tolerance": 0.0005,
+      "unit": "standardized units",
+      "steps": [
+        "Calculate SE=σ/√n=12/12=1 minute.",
+        "Form the signed difference: 97.5−100=−2.5 minutes.",
+        "Divide by SE: z_obs=−2.5/1=−2.500."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.046",
+      "topic": "fund-statistics.hypothesis-tests",
+      "type": "numeric",
+      "difficulty": "medium",
+      "question": "Sixteen independent observations from a Normal population have mean 45.5 points and adjusted sample SD 8 points. The population SD is unknown. For H₀: μ=50 points, calculate the SIGNED observed t statistic. Enter three decimal places.",
+      "answer": -2.25,
+      "hint": "Estimate the mean SE with s/√n. Degrees of freedom identify the reference distribution but are not the denominator of SE.",
+      "explanation": "Estimated SE=8/√16=2 points. The observed statistic is (45.5−50)/2=−2.25, with 15 df for the t reference.",
+      "source": "Original student practice · Topic 5",
+      "tolerance": 0.0005,
+      "unit": "standardized units",
+      "steps": [
+        "Use estimated SE=s/√n=8/4=2 points.",
+        "Subtract the hypothesized mean: 45.5−50=−4.5 points.",
+        "Calculate t_obs=−4.5/2=−2.250; the reference has 16−1=15 df."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.047",
+      "topic": "fund-statistics.hypothesis-tests",
+      "type": "numeric",
+      "difficulty": "medium",
+      "question": "A valid two-sided known-variance mean test gives z_obs=−1.80. Calculate its two-sided standard Normal p-value. Enter a decimal probability to four decimal places, not a percentage.",
+      "answer": 0.07186063822585158,
+      "hint": "Use the magnitude of the observed statistic and add the equal probability in the other tail.",
+      "explanation": "The two-sided p-value is 2P(Z>1.80)≈0.07186064, which rounds to 0.0719. The negative sign changes the observed direction, not this two-sided probability.",
+      "source": "Original student practice · Topic 5",
+      "tolerance": 5e-05,
+      "unit": "decimal probability",
+      "steps": [
+        "Take the magnitude |−1.80|=1.80.",
+        "Find the upper-tail probability P(Z>1.80)≈0.0359303191.",
+        "Double the upper tail: p≈0.0718606382; enter 0.0719."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.048",
+      "topic": "fund-statistics.hypothesis-tests",
+      "type": "numeric",
+      "difficulty": "hard",
+      "question": "A random sample of 250 independent patients includes 100 successes. Test H₀: π=0.30 against a two-sided alternative using the course null-based Normal test. Calculate the observed z statistic and enter three decimal places. Both expected null outcome counts are adequate.",
+      "answer": 3.4503277967117723,
+      "hint": "Find p̂ from the data, but use π₀ in the SE denominator.",
+      "explanation": "The sample estimate is 0.40 and the null SE is √(0.30×0.70/250)≈0.02898275. Thus z=(0.40−0.30)/SE≈3.4503278, which rounds to 3.450.",
+      "source": "Original student practice · Topic 5",
+      "tolerance": 0.0005,
+      "unit": "standardized units",
+      "steps": [
+        "Calculate p̂=100/250=0.40. Null expected counts are 75 and 175.",
+        "Use SE₀=√[0.30×0.70/250]≈0.0289827535.",
+        "Calculate z_obs=(0.40−0.30)/0.0289827535≈3.4503278; enter 3.450."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.049",
+      "topic": "fund-statistics.hypothesis-tests",
+      "type": "written",
+      "difficulty": "medium",
+      "question": "A one-mean analysis reports an observed sample mean rehabilitation score of 51.8 points and tests H₀: μ=50 against Hₐ: μ≠50. Under its justified t model it reports t=1.40 with 39 df and a two-sided p-value rounded to 0.169. The planned significance level is 0.05. Write the decision and a careful interpretation.",
+      "answer": "Do not reject H₀ at the 5% level because the two-sided p-value, about 0.169, exceeds 0.05. The sample estimate is above 50 points, but the evidence is insufficient at this threshold to conclude that the population mean differs from 50. The p-value describes how extreme the result is under the null model and assumptions; it is not a 16.9% probability that H₀ is true. Nonrejection does not establish equality or absence of a clinically relevant difference.",
+      "hint": "Name the population target, compare p with α, and separate the sample estimate from the test decision.",
+      "explanation": "A correct conclusion combines the population-level target, the pre-specified decision threshold and the limits of nonrejection. The positive observed direction alone does not establish a population difference.",
+      "source": "Original student practice · Topic 5",
+      "rubric": [
+        "States do not reject H₀ at α=0.05 because 0.169>0.05.",
+        "Keeps the conclusion about the population mean rather than individual scores.",
+        "Distinguishes the observed mean 51.8 above 50 from sufficient evidence of a population difference.",
+        "Avoids claiming that H₀ is proven true or that the p-value is its probability."
+      ]
+    },
+    {
+      "id": "fund-statistics.self.050",
+      "topic": "fund-statistics.hypothesis-tests",
+      "type": "written",
+      "difficulty": "hard",
+      "question": "For 37 follow-up attenders among 180 independently sampled eligible patients, a null-based proportion test of H₀: π=0.15 gives a two-sided Normal p-value of approximately 0.037. A separately calculated 95% Wald interval is approximately [0.147, 0.265], which contains 0.15. At α=0.05, explain why these statements need not be contradictory and give the decision from the specified null-based test.",
+      "answer": "The specified null-based test rejects H₀ at 5% because its p-value is about 0.037<0.05. That test calculates its SE with π₀=0.15. The Wald interval instead estimates SE using the observed proportion 37/180. Because these are different SE constructions, this Wald interval does not generally invert the null-based test, so its inclusion of 0.15 need not give the same decision. A test and interval must be matched before treating their decisions as equivalent; no additional interval method needs to be calculated here.",
+      "hint": "Compare the denominator used under the null with the SE estimated for the Wald interval.",
+      "explanation": "Mean-test/interval duality applies to matched procedures. It should not be transferred automatically to the course null-based proportion test and its earlier observed-proportion Wald interval.",
+      "source": "Original student practice · Topic 5",
+      "rubric": [
+        "Uses the specified p-value to reject H₀ at α=0.05.",
+        "States that the test SE uses the null proportion π₀, whereas the Wald interval SE uses the observed estimate.",
+        "Explains that the two procedures are not generally inverses and therefore can give different near-boundary decisions.",
+        "Does not claim that every confidence interval and test must agree or introduce an unsupported exact-method calculation."
+      ]
+    }
+  ]
+}

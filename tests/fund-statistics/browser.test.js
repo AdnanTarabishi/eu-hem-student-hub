@@ -19,7 +19,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     await page.goto(base+'course.html?course=fund-quant-methods');
     await page.locator('a[href="fund-statistics.html"]').first().waitFor();
     await open();assert.equal(await page.locator('.fs-grid .fs-card').count(),6);
-    assert.match(await page.locator('.fs-card').nth(4).innerText(),/36 slides reviewed/);
+    assert.match(await page.locator('.fs-card').nth(4).innerText(),/37 slides reviewed/);
     assert.doesNotMatch(await page.locator('#fs-view').innerText(),/Topic 5 slides pending/);
     // Every topic guide and quiz is wired to its own 15 questions, and progress survives reload.
     for(const topic of [...new Set(bank.map(q=>q.topic))]) {
@@ -35,7 +35,7 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
       assert.equal(await page.locator('input[name="answer"]:checked').inputValue(),String(q.answer.charCodeAt(0)-65));
       if(topic==='fund-statistics.hypothesis-tests') {
         assert.equal(await page.locator('#lecture-guide section').count(),14);
-        assert.match(await page.locator('#lecture-guide').textContent(),/All 36 Topic 5 slides/);
+        assert.match(await page.locator('#lecture-guide').textContent(),/All 37 Topic 5 slides/);
         assert.match(await page.locator('#lecture-guide').textContent(),/0.05166/);
         await page.locator('.lecture-toolbar [data-view="explore"]').click();
         assert.equal(await page.locator('[data-activity="fund-evidence"] svg').count(),2);
@@ -170,15 +170,22 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     await page.setViewportSize({width:1440,height:1000});
     await nav('sources');assert.equal(await page.locator('tbody').nth(1).locator('tr').count(),17);assert.match(await page.locator('#fs-view').innerText(),/before−after/);
     assert.match(await page.locator('.fs-stats').innerText(),/53 \/ 37/);
-    assert.match(await page.locator('.fs-stats').innerText(),/6 \/ 274/);
+    assert.match(await page.locator('.fs-stats').innerText(),/6 \/ 275/);
     await nav('reference');assert.match(await page.locator('#fs-view').innerText(),/T.DIST.2T/);
     await nav('mock');await page.getByRole('button',{name:'Start 90-minute mock'}).click();
     assert.equal(await page.locator('.fs-feedback').count(),0);assert.match(await page.locator('#fs-timer').innerText(),/^(89|90):/);
-    const ids=['012','026','040','053','074','088'];
+    const current=await page.evaluate(()=>JSON.parse(sessionStorage.getItem('euhem-fund-mock-v1')));
+    const ids=current.questionIds;
+    assert.equal(new Set(ids).size,6);
+    assert.ok(ids.every(id=>bank.find(q=>q.id===id).topic!=='fund-statistics.two-means'));
+    assert.ok(ids.every(id=>!bank.find(q=>q.id===id).supplementary));
     for(let i=0;i<6;i++){
-      const q=bank.find(q=>q.id==='fund-statistics.q.'+ids[i]);await page.locator(`input[name="fs-answer-${i}"][value="${q.answer.charCodeAt(0)-65}"]`).check();
+      const q=bank.find(q=>q.id===ids[i]);await page.locator(`input[name="fs-answer-${i}"][value="${q.answer.charCodeAt(0)-65}"]`).check();
     }
-    const answers=[[75,70.90435,79.09565,2.88675],[.6,.03535534,2.82843,.00467773]];
+    const legacyAnswers=[[75,70.90435,79.09565,2.88675],[.6,.03535534,2.82843,.00467773]];
+    const forms=require('../../fund-statistics-mock-bank.js');
+    const selectedForm=forms.find(form=>form.id===current.form);
+    const answers=selectedForm?selectedForm.applied.map(item=>item.fields.map(field=>field[1])):legacyAnswers;
     for(let i=0;i<2;i++)for(let j=0;j<4;j++)await page.locator(`#fs-num-${i}-${j}`).fill(String(answers[i][j]));
     await page.locator('#fs-text-0').fill('Group 1 has a lower estimated population mean.');
     await page.reload();await page.waitForSelector('#fs-content:not([hidden])');
@@ -188,6 +195,11 @@ const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json
     for(const box of await page.locator('[data-rubric]').all())await box.check();
     assert.match(await page.locator('#fs-score').innerText(),/30.0\/30/);
     await page.locator('#fs-new-mock').click();
+    const nextSession=await page.evaluate(()=>JSON.parse(sessionStorage.getItem('euhem-fund-mock-v1')));
+    assert.notEqual(nextSession.form,current.form);
+    assert.ok(nextSession.questionIds.every(id=>!ids.includes(id)));
+    await page.reload();await page.waitForSelector('#fs-content:not([hidden])');
+    assert.deepEqual(await page.evaluate(()=>JSON.parse(sessionStorage.getItem('euhem-fund-mock-v1')).orders),nextSession.orders);
     // A deadline is evaluated from timestamps; backgrounding/refreshing cannot pause it.
     await page.evaluate(()=>{const m=JSON.parse(sessionStorage.getItem('euhem-fund-mock-v1'));m.started=Date.now()-5401000;m.deadline=m.started+5400000;sessionStorage.setItem('euhem-fund-mock-v1',JSON.stringify(m));});
     await page.reload();await page.waitForSelector('#fs-score');assert.match(await page.locator('#fs-score').innerText(),/time ended/i);

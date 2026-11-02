@@ -105,9 +105,9 @@ const mime = {
       assert.match(await link.innerText(), new RegExp("Topic\\s*0?" + (i + 1), "i"));
     }
     const tools = page.locator("a.fc-tool-card");
-    assert.equal(await tools.count(), 6);
+    assert.equal(await tools.count(), 7);
     const toolViews = await tools.evaluateAll(all => all.map(a => new URL(a.href).hash.slice(1)).sort());
-    assert.deepEqual(toolViews, ["cards", "cases", "explore", "lab-guides", "mock", "reference"].sort());
+    assert.deepEqual(toolViews, ["cards", "cases", "explore", "lab-guides", "mock", "quizzes", "reference"].sort());
     for (const href of await tools.evaluateAll(all => all.map(a => a.getAttribute("href")))) {
       assert.equal(new URL(href, base).pathname, "/eu-hem-student-hub/fund-statistics.html");
     }
@@ -287,7 +287,7 @@ const mime = {
     assert.equal(await failed.page.locator("body.fund-course-page").count(), 0);
     assert.equal(await failed.page.locator(".fc-overview").count(), 0);
     assert.deepEqual(errors, []);
-    console.log("Fundamentals course passed: source-driven metrics, six topic destinations, six study tools, module facts, saved progress/bookmark/plan, tab history, responsive/dark, real offline reload and optional-data fallback.");
+    console.log("Fundamentals course passed: source-driven metrics, six topic destinations, seven study tools, module facts, saved progress/bookmark/plan, tab history, responsive/dark, real offline reload and optional-data fallback.");
   } finally {
     await Promise.all(contexts.map(context => context.close()));
     await browser.close(); server.close();
