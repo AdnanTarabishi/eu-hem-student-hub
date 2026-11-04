@@ -1015,31 +1015,6 @@ DESCRIPTION:No final examination. This is an administrative Pass/Fail recor
 TRANSP:TRANSPARENT
 END:VEVENT
 BEGIN:VEVENT
-UID:exam-74948--2026%2011%2003--11%2000--ranzani%20aula%20a--written--2026%
- 2010%2019--2026%2010%2030------@eu-hem-student-hub
-SEQUENCE:0
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
-DTSTART;TZID=Europe/Rome:20261103T110000
-DTEND;TZID=Europe/Rome:20261103T130000
-SUMMARY:Exam: Statistics for Healthcare
-LOCATION:RANZANI AULA "A"
-DESCRIPTION:Type: Written\nTeacher: Forster Martin\nRegistration closes: 20
- 26-10-30\nEnd time is an estimate (2 h). Register on AlmaEsami.\nSource: o
- fficial UniBo exam dates
-END:VEVENT
-BEGIN:VEVENT
-UID:registration-74948--2026%2011%2003--11%2000--ranzani%20aula%20a--writte
- n--2026%2010%2019--2026%2010%2030------@eu-hem-student-hub
-SEQUENCE:0
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
-DTSTART;VALUE=DATE:20261030
-DTEND;VALUE=DATE:20261031
-SUMMARY:Last day to register: Statistics for Healthcare
-DESCRIPTION:Exam on 2026-11-03 at 11:00. Register on AlmaEsami.
-END:VEVENT
-BEGIN:VEVENT
 UID:exam-32626--2026%2012%2017--14%2000--laboratorio%20informatico--practic
  al--2026%2012%2002--2026%2012%2013------@eu-hem-student-hub
 SEQUENCE:0

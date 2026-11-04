@@ -7,52 +7,8 @@
     "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates?b_start:int=20"
   ],
   "sourceType": "official",
-  "verifiedAt": "2026-11-03T20:57:55.604Z",
+  "verifiedAt": "2026-11-04T01:19:55.984Z",
   "records": [
-    {
-      "codes": [
-        "96525",
-        "74948"
-      ],
-      "dateKey": "2026-11-03",
-      "time": "11:00",
-      "names": [
-        "Quantitative Methods In Health And Healthcare (I.C.)",
-        "Statistics For Healthcare"
-      ],
-      "teachers": [
-        "Forster Martin"
-      ],
-      "type": "Written",
-      "place": "RANZANI AULA \"A\"",
-      "registrationOpens": "2026-10-19",
-      "registrationCloses": "2026-10-30",
-      "duration": "",
-      "notes": "",
-      "endTime": "",
-      "assessmentCode": "74948"
-    },
-    {
-      "codes": [
-        "79157"
-      ],
-      "dateKey": "2026-11-03",
-      "time": "11:00",
-      "names": [
-        "Research Methods In Health And Health Care (I.C.)"
-      ],
-      "teachers": [
-        "Forster Martin"
-      ],
-      "type": "Written",
-      "place": "RANZANI AULA \"A\"",
-      "registrationOpens": "2026-10-19",
-      "registrationCloses": "2026-10-30",
-      "duration": "",
-      "notes": "",
-      "endTime": "",
-      "assessmentCode": "79157"
-    },
     {
       "codes": [
         "96496",
