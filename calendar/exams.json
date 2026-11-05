@@ -7,54 +7,8 @@
     "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates?b_start:int=20"
   ],
   "sourceType": "official",
-  "verifiedAt": "2026-11-05T03:28:34.368Z",
+  "verifiedAt": "2026-11-05T12:18:07.902Z",
   "records": [
-    {
-      "codes": [
-        "96496",
-        "96498"
-      ],
-      "dateKey": "2026-11-04",
-      "time": "15:00",
-      "names": [
-        "Fundamentals Of Quantitative Methods In Health And Healthcare (I.C.)",
-        "Fundamentals Of Statistics For Healthcare"
-      ],
-      "teachers": [
-        "Capacci Sara"
-      ],
-      "type": "Written",
-      "place": "LAB G - LAB T (Via Ranzani, 1)",
-      "registrationOpens": "2026-10-20",
-      "registrationCloses": "2026-10-31",
-      "duration": "",
-      "notes": "",
-      "endTime": "",
-      "assessmentCode": "96498"
-    },
-    {
-      "codes": [
-        "96496",
-        "96498"
-      ],
-      "dateKey": "2026-11-04",
-      "time": "16:30",
-      "names": [
-        "Fundamentals Of Quantitative Methods In Health And Healthcare (I.C.)",
-        "Fundamentals Of Statistics For Healthcare"
-      ],
-      "teachers": [
-        "Capacci Sara"
-      ],
-      "type": "Written",
-      "place": "LAB G - LAB T (Via Ranzani, 1)",
-      "registrationOpens": "2026-10-20",
-      "registrationCloses": "2026-10-31",
-      "duration": "",
-      "notes": "",
-      "endTime": "",
-      "assessmentCode": "96498"
-    },
     {
       "codes": [
         "B5429"

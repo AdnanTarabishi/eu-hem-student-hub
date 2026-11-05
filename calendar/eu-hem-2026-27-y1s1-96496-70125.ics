@@ -895,58 +895,6 @@ LOCATION:AULA 1 · Piano Terra · PIAZZA Antonino Scaravilli 1/2 - Bologna
 DESCRIPTION:Andre Pieter Den Exter\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
-UID:exam-96498--2026%2011%2004--15%2000--lab%20g%20lab%20t%20via%20ranzani%
- 201--written--2026%2010%2020--2026%2010%2031------@eu-hem-student-hub
-SEQUENCE:0
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
-DTSTART;TZID=Europe/Rome:20261104T150000
-DTEND;TZID=Europe/Rome:20261104T170000
-SUMMARY:Exam: Fundamentals of Statistics for Healthcare
-LOCATION:LAB G - LAB T (Via Ranzani\, 1)
-DESCRIPTION:Type: Written\nTeacher: Capacci Sara\nRegistration closes: 2026
- -10-31\nEnd time is an estimate (2 h). Register on AlmaEsami.\nSource: off
- icial UniBo exam dates
-END:VEVENT
-BEGIN:VEVENT
-UID:registration-96498--2026%2011%2004--15%2000--lab%20g%20lab%20t%20via%20
- ranzani%201--written--2026%2010%2020--2026%2010%2031------@eu-hem-student-
- hub
-SEQUENCE:0
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
-DTSTART;VALUE=DATE:20261031
-DTEND;VALUE=DATE:20261101
-SUMMARY:Last day to register: Fundamentals of Statistics for Healthcare
-DESCRIPTION:Exam on 2026-11-04 at 15:00. Register on AlmaEsami.
-END:VEVENT
-BEGIN:VEVENT
-UID:exam-96498--2026%2011%2004--16%2030--lab%20g%20lab%20t%20via%20ranzani%
- 201--written--2026%2010%2020--2026%2010%2031------@eu-hem-student-hub
-SEQUENCE:0
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
-DTSTART;TZID=Europe/Rome:20261104T163000
-DTEND;TZID=Europe/Rome:20261104T183000
-SUMMARY:Exam: Fundamentals of Statistics for Healthcare
-LOCATION:LAB G - LAB T (Via Ranzani\, 1)
-DESCRIPTION:Type: Written\nTeacher: Capacci Sara\nRegistration closes: 2026
- -10-31\nEnd time is an estimate (2 h). Register on AlmaEsami.\nSource: off
- icial UniBo exam dates
-END:VEVENT
-BEGIN:VEVENT
-UID:registration-96498--2026%2011%2004--16%2030--lab%20g%20lab%20t%20via%20
- ranzani%201--written--2026%2010%2020--2026%2010%2031------@eu-hem-student-
- hub
-SEQUENCE:0
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
-DTSTART;VALUE=DATE:20261031
-DTEND;VALUE=DATE:20261101
-SUMMARY:Last day to register: Fundamentals of Statistics for Healthcare
-DESCRIPTION:Exam on 2026-11-04 at 16:30. Register on AlmaEsami.
-END:VEVENT
-BEGIN:VEVENT
 UID:exam-96499--2026%2012%2017--11%2000--laboratorio%20informatico--practic
  al--2026%2012%2002--2026%2012%2013------@eu-hem-student-hub
 SEQUENCE:0
