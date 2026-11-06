@@ -7,50 +7,8 @@
     "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates?b_start:int=20"
   ],
   "sourceType": "official",
-  "verifiedAt": "2026-11-06T01:31:43.065Z",
+  "verifiedAt": "2026-11-06T09:21:50.193Z",
   "records": [
-    {
-      "codes": [
-        "B5429"
-      ],
-      "dateKey": "2026-11-05",
-      "time": "09:00",
-      "names": [
-        "Economics Of Risky Health Behaviours"
-      ],
-      "teachers": [
-        "Dragone Davide"
-      ],
-      "type": "Written",
-      "place": "LAB INFORMATICO N - BELMELORO",
-      "registrationOpens": "2026-10-26",
-      "registrationCloses": "2026-11-03",
-      "duration": "",
-      "notes": "",
-      "endTime": "",
-      "assessmentCode": "B5429"
-    },
-    {
-      "codes": [
-        "70138"
-      ],
-      "dateKey": "2026-11-05",
-      "time": "09:00",
-      "names": [
-        "Lifestyles And Health Outcomes"
-      ],
-      "teachers": [
-        "Dragone Davide"
-      ],
-      "type": "Written",
-      "place": "LAB INFORMATICO N - BELMELORO",
-      "registrationOpens": "2026-10-26",
-      "registrationCloses": "2026-11-03",
-      "duration": "",
-      "notes": "",
-      "endTime": "",
-      "assessmentCode": "70138"
-    },
     {
       "codes": [
         "96526"
