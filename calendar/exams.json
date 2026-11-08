@@ -7,7 +7,7 @@
     "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates?b_start:int=20"
   ],
   "sourceType": "official",
-  "verifiedAt": "2026-11-08T07:17:18.536Z",
+  "verifiedAt": "2026-11-08T15:10:38.940Z",
   "records": [
     {
       "codes": [
@@ -788,6 +788,27 @@
       "notes": "",
       "endTime": "",
       "assessmentCode": "79075"
+    },
+    {
+      "codes": [
+        "70141"
+      ],
+      "dateKey": "2027-01-29",
+      "time": "12:00",
+      "names": [
+        "Health Econometrics"
+      ],
+      "teachers": [
+        "De Cao Elisabetta"
+      ],
+      "type": "Practical",
+      "place": "Lab Inf. B (Accesso da Via Zamboni, 34)",
+      "registrationOpens": "2027-01-14",
+      "registrationCloses": "2027-01-25",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "70141"
     },
     {
       "codes": [
