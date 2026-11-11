@@ -7,7 +7,7 @@
     "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates?b_start:int=20"
   ],
   "sourceType": "official",
-  "verifiedAt": "2026-11-11T06:13:16.031Z",
+  "verifiedAt": "2026-11-11T14:22:21.602Z",
   "records": [
     {
       "codes": [
@@ -94,6 +94,27 @@
       "notes": "",
       "endTime": "",
       "assessmentCode": "96499"
+    },
+    {
+      "codes": [
+        "C9942"
+      ],
+      "dateKey": "2026-12-17",
+      "time": "11:00",
+      "names": [
+        "Seminars In Health Economics"
+      ],
+      "teachers": [
+        "Verzulli Rossella"
+      ],
+      "type": "Oral",
+      "place": "Aula 6 via Zamboni 34",
+      "registrationOpens": "2026-11-17",
+      "registrationCloses": "2026-12-12",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "C9942"
     },
     {
       "codes": [
@@ -226,27 +247,6 @@
       "notes": "",
       "endTime": "",
       "assessmentCode": "79077"
-    },
-    {
-      "codes": [
-        "C9942"
-      ],
-      "dateKey": "2026-12-18",
-      "time": "11:00",
-      "names": [
-        "Seminars In Health Economics"
-      ],
-      "teachers": [
-        "Verzulli Rossella"
-      ],
-      "type": "Written",
-      "place": "Aula 22 Scaravilli",
-      "registrationOpens": "2026-10-12",
-      "registrationCloses": "2026-12-13",
-      "duration": "",
-      "notes": "",
-      "endTime": "",
-      "assessmentCode": "C9942"
     },
     {
       "codes": [
