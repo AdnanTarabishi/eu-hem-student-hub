@@ -9,7 +9,7 @@
     "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/timetable/@@orario_reale_json?anno=1&start=2026-12-03&end=2026-12-31&calendar_view="
   ],
   "sourceType": "official",
-  "verifiedAt": "2026-11-12T11:03:22.654Z",
+  "verifiedAt": "2026-11-12T18:54:00.852Z",
   "records": [
     {
       "id": "2026-000-409407--I|97484-2026-09-07T09:00:00",
@@ -1393,13 +1393,13 @@
       "feedTitle": "QUANTITATIVE METHODS IN HEALTH AND HEALTHCARE (I.C.) / ECONOMETRICS",
       "classrooms": [
         {
-          "name": "AULA ARZELA'",
-          "floor": "Piano Quinto",
-          "building": "AULA ARZELA'",
-          "address": "Piazza di Porta San Donato, 5 - Bologna"
+          "name": "AULA 2",
+          "floor": "Piano Terra",
+          "building": "AULA 2",
+          "address": "PIAZZA Antonino Scaravilli 1/2 - Bologna"
         }
       ],
-      "room": "AULA ARZELA' · Piano Quinto · Piazza di Porta San Donato, 5 - Bologna",
+      "room": "AULA 2 · Piano Terra · PIAZZA Antonino Scaravilli 1/2 - Bologna",
       "teacher": "Elisabetta De Cao",
       "online": false,
       "note": "Tutor session Ayishatu Awol Tanko"
@@ -1582,13 +1582,13 @@
       "feedTitle": "QUANTITATIVE METHODS IN HEALTH AND HEALTHCARE (I.C.) / ECONOMETRICS",
       "classrooms": [
         {
-          "name": "AULA A (Accesso da via Centotrecento, 18)",
-          "floor": "Piano Terra",
-          "building": "AULA A (Accesso da via Centotrecento, 18)",
-          "address": "Via Centotrecento, 18 - Bologna"
+          "name": "AULA 21",
+          "floor": "Piano Secondo",
+          "building": "AULA 21",
+          "address": "PIAZZA Antonino Scaravilli 1/2 - Bologna"
         }
       ],
-      "room": "AULA A (Accesso da via Centotrecento, 18) · Piano Terra · Via Centotrecento, 18 - Bologna",
+      "room": "AULA 21 · Piano Secondo · PIAZZA Antonino Scaravilli 1/2 - Bologna",
       "teacher": "Elisabetta De Cao",
       "online": false,
       "note": ""
@@ -1645,13 +1645,13 @@
       "feedTitle": "QUANTITATIVE METHODS IN HEALTH AND HEALTHCARE (I.C.) / ECONOMETRICS",
       "classrooms": [
         {
-          "name": "AULA ARZELA'",
-          "floor": "Piano Quinto",
-          "building": "AULA ARZELA'",
-          "address": "Piazza di Porta San Donato, 5 - Bologna"
+          "name": "AULA 2",
+          "floor": "Piano Terra",
+          "building": "AULA 2",
+          "address": "PIAZZA Antonino Scaravilli 1/2 - Bologna"
         }
       ],
-      "room": "AULA ARZELA' · Piano Quinto · Piazza di Porta San Donato, 5 - Bologna",
+      "room": "AULA 2 · Piano Terra · PIAZZA Antonino Scaravilli 1/2 - Bologna",
       "teacher": "Elisabetta De Cao",
       "online": false,
       "note": "Tutor session Ayishatu Awol Tanko"
@@ -1834,13 +1834,13 @@
       "feedTitle": "QUANTITATIVE METHODS IN HEALTH AND HEALTHCARE (I.C.) / ECONOMETRICS",
       "classrooms": [
         {
-          "name": "AULA A (Accesso da via Centotrecento, 18)",
-          "floor": "Piano Terra",
-          "building": "AULA A (Accesso da via Centotrecento, 18)",
-          "address": "Via Centotrecento, 18 - Bologna"
+          "name": "AULA 21",
+          "floor": "Piano Secondo",
+          "building": "AULA 21",
+          "address": "PIAZZA Antonino Scaravilli 1/2 - Bologna"
         }
       ],
-      "room": "AULA A (Accesso da via Centotrecento, 18) · Piano Terra · Via Centotrecento, 18 - Bologna",
+      "room": "AULA 21 · Piano Secondo · PIAZZA Antonino Scaravilli 1/2 - Bologna",
       "teacher": "Elisabetta De Cao",
       "online": false,
       "note": ""
@@ -2065,13 +2065,13 @@
       "feedTitle": "QUANTITATIVE METHODS IN HEALTH AND HEALTHCARE (I.C.) / ECONOMETRICS",
       "classrooms": [
         {
-          "name": "AULA A (Accesso da via Centotrecento, 18)",
+          "name": "AULA S. GIACOMO",
           "floor": "Piano Terra",
-          "building": "AULA A (Accesso da via Centotrecento, 18)",
-          "address": "Via Centotrecento, 18 - Bologna"
+          "building": "AULA S. GIACOMO",
+          "address": "Via San Giacomo, 3 - Bologna"
         }
       ],
-      "room": "AULA A (Accesso da via Centotrecento, 18) · Piano Terra · Via Centotrecento, 18 - Bologna",
+      "room": "AULA S. GIACOMO · Piano Terra · Via San Giacomo, 3 - Bologna",
       "teacher": "Elisabetta De Cao",
       "online": false,
       "note": ""
@@ -2128,13 +2128,13 @@
       "feedTitle": "QUANTITATIVE METHODS IN HEALTH AND HEALTHCARE (I.C.) / ECONOMETRICS",
       "classrooms": [
         {
-          "name": "AULA ARZELA'",
-          "floor": "Piano Quinto",
-          "building": "AULA ARZELA'",
-          "address": "Piazza di Porta San Donato, 5 - Bologna"
+          "name": "AULA B",
+          "floor": "Piano Terra",
+          "building": "AULA B",
+          "address": "VIA Irnerio 42 - Bologna"
         }
       ],
-      "room": "AULA ARZELA' · Piano Quinto · Piazza di Porta San Donato, 5 - Bologna",
+      "room": "AULA B · Piano Terra · VIA Irnerio 42 - Bologna",
       "teacher": "Elisabetta De Cao",
       "online": false,
       "note": "Tutor session Ayishatu Awol Tanko"
@@ -2254,13 +2254,13 @@
       "feedTitle": "QUANTITATIVE METHODS IN HEALTH AND HEALTHCARE (I.C.) / ECONOMETRICS",
       "classrooms": [
         {
-          "name": "AULA A (Accesso da via Centotrecento, 18)",
-          "floor": "Piano Terra",
-          "building": "AULA A (Accesso da via Centotrecento, 18)",
-          "address": "Via Centotrecento, 18 - Bologna"
+          "name": "AULA 21",
+          "floor": "Piano Secondo",
+          "building": "AULA 21",
+          "address": "PIAZZA Antonino Scaravilli 1/2 - Bologna"
         }
       ],
-      "room": "AULA A (Accesso da via Centotrecento, 18) · Piano Terra · Via Centotrecento, 18 - Bologna",
+      "room": "AULA 21 · Piano Secondo · PIAZZA Antonino Scaravilli 1/2 - Bologna",
       "teacher": "Elisabetta De Cao",
       "online": false,
       "note": ""

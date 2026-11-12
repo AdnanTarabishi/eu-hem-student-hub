@@ -615,14 +615,13 @@ DESCRIPTION:Elisabetta De Cao\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
 UID:class-2026-000-380199-I-32626-2026-11-12T16-00-00@eu-hem-student-hub
-SEQUENCE:1
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
+SEQUENCE:2
+DTSTAMP:20261112T185403Z
+LAST-MODIFIED:20261112T185403Z
 DTSTART;TZID=Europe/Rome:20261112T160000
 DTEND;TZID=Europe/Rome:20261112T180000
 SUMMARY:Econometrics
-LOCATION:AULA ARZELA' · Piano Quinto · Piazza di Porta San Donato\, 5 - B
- ologna
+LOCATION:AULA 2 · Piano Terra · PIAZZA Antonino Scaravilli 1/2 - Bologna
 DESCRIPTION:Elisabetta De Cao\nTutor session Ayishatu Awol Tanko\nSource: o
  fficial UniBo timetable
 END:VEVENT
@@ -672,14 +671,14 @@ DESCRIPTION:Francesco Ciabuschi\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
 UID:class-2026-000-380199-I-32626-2026-11-18T13-00-00@eu-hem-student-hub
-SEQUENCE:1
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
+SEQUENCE:2
+DTSTAMP:20261112T185403Z
+LAST-MODIFIED:20261112T185403Z
 DTSTART;TZID=Europe/Rome:20261118T130000
 DTEND;TZID=Europe/Rome:20261118T160000
 SUMMARY:Econometrics
-LOCATION:AULA A (Accesso da via Centotrecento\, 18) · Piano Terra · Via C
- entotrecento\, 18 - Bologna
+LOCATION:AULA 21 · Piano Secondo · PIAZZA Antonino Scaravilli 1/2 - Bolog
+ na
 DESCRIPTION:Elisabetta De Cao\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
@@ -695,14 +694,13 @@ DESCRIPTION:Francesco Ciabuschi\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
 UID:class-2026-000-380199-I-32626-2026-11-19T16-00-00@eu-hem-student-hub
-SEQUENCE:1
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
+SEQUENCE:2
+DTSTAMP:20261112T185403Z
+LAST-MODIFIED:20261112T185403Z
 DTSTART;TZID=Europe/Rome:20261119T160000
 DTEND;TZID=Europe/Rome:20261119T180000
 SUMMARY:Econometrics
-LOCATION:AULA ARZELA' · Piano Quinto · Piazza di Porta San Donato\, 5 - B
- ologna
+LOCATION:AULA 2 · Piano Terra · PIAZZA Antonino Scaravilli 1/2 - Bologna
 DESCRIPTION:Elisabetta De Cao\nTutor session Ayishatu Awol Tanko\nSource: o
  fficial UniBo timetable
 END:VEVENT
@@ -753,14 +751,14 @@ DESCRIPTION:Francesco Ciabuschi\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
 UID:class-2026-000-380199-I-32626-2026-11-25T13-00-00@eu-hem-student-hub
-SEQUENCE:1
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
+SEQUENCE:2
+DTSTAMP:20261112T185403Z
+LAST-MODIFIED:20261112T185403Z
 DTSTART;TZID=Europe/Rome:20261125T130000
 DTEND;TZID=Europe/Rome:20261125T160000
 SUMMARY:Econometrics
-LOCATION:AULA A (Accesso da via Centotrecento\, 18) · Piano Terra · Via C
- entotrecento\, 18 - Bologna
+LOCATION:AULA 21 · Piano Secondo · PIAZZA Antonino Scaravilli 1/2 - Bolog
+ na
 DESCRIPTION:Elisabetta De Cao\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
@@ -820,14 +818,13 @@ DESCRIPTION:Francesco Ciabuschi\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
 UID:class-2026-000-380199-I-32626-2026-12-02T13-00-00@eu-hem-student-hub
-SEQUENCE:1
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
+SEQUENCE:2
+DTSTAMP:20261112T185403Z
+LAST-MODIFIED:20261112T185403Z
 DTSTART;TZID=Europe/Rome:20261202T130000
 DTEND;TZID=Europe/Rome:20261202T160000
 SUMMARY:Econometrics
-LOCATION:AULA A (Accesso da via Centotrecento\, 18) · Piano Terra · Via C
- entotrecento\, 18 - Bologna
+LOCATION:AULA S. GIACOMO · Piano Terra · Via San Giacomo\, 3 - Bologna
 DESCRIPTION:Elisabetta De Cao\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
@@ -843,14 +840,13 @@ DESCRIPTION:Francesco Ciabuschi\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
 UID:class-2026-000-380199-I-32626-2026-12-03T16-00-00@eu-hem-student-hub
-SEQUENCE:1
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
+SEQUENCE:2
+DTSTAMP:20261112T185403Z
+LAST-MODIFIED:20261112T185403Z
 DTSTART;TZID=Europe/Rome:20261203T160000
 DTEND;TZID=Europe/Rome:20261203T190000
 SUMMARY:Econometrics
-LOCATION:AULA ARZELA' · Piano Quinto · Piazza di Porta San Donato\, 5 - B
- ologna
+LOCATION:AULA B · Piano Terra · VIA Irnerio 42 - Bologna
 DESCRIPTION:Elisabetta De Cao\nTutor session Ayishatu Awol Tanko\nSource: o
  fficial UniBo timetable
 END:VEVENT
@@ -879,14 +875,14 @@ DESCRIPTION:Andre Pieter Den Exter\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
 UID:class-2026-000-380199-I-32626-2026-12-09T13-00-00@eu-hem-student-hub
-SEQUENCE:1
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
+SEQUENCE:2
+DTSTAMP:20261112T185403Z
+LAST-MODIFIED:20261112T185403Z
 DTSTART;TZID=Europe/Rome:20261209T130000
 DTEND;TZID=Europe/Rome:20261209T160000
 SUMMARY:Econometrics
-LOCATION:AULA A (Accesso da via Centotrecento\, 18) · Piano Terra · Via C
- entotrecento\, 18 - Bologna
+LOCATION:AULA 21 · Piano Secondo · PIAZZA Antonino Scaravilli 1/2 - Bolog
+ na
 DESCRIPTION:Elisabetta De Cao\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
