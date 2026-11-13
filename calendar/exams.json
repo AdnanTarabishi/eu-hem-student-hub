@@ -7,7 +7,7 @@
     "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates?b_start:int=20"
   ],
   "sourceType": "official",
-  "verifiedAt": "2026-11-12T18:54:00.852Z",
+  "verifiedAt": "2026-11-13T00:20:42.332Z",
   "records": [
     {
       "codes": [
@@ -226,6 +226,27 @@
       "notes": "",
       "endTime": "",
       "assessmentCode": "79157"
+    },
+    {
+      "codes": [
+        "B2030"
+      ],
+      "dateKey": "2026-12-18",
+      "time": "09:00",
+      "names": [
+        "Behavioral Public Economics And Policy"
+      ],
+      "teachers": [
+        "Heger Stephanie"
+      ],
+      "type": "Scritto e orale",
+      "place": "AULA E2 (accesso da Mura di Anteo Zamboni 2/B)",
+      "registrationOpens": "2026-12-03",
+      "registrationCloses": "2026-12-14",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "B2030"
     },
     {
       "codes": [
