@@ -1086,54 +1086,54 @@ SUMMARY:Last day to register: Fundamentals of Econometrics
 DESCRIPTION:Exam on 2026-12-17 at 12:15. Register on AlmaEsami.
 END:VEVENT
 BEGIN:VEVENT
-UID:exam-87428--2026%2012%2022--09%2000--lab%20g%20v%20ranzani%201--written
- --2026%2012%2007--2026%2012%2018------lab%20g%20v%20ranzani%201@eu-hem-stu
- dent-hub
+UID:exam-87428--2026%2012%2022--09%2000--lab%20g%20e%20lab%20t%20v%20ranzan
+ i%201--written--2026%2012%2007--2026%2012%2018------lab%20g%20e%20lab%20t%
+ 20v%20ranzani%201@eu-hem-student-hub
 SEQUENCE:0
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
+DTSTAMP:20261116T202739Z
+LAST-MODIFIED:20261116T202739Z
 DTSTART;TZID=Europe/Rome:20261222T090000
 DTEND;TZID=Europe/Rome:20261222T110000
 SUMMARY:Exam: Fundamentals in Healthcare Management
-LOCATION:lab G v. Ranzani 1
+LOCATION:lab G e lab T v. Ranzani 1
 DESCRIPTION:Type: Written\nTeacher: Ciabuschi Francesco\nRegistration close
- s: 2026-12-18\nNotes: lab G v. Ranzani 1)\nEnd time is an estimate (2 h). 
- Register on AlmaEsami.\nSource: official UniBo exam dates
+ s: 2026-12-18\nNotes: lab G e lab T. v. Ranzani 1\nEnd time is an estimate
+  (2 h). Register on AlmaEsami.\nSource: official UniBo exam dates
 END:VEVENT
 BEGIN:VEVENT
-UID:registration-87428--2026%2012%2022--09%2000--lab%20g%20v%20ranzani%201-
- -written--2026%2012%2007--2026%2012%2018------lab%20g%20v%20ranzani%201@eu
- -hem-student-hub
+UID:registration-87428--2026%2012%2022--09%2000--lab%20g%20e%20lab%20t%20v%
+ 20ranzani%201--written--2026%2012%2007--2026%2012%2018------lab%20g%20e%20
+ lab%20t%20v%20ranzani%201@eu-hem-student-hub
 SEQUENCE:0
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
+DTSTAMP:20261116T202739Z
+LAST-MODIFIED:20261116T202739Z
 DTSTART;VALUE=DATE:20261218
 DTEND;VALUE=DATE:20261219
 SUMMARY:Last day to register: Fundamentals in Healthcare Management
 DESCRIPTION:Exam on 2026-12-22 at 09:00. Register on AlmaEsami.
 END:VEVENT
 BEGIN:VEVENT
-UID:exam-87428--2026%2012%2022--10%2030--lab%20g%20v%20ranzani%201--written
- --2026%2012%2007--2026%2012%2018------lab%20g%20v%20ranzani%201@eu-hem-stu
- dent-hub
+UID:exam-87428--2026%2012%2022--10%2030--lab%20g%20e%20lab%20t%20v%20ranzan
+ i%201--written--2026%2012%2007--2026%2012%2018------lab%20g%20e%20lab%20t%
+ 20v%20ranzani%201@eu-hem-student-hub
 SEQUENCE:0
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
+DTSTAMP:20261116T202739Z
+LAST-MODIFIED:20261116T202739Z
 DTSTART;TZID=Europe/Rome:20261222T103000
 DTEND;TZID=Europe/Rome:20261222T123000
 SUMMARY:Exam: Fundamentals in Healthcare Management
-LOCATION:lab G v. Ranzani 1
+LOCATION:lab G e lab T v. Ranzani 1
 DESCRIPTION:Type: Written\nTeacher: Ciabuschi Francesco\nRegistration close
- s: 2026-12-18\nNotes: lab G v. Ranzani 1)\nEnd time is an estimate (2 h). 
- Register on AlmaEsami.\nSource: official UniBo exam dates
+ s: 2026-12-18\nNotes: lab G e lab T. v. Ranzani 1\nEnd time is an estimate
+  (2 h). Register on AlmaEsami.\nSource: official UniBo exam dates
 END:VEVENT
 BEGIN:VEVENT
-UID:registration-87428--2026%2012%2022--10%2030--lab%20g%20v%20ranzani%201-
- -written--2026%2012%2007--2026%2012%2018------lab%20g%20v%20ranzani%201@eu
- -hem-student-hub
+UID:registration-87428--2026%2012%2022--10%2030--lab%20g%20e%20lab%20t%20v%
+ 20ranzani%201--written--2026%2012%2007--2026%2012%2018------lab%20g%20e%20
+ lab%20t%20v%20ranzani%201@eu-hem-student-hub
 SEQUENCE:0
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
+DTSTAMP:20261116T202739Z
+LAST-MODIFIED:20261116T202739Z
 DTSTART;VALUE=DATE:20261218
 DTEND;VALUE=DATE:20261219
 SUMMARY:Last day to register: Fundamentals in Healthcare Management
