@@ -1,12 +1,12 @@
 {
   "version": 1,
   "cohort": "2026-27",
-  "checkedAt": "2026-11-17T22:20:53.017Z",
+  "checkedAt": "2026-11-18T04:17:57.144Z",
   "timetable": {
     "ok": true,
     "source": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/timetable/@@orario_reale_json?anno=1&start=2026-09-01&end=2026-12-31&calendar_view=",
-    "checkedAt": "2026-11-17T22:20:53.017Z",
-    "verifiedAt": "2026-11-17T22:20:53.017Z",
+    "checkedAt": "2026-11-18T04:17:57.144Z",
+    "verifiedAt": "2026-11-18T04:17:57.144Z",
     "sourceType": "official",
     "recordCount": 118,
     "error": ""
@@ -14,8 +14,8 @@
   "exams": {
     "ok": true,
     "source": "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates",
-    "checkedAt": "2026-11-17T22:20:53.017Z",
-    "verifiedAt": "2026-11-17T22:20:53.017Z",
+    "checkedAt": "2026-11-18T04:17:57.144Z",
+    "verifiedAt": "2026-11-18T04:17:57.144Z",
     "sourceType": "official",
     "recordCount": 46,
     "error": ""
