@@ -1643,6 +1643,31 @@ SUMMARY:Last day to register: Fundamentals in Healthcare Management
 DESCRIPTION:Exam on 2026-12-22 at 10:30. Register on AlmaEsami.
 END:VEVENT
 BEGIN:VEVENT
+UID:exam-70125--2027%2001%2009--09%2000--take%20home%20exam--written--2026%
+ 2012%2025--2027%2001%2005------@eu-hem-student-hub
+SEQUENCE:0
+DTSTAMP:20261118T215511Z
+LAST-MODIFIED:20261118T215511Z
+DTSTART;TZID=Europe/Rome:20270109T090000
+DTEND;TZID=Europe/Rome:20270109T110000
+SUMMARY:Exam: International Law and Health
+LOCATION:take home exam
+DESCRIPTION:Type: Written\nTeacher: Den Exter Andre Pieter\nRegistration cl
+ oses: 2027-01-05\nEnd time is an estimate (2 h). Register on AlmaEsami.\nS
+ ource: official UniBo exam dates
+END:VEVENT
+BEGIN:VEVENT
+UID:registration-70125--2027%2001%2009--09%2000--take%20home%20exam--writte
+ n--2026%2012%2025--2027%2001%2005------@eu-hem-student-hub
+SEQUENCE:0
+DTSTAMP:20261118T215511Z
+LAST-MODIFIED:20261118T215511Z
+DTSTART;VALUE=DATE:20270105
+DTEND;VALUE=DATE:20270106
+SUMMARY:Last day to register: International Law and Health
+DESCRIPTION:Exam on 2027-01-09 at 09:00. Register on AlmaEsami.
+END:VEVENT
+BEGIN:VEVENT
 UID:exam-87428--2027%2001%2013--13%2000--lab%20t%20accesso%20via%20ranzani%
  201--written--2027%2001%2001--2027%2001%2009------lab%20t%20accesso%20via%
  20ranzani%201@eu-hem-student-hub
@@ -1852,5 +1877,30 @@ DTSTART;VALUE=DATE:20270125
 DTEND;VALUE=DATE:20270126
 SUMMARY:Last day to register: Fundamentals of Econometrics
 DESCRIPTION:Exam on 2027-01-29 at 15:00. Register on AlmaEsami.
+END:VEVENT
+BEGIN:VEVENT
+UID:exam-70125--2027%2002%2006--09%2000--take%20home%20exam--written--2027%
+ 2001%2022--2027%2002%2002------@eu-hem-student-hub
+SEQUENCE:0
+DTSTAMP:20261118T215511Z
+LAST-MODIFIED:20261118T215511Z
+DTSTART;TZID=Europe/Rome:20270206T090000
+DTEND;TZID=Europe/Rome:20270206T110000
+SUMMARY:Exam: International Law and Health
+LOCATION:take home exam
+DESCRIPTION:Type: Written\nTeacher: Den Exter Andre Pieter\nRegistration cl
+ oses: 2027-02-02\nEnd time is an estimate (2 h). Register on AlmaEsami.\nS
+ ource: official UniBo exam dates
+END:VEVENT
+BEGIN:VEVENT
+UID:registration-70125--2027%2002%2006--09%2000--take%20home%20exam--writte
+ n--2027%2001%2022--2027%2002%2002------@eu-hem-student-hub
+SEQUENCE:0
+DTSTAMP:20261118T215511Z
+LAST-MODIFIED:20261118T215511Z
+DTSTART;VALUE=DATE:20270202
+DTEND;VALUE=DATE:20270203
+SUMMARY:Last day to register: International Law and Health
+DESCRIPTION:Exam on 2027-02-06 at 09:00. Register on AlmaEsami.
 END:VEVENT
 END:VCALENDAR

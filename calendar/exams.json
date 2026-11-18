@@ -7,7 +7,7 @@
     "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/exam-dates?b_start:int=20"
   ],
   "sourceType": "official",
-  "verifiedAt": "2026-11-18T13:56:07.016Z",
+  "verifiedAt": "2026-11-18T21:55:08.407Z",
   "records": [
     {
       "codes": [
@@ -319,8 +319,8 @@
       "dateKey": "2026-12-19",
       "time": "09:00",
       "names": [
-        "Law And Economics Of Pharmaceutical Markets (I.C.)",
-        "Economics Of The Biopharmaceutical Industry"
+        "Economics Of The Biopharmaceutical Industry",
+        "Law And Economics Of Pharmaceutical Markets (I.C.)"
       ],
       "teachers": [
         "Fabbri Daniele"
@@ -421,6 +421,27 @@
       "notes": "lab G e lab T. v. Ranzani 1",
       "endTime": "",
       "assessmentCode": "87427"
+    },
+    {
+      "codes": [
+        "70125"
+      ],
+      "dateKey": "2027-01-09",
+      "time": "09:00",
+      "names": [
+        "International Law And Health"
+      ],
+      "teachers": [
+        "Den Exter Andre Pieter"
+      ],
+      "type": "Written",
+      "place": "take home exam",
+      "registrationOpens": "2026-12-25",
+      "registrationCloses": "2027-01-05",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "70125"
     },
     {
       "codes": [
@@ -659,6 +680,29 @@
     },
     {
       "codes": [
+        "96526",
+        "79076"
+      ],
+      "dateKey": "2027-01-22",
+      "time": "09:00",
+      "names": [
+        "Economics Of The Biopharmaceutical Industry",
+        "Law And Economics Of Pharmaceutical Markets (I.C.)"
+      ],
+      "teachers": [
+        "Fabbri Daniele"
+      ],
+      "type": "Written",
+      "place": "Aula 3 Scaravilli",
+      "registrationOpens": "2027-01-07",
+      "registrationCloses": "2027-01-18",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "79076"
+    },
+    {
+      "codes": [
         "97177",
         "79060"
       ],
@@ -700,29 +744,6 @@
       "notes": "",
       "endTime": "",
       "assessmentCode": "87427"
-    },
-    {
-      "codes": [
-        "96526",
-        "79076"
-      ],
-      "dateKey": "2027-01-22",
-      "time": "09:00",
-      "names": [
-        "Law And Economics Of Pharmaceutical Markets (I.C.)",
-        "Economics Of The Biopharmaceutical Industry"
-      ],
-      "teachers": [
-        "Fabbri Daniele"
-      ],
-      "type": "Written",
-      "place": "Aula 3 Scaravilli",
-      "registrationOpens": "2027-01-07",
-      "registrationCloses": "2027-01-18",
-      "duration": "",
-      "notes": "",
-      "endTime": "",
-      "assessmentCode": "79076"
     },
     {
       "codes": [
@@ -960,6 +981,27 @@
       "notes": "",
       "endTime": "",
       "assessmentCode": "C9942"
+    },
+    {
+      "codes": [
+        "70125"
+      ],
+      "dateKey": "2027-02-06",
+      "time": "09:00",
+      "names": [
+        "International Law And Health"
+      ],
+      "teachers": [
+        "Den Exter Andre Pieter"
+      ],
+      "type": "Written",
+      "place": "take home exam",
+      "registrationOpens": "2027-01-22",
+      "registrationCloses": "2027-02-02",
+      "duration": "",
+      "notes": "",
+      "endTime": "",
+      "assessmentCode": "70125"
     },
     {
       "codes": [
