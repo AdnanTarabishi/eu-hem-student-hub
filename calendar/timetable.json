@@ -9,7 +9,7 @@
     "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/timetable/@@orario_reale_json?anno=1&start=2026-12-03&end=2026-12-31&calendar_view="
   ],
   "sourceType": "official",
-  "verifiedAt": "2026-11-20T11:35:27.541Z",
+  "verifiedAt": "2026-11-20T20:13:51.335Z",
   "records": [
     {
       "id": "2026-000-409407--I|97484-2026-09-07T09:00:00",
@@ -1615,27 +1615,6 @@
       "note": ""
     },
     {
-      "id": "2026-000-381359--I|96499-2026-11-19T13:00:00",
-      "dateKey": "2026-11-19",
-      "time": "13:00 - 15:00",
-      "start": "2026-11-19T13:00:00",
-      "end": "2026-11-19T15:00:00",
-      "moduleCode": "96499",
-      "feedTitle": "FUNDAMENTALS OF QUANTITATIVE METHODS IN HEALTH AND HEALTHCARE (I.C.) / FUNDAMENTALS OF ECONOMETRICS",
-      "classrooms": [
-        {
-          "name": "AULA ENRIQUES",
-          "floor": "Piano Terra",
-          "building": "AULA ENRIQUES",
-          "address": "Piazza di Porta San Donato, 5 - Bologna"
-        }
-      ],
-      "room": "AULA ENRIQUES · Piano Terra · Piazza di Porta San Donato, 5 - Bologna",
-      "teacher": "Elisabetta De Cao",
-      "online": false,
-      "note": "Tutor session Ozlem Yasar"
-    },
-    {
       "id": "2026-000-380199--I|32626-2026-11-19T16:00:00",
       "dateKey": "2026-11-19",
       "time": "16:00 - 18:00",
@@ -1760,6 +1739,27 @@
       "teacher": "Elisabetta De Cao",
       "online": false,
       "note": ""
+    },
+    {
+      "id": "2026-000-381359--I|96499-2026-11-23T16:00:00",
+      "dateKey": "2026-11-23",
+      "time": "16:00 - 18:00",
+      "start": "2026-11-23T16:00:00",
+      "end": "2026-11-23T18:00:00",
+      "moduleCode": "96499",
+      "feedTitle": "FUNDAMENTALS OF QUANTITATIVE METHODS IN HEALTH AND HEALTHCARE (I.C.) / FUNDAMENTALS OF ECONOMETRICS",
+      "classrooms": [
+        {
+          "name": "AULA 21",
+          "floor": "Piano Secondo",
+          "building": "AULA 21",
+          "address": "PIAZZA Antonino Scaravilli 1/2 - Bologna"
+        }
+      ],
+      "room": "AULA 21 · Piano Secondo · PIAZZA Antonino Scaravilli 1/2 - Bologna",
+      "teacher": "Elisabetta De Cao",
+      "online": false,
+      "note": "Tutor session Ozlem Yasar"
     },
     {
       "id": "2026-000-380158--I|87428-2026-11-24T10:00:00",

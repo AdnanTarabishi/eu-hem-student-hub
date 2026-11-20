@@ -772,19 +772,6 @@ LOCATION:AULA B (ANATOMIA) · Piano Terra · Via Irnerio\, 48 - Bologna
 DESCRIPTION:Francesco Ciabuschi\nSource: official UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
-UID:class-2026-000-381359-I-96499-2026-11-19T13-00-00@eu-hem-student-hub
-SEQUENCE:1
-DTSTAMP:20261021T040300Z
-LAST-MODIFIED:20261021T040300Z
-DTSTART;TZID=Europe/Rome:20261119T130000
-DTEND;TZID=Europe/Rome:20261119T150000
-SUMMARY:Fundamentals of Econometrics
-LOCATION:AULA ENRIQUES · Piano Terra · Piazza di Porta San Donato\, 5 - B
- ologna
-DESCRIPTION:Elisabetta De Cao\nTutor session Ozlem Yasar\nSource: official 
- UniBo timetable
-END:VEVENT
-BEGIN:VEVENT
 UID:class-2026-000-381359-I-96499-2026-11-20T09-00-00@eu-hem-student-hub
 SEQUENCE:1
 DTSTAMP:20261021T040300Z
@@ -805,6 +792,19 @@ DTEND;TZID=Europe/Rome:20261120T160000
 SUMMARY:Health Systems
 LOCATION:AULA 11 · Piano Primo · PIAZZA Antonino Scaravilli 1/2 - Bologna
 DESCRIPTION:Rossella Verzulli\nSource: official UniBo timetable
+END:VEVENT
+BEGIN:VEVENT
+UID:class-2026-000-381359-I-96499-2026-11-23T16-00-00@eu-hem-student-hub
+SEQUENCE:0
+DTSTAMP:20261120T201353Z
+LAST-MODIFIED:20261120T201353Z
+DTSTART;TZID=Europe/Rome:20261123T160000
+DTEND;TZID=Europe/Rome:20261123T180000
+SUMMARY:Fundamentals of Econometrics
+LOCATION:AULA 21 · Piano Secondo · PIAZZA Antonino Scaravilli 1/2 - Bolog
+ na
+DESCRIPTION:Elisabetta De Cao\nTutor session Ozlem Yasar\nSource: official 
+ UniBo timetable
 END:VEVENT
 BEGIN:VEVENT
 UID:class-2026-000-380158-I-87428-2026-11-24T10-00-00@eu-hem-student-hub
