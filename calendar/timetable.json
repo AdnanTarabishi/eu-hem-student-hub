@@ -9,7 +9,7 @@
     "https://corsi.unibo.it/2cycle/euHealthEconomicsManagement/timetable/@@orario_reale_json?anno=1&start=2026-12-03&end=2026-12-31&calendar_view="
   ],
   "sourceType": "official",
-  "verifiedAt": "2026-11-27T18:56:46.210Z",
+  "verifiedAt": "2026-11-28T01:57:40.929Z",
   "records": [
     {
       "id": "2026-000-409407--I|97484-2026-09-07T09:00:00",
@@ -1930,34 +1930,13 @@
       "note": ""
     },
     {
-      "id": "2026-000-401821--I|70125_1-2026-11-27T16:00:00",
+      "id": "2026-000-413357--I|70125_2-2026-11-27T16:00:00",
       "dateKey": "2026-11-27",
       "time": "16:00 - 18:00",
       "start": "2026-11-27T16:00:00",
       "end": "2026-11-27T18:00:00",
-      "moduleCode": "70125_1",
-      "feedTitle": "INTERNATIONAL LAW AND HEALTH / (1) Modulo 1",
-      "classrooms": [
-        {
-          "name": "AULA 11",
-          "floor": "Piano Primo",
-          "building": "AULA 11",
-          "address": "PIAZZA Antonino Scaravilli 1/2 - Bologna"
-        }
-      ],
-      "room": "AULA 11 · Piano Primo · PIAZZA Antonino Scaravilli 1/2 - Bologna",
-      "teacher": "Andre Pieter Den Exter",
-      "online": false,
-      "note": ""
-    },
-    {
-      "id": "2026-000-401821--I|70125_1-2026-11-28T08:30:00",
-      "dateKey": "2026-11-28",
-      "time": "08:30 - 12:30",
-      "start": "2026-11-28T08:30:00",
-      "end": "2026-11-28T12:30:00",
-      "moduleCode": "70125_1",
-      "feedTitle": "INTERNATIONAL LAW AND HEALTH / (1) Modulo 1",
+      "moduleCode": "70125_2",
+      "feedTitle": "INTERNATIONAL LAW AND HEALTH / (2) Modulo 2",
       "classrooms": [
         {
           "name": "AULA 1",
@@ -1967,7 +1946,28 @@
         }
       ],
       "room": "AULA 1 · Piano Terra · PIAZZA Antonino Scaravilli 1/2 - Bologna",
-      "teacher": "Andre Pieter Den Exter",
+      "teacher": "",
+      "online": false,
+      "note": ""
+    },
+    {
+      "id": "2026-000-413357--I|70125_2-2026-11-28T08:30:00",
+      "dateKey": "2026-11-28",
+      "time": "08:30 - 12:30",
+      "start": "2026-11-28T08:30:00",
+      "end": "2026-11-28T12:30:00",
+      "moduleCode": "70125_2",
+      "feedTitle": "INTERNATIONAL LAW AND HEALTH / (2) Modulo 2",
+      "classrooms": [
+        {
+          "name": "AULA 1",
+          "floor": "Piano Terra",
+          "building": "AULA 1",
+          "address": "PIAZZA Antonino Scaravilli 1/2 - Bologna"
+        }
+      ],
+      "room": "AULA 1 · Piano Terra · PIAZZA Antonino Scaravilli 1/2 - Bologna",
+      "teacher": "",
       "online": false,
       "note": ""
     },
@@ -2182,13 +2182,13 @@
       "note": ""
     },
     {
-      "id": "2026-000-401821--I|70125_1-2026-12-04T16:00:00",
+      "id": "2026-000-413357--I|70125_2-2026-12-04T16:00:00",
       "dateKey": "2026-12-04",
       "time": "16:00 - 18:00",
       "start": "2026-12-04T16:00:00",
       "end": "2026-12-04T18:00:00",
-      "moduleCode": "70125_1",
-      "feedTitle": "INTERNATIONAL LAW AND HEALTH / (1) Modulo 1",
+      "moduleCode": "70125_2",
+      "feedTitle": "INTERNATIONAL LAW AND HEALTH / (2) Modulo 2",
       "classrooms": [
         {
           "name": "AULA 11",
@@ -2198,28 +2198,28 @@
         }
       ],
       "room": "AULA 11 · Piano Primo · PIAZZA Antonino Scaravilli 1/2 - Bologna",
-      "teacher": "Andre Pieter Den Exter",
+      "teacher": "",
       "online": false,
       "note": ""
     },
     {
-      "id": "2026-000-401821--I|70125_1-2026-12-05T08:30:00",
+      "id": "2026-000-413357--I|70125_2-2026-12-05T08:30:00",
       "dateKey": "2026-12-05",
       "time": "08:30 - 12:30",
       "start": "2026-12-05T08:30:00",
       "end": "2026-12-05T12:30:00",
-      "moduleCode": "70125_1",
-      "feedTitle": "INTERNATIONAL LAW AND HEALTH / (1) Modulo 1",
+      "moduleCode": "70125_2",
+      "feedTitle": "INTERNATIONAL LAW AND HEALTH / (2) Modulo 2",
       "classrooms": [
         {
-          "name": "AULA A - S.P.V.",
+          "name": "AULA C - S.P.V.",
           "floor": "Piano Terra",
-          "building": "AULA A - S.P.V.",
+          "building": "AULA C - S.P.V.",
           "address": "VIA San Petronio vecchio 32 - Bologna"
         }
       ],
-      "room": "AULA A - S.P.V. · Piano Terra · VIA San Petronio vecchio 32 - Bologna",
-      "teacher": "Andre Pieter Den Exter",
+      "room": "AULA C - S.P.V. · Piano Terra · VIA San Petronio vecchio 32 - Bologna",
+      "teacher": "",
       "online": false,
       "note": ""
     },
